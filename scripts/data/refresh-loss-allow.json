@@ -2580,5 +2580,12 @@
   "aon": "class-feature-1285",
   "before": "7562a5e3058b935e",
   "why": "2026-10-14, lane C1 (book casters may prepare only from their book): the apply-it-yourself note said \"The app lets you prepare from the whole occult list instead of from your dirge\", which is no longer true — the dirge class-feature-1285 prints (\"eight occult cantrips, the 1st-rank spell harm, and four other 1st-rank occult spells\") is now modelled (classes/necromancer spellcasting.spellbook, harm as this feature's grantedSpells), so nothing is left to apply by hand. Removed by an overlay `value: null` row; held by test/book-cantrips.test.ts."
+ },
+ {
+  "key": "feats/improvisational-warrior",
+  "field": "critSpecWeapons.groups",
+  "aon": "feat-1223",
+  "before": "134e371cb182ba44",
+  "why": "package M round 2, 2026-10-16: feat-1223 prints \"When you use an improvised weapon, you apply the critical specialization of a brawling weapon to it.\" The grant reaches IMPROVISED weapons and borrows the brawling group's effect; it never reached brawling-group weapons. `groups: ['brawling']` lit it on the Fist and every brawling weapon, so it is replaced (one superseding overlay row) by `names: ['improvised']`, as improvised-critical (feat-6443), with the brawling effect said in critSpecCondition. Held by test/package-m-data2-critspec.test.ts and test/bespoke-tail.test.ts. Dark under the trust gate today."
  }
 ]

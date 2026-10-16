@@ -226,6 +226,14 @@ export interface PinnedDesc {
    * sheet.
    */
   ours?: PinnedOursLine[];
+  /**
+   * Package M round 2 (2026-10-16): the class a CLASS FEATURE was read for when it was pinned — a shared
+   * feature's paragraph (Perception Expertise reached from the Cleric page reads the cleric's "expert", not
+   * the Thaumaturge page's "master"), the second class's row under Dual Class. The reopened card reads it for
+   * this class (MainTab PinnedDescCard). Stored, NOT part of the identity (play.ts samePin); absent on pins
+   * saved before it and on pins read for no class, which reopen exactly as before.
+   */
+  classId?: string;
 }
 
 /** One stored ours line of a pin (structurally src/sheet/cardModel.ts OursLine). */
@@ -1668,6 +1676,35 @@ export interface DefenseGrants {
      * blast) never matches. Absent = ungated.
      */
     categories?: WeaponCategory[];
+    /**
+     * Only a Strike with the character's DEITY'S FAVORED WEAPON — *"When you critically succeed at an
+     * attack roll using your deity's favored weapon, you apply the weapon's critical specialization
+     * effect"* (Warpriest Third Doctrine, doctrine-5; Cloistered Cleric Fourth Doctrine, doctrine-4;
+     * Battle Creed's Lesser Creed, doctrine-6; the Avenger racket, racket-10). A gate like `categories`:
+     * the favored weapon must match AND any narrowing above must too. Read per character by
+     * `critSpecSources` off the deity the character follows (`details.deityId`); no deity, or a deity
+     * naming no favored weapon, matches nothing. A favored "weapon" that is no item (Irori's fist, a
+     * deity's jaws or claws) is an unarmed attack and matches the unarmed Strike of that name.
+     */
+    deityFavored?: boolean;
+    /**
+     * The largest damage die a Strike of each CATEGORY may roll, in faces — the Ruffian racket's *"This
+     * benefit doesn't apply to a simple weapon with a damage die greater than d8 or a martial or advanced
+     * weapon with a damage die greater than d6. (Apply any abilities that alter the damage die size
+     * first.)"* (racket-7). Tested against the die the Strike actually rolls (`Strike.dieFaces`, after any
+     * die change). A gate: a Strike whose category is named here and whose die is bigger — or unknown —
+     * does not match. A category not named is not limited by this field.
+     */
+    maxDieFaces?: Partial<Record<WeaponCategory, number>>;
+    /**
+     * The whole grant applies only to an inventor whose innovation is of this TYPE (InventorBuild) —
+     * *"If you have a weapon innovation, you gain access to the critical specialization effect with your
+     * innovation"* (Inventor Weapon Expertise, class-feature-490). The weapon twin of
+     * `armorSpec.innovationType`, and a gate like `minRank`: `designated` still picks the one marked
+     * item. The Innovation mark can be put on any item, so without this an armor- or construct-innovation
+     * inventor who marked a longsword got its critical specialization (package M round 2 review).
+     */
+    innovationType?: InventorBuild['innovationType'];
   };
   /** Melee unarmed Strikes this feat/feature grants (from Foundry `Strike` rule elements). */
   grantedStrikes?: GrantedStrike[];

@@ -35459,8 +35459,9 @@
     "itemType": "weapon"
    },
    "note": "Only weapons already in your inventory are listed — buy the weapon first if the list is empty.",
-   "inert": "Records which weapon you saturated (name it yourself — it gains the unique trait). The app doesn't yet limit this feat's critical specialization to that one weapon, and the 1-action summoning isn't tracked."
-  }
+   "inert": "Records which weapon you saturated (name it yourself — it gains the unique trait). This feat's critical specialization reaches that one weapon only, and no weapon at all until one is picked; the 1-action summoning isn't tracked."
+  },
+  "why": "package M round 2 (b): the choice's note said \"The app doesn't yet limit this feat's critical specialization to that one weapon\" — no longer true once critSpecWeapons reads this pick (feat-7001: \"Pick a weapon and give it a name; this weapon gains the unique trait. You gain access to its critical specialization effect.\"), and unanswered it reaches no weapon (derive.ts critSpecSources `unanswered`). Whole value re-emitted with only the `inert` sentence changed."
  },
  {
   "category": "feats",
@@ -55636,8 +55637,10 @@
   "id": "inventor-weapon-expertise",
   "field": "critSpecWeapons",
   "value": {
-   "designated": "innovation"
-  }
+   "designated": "innovation",
+   "innovationType": "weapon"
+  },
+  "why": "package M round 2 review: class-feature-490 (Inventor Weapon Expertise, Guns & Gears (Remastered) pg. 15) prints \"If you have a weapon innovation, you gain access to the critical specialization effect with your innovation.\" The grant needs a WEAPON innovation (innovationType 'weapon') as well as the marked item (designated). The record carried designated alone, so an armor- or construct-innovation inventor who marked a longsword as the Innovation (the mark goes on any item) got its critical specialization. Foundry's rule carries the same gate (predicate feature:weapon-innovation); the importer dropped it. Wanderer's Guide row 24907 encodes no critical specialization on the feature."
  },
  {
   "category": "classFeatures",
@@ -97399,10 +97402,11 @@
   "id": "improvisational-warrior",
   "field": "critSpecWeapons",
   "value": {
-   "groups": [
-    "brawling"
+   "names": [
+    "improvised"
    ]
-  }
+  },
+  "why": "package M round 2 fix: feat-1223 (Improvisational Warrior, Pathfinder #153: Life's Long Shadows pg. 73) prints \"When you use an improvised weapon, you apply the critical specialization of a brawling weapon to it.\" The grant reaches IMPROVISED weapons and borrows the brawling group's effect for them; it gives nothing to brawling-group weapons. The record narrowed by groups:['brawling'], which lit the effect on every brawling-group Strike (the Fist, a gauntlet) and on no improvised weapon. Matched by name like improvised-critical (feat-6443); no shipped weapon is improvised, so it reaches none today. Wanderer's Guide row 47206 encodes nothing mechanical. Gated dark today by the trust gate."
  },
  {
   "category": "feats",
@@ -191160,5 +191164,178 @@
    "innovationType": "armor"
   },
   "why": "package M (8): class-feature-497 (Medium Armor Expertise, Class Inventor, Guns & Gears (Remastered)) prints \"If you have a medium or heavy armor innovation, you gain access to the critical specialization effect with your armor innovation.\" For armor that effect is the armor specialization effect, so the record grants it on the designated innovation suit alone, in medium or heavy, and only to an inventor whose innovation IS armor (innovationType): the Innovation mark can be put on any item, so a weapon- or construct-innovation inventor who marked a suit would otherwise get it. The record carried nothing, so an 11th-level armor-innovation inventor had no armor specialization."
+ },
+ {
+  "category": "classFeatures",
+  "id": "ruffian",
+  "field": "critSpecWeapons",
+  "value": {
+   "categories": [
+    "simple",
+    "martial",
+    "advanced"
+   ],
+   "maxDieFaces": {
+    "simple": 8,
+    "martial": 6,
+    "advanced": 6
+   }
+  },
+  "why": "package M round 2 (b): racket-7 (Ruffian, Player Core pg. 166) prints \"You can deal sneak attack damage with any weapon, not just the weapons listed in the sneak attack class feature. This benefit doesn't apply to a simple weapon with a damage die greater than d8 or a martial or advanced weapon with a damage die greater than d6. (Apply any abilities that alter the damage die size first.) Critical hits you make with these weapons gain the weapon's critical specialization benefit if the target is off-guard to you.\" \"These weapons\" are weapons within those dice, so WEAPON categories only (Player Core rules-2191: \"unarmed attacks aren't weapons\") and the die cap per category, tested against the die the Strike rolls. The record carried critSpec with no narrowing, so a ruffian's longbow (martial d8), greataxe (martial d12) and every unarmed attack showed the effect. Wanderer's Guide encodes no critical specialization on the racket."
+ },
+ {
+  "category": "classFeatures",
+  "id": "ruffian",
+  "field": "critSpecCondition",
+  "value": "when the target is off-guard to you",
+  "why": "package M round 2 (b): racket-7 (Ruffian) prints \"Critical hits you make with these weapons gain the weapon's critical specialization benefit if the target is off-guard to you.\" A per-target condition, annotated beside the effect exactly as the Avenger racket's (racket-10) already is; the record carried none, so the strike card showed the effect unconditionally."
+ },
+ {
+  "category": "classFeatures",
+  "id": "avenger",
+  "field": "critSpecWeapons",
+  "value": {
+   "deityFavored": true
+  },
+  "why": "package M round 2 (b): racket-10 (Avenger, War of Immortals pg. 58) prints \"When you critically succeed at an attack roll using your deity's favored weapon and the target has the off-guard condition, you also apply the weapon's critical specialization effect.\" The record carried the off-guard condition but no weapon narrowing, so every weapon and unarmed attack showed the effect; deityFavored reads the favored weapon of the deity the character follows (derive.ts critSpecSources). Wanderer's Guide encodes no critical specialization on the racket."
+ },
+ {
+  "category": "classFeatures",
+  "id": "fourth-doctrine-cloistered-cleric",
+  "field": "critSpecWeapons",
+  "value": {
+   "deityFavored": true
+  },
+  "why": "package M round 2 (b): doctrine-4 (Cloistered Cleric, Player Core) prints under Fourth Doctrine (11th) \"When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect; use your spell DC in place of your class DC.\" The record carried critSpec with no narrowing, so an 11th-level cloistered cleric showed the effect on every weapon and the Fist. Wanderer's Guide encodes no critical specialization here."
+ },
+ {
+  "category": "classFeatures",
+  "id": "third-doctrine-warpriest",
+  "field": "critSpecWeapons",
+  "value": {
+   "deityFavored": true
+  },
+  "why": "package M round 2 (b): doctrine-5 (Warpriest, Player Core) prints under Third Doctrine (7th) \"When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect; You can use your spell DC in place of your class DC.\" The record carried critSpec with no narrowing, so a 7th-level warpriest showed the effect on every weapon. Wanderer's Guide encodes no critical specialization here."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesser-creed",
+  "field": "critSpecWeapons",
+  "value": {
+   "deityFavored": true
+  },
+  "why": "package M round 2 (b): doctrine-6 (Battle Creed, Divine Mysteries pg. 272) prints under Lesser Creed (5th) \"When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect.\" The record (a section of doctrine-6) carried critSpec with no narrowing, so a 5th-level battle harbinger showed the effect on every weapon. Wanderer's Guide encodes no critical specialization here."
+ },
+ {
+  "category": "classFeatures",
+  "id": "born-of-the-bones-of-the-earth",
+  "field": "critSpec",
+  "value": false,
+  "why": "package M round 2 (b): class-feature-1070 (Dominion Epithet) prints \"Each one grants a critical specialization ability you can use instead of any others you might have access to\", and epithet-7 (Born of the Bones of the Earth) prints that ability as its own effect: \"When you critically succeed on a Strike and the target of the critical hit is standing on a surface of earth or stone, the target is driven down and mired in the ground.\" It grants no weapon's critical specialization effect, yet critSpec true showed each weapon group's effect on every Strike. The epithet's own effect is a crit trigger (owner ruling Q15: no implementation unless complicated) and stays in its description. Wanderer's Guide encodes no critical specialization here."
+ },
+ {
+  "category": "classFeatures",
+  "id": "dancer-in-the-seasons",
+  "field": "critSpec",
+  "value": false,
+  "why": "package M round 2 (b): class-feature-1070 (Dominion Epithet) prints \"Each one grants a critical specialization ability you can use instead of any others you might have access to\"; epithet-8 (Dancer in the Seasons) prints its own: \"When you critically succeed on a Strike, you can Step as a free action in a whirl of leaves, snow, blossoms, or shimmering heat.\" No weapon's critical specialization effect is granted, so critSpec true (each weapon group's effect on every Strike) was wrong. The own effect stays in the description (owner ruling Q15)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "of-verse-unbroken",
+  "field": "critSpec",
+  "value": false,
+  "why": "package M round 2 (b): class-feature-1070 (Dominion Epithet) prints \"Each one grants a critical specialization ability you can use instead of any others you might have access to\"; epithet-9 (Of Verse Unbroken) prints its own: \"When you critically succeed on a Strike, haunting melodies play around the target, making them stupefied 1 unless they succeed on a Will save against your class DC.\" No weapon's critical specialization effect is granted, so critSpec true was wrong. The own effect stays in the description (owner ruling Q15)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "plunderer-of-the-hives-riches",
+  "field": "critSpec",
+  "value": false,
+  "why": "package M round 2 (b): class-feature-1070 (Dominion Epithet) prints \"Each one grants a critical specialization ability you can use instead of any others you might have access to\"; epithet-17 (Plunderer of the Hive's Riches) prints its own: \"When you critically succeed at a Strike, the taste of honey fills your mouth as you plunder part of your foe's vitality for yourself, gaining temporary Hit Points equal to half the creature's level that last for 1 minute.\" No weapon's critical specialization effect is granted, so critSpec true was wrong. The own effect stays in the description (owner ruling Q15: temporary Hit Points alone are not complicated)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "restless-as-the-tide",
+  "field": "critSpec",
+  "value": false,
+  "why": "package M round 2 (b): class-feature-1070 (Dominion Epithet) prints \"Each one grants a critical specialization ability you can use instead of any others you might have access to\"; epithet-11 (Restless as the Tides) prints its own: \"When you critically succeed on a Strike, water blasts the target and those nearby.\" No weapon's critical specialization effect is granted, so critSpec true was wrong. The own effect stays in the description (owner ruling Q15)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "trespasser-in-deaths-realm",
+  "field": "critSpec",
+  "value": false,
+  "why": "package M round 2 (b): class-feature-1070 (Dominion Epithet) prints \"Each one grants a critical specialization ability you can use instead of any others you might have access to\"; epithet-18 (Trespasser in Death's Realm) prints its own: \"When you critically succeed at a Strike, you pull your target closer to death from your stolen connection.\" No weapon's critical specialization effect is granted, so critSpec true was wrong. The own effect stays in the description (owner ruling Q15)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "whose-cry-is-thunder",
+  "field": "critSpec",
+  "value": false,
+  "why": "package M round 2 (b): class-feature-1070 (Dominion Epithet) prints \"Each one grants a critical specialization ability you can use instead of any others you might have access to\"; epithet-12 (Whose Cry is Thunder) prints its own: \"When you critically succeed on a Strike, a thunderclap booms!\" No weapon's critical specialization effect is granted, so critSpec true was wrong. The own effect stays in the description (owner ruling Q15)."
+ },
+ {
+  "category": "feats",
+  "id": "undersea-privateer-dedication",
+  "field": "critSpecWeapons",
+  "value": {
+   "minRank": "expert"
+  },
+  "why": "package M round 2 (b): feat-8915 (Undersea Privateer Dedication, Hellfire Dispatches pg. 96) prints \"If you're at least an expert in the weapon you're using when fighting in or underwater, you get the critical specialization effect of that weapon when you get a critical hit with it.\" The record carried critSpec with no narrowing, so a 2nd-level dedication (trained) showed the effect on every weapon. Today the trust gate keeps this feat's critSpec dark (Wanderer's Guide encodes nothing); this row is what applies when the gate is switched off."
+ },
+ {
+  "category": "feats",
+  "id": "undersea-privateer-dedication",
+  "field": "critSpecCondition",
+  "value": "when fighting in or underwater",
+  "why": "package M round 2 (b): feat-8915 prints \"If you're at least an expert in the weapon you're using when fighting in or underwater, you get the critical specialization effect of that weapon\". A situation no sheet state knows, so it is annotated beside the effect like Ranger Weapon Expertise's hunted-prey clause."
+ },
+ {
+  "category": "feats",
+  "id": "hunters-fangs",
+  "field": "critSpecWeapons",
+  "value": {
+   "names": [
+    "fangs"
+   ]
+  },
+  "why": "package M round 2 (b): feat-2769 (Hunter's Fangs, The Mwangi Expanse pg. 104) prints \"Whenever you score a critical hit with your fangs unarmed attack, you apply the unarmed attack's critical specialization effect.\" The anadi ancestry's attack ships as \"Fangs\"; the record carried critSpec with no narrowing, i.e. every weapon. Gated dark today by the trust gate (Wanderer's Guide encodes nothing); this row is what applies when the gate is switched off."
+ },
+ {
+  "category": "feats",
+  "id": "improvised-critical",
+  "field": "critSpecWeapons",
+  "value": {
+   "names": [
+    "improvised"
+   ]
+  },
+  "why": "package M round 2 (b): feat-6443 (Improvised Critical, Player Core 2 pg. 221) prints \"You can apply critical specialization effects to improvised weapons you wield.\" Player Core's rules-2192 defines an improvised weapon as \"something that wasn't built to be a weapon\"; no shipped weapon item is one and none carries a marker, so the narrowing reaches only a Strike named for one (a homebrew \"Improvised …\" item) and nothing else. The record carried critSpec with no narrowing, i.e. every weapon. Gated dark today by the trust gate."
+ },
+ {
+  "category": "feats",
+  "id": "signature-weapon",
+  "field": "critSpecWeapons",
+  "value": {
+   "bases": [
+    "{item|flags.system.rulesSelections.weapon}"
+   ]
+  },
+  "why": "package M round 2 (b): feat-7001 (Signature Weapon, Tian Xia Character Guide pg. 86) prints \"Pick a weapon and give it a name; this weapon gains the unique trait. You gain access to its critical specialization effect.\" The record asks that pick (choice flag signatureWeapon, the weapon's item id); the `{item|…}` placeholder is derive.ts critSpecSources' \"this record's own pick\" and fails closed when unanswered. The record carried critSpec with no narrowing, i.e. every weapon. Gated dark today by the trust gate."
+ },
+ {
+  "category": "feats",
+  "id": "secrets-of-steel",
+  "field": "critSpecCondition",
+  "value": "on a Strike modified by Bespell Strikes",
+  "why": "package M round 2 (b): feat-7984 (Secrets of Steel, Battlecry! pg. 69) prints \"When you use Bespell Strikes, you gain access to the critical specialization effect of the chosen weapon or unarmed attacks used with Bespell Strikes.\" Any weapon or unarmed attack, but only on the Strike Bespell Strikes modifies — a per-use state the sheet does not track, so it is annotated beside the effect. Gated dark today by the trust gate (Wanderer's Guide encodes only a note)."
+ },
+ {
+  "category": "feats",
+  "id": "improvisational-warrior",
+  "field": "critSpecCondition",
+  "value": "using the brawling group's effect (or another group's, if the GM finds it fits the improvised weapon better)",
+  "why": "package M round 2 fix: feat-1223 prints \"you apply the critical specialization of a brawling weapon to it. Depending on the shape and nature of the improvised weapon, your GM might determine another weapon group's critical specialization is more appropriate.\" An improvised weapon has no group of its own, so which effect applies is said beside it."
  }
 ]

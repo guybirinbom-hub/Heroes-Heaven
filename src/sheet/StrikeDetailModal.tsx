@@ -41,9 +41,11 @@ function strikeParts(strike: Strike, character: Character, content: ContentDatab
   // slug finds another page or none. A strike with no item (Fist, a blast) keeps the title lookup.
   // Card step 19: stored with the pin (play.ts pinOf) — the mode it was pinned from, never its identity.
   const node = { title: strike.name, description, descRefs, key: 'items', mode: 'mine' as const, ...(item ? { slug: shownItemId(item, content) } : {}) };
-  // Crit specialization — shown in Strikes ONLY when the character actually has it (matching the row).
+  // Crit specialization — shown in Strikes ONLY when the character actually has it (matching the row). The
+  // character goes in too (package M round 2): a grant narrowed to a designated item (critSpecWeapons
+  // .designated — the inventor's weapon innovation) reads the item's designation off it.
   const critText = critSpec(strike.group);
-  const showsCrit = !!critText && strikeShowsCritSpec(strike, critSpecSources(character, content));
+  const showsCrit = !!critText && strikeShowsCritSpec(strike, critSpecSources(character, content), character);
   return { item, node, critText, showsCrit };
 }
 

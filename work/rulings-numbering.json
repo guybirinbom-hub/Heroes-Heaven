@@ -173,6 +173,7 @@
   "cantrip-expansion#dual-class-pool": 172,
   "adaptive-adept#repertoire-place": 173,
   "adapted-cantrip#repertoire-cantrip-count": 174,
-  "basic-cleric-spellcasting#deity-spells": 175
+  "basic-cleric-spellcasting#deity-spells": 175,
+  "expert-strikes": 176
  }
 }

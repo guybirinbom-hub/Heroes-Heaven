@@ -77,7 +77,10 @@ describe('a rider filtered on a designation', () => {
 });
 
 describe('crit specialization narrowed to the designated item', () => {
-  const inventor = (inv: InventoryItem[]): Character => ({ ...build('inventor', 11, {}), inventory: inv });
+  // batch package-m premise: class-feature-490 "If you have a weapon innovation, you gain access to the critical specialization effect with your innovation."
+  // A WEAPON-innovation inventor: the default build is the first subclass (armor innovation), whose marked
+  // weapon gets nothing since the record carries critSpecWeapons.innovationType (package M round 2 review).
+  const inventor = (inv: InventoryItem[]): Character => ({ ...build('inventor', 11, { subclassId: 'weapon-innovation' }), inventory: inv });
 
   it('the designated innovation shows it', () => {
     const inv = held('a', sword, ['innovation']);

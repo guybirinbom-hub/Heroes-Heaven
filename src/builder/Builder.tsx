@@ -73,7 +73,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId, SpellAccessGrant, SpellcastingEntry, Tradition } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, choiceOptionRecord, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, requestArchetypeTraditionChange, type OptionRecord } from './shared';
+import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, choiceOptionRecord, levelRowClasses, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, requestArchetypeTraditionChange, type OptionRecord } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -2494,6 +2494,10 @@ export function Builder({
               // `build` last: the level list is archetype-aware only when the resolver can see the
               // dedication that carries the class archetype (War Mage: no Arcane Bond row, a War Magic one).
               const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[], build);
+              // Package M round 2 (Dual Class): the class each automatic row belongs to, read back in
+              // levelGrants' order (shared.tsx levelRowClasses) — its text and its card are read for it.
+              const rowClasses = levelRowClasses(build, content, lvl, g.features);
+              const rowClassOf = (f: (typeof g.features)[number]) => rowClasses[g.features.indexOf(f)] ?? build.classId;
               /* Picks at this level under a key no slot above draws — a pick v0.1.40 stranded, a slot a
                  change took away, any key the slot list does not produce. The sheet still grants every
                  one, so each is listed here to be moved or removed by the player. Derived on every
@@ -2607,7 +2611,8 @@ export function Builder({
                         {g.features
                           .filter((f) => f.id !== subAnchorId)
                           .map((f) => (
-                            <div className="lvl-gain-block" key={f.id}>
+                            // Keyed by its class too: a record both classes list at this level is two rows.
+                            <div className="lvl-gain-block" key={`${rowClassOf(f) ?? ''}:${f.id}`}>
                               <div className="lvl-gain">
                                 <i className="ti ti-award lvl-gain-ic" aria-hidden="true" />
                                 <span className="lvl-gain-name">{f.name}</span>
@@ -2615,12 +2620,14 @@ export function Builder({
                               </div>
                               <ChoiceDetails
                                 name={f.name}
-                                flavor={classFeatureDescription(content.classFeatures[f.id]?.description, build.classId, content)}
+                                flavor={classFeatureDescription(content.classFeatures[f.id]?.description, rowClassOf(f), content)}
                                 descRefs={content.classFeatures[f.id]?.descRefs}
                                 bucket="classFeatures"
                                 id={f.id}
-                                // Card step 15: the 'mine' card, scoped to the build at its current level.
+                                // Card step 15: the 'mine' card, scoped to the build at its current level —
+                                // and (package M round 2) to the row's own class under Dual Class.
                                 character={featPrereqChar}
+                                classId={rowClassOf(f)}
                               />
                               {/* The question it asks lives in the choice zone below — see
                                   `askingFeatures`. This says where it went. */}

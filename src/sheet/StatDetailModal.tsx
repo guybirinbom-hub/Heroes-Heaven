@@ -16,7 +16,7 @@ import { DescriptionModal } from './DescriptionModal';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { useEscapeClose } from './useEscapeClose';
 import { RecordCard } from './RecordCard';
-import { scopeOfCharacter } from './cardScope';
+import { heldFeatureClassOf, scopeOfCharacter } from './cardScope';
 
 /** An action name to its core.json id — the same kebab-casing MainTab uses, so a marker authored
  *  against "treat-wounds" is found from either surface. */
@@ -234,8 +234,11 @@ export function StatDetailModal({
         // must not bubble on to this modal's), so you return to the stat.
         <div style={{ display: 'contents' }} onClick={(e) => e.stopPropagation()}>
           {/* Card step 13a: scoped to this character — its level, class, subclass and the options its
-              build owns — so the parts it does not have yet fold (docs/card-design.md section 3). */}
-          <RecordCard record={{ bucket: fullText.bucket, id: fullText.id }} mode="mine" chrome="popup" scope={scopeOfCharacter(character)} onExit={() => setFullText(null)} />
+              build owns — so the parts it does not have yet fold (docs/card-design.md section 3).
+              Package M round 2: a class feature only the SECOND class holds (Dual Class) is read for that
+              class and its subclass (cardScope heldFeatureClassOf), not the first. */}
+          <RecordCard record={{ bucket: fullText.bucket, id: fullText.id }} mode="mine" chrome="popup"
+            scope={scopeOfCharacter(character, heldFeatureClassOf(character, content, fullText.bucket, fullText.id))} onExit={() => setFullText(null)} />
         </div>
       )}
 

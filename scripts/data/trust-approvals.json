@@ -561,6 +561,7 @@
   { "n": 166, "id": "book-names-different-book-folds", "status": "ruled" },
   { "n": 167, "id": "reprint-grade-to-grade", "status": "ruled" },
   { "n": 169, "id": "shop-respects-sources", "status": "ruled" },
-  { "n": 170, "id": "sources-apply-to-everything", "status": "ruled" }
+  { "n": 170, "id": "sources-apply-to-everything", "status": "ruled" },
+  { "n": 176, "id": "expert-strikes", "status": "open" }
  ]
 }

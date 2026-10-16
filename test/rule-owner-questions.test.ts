@@ -115,10 +115,12 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
      * the three filed 2026-10-15 outside any batch: #171 expanded-necromancy#archetype-ninth-rank,
      * #172 cantrip-expansion#dual-class-pool, #173 adaptive-adept#repertoire-place. (This pin went red
      * when those three were filed; the 2026-10-15 desk pass rules them, and BEFORE reverts every desk
-     * pass, so they read as open here either way.) */
+     * pass, so they read as open here either way.) Package M (2026-10-16) filed #176 expert-strikes open
+     * (class-feature-938 "an unarmed attack in the brawling group" vs Wanderer's Guide's "brawling weapons");
+     * no answers file speaks for it, so it stays open here. */
     // batch 039: familiar#archetype-reach
     // batch P02: enhanced-familiar#ability-budget
-    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161, 162, 163, 164, 168, 171, 172, 173]);
+    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161, 162, 163, 164, 168, 171, 172, 173, 176]);
     expect((after.ruled ?? []).length).toBe((BEFORE.ruled ?? []).length + ANSWERED.size);
 
     for (const n of ANSWERED) {

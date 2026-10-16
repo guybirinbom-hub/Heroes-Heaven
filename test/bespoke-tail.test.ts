@@ -198,7 +198,9 @@ describe('the last bare feats', () => {
 
   it('the three crit-spec feats each narrow to their own weapons', () => {
     for (const [id, key] of [
-      ['improvisational-warrior', 'groups'],
+      // package M round 2 premise: feat-1223 "When you use an improvised weapon, you apply the critical specialization of a brawling weapon to it."
+      // — improvised weapons, matched by name (as improvised-critical, feat-6443); `groups:['brawling']` reached brawling weapons instead.
+      ['improvisational-warrior', 'names'],
       ['viking-weapon-specialist', 'bases'],
       ['catfolk-weapon-rake', 'traits'],
     ] as const) {

@@ -3273,20 +3273,56 @@ function hasDeadlySimplicity(c: Character): boolean {
 /** The set of the character's deity's favored weapon item ids that are SIMPLE weapons (real items),
  *  which is what Deadly Simplicity's die-step applies to for wielded weapons. */
 function deitySimpleFavoredWeaponIds(c: Character, db: ContentDatabase): Set<string> {
-  const deity = c.details.deityId ? db.deities[c.details.deityId] : undefined;
-  const out = new Set<string>();
-  for (const w of deity?.favoredWeapons ?? []) {
-    const item = db.items[w];
-    if (item && item.itemType === 'weapon' && item.category === 'simple') out.add(w);
-  }
-  return out;
+  /* One resolution of the deity's favored weapons for every reader (`deityFavoredWeapons`): Deadly
+   * Simplicity keeps the simple weapon ITEMS, the doctrines' critical specialization keeps them all. */
+  return new Set(
+    deityFavoredWeapons(c, db).bases.filter((w) => {
+      const item = db.items[w];
+      return item?.itemType === 'weapon' && item.category === 'simple';
+    }),
+  );
 }
 
 /** True if the character's deity's favored weapon is an UNARMED attack (e.g. Irori's fist — a favored
  *  "weapon" id that isn't a real weapon item). Deadly Simplicity then applies to the Fist Strike. */
 function deityFavorsUnarmed(c: Character, db: ContentDatabase): boolean {
+  return deityFavoredWeapons(c, db).unarmed.length > 0;
+}
+
+/** "d8" → 8; undefined for a missing or unreadable die. */
+function dieFacesOf(die: string | undefined): number | undefined {
+  const n = Number.parseInt(String(die ?? '').replace(/^\d*d/, ''), 10);
+  return Number.isFinite(n) && n > 0 ? n : undefined;
+}
+
+/**
+ * The character's deity's favored weapons, split the way a Strike is matched against them: weapon ITEMS
+ * by base id, and the favored "weapons" that are no item — Irori's fist, a deity's jaws, claws or tail —
+ * as unarmed attacks, matched on an unarmed Strike's base or name (singular, so "claws" finds "Claw").
+ * Every favored weapon, not only the simple ones `deitySimpleFavoredWeaponIds` keeps for Deadly
+ * Simplicity: the doctrines' and the Avenger's critical specialization names the favored weapon itself.
+ */
+export interface FavoredWeapons {
+  bases: string[];
+  unarmed: string[];
+}
+export function deityFavoredWeapons(c: Character, db: ContentDatabase): FavoredWeapons {
   const deity = c.details.deityId ? db.deities[c.details.deityId] : undefined;
-  return (deity?.favoredWeapons ?? []).some((w) => !db.items[w]);
+  const out: FavoredWeapons = { bases: [], unarmed: [] };
+  for (const w of deity?.favoredWeapons ?? []) {
+    if (db.items[w]) out.bases.push(w);
+    else out.unarmed.push(String(w).toLowerCase().replace(/s$/, ''));
+  }
+  return out;
+}
+
+/** Whether this Strike is made with one of `f` — see `deityFavoredWeapons`. Nothing resolved = no. */
+function isFavoredWeaponStrike(strike: Strike, f: FavoredWeapons | undefined): boolean {
+  if (!f) return false;
+  if (strike.base && f.bases.includes(strike.base)) return true;
+  if (strike.category !== 'unarmed') return false;
+  const name = strike.name.toLowerCase();
+  return f.unarmed.some((u) => strike.base === u || name.includes(u));
 }
 
 /**
@@ -3332,6 +3368,11 @@ export interface Strike {
    *  category, not the proficiency it rolls at: a familiarity feat moves the second, never the first.
    *  Absent on a Strike that is neither a weapon nor an unarmed attack (a blast, a battle form). */
   category?: WeaponCategory;
+  /** Faces of the damage die this Strike ROLLS, after anything that changes the die (a rider, Deadly
+   *  Simplicity) — for the Ruffian's *"a simple weapon with a damage die greater than d8 or a martial or
+   *  advanced weapon with a damage die greater than d6 … Apply any abilities that alter the damage die
+   *  size first"* (critSpecWeapons.maxDieFaces). Absent on a Strike with no die. */
+  dieFaces?: number;
   /** Bonus damage from Weapon Specialization (already folded into `damage`). */
   specDamage?: number;
   // --- breakdown primitives (so the strike-detail popup can explain attack & damage; populated by
@@ -4192,6 +4233,12 @@ export interface CritSpecSource {
   weapons?: DefenseGrants['critSpecWeapons'];
   /** A per-target condition to print beside the effect — see DefenseGrants.critSpecCondition. */
   condition?: string;
+  /** With `weapons.deityFavored`: the character's deity's favored weapons, resolved once by
+   *  `critSpecSources` so the per-Strike test needs no database. Absent otherwise. */
+  favored?: FavoredWeapons;
+  /** The grant's only narrowing was the record's own pick, and it is unanswered: it matches no Strike
+   *  (its emptied list would otherwise read as no narrowing at all, i.e. every Strike). */
+  unanswered?: boolean;
 }
 
 /** Every crit-spec grant the character has, from class features (Weapon Mastery/Expertise, …),
@@ -4277,6 +4324,11 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
         return [parts[0]];
       }),
     };
+    /* …and closed for the WHOLE grant. A grant narrowed by nothing but its own unanswered pick (Signature
+     * Weapon, Samsaran Weapon Memory, Gird Champion) came out of the line above with an empty list and no
+     * other narrowing — and an unnarrowed entry matches every Strike in weaponMatches. Package M round 2:
+     * an unanswered Signature Weapon showed the effect on every weapon. Such a grant matches nothing. */
+    if (!critSpecNarrowed(src.weapons)) src.unanswered = true;
   }
   // Each held class's subclass (Dual Class: a Fighter/Cleric warpriest's doctrine too).
   for (const subclassId of heldClasses(c).map((s) => s.subclassId)) {
@@ -4304,7 +4356,23 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
     const cf = db.classFeatures[fid];
     if (cf?.critSpec) add(cf, cf.level ?? 1);
   }
+  /* *"…using your DEITY'S FAVORED WEAPON"* (doctrine-4, doctrine-5, doctrine-6's Lesser Creed, racket-10):
+   * the weapons come off the deity the character follows, read once and AFTER every pass above — the
+   * doctrines and the racket arrive through the subclass passes. An empty list stays empty and
+   * `weaponMatches` fails it closed: no deity is no favored weapon, never every weapon. */
+  if (out.some((s) => s.weapons?.deityFavored)) {
+    const favored = deityFavoredWeapons(c, db);
+    for (const src of out) if (src.weapons?.deityFavored) src.favored = favored;
+  }
   return out.filter((s) => s.level <= c.level);
+}
+
+/** Whether a crit-spec weapon block narrows at all — the same keys `weaponMatches` reads. An entry with
+ *  none of them matches every Strike, so a grant whose only narrowing resolved away must not keep it. */
+function critSpecNarrowed(w: DefenseGrants['critSpecWeapons']): boolean {
+  if (!w) return false;
+  if (w.groups?.length || w.traits?.length || w.bases?.length || w.names?.length || w.categories?.length) return true;
+  return !!(w.melee || w.designated || w.minRank || w.deityFavored || w.innovationType || (w.maxDieFaces && Object.keys(w.maxDieFaces).length));
 }
 
 /** Which armors the character has the armor specialization effect for, and any increase to its value.
@@ -4353,10 +4421,25 @@ export function armorSpecAccess(c: Character, db: ContentDatabase): ArmorSpecAcc
     }
     for (const id of a.items ?? []) out.items.add(id);
     /* *"…the critical specialization effect with your armor innovation"* — the suit the player marked,
-     * matched the way critSpecWeapons.designated matches a weapon. Nothing designated = nothing. */
+     * matched the way critSpecWeapons.designated matches a weapon. Nothing marked = the suit the build
+     * granted as the innovation (below), and with no such suit, nothing. */
     if (a.designated) {
-      for (const inv of c.inventory ?? []) {
-        if (!(inv.designations ?? []).includes(a.designated)) continue;
+      const marked = (c.inventory ?? []).filter((inv) => (inv.designations ?? []).includes(a.designated!));
+      /* Package M round 2 (d): the Innovation mark is a manual toggle (types.ts ClassFeature.defensesRequire)
+       * that nothing sets, so an armor-innovation inventor's own suit — the one Armor Innovation hands
+       * over (build.ts: the `inventorArmorStats` item, granted worn) — had no armor specialization at 11
+       * until the player found the toggle. With NOTHING marked, that granted suit IS the innovation: print
+       * says *"Your innovation is a cutting-edge suit of medium armor"* (innovation-1). Only for a grant
+       * scoped to an innovation type (`innovationType`, checked above against the character's own), and
+       * read here, never written: a player's mark on any ARMOR always wins, and the stored character is
+       * untouched. A mark on something that is not armor (a weapon, a gadget — InventoryTab offers the toggle
+       * everywhere) names no suit, so it does not take the granted suit's place: the grant is about "your
+       * armor innovation", and a marked weapon is not one. */
+      const markedArmor = marked.filter((inv) => db.items[inv.itemId]?.itemType === 'armor');
+      const suits = markedArmor.length || !a.innovationType
+        ? marked
+        : (c.inventory ?? []).filter((inv) => !!inv.grantedBy && !!c.inventor?.armorStats && inv.itemId === c.inventor.armorStats);
+      for (const inv of suits) {
         if (db.items[inv.itemId]?.itemType !== 'armor') continue;
         /* Two grants on one suit: either one's category list is enough, and an unnarrowed one wins. */
         const anyAlready = out.designated.has(inv.instanceId) && out.designated.get(inv.instanceId) === undefined;
@@ -4376,8 +4459,22 @@ export function armorSpecAccess(c: Character, db: ContentDatabase): ArmorSpecAcc
   return out;
 }
 
-function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons'], c?: Character): boolean {
+function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons'], c?: Character, favored?: FavoredWeapons): boolean {
   if (!w) return true;
+  /* *"If you have a WEAPON innovation, you gain access to the critical specialization effect with your
+   * innovation"* (class-feature-490) — a gate on the inventor's innovation TYPE, the twin of
+   * armorSpec.innovationType. The Innovation mark can be put on any item, so an armor- or
+   * construct-innovation inventor who marked a longsword must get nothing. No character = no inventor =
+   * fails closed. */
+  if (w.innovationType && c?.inventor?.innovationType !== w.innovationType) return false;
+  /* *"…using your deity's favored weapon"* — a gate, resolved per character by critSpecSources. Unresolved
+   * or empty fails closed: the doctrines must never widen to every weapon. */
+  if (w.deityFavored && !isFavoredWeaponStrike(strike, favored)) return false;
+  /* *"…a simple weapon with a damage die greater than d8 or a martial or advanced weapon with a damage die
+   * greater than d6"* (racket-7) — the die the Strike rolls, after any die change. A Strike of a capped
+   * category whose die is unknown fails closed. */
+  const cap = strike.category ? w.maxDieFaces?.[strike.category] : undefined;
+  if (cap != null && !(strike.dieFaces != null && strike.dieFaces <= cap)) return false;
   /* A rank the STRIKE must already reach — Archer Dedication's *"If you are at least an expert in the
    * bow you are using, you gain access to its critical specialization effect."* Tested against this
    * attack's own rank rather than a weapon-category rank, because the two part company the moment a
@@ -4421,7 +4518,7 @@ export function strikeShowsCritSpec(strike: Strike, sources: CritSpecSource[], c
   // A per-strike `unarmedTraits.critSpec` rider grants it to that one attack with no other source —
   // critSpecWeapons filters by group, trait or base weapon, never by one particular attack.
   if (strike.critSpec) return true;
-  return sources.some((s) => weaponMatches(strike, s.weapons, c));
+  return sources.some((s) => !s.unanswered && weaponMatches(strike, s.weapons, c, s.favored));
 }
 
 /**
@@ -4436,7 +4533,7 @@ export function strikeShowsCritSpec(strike: Strike, sources: CritSpecSource[], c
  */
 export function critSpecConditionFor(strike: Strike, sources: CritSpecSource[], c?: Character): string | undefined {
   if (strike.critSpec) return undefined;
-  const matching = sources.filter((s) => weaponMatches(strike, s.weapons, c));
+  const matching = sources.filter((s) => !s.unanswered && weaponMatches(strike, s.weapons, c, s.favored));
   if (!matching.length || matching.some((s) => !s.condition)) return undefined;
   return [...new Set(matching.map((s) => s.condition!))].join('; ');
 }
@@ -5039,6 +5136,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     group: w.group,
     base: w.id,
     category: w.category,
+    ...(dieFacesOf(effDie) ? { dieFaces: dieFacesOf(effDie) } : {}),
     specDamage: specDamage || undefined,
     rank,
     atkAbility,
@@ -5377,6 +5475,7 @@ function deriveUnarmedStrike(
     // A stance's granted WEAPON Strike (Haft Striker's simple haft) is that category; everything else
     // derived here is an unarmed attack.
     category: p.weaponCategory ?? 'unarmed',
+    ...(dieFacesOf(die) ? { dieFaces: dieFacesOf(die) } : {}),
     specDamage: specDamage || undefined,
     rank,
     atkAbility,

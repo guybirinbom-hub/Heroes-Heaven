@@ -134,6 +134,7 @@ export function ChoiceDetails({
   bucket,
   id,
   character,
+  classId,
 }: {
   /** The option's name — the popup title. */
   name?: string;
@@ -155,6 +156,13 @@ export function ChoiceDetails({
    * it always was, byte for byte.
    */
   character?: Character | null;
+  /**
+   * Package M round 2 (Dual Class): the class this row belongs to — the builder's level page passes each
+   * "You gain automatically" row's class (levelRowClasses). The card is scoped to it (scopeOfCharacter: the
+   * second class with its own subclass), so a second-class row's card reads that class's paragraph of a
+   * shared feature. Absent (or the first class): the scope it always had.
+   */
+  classId?: string | null;
 }) {
   const [open, setOpen] = useState(false);
   const hasFlavor = !!flavor && flavor.trim().length > 0;
@@ -179,7 +187,7 @@ export function ChoiceDetails({
         // Card step 15: a row that names its record and is shown for a build opens the 'mine' card.
         <ChoiceDetailsModal
           root={{ title: name ?? 'Details', description: flavor!, descRefs, ...(bucket && id ? { key: bucket, slug: id } : {}) }}
-          mine={bucket && id && character ? { scope: scopeOfCharacter(character) } : undefined}
+          mine={bucket && id && character ? { scope: scopeOfCharacter(character, classId) } : undefined}
           onClose={() => setOpen(false)}
         />
       )}
@@ -270,6 +278,46 @@ export function holdOnTitleLookup(ownPage: AstNode | undefined, bucket: string, 
   const titleSlug = astSlug(title);
   const titleBucket = bucketOf(titleSlug);
   return !!titleBucket && !(titleBucket === bucket && titleSlug === id);
+}
+
+/**
+ * Package M round 2 (2026-10-16), Dual Class on the builder's level page: the class each "You gain
+ * automatically" row belongs to, one entry per row (null where no class is held). build.ts levelGrants lists
+ * the first class's rows, then (Dual Class) the second class's, then a class archetype's substitutes — and
+ * drops which class each came from, so the page read every row for the first class: a thaumaturge /
+ * swashbuckler's level-5 Weapon Expertise rows both showed the thaumaturge's text. Read back here, in that
+ * order:
+ *  - a record the first class lists at this level (its subclass variant included; what its subclass or its
+ *    class archetype removes left out) is the first class's — the first time it appears;
+ *  - a record the second class lists at this level is the second class's (so a record both list, which
+ *    appears twice, is the first class's, then the second's);
+ *  - a substitute a class archetype adds at this level is the class it substitutes into;
+ *  - anything else is the first class's, as before. A single-class build: every row is its class.
+ */
+export function levelRowClasses(build: BuildState, content: ContentDatabase, level: number, rows: readonly { id: string }[]): (string | null)[] {
+  const [first, second] = heldClasses(build);
+  if (!second?.classId) return rows.map(() => first?.classId ?? null);
+  const arch = resolveClassArchetype(build, content);
+  type Slot = { classId: string | null; subclassId: string | null };
+  const lists = (slot: Slot, id: string): boolean => {
+    const cls = slot.classId ? content.classes[slot.classId] : undefined;
+    if (!cls) return false;
+    const removed = new Set([
+      ...(cls.subclass?.options.find((o) => o.id === slot.subclassId)?.suppressedFeatures ?? []),
+      ...arch.suppressedFor(slot.classId),
+    ]);
+    return cls.features.some((f) => f.level === level && !removed.has(f.featureId) &&
+      (f.featureId === id || (!!slot.subclassId && `${f.featureId}-${slot.subclassId}` === id)));
+  };
+  const firstSeen = new Set<string>();
+  return rows.map((r) => {
+    if (lists(first, r.id) && !firstSeen.has(r.id)) {
+      firstSeen.add(r.id);
+      return first.classId;
+    }
+    if (lists(second, r.id)) return second.classId;
+    return arch.addedFrom.find((a) => a.level === level && a.featureId === r.id)?.classId ?? first.classId;
+  });
 }
 
 export const ABILITY_LABEL: Record<AbilityId, string> = {

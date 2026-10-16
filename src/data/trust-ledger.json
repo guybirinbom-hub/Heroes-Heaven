@@ -1,5 +1,5 @@
 {
- "coreSha": "134e371cb182ba44573881713629008f18d50eadad417a13be2be5ed09425e1b",
+ "coreSha": "9689eb4eaaebde22fe8d72b7860a0f788387b38be7403416c70d9d4b2be227e1",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -4980,7 +4980,8 @@
    "senses"
   ],
   "feats/hunters-fangs": [
-   "critSpec"
+   "critSpec",
+   "critSpecWeapons"
   ],
   "feats/hunters-luck": [
    "focusSpells"
@@ -5003,7 +5004,8 @@
    "critSpecWeapons"
   ],
   "feats/improvised-critical": [
-   "critSpec"
+   "critSpec",
+   "critSpecWeapons"
   ],
   "feats/in-plain-sight": [
    "skillSubstitutions"
@@ -5642,7 +5644,8 @@
    "grantsClassFeatures"
   ],
   "feats/signature-weapon": [
-   "critSpec"
+   "critSpec",
+   "critSpecWeapons"
   ],
   "feats/sink-and-swim": [
    "grantsActions",
@@ -5917,7 +5920,8 @@
    "enhancement"
   ],
   "feats/undersea-privateer-dedication": [
-   "critSpec"
+   "critSpec",
+   "critSpecWeapons"
   ],
   "feats/unimpeded-step": [
    "recordMarks"

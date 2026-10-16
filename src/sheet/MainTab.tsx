@@ -29,7 +29,7 @@ import { traitDesc } from '../rules/glossary';
 import { assuranceNote, assuranceResult, markNote, markTooltip, markedActionCost, nameOfRecord, recordMarkersFor, sheetLoreKeys, spellNotesFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { SKILL_ACTIONS, rankAtLeast } from '../rules/skillActions';
 import { RecordCard } from './RecordCard';
-import { scopeOfCharacter } from './cardScope';
+import { heldFeatureClassOf, scopeOfCharacter } from './cardScope';
 import { astSlug, useAstNode } from './useAst';
 import { OURS_KINDS, type OursLine } from './cardModel';
 import { atLevelLines } from './cardAtLevel';
@@ -159,8 +159,16 @@ export function PinnedDescCard({ pin, content, character, onClose, onPlay, pinne
   const action = pin.mode === 'mine' && character && node.key === 'actions' && node.slug ? pinnedActionDetail(content, node.slug) : undefined;
   if (action && character)
     return <ActionDetailModal detail={action} character={character} content={content} onClose={onClose} onPlay={onPlay} pinned={pinned ?? NO_PIN_KEYS} />;
+  /* Package M round 2 (docs/card-design.md section 7, "Pins keep the class"): a class feature's pin reopens
+     read for the class it was pinned under (PinnedDesc.classId — FeatDetail's Dual Class row, a mine card's
+     scope, a link followed from a class page). 'mine': the scope of that class (scopeOfCharacter: the second
+     class with its own subclass; a class the character no longer holds gives the scope it always gave); a
+     pin that stores no class is read for the class that alone holds the record (cardScope heldFeatureClassOf:
+     the second class's feature under Dual Class; otherwise undefined — exactly the scope it always had).
+     'browse': the node carries its stored class and RecordCard reads the first node for it (a pin with none
+     opens exactly as before). The stored pin is never rewritten. */
   if (pin.mode === 'mine')
-    return <RecordCard node={node} mode="mine" chrome="popup" scope={scopeOfCharacter(character)} printed={[]} ours={box} onExit={onClose} />;
+    return <RecordCard node={node} mode="mine" chrome="popup" scope={scopeOfCharacter(character, pin.classId ?? heldFeatureClassOf(character, content, node.key, node.slug))} printed={[]} ours={box} onExit={onClose} />;
   return <RecordCard node={node} mode="browse" chrome="popup" ours={box} onExit={onClose} />;
 }
 
@@ -532,7 +540,8 @@ function ActionCard({ detail, onClose, character, content, onPlay, pinned }: Act
       record={rec}
       mode="mine"
       chrome="popup"
-      scope={scopeOfCharacter(character)}
+      // Package M round 2: a class-feature action of the SECOND class (Dual Class) is read for that class.
+      scope={scopeOfCharacter(character, heldFeatureClassOf(character, content, rec.bucket, rec.id))}
       printed={[]}
       headerActions={headerActions}
       controls={chips}
@@ -1092,14 +1101,17 @@ export function MainTab({
             {s.group && <span className="strike-group">{s.group.charAt(0).toUpperCase() + s.group.slice(1)}</span>}
           </div>
         )}
-        {critSpec(s.group) && strikeShowsCritSpec(s, critSources) && (
+        {/* Package M round 2: the CHARACTER goes in too — a grant narrowed to a designated item (the
+            inventor's weapon innovation, the thaumaturge's weapon implement, Rod of Rule's bonded weapon,
+            critSpecWeapons.designated) reads the item's designation off it, and matched nothing without. */}
+        {critSpec(s.group) && strikeShowsCritSpec(s, critSources, character) && (
           <div className="strike-crit">
             <span className="sc-label">Crit</span>
             <CritSpecText text={critSpec(s.group)!} content={content} />
             {/* …and the per-target clause the grant is limited by, when every source carries one.
                 Ranger Weapon Expertise gives it only "when attacking your hunted prey"; without this
                 the card shows the effect unconditionally and a ranger reads it as always-on. */}
-            {critSpecConditionFor(s, critSources) ? <span className="sc-when"> — {critSpecConditionFor(s, critSources)}</span> : null}
+            {critSpecConditionFor(s, critSources, character) ? <span className="sc-when"> — {critSpecConditionFor(s, critSources, character)}</span> : null}
           </div>
         )}
       </div>

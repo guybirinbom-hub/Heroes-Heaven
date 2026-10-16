@@ -183,6 +183,10 @@ export function featPinNode(entry: FeatEntry): FeatPinNode {
     // draws them in the reopened card's box. The description keeps pinDescriptionOf's words for the
     // no-page lane and for a device still on an older version (additive synced shape).
     ...(entry.ours?.length ? { ours: entry.ours } : {}),
+    // Package M round 2 (docs/card-design.md section 7, "Pins keep the class"): a class-feature row's class
+    // (FeatsTab's class loop), so a Dual Class character's second-class row reopens from the Pinned list
+    // read for that class (MainTab PinnedDescCard → scopeOfCharacter(character, classId)), not the first.
+    ...(entry.classId ? { classId: entry.classId } : {}),
   };
 }
 
@@ -227,8 +231,9 @@ export function pinDescriptionOf(entry: FeatEntry): string {
   return [entry.description, ...words.map((w) => w.replace(/</g, '&lt;'))].filter(Boolean).join('\n\n');
 }
 
-/** The node FeatDetail's star hands to the pin: a description node plus the row's ours lines. */
-export type FeatPinNode = DescNode & { ours?: OursLine[]; mode?: 'browse' | 'mine' | 'gm' };
+/** The node FeatDetail's star hands to the pin: a description node plus the row's ours lines (and, for a
+ *  class-feature row, the class it belongs to — package M round 2). */
+export type FeatPinNode = DescNode & { ours?: OursLine[]; mode?: 'browse' | 'mine' | 'gm'; classId?: string };
 
 /** The key this popup's pin carried before card step 7a (a heritage row was keyed 'classFeatures'). */
 function featLegacyPinKey(entry: FeatEntry): string {

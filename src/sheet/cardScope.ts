@@ -32,8 +32,8 @@
  */
 import type { AstNode } from './astStore';
 import type { CardScope } from './cardModel';
-import type { Character } from '../rules/types';
-import { heldClasses, holdsSubclass } from '../rules/derive';
+import type { Character, ContentDatabase } from '../rules/types';
+import { classFeatureIdsOwned, heldClasses, holdsSubclass } from '../rules/derive';
 import LEVEL_FOLDS_JSON from '../../scripts/data/level-folds.json';
 // Read here, not through astVisibility.ts pageSliceOf: astVisibility imports canonLabel from this module.
 import PAGE_SLICES_JSON from '../data/page-slices.json';
@@ -694,13 +694,43 @@ export function scopeOfCharacter(ch: Character | null | undefined, classId?: str
  * wizard's paragraph) → a link there is still read for the wizard, not the viewer's own class. With no class
  * page on the trail, the character's class (`scopeClassId`, the mine card's scope); with neither, none (the
  * page as it ships). A class page's slug is its class id.
+ *
+ * Package M round 2: a node that carries the class it is read for (`classId` — a pin reopened from the
+ * Pinned list keeps the class it was read for, PinnedDesc.classId) counts as that class's page here, so the
+ * links on a reopened Perception Expertise are still read for the cleric it was pinned from.
  */
-export function linkClassOf(trail: readonly { key?: string; slug?: string }[], scopeClassId: string | undefined): string | undefined {
+export function linkClassOf(trail: readonly { key?: string; slug?: string; classId?: string }[], scopeClassId: string | undefined): string | undefined {
   for (let i = trail.length - 1; i >= 0; i--) {
     const n = trail[i];
     if (n?.key === 'classes' && n.slug) return n.slug;
+    if (n?.classId) return n.classId;
   }
   return scopeClassId;
+}
+
+/**
+ * Package M round 2 (2026-10-16), Dual Class on the surfaces that know only the RECORD — a stat breakdown's
+ * "Full text", the action card, a reopened pin that stores no class: the held class a class feature is read
+ * for. The SECOND class when only it holds the record (its table up to the character's level, its subclass
+ * and that subclass's grants — derive.ts classFeatureIdsOwned, the read the sheet's owned set makes), else
+ * undefined: scopeOfCharacter's first class, as before. A record both classes hold (a wizard/thaumaturge's
+ * shared Weapon Expertise) cannot be told apart from the record alone and stays the first class's; a surface
+ * that knows the row's class passes that instead (FeatsTab's FeatEntry.classId, the builder's level rows,
+ * a pin's stored class). Anything that is not a class feature, a single-class character, no character: undefined.
+ */
+export function heldFeatureClassOf(
+  ch: Character | null | undefined,
+  content: ContentDatabase | null | undefined,
+  bucket: string | undefined,
+  id: string | undefined,
+): string | undefined {
+  if (!ch || !content || bucket !== 'classFeatures' || !id) return undefined;
+  const [first, second] = heldClasses(ch);
+  if (!second?.classId || second.classId === first?.classId) return undefined;
+  const level = Number(ch.level) || 0;
+  const holds = (s: { classId: string | null; subclassId: string | null }) =>
+    classFeatureIdsOwned({ classId: s.classId, subclassId: s.subclassId, level }, content).has(id);
+  return holds(second) && !holds(first) ? second.classId : undefined;
 }
 
 /* ------------------------------------------------------------------------------------------------ */

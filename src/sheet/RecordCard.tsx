@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import type { ContentDatabase, DescRef } from '../rules/types';
 import { useContent } from './ContentContext';
-import { usePinDesc, type PinNode } from './PinContext';
+import { nodeClassOf, usePinDesc, type PinNode } from './PinContext';
 import { lookupRef, type DescNode } from './descref';
 import { RichText } from './RichText';
 import { useBackHandler, useEscapeClose } from './useEscapeClose';
@@ -233,16 +233,6 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   const pin = usePinDesc();
   const [stack, setStack] = useState<DescNode[]>(() => [node ?? nodeOfRecord(record, content)]);
   const cur = stack[stack.length - 1];
-  /* Polish round (docs/card-design.md section 6: "A pin made from the sheet reopens as mine at the
-     character's current level"; section 7: "new pins store bucket + id + mode"): the built-in star of the
-     record a 'mine' card opened — the action card, StatDetailModal's full text, any mine card without a
-     star of its own — hands over its {key, slug, title} with mode 'mine', as FeatDetail / ItemDetail /
-     StrikeDetailModal do, so MainTab's PinnedDescCard reopens it as the character's own card. A page
-     opened from a link inside the card is a browse card (section 6) and pins as it always did; a browse
-     card's star stores no mode, so a pin made from search keeps reopening as browse. The mode is never
-     part of the identity (play.ts samePin): has() reads the same pin either way. */
-  const pinNode: PinNode = mode === 'mine' && stack.length === 1 ? { ...cur, mode: 'mine' } : cur;
-  const pinned = pin?.has(pinNode) ?? false;
   // explicit slug (from a resolved cross-ref) or best-effort from the title, so any titled node can
   // resolve its ast; a miss simply falls back to the RichText path.
   const curSlug = cur.slug ?? astSlug(cur.title);
@@ -274,9 +264,36 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
      mastery" its Martial Weapon Mastery — not the shared record whose page is the Thaumaturge's. The class
      is the nearest class page on the stack up to the link, else the character's (cardScope.ts
      linkClassOf). Any other link opens what it names, as before. */
-  const trail = (upto: number) => stack.slice(0, upto + 1).map((n) => ({ key: n.key, slug: n.slug ?? astSlug(n.title) }));
+  const trail = (upto: number) => stack.slice(0, upto + 1).map((n) => ({ key: n.key, slug: n.slug ?? astSlug(n.title), classId: nodeClassOf(n) }));
   const ownId = (bucket: string | undefined, slug: string) =>
     bucket === 'classFeatures' && content ? classOwnFeatureId(slug, linkClassOf(trail(stack.length - 1), scope?.classId), content) : slug;
+  const mine = mode === 'mine' && stack.length === 1;
+  /* Card step 12 / package M: the class the open node is read for — the mine card's scope (else, with no
+     character, the class its node carries); a page opened from a link: the nearest class page on the stack
+     below it, else the character's (linkClassOf); the stack's first node of a browse card: the class it
+     carries (package M round 2 — a pin reopened from the Pinned list keeps the class it was read for,
+     PinnedDesc.classId), else none, as before (search). */
+  const viewerClass = mine
+    ? scope?.classId ?? nodeClassOf(cur)
+    : stack.length > 1 ? linkClassOf(trail(stack.length - 2), scope?.classId) : nodeClassOf(cur);
+  /* Polish round (docs/card-design.md section 6: "A pin made from the sheet reopens as mine at the
+     character's current level"; section 7: "new pins store bucket + id + mode"): the built-in star of the
+     record a 'mine' card opened — the action card, StatDetailModal's full text, any mine card without a
+     star of its own — hands over its {key, slug, title} with mode 'mine', as FeatDetail / ItemDetail /
+     StrikeDetailModal do, so MainTab's PinnedDescCard reopens it as the character's own card. A page
+     opened from a link inside the card is a browse card (section 6) and pins as it always did; a browse
+     card's star stores no mode, so a pin made from search keeps reopening as browse. The mode is never
+     part of the identity (play.ts samePin): has() reads the same pin either way.
+     Package M round 2 (section 7, "Pins keep the class"): a CLASS FEATURE's star also stores the class it
+     is read for (`classId`) — a linked Perception Expertise starred under the Cleric page, a Dual Class
+     second-class row — so the reopened card reads that class's paragraph, not the shared record's page. Not
+     part of the identity either; a node read for no class (search) stores none and reopens as before. */
+  const pinClass = cur.key === 'classFeatures' ? viewerClass : undefined;
+  // With nothing to add, the star hands over the node itself, as it always did (test/card-browse.test.tsx).
+  const pinNode: PinNode = mine || pinClass
+    ? { ...cur, ...(mine ? { mode: 'mine' as const } : {}), ...(pinClass ? { classId: pinClass } : {}) }
+    : cur;
+  const pinned = pin?.has(pinNode) ?? false;
   // Open a linked term: from an ast cross-link (resolved "bucket:slug") …
   const openRef = (bucket: string, slug: string) => {
     const id = ownId(bucket, slug);
@@ -351,8 +368,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
      draws the old text through DescBody's own branches and says so. After the body, BOTH lanes keep
      section 2 rule 4's order: the ours box (4.5), then the footer (4.6) — our dimmed Source line (only
      where the page prints none), the RemasteredLine, the desk #152 empty note, the no-page /
-     could-not-load line — and the caller's footer last. */
-  const mine = mode === 'mine' && stack.length === 1;
+     could-not-load line — and the caller's footer last. (`mine` is computed above, beside the star.) */
   /* Card step 13a (section 3; owner ruling Q1 = A): a pointer row ("listed in your cause") shows the
      matching section of the character's subclass page — loaded here, before any branch returns. */
   const ptr = mine ? pointerOf(astBucket ?? cur.key, curSlug, scope) : null;
@@ -372,9 +388,9 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
      class page on the stack below it (a class card, or a class page opened from search or a link, however
      many links deep), else the character's (the mine card's scope); with neither (search, a description's
      link) it stays the record's own page, as before. When that class's paragraph applies, the node draws
-     this no-page lane. */
-  const viewerClass = mine ? scope?.classId : stack.length > 1 ? linkClassOf(trail(stack.length - 2), scope?.classId) : undefined;
-  const shared = (mine || stack.length > 1) && !astLoading ? sharedFeatureView(cur, curSlug, astNode, viewerClass, content) : null;
+     this no-page lane. Package M round 2: and the first node of a browse card that carries its class (a
+     reopened pin, `viewerClass` above). */
+  const shared = (mine || stack.length > 1 || !!nodeClassOf(cur)) && !astLoading ? sharedFeatureView(cur, curSlug, astNode, viewerClass, content) : null;
   // Our Source line, read off the record's fields — marked ours on BOTH lanes: it is not the page's words.
   // Package M: under a shared feature's class paragraph, the class's own book (sharedFeatureBook), never the
   // shared record's (the swashbuckler's Player Core 2 paragraph read "Dark Archive", the Thaumaturge's).

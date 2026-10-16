@@ -1,0 +1,86 @@
+{
+ "_": "scripts/critspec-narrowing-check.mjs (npm run verify). Every record that turns critical specialization on (critSpec, at any depth) must say WHICH Strikes it reaches — a critSpecWeapons narrowing, a mode or feat gate, or a rider's match — unless print really gives it to every Strike. Those records are listed under `unnarrowed`, each quoting the printed sentence and its AoN doc id; the check finds the quote in that document of the Archives mirror. `rankGate` holds the records whose Foundry CriticalSpecialization rule carried an item:proficiency:rank predicate (the gate the importer dropped, package M), measured from the Foundry packs into `foundryRankRecords`; each must carry critSpecWeapons.minRank or an `allow` entry saying why not. Package M round 2, 2026-10-16. An entry that no longer applies fails until it is removed.",
+ "unnarrowed": [
+  {
+   "record": "classFeatures/peerless-under-heaven",
+   "aonId": "epithet-10",
+   "quote": "When you critically succeed on a Strike, divine skill at arms guides your weapon, granting you the critical specialization effect for the weapon group.",
+   "why": "Any Strike — weapon or unarmed — gets the effect of its own group. The second sentence (the grievous rune's additional effect when access was already there) is not modelled."
+  },
+  {
+   "record": "feats/secrets-of-steel",
+   "aonId": "feat-7984",
+   "quote": "When you use Bespell Strikes, you gain access to the critical specialization effect of the chosen weapon or unarmed attacks used with Bespell Strikes.",
+   "why": "Any weapon or unarmed attack; what narrows it is the Strike Bespell Strikes modifies, a per-use state the sheet does not track, carried as critSpecCondition (\"on a Strike modified by Bespell Strikes\")."
+  }
+ ],
+ "rankGate": {
+  "foundryRankRecords": [
+   "classFeatures/bard-weapon-expertise",
+   "classFeatures/fighter-weapon-mastery",
+   "classFeatures/military-expertise",
+   "classFeatures/weapon-expertise",
+   "classFeatures/weapon-expertise-swashbuckler",
+   "feats/archer-dedication",
+   "feats/aristocratic-arms",
+   "feats/brawling-focus",
+   "feats/crossbow-infiltrator-dedication",
+   "feats/mauler-dedication"
+  ],
+  "allow": [
+   {
+    "record": "classFeatures/bard-weapon-expertise",
+    "aonId": "class-feature-638",
+    "quote": "When you critically succeed at an attack roll using one of these weapons or an unarmed attack while one of your compositions is active, you apply the critical specialization effect for that weapon or unarmed attack.",
+    "why": "\"These weapons\" are the ones the same feature's first sentence raises to expert (\"Your proficiency rank for martial weapons, simple weapons, and unarmed attacks increases to expert\"). The record's categories gate (simple, martial, unarmed) is that set, and the bard holds every member of it at expert from the level the feature is gained, so Foundry's rank-2 predicate never gives a different answer."
+   },
+   {
+    "record": "feats/brawling-focus",
+    "aonId": "feat-438",
+    "quote": "You gain access to the critical specialization effects of unarmed strikes in the brawling group and weapons in the brawling group.",
+    "why": "Foundry's rank predicate sits only on the second sentence's branch (feat:monastic-weaponry and rank >= trained: \"If you have Monastic Weaponry, you also gain the critical specialization effects of all monk weapons in which you are trained\"), which the record does not model; the brawling-group grant itself has no rank in print."
+   }
+  ]
+ },
+ "featureGate": {
+  "_": "Rule 3 (package M round 2 review). Records whose Foundry CriticalSpecialization predicate carries a feature:, class: or feat: atom (another record the character must hold), measured from the packs into foundryFeatureRecords. Each that turns crit spec on needs an entry: the atoms (predicate), the record field that carries the gate (field, and value when it must equal one), and a quote + doc id + why. classFeatures/weapon-expertise (class:swashbuckler), feats/monastic-weaponry (feature:expert-strikes), feats/bestial-manifestation (feat:bestial-brutality) and items/sun-sling (feat:suns-fury) turn none on and need none.",
+  "foundryFeatureRecords": [
+   "classFeatures/initiate-benefit-weapon",
+   "classFeatures/inventor-weapon-expertise",
+   "classFeatures/weapon-expertise",
+   "feats/bestial-manifestation",
+   "feats/brawling-focus",
+   "feats/monastic-weaponry",
+   "items/sun-sling"
+  ],
+  "entries": [
+   {
+    "record": "classFeatures/inventor-weapon-expertise",
+    "predicate": ["feature:weapon-innovation"],
+    "field": "critSpecWeapons.innovationType",
+    "value": "weapon",
+    "aonId": "class-feature-490",
+    "quote": "If you have a weapon innovation, you gain access to the critical specialization effect with your innovation.",
+    "why": "\"If you have a weapon innovation\" is the inventor's innovation TYPE, carried as critSpecWeapons.innovationType and tested in derive.ts weaponMatches against the character's own (c.inventor.innovationType). The Innovation mark can be put on any item, so without it an armor- or construct-innovation inventor who marked a longsword got its critical specialization."
+   },
+   {
+    "record": "classFeatures/initiate-benefit-weapon",
+    "predicate": ["feature:thaumaturge-weapon-expertise"],
+    "field": "critSpecLevel",
+    "value": 5,
+    "aonId": "implement-9",
+    "quote": "At 5th level, when you gain thaumaturgic weapon expertise, your instinctive knowledge of your weapon implement also grants you the weapon's critical specialization effect.",
+    "why": "critSpecLevel 5 stands in for \"when you gain thaumaturgic weapon expertise\", and critSpecWeapons.designated 'weapon-implement' keeps it to the marked implement. Two routes reach the record. (1) The thaumaturge's own implement pick (build.ts classChoices, initiate-benefit-<implement>): the thaumaturge table grants Weapon Expertise at 5, the same level, so the level gate is the feature gate. (2) Implement Initiate (derivedGrant from Thaumaturge Dedication): that owner never gains the feature, and the weapon-implement mark the grant needs is offered only to a character holding the thaumaturge class (InventoryTab designationKinds), so it reaches no Strike for them. Both pinned by test/package-m-data2-critspec.test.ts. A weapon-implement mark stored on a non-thaumaturge would still light it (reported)."
+   },
+   {
+    "record": "feats/brawling-focus",
+    "predicate": ["feat:monastic-weaponry"],
+    "field": "critSpecWeapons.groups",
+    "value": ["brawling"],
+    "aonId": "feat-438",
+    "quote": "If you have Monastic Weaponry, you also gain the critical specialization effects of all monk weapons in which you are trained.",
+    "why": "The feat: atom is not a gate on the grant: Foundry puts it on the OR branch that ADDS monk weapons for a character with Monastic Weaponry, beside item:group:brawling. The record carries only the first branch (the brawling group, the field named here), so it is narrower than print for a Monastic Weaponry character, never broader; the monk-weapon branch is not modelled (reported, like the rankGate entry for the same record)."
+   }
+  ]
+ }
+}

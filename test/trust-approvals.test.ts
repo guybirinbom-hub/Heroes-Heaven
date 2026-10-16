@@ -191,7 +191,7 @@ describe('trust-approvals.json — completeness', () => {
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
   // batch P02: enhanced-familiar#ability-budget
-  it('the desk roster is every number in work/owner-questions.json — 175: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29, the one ruled in chat on 2026-09-30, the three filed open on 2026-10-15 and the two package K filed and ruled the same day — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 176: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29, the one ruled in chat on 2026-09-30, the three filed open on 2026-10-15, the two package K filed and ruled the same day, and the one package M filed open on 2026-10-16 — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
     // reprint lane 2026-09-25: #165 reprint-cross-kind-sub-pages, #166 book-names-different-book-folds, #167 reprint-grade-to-grade
     // batch P02: enhanced-familiar#ability-budget — #168 enhanced-familiar#fixed-budget-grants (open, so `unruled`)
@@ -200,7 +200,8 @@ describe('trust-approvals.json — completeness', () => {
     // 2026-10-15: desk #171 expanded-necromancy#archetype-ninth-rank and #172 cantrip-expansion#dual-class-pool (open, so `unruled`)
     // 2026-10-15: desk #173 adaptive-adept#repertoire-place (open, so `unruled`)
     // package K 2026-10-15: desk #174 adapted-cantrip#repertoire-cantrip-count and #175 basic-cleric-spellcasting#deity-spells (ruled, `approvals`)
-    expect(deskNumbers.length).toBe(175);
+    // package M 2026-10-16: desk #176 expert-strikes (open, so `unruled`): class-feature-938 "an unarmed attack in the brawling group" vs Wanderer's Guide's "brawling weapons"
+    expect(deskNumbers.length).toBe(176);
   });
 
   it('every desk number has exactly one disposition', () => {

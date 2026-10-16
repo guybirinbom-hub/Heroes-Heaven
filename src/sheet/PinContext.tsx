@@ -4,9 +4,17 @@ import type { DescNode } from './descref';
 
 /**
  * The node a star hands to the pin: a description node, plus (card step 19) the mode it was pinned from
- * and the popup's ours lines — both stored on the pin by play.ts pinOf; neither is part of its identity.
+ * and the popup's ours lines, and (package M round 2) the class a class feature was read for — all stored on
+ * the pin by play.ts pinOf; none is part of its identity.
  */
-export type PinNode = DescNode & Pick<PinnedDesc, 'mode' | 'ours'>;
+export type PinNode = DescNode & Pick<PinnedDesc, 'mode' | 'ours' | 'classId'>;
+
+/** The class a card node is read for, when it carries one: a pin reopened from the Pinned list keeps the
+ *  class it was read for (PinnedDesc.classId). Any other node carries none. */
+export function nodeClassOf(n: DescNode | undefined): string | undefined {
+  const c = (n as PinNode | undefined)?.classId;
+  return typeof c === 'string' && c ? c : undefined;
+}
 
 /**
  * Lets any DescriptionModal — wherever it is opened from — offer a "favorite" star that pins the

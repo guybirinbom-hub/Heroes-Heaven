@@ -2389,7 +2389,9 @@ export function pinId(n: { key?: string; title: string; slug?: string }): string
 /**
  * Do two pin nodes name the same record? By {bucket, id} when BOTH know their id; otherwise by the legacy
  * `key:title`, so a pin saved before step 19 (no id) is found — and unpinned — by the new star of the same
- * record, and a new pin by a node that knows only its title. One pin per record. The mode is never compared.
+ * record, and a new pin by a node that knows only its title. One pin per record. The mode is never compared,
+ * nor the class it was read for (package M round 2, `classId`): a shared feature starred from two classes'
+ * pages is one pin.
  */
 export function samePin(a: { key?: string; title: string; slug?: string }, b: { key?: string; title: string; slug?: string }): boolean {
   if (a.slug && b.slug) return (a.key ?? '') === (b.key ?? '') && a.slug === b.slug;
@@ -2402,8 +2404,9 @@ const PIN_OURS_KINDS = new Set(['choice', 'mark', 'note']);
 /**
  * The object a pin STORES for a node. Every copy site that builds a pin from a node goes through this, so a
  * field added to the pin is never dropped by a field-by-field copy (the bug class card step 19 closes).
- * Additive only: the pre-step-19 fields keep their shape (synced data), and slug / mode / ours are present
- * only when the node carries them.
+ * Additive only: the pre-step-19 fields keep their shape (synced data), and slug / mode / ours / classId are
+ * present only when the node carries them. Package M round 2: `classId`, the class a class feature was read
+ * for (a link followed from a class page, a Dual Class row), so the pin reopens read for that class.
  */
 export function pinOf(node: PinnedDesc): PinnedDesc {
   const ours = (node.ours ?? []).filter((l) => PIN_OURS_KINDS.has(l.kind)).map((l) => ({ ...l, ...(l.from ? { from: { ...l.from } } : {}) }));
@@ -2415,6 +2418,7 @@ export function pinOf(node: PinnedDesc): PinnedDesc {
     ...(node.slug ? { slug: node.slug } : {}),
     ...(node.mode ? { mode: node.mode } : {}),
     ...(ours.length ? { ours } : {}),
+    ...(typeof node.classId === 'string' && node.classId ? { classId: node.classId } : {}),
   };
 }
 
