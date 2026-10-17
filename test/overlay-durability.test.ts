@@ -2,13 +2,12 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { content } from './_content';
 import { backgroundGrantedFeats } from '../src/rules/build';
-import { loadBaseline, recordReader, syncOverlayValue } from '../scripts/lib/embedded-descriptions.mjs';
+import { loadBaseline } from '../scripts/lib/embedded-descriptions.mjs';
+import { loadCreated, unbakedRows } from '../scripts/lib/overlay-replay.mjs';
 
 const c = content();
 type Patch = { category: string; id: string; field?: string; value: unknown; path?: string[]; create?: boolean; delete?: boolean };
 const overlay = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as Patch[];
-/* content() has merged core-descriptions.json back onto the records, so the reader needs no split file. */
-const optionRecord = recordReader(c);
 const embeddedKeep = new Set(loadBaseline('.').keys());
 
 /**
@@ -65,43 +64,28 @@ describe('mechanical data survives a re-import', () => {
    * the skill-feat half moved to its own record. Only the pathless row of such a pair is excused, and
    * only for the exact field the later row overwrites; the later row itself is still checked.
    */
-  /* Indexed in one pass rather than scanned per row: the overlay is ~14k rows and the pairwise form
-   * timed the suite out. Key is "<category>/<id>/<amended field>" -> the LAST index that amends it. */
-  const lastAmend = new Map<string, number>();
-  overlay.forEach((q, j) => {
-    if (q.path?.length === 1) lastAmend.set(`${q.category}/${q.id}/${q.path[0]}`, j);
-  });
-  const amendedLater = (p: { category: string; id: string; field?: string; path?: string[] }, i: number) =>
-    !p.path?.length && (lastAmend.get(`${p.category}/${p.id}/${p.field}`) ?? -1) > i;
-
+  /*
+   * ONE RULE FOR "MATCHES" (package C, 2026-10-17): scripts/lib/overlay-replay.mjs `unbakedRows`, which
+   * scripts/regen-durability-check.mjs check 9, the replay's loss check and the batch post-check all use.
+   * This test kept its own copy until then (the length-1 amend excuse above and the option sync only), so
+   * once the replay learned the chain's created-option append, frequency fill and deeper amend paths, a
+   * normal amend row inside a whole-list row passed verify and failed here (the package C final checker).
+   * What the shared rule settles, each from a real miss: the amend pair above; a class option list compared
+   * after the chain's append + sync (2026-09-30: an option's text and links are its classFeatures record's,
+   * scripts/lib/embedded-descriptions.mjs — embedded-description-check fails a row whose option TEXT differs,
+   * so only added links are excused); `value: null` and absent agree (the applier can only assign, so
+   * "remove" is written as null); a create row matches when its record ships (it never overwrites), a
+   * delete row when the record is gone; a path that resolves to nothing is drift — it patches nothing.
+   * Read from the shipped files themselves (content() merges the prose back onto the records).
+   */
   it('every overlay patch actually matches what core.json holds', () => {
     // A patch that has drifted from the shipped value means core.json was hand-edited after the fact,
     // and the next regeneration would silently revert that edit. That is how the two backgrounds
     // whose overlay said `performance` while core.json said `society` were found.
-    const db = c as unknown as Record<string, Record<string, Record<string, unknown>>>;
-    const drift = overlay
-      .filter((p, i) => {
-        if (amendedLater(p, i)) return false;
-        // A `create` entry carries a whole record rather than one field; it matches when the record
-        // ships at all. (It never overwrites, so a differing shipped record is upstream's, not drift.)
-        if (p.create) return !db[p.category]?.[p.id];
-        // A `delete` entry matches when the record is GONE; a record that came back is drift.
-        if (p.delete) return !!db[p.category]?.[p.id];
-        const target = p.path?.length ? resolvePath(db[p.category][p.id], p.path) : db[p.category][p.id];
-        if (!target || !p.field) return true; // an unresolved path is drift of the worst kind: it patches nothing
-        const live = target[p.field];
-        // The overlay applier can only ASSIGN, so "remove this field" has to be written as null.
-        // null and absent are equivalent to every reader (`rec.speeds?.land`, `...(rec.speeds ?? {})`),
-        // so treat them as agreeing rather than forcing a literal null into core.json.
-        if (p.value === null && live === undefined) return false;
-        // 2026-09-30, the regenerating lane: a class option's text and links are its classFeatures record's
-        // (scripts/lib/embedded-descriptions.mjs, run after the overlay by every writer of a class option list),
-        // so a whole-list row is compared THROUGH that sync — the same rule scripts/regen-durability-check.mjs applies.
-        // scripts/embedded-description-check.mjs fails a row whose option TEXT differs from its record's, so this
-        // excuses only the record links the sync adds (test/embedded-descriptions.test.ts, "the overlay half").
-        return JSON.stringify(live) !== JSON.stringify(syncOverlayValue(p, optionRecord, embeddedKeep));
-      })
-      .map((p) => `${p.category}/${p.id}${p.path?.length ? '/' + p.path.join('/') : ''}.${p.field}`);
+    const core = JSON.parse(readFileSync('public/core.json', 'utf8').replace(/^﻿/, ''));
+    const descs = JSON.parse(readFileSync('public/core-descriptions.json', 'utf8').replace(/^﻿/, ''));
+    const drift = unbakedRows(core, descs, overlay, { keep: embeddedKeep, created: loadCreated('.') })
+      .stale.map((s: { label: string }) => s.label);
     expect(drift, 'overlay entries that no longer match core.json').toEqual([]);
   });
 

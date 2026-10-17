@@ -28,7 +28,8 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadBaseline as loadEmbeddedBaseline, recordReader, syncOverlayValue } from './lib/embedded-descriptions.mjs';
+import { loadBaseline as loadEmbeddedBaseline } from './lib/embedded-descriptions.mjs';
+import { loadCreated, unbakedRows } from './lib/overlay-replay.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8').replace(/^﻿/, ''));
@@ -183,23 +184,12 @@ for (const bucket of ['kingdomStructure', 'kingdomEvent', 'creatureAdjustment', 
 {
   const OVERLAY = 'scripts/data/effect-backfill.json';
   const rows = existsSync(join(ROOT, OVERLAY)) ? read(OVERLAY) : [];
-  const PROSE = { description: 'd', descRefs: 'r' };
-  const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-
-  /* Array steps address by id (`id=apparition`), never by index — the same walk applyBackfill uses. */
-  const walk = (root, path) => {
-    let node = root;
-    for (const step of path) {
-      if (node == null) return null;
-      if (Array.isArray(node)) {
-        const [k, v] = String(step).split('=');
-        node = k === 'id' ? node.find((x) => x?.id === v) : null;
-      } else node = node[step];
-    }
-    return node && typeof node === 'object' ? node : null;
-  };
-
   /*
+   * THE RULE FOR "BAKED" LIVES IN scripts/lib/overlay-replay.mjs `unbakedRows` (package C, 2026-10-17),
+   * shared with the replay (scripts/apply-backfill-now.mjs) and its proof (scripts/replay-lossless-check.mjs):
+   * one rule, so the replay can never treat a row as "already shipped" that this check calls "not baked".
+   * The cases it settles, kept here because each cost a real miss:
+   *
    * A LEAF A LATER ROW AMENDS IS NOT A STALE BAKE.
    *
    * applyBackfill replays the overlay IN ORDER, so a pathless whole-value row followed by a `path` row
@@ -213,13 +203,7 @@ for (const bucket of ['kingdomStructure', 'kingdomEvent', 'creatureAdjustment', 
    * record, so the note on feats/haunting-memories.choice was rewritten by a `path: ['choice']` row
    * over the whole-value `choice` row an earlier batch wrote. Indexed in one pass; only the pathless
    * row of such a pair is excused, and only for the exact field the later row overwrites.
-   */
-  const lastAmend = new Map();
-  rows.forEach((q, j) => {
-    if (q.path?.length === 1) lastAmend.set(`${q.category}/${q.id}/${q.path[0]}`, j);
-  });
-
-  /*
+   *
    * A CLASS OPTION'S TEXT AND LINKS ARE ITS RECORD'S, WHATEVER A WHOLE-LIST ROW RESTATES (2026-09-30).
    *
    * An overlay row that writes a class option list (`options` pathed into subclass / extraChoices, or a whole
@@ -230,46 +214,18 @@ for (const bucket of ['kingdomStructure', 'kingdomEvent', 'creatureAdjustment', 
    * text to differ: scripts/embedded-description-check.mjs (npm run verify, its OVERLAY half) fails any such row
    * whose option text is not its record's (baseline aside), so with it green the only thing this comparison
    * excuses is a record link the sync ADDS to a row's option — never a text, and never a link the row wrote.
+   *
+   * …AND A CREATED RECORD'S AoN JOIN KEYS, which a `create` row carries INSIDE its value rather than as a
+   * `field` row. stamp-aonid.mjs clears every aon* field and rewrites it from out/map.json; a created record
+   * is not in the committed map, so build-map called it `authored` and the authored parent page was replaced
+   * by `aonOrigin` on every regen. Measured 2026-09-12: 33 records silently lost their parent page that way —
+   * nine Munitions Master modifications, eighteen Construct innovation modifications, and six more.
+   *
+   * A row whose record does not exist is a different defect (authored data reaching nothing) and is counted
+   * separately — it is not evidence that the bake is stale.
    */
-  const optionRecord = recordReader(core, descs);
-  const embeddedKeep = new Set(loadEmbeddedBaseline(ROOT).keys());
-
-  const stale = [];
-  let missingRecord = 0;
-  for (const [i, fix] of rows.entries()) {
-    if (!fix.path?.length && fix.field && (lastAmend.get(`${fix.category}/${fix.id}/${fix.field}`) ?? -1) > i) continue;
-    if (fix.create) {
-      const rec = core[fix.category]?.[fix.id];
-      if (!rec) { stale.push(`${fix.category}/${fix.id} (created record absent)`); continue; }
-      /*
-       * …and the record's AoN JOIN KEYS, which a `create` row carries INSIDE its value rather than as
-       * a `field` row, so the loop below never saw them. stamp-aonid.mjs clears every aon* field and
-       * rewrites it from out/map.json; a created record is not in the committed map, so build-map
-       * called it `authored` and the authored parent page was replaced by `aonOrigin` on every regen.
-       * Measured 2026-09-12: 33 records silently lost their parent page that way — nine Munitions
-       * Master modifications, eighteen Construct innovation modifications, and six more.
-       */
-      for (const f of ['aonId', 'aonParentId', 'aonSection']) {
-        if (fix.value?.[f] !== undefined && rec[f] !== fix.value[f]) {
-          stale.push(`${fix.category}/${fix.id}.${f} (created as ${JSON.stringify(fix.value[f])}, artefact has ${JSON.stringify(rec[f])})`);
-        }
-      }
-      continue;
-    }
-    if (!fix.field) continue;
-    const proseKey = PROSE[fix.field];
-    const db = proseKey ? descs : core;
-    const entry = db[fix.category]?.[fix.id];
-    /* A row whose record does not exist is a different defect (authored data reaching nothing) and is
-     * counted separately — it is not evidence that the bake is stale. */
-    if (!entry) { missingRecord++; continue; }
-    const target = fix.path?.length ? walk(entry, fix.path) : entry;
-    if (!target) { missingRecord++; continue; }
-    const key = proseKey ?? fix.field;
-    const got = target[key];
-    const agrees = fix.value === null ? got === undefined : eq(got, syncOverlayValue(fix, optionRecord, embeddedKeep));
-    if (!agrees) stale.push(`${fix.category}/${fix.id}.${fix.field}`);
-  }
+  const { stale: unbaked, missingRecord } = unbakedRows(core, descs, rows, { keep: new Set(loadEmbeddedBaseline(ROOT).keys()), created: loadCreated(ROOT) });
+  const stale = unbaked.map((s) => s.label);
 
   check(
     'public/core.json reflects every row of the effect-backfill overlay',

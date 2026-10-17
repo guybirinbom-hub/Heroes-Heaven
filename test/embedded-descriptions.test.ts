@@ -237,7 +237,31 @@ describe('every writer of a class option list runs the sync, and the durability 
     },
   );
 
-  it('scripts/regen-durability-check.mjs compares every overlay row through syncOverlayValue', () => {
-    expect(src('scripts/regen-durability-check.mjs')).toMatch(/eq\(got, syncOverlayValue\(fix, optionRecord, embeddedKeep\)\)/);
+  /* Package C (2026-10-17): the "baked" rule moved to scripts/lib/overlay-replay.mjs unbakedRows, shared by
+   * this check and the replay's loss check — the comparison through syncOverlayValue moved with it. */
+  it('scripts/regen-durability-check.mjs compares every overlay row through the sync (in the shared unbakedRows / chainValue)', () => {
+    expect(src('scripts/regen-durability-check.mjs')).toMatch(/unbakedRows\(core, descs, rows, \{ keep: new Set\(loadEmbeddedBaseline\(ROOT\)\.keys\(\)\), created: loadCreated\(ROOT\) \}\)/);
+    const lib = src('scripts/lib/overlay-replay.mjs');
+    expect(lib).toContain('eq(got, chainValue(rows, index, { core, descs, recordOf, keep, created }))');
+    const fn = lib.slice(lib.indexOf('export function chainValue('));
+    expect(fn.slice(0, fn.indexOf('\n}\n'))).toContain('syncOptionList(fix.id, list, recordOf, keep, acc)');
+  });
+
+  /* The batch post-check reads a row back from the shipped artefact through the same chainValue: comparing the
+   * raw row refused the champion / animist lists once the replay synced them (package C refuters). */
+  it('scripts/wg-batch-run.mjs post-check compares a row with chainValue, not its raw value', () => {
+    const text = src('scripts/wg-batch-run.mjs');
+    expect(text).toContain('const expected = at === undefined ? row.value : chainValue(overlayAfter, at, chainCtx);');
+    expect(text).toContain('if (!eq(shipped, expected)) post.push(');
+  });
+
+  /* The fourth writer: scripts/apply-backfill-now.mjs (through replayOverlay) puts whole option lists back on
+   * the finished artefacts, and skipping the sync there lost the champion's and animist's option links. */
+  it('the overlay replay (scripts/lib/overlay-replay.mjs replayOverlay) runs the sync after the rows', () => {
+    const text = src('scripts/lib/overlay-replay.mjs');
+    const fn = text.slice(text.indexOf('export function replayOverlay('));
+    const body = fn.slice(0, fn.indexOf('\n}\n'));
+    expect(body.indexOf('syncOptionDescriptions(db, recordReader(db, descs), keep)')).toBeGreaterThan(body.indexOf('applyBackfill('));
+    expect(src('scripts/apply-backfill-now.mjs')).toContain('replayOverlay(db, descs, rows,');
   });
 });

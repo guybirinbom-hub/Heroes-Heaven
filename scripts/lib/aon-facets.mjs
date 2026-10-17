@@ -16,6 +16,8 @@
  */
 
 import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 /*
  * Archives usage PROSE -> Heroes Heaven's usage slug, learned once by
@@ -25,8 +27,12 @@ import { readFileSync } from 'node:fs';
  * drops the article in "affixed to a weapon", and calls "tattoo" `tattooed-on-the-body`. The Archives
  * supply the FACT; the vocabulary the engine reads is HH's own.
  */
+/* Both tables are read from this file's own folder, not the current one: the overlay replay runs the book
+ * fold (scripts/lib/overlay-replay.mjs), and from any other folder a failed read silently gave `{}` and the
+ * fold quietly did nothing (the package C final checker, 2026-10-17). */
+const DATA_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
 const USAGE_SLUGS = (() => {
-  try { return JSON.parse(readFileSync('scripts/data/usage-slugs.json', 'utf8')); } catch { return {}; }
+  try { return JSON.parse(readFileSync(join(DATA_DIR, 'usage-slugs.json'), 'utf8')); } catch { return {}; }
 })();
 const USAGE_NUM = { 1: 'one', 2: 'two', 3: 'three', 4: 'four' };
 
@@ -45,7 +51,7 @@ const USAGE_NUM = { 1: 'one', 2: 'two', 3: 'three', 4: 'four' };
  * is built from whatever core.json already holds and is not shareable.
  */
 const BOOK_NAMES = (() => {
-  try { return JSON.parse(readFileSync('scripts/data/book-names.json', 'utf8')); } catch { return {}; }
+  try { return JSON.parse(readFileSync(join(DATA_DIR, 'book-names.json'), 'utf8')); } catch { return {}; }
 })();
 
 /** AoN's book title -> core.json's, via the hand-kept table then `fold` (an importer's own index). */

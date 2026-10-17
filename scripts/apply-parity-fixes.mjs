@@ -507,4 +507,4 @@ for (const [file, edits] of Object.entries(byFile)) {
   writeFileSync(join(ROOT, file), src);
   console.log(`${file}: ${edits.length} edit(s) applied.`);
 }
-console.log('\nNext: node scripts/apply-backfill-now.mjs && npx tsc -b && node scripts/vt.mjs run && npm run verify');
+console.log('\nNext: node scripts/apply-backfill-now.mjs && node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json && node scripts/vt.mjs run && npm run verify');

@@ -38,6 +38,8 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { withHeavyLock } from './lib/heavy-lock.mjs';
 import { backfillTarget } from './lib/apply-backfill.mjs';
+import { loadBaseline as loadEmbeddedBaseline } from './lib/embedded-descriptions.mjs';
+import { chainValue, loadCreated } from './lib/overlay-replay.mjs';
 import { testPinsFrom } from './add-owner-question.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -681,9 +683,9 @@ export function precheck(rows, overlayBefore, { mirror = mirrorText, currentDesc
     const c = creates.get(`${r.row.category}/${r.row.id}`);
     if (!c) return;
     /* PROSE IS NOT A FIELD OF THE RECORD, so (1b)'s premise cannot arise for it. `description` and
-     * `descRefs` are exactly the two fields apply-backfill-now.mjs hands the applier as
-     * `skipFields: ['description', 'descRefs']` (scripts/apply-backfill-now.mjs:45) and then routes BY
-     * HAND to public/core-descriptions.json — a different file from the one a create row writes. Neither
+     * `descRefs` are exactly the two fields the replay hands the applier as `skipFields` and then routes
+     * BY HAND to public/core-descriptions.json (scripts/lib/overlay-replay.mjs replayOverlay, which
+     * apply-backfill-now.mjs runs) — a different file from the one a create row writes. Neither
      * row can therefore "reach the shipped artefact instead of" the other, which is the whole harm (1b)
      * exists to refuse, and the create row's own post-check below still compares the shipped record with
      * the create value (deleting description/descRefs from the shipped copy when the create carries
@@ -811,14 +813,18 @@ async function stageApply() {
     const expectRows = expectRowsFor(read(OVERLAY), mine.map(({ row }) => row));
     const r = node_('scripts/apply-parity-fixes.mjs', [spec.file, '--write', '--expect-rows', String(expectRows)]);
     if (r.status !== 0) refuse(`apply-parity-fixes.mjs refused ${spec.file} (exit ${r.status}): ${refusalTail(r.out, 8)}`);
+    /* A WHOLE replay, and that is safe since package C (2026-10-17): the replay runs the chain's class-option
+     * sync, and it REFUSES — writing nothing — when it would change a record whose rows were all already
+     * shipped (scripts/lib/overlay-replay.mjs). Before that, every batch silently dropped the champion and
+     * animist option links here. refusalTail, so the digest shows the refusal and the records it names. */
     const rp = node_('scripts/apply-backfill-now.mjs', []);
-    if (rp.status !== 0) refuse(`apply-backfill-now.mjs failed after ${spec.file} (exit ${rp.status}): ${tail(rp.out, 4)}`);
+    if (rp.status !== 0) refuse(`apply-backfill-now.mjs failed after ${spec.file} (exit ${rp.status}): ${refusalTail(rp.out, 8)}`);
     applied.push(spec.file);
   }
   /* One final unconditional replay: the created-prose specs land last, and a create row's record only
    * exists in the shipped artefact after a replay that ran AFTER it was written. */
   const finalReplay = node_('scripts/apply-backfill-now.mjs', []);
-  if (finalReplay.status !== 0) refuse(`the final apply-backfill-now.mjs replay failed (exit ${finalReplay.status}): ${tail(finalReplay.out, 4)}`);
+  if (finalReplay.status !== 0) refuse(`the final apply-backfill-now.mjs replay failed (exit ${finalReplay.status}): ${refusalTail(finalReplay.out, 8)}`);
 
   /* ---- post-checks ---- */
   const post = [];
@@ -826,6 +832,8 @@ async function stageApply() {
   const descs = read('public/core-descriptions.json');
   const overlayAfter = read(OVERLAY);
   const afterByKey = new Map(overlayAfter.map((r) => [keyOf(r), r]));
+  const afterIndex = new Map(overlayAfter.map((r, i) => [keyOf(r), i]));
+  const chainCtx = { core, descs, keep: new Set(loadEmbeddedBaseline(ROOT).keys()), created: loadCreated(ROOT) };
 
   const shippedOf = (row) => {
     if (row.field === 'description' || row.field === 'descRefs') {
@@ -864,7 +872,14 @@ async function stageApply() {
     }
     const shipped = shippedOf(row);
     if (row.value === null) { if (shipped !== undefined) post.push(`${file}#${finding}: ${keyOf(row)} is a removal row (value:null) and the field is still present in the shipped artefact`); continue; }
-    if (!eq(shipped, row.value)) post.push(`${file}#${finding}: ${keyOf(row)} is not readable from the SHIPPED artefact (shipped ${clip(JSON.stringify(shipped), 80)} ≠ row ${clip(JSON.stringify(row.value), 80)})`);
+    /* Compared with what the CHAIN makes of the row (scripts/lib/overlay-replay.mjs chainValue — the same rule
+     * as regen-durability-check's "baked"), not the raw value: since package C (2026-10-17) the replay runs
+     * the chain's class-option sync, so a whole-list row's options ship with their records' links added, and
+     * a later path row amending this one is part of what ships. Comparing the raw value refused exactly the
+     * champion / animist lists the replay now keeps right. */
+    const at = afterIndex.get(keyOf(row));
+    const expected = at === undefined ? row.value : chainValue(overlayAfter, at, chainCtx);
+    if (!eq(shipped, expected)) post.push(`${file}#${finding}: ${keyOf(row)} is not readable from the SHIPPED artefact (shipped ${clip(JSON.stringify(shipped), 80)} ≠ row ${clip(JSON.stringify(expected), 80)})`);
   }
 
   for (const [k, old] of startByKey) {

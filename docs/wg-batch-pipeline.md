@@ -74,7 +74,11 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   description / descRefs row with a `path`; (5) refuse a `why` that names no AoN doc id, and for a
   description row refuse unless the restored tokens occur in that mirror doc. Then, in manifest
   order: `apply-parity-fixes.mjs <spec> --write` followed by `apply-backfill-now.mjs` for each spec;
-  `created-prose` specs last, then one final unconditional replay. Post-checks: every authored row is
+  `created-prose` specs last, then one final unconditional replay. The replay is lossless since
+  2026-10-17 (package C): it runs the chain's class-option sync, and it refuses — writing nothing —
+  when it would change a record whose overlay rows are all already shipped
+  (`scripts/lib/overlay-replay.mjs`; `replay-lossless-check.mjs` proves it in `npm run verify`).
+  Before that, every batch's whole replay dropped the champion and animist option links. Post-checks: every authored row is
   readable from the SHIPPED artefacts (core.json / core-descriptions.json), not just the overlay;
   every `create` row deep-equals its shipped record (a corrected create needs `npm run data` — stop);
   no overlay row key present at the batch-start commit is missing or narrowed (a removal must be an

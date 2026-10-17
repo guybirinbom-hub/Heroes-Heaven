@@ -133,9 +133,10 @@ describe('feats/wild-lights keeps the printed spell name Dancing Lights', () => 
     const rec = db.feats['wild-lights'];
     expect(rec.description).toContain('When you cast Dancing Lights,');
     expect(rec.description, 'the import-time rewrite').not.toContain('When you cast Light,');
-    /* Emptied rather than removed: a prose row is replayed to core-descriptions.json only when its
-     * value is an array (scripts/apply-backfill-now.mjs:72), so `null` would reach neither file. `[]`
-     * is what every reader already treats as no links — each tests `descRefs?.length` or maps it. */
+    /* Emptied rather than removed: when this row was written, a prose row was replayed to
+     * core-descriptions.json only when its value was an array, so `null` would have reached neither file
+     * (since package C, 2026-10-17, scripts/lib/overlay-replay.mjs replayOverlay removes the key for `null`).
+     * `[]` is what every reader already treats as no links — each tests `descRefs?.length` or maps it. */
     expect(rec.descRefs, 'the import-time link to a spell this feat does not modify').toEqual([]);
   });
 

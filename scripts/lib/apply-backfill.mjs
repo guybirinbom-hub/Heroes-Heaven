@@ -41,13 +41,16 @@ export function backfillTarget(root, path) {
  * The pipeline passes nothing here and is unaffected.
  *
  * `only` (a Set of `<category>/<id>`) replays just those records' rows — the same caller's `--only`.
+ *
+ * `file` may also be the rows themselves (an array): scripts/lib/overlay-replay.mjs reads the overlay
+ * once and hands the same rows to this applier, the prose routing and the loss check.
  */
 export function applyBackfill(db, file = 'scripts/data/effect-backfill.json', { skipFields = [], only = null } = {}) {
-  if (!existsSync(file)) return { applied: 0, unresolved: [] };
+  if (!Array.isArray(file) && !existsSync(file)) return { applied: 0, unresolved: [] };
   const skip = new Set(skipFields);
   const unresolved = [];
   let applied = 0;
-  for (const fix of JSON.parse(readFileSync(file, 'utf8'))) {
+  for (const fix of Array.isArray(file) ? file : JSON.parse(readFileSync(file, 'utf8'))) {
     if (fix.field && skip.has(fix.field)) continue;
     if (only && !only.has(`${fix.category}/${fix.id}`)) continue;
     // `create` adds a whole record rather than patching a field — needed where a record is filed in
