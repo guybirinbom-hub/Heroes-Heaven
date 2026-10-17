@@ -1,5 +1,5 @@
 {
- "coreSha": "7f7bde993bd9ac4e7870b76c71bc139a1b0bab3977b577cdb31f5e067e4370aa",
+ "coreSha": "d53f43edc1a3250adc566f11d5862cd9622445762ef5ff2716c3c0b62898756b",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -6695,6 +6695,9 @@
    "apexAttribute",
    "passiveEffects.skills"
   ],
+  "items/greater-backfire-mantle": [
+   "passiveEffects.resistances"
+  ],
   "items/greater-belkzen-deadsmasher": [
    "passiveEffects.resistances"
   ],
@@ -6717,12 +6720,14 @@
    "passiveEffects.resistances"
   ],
   "items/greater-flaming-star": [
+   "effectChoices[].options[].grant.passive.resistances",
    "passiveEffects.resistances"
   ],
   "items/greater-foxglove-token": [
    "passiveEffects.resistances"
   ],
   "items/greater-grim-sandglass": [
+   "effectChoices[].options[].grant.passive.resistances",
    "passiveEffects.resistances"
   ],
   "items/greater-heartmoss": [
@@ -6747,6 +6752,7 @@
    "passiveEffects.resistances"
   ],
   "items/greater-polished-demon-horn": [
+   "effectChoices[].options[].grant.passive.resistances",
    "passiveEffects.resistances"
   ],
   "items/greater-sailors-collar": [
@@ -6889,8 +6895,14 @@
   "items/major-flag-of-the-stronghold": [
    "passiveEffects.resistances"
   ],
+  "items/major-flaming-star": [
+   "effectChoices[].options[].grant.passive.resistances"
+  ],
   "items/major-foxglove-token": [
    "passiveEffects.resistances"
+  ],
+  "items/major-grim-sandglass": [
+   "effectChoices[].options[].grant.passive.resistances"
   ],
   "items/major-heartmoss": [
    "passiveEffects.resistances"
@@ -6902,6 +6914,7 @@
    "passiveEffects.resistances"
   ],
   "items/major-polished-demon-horn": [
+   "effectChoices[].options[].grant.passive.resistances",
    "passiveEffects.resistances"
   ],
   "items/major-sihedron-medallion": [
@@ -7446,66 +7459,9 @@
   "items/absolute-solvent",
   "items/awakened-metal-shot",
   "items/bravery-baldric-healthful-greater",
-  "items/fiend-warding-tattoo",
-  "items/full-pack",
-  "items/greater-backfire-mantle",
-  "items/greater-binding-coil",
-  "items/greater-blade-of-four-energies",
-  "items/greater-codebreakers-parchment",
-  "items/greater-codex-of-unimpeded-sight",
-  "items/greater-dazzling-rosary",
-  "items/greater-endless-grimoire",
-  "items/greater-firestarter-pellets",
-  "items/greater-five-feather-wreath",
-  "items/greater-flaming-star",
-  "items/greater-grim-sandglass",
-  "items/greater-healers-gel",
-  "items/greater-impactful",
-  "items/greater-noxious-incense",
-  "items/greater-ouroboros-flail",
-  "items/greater-perfect-droplet",
-  "items/greater-pickled-demon-tongue",
-  "items/greater-polished-demon-horn",
-  "items/greater-potion-of-stable-form",
-  "items/greater-retrieval-prism",
-  "items/greater-silversoul-bomb",
-  "items/greater-singing-shortbow",
-  "items/greater-sonic-tuning-mace",
-  "items/greater-spirit-sealing-fulu",
-  "items/greater-staff-of-natures-cunning",
-  "items/greater-staff-of-the-desert-winds",
-  "items/greater-stalk-goggles",
-  "items/greater-stampede-medallion",
-  "items/greater-thunderbird-tuft",
-  "items/greater-trinity-geode",
   "items/guiding-starknife",
-  "items/healers-gel",
   "items/lantern",
-  "items/lesser-thunderbird-tuft",
-  "items/major-codebreakers-parchment",
-  "items/major-endless-grimoire",
-  "items/major-firestarter-pellets",
-  "items/major-five-feather-wreath",
-  "items/major-flaming-star",
-  "items/major-grim-sandglass",
-  "items/major-healers-gel",
-  "items/major-ouroboros-flail",
-  "items/major-perfect-droplet",
-  "items/major-pickled-demon-tongue",
-  "items/major-polished-demon-horn",
-  "items/major-silversoul-bomb",
-  "items/major-staff-of-natures-cunning",
-  "items/major-staff-of-the-desert-winds",
-  "items/major-stalk-goggles",
-  "items/major-stampede-medallion",
-  "items/major-thunderbird-tuft",
-  "items/major-trinity-geode",
-  "items/moderate-thunderbird-tuft",
-  "items/trail-warding-tattoo",
-  "items/true-endless-grimoire",
-  "items/true-staff-of-the-desert-winds",
-  "items/waterproof-carrying-case",
-  "items/wave-warding-tattoo"
+  "items/waterproof-carrying-case"
  ],
- "wgSha": "2b87079480019d715471869097a04c8a70f223ff328f30fe29528be3d3953912"
+ "wgSha": "207bdce4f521b9213e6e4fc2e2340feca2ec722d5da5adee1721b735100e6bc9"
 }

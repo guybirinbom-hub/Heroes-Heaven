@@ -58,7 +58,9 @@ const ALIASES = {
   'alertness': ['perception-expertise'],
   'vigilant-senses': ['perception-mastery'],
   'incredible-senses': ['perception-legend'],
-  'perception-expertise': ['perception-mastery'],
+  // No 'perception-expertise' -> perception-mastery alias any more (package I): the Thaumaturge's level-9 row was
+  // the only row it served, and it now names its own record, perception-expertise-thaumaturge (class-feature-1183).
+  // Kept, it would let that row slide back to the Commander's Perception Mastery page unreported.
   /*
    * IMPOSSIBLE MAGIC RENAMED THREE MAGUS ROWS, and the three aliases that used to sit here —
    * twofold-will -> resolve, spell-tempered-body -> juggernaut, perception-expertise -> alertness —

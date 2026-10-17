@@ -203,6 +203,11 @@ export const REMASTER_REPRINT_IDS = new Set([
   'wave-warding-tattoo', // -> warding-tattoo-wave   (both level 6, 220 gp)
   'fiend-warding-tattoo', // -> warding-tattoo-fiend (both level 7, 300 gp)
   'full-pack', // -> cantrip-deck-full-pack          (both level 1, 20 gp; AoN names the reprint just "Full Pack")
+  // package I (I7b, 2026-10-17): the level-5 grade. Impossible Magic prints it as plain "Healer's Gel"
+  // (equipment-5055-4573, Item 5, 25 gp, legacy_name "Healer's Gel (Lesser)"); the app held it only as the
+  // unpriced family summary, so it was offered nowhere. Overlay rows pin items/healers-gel to that grade and
+  // give it the lesser gel's rules; hidden here while its legacy half is offered, like the seven above.
+  'healers-gel', // -> healers-gel-lesser            (both level 5, 25 gp; equipment-5055-4573 has no grade word)
 ]);
 
 /**

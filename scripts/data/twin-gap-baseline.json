@@ -1,0 +1,12 @@
+{
+ "_": "scripts/reprint-check.mjs CHECK 10. Same-level, same-price reprint twins that still lack a rule field their legacy half carries (scripts/lib/reprint-twin-gaps.mjs, after scripts/data/twin-gap-allow.json), as they stood when package I lane L6 (I7b, 2026-10-17) gave the 56 hidden twins their legacy halves' rules. None is a twin findHiddenTwins offers: each is a reprint the shop already offers beside its legacy half. Shape: \"items/<twin>\": [the lost fields, sorted]. A same-price twin gap not listed fails, and so does a listed one whose fields differ (fix the twin, or trim the entry; the list only shrinks).",
+ "items/absolute-solvent": ["consumableType", "uses"],
+ "items/bravery-baldric-healthful-greater": ["activationCost", "frequency", "usage"],
+ "items/dwarven-waraxe": ["hands", "usage"],
+ "items/guiding-starknife": ["activationCost", "builtInRunes", "damage", "frequency", "group", "hands", "range", "usage"],
+ "items/judgement-thurible": ["effectChoices", "usage"],
+ "items/judgement-thurible-greater": ["effectChoices", "usage"],
+ "items/judgement-thurible-major": ["effectChoices", "usage"],
+ "items/lantern": ["usage"],
+ "items/waterproof-carrying-case": ["hands", "usage"]
+}

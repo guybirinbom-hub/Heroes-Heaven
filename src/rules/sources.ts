@@ -497,7 +497,10 @@ export function sourceRowLabelsFor(groups: readonly SourceGroup[], books: Iterab
  * articles" row, and the Gatewalkers volumes #187 and #188: six Greater / Major grades moved to them from
  * "Adventure Path: Gatewalkers" with the Archives refresh e26a64c, inside the one Gatewalkers row, so an old
  * whole-row selection read 5 of 7 books on and lost them). test/sources.test.ts compares every Sources row
- * with the v0.1.40 card read from git, so a key a relabel adds to a row fails until a pair here covers it.
+ * with the v0.1.40 card read from git, so a key a relabel adds to a row fails until a pair here covers it. The
+ * Kingmaker pairs are the other shape (package I, I7d): both new keys already held records at v0.1.40, in the one
+ * "Kingmaker" row with the Foundry label "Pathfinder Kingmaker", and 116 records moved from that label to them — a
+ * selection holding only the label would have lost those. test/sources.test.ts pins both pairs.
  *
  * NOT here either, because they are not splits: the Azarketi Ancestry Web Supplement (a free reprint of
  * Absalom, City of Lost Omens' own chapter) and the 2020 Beginner Box Game Master's Guide (Secrets of the
@@ -521,6 +524,13 @@ export const BOOK_SPLITS: ReadonlyArray<readonly [string, string]> = [
   ["Pathfinder Adventure Path: Hell's Destiny", "Pathfinder #223: Hell's Destiny"],
   ['Pathfinder Adventure Path: Gatewalkers', 'Pathfinder #187: The Seventh Arch'],
   ['Pathfinder Adventure Path: Gatewalkers', 'Pathfinder #188: They Watched the Stars'],
+  // The Foundry reference's label "Pathfinder Kingmaker" spanned two books: 114 actions, conditions and a feat, and two
+  // ingredient items, printed in the Adventure Path or in the Companion Guide, each now under its own document's book
+  // (reprint-check CHECK 6). All three keys sat in the ONE v0.1.40 "Kingmaker" row (apBundleLabel), which toggled them
+  // together: the Gatewalkers #187 / #188 shape. A stored selection from before the mark that holds only the old label
+  // gets both books on, once, and a marked one is taken as the player left it.
+  ['Pathfinder Kingmaker', 'Pathfinder Kingmaker Adventure Path'],
+  ['Pathfinder Kingmaker', 'Pathfinder Kingmaker Companion Guide'],
   ["Pathfinder Extinction Curse Player's Guide", "Pathfinder Blog: Come One, Come All, to the Extinction Curse Player's Guide!"],
   ...[
     'Battle of the Pantheons Winner Announcement', 'Celebrating Hispanic Heritage Month', 'Friends in High Places',

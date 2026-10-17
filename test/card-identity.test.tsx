@@ -660,9 +660,12 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
       }
     }
     console.log(`card-identity: ${moved.length} class features whose title lookup lands elsewhere; ${changed} re-pointed (id page ≠ pre-step popup); ${held} held on the pre-step popup; ${shorterThanBefore} shorter than a pre-step popup that was another record's page; ${bad.length} problems`);
-    // 61 title lookups land elsewhere; 5 of them land on a page identical to the record's own.
+    // 62 title lookups land elsewhere; 5 of them land on a page identical to the record's own.
     // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
-    expect([moved.length, changed]).toEqual([61, 56]);
+    // package I: I9 (2026-10-17) — +1/+1: classFeatures/perception-expertise-thaumaturge is titled "Perception
+    // Expertise", whose title lookup opens the shared record's page (class-feature-1075); by id it opens its own
+    // (class-feature-1183), so it is one more record that moved and one more whose popup the id re-points.
+    expect([moved.length, changed]).toEqual([62, 57]);
     expect(bad).toEqual([]);
   }, 300_000);
 

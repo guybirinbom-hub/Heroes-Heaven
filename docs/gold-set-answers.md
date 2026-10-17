@@ -722,13 +722,16 @@ numbers it carries. Where the reprint a link names is one the app hides as a dup
 legacy half (56 grades: 48 in *Impossible Magic* — Healer's Gel, Endless Grimoire … — 6 in the *Gatewalkers*
 hardcover and 2 in the *Season of Ghosts* compilation, each over its Adventure Path volume's copy), the reprint is offered whenever
 "Hide legacy data" or the book filter takes the legacy half away, and the GM's search always lists it
-(`findHiddenTwins`, src/data/index.ts). That does not cover every link: under "Hide legacy data", 10 legacy
-items link to a record the shop never offers. Nine link to a family page whose grades ship as their own
-records (Universal Solvent → Absolute Solvent ×5, Awakened … Shot → Awakened Metal Shot ×3, and Lantern
-Implement → Lantern, a wrong link that is parked). One is a real loss to the player: Healer's Gel (Lesser)
-links to `items/healers-gel`, the level-5 *Impossible Magic* Healer's Gel, which the app holds only as an
-unpriced family summary (hidden by `findUmbrellaIds`), so that grade is offered nowhere; it is queued as
-separate work. The ten sit in `scripts/data/never-offered-links-baseline.json` (reprint-check CHECK 9), where a
+(`findHiddenTwins`, src/data/index.ts). Since package I (2026-10-17) each such twin carries its legacy half's
+rules — copied only where its own page prints the same mechanic, written from the reprint where the print
+changed (this rule, R12) — and reprint-check CHECK 10 fails a same-price twin that lacks one. That does not
+cover every link: under "Hide legacy data", 9 legacy items link to a record the shop never offers, each to a
+family page whose grades ship as their own records (Universal Solvent → Absolute Solvent ×5, Awakened … Shot →
+Awakened Metal Shot ×3, and Lantern Implement → Lantern, a wrong link that is parked). A tenth was a real loss
+to the player: Healer's Gel (Lesser) linked to `items/healers-gel`, the level-5 *Impossible Magic* Healer's Gel,
+which the app held only as an unpriced family summary (hidden by `findUmbrellaIds`); package I pinned that
+record to its grade (equipment-5055-4573, 25 gp) and gave it the lesser gel's rules, so it is the twin offered
+in its place. The nine sit in `scripts/data/never-offered-links-baseline.json` (reprint-check CHECK 9), where a
 new one fails. "Whole" includes the plain description (the search text and the popup's fallback), which a move does
 not re-read: a record on a reprint may not read like the printing it replaced (reprint-check CHECK 8). The two
 the lane moved (Cantrip Deck (5-pack), the barbarian's Greater Weapon Specialization) carry their new page's

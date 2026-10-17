@@ -1131,7 +1131,10 @@ function profTimeline(c: Character, db: ContentDatabase, track: string, baseRank
     out.push({ level: 1, text: `${RANK_LABEL[baseRank]} ${label}`, detail: cls ? `from your ${cls.name}` : undefined, rank: baseRank });
   }
   for (const e of advancementFor(c).filter((e) => e.track === track).sort((a, b) => a.level - b.level)) {
-    out.push({ level: e.level, text: `Raised to ${RANK_LABEL[e.rank]}`, detail: humanize(e.source), rank: e.rank });
+    // package I: a row keyed by the class's own copy of a shared feature (perception-expertise-thaumaturge) reads as
+    // the feature's printed name, "Perception expertise", never "Perception expertise thaumaturge".
+    const own = c.classId && e.source?.endsWith(`-${c.classId}`) ? e.source.slice(0, -(c.classId.length + 1)) : e.source;
+    out.push({ level: e.level, text: `Raised to ${RANK_LABEL[e.rank]}`, detail: humanize(own), rank: e.rank });
   }
   return out;
 }

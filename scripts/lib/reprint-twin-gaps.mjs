@@ -16,8 +16,34 @@
  * price at the same level (`samePrice: false`) may be one too: Arboreal Boots (160 gp against Boots of
  * Elvenkind's 145) prints no activation at all, so the legacy record's fields say what the twin LACKS only
  * where the numbers agree. What a twin that applies nothing says is true either way ("shown, not applied").
+ *
+ * A field NEITHER printing prints is not a gap (package I, I7b, 2026-10-17): the four Endless Grimoire /
+ * Codex twins lacked only `usage`, which their legacy halves carry from Foundry while neither AoN page
+ * prints a Usage line. scripts/data/twin-gap-allow.json names each such field with its print evidence,
+ * and `lost` leaves it out; nothing else is excused, so the twin-gap guards (scripts/reprint-check.mjs
+ * CHECK 10, test/hidden-reprint-twins.test.ts) fail on every other gap.
  */
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+/* A plain path, not a URL object: under vitest's jsdom environment `URL` is jsdom's, which node:fs does not
+ * take as a file URL — the allow file then read as absent and excused nothing. */
+const ALLOW_FILE = join(dirname(fileURLToPath(import.meta.url)), '..', 'data', 'twin-gap-allow.json');
+
 const copper = (p) => (p?.pp ?? 0) * 1000 + (p?.gp ?? 0) * 100 + (p?.sp ?? 0) * 10 + (p?.cp ?? 0);
+
+/** scripts/data/twin-gap-allow.json as `Map<'items/<twin>', Set<field>>` (empty when the file is absent). */
+export function loadTwinGapAllow(file = ALLOW_FILE) {
+  const out = new Map();
+  if (!existsSync(file)) return out;
+  for (const [key, fields] of Object.entries(JSON.parse(readFileSync(file, 'utf8')))) {
+    if (key === '_' || !fields || typeof fields !== 'object') continue;
+    // An entry with no reason excuses nothing: the reason is the evidence.
+    out.set(key, new Set(Object.entries(fields).filter(([, why]) => typeof why === 'string' && why.trim()).map(([f]) => f)));
+  }
+  return out;
+}
 
 /** Fields that describe or list an item and apply no rule — the ledger's CREATED_CONTENT plus the three
  *  every new-only item is given from its page's facets. */
@@ -36,7 +62,7 @@ export const hasValue = (v) => v != null && v !== ''
 /** The rule fields a record carries (non-empty, outside LISTING_FIELDS). */
 export const ruleFields = (rec) => Object.keys(rec ?? {}).filter((k) => !LISTING_FIELDS.has(k) && hasValue(rec[k]));
 
-export function reprintTwinGaps(core) {
+export function reprintTwinGaps(core, { allow = loadTwinGapAllow() } = {}) {
   const items = core?.items ?? {};
   const byTwin = new Map();
   for (const [id, L] of Object.entries(items)) {
@@ -44,7 +70,8 @@ export function reprintTwinGaps(core) {
     if (ra?.bucket !== 'items' || !ra.id || ra.id === id) continue;
     const T = items[ra.id];
     if (!T?.name || (L.level ?? null) !== (T.level ?? null)) continue;
-    const lost = ruleFields(L).filter((k) => !hasValue(T[k]));
+    const excused = allow.get(`items/${ra.id}`);
+    const lost = ruleFields(L).filter((k) => !hasValue(T[k]) && !excused?.has(k));
     if (!lost.length) continue;
     const row = byTwin.get(ra.id) ?? { key: `items/${ra.id}`, from: [], lost: [], samePrice: false, lostSamePrice: [] };
     row.from.push(`items/${id}`);

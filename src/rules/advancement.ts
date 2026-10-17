@@ -664,7 +664,11 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 5, track: 'simple', rank: 'expert', source: 'weapon-expertise' },
     { level: 5, track: 'martial', rank: 'expert', source: 'weapon-expertise' },
     { level: 7, track: 'will', rank: 'master', source: 'disciplined-mind' },
-    { level: 9, track: 'perception', rank: 'master', source: 'perception-mastery' },
+    // package I: class-feature-1183 (Thaumaturge, Dark Archives (Remastered)) names the level-9 feature "Perception
+    // Expertise" and gives master; the class table's row is the Thaumaturge's own record. Keyed by that record so
+    // wg-diff / wg-values credit the rank to the record Wanderer's Guide matches (scripts/wg-diff.mjs
+    // ADVANCEMENT_TRACK_KINDS); explain.ts drops the own-class suffix from the breakdown label.
+    { level: 9, track: 'perception', rank: 'master', source: 'perception-expertise-thaumaturge' },
     { level: 9, track: 'classDc', rank: 'expert', source: 'thaumaturgic-expertise' },
     { level: 11, track: 'unarmored', rank: 'expert', source: 'medium-armor-expertise' },
     { level: 11, track: 'light', rank: 'expert', source: 'medium-armor-expertise' },

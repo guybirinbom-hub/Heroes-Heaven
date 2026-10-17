@@ -615,7 +615,12 @@ describe('F6c: a lead naming several classes is an addendum for exactly those cl
     expect(missed).toEqual([]);
     // 150 since package M: the swashbuckler's level-5 row names its own Weapon Expertise
     // (class-feature-1019), so weapon-expertise@swashbuckler is no longer a shared-page row.
-    expect(rows.length).toBe(150);
+    // 148 since package I (I9, Perception Expertise): the Thaumaturge's level-9 row names its own record
+    // (perception-expertise-thaumaturge, class-feature-1183), so perception-mastery@thaumaturge is gone, and the shared
+    // perception-expertise now sits on the Exemplar's own page (class-feature-1075), so perception-expertise@exemplar is
+    // no longer a shared-page row either. The distinct-feature count below stays 25.
+    // batch package-i premise: class-feature-1183 "Your proficiency rank for Perception increases to master."
+    expect(rows.length).toBe(148);
     expect(new Set(rows.map((r) => r.split('@')[0])).size).toBe(25);
     // A bard's Reflex Expertise is the generic paragraph, without the Guardian's addendum.
     const bard = sharedFeatureFallback('reflex-expertise', 'bard', textOf(trees.classFeatures['reflex-expertise']), db)!;

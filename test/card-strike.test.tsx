@@ -386,7 +386,9 @@ describe('card step 10: the strike popup is the weapon\'s mine card', () => {
     expect(oldShown).toEqual([]);
     expect(statsWrong).toEqual([]);
     // Measured 2026-10-07: 59 of the 60 sampled weapons make a strike for a fighter wielding them; Dragon
-    // Handwraps make none of their own (handwraps etch onto the unarmed attacks).
-    expect({ judged, noStrike }).toEqual({ judged: 59, noStrike: ['dragon-handwraps'] });
+    // Handwraps made none of their own (handwraps etch onto the unarmed attacks).
+    // package I (I7b): i7b-greater-singing-shortbow and the 11 other twins that became weapons joined the pool,
+    // so the seeded draw moved: still 59 of 60, and the one without a Strike is again a handwraps (Amphisbaena).
+    expect({ judged, noStrike }).toEqual({ judged: 59, noStrike: ['amphisbaena-handwraps'] });
   }, 120_000);
 });

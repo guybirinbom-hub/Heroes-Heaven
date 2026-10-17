@@ -45,6 +45,37 @@ const ownerQueued = new Set([...(_oq.open ?? []), ...(_oq.deferred ?? [])].map((
 
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 const isCantrip = (sid) => (core.spells?.[sid]?.traits ?? []).includes('cantrip');
+
+/*
+ * A SIBLING GRADE'S BLOCK IS NOT THIS RECORD'S PRINT (package I, I7b, 2026-10-17). A grade built from its
+ * family page carries the whole page as its .d — the Greater Flaming Star's text ends with the Major block's
+ * "You cast 4th-rank fireball", and the forward lane read that as the Greater's own rank (its block prints
+ * plain "You cast fireball", rank 3). The direction rule above only excuses a LOWER sibling clause. So the
+ * prose lanes read the page with every SIBLING's block cut out: a line that is exactly the name of another
+ * record built from the same AoN page (`equipment-5153` for `equipment-5153-4636`) opens that sibling's block,
+ * which runs to the next such title. Line 0 is the family's own title, never a block. The header and this
+ * record's own block stay, so a rank printed for every grade still binds.
+ */
+const pageOfAon = (aonId) => /^([a-z-]+-\d+)(?:-\d+)?$/.exec(String(aonId ?? ''))?.[1] ?? null;
+const titleKey = (s) => String(s).toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+const familyTitles = new Map();
+for (const it of Object.values(core.items ?? {})) {
+  const p = pageOfAon(it?.aonId);
+  if (!p || !it?.name) continue;
+  if (!familyTitles.has(p)) familyTitles.set(p, new Set());
+  familyTitles.get(p).add(titleKey(it.name));
+}
+const withoutSiblingBlocks = (raw, item) => {
+  const titles = familyTitles.get(pageOfAon(item?.aonId));
+  if (!titles || titles.size < 2) return raw;
+  const own = titleKey(item?.name ?? '');
+  let sibling = false;
+  return raw.split('\n').filter((line, i) => {
+    const t = titleKey(line);
+    if (i > 0 && t && titles.has(t)) sibling = t !== own;
+    return !sibling;
+  }).join('\n');
+};
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /** Forward: "5th-rank Vital Beacon", "4th rank Wall of Wind", "3rd-level Fear spell (DC 38)". */
@@ -60,7 +91,7 @@ const flag = (id, spellId, printed, stored, lane) =>
 
 for (const [id, item] of Object.entries(core.items ?? {})) {
   if (ownerQueued.has(id)) continue;
-  const text = String(descs.items?.[id]?.d ?? '').replace(/\s+/g, ' ');
+  const text = withoutSiblingBlocks(String(descs.items?.[id]?.d ?? ''), item).replace(/\s+/g, ' ');
 
   /* spellId → EVERY stored rank (a Set — the Fan of Soothing Winds casts Heal at 4th/3rd/2nd). */
   const storedAt = new Map();

@@ -148,6 +148,9 @@ describe('grade-spelling duplicates', () => {
       'wave-warding-tattoo': 'warding-tattoo-wave',
       'fiend-warding-tattoo': 'warding-tattoo-fiend',
       'full-pack': 'cantrip-deck-full-pack',
+      // package I (I7b): i7b-healers-gel-base-grade — the level-5 grade (equipment-5055-4573, 25 gp), pinned and
+      // priced so the hide-legacy shop offers it in Healer's Gel (Lesser)'s place.
+      'healers-gel': 'healers-gel-lesser',
     };
     expect([...REMASTER_REPRINT_IDS].sort()).toEqual(Object.keys(twin).sort());
     for (const [reprint, kept] of Object.entries(twin)) {

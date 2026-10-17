@@ -580,10 +580,22 @@ describe('trust ledger — a created record that applies only part of its print 
  */
 describe('trust ledger — a reprint twin that does less than its legacy printing says so', () => {
   it('the hollow twins are unencoded, in both modes', () => {
-    for (const id of ['greater-singing-shortbow', 'greater-healers-gel', 'major-grim-sandglass', 'greater-pickled-demon-tongue', 'guiding-starknife']) {
+    // A twin that still lacks its legacy printing's rules stays marked: Guiding Starknife is offered beside its
+    // legacy half (scripts/data/twin-gap-baseline.json) and still has no Strike.
+    for (const id of ['guiding-starknife']) {
       expect(ledger.unencoded, id).toContain(`items/${id}`);
       expect(batched.unencoded, id).toContain(`items/${id}`);
     }
+    // package I (I7b): i7b-greater-singing-shortbow, i7b-greater-healers-gel, i7b-major-grim-sandglass,
+    // i7b-greater-pickled-demon-tongue — the hidden twins now carry their legacy halves' rules (from their own
+    // Impossible Magic / Gatewalkers pages), so they leave `unencoded`. Only the resistances the trust gate holds
+    // (no Wanderer's Guide row) stay OFF, as on their legacy halves.
+    for (const id of ['greater-singing-shortbow', 'greater-healers-gel', 'major-grim-sandglass', 'greater-pickled-demon-tongue', 'healers-gel']) {
+      expect(ledger.unencoded, id).not.toContain(`items/${id}`);
+      expect(batched.unencoded, id).not.toContain(`items/${id}`);
+      expect(ledger.partly[`items/${id}`], id).toBeUndefined();
+    }
+    expect(ledger.records['items/greater-pickled-demon-tongue']).toEqual(['passiveEffects.resistances']);
   });
 
   it('a same-price twin that applies part of its rules is partly, naming what it lacks', () => {

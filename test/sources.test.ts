@@ -450,4 +450,107 @@ describe('enabledBookSet — the 2026-09-25 book split never narrows a saved cho
       expect(enabledBookSet(storedSources([...CORE_BOOKS, from])).has(to), `${pair}: ran on a marked selection`).toBe(false);
     });
   }
+
+  /*
+   * The Kingmaker split (package I, I7d, 2026-10-17; desk #166 "Middle way": different books are never folded
+   * together). The Foundry reference's label "Pathfinder Kingmaker" spanned two books: 100 actions, 13 conditions and a
+   * feat printed in the Adventure Path or the Companion Guide, and the two ingredient items (rules-1893, Companion
+   * Guide pg. 109). Each of those records now names its own document's book (one overlay `source` row each). All three
+   * keys sat in the ONE v0.1.40 "Kingmaker" row, which toggled them together, so the old label derives both new books
+   * on for a selection stored before the mark — and for none stored after it (a marked selection is as the player left it).
+   */
+  const KM = 'Pathfinder Kingmaker';
+  const KM_AP = 'Pathfinder Kingmaker Adventure Path';
+  const KM_CG = 'Pathfinder Kingmaker Companion Guide';
+  for (const to of [KM_AP, KM_CG]) {
+    it(`an old selection with "${KM}" on reads "${to}" on: one v0.1.40 row`, () => {
+      const pair = `BOOK_SPLITS pair "${KM}" -> "${to}"`;
+      expect(BOOK_SPLITS.some(([a, b]) => a === KM && b === to), `${pair}: missing from src/rules/sources.ts`).toBe(true);
+      expect(rowAt(KM), `${pair}: the old label's v0.1.40 row`).toBe('Adventure Paths / Kingmaker');
+      expect(rowAt(to), `${pair}: the new key's v0.1.40 row`).toBe(rowAt(KM));
+      const on = enabledBookSet([...CORE_BOOKS, KM]); // stored before the split: no mark
+      expect(on.has(to), `${pair}: a selection stored before the split with the old label on reads the new key off`).toBe(true);
+      expect(enabledBookSet(storedSources(on)).has(to), `${pair}: the new key is lost once the selection is saved again`).toBe(true);
+      expect(enabledBookSet(storedSources([...CORE_BOOKS, KM])).has(to), `${pair}: ran on a marked selection`).toBe(false);
+    });
+  }
+
+  it('an old selection with only the Foundry label on is offered the Kingmaker feat, ingredient and campsite action it was offered before', () => {
+    const on = enabledBookSet([...CORE_BOOKS, KM]);
+    const picker = applySources(db, on, new Set());
+    expect(picker.feats['the-harder-they-fall-kingmaker'], 'Companion Guide feat').toBeTruthy();
+    expect(picker.items['basic-ingredient'], 'Companion Guide ingredient').toBeTruthy();
+    expect(picker.actions['aon-blend-into-the-night'], 'Companion Guide camping action').toBeTruthy();
+    expect(picker.actions['aon-abandon-hex'], 'Adventure Path kingdom action').toBeTruthy();
+  });
+
+  it('the Sources card still holds both Kingmaker books in the one "Kingmaker" row', () => {
+    const row = sourceCatalog(db).groups.find((g) => g.category === 'Adventure Paths')!.entries.find((e) => e.label === 'Kingmaker')!;
+    expect(row.books).toEqual(expect.arrayContaining([KM_AP, KM_CG]));
+  });
+
+  /*
+   * The records the lane relabelled, by the book their own document is printed in (the mirror: action-1371 "Abandon
+   * Hex", Kingmaker Adventure Path pg. 518; action-1489 "Blend into the Night", Companion Guide; condition-45 "Defeated",
+   * Adventure Path; feat-3901 "The Harder They Fall (Ranger)", Companion Guide pg. 23; rules-1893 "Ingredients",
+   * Companion Guide pg. 109). The
+   * licence is the one each record carried before, unchanged. reprint-check CHECK 6 holds the 114 with an aonId to their
+   * document's books; the two ingredient items have no aonId, which is why this list names them.
+   */
+  const KINGMAKER_OWN_BOOK: [bucket: string, id: string, book: string, license: string][] = [
+    ['actions', 'aon-abandon-hex', KM_AP, 'ORC'],
+    ['actions', 'aon-build-structure', KM_AP, 'ORC'],
+    ['actions', 'aon-tap-treasury', KM_AP, 'ORC'],
+    ['actions', 'aon-blend-into-the-night', KM_CG, 'ORC'],
+    ['actions', 'aon-camp-management', KM_CG, 'ORC'],
+    ['actions', 'aon-wilderness-survival', KM_CG, 'ORC'],
+    ['conditions', 'aon-defeated', KM_AP, 'ORC'],
+    ['conditions', 'aon-weary', KM_AP, 'ORC'],
+    ['feats', 'the-harder-they-fall-kingmaker', KM_CG, 'OGL'],
+    ['items', 'basic-ingredient', KM_CG, 'OGL'],
+    ['items', 'special-ingredient', KM_CG, 'OGL'],
+  ];
+  /** Still on the old label until their aonId repoint lands in the regenerating lane: each is stamped on ANOTHER
+   *  printing's page (feat-1009, condition-62), where a `source` row would name a book that page is not printed in. */
+  const WAITING_FOR_PAGE_REPOINT = ['conditions/aon-concealed-army', 'feats/roll-with-it-kingmaker'];
+  type KmRecord = { source?: { book?: string; license?: string } };
+  const kingmakerProblems = (c: unknown): string[] => {
+    const buckets = c as Record<string, Record<string, KmRecord> | undefined>;
+    const onLabel = Object.entries(buckets).flatMap(([bucket, recs]) =>
+      recs && typeof recs === 'object' && !Array.isArray(recs)
+        ? Object.entries(recs).filter(([, r]) => r?.source?.book?.trim() === KM).map(([id]) => `${bucket}/${id}`)
+        : [],
+    );
+    const problems: string[] = [];
+    for (const where of onLabel) if (!WAITING_FOR_PAGE_REPOINT.includes(where)) problems.push(`${where}: reads "${KM}", a label that spans two books — name the book its own document is printed in`);
+    for (const where of WAITING_FOR_PAGE_REPOINT) if (!onLabel.includes(where)) problems.push(`${where}: no longer reads "${KM}" — remove it from WAITING_FOR_PAGE_REPOINT`);
+    for (const [bucket, id, book, license] of KINGMAKER_OWN_BOOK) {
+      const s = buckets[bucket]?.[id]?.source;
+      if (s?.book !== book || s?.license !== license) problems.push(`${bucket}/${id}: reads ${JSON.stringify(s)}, expected ${JSON.stringify({ book, license })}`);
+    }
+    return problems;
+  };
+
+  it('no record reads the Foundry label "Pathfinder Kingmaker" but the two that wait for their page repoint, and the rest name their own book', () => {
+    expect(kingmakerProblems(db)).toEqual([]);
+  });
+
+  it('…and the check fails on a planted bad record (an old label back, a new record on it, a waiting one fixed)', () => {
+    const d = db as unknown as Record<string, Record<string, KmRecord>>;
+    const planted = {
+      ...d,
+      actions: {
+        ...d.actions,
+        'aon-abandon-hex': { ...d.actions['aon-abandon-hex'], source: { book: KM, license: 'ORC' } }, // relabelled back
+        'planted-new-action': { source: { book: KM, license: 'ORC' } }, // a new record on the old label
+      },
+      feats: { ...d.feats, 'roll-with-it-kingmaker': { ...d.feats['roll-with-it-kingmaker'], source: { book: KM_CG, license: 'OGL' } } }, // fixed: the entry must go
+      items: { ...d.items, 'basic-ingredient': { ...d.items['basic-ingredient'], source: { book: KM_AP, license: 'OGL' } } }, // the wrong Kingmaker book
+    };
+    const found = kingmakerProblems(planted);
+    expect(found.filter((p) => p.startsWith('actions/aon-abandon-hex'))).toHaveLength(2); // on the label, and not the book it should name
+    expect(found.some((p) => p.startsWith('actions/planted-new-action'))).toBe(true);
+    expect(found.some((p) => p.startsWith('feats/roll-with-it-kingmaker') && p.includes('remove it'))).toBe(true);
+    expect(found.some((p) => p.startsWith('items/basic-ingredient'))).toBe(true);
+  });
 });

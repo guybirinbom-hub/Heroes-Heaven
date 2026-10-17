@@ -34,7 +34,9 @@
  * (a baseline of the older exceptions, which only shrinks); CHECK 7: a book split never moves a record the
  * old book also prints; CHECK 8: a record on a reprint does not keep the replaced printing's prose (a
  * baseline of the older exceptions, which only shrinks); CHECK 9: a legacy item's "Remastered as" is an
- * item the hide-legacy shop offers (a baseline of the older exceptions, which only shrinks).
+ * item the hide-legacy shop offers (a baseline of the older exceptions, which only shrinks); CHECK 10: a
+ * same-price reprint twin carries every rule field its legacy half carries (a baseline of the older
+ * exceptions, which only shrinks).
  *
  * Anything else is a failure: re-run `npm run data`, whose chain applies the rule in
  * scripts/lib/reprint.mjs (the importer's join + the AST writer, and build-map.mjs so the stamp
@@ -51,6 +53,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadReprintIndex, repointDoc, shippedTwin, slugify, whyUnpaired } from './lib/reprint.mjs';
 import { movedProseVerdict } from './lib/moved-prose.mjs';
+import { reprintTwinGaps } from './lib/reprint-twin-gaps.mjs';
 import { bookTitle, foldedBook } from './lib/aon-facets.mjs';
 import { BOOK_SPLITS, CHOOSABLE_SOURCE_MAPS } from '../src/rules/sources';
 import { seedContent } from '../src/rules/seed';
@@ -442,7 +445,6 @@ const TWIN_NUMBERS_DIFFER = {
   'items/feather-token-chest-ammunition': 'the AMMUNITION variant has no document of its own, so it sits on the plain token\'s block equipment-244-244 (Item 3, 10 gp), whose remaster_name is Marvelous Miniature (Chest), equipment-3002-2862; the remaster prints no ammunition variant.',
   'items/feather-token-ladder-ammunition': 'the AMMUNITION variant has no document of its own, so it sits on the plain token\'s block equipment-244-247 (Item 1, 3 gp), whose remaster_name is Marvelous Miniature (Ladder), equipment-3002-2864; the remaster prints no ammunition variant.',
   'items/feather-token-swan-boat-ammunition': 'the AMMUNITION variant has no document of its own, so it sits on the plain token\'s block equipment-244-248 (Item 8, 76 gp), whose remaster_name is Marvelous Miniature (Boat), equipment-3002-2860; the remaster prints no ammunition variant.',
-  'items/healers-gel-lesser': 'the reprint\'s base grade equipment-5055-4573 (Healer\'s Gel, Item 5, 25 gp) has no record of its own: it shares its name, so its slug, with the family page equipment-5055, and the record that answers is that priceless family head.',
   'items/thieves-tools-concealable': 'the record carries its family\'s PAGE id equipment-58 (its own block, equipment-58-845, is Item 4, 80 gp), and every Thieves\' Tools block names only "Thieves\' Toolkit" (equipment-2758), which carries the base kit\'s numbers; the remaster prints no concealable variant.',
   'items/thieves-tools-concealable-picks': 'the record carries its family\'s PAGE id equipment-58 (its own block, equipment-58-844, is Item 4, 10 gp), and every Thieves\' Tools block names only "Thieves\' Toolkit" (equipment-2758), which carries the base kit\'s numbers; the remaster prints no concealable variant.',
 };
@@ -594,9 +596,11 @@ const proseProblems = [];
  * CHECK 9 — A LEGACY ITEM'S "REMASTERED AS" IS AN ITEM THE HIDE-LEGACY SHOP OFFERS.
  *
  * "Hide legacy data" takes the legacy item out of the shop and leaves its popup's link as the way to the
- * reprint. findHiddenTwins brings back the 56 reprints the duplicate rules hide, but a link can also open a
- * record the shop never offers at all: an AoN family summary (findUmbrellaIds). Healer's Gel (Lesser) does —
- * the level-5 Impossible Magic grade has no record of its own, so a hide-legacy player cannot get it. This is
+ * reprint. findHiddenTwins brings back the reprints the duplicate rules hide, but a link can also open a
+ * record the shop never offers at all: an AoN family summary (findUmbrellaIds). Healer's Gel (Lesser) did —
+ * the level-5 Impossible Magic grade had no record of its own, so a hide-legacy player could not get it, until
+ * package I (I7b, 2026-10-17) pinned items/healers-gel to that grade (equipment-5055-4573, 25 gp) and made it
+ * the twin findHiddenTwins offers in its place (REMASTER_REPRINT_IDS). This is
  * measured with the shop's own list (shopItems over seed + core, the four hidden-from-lists sets computed as
  * src/data/index.ts mergeWithSeed computes them), not a copy of its rules. The links in that state when the
  * check went in are the baseline in scripts/data/never-offered-links-baseline.json, each with its reason: a new
@@ -626,6 +630,47 @@ const offerProblems = [];
   const listed = Object.keys(baseline).filter((k) => k !== '_');
   for (const where of listed) if (!never.has(where)) console.log(`   CHECK 9: ${where} now links to an offered item (or no longer links) — remove its line from ${BASELINE}`);
   console.log(`${never.size} legacy item(s) link to an item the hide-legacy shop never offers; ${listed.length} in the baseline (it only shrinks).`);
+}
+
+/*
+ * CHECK 10 — A SAME-PRICE REPRINT TWIN CARRIES ITS LEGACY HALF'S RULES (package I, I7b, 2026-10-17).
+ *
+ * "Hide legacy data" offers a reprint in its legacy half's place (findHiddenTwins), and the 56 it offered
+ * were new-only records built from their page's flat fields: Greater Singing Shortbow an Equipment card with
+ * no Strike, the Greater Healer's Gel with no spell and no uses. The trust marker said so; nothing failed
+ * when a twin lacked a rule. Package I gave every one of them its legacy half's rules (from the reprint's own
+ * page where the print changed them) through scripts/data/effect-backfill.json, and this holds the line: a
+ * same-level, same-price twin lacking a rule field its legacy half carries (scripts/lib/reprint-twin-gaps.mjs,
+ * which excuses only the fields scripts/data/twin-gap-allow.json shows neither printing prints) fails unless
+ * scripts/data/twin-gap-baseline.json lists it with exactly those fields. The baseline holds the 9 offered
+ * beside their legacy half when the check went in; it only shrinks — a listed twin whose fields changed fails
+ * until its entry is trimmed. A repriced twin is not held to it (Arboreal Boots prints no activation).
+ */
+const twinGapProblems = [];
+{
+  const BASELINE = 'scripts/data/twin-gap-baseline.json';
+  const baseline = JSON.parse(readFileSync(join(ROOT, BASELINE), 'utf8'));
+  const rows = reprintTwinGaps(core).filter((r) => r.samePrice);
+  const seen = new Set();
+  for (const r of rows) {
+    seen.add(r.key);
+    const listed = baseline[r.key];
+    const lost = [...r.lostSamePrice].sort();
+    if (!Array.isArray(listed)) twinGapProblems.push(`${r.key} lacks ${lost.join(', ')} that its legacy half ${r.from.join(', ')} carries`);
+    else if (lost.join(',') !== [...listed].sort().join(',')) twinGapProblems.push(`${r.key} now lacks ${lost.join(', ') || 'nothing'}, ${BASELINE} says ${listed.join(', ')} — fix the twin or trim the entry (it only shrinks)`);
+  }
+  for (const k of Object.keys(baseline)) if (k !== '_' && !seen.has(k)) twinGapProblems.push(`${k} is in ${BASELINE} but no longer lacks a rule field — remove the entry`);
+  console.log(`${rows.length} same-price reprint twin(s) lack a rule field their legacy half carries; ${Object.keys(baseline).filter((k) => k !== '_').length} in ${BASELINE} (it only shrinks).`);
+}
+
+if (twinGapProblems.length) {
+  console.error('\nreprint-check: FAIL — a same-price reprint twin lacks a rule its legacy half carries (CHECK 10):');
+  for (const p of twinGapProblems.slice(0, 40)) console.error('   ' + p);
+  if (twinGapProblems.length > 40) console.error(`   … and ${twinGapProblems.length - 40} more`);
+  console.error('   Repair: overlay rows through scripts/apply-parity-fixes.mjs from the twin\'s OWN page (work/package-i/');
+  console.error('   september-a.json is the pattern), or — only where neither printing prints the field — a reasoned entry in');
+  console.error('   scripts/data/twin-gap-allow.json.');
+  process.exit(1);
 }
 
 if (offerProblems.length) {

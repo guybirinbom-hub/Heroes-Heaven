@@ -68,6 +68,13 @@ for (const [id, it] of Object.entries(core.items ?? {})) {
   const potency = Number(m[1]);
   const tail = m[3].toLowerCase().replace(/[*_]/g, ' ').trim();
   /*
+   * "+N <type> bonus" is a BONUS, never a potency rune (package I, I7b, 2026-10-17). Once the Impossible Magic
+   * staves became staff weapons, the Greater Staff of Nature's Cunning's "you gain a +2 item bonus to Nature
+   * checks to Recall Knowledge" read as a self-description — the tail names "nature", which is in the item's
+   * name — and the guard asked for +2 runes on a staff that has none.
+   */
+  if (!m[2] && /^(?:(?:item|status|circumstance)\s+)?bonus\b/.test(tail)) { skipped.push(`${id} — "+${m[1]} ${tail}" is a bonus, not a rune`); continue; }
+  /*
    * ⚠ THE STRIKING RUNE IS NOT ALWAYS ADJACENT TO THE POTENCY. Eclipse prints *"This +1 RETURNING
    * striking cold iron starknife"* — a property rune sits in between — so reading only the words
    * immediately after "+1" gave it potency and NO striking, which is a wrong rune rather than a missing
