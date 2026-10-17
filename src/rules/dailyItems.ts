@@ -33,6 +33,10 @@ export interface DailyItemSlot {
   traits?: string[];
   maxLevel?: number;
   fromKnownFormulas?: boolean;
+  /** An ITEM slot: only these rarities are offered (Practical Magic: "all common spell catalysts"). */
+  rarity?: string[];
+  /** With `rarity`: an item whose formula the character knows otherwise passes the rarity test as well. */
+  orKnownFormulas?: boolean;
   /** A printed restriction the app cannot enforce. */
   note?: string;
 }
@@ -122,6 +126,8 @@ export function dailyItemSlots(c: Character, db: ContentDatabase): DailyItemSlot
           ...(def.filter.traits?.length ? { traits: def.filter.traits } : {}),
           ...(maxLevel != null ? { maxLevel } : {}),
           ...(def.filter.fromKnownFormulas ? { fromKnownFormulas: true } : {}),
+          ...(def.filter.rarity?.length ? { rarity: def.filter.rarity } : {}),
+          ...(def.filter.orKnownFormulas ? { orKnownFormulas: true } : {}),
           ...(def.filter.note ? { note: def.filter.note } : {}),
         });
       }
@@ -166,9 +172,19 @@ export function dailyItemOptions(
   // "It must be an item whose formula you know" — a clause with nothing to filter against until the
   // formula book existed. An empty book now yields an empty list, which the Rest sheet already says.
   const knownIds = slot.fromKnownFormulas ? new Set(knownFormulas(c.inventory, db)) : null;
+  // Practical Magic (AoN feat-9331): "You know the formulas for all COMMON spell catalysts of your level or lower
+  // ... You must know each spell catalyst's formula." So the pool is the common ones, plus a catalyst of another
+  // rarity whose formula the character holds (a formula book). Like the two pools above, what the character
+  // already holds is never narrowed by the book filter either.
+  const alsoKnown = slot.orKnownFormulas ? new Set(knownFormulas(c.inventory, db)) : null;
+  const rarities = slot.rarity?.length ? slot.rarity : null;
   return Object.values(db.items)
     .filter((i) => {
-      if (knownIds ? !knownIds.has(i.id) : !onBooks(i)) return false;
+      // `keep` (the slot's stored answer) is never taken away: UNKNOWN is not EMPTY, and a pick the player already
+      // made today stays on the list whatever its rarity, the way it already stays past the book filter.
+      const held = alsoKnown?.has(i.id) ?? false;
+      if (knownIds ? !knownIds.has(i.id) : !(held || onBooks(i))) return false;
+      if (rarities && !held && i.id !== opts?.keep && !rarities.includes(i.rarity ?? 'common')) return false;
       if (slot.maxLevel != null && (i.level ?? 0) > slot.maxLevel) return false;
       const traits = new Set(i.traits ?? []);
       return wantTraits.every((t) => traits.has(t));

@@ -3524,6 +3524,18 @@ export interface Feat extends ContentBase, DefenseGrants {
       maxLevel?: number | string;
       /** Restrict to formulas the character knows (Herbal Forager). */
       fromKnownFormulas?: boolean;
+      /**
+       * An ITEM slot offers only these rarities (an item with no rarity counts as common). Practical Magic
+       * (AoN feat-9331): "You know the formulas for all common spell catalysts of your level or lower."
+       * A slot the player has already answered keeps its stored pick whatever its rarity.
+       */
+      rarity?: string[];
+      /**
+       * With `rarity`: an item whose formula the character knows some other way (a formula book) passes the
+       * rarity test too, because print says "You must know each spell catalyst's formula" and only the COMMON
+       * formulas come free (feat-9331).
+       */
+      orKnownFormulas?: boolean;
       /** A printed restriction the app cannot enforce, shown with the picker. */
       note?: string;
     };

@@ -2340,122 +2340,207 @@
   "why": "batch P02 running-recharge#description-header: page header (name, Source) stripped so the body opens with feat-9057's \"Preparing in every way for your next assault\"; shorter by the header; guarded by scripts/description-header-check.mjs."
  },
  {
-  "key": "items/bagpipes-of-turmoil",
-  "field": "passiveEffects.skills.performance",
-  "aon": "equipment-2265",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (the owner's 'Yes, stars on (Recommended)'; a print fix, not an Archives change): equipment-2265 prints \"While playing the bagpipes, you gain a +1 item bonus to Performance checks\". The flat +1 raised EVERY Performance check; with the approval the star FEAT_SITUATIONAL[\"bagpipes-of-turmoil\"] is lit and carries it. Lit: a player no longer gets +1 on singing or dancing. Held by test/ruling-b-stars-lit.test.ts and test/lost-condition-blocked-check.test.ts."
+  "key": "feats/timewracked-dedication",
+  "field": "speeds.fly",
+  "aon": "feat-8166",
+  "before": "6aa0887e0190d7a8",
+  "why": "desk #153, 2026-10-15 (a print ruling, not an Archives change): feat-8166 prints \"Your Speed increases by 5 feet for each mode of movement available to you\", ruled '+5 to every speed'. The per-mode formula leaves the record; landSpeedBonus 5 + speedBonusAllSpeeds carry the +5 to every Speed the character has, in any grant order. Held by test/desk153-timewracked-speed.test.ts."
  },
  {
-  "key": "items/borts-blessing",
-  "field": "passiveEffects.skills.diplomacy",
-  "aon": "equipment-476",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-476 prints \"the wearer receives a +1 item bonus to Diplomacy checks to Make an Impression\". The flat +1 raised every Diplomacy check; the now-lit star FEAT_SITUATIONAL[\"borts-blessing\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+  "key": "feats/timewracked-dedication",
+  "field": "speeds.swim",
+  "aon": "feat-8166",
+  "before": "6aa0887e0190d7a8",
+  "why": "desk #153, 2026-10-15 (a print ruling): the swim formula leaves the record; speedBonusAllSpeeds pays a swim Speed once, in any grant order (kept beside the flag it paid an ancestry swim Speed twice). Held by test/desk153-timewracked-speed.test.ts."
  },
  {
-  "key": "items/clarity-goggles-greater",
-  "field": "passiveEffects.perception",
-  "aon": "equipment-2314-2161",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change), the example the owner was shown: equipment-2314-2161 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" (+3 for this grade). The flat +3 raised every Perception check; the now-lit star FEAT_SITUATIONAL[\"clarity-goggles-greater\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/day-goggles",
-  "field": "passiveEffects.perception",
-  "aon": "equipment-1146",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-1146 prints \"while wearing the goggles, you take a -2 item penalty to visual Perception checks\". A restricted penalty; the now-lit star FEAT_SITUATIONAL[\"day-goggles\"] (its -2 row) carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/eye-slash-greater",
-  "field": "passiveEffects.perception",
-  "aon": "equipment-2206-1905",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2206-1905 prints \"The tattoo also grants you a +1 item bonus to Perception checks that involve sight.\" The flat +1 left passiveEffects (the far-sight sense stays); the now-lit star FEAT_SITUATIONAL[\"eye-slash-greater\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/eye-slash-major",
-  "field": "passiveEffects.perception",
-  "aon": "equipment-2206-1906",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2206-1906 prints \"The tattoo also grants you a +2 item bonus to Perception checks that involve sight.\" The flat +2 left passiveEffects (the far-sight sense stays); the now-lit star FEAT_SITUATIONAL[\"eye-slash-major\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/eye-slash-true",
-  "field": "passiveEffects.perception",
-  "aon": "equipment-2206-1907",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2206-1907 prints \"The tattoo also grants you a +3 item bonus to Perception checks that involve sight.\" The flat +3 left passiveEffects (the far-sight sense stays); the now-lit star FEAT_SITUATIONAL[\"eye-slash-true\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/holy-chain",
-  "field": "passiveEffects.skills.diplomacy",
-  "aon": "equipment-3273",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-3273 prints \"giving you a +2 item bonus to Diplomacy checks against all creatures except fiends\". A number cannot carry the fiend exception (ruling B), so the flat +2 left passiveEffects and the now-lit star FEAT_SITUATIONAL[\"holy-chain\"] states the +2 against every creature but a fiend. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/mirror-goggles-lesser",
-  "field": "passiveEffects.perception",
-  "aon": "equipment-2315-2162",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2315-2162 prints \"you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects\". The flat +1 raised every Perception check; the now-lit star FEAT_SITUATIONAL[\"mirror-goggles-lesser\"] carries both halves. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/persona-mask",
-  "field": "passiveEffects.skills.performance",
-  "aon": "equipment-3099-3044",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-3099-3044 prints \"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" The flat +1 raised every Performance check; the now-lit star FEAT_SITUATIONAL[\"persona-mask\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/persona-mask-greater",
-  "field": "passiveEffects.skills.performance",
-  "aon": "equipment-3099-3045",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-3099-3045 prints \"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" (+2 for this grade). The flat +2 raised every Performance check; the now-lit star FEAT_SITUATIONAL[\"persona-mask-greater\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/razmiri-wayfinder",
-  "field": "passiveEffects.skills.deception",
-  "aon": "equipment-470-832",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-470-832 prints \"provides its wearer a +1 item bonus to Deception checks to Lie or Impersonate\". The flat +1 raised every Deception check; the now-lit star FEAT_SITUATIONAL[\"razmiri-wayfinder\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/resonant-guitar",
-  "field": "passiveEffects.skills.performance",
-  "aon": "equipment-2616",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2616 prints \"grants a +2 item bonus to Performance checks attempted while using it\". The flat +2 raised every Performance check; the now-lit star FEAT_SITUATIONAL[\"resonant-guitar\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/shining-hackle",
-  "field": "passiveEffects.perception",
-  "aon": "equipment-3978",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-3978 prints \"you gain a +1 item bonus to Perception checks based on sight\". The flat +1 left passiveEffects (the printed -1 Stealth penalty stays a number); the now-lit star FEAT_SITUATIONAL[\"shining-hackle\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "items/wardrobe-stone-greater",
-  "field": "passiveEffects.perception",
-  "aon": "equipment-1323-1222",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-1323-1222 prints \"You gain +3 item bonus to Perception checks involving sight\". The flat +3 raised every Perception check; the now-lit star FEAT_SITUATIONAL[\"wardrobe-stone-greater\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
- },
- {
-  "key": "feats/rope-runner",
+  "key": "feats/timewracked-dedication",
   "field": "speeds.climb",
-  "aon": "feat-6380",
-  "before": "1987a3fd0f03122e",
-  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): feat-6380 prints \"You gain a climb Speed of 15 feet, but only when climbing ropes and similar objects.\" A gated Speed is a star (ruling #126), so the standing climb 15 goes; the record's own star and the On Ropes mode modes/cat-rope-runner (climb 15 while it is on), both lit by the approval, carry it. Held by test/ruling-b-stars-lit.test.ts and test/conditional-speed-check.test.ts."
+  "aon": "feat-8166",
+  "before": "6aa0887e0190d7a8",
+  "why": "desk #153, 2026-10-15 (a print ruling): the climb formula leaves the record; speedBonusAllSpeeds pays a climb Speed once, in any grant order. Held by test/desk153-timewracked-speed.test.ts."
  },
  {
-  "key": "feats/mauler-dedication",
-  "field": "critSpecWeapons.hands",
-  "aon": "feat-6368",
-  "before": "1987a3fd0f03122e",
-  "why": "2026-10-17, the owner's decision (not an Archives change): feat-6368 prints \"all melee weapons that require two hands to wield or have the two-hand trait\"; package M round 3 had added the `hands: 2` half, past Wanderer's Guide's trait-only shape. Asked, he said 'so now if you find these write them but we will adress them later', so the record is back to Wanderer's Guide's shape (the value before 7916e1c) and the gap is in chat-todo.md's 'Future correctness pass' list. Held by test/package-m-data3-mauler.test.ts."
+  "key": "feats/timewracked-dedication",
+  "field": "speeds.burrow",
+  "aon": "feat-8166",
+  "before": "6aa0887e0190d7a8",
+  "why": "desk #153, 2026-10-15 (a print ruling): the burrow formula leaves the record; speedBonusAllSpeeds pays a burrow Speed once, in any grant order. Held by test/desk153-timewracked-speed.test.ts."
+ },
+ {
+  "key": "items/screech-shooter-major",
+  "field": "description",
+  "aon": "equipment-1169-1110",
+  "before": "6aa0887e0190d7a8",
+  "why": "desk #151, 2026-09-12 (a print ruling, not an Archives change): equipment-1169-1110 prints the major's whole block as \"The DC for the activation is 37 and it affects creatures in a 50-foot emanation\" and no rune sentence, so '+2 greater striking' leaves its opening sentence (20 characters, a pure deletion); the runes are builtInRunes {potency 2, striking greater}. Held by test/desk151-screech-shooter.test.ts."
+ },
+ {
+  "key": "items/acid-flask-lesser",
+  "field": "strikeDamage",
+  "aon": "equipment-3286-3118",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I11, 2026-10-17 (a shape fix, not an Archives change): equipment-3286-3118 prints \"The bomb deals 1d6 persistent acid damage and 1 acid splash damage.\" Both riders keep their numbers (1d6 persistent, 1 splash) and move from the untyped {dice: 1, die: 'd6'} to StrikeDamageRider's {dice: {n, die}}, which is why no member matches by value; the old shape printed \"undefinedundefined\" on the Strikes tab. Held by scripts/overlay-shape-check.mjs and test/residual-final.test.ts."
+ },
+ {
+  "key": "items/acid-flask-moderate",
+  "field": "strikeDamage",
+  "aon": "equipment-3286-3119",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I11, 2026-10-17 (a shape fix, not an Archives change): equipment-3286-3119 prints \"The bomb deals 2d6 persistent acid damage and 2 acid splash damage.\" Both riders keep their numbers (2d6 persistent, 2 splash) and move from the untyped {dice: 2, die: 'd6'} to StrikeDamageRider's {dice: {n, die}}, which is why no member matches by value; the old shape printed \"undefinedundefined\" on the Strikes tab. Held by scripts/overlay-shape-check.mjs and test/residual-final.test.ts."
+ },
+ {
+  "key": "items/acid-flask-greater",
+  "field": "strikeDamage",
+  "aon": "equipment-3286-3120",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I11, 2026-10-17 (a shape fix, not an Archives change): equipment-3286-3120 prints \"The bomb deals 3d6 persistent acid damage and 3 acid splash damage.\" Both riders keep their numbers (3d6 persistent, 3 splash) and move from the untyped {dice: 3, die: 'd6'} to StrikeDamageRider's {dice: {n, die}}, which is why no member matches by value; the old shape printed \"undefinedundefined\" on the Strikes tab. Held by scripts/overlay-shape-check.mjs and test/residual-final.test.ts."
+ },
+ {
+  "key": "items/acid-flask-major",
+  "field": "strikeDamage",
+  "aon": "equipment-3286-3121",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I11, 2026-10-17 (a shape fix, not an Archives change): equipment-3286-3121 prints \"The bomb deals 4d6 persistent acid damage and 4 acid splash damage.\" Both riders keep their numbers (4d6 persistent, 4 splash) and move from the untyped {dice: 4, die: 'd6'} to StrikeDamageRider's {dice: {n, die}}, which is why no member matches by value; the old shape printed \"undefinedundefined\" on the Strikes tab. Held by scripts/overlay-shape-check.mjs and test/residual-final.test.ts."
+ },
+ {
+  "key": "feats/practical-magic-impossible-magic",
+  "field": "dailyTemporaryItems",
+  "aon": "feat-9331",
+  "before": "6aa0887e0190d7a8",
+  "inPlace": true,
+  "why": "package I item I6c, 2026-10-17 (a print reading, not an Archives change): feat-9331 prints \"You know the formulas for all common spell catalysts of your level or lower\" and \"You must know each spell catalyst's formula\". The one catalyst slot keeps its id, count, traits and level cap; it gains rarity ['common'] and orKnownFormulas and its note is reworded, so no member matches by value. Held by test/daily-items.test.ts and test/batchP02-data-rows-3.test.ts."
+ },
+ {
+  "key": "items/scroll-of-1st-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-2nd-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-3rd-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-4th-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-5th-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-6th-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-7th-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-8th-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-9th-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/scroll-of-10th-rank-spell",
+  "field": "description",
+  "aon": "equipment-2962",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-2962 (Magic Scroll, GM Core pg. 262) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-1st-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2939",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2939 (Magic Wand (1st-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-2nd-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2940",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2940 (Magic Wand (2nd-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-3rd-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2941",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2941 (Magic Wand (3rd-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-4th-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2942",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2942 (Magic Wand (4th-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-5th-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2943",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2943 (Magic Wand (5th-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-6th-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2944",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2944 (Magic Wand (6th-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-7th-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2945",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2945 (Magic Wand (7th-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-8th-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2946",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2946 (Magic Wand (8th-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
+ },
+ {
+  "key": "items/magic-wand-9th-rank-spell",
+  "field": "description",
+  "aon": "equipment-3050-2947",
+  "before": "6aa0887e0190d7a8",
+  "why": "package I item I6f, 2026-10-17 (a removal, not an Archives change): equipment-3050-2947 (Magic Wand (9th-rank Spell), GM Core pg. 282) prints no \"Note: To create a scroll or wand of a specific spell, drag the spell from the compendium ...\" line. The note and the \"---\" rule above it are Foundry VTT's editor instruction (167 characters, a pure deletion), carried in from core.foundry-backup.json; the printed body is unchanged. Held by scripts/foundry-ui-text-check.mjs and test/foundry-ui-text-check.test.ts."
  }
 ]

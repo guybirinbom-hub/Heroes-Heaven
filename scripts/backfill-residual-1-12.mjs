@@ -262,10 +262,14 @@ const ROWS = [
    * only the flat 1. Fixed as a FAMILY, not as the one record the read happened to name — all four
    * grades print the same sentence with the grade's own dice, and the dice ARE the item.
    */
-  { category: 'items', id: 'acid-flask-lesser', field: 'strikeDamage', value: [{ dice: 1, die: 'd6', type: 'acid', persistent: true, note: 'Acid flask' }, { dice: 1, die: '', type: 'acid', splash: true, note: 'Acid flask splash' }] },
-  { category: 'items', id: 'acid-flask-moderate', field: 'strikeDamage', value: [{ dice: 2, die: 'd6', type: 'acid', persistent: true, note: 'Acid flask' }, { dice: 2, die: '', type: 'acid', splash: true, note: 'Acid flask splash' }] },
-  { category: 'items', id: 'acid-flask-greater', field: 'strikeDamage', value: [{ dice: 3, die: 'd6', type: 'acid', persistent: true, note: 'Acid flask' }, { dice: 3, die: '', type: 'acid', splash: true, note: 'Acid flask splash' }] },
-  { category: 'items', id: 'acid-flask-major', field: 'strikeDamage', value: [{ dice: 4, die: 'd6', type: 'acid', persistent: true, note: 'Acid flask' }, { dice: 4, die: '', type: 'acid', splash: true, note: 'Acid flask splash' }] },
+  /* package I item I11: these four used to store `dice: N, die: 'd6'` (a bare number beside a stray
+   * top-level die). StrikeDamageRider wants `dice: { n, die }`, and derive.ts printed "undefinedundefined".
+   * Re-shaped here so `--write` cannot put the old shape back; scripts/overlay-shape-check.mjs refuses it
+   * either way. The splash rider uses die '' like the versatile vial's (derive.ts vialSplash). */
+  { category: 'items', id: 'acid-flask-lesser', field: 'strikeDamage', value: [{ type: 'acid', dice: { n: 1, die: 'd6' }, persistent: true, note: 'Acid flask' }, { type: 'acid', dice: { n: 1, die: '' }, splash: true, note: 'Acid flask splash' }] },
+  { category: 'items', id: 'acid-flask-moderate', field: 'strikeDamage', value: [{ type: 'acid', dice: { n: 2, die: 'd6' }, persistent: true, note: 'Acid flask' }, { type: 'acid', dice: { n: 2, die: '' }, splash: true, note: 'Acid flask splash' }] },
+  { category: 'items', id: 'acid-flask-greater', field: 'strikeDamage', value: [{ type: 'acid', dice: { n: 3, die: 'd6' }, persistent: true, note: 'Acid flask' }, { type: 'acid', dice: { n: 3, die: '' }, splash: true, note: 'Acid flask splash' }] },
+  { category: 'items', id: 'acid-flask-major', field: 'strikeDamage', value: [{ type: 'acid', dice: { n: 4, die: 'd6' }, persistent: true, note: 'Acid flask' }, { type: 'acid', dice: { n: 4, die: '' }, splash: true, note: 'Acid flask splash' }] },
 
   /* Now that `recordMarksFor` walks the inventory, an ITEM can carry an action annotation. This is the
    * record that exposed the gap: *"You reduce the reload time for a repeating hand crossbow magazine

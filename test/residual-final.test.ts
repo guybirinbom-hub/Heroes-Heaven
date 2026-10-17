@@ -45,12 +45,29 @@ describe('the acid flasks delivered a third of their damage', () => {
     ['acid-flask-greater', 3],
     ['acid-flask-major', 4],
   ] as const) {
+    // package I item I11: the rider's dice are { n, die } (StrikeDamageRider). This test used to pin
+    // `dice` as a bare number beside a top-level `die` — the shape that printed "undefinedundefined" —
+    // so it passed on the very bug it was written for.
     it(`${id} carries ${dice}d6 persistent and ${dice} splash`, () => {
       const rd = db.items[id]?.strikeDamage ?? [];
       const persistent = rd.find((r) => r.persistent);
       const splash = rd.find((r) => r.splash);
-      expect(persistent, 'the persistent damage is the bulk of a flask').toMatchObject({ dice, die: 'd6', type: 'acid' });
-      expect(splash, 'and the splash is why you throw it at a group').toMatchObject({ dice, type: 'acid' });
+      expect(persistent, 'the persistent damage is the bulk of a flask').toMatchObject({ dice: { n: dice, die: 'd6' }, type: 'acid', persistent: true });
+      expect(splash, 'and the splash is why you throw it at a group').toMatchObject({ dice: { n: dice, die: '' }, type: 'acid', splash: true });
+      for (const r of rd) expect(r, 'no stray top-level die/n beside dice').not.toHaveProperty('die');
+    });
+
+    it(`${id}: the Strike line reads the printed damage and never "undefined"`, () => {
+      const ch = {
+        ...build('fighter', 5),
+        inventory: [{ instanceId: 'f', itemId: id, quantity: 1, equipped: true }],
+      } as ReturnType<typeof build>;
+      const grade = id.replace('acid-flask-', '');
+      const flask = deriveStrikes(ch, db).find((s) => /acid flask/i.test(s.name) && s.name.toLowerCase().includes(grade));
+      expect(flask, 'the flask is a weapon and appears as a Strike').toBeTruthy();
+      // The exact line, not a /persistent|2d6/ match: that regex matched "undefinedundefined persistent acid".
+      expect(flask!.damage).toContain(`plus ${dice}d6 persistent acid plus ${dice} acid splash`);
+      expect(flask!.damage).not.toContain('undefined');
     });
   }
 
@@ -62,7 +79,8 @@ describe('the acid flasks delivered a third of their damage', () => {
     } as ReturnType<typeof build>;
     const flask = deriveStrikes(ch, db).find((s) => /acid flask/i.test(s.name));
     expect(flask, 'the flask is a weapon and appears as a Strike').toBeTruthy();
-    expect(JSON.stringify(flask), 'its persistent acid must be on the strike').toMatch(/persistent|2d6/i);
+    expect(flask!.damage, 'its persistent acid must be on the strike').toContain('2d6 persistent acid');
+    expect(JSON.stringify(flask), 'and nothing on the strike may read "undefined"').not.toContain('undefined');
   });
 });
 

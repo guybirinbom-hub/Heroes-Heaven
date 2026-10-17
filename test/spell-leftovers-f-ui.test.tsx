@@ -252,6 +252,22 @@ describe('10 · Spellshot + Beast Gunner says where the spellshot cantrips went'
     },
     T,
   );
+  // package I, desk #162 (2026-10-17): the Spellshot card's own NOTE (the record's `note`, one text for every character) told
+  // the pairing the cantrips are prepared in the archetype's picker and that the wizard feats give the slots — the
+  // opposite of the box right above it. It now carries the Beast Gunner clause too, in the same words.
+  it(
+    'the builder’s Level 2 page: the Spellshot card’s record note no longer contradicts the box, it says the Beast Gunner case too',
+    () => {
+      const r = openAt(pair(), 2);
+      const note = [...r.host.querySelectorAll('.lvl-note')].map((n) => flat(n.textContent)).find((t) => /four arcane cantrips/.test(t));
+      expect(note, 'fixture: the Spellshot card shows its record note').toBeTruthy();
+      expect(note).toContain('If you also take Beast Gunner Dedication, it holds your archetype spells instead');
+      expect(note).toContain('cast at will as innate arcane cantrips');
+      expect(note).toContain("spell slots come from the beast gunner's own spellcasting feats");
+      r.stop();
+    },
+    T,
+  );
   it(
     'the Spells tab: the beast gunner entry names the two cantrips and where they are',
     () => {

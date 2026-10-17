@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { dailyItemOptions, dailyItemSlots } from '../src/rules/dailyItems';
+import { enabledBookSet } from '../src/rules/sources';
 
 /**
  * Temporary items the player makes at daily preparations.
@@ -114,6 +115,117 @@ describe('Herbal Forager makes an ITEM, not a scroll', () => {
 
   it('a character with no formula book is offered nothing, which the Rest sheet already says', () => {
     expect(dailyItemOptions(slot(), withFeats('ranger', 6, ['herbal-forager']), db)).toEqual([]);
+  });
+});
+
+/*
+ * package I: i6c-practical-magic-common-catalysts. Practical Magic (Hedge Mage, AoN feat-9331, Impossible Magic
+ * pg. 95): "You know the formulas for all common spell catalysts of your level or lower. ... Each day during your
+ * daily preparations, you can make two spell catalysts with an item level no higher than half your level. You
+ * must know each spell catalyst's formula." The row once capped the level and let every rarity through (66 of the
+ * 150 catalysts are uncommon or rare). The pool is now the common ones plus any whose formula the character holds
+ * in a formula book; a pick the player already made today stays on the list (a player's change is never overwritten).
+ */
+describe('Practical Magic offers the common spell catalysts, and an uncommon or rare one only when its formula is known', () => {
+  const FEAT = 'practical-magic-impossible-magic';
+  const caster = () => withFeats('wizard', 12, [FEAT]);
+  const slot = () => dailyItemSlots(caster(), db)[0];
+  const withBook = (formulas: string[]) => {
+    const c = caster();
+    return { ...c, inventory: [...c.inventory, { instanceId: 'book-1', itemId: 'formula-book-blank', quantity: 1, formulas }] };
+  };
+  const ids = (c = caster(), o?: { enabled?: Set<string>; keep?: string }) => dailyItemOptions(slot(), c, db, o).map((x) => x.id);
+  const catalysts = Object.values(db.items).filter((i) => (i.traits ?? []).includes('catalyst'));
+  // Half of level 12 is 6. Measured 2026-10-17: 41 common, 16 uncommon and 7 rare catalysts at level 6 or lower.
+  const atOrBelow6 = catalysts.filter((i) => (i.level ?? 0) <= 6);
+
+  it('the shipped feat gives two slots that carry the rarity filter and the known-formula union', () => {
+    // package I: i6c-practical-magic-common-catalysts
+    expect(dailyItemSlots(caster(), db)).toHaveLength(2);
+    for (const s of dailyItemSlots(caster(), db)) {
+      // package I: i6c-practical-magic-common-catalysts
+      expect(s.rarity).toEqual(['common']);
+      expect(s.orKnownFormulas).toBe(true);
+      expect(s.maxLevel).toBe(6);
+      expect(s.traits).toEqual(['catalyst']);
+    }
+  });
+
+  it('dailyItemSlots copies rarity and orKnownFormulas from the definition onto the slot', () => {
+    const rec = db.feats[FEAT];
+    const filter = { ...rec.dailyTemporaryItems![0].filter, rarity: ['rare'], orKnownFormulas: false };
+    const patched = { ...db, feats: { ...db.feats, [FEAT]: { ...rec, dailyTemporaryItems: [{ ...rec.dailyTemporaryItems![0], filter }] } } };
+    const s = dailyItemSlots(caster(), patched)[0];
+    // package I: i6c-practical-magic-common-catalysts
+    expect(s.rarity).toEqual(['rare']);
+    expect(s.orKnownFormulas).toBeUndefined();
+    // a definition with no rarity key yields a slot with none
+    const bare = { ...rec.dailyTemporaryItems![0], filter: { traits: ['catalyst'], maxLevel: 3 } };
+    const patched2 = { ...db, feats: { ...db.feats, [FEAT]: { ...rec, dailyTemporaryItems: [bare] } } };
+    expect(dailyItemSlots(caster(), patched2)[0].rarity).toBeUndefined();
+  });
+
+  it('offers common catalysts at half level or lower, and no uncommon or rare one', () => {
+    const offered = ids();
+    const common = atOrBelow6.filter((i) => (i.rarity ?? 'common') === 'common');
+    expect(common.length).toBeGreaterThan(30);
+    // package I: i6c-practical-magic-common-catalysts
+    expect(offered.sort()).toEqual(common.map((i) => i.id).sort());
+    expect(offered).toContain('deadlock-mint');
+    // package I: i6c-practical-magic-common-catalysts
+    for (const id of ['unsullied-blood', 'demon-bone-tiles', 'black-ash', 'grave-token', 'steadfast-sentinel']) {
+      expect(offered, id).not.toContain(id);
+      expect(db.items[id].rarity, `${id} is not common`).not.toBe('common');
+      expect(db.items[id].level ?? 0, `${id} is within the level cap`).toBeLessThanOrEqual(6);
+    }
+    for (const id of offered) expect(db.items[id].rarity ?? 'common', id).toBe('common');
+  });
+
+  it('an uncommon or rare catalyst whose formula is in a formula book is offered; the rest stay out', () => {
+    const offered = ids(withBook(['unsullied-blood', 'demon-bone-tiles']));
+    // package I: i6c-practical-magic-common-catalysts
+    expect(offered).toContain('unsullied-blood');
+    expect(offered).toContain('demon-bone-tiles');
+    expect(offered).not.toContain('black-ash');
+    expect(offered).toContain('deadlock-mint');
+    expect(offered).toHaveLength(ids().length + 2);
+  });
+
+  it('a known formula still obeys the half-level cap, and the trait', () => {
+    const tooHigh = catalysts.find((i) => (i.level ?? 0) > 6 && i.rarity !== 'common');
+    expect(tooHigh, 'an uncommon or rare catalyst above level 6').toBeTruthy();
+    const offered = ids(withBook([tooHigh!.id, 'elixir-of-life-minor']));
+    // package I: i6c-practical-magic-common-catalysts
+    expect(offered).not.toContain(tooHigh!.id);
+    expect(offered).not.toContain('elixir-of-life-minor');
+  });
+
+  it('a formula held in a book counts even with the catalyst\'s own book switched off (what the character holds is never narrowed)', () => {
+    const core = enabledBookSet(undefined);
+    const offered = ids(withBook(['unsullied-blood']), { enabled: core });
+    // package I: i6c-practical-magic-common-catalysts
+    expect(offered).toContain('unsullied-blood');
+    expect(ids(caster(), { enabled: core })).not.toContain('unsullied-blood');
+  });
+
+  it("the player's stored pick stays on the list whatever its rarity, and lets nothing else through", () => {
+    const offered = ids(caster(), { keep: 'black-ash' });
+    // package I: i6c-practical-magic-common-catalysts
+    expect(offered).toContain('black-ash');
+    expect(offered).not.toContain('unsullied-blood');
+    expect(ids(caster(), { keep: 'black-ash' })).toHaveLength(ids().length + 1);
+  });
+
+  // mutation-proof controls: each clause of the new code is what removes the entry, and only that clause
+  it('without the rarity key the slot offers every catalyst at or below the cap; without the union a book does not unlock one', () => {
+    const c = caster();
+    const open = dailyItemOptions({ ...slot(), rarity: undefined }, c, db).map((x) => x.id);
+    // package I: i6c-practical-magic-common-catalysts
+    expect(open).toHaveLength(atOrBelow6.length);
+    expect(open).toContain('unsullied-blood');
+    const noUnion = dailyItemOptions({ ...slot(), orKnownFormulas: false }, withBook(['unsullied-blood']), db).map((x) => x.id);
+    // package I: i6c-practical-magic-common-catalysts
+    expect(noUnion).not.toContain('unsullied-blood');
   });
 });
 

@@ -102,6 +102,9 @@ describe('prose restored to the record’s own printing', () => {
 });
 
 describe('practical-magic-impossible-magic makes two temporary spell catalysts each morning', () => {
+  // package I: i6c-practical-magic-common-catalysts — the P02 row (#14687) capped the level but let every rarity through;
+  // AoN feat-9331 prints "all common spell catalysts of your level or lower … You must know each spell catalyst's formula",
+  // so the row now carries `rarity: ['common']` + `orKnownFormulas` and a note that says so.
   const ROW = [
     {
       id: 'catalyst',
@@ -110,7 +113,9 @@ describe('practical-magic-impossible-magic makes two temporary spell catalysts e
       filter: {
         traits: ['catalyst'],
         maxLevel: 'floor(@actor.level/2)',
-        note: 'Common spell catalysts only; you know their formulas without a formula book. It loses its magic at your next daily preparations if unused.',
+        rarity: ['common'],
+        orKnownFormulas: true,
+        note: 'Common spell catalysts, or one whose formula you know; you know the common formulas without a formula book. It loses its magic at your next daily preparations if unused.',
       },
     },
   ];

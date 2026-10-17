@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { registryKeys } from '../scripts/lib/situational-approval-reach.mjs';
 
 /**
  * WHY THIS FILE EXISTS.
@@ -380,6 +381,13 @@ describe('trust-approvals.json — the plan’s add-a-mechanic list is covered',
     expect(has(175, 'feats/basic-cleric-spellcasting', 'spellListAdditions'), '#175 Basic Cleric Spellcasting spellListAdditions').toBe(true);
     for (const r of ['classFeatures/energy-shot', 'feats/fulminating-shot', 'classFeatures/dispelling-bullet']) {
       expect(has(163, r, 'situational'), `#163 ${r} situational`).toBe(true);
+    }
+    // package I (2026-10-17): an approval with no star behind it lights an empty room — #163 stood that way for two
+    // days. The three need their FEAT_SITUATIONAL keys (scripts/trust-ledger-check.mjs check 6b asks it of every
+    // `situational` approval; test/situational-approval-reach.test.ts plants the bad case).
+    const starred = registryKeys(readFileSync('src/rules/situationalBonuses.ts', 'utf8'), 'FEAT_SITUATIONAL');
+    for (const id of ['energy-shot', 'fulminating-shot', 'dispelling-bullet']) {
+      expect(starred, `#163 ${id} has a FEAT_SITUATIONAL star`).toContain(id);
     }
   });
 

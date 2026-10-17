@@ -1023,6 +1023,35 @@ describe('sources-apply-to-everything: a class sub-pick a feat asks for follows 
     expect(choiceOpts(c, 'feats', 'wizard-dedication')).toContain('school-of-gates');
   });
 
+  // package I: i3-wizard-dedication-impossible-magic-schools — AoN feat-5106 (Wizard Dedication, Player Core pg. 223)
+  // sets no limit on the school, so the four Impossible Magic schools (arcane-school-31..34) are on its list; the Sources
+  // card still decides who sees them, by each option's own book.
+  it('(e) Wizard Dedication offers the four Impossible Magic schools only with Impossible Magic on; a held answer stays offered with the book off', () => {
+    const c = db();
+    const IM_SCHOOLS = ['school-of-breathtaking-influence', 'school-of-keen-inquiry', 'school-of-nexian-spaces', 'school-of-quantic-control'];
+    for (const id of IM_SCHOOLS) {
+      // package I: i3-wizard-dedication-impossible-magic-schools
+      expect(choiceOpts(c, 'feats', 'wizard-dedication')).toContain(id);
+      expect(c.classFeatures[id].source?.book).toBe(IM);
+    }
+    const core = applySources(c, enabledBookSet(undefined), new Set());
+    const on = applySources(c, enabledBookSet(books(IM)), new Set());
+    for (const id of IM_SCHOOLS) {
+      // package I: i3-wizard-dedication-impossible-magic-schools
+      expect(choiceOpts(core, 'feats', 'wizard-dedication'), `${id} hidden, Core only`).not.toContain(id);
+      expect(choiceOpts(on, 'feats', 'wizard-dedication'), `${id} offered, Impossible Magic on`).toContain(id);
+    }
+    // package I: i3-wizard-dedication-impossible-magic-schools — the Player Core schools are still there, Core only
+    expect(choiceOpts(core, 'feats', 'wizard-dedication')).toContain('school-of-battle-magic');
+    const holder: BuildState = { ...emptyBuild(), name: 'Held', featChoices: { '2:class:0': 'school-of-nexian-spaces' } };
+    const keep = collectChosenIds(holder, c);
+    // package I: i3-wizard-dedication-impossible-magic-schools
+    expect(choiceOpts(applySources(c, enabledBookSet(undefined), keep), 'feats', 'wizard-dedication')).toContain('school-of-nexian-spaces');
+    // the class's own picker agrees with the dedication in both worlds
+    expect(opts(core, 'wizard')).not.toContain('school-of-nexian-spaces');
+    expect(opts(on, 'wizard')).toContain('school-of-nexian-spaces');
+  });
+
   it('(e) a choice whose answers are not class features is untouched: Advanced Domain keeps "time" (a domain), Advanced Weapon Training "shield" (a weapon group)', () => {
     const c = db();
     const core = applySources(c, enabledBookSet(undefined), new Set());

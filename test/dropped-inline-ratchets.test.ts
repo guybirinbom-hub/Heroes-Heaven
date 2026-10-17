@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
+// @ts-expect-error — plain-ESM script, no type declarations (scripts/ is JS, test/ is TS).
+import { LOST_LABEL, findLostLabels } from '../scripts/lib/lost-label.mjs';
 
 /**
  * THE DROPPED-INLINE RATCHETS, PINNED AT THE MEASURED COUNTS (ratchet lane, 2026-09-29).
@@ -39,5 +41,43 @@ describe('ratchet lane 2026-09-29: the dropped-inline ratchets sit at the counts
   // mutation-proof: put DAMAGE_TYPE_BASELINE back to 11 in scripts/dropped-inline-check.mjs and this must fail naming it.
   it('DAMAGE_TYPE_BASELINE is 0, not the 11 it was before the measurement', () => {
     expect(ratchetDecls('DAMAGE_TYPE_BASELINE'), 'DAMAGE_TYPE_BASELINE in scripts/dropped-inline-check.mjs').toEqual([0]);
+  });
+});
+
+/*
+ * PACKAGE I ITEM I4 — THE LOST LINK LABEL ZERO-GUARD.
+ *
+ * Vampire Dedication shipped "…vulnerabilities detailed on and the Drink Blood ability." where AoN
+ * (feat-3545) prints "…detailed in the Vampire Vulnerabilities sidebar and the Drink Blood ability." The
+ * de-linkifier ate the link phrase. scripts/dropped-inline-check.mjs now fails on that shape; its pattern
+ * lives in scripts/lib/lost-label.mjs so it can be proved here without running the whole check.
+ */
+describe('package I item I4: a description may not point at a place that lost its name', () => {
+  // package I item I4: LOST_LABEL_BASELINE measured 0 (node scripts/dropped-inline-check.mjs, after the vampire-dedication row)
+  // mutation-proof: set LOST_LABEL_BASELINE to 1 in scripts/dropped-inline-check.mjs and this must fail naming it.
+  it('LOST_LABEL_BASELINE is 0 — a zero-guard, never a ratchet', () => {
+    expect(ratchetDecls('LOST_LABEL_BASELINE'), 'LOST_LABEL_BASELINE in scripts/dropped-inline-check.mjs').toEqual([0]);
+  });
+
+  // mutation-proof: widen the pattern to `\b\w+ (on|in) (and|or)` and the honest-English case below must fail;
+  // delete the 'detailed' alternative and the first case must fail.
+  it('matches the damaged sentence and not the printed one', () => {
+    expect(LOST_LABEL.test('You gain revulsion and sunlight vulnerabilities detailed on and the Drink Blood ability.')).toBe(true);
+    expect(LOST_LABEL.test('You gain revulsion and sunlight vulnerabilities detailed in the Vampire Vulnerabilities sidebar and the Drink Blood ability.')).toBe(false);
+    for (const damaged of ['as described in .', 'the rules listed on or the', 'presented in , and', 'explained on and', 'found in ; see']) {
+      expect(LOST_LABEL.test(damaged), damaged).toBe(true);
+    }
+  });
+
+  it('does not fire on ordinary English that shares its words', () => {
+    for (const honest of ['They blend in and wait.', 'creatures found in and around the city', 'found in or near water', 'move in or out of the area', 'depends on or', 'a note on and off switch']) {
+      expect(LOST_LABEL.test(honest), honest).toBe(false);
+    }
+  });
+
+  it('findLostLabels names the record, and the shipped descriptions hold none', () => {
+    expect(findLostLabels({ feats: { x: { d: 'detailed on and the' }, y: { d: 'detailed in the Sidebar and the' } } })).toEqual(['feats/x']);
+    const shipped = JSON.parse(readFileSync('public/core-descriptions.json', 'utf8'));
+    expect(findLostLabels(shipped)).toEqual([]);
   });
 });

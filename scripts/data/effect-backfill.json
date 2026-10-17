@@ -31434,12 +31434,8 @@
   "category": "feats",
   "id": "timewracked-dedication",
   "field": "speeds",
-  "value": {
-   "fly": "min(@actor.speed.fly,5)+@actor.speed.fly",
-   "swim": "min(@actor.speed.swim,5)+@actor.speed.swim",
-   "climb": "min(@actor.speed.climb,5)+@actor.speed.climb",
-   "burrow": "min(@actor.speed.burrow,5)+@actor.speed.burrow"
-  }
+  "value": null,
+  "why": "AoN feat-8166, desk #153: the imported per-mode formulas 'min(@actor.speed.X,5)+@actor.speed.X' are REPLACED by speedBonusAllSpeeds, not kept beside it. They resolve in grantSources order, so a Speed granted after the feat (an answer, an item, a stance, a mode) got no +5 (measured: fly 20 stayed 20), and beside the flag an ancestry Speed is paid twice (measured: azarketi swim 30 -> 40). Removed, the one +5 lands on every Speed in every order (fly 20 -> 25, swim 30 -> 35)."
  },
  {
   "category": "feats",
@@ -67279,6 +67275,22 @@
      "label": "School of Unified Magical Theory"
     },
     {
+     "value": "school-of-breathtaking-influence",
+     "label": "School of Breathtaking Influence"
+    },
+    {
+     "value": "school-of-keen-inquiry",
+     "label": "School of Keen Inquiry"
+    },
+    {
+     "value": "school-of-nexian-spaces",
+     "label": "School of Nexian Spaces"
+    },
+    {
+     "value": "school-of-quantic-control",
+     "label": "School of Quantic Control"
+    },
+    {
      "value": "school-of-gates",
      "label": "School of Gates"
     },
@@ -67307,7 +67319,8 @@
      "label": "Runelord"
     }
    ]
-  }
+  },
+  "why": "AoN feat-5106 (Wizard Dedication, Player Core pg. 223; live page re-checked 2026-10-17, same words): \"Select a school; you don't gain any abilities from your choice of school, but qualify for feats as a member.\" No school is excluded. Impossible Magic prints four more arcane schools with no restriction on who may study them: arcane-school-31 (School of Breathtaking Influence), arcane-school-32 (School of Keen Inquiry), arcane-school-33 (School of Nexian Spaces), arcane-school-34 (School of Quantic Control), all Impossible Magic pg. 108, all already records the wizard class's own Arcane School picker offers. The 14 options of the replaced row are kept in their order; the four are added after the Player Core seven. Book filtering is the Sources card's job (applySources narrows a feat's class-feature choice by each option's own record book, desk #170), so a character without Impossible Magic on is still not offered them."
  },
  {
   "category": "feats",
@@ -150185,8 +150198,8 @@
   "category": "feats",
   "id": "spellshot-dedication",
   "field": "note",
-  "value": "Your spellbook holds four arcane cantrips; the app tracks the two you prepare each day, chosen in the archetype's own cantrip picker. Spell slots come from the wizard archetype's feats — Basic Wizard Spellcasting at 4th, Expert Wizard Spellcasting at 12th — which this feat lets you take.",
-  "why": "feat-3267 — Spellshot Dedication, Guns & Gears (Remastered) p. 140, and archetype-122, whose feat list runs to Expert Wizard Spellcasting. Replaces a note that told the player to take that feat through an Override."
+  "value": "Your spellbook holds four arcane cantrips; the app tracks the two you prepare each day, chosen in the archetype's own cantrip picker. Spell slots come from the wizard archetype's feats — Basic Wizard Spellcasting at 4th, Expert Wizard Spellcasting at 12th — which this feat lets you take. If you also take Beast Gunner Dedication, it holds your archetype spells instead: your 2 Spellshot Dedication cantrips are cast at will as innate arcane cantrips (choose them on this feat's card in the builder), and spell slots come from the beast gunner's own spellcasting feats.",
+  "why": "feat-3267 (Spellshot Dedication, Guns & Gears (Remastered) p. 140) and owner ruling desk #162 (2026-10-15, work/desk-answers-2026-10-15.json, his pick 'One pool + a note'): beside Beast Gunner Dedication the app keeps ONE archetype pool, the beast gunner's, and casts the spellshot's two cantrips at will as innate arcane cantrips (package F, 00a26fa, src/rules/build.ts). The old note told every spellshot the two cantrips are prepared in the archetype's own picker and that the wizard feats give the slots - both false in that pairing, on the same builder card where package F's line says the opposite. An app note: it adds no printed rule words."
  },
  {
   "category": "feats",
@@ -150900,20 +150913,25 @@
   "field": "strikeDamage",
   "value": [
    {
-    "dice": 1,
-    "die": "d6",
     "type": "acid",
+    "dice": {
+     "n": 1,
+     "die": "d6"
+    },
     "persistent": true,
     "note": "Acid flask"
    },
    {
-    "dice": 1,
-    "die": "",
     "type": "acid",
+    "dice": {
+     "n": 1,
+     "die": ""
+    },
     "splash": true,
     "note": "Acid flask splash"
    }
-  ]
+  ],
+  "why": "equipment-3286-3118 (Acid Flask (Lesser)) prints \"The bomb deals 1d6 persistent acid damage and 1 acid splash damage.\" Same numbers as overlay row #11781, re-shaped to StrikeDamageRider (dice: {n, die}); the old shape rendered 'undefinedundefined' on the Strikes tab. Package I item I11."
  },
  {
   "category": "items",
@@ -150921,20 +150939,25 @@
   "field": "strikeDamage",
   "value": [
    {
-    "dice": 2,
-    "die": "d6",
     "type": "acid",
+    "dice": {
+     "n": 2,
+     "die": "d6"
+    },
     "persistent": true,
     "note": "Acid flask"
    },
    {
-    "dice": 2,
-    "die": "",
     "type": "acid",
+    "dice": {
+     "n": 2,
+     "die": ""
+    },
     "splash": true,
     "note": "Acid flask splash"
    }
-  ]
+  ],
+  "why": "equipment-3286-3119 (Acid Flask (Moderate)) prints \"The bomb deals 2d6 persistent acid damage and 2 acid splash damage.\" Same numbers as overlay row #11782, re-shaped to StrikeDamageRider (dice: {n, die}); the old shape rendered 'undefinedundefined' on the Strikes tab. Package I item I11."
  },
  {
   "category": "items",
@@ -150942,20 +150965,25 @@
   "field": "strikeDamage",
   "value": [
    {
-    "dice": 3,
-    "die": "d6",
     "type": "acid",
+    "dice": {
+     "n": 3,
+     "die": "d6"
+    },
     "persistent": true,
     "note": "Acid flask"
    },
    {
-    "dice": 3,
-    "die": "",
     "type": "acid",
+    "dice": {
+     "n": 3,
+     "die": ""
+    },
     "splash": true,
     "note": "Acid flask splash"
    }
-  ]
+  ],
+  "why": "equipment-3286-3120 (Acid Flask (Greater)) prints \"The bomb deals 3d6 persistent acid damage and 3 acid splash damage.\" Same numbers as overlay row #11783, re-shaped to StrikeDamageRider (dice: {n, die}); the old shape rendered 'undefinedundefined' on the Strikes tab. Package I item I11."
  },
  {
   "category": "items",
@@ -150963,20 +150991,25 @@
   "field": "strikeDamage",
   "value": [
    {
-    "dice": 4,
-    "die": "d6",
     "type": "acid",
+    "dice": {
+     "n": 4,
+     "die": "d6"
+    },
     "persistent": true,
     "note": "Acid flask"
    },
    {
-    "dice": 4,
-    "die": "",
     "type": "acid",
+    "dice": {
+     "n": 4,
+     "die": ""
+    },
     "splash": true,
     "note": "Acid flask splash"
    }
-  ]
+  ],
+  "why": "equipment-3286-3121 (Acid Flask (Major)) prints \"The bomb deals 4d6 persistent acid damage and 4 acid splash damage.\" Same numbers as overlay row #11784, re-shaped to StrikeDamageRider (dice: {n, die}); the old shape rendered 'undefinedundefined' on the Strikes tab. Package I item I11."
  },
  {
   "category": "classFeatures",
@@ -177644,8 +177677,8 @@
   "category": "items",
   "id": "screech-shooter-major",
   "field": "description",
-  "value": "Built from the larynx of a terror shrike, or similar animal that possesses a frightening screech or similar special ability, a *major screech shooter* is a special *+2 greater striking harmona gun* designed to fire terrifying blasts of sound. A *screech shooter* deals sonic damage but can otherwise be used like a normal harmona gun.\n\n---\n\n**Activate—Screech Shot** ⟨2⟩ (emotion, manipulate, mental)\n\n**Frequency** once per hour\n\n---\n\n**Effect** The screech shooter unleashes a frightening wail. All creatures in a 50-foot emanation from you must attempt a DC 37 Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature is Frightened 1.\n\n**Failure** The creature is Frightened 2.\n\n**Critical Failure** The creature is Frightened 3 and fleeing for 1 round.\n\n---\n\n**Craft Requirements** The initial raw materials must include the larynx of a creature with a frightening screech.",
-  "why": "AoN equipment-1169-1110 (Screech Shooter (Major), Guns & Gears (Remastered) pg. 155): \"The DC for the activation is 37 and it affects creatures in a 50-foot emanation\", against the base page's DC 25 / 30-foot emanation (equipment-1169). SUPERSEDES the shipped description row, carried whole with the Effect line's two numbers changed to 50-foot and DC 37 (owner 2026-09-10 #72). The major grade prints NO rune sentence of its own, so the shipped \"+2 greater striking\" first sentence is left exactly as it stands - changing it would be an invention, not a printed clause."
+  "value": "Built from the larynx of a terror shrike, or similar animal that possesses a frightening screech or similar special ability, a *major screech shooter* is a special *harmona gun* designed to fire terrifying blasts of sound. A *screech shooter* deals sonic damage but can otherwise be used like a normal harmona gun.\n\n---\n\n**Activate—Screech Shot** ⟨2⟩ (emotion, manipulate, mental)\n\n**Frequency** once per hour\n\n---\n\n**Effect** The screech shooter unleashes a frightening wail. All creatures in a 50-foot emanation from you must attempt a DC 37 Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature is Frightened 1.\n\n**Failure** The creature is Frightened 2.\n\n**Critical Failure** The creature is Frightened 3 and fleeing for 1 round.\n\n---\n\n**Craft Requirements** The initial raw materials must include the larynx of a creature with a frightening screech.",
+  "why": "AoN equipment-1169-1110 (Screech Shooter (Major), Guns & Gears (Remastered) pg. 155) prints the major's whole block as \"The DC for the activation is 37 and it affects creatures in a 50-foot emanation.\" - no rune sentence. Owner ruling desk #151 (2026-09-12, work/desk-answers-2026-09-12.json): '(a) the major's text becomes the Archives' own block (drop the flattened \"+2 greater striking\" sentence)'. SUPERSEDES desk #72's row, carried whole: only the words '+2 greater striking' leave the opening sentence (a pure deletion), and the Effect line keeps the major's own DC 37 / 50-foot emanation (#72 option A). The rune grade moves to builtInRunes."
  },
  {
   "category": "items",
@@ -189508,11 +189541,15 @@
       "catalyst"
      ],
      "maxLevel": "floor(@actor.level/2)",
-     "note": "Common spell catalysts only; you know their formulas without a formula book. It loses its magic at your next daily preparations if unused."
+     "rarity": [
+      "common"
+     ],
+     "orKnownFormulas": true,
+     "note": "Common spell catalysts, or one whose formula you know; you know the common formulas without a formula book. It loses its magic at your next daily preparations if unused."
     }
    }
   ],
-  "why": "AoN feat-9331 (Practical Magic, Impossible Magic pg. 95, this record's aonId): \"Each day during your daily preparations, you can make two spell catalysts with an item level no higher than half your level. ... A spell catalyst created this way is a temporary item and loses its magic the next time you make your daily preparations if you haven't already used it.\" Same shape as talisman-dabbler-dedication's dailyTemporaryItems row; read by src/rules/dailyItems.ts (dailyItemSlots/dailyItemOptions)."
+  "why": "AoN feat-9331 (Practical Magic, Hedge Mage, Impossible Magic pg. 95, this record's aonId): \"You know the formulas for all common spell catalysts of your level or lower. You remember spell catalyst formulas and don't need a formula book for them. Each day during your daily preparations, you can make two spell catalysts with an item level no higher than half your level. You must know each spell catalyst's formula.\" The replaced row (#14687, batch P02) capped the level but let every rarity through: 66 of the 150 catalysts are uncommon or rare (e.g. unsullied-blood, demon-bone-tiles, black-ash). A formula the character knows otherwise (src/rules/formulaBook.ts knownFormulas) still counts, which is what `orKnownFormulas` keeps."
  },
  {
   "category": "spells",
@@ -192040,5 +192077,436 @@
    ]
   },
   "why": "desk #176, his 'Unarmed only (Recommended)' (2026-10-17; work/desk-answers-2026-10-17.json): AoN class-feature-938 (Expert Strikes, Player Core 2 pg. 114) prints \"When you get a critical hit with an unarmed attack in the brawling group, you get its critical specialization effect.\" The imported narrowing {groups:['brawling']} (Wanderer's Guide's \"brawling weapons\") also lit brawling-group WEAPONS (gauntlet, knuckle-duster, spiked gauntlet); `categories: ['unarmed']` is the gate the Strike must pass beside the group (derive.ts weaponMatches), so only an unarmed attack in the brawling group matches."
+ },
+ {
+  "category": "feats",
+  "id": "timewracked-dedication",
+  "field": "speedBonusAllSpeeds",
+  "value": true,
+  "why": "AoN feat-8166 (Timewracked Dedication, Pathfinder #219 pg. 80): \"Your Speed increases by 5 feet for each mode of movement available to you.\" Owner ruling desk #153 (2026-10-15, work/desk-answers-2026-10-15.json, his pick '+5 to every speed'): +5 feet to EVERY Speed the character has. The record's landSpeedBonus 5 is the +5; this flag carries it to every other Speed the character already has (src/rules/derive.ts deriveSpeeds `allSpeedsBonus`, applied after every grant, stance and mode; a Speed the character lacks is not created). Not in scripts/data/trust-fields.json, so the gate never strips it (trust-approvals noMechanic #153)."
+ },
+ {
+  "category": "items",
+  "id": "screech-shooter",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "striking": "striking"
+  },
+  "why": "AoN equipment-1169 (Screech Shooter, Guns & Gears (Remastered) pg. 155): \"a screech shooter is a special +1 striking harmona gun designed to fire terrifying blasts of sound.\" Owner ruling desk #151 (2026-09-12, work/desk-answers-2026-09-12.json): '(b) builtInRunes on all three: base {potency 1, striking 1}'. A chassis field outside scripts/data/trust-fields.json; the gate never strips it (trust-approvals noMechanic #151)."
+ },
+ {
+  "category": "items",
+  "id": "screech-shooter-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "striking": "greater"
+  },
+  "why": "AoN equipment-1169-1109 (Screech Shooter (Greater), Item 13): \"A greater screech shooter is a +2 greater striking harmona gun.\" Owner ruling desk #151 (2026-09-12): 'greater {potency 2, striking 2}'."
+ },
+ {
+  "category": "items",
+  "id": "screech-shooter-major",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "striking": "greater"
+  },
+  "why": "AoN equipment-1169-1110 (Screech Shooter (Major), Item 17) prints no rune line: its whole block is \"The DC for the activation is 37 and it affects creatures in a 50-foot emanation.\" Owner ruling desk #151 (2026-09-12): 'major {potency 2, striking 2} (a higher grade inherits the previous grade's runes unless it restates them)', i.e. the greater's +2 greater striking (equipment-1169-1109)."
+ },
+ {
+  "category": "feats",
+  "id": "vampire-dedication",
+  "field": "description",
+  "value": "You're a newly risen vampire. You gain the undead and vampire traits and the basic undead benefits, and your undead hunger is for the blood of the living. Your incisors elongate; you gain a fangs unarmed attack that deals 1d6 piercing damage. They're in the brawling group and have the grapple and unarmed traits. You gain revulsion and sunlight vulnerabilities detailed in the Vampire Vulnerabilities sidebar and the Drink Blood ability.",
+  "why": "feat-3545 prints \"You gain revulsion and sunlight vulnerabilities detailed in the Vampire Vulnerabilities sidebar and the Drink Blood ability.\" The shipped text read \"detailed on and\": the link label was stripped. The sidebar ships as sidebar/vampire-vulnerabilities (sidebar-1790). Package I item I4."
+ },
+ {
+  "category": "feats",
+  "id": "vampire-dedication",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Drink Blood",
+    "key": "actions"
+   },
+   {
+    "label": "Vampire Vulnerabilities",
+    "key": "sidebar"
+   },
+   {
+    "label": "basic undead benefits",
+    "key": "rules"
+   }
+  ],
+  "why": "feat-3545 links 'Vampire Vulnerabilities' (sidebar-1790, shipped as sidebar/vampire-vulnerabilities) and 'basic undead benefits' (rules-1694, shipped as rules/basic-undead-benefits); the existing Drink Blood ref is kept. src/data/index.ts copies every extra core bucket (sidebar, rules) into content, so lookupRef resolves both. Package I item I4."
+ },
+ {
+  "category": "classFeatures",
+  "id": "necromancer-spellcasting",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1285 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "grave-spells",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1286 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "fatal-method",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1287 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "grim-fascination",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1288 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "mastery-of-life-and-death",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1289 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "undead-lore",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1290 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "inevitable-return",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1294 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "mental-wards",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1295 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "expert-necromancy",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1299 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "unnatural-fortitude",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1301 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "master-necromancy",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1305 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "undying-resilience",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1306 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "epitaph",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1307 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "legendary-necromancy",
+  "field": "traits",
+  "value": [
+   "necromancer"
+  ],
+  "why": "class-feature-1308 is a Necromancer class feature (the page's class: Necromancer; class-75's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "runes",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1312 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "runic-repertoire",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1313 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "runic-crafter",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1316 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "expert-runes",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1322 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "runic-optimization",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1324 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "assured-runic-crafter",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1325 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "forged-endurance",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1326 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-runic-optimization",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1330 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "masterful-runes",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1331 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "legendary-runes",
+  "field": "traits",
+  "value": [
+   "runesmith"
+  ],
+  "why": "class-feature-1332 is a Runesmith class feature (the page's class: Runesmith; class-76's table lists it). Class trait, as every other class's own features carry. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "performers-heart",
+  "field": "traits",
+  "value": [
+   "bard"
+  ],
+  "why": "class-feature-637 is a Bard class feature (the page's class: Bard); only the bard's table lists it, and its sibling greater-performers-heart (class-feature-643) already carries ['bard']. Found by the I14 measurement. Package I item I14."
+ },
+ {
+  "category": "classFeatures",
+  "id": "stylish-combatant",
+  "field": "traits",
+  "value": [
+   "swashbuckler"
+  ],
+  "why": "class-feature-1007 is a Swashbuckler class feature (the page's class: Swashbuckler); only the swashbuckler's table lists it. Found by the I14 measurement. Package I item I14."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-1st-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 1st-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-2nd-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 2nd-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-3rd-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 3rd-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-4th-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 4th-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-5th-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 5th-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-6th-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 6th-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-7th-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 7th-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-8th-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 8th-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-9th-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 9th-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "scroll-of-10th-rank-spell",
+  "field": "description",
+  "value": "Casting a Spell from a scroll requires holding the scroll in one hand and activating it with a Cast a Spell activity using the normal number of actions for that spell.\n\nThe spell must appear on your spell list. Because you're the one Casting the Spell, use your spell attack modifier and spell DC. The spell also gains the appropriate trait for your tradition (arcane, divine, occult, or primal).\n\nAny physical costs are provided when a scroll is created, so you don't need to provide them when casting from a scroll. If the spell requires a locus, you must have that locus to Cast the Spell from a scroll.",
+  "why": "equipment-2962 (Magic Scroll, GM Core pg. 262 — the printed scroll entry; this record is the Foundry-era \"Scroll of 10th-rank Spell\" kept for saved characters and has no Archives page of its own) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added, the printed body is unchanged."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-1st-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2939 (Magic Wand (1st-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-2nd-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2940 (Magic Wand (2nd-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-3rd-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2941 (Magic Wand (3rd-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-4th-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2942 (Magic Wand (4th-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-5th-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2943 (Magic Wand (5th-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-6th-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2944 (Magic Wand (6th-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-7th-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2945 (Magic Wand (7th-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-8th-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2946 (Magic Wand (8th-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
+ },
+ {
+  "category": "items",
+  "id": "magic-wand-9th-rank-spell",
+  "field": "description",
+  "value": "This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within.\n\n**Activate** Cast a Spell\n\n**Frequency** once per day, plus overcharge\n\n---\n\n**Effect** You Cast the Spell at the indicated rank.\n\n**Craft Requirements** Supply a casting of the spell at the listed rank.",
+  "why": "equipment-3050-2947 (Magic Wand (9th-rank Spell), GM Core pg. 282; family page equipment-3050 Magic Wand) prints no such line. The closing \"*Note: To create a scroll or wand of a specific spell, drag the spell from the compendium or compendium browser into the inventory of a PC, NPC, or loot actor.*\" and the \"---\" rule above it are Foundry VTT's editor instruction, carried in from public/core.foundry-backup.json; Heroes Heaven has no compendium and no loot actor. Removal only: no word is added."
  }
 ]

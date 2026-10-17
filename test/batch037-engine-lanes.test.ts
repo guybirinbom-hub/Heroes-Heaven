@@ -74,13 +74,21 @@ describe('swashbucklers-speed lane scope: only a printed type gets typed', () =>
   });
 
   // batch 037: swashbucklers-speed#typed-all-speeds
-  it('only the clause that prints the PLURAL raises every Speed', () => {
-    /* "to your Speeds" (feat-6238) is the one plural in the whole carrier set; every other clause says
-     * "your Speed". A second `speedBonusAllSpeeds` would have to quote its own plural. */
+  // desk 153 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
+  it('only a clause that prints the PLURAL raises every Speed', () => {
+    /* "to your Speeds" (feat-6238) is the plural of the swashbuckler's; every other clause says "your Speed" —
+     * except ONE more that quotes a plural of its own: Timewracked Dedication (feat-8166) raises "your Speed … for
+     * each mode of movement available to you", which owner ruling #153 (2026-10-15) read as +5 to every Speed
+     * (package I). A third `speedBonusAllSpeeds` would have to quote its own plural and be listed here. */
+    const OWN_PLURAL: Record<string, RegExp> = {
+      'swashbucklers-speed': /to your Speeds/i,
+      'timewracked-dedication': /for each mode of movement available to you/i,
+    };
     const plural = carriers().filter(({ rec }) => (rec as { speedBonusAllSpeeds?: unknown }).speedBonusAllSpeeds);
     for (const { id, rec } of plural) {
-      expect(rec.description ?? '', id).toMatch(/to your Speeds/i);
+      expect(OWN_PLURAL[id], `${id} is not a record print gives the plural to`).toBeTruthy();
+      expect(rec.description ?? '', id).toMatch(OWN_PLURAL[id]);
     }
-    expect(plural.length, 'at most the one record print gives it to').toBeLessThanOrEqual(1);
+    expect(plural.map(({ id }) => id).sort(), 'exactly the records print gives it to').toEqual(['swashbucklers-speed', 'timewracked-dedication']);
   });
 });

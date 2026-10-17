@@ -26,6 +26,7 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { reprintTwinGaps } from './lib/reprint-twin-gaps.mjs';
+import { situationalApprovalCount, unreachedSituationalApprovals } from './lib/situational-approval-reach.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const R = (p) => join(ROOT, p);
@@ -171,6 +172,21 @@ const leafOf = (path) => CONTAINERS.reduce((p, c) => (p.startsWith(c) ? p.slice(
   }
   check('every approvals entry names a real record (or is pending)', badRecord.length === 0, badRecord.length ? some(badRecord) : `${(approvals.approvals ?? []).length} approvals, ${(approvals.noMechanic ?? []).length} noMechanic`);
   check('every approved field path is plausible', badPath.length === 0, badPath.length ? some(badPath) : '');
+}
+
+/* ---- 6b. every `situational` approval reaches a star (package I, desk #163) -------------------------
+ * Check 6 asks whether an approval's PATH is real; this asks whether anything is behind it. A `situational`
+ * approval switches a starred note on, and the note has to exist: a FEAT_SITUATIONAL / CHOICE_SITUATIONAL
+ * key in src/rules/situationalBonuses.ts, or a `situational` field on the record itself. Desk #163 (Energy
+ * Shot, Fulminating Shot, Dispelling Bullet) was approved on 2026-10-15 with none of the three behind it —
+ * every check here stayed green and the player got no star. A `pending` approval is exempt. The reader is
+ * scripts/lib/situational-approval-reach.mjs (test/situational-approval-reach.test.ts plants the bad cases). */
+{
+  const unreached = unreachedSituationalApprovals({
+    approvals, core, registrySource: readFileSync(R('src/rules/situationalBonuses.ts'), 'utf8'),
+  });
+  check('every `situational` approval reaches a star', unreached.length === 0,
+    unreached.length ? `${unreached.length} of ${situationalApprovalCount(approvals)} reach nothing: ${some(unreached)}` : `${situationalApprovalCount(approvals)} approvals, every one has a star`);
 }
 
 /* ---- 7. every desk ruling has exactly one disposition -------------------------------------------

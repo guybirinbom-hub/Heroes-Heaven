@@ -304,6 +304,24 @@ describe('10 · Spellshot + Beast Gunner: one pool, the spellshot’s two cantri
     );
     expect(levelChoices(b, db).filter((m) => /Spellshot/.test(m.label))).toEqual([]);
   });
+  // package I, desk #162 (2026-10-17): the record's own `note` (Feats tab "Note: …", the builder card) is one static
+  // text for every character, so it used to tell a spellshot BESIDE Beast Gunner that the cantrips are prepared in the
+  // archetype's picker and that the wizard feats give the slots — both false in the pairing, on the same card where
+  // the line above says the opposite. Now it says both cases, in the entry note's own words; rewording either side
+  // alone fails here.
+  it('the Spellshot Dedication record note carries the pairing too, in the words the beast gunner entry note uses', () => {
+    const entryNote = entry(buildCharacter(pair(), db), 'beast-gunner-dedication-casting')?.note ?? '';
+    for (const d of [db, gated]) {
+      const rec = String((d.feats['spellshot-dedication'] as { note?: string }).note ?? '');
+      expect(rec, 'the lone-spellshot sentences stay').toContain("the app tracks the two you prepare each day, chosen in the archetype's own cantrip picker");
+      expect(rec, 'the lone-spellshot sentences stay').toContain('Basic Wizard Spellcasting at 4th, Expert Wizard Spellcasting at 12th');
+      expect(rec).toContain('If you also take Beast Gunner Dedication');
+      for (const fragment of ['holds your archetype spells', 'cast at will as innate arcane cantrips']) {
+        expect(rec, `record note: ${fragment}`).toContain(fragment);
+        expect(entryNote, `beast gunner entry note: ${fragment}`).toContain(fragment);
+      }
+    }
+  });
   it('a lone spellshot (it holds the pool) gets no such note and owes no such choice', () => {
     const b = pair({ featPicks: { '2:class:0': 'spellshot-dedication', '4:class:1': 'basic-wizard-spellcasting' } });
     expect(entry(buildCharacter(b, db), 'spellshot-dedication-casting')?.note ?? '').not.toMatch(/at will/);

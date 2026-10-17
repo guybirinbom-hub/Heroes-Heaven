@@ -1,0 +1,15 @@
+{
+  "_": "scripts/foundry-ui-text-check.mjs (package I, item I6f, 2026-10-17). The records whose shipped text still carries a phrase only Foundry VTT's editor or automation uses ('The button above...', 'The effect linked here...', 'For Foundry automation...', '...cannot reference data from another actor...'), measured with node scripts/foundry-ui-text-check.mjs --list on the tree that removed the 19 scroll/wand 'drag the spell from the compendium' notes. Each is its own cleanup: the sentence describes an effect Foundry builds, so the fix is a reading of the print and of the record's mechanics, not a deletion (found mid-job, so by the 2026-10-17 rule they are chat-todo's Future correctness pass, not fixed here). A NEW offender fails; a listed one that is now clean fails until its entry is removed - the list only shrinks.",
+  "records": [
+    "classFeatures/offensive-boost",
+    "classes/inventor",
+    "familiarAbilities/radiant",
+    "feats/call-worm-spirit",
+    "feats/crimson-breath",
+    "feats/fey-ascension",
+    "feats/pass-vengeful-judgment",
+    "feats/starlight-armor",
+    "feats/worms-feast",
+    "spells/impeccable-flow"
+  ]
+}

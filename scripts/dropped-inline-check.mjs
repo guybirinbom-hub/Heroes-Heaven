@@ -30,6 +30,7 @@ import { findStrippedSaveDc } from './repair-stripped-save-dc.mjs';
 import { findDroppedDamageType } from './repair-damage-type.mjs';
 import { findStrippedFlatDc } from './repair-flat-check-dc.mjs';
 import { hasArtefact } from './repair-stripped-skill-links.mjs';
+import { LOST_LABEL, findLostLabels } from './lib/lost-label.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -180,6 +181,42 @@ const ARTEFACT_BASELINE = 17;
     process.exit(1);
   }
   console.log(`dropped-inline: ${hits.length} collapsed-link query string(s) (ratchet ${ARTEFACT_BASELINE}; repair-stripped-skill-links.mjs lowers it)`);
+}
+
+/*
+ * THE LOST LINK LABEL — a tenth class, and the smallest: a cross-reference that lost its object.
+ *
+ * AoN prints *"…vulnerabilities detailed in the Vampire Vulnerabilities sidebar and the Drink Blood
+ * ability."* (feat-3545, Vampire Dedication); the de-linkifier that builds the plain-text fallback `d`
+ * ate the link phrase and the record shipped *"…detailed on and the Drink Blood ability."* — told to
+ * look "on and", never told where. The popup draws the Archives page tree and was right; the damaged
+ * copy is what search text, tooltips and any AST-less bucket show (package I item I4).
+ *
+ * A ZERO-GUARD, not a ratchet: the shape is a reference verb ("detailed/described/listed/presented/
+ * explained") + "on|in" + a conjunction or punctuation, which has no honest reading, and the corpus
+ * held exactly one (measured 2026-10-17 over every core-descriptions `d`; zero after the overlay row).
+ * The pattern lives in scripts/lib/lost-label.mjs so test/dropped-inline-ratchets.test.ts can prove it
+ * matches the bad sentence and not the good one without importing this script (which runs everything).
+ * Repair a hit with a `description` overlay row that restores the printed sentence, never by raising
+ * the baseline.
+ */
+// package I item I4: measured 0 after the vampire-dedication description row; pinned by test/dropped-inline-ratchets.test.ts
+const LOST_LABEL_BASELINE = 0;
+{
+  const descs = JSON.parse(readFileSync(join(ROOT, 'public/core-descriptions.json'), 'utf8'));
+  const hits = findLostLabels(descs);
+  if (hits.length > LOST_LABEL_BASELINE) {
+    console.log(`dropped-inline: FAIL — ${hits.length} description(s) point at a place that lost its name ("detailed on and …", "described in .") — more than the ${LOST_LABEL_BASELINE} the guard allows:`);
+    for (const h of hits.slice(0, 30)) {
+      const [cat, ...rest] = h.split('/');
+      const text = descs[cat][rest.join('/')].d;
+      const at = LOST_LABEL.exec(text)?.index ?? 0;
+      console.log(`   ${h.padEnd(40)} …${text.slice(Math.max(0, at - 30), at + 50).replace(/\s+/g, ' ')}…`);
+    }
+    console.log('\nRestore the printed sentence and its links with a description + descRefs overlay row (the AoN page has the label); never raise LOST_LABEL_BASELINE.');
+    process.exit(1);
+  }
+  console.log(`dropped-inline: ${hits.length} lost link label(s) (zero-guard ${LOST_LABEL_BASELINE}; lib/lost-label.mjs has the pattern)`);
 }
 
 /*

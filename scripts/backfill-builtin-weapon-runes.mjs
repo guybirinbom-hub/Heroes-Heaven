@@ -14,8 +14,17 @@
  * <base weapon>", where the base weapon named is the item's own. Anything less explicit is left alone
  * and reported, because a wrong rune is a wrong attack roll on every Strike for the rest of a career.
  *
+ * ONE ADJECTIVE IS ALLOWED BETWEEN THE ARTICLE AND THE "+N": "special" (package I, desk #151, 2026-10-17).
+ * Print opens the Screech Shooter with "a special +1 striking harmona gun"; the old pattern needed the "+N" right
+ * after the article, so all three grades of that weapon slipped past this detector and every one of them
+ * Struck like a plain harmona gun. Only "special" is allowed, not any word: a loose adjective slot also matches
+ * "This steel +1 dagger" and 15 more descriptions nobody has read against print (found 2026-10-17, left for the
+ * future correctness pass) — a wrong rune on every Strike is not something to author on a guess.
+ *
  *   node scripts/backfill-builtin-weapon-runes.mjs           # report
  *   node scripts/backfill-builtin-weapon-runes.mjs --write
+ *   node scripts/backfill-builtin-weapon-runes.mjs --check   # a GUARD (npm run verify): exit 1 when a weapon whose
+ *                                                            # opening clause names its own runes has no builtInRunes
  */
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -24,6 +33,7 @@ import { readBackfill, writeBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WRITE = process.argv.includes('--write');
+const CHECK = process.argv.includes('--check');
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8').replace(/^﻿/, ''));
 const core = read('public/core.json');
 const descs = read('public/core-descriptions.json');
@@ -34,7 +44,7 @@ const descs = read('public/core-descriptions.json');
  * and the base weapon. The tail is captured whole and searched for the weapon's own name, rather than
  * assuming the next word is it.
  */
-const SELF = /\b(?:this|these|a|an)\s+\*{0,2}\+(\d)\s*(major striking|greater striking|striking)?\*{0,2}\s*([^.;]{0,60}?)(?=[.;,]|\s+(?:that|which|has|is|was|with|and|can|deals?|grants?)\b)/i;
+const SELF = /\b(?:this|these|a|an)\s+(?:special\s+)?\*{0,2}\+(\d)\s*(major striking|greater striking|striking)?\*{0,2}\s*([^.;]{0,60}?)(?=[.;,]|\s+(?:that|which|has|is|was|with|and|can|deals?|grants?)\b)/i;
 const STRIKING = { striking: 'striking', 'greater striking': 'greater', 'major striking': 'major' };
 
 /* Every word that appears in a BASE weapon's name — the printed vocabulary of the armoury, so the
@@ -90,15 +100,27 @@ for (const [id, it] of Object.entries(core.items ?? {})) {
   edits.push({ category: 'items', id, field: 'builtInRunes', value: { potency, ...(striking ? { striking } : {}) }, printed: m[0].trim() });
 }
 
-console.log(`${edits.length} specific magic weapon(s) to give their own runes; ${skipped.length} clause(s) skipped as not self-describing.\n`);
-for (const e of edits.slice(0, 20)) console.log(`  ${e.id.padEnd(34)} +${e.value.potency}${e.value.striking ? ' ' + e.value.striking : ''}   ← "${e.printed}"`);
-if (edits.length > 20) console.log(`  …and ${edits.length - 20} more`);
-if (skipped.length) {
-  console.log(`\nskipped (left alone — a wrong rune is a wrong attack roll for a whole career):`);
-  for (const s of skipped.slice(0, 12)) console.log(`   ${s}`);
-  if (skipped.length > 12) console.log(`   …and ${skipped.length - 12} more`);
+if (!CHECK) {
+  console.log(`${edits.length} specific magic weapon(s) to give their own runes; ${skipped.length} clause(s) skipped as not self-describing.\n`);
+  for (const e of edits.slice(0, 20)) console.log(`  ${e.id.padEnd(34)} +${e.value.potency}${e.value.striking ? ' ' + e.value.striking : ''}   ← "${e.printed}"`);
+  if (edits.length > 20) console.log(`  …and ${edits.length - 20} more`);
+  if (skipped.length) {
+    console.log(`\nskipped (left alone — a wrong rune is a wrong attack roll for a whole career):`);
+    for (const s of skipped.slice(0, 12)) console.log(`   ${s}`);
+    if (skipped.length > 12) console.log(`   …and ${skipped.length - 12} more`);
+  }
 }
 
+if (CHECK) {
+  if (edits.length) {
+    console.error(`\nbuiltin-weapon-runes check: FAIL — ${edits.length} weapon(s) describe their own runes in their opening clause and carry no builtInRunes:`);
+    for (const e of edits) console.error(`   items/${e.id}  "${e.printed}"`);
+    console.error('   Every Strike with them is rolled as a plain weapon. Author builtInRunes through scripts/apply-parity-fixes.mjs (or this script with --write).');
+    process.exit(1);
+  }
+  console.log('builtin-weapon-runes check: ok — no weapon names its own runes without carrying them.');
+  process.exit(0);
+}
 if (!WRITE) { console.log('\n(report only — pass --write to author)'); process.exit(0); }
 
 const rows = readBackfill(ROOT);
