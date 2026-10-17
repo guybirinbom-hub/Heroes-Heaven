@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { afterAll, describe, expect, it, vi } from 'vitest';
 import { CHILD_TIMEOUT } from './_timeouts';
+import { liveSnapshots, spentRows } from '../scripts/lib/refresh-loss-scope.mjs';
 
 /**
  * scripts/refresh-loss-check.mjs (npm run verify): the `before` and `inPlace` qualifiers on an allow row.
@@ -79,12 +80,37 @@ describe('refresh-loss-check: a row scoped to one snapshot, its in-place claim m
     expect(run(schools('x'), schools('x'), () => [row({ inPlace: 'yes' })]).code).toBe(1);
   });
 
-  it('the lane\'s own rows are scoped to the snapshot they explain (a787fb0\'s core.json) and all but one measured in place', () => {
-    const rows = JSON.parse(readFileSync(path.join(ROOT, 'scripts/data/refresh-loss-allow.json'), 'utf8')) as { key: string; why: string; before?: string; inPlace?: boolean }[];
-    const lane = rows.filter((r) => r.why.startsWith('2026-09-30, the regenerating lane'));
-    expect(lane.length).toBeGreaterThanOrEqual(10);
-    for (const r of lane) expect(r.before, r.key).toBe('7562a5e3058b935e');
-    // classes/summoner is scoped only: angel-eidolon's remastered wording is 16 characters shorter (its whyNotInPlace)
-    expect(lane.filter((r) => !r.inPlace).map((r) => r.key)).toEqual(['classes/summoner']);
+  /* This case used to read the real allow-list and expect the 2026-09-30 regenerating lane's rows scoped to
+   * 7562a5e3058b935e. That lane was committed in 17f42d0, so those rows were spent — and nothing ever deleted
+   * them (76 spent rows by 2026-10-17). Package I made a spent row fatal; the cases below pin that rule. */
+});
+
+describe('refresh-loss-check: a spent scoped row fails the run against git HEAD (package I, 2026-10-17)', () => {
+  const rows = [
+    { key: 'a', before: 'aaaaaaaaaaaa' }, { key: 'b', before: 'bbbbbbbbbbbb' }, { key: 'c', before: 'cccccccccccc' }, { key: 'd' },
+  ];
+  const sha = (c: string) => c.repeat(64);
+
+  it('with no lane in progress, rows scoped to HEAD\'s or the previous core.json stay; others are spent; unscoped rows never are', () => {
+    const live = liveSnapshots({ headSha: sha('a'), prevSha: sha('b'), workingSha: sha('a') });
+    expect(spentRows(rows, live).map((r) => r.key)).toEqual(['c']);
+  });
+
+  it('inside a lane (working core.json is not HEAD\'s), only rows scoped to HEAD\'s core.json stay', () => {
+    const live = liveSnapshots({ headSha: sha('a'), prevSha: sha('b'), workingSha: sha('e') });
+    expect(spentRows(rows, live).map((r) => r.key)).toEqual(['b', 'c']);
+  });
+
+  it('no row in the real scripts/data/refresh-loss-allow.json is spent against today\'s HEAD', () => {
+    const real = JSON.parse(readFileSync(path.join(ROOT, 'scripts/data/refresh-loss-allow.json'), 'utf8')) as { key: string; before?: string }[];
+    const git = (args: string[]) => spawnSync('git', args, { cwd: ROOT, maxBuffer: 1 << 30 }).stdout as Buffer;
+    const hash = (b: Buffer) => createHash('sha256').update(b).digest('hex');
+    const [, prev] = git(['log', '-2', '--format=%H', '--', 'public/core.json']).toString().trim().split(/\s+/);
+    const live = liveSnapshots({
+      headSha: hash(git(['show', 'HEAD:public/core.json'])),
+      prevSha: prev ? hash(git(['show', `${prev}:public/core.json`])) : null,
+      workingSha: hash(readFileSync(path.join(ROOT, 'public/core.json'))),
+    });
+    expect(spentRows(real, live).map((r) => `${r.key} ${r.before}`)).toEqual([]);
   });
 });

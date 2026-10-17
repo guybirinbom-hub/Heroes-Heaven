@@ -63,6 +63,7 @@
  *   node scripts/refresh-loss-check.mjs                       # vs `git show HEAD:public/core.json`
  *   node scripts/refresh-loss-check.mjs before/core.json before/core-descriptions.json
  *   node scripts/refresh-loss-check.mjs --json work/.refresh-loss.json   # the findings, untruncated
+ *   node scripts/refresh-loss-check.mjs --prune-spent        # delete the spent scoped allow rows, then check
  *
  * The description file argument is optional; without it the guard looks for a core-descriptions.json
  * beside the core file, and failing that compares core.json alone (descriptions then simply do not
@@ -76,7 +77,8 @@
  *   "before": "<hex>"   the first 12+ hex digits of the sha256 of the BEFORE core.json the row explains. The row
  *                       applies only when the guard compares against that exact snapshot; against any other it
  *                       is listed under SCOPED ELSEWHERE and excuses nothing — once the lane is committed, HEAD
- *                       moves and the row is spent (delete it then).
+ *                       moves and the row is spent. Since 2026-10-17 a spent row FAILS the run against git HEAD
+ *                       (scripts/lib/refresh-loss-scope.mjs); `--prune-spent` deletes them.
  *   "inPlace": true     an `array-lost` only: every member the finding calls lost must still be in the after
  *                       array under the same `id` and have lost nothing inside — no key, no id'd member, no list
  *                       member, no text emptied or shorter by more than TEXT_SLACK, no number or flag changed
@@ -94,6 +96,7 @@ import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { liveSnapshots, spentRows } from './lib/refresh-loss-scope.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -171,7 +174,35 @@ const after = merge(
 /* sha256 of the BEFORE core.json's bytes — what a row's `before` qualifier names (see the header). */
 const beforeSha = createHash('sha256').update(readFileSync(beforeCore)).digest('hex');
 const ALLOW_PATH = process.env.REFRESH_LOSS_ALLOW || join(ROOT, 'scripts/data/refresh-loss-allow.json');
-const allowRows = existsSync(ALLOW_PATH) ? load(ALLOW_PATH) : [];
+let allowRows = existsSync(ALLOW_PATH) ? load(ALLOW_PATH) : [];
+
+/*
+ * SPENT SCOPED ROWS ARE FATAL (package I, 2026-10-17) — only against git HEAD, where "spent" is knowable.
+ * scripts/lib/refresh-loss-scope.mjs says which snapshots a scoped row may still name. `--prune-spent` rewrites the
+ * allow file without the spent rows, in its own format (1-space JSON, CRLF, trailing CRLF — round-trips byte for
+ * byte), so the red is a one-step fix inside the data lane that made the previous lane's rows spent.
+ */
+if (against === 'git HEAD') {
+  const sha = (buf) => createHash('sha256').update(buf).digest('hex');
+  let prevSha = null;
+  try {
+    const [, prev] = execFileSync('git', ['log', '-2', '--format=%H', '--', 'public/core.json'], { cwd: ROOT, encoding: 'utf8' }).trim().split(/\s+/);
+    if (prev) prevSha = sha(execFileSync('git', ['show', `${prev}:public/core.json`], { cwd: ROOT, maxBuffer: 1 << 30 }));
+  } catch { /* no history: only HEAD's snapshot is live */ }
+  const workingSha = sha(readFileSync(process.env.CORE_JSON || join(ROOT, 'public/core.json')));
+  const spent = spentRows(allowRows, liveSnapshots({ headSha: beforeSha, prevSha, workingSha }));
+  if (spent.length && process.argv.includes('--prune-spent')) {
+    allowRows = allowRows.filter((r) => !spent.includes(r));
+    writeFileSync(ALLOW_PATH, `${JSON.stringify(allowRows, null, 1).replace(/\n/g, '\r\n')}\r\n`);
+    console.log(`refresh-loss-check: pruned ${spent.length} spent scoped row(s) from ${ALLOW_PATH} (${allowRows.length} left).`);
+  } else if (spent.length) {
+    console.error(`refresh-loss-check: FAIL — ${spent.length} scoped allow row(s) are SPENT: their lane is committed and they can never excuse anything again.`);
+    for (const r of spent.slice(0, 20)) console.error(`   ${r.key} ${r.field}  before ${r.before}`);
+    if (spent.length > 20) console.error(`   …and ${spent.length - 20} more`);
+    console.error('   Delete them before this lane commits: node scripts/refresh-loss-check.mjs --prune-spent');
+    process.exit(1);
+  }
+}
 const allow = new Map();
 /** Rows scoped to another before-snapshot: they excuse nothing in this run. */
 const elsewhere = [];

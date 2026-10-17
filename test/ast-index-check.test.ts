@@ -218,6 +218,14 @@ describe('scripts/ast-index-check.mjs on a scratch copy (AST_INDEX / AST_DIR)', 
     expect(r.out, 'light-mortar under siegeWeapons is neither missing nor dangling — only the pin catches it').not.toMatch(/MISSING |DANGLING /);
   });
 
+  /* package I, 2026-10-17: backfill-ast-edition.mjs still printed "the 9 pinned slugs" after strigoi left the pins
+   * on 2026-09-30 (8). Its count is derived now, like ast-index-check.mjs's; no typed count may come back. */
+  it('scripts/backfill-ast-edition.mjs derives the pinned-slug count, never types it', () => {
+    const text = readFileSync(path.join(__dirname, '..', 'scripts/backfill-ast-edition.mjs'), 'utf8');
+    expect(text).not.toMatch(/\b\d+ (?:pinned slugs|entries the EARLIER)/);
+    expect(text).toContain('${Object.keys(REGEN_DIFFERS).length} pinned slugs');
+  });
+
   it('mutation: runes deleted from the index fails as missing AND off its pin', () => {
     const { runes: _gone, ...short } = pinIndex;
     const r = run(fixture(pinTrees, short));

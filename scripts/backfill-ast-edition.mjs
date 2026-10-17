@@ -199,7 +199,7 @@ if (perBucket.length) {
 const docOf = makeDocOf({ docIndex, fullDoc });
 const indexStep = { indexPath: join(ROOT, 'public/ast-index.json'), astDir: join(ROOT, 'public/ast'), exclude: createdRefs(ROOT), docOf };
 // Rule 4 re-derives every entry THIS step writes exactly (the lib's header: all 1,779 of the last full
-// chain, so a resumed tail is byte-identical). It cannot re-derive 9 entries the EARLIER import steps
+// chain, so a resumed tail is byte-identical). It cannot re-derive the REGEN_DIFFERS entries the EARLIER import steps
 // write — the lib pins them (REGEN_DIFFERS) and scripts/ast-index-check.mjs fails an index that holds one
 // under another bucket; only an index that lost some of theirs can reach them. Say how many added slugs
 // were a choice among several buckets and name any pinned one placed off its pin, so such a repair says
@@ -210,7 +210,7 @@ const sayAmbiguous = ({ ambiguous }) => {
     .map((a) => `${a.slug} -> ${a.bucket} (pinned: ${REGEN_DIFFERS[a.slug].pinned})`);
   console.log(`  ${ambiguous.length} of them had trees in several buckets and were placed by scripts/lib/ast-index.mjs rule 4; `
     + (off.length ? `${off.length} of those ${off.length === 1 ? 'is a pinned slug' : 'are pinned slugs'} the chain writes under another bucket; scripts/ast-index-check.mjs fails ${off.length === 1 ? 'it' : 'them'} until a full npm run data (or the committed index) restores the pin: ${off.join('; ')}`
-      : 'none is one of the 9 pinned slugs where that rule differs from the chain'));
+      : `none is one of the ${Object.keys(REGEN_DIFFERS).length} pinned slugs where that rule differs from the chain`));
 };
 
 if (!WRITE) {
