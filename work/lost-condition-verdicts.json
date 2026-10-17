@@ -1,0 +1,882 @@
+{
+ "_": "lost-condition fix lane (2026-10-17): one verdict per measured record+key pair of the 60 in the read-only triage (a pair with two Foundry selectors carrying different verdicts — Strength of Eight Legions' FlatModifier — has one entry per selector). selector/type and families are the ones scripts/lost-condition-check.mjs printed BEFORE this lane's fixes. verdict: fixed (the data now matches print; the check stops printing the unit, except where `why` says a carrier is not yet in its list) · print-unconditional (quote is the clause) · default-state (print's default state holds the effect) · route — routeKind 'carried' (another documented carrier holds the condition), 'no-lit-route' (print restricts it and the star exists, but the star is DARK under the trust gate and no documented route lights it, so the lit number is KEPT per the lane's instruction), 'blocked' (the fix is known and needs a file outside this lane — blockedBy, followUp). No owner-question: none of the 60 has unsettled print or a Wanderer's Guide encoding that contradicts print. quote is checked against the mirror with the check's own normalisation; aonId is the record's own page unless aonIdNote / quoteOn says otherwise. BLOCKED LANE (same day): the 8 'blocked' entries are fixed (`fixedIn`, verdict fixed; their allow entries are gone and the check fails if any over-grant returns); the 16 'no-lit-route' entries remain, kept only while they wait on the owner's approval of their Ruling-B star (allow entries carry awaitsApproval 126).",
+ "generated": "2026-10-17",
+ "counts": {
+  "route:carried": 1,
+  "print-unconditional": 18,
+  "fixed": 23,
+  "route:no-lit-route": 16,
+  "route:blocked": 0,
+  "default-state": 4
+ },
+ "entries": [
+  {
+   "record": "ancestries/awakened-animal",
+   "key": "BaseSpeed",
+   "selector": "land",
+   "families": [
+    "heritage/ancestry/trait"
+   ],
+   "verdict": "route",
+   "routeKind": "carried",
+   "aonId": "ancestry-72",
+   "quote": "start with their primary movement ability, choose the heritage that matches it most closely",
+   "why": "Not an over-grant: the check paired our ancestry BASE land Speed 5 with Foundry's predicated BaseSpeed 20 (\"not swimming animal\"). The ancestry page prints its Speed line with NO value and has you pick the heritage by the animal's movement (the quote) — the heritage sets it — and ours carries the 20 on the heritages: climbing-animal and flying-animal landSpeedMin 20 (heritage-288: \"You have a land Speed of 20 feet, a climb Speed of 20 feet\"), running-animal 30, swimming-animal's water-dwelling option landSpeedMin 20 (heritage-291: \"if you can move on land, you have base Speed of 20 feet\"); an aquatic swimming animal keeps the base 5, as Foundry's base does.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "backgrounds/close-ties",
+   "key": "GrantItem",
+   "selector": "specialty-crafting",
+   "families": [
+    "own choice"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "background-393",
+   "quote": "You gain the Specialty Crafting skill feat",
+   "why": "The predicate is Foundry's Season of Ghosts family/foundling background adjustment (background-variant:none|family:typical), a variant our mirror does not print anywhere (searched: no family-background or foundling adjustment for Season of Ghosts). The page grants the skill feat outright. Backgrounds are chassis (all-on) under the trust gate.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "backgrounds/folklore-enthusiast",
+   "key": "GrantItem",
+   "selector": "oddity-identification",
+   "families": [
+    "own choice"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "background-394",
+   "quote": "You gain the Oddity Identification skill feat",
+   "why": "Same Foundry background-variant predicate as Close Ties; the page grants the feat outright.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "backgrounds/northridge-scholar",
+   "key": "GrantItem",
+   "selector": "additional-lore",
+   "families": [
+    "own choice"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "background-395",
+   "quote": "You gain the Additional Lore feat",
+   "why": "Same Foundry background-variant predicate as Close Ties; the page grants the feat outright.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "backgrounds/outskirt-dweller",
+   "key": "GrantItem",
+   "selector": "terrain-expertise",
+   "families": [
+    "own choice"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "background-396",
+   "quote": "You gain the Terrain Expertise (forest) skill feat",
+   "why": "Same Foundry background-variant predicate as Close Ties; the page grants the feat outright.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "backgrounds/southbank-traditionalist",
+   "key": "GrantItem",
+   "selector": "hobnobber",
+   "families": [
+    "own choice"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "background-397",
+   "quote": "You gain the Hobnobber feat",
+   "why": "Same Foundry background-variant predicate as Close Ties; the page grants the feat outright.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "backgrounds/willowshore-urchin",
+   "key": "GrantItem",
+   "selector": "charming-liar",
+   "families": [
+    "own choice"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "background-398",
+   "quote": "You gain the Charming Liar feat",
+   "why": "Same Foundry background-variant predicate as Close Ties; the page grants the feat outright.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "classFeatures/harmonic-oscillator",
+   "key": "Resistance",
+   "type": "force,sonic",
+   "families": [
+    "armor/shield"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "innovation-1",
+   "quote": "You gain resistance equal to 3 + half your level to force and sonic damage.",
+   "why": "Read innovation-1 (Guns & Gears Remastered, the newest printing — R12) and innovation-5 (2021): neither prints a wearing condition on any INITIAL modification or on Hyper Boosters; the same page writes \"While wearing your/the armor\" modification by modification, not by tier — on Antimagic Plating, Camouflage Pigmentation, Dense Plating, Layered Mesh, Tensile Absorption, Automated Impediments, Energy Barrier, Multisensory Mask and Physical Protections, and not on Hyper Boosters, a breakthrough (Layered Mesh already carries defensesRequire {armored:true} for exactly that clause). Foundry's armor:id predicate is evidence, not a source, and Wanderer's Guide encodes these resistances/Speeds unconditionally too (no contradiction to report). Overdrive's +2 is the separate state variant (whileActive or the cat-…-overdrive mode).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "classFeatures/hyper-boosters",
+   "key": "FlatModifier",
+   "selector": "land-speed",
+   "families": [
+    "armor/shield"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "innovation-1",
+   "quote": "You gain a +10-foot status bonus to your Speed, which increases to a +20-foot status bonus when you're in Overdrive.",
+   "why": "Read innovation-1 (Guns & Gears Remastered, the newest printing — R12) and innovation-5 (2021): neither prints a wearing condition on any INITIAL modification or on Hyper Boosters; the same page writes \"While wearing your/the armor\" modification by modification, not by tier — on Antimagic Plating, Camouflage Pigmentation, Dense Plating, Layered Mesh, Tensile Absorption, Automated Impediments, Energy Barrier, Multisensory Mask and Physical Protections, and not on Hyper Boosters, a breakthrough (Layered Mesh already carries defensesRequire {armored:true} for exactly that clause). Foundry's armor:id predicate is evidence, not a source, and Wanderer's Guide encodes these resistances/Speeds unconditionally too (no contradiction to report). Overdrive's +2 is the separate state variant (whileActive or the cat-…-overdrive mode).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "classFeatures/metallic-reactance",
+   "key": "Resistance",
+   "type": "acid,electricity",
+   "families": [
+    "armor/shield"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "innovation-1",
+   "quote": "You gain resistance equal to 3 + half your level to acid and electricity damage.",
+   "why": "Read innovation-1 (Guns & Gears Remastered, the newest printing — R12) and innovation-5 (2021): neither prints a wearing condition on any INITIAL modification or on Hyper Boosters; the same page writes \"While wearing your/the armor\" modification by modification, not by tier — on Antimagic Plating, Camouflage Pigmentation, Dense Plating, Layered Mesh, Tensile Absorption, Automated Impediments, Energy Barrier, Multisensory Mask and Physical Protections, and not on Hyper Boosters, a breakthrough (Layered Mesh already carries defensesRequire {armored:true} for exactly that clause). Foundry's armor:id predicate is evidence, not a source, and Wanderer's Guide encodes these resistances/Speeds unconditionally too (no contradiction to report). Overdrive's +2 is the separate state variant (whileActive or the cat-…-overdrive mode).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "classFeatures/otherworldly-protection",
+   "key": "Resistance",
+   "counterparts": [
+    "holy",
+    "spirit",
+    "unholy",
+    "vitality",
+    "void"
+   ],
+   "families": [
+    "armor/shield"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "innovation-1",
+   "quote": "You gain resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing",
+   "why": "Read innovation-1 (Guns & Gears Remastered, the newest printing — R12) and innovation-5 (2021): neither prints a wearing condition on any INITIAL modification or on Hyper Boosters; the same page writes \"While wearing your/the armor\" modification by modification, not by tier — on Antimagic Plating, Camouflage Pigmentation, Dense Plating, Layered Mesh, Tensile Absorption, Automated Impediments, Energy Barrier, Multisensory Mask and Physical Protections, and not on Hyper Boosters, a breakthrough (Layered Mesh already carries defensesRequire {armored:true} for exactly that clause). Foundry's armor:id predicate is evidence, not a source, and Wanderer's Guide encodes these resistances/Speeds unconditionally too (no contradiction to report). Overdrive's +2 is the separate state variant (whileActive or the cat-…-overdrive mode). The void/vitality swap and the holy/unholy sanctification split are already carried by whenVoidHealing / whenCreatureTrait.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "classFeatures/perfect-fortification",
+   "key": "Resistance",
+   "type": "precision",
+   "families": [
+    "armor/shield"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "innovation-1",
+   "quote": "Additionally, you gain resistance 2 + half your level against precision damage.",
+   "why": "Read innovation-1 (Guns & Gears Remastered, the newest printing — R12) and innovation-5 (2021): neither prints a wearing condition on any INITIAL modification or on Hyper Boosters; the same page writes \"While wearing your/the armor\" modification by modification, not by tier — on Antimagic Plating, Camouflage Pigmentation, Dense Plating, Layered Mesh, Tensile Absorption, Automated Impediments, Energy Barrier, Multisensory Mask and Physical Protections, and not on Hyper Boosters, a breakthrough (Layered Mesh already carries defensesRequire {armored:true} for exactly that clause). Foundry's armor:id predicate is evidence, not a source, and Wanderer's Guide encodes these resistances/Speeds unconditionally too (no contradiction to report). Overdrive's +2 is the separate state variant (whileActive or the cat-…-overdrive mode). The only \"while wearing the armor\" on this entry scopes the sentence before it (\"Each time you're critically hit while wearing the armor, attempt a DC 13 flat check\"); the resistance sentence carries none. Read as printed, not widened.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "classFeatures/phlogistonic-regulator",
+   "key": "Resistance",
+   "type": "cold,fire",
+   "families": [
+    "armor/shield"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "innovation-1",
+   "quote": "You gain resistance equal to half your level to cold and fire damage.",
+   "why": "Read innovation-1 (Guns & Gears Remastered, the newest printing — R12) and innovation-5 (2021): neither prints a wearing condition on any INITIAL modification or on Hyper Boosters; the same page writes \"While wearing your/the armor\" modification by modification, not by tier — on Antimagic Plating, Camouflage Pigmentation, Dense Plating, Layered Mesh, Tensile Absorption, Automated Impediments, Energy Barrier, Multisensory Mask and Physical Protections, and not on Hyper Boosters, a breakthrough (Layered Mesh already carries defensesRequire {armored:true} for exactly that clause). Foundry's armor:id predicate is evidence, not a source, and Wanderer's Guide encodes these resistances/Speeds unconditionally too (no contradiction to report). Overdrive's +2 is the separate state variant (whileActive or the cat-…-overdrive mode).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "classFeatures/speed-boosters",
+   "key": "FlatModifier",
+   "selector": "land-speed",
+   "families": [
+    "armor/shield"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "innovation-1",
+   "quote": "You gain a +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive.",
+   "why": "Read innovation-1 (Guns & Gears Remastered, the newest printing — R12) and innovation-5 (2021): neither prints a wearing condition on any INITIAL modification or on Hyper Boosters; the same page writes \"While wearing your/the armor\" modification by modification, not by tier — on Antimagic Plating, Camouflage Pigmentation, Dense Plating, Layered Mesh, Tensile Absorption, Automated Impediments, Energy Barrier, Multisensory Mask and Physical Protections, and not on Hyper Boosters, a breakthrough (Layered Mesh already carries defensesRequire {armored:true} for exactly that clause). Foundry's armor:id predicate is evidence, not a source, and Wanderer's Guide encodes these resistances/Speeds unconditionally too (no contradiction to report). Overdrive's +2 is the separate state variant (whileActive or the cat-…-overdrive mode).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/axe-of-the-dwarven-lords",
+   "key": "FlatModifier",
+   "selector": "crafting",
+   "families": [
+    "effect trait",
+    "other roll option",
+    "roll context"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-609",
+   "quote": "While the axe is in your possession, you gain a +4 item bonus when Crafting armor, jewelry, metalworking, stonemasonry, snares, traps, and weapons.",
+   "why": "The +4 left passiveEffects (ruling B); it is carried by the existing star FEAT_SITUATIONAL[\"axe-of-the-dwarven-lords\"], which is LIT (Wanderer's Guide encodes `conditional` on this record). Gate ON, a human holder: Crafting 0 -> 0 (was 0 -> 4), star shown. test/lost-condition-fixes-axe.test.ts.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/axe-of-the-dwarven-lords",
+   "key": "Sense",
+   "selector": "greater-darkvision",
+   "families": [
+    "heritage/ancestry/trait"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-609",
+   "quote": "If you are a dwarf, you gain greater darkvision while holding the axe.",
+   "why": "New gate SenseEntry.whenCreatureTrait (src/rules/types.ts), read in deriveDefenses through the same hasCreatureTrait the IWR gate uses; the overlay row now carries whenCreatureTrait: \"dwarf\". Gate ON: a human holder's senses [\"normal\"] (was greater darkvision), a dwarf holder [\"darkvision\",\"greater-darkvision\"]. The reconcile step (2026-10-17) added a sense's whenCreatureTrait to scripts/lost-condition-check.mjs's carriers for heritage/ancestry/trait (every same-named sense entry must carry it), so the check no longer prints this unit.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/bagpipes-of-turmoil",
+   "key": "FlatModifier",
+   "selector": "performance",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-2265",
+   "quote": "While playing the bagpipes, you gain a +1 item bonus to Performance checks",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"bagpipes-of-turmoil\"] already exists. But it is DARK: Wanderer's Guide encodes `skill` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/borts-blessing",
+   "key": "FlatModifier",
+   "selector": "diplomacy",
+   "families": [
+    "roll context"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-476",
+   "quote": "the wearer receives a +1 item bonus to Diplomacy checks to Make an Impression",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"borts-blessing\"] already exists. But it is DARK: Wanderer's Guide encodes `skill` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/brooch-of-inspiration-greater",
+   "key": "FlatModifier",
+   "selector": "lore-skill-check",
+   "families": [
+    "roll context"
+   ],
+   "verdict": "fixed",
+   "fixedIn": "blocked lane, 2026-10-17",
+   "aonId": "equipment-1434-1355",
+   "quote": "you gain a +1 item bonus to checks to Recall Knowledge with Lore skills",
+   "why": "Print restricts the bonus to Recall Knowledge (a Lore check to Earn Income, for one, does not get it). Was blocked on test/fix-campaign.test.ts, which pinned the flat loreBonus on every Lore skill; that test now pins the star FEAT_SITUATIONAL[\"brooch-of-inspiration-greater\"] and the untouched Lore total, and passiveEffects is null on all three grades (overlay rows; the Major grade, \"applies to all checks to Recall Knowledge with any skill\", carried loreBonus 3 and has no Foundry row of this shape). Dark under the trust gate, so nothing changed on a sheet. test/fix-campaign.test.ts, test/lost-condition-blocked-check.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/brooch-of-inspiration",
+   "key": "FlatModifier",
+   "selector": "lore-skill-check",
+   "families": [
+    "roll context"
+   ],
+   "verdict": "fixed",
+   "fixedIn": "blocked lane, 2026-10-17",
+   "aonId": "equipment-1434",
+   "quote": "While wearing the brooch, you gain a +1 item bonus to checks to Recall Knowledge with Lore skills.",
+   "why": "As the Greater grade: the flat loreBonus 1 is gone (passiveEffects null) and the star FEAT_SITUATIONAL[\"brooch-of-inspiration\"] carries the Recall Knowledge clause; the fix-campaign test pins the star. Dark under the trust gate.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/busine-of-divine-reinforcements",
+   "key": "FlatModifier",
+   "selector": "performance",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-1566",
+   "quote": "When played as an instrument, the busine generates powerful and harmonious notes and grants a +2 item bonus to Performance checks.",
+   "why": "This record is the unsourced plural twin (no aonId) of items/busine-of-divine-reinforcement (equipment-1566), whose own star and lack of a number were already right. The twin's flat +2 Performance left passiveEffects for a new star FEAT_SITUATIONAL[\"busine-of-divine-reinforcements\"]. Dark under the trust gate (no Wanderer's Guide row), so no sheet changes today. test/lost-condition-fixes-stars.test.ts.",
+   "trustBefore": "dark",
+   "aonIdNote": "not the record's own page (none)"
+  },
+  {
+   "record": "items/cauthooj-bagpipes",
+   "key": "FlatModifier",
+   "selector": "performance",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-3221",
+   "quote": "The pipes grant a +2 item bonus to Performance checks while playing music with them.",
+   "why": "Flat +2 removed; the existing star carries it. Dark under the trust gate. test/lost-condition-fixes-stars.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/clarity-goggles-greater",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-2314-2161",
+   "quote": "While wearing the goggles, you gain a +1 item bonus to visual Perception checks.",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"clarity-goggles-greater\"] already exists. But it is DARK: Wanderer's Guide encodes `perception` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go. (The Greater grade prints \"The goggles grant a +3 item bonus.\")",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/clarity-goggles-lesser",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-2314-2159",
+   "quote": "While wearing the goggles, you gain a +1 item bonus to visual Perception checks.",
+   "why": "Flat +1 removed; the existing star carries it. Dark under the trust gate. test/lost-condition-fixes-stars.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/clarity-goggles-moderate",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-2314-2160",
+   "quote": "The goggles grant a +2 item bonus.",
+   "why": "Flat +2 removed; the existing star carries it (the base clause: \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\"). Dark under the trust gate. test/lost-condition-fixes-stars.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/day-goggles",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "item"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-1146",
+   "quote": "while wearing the goggles, you take a -2 item penalty to visual Perception checks",
+   "why": "A PENALTY, ruling B the same way. Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"day-goggles\"] (its \"-2 item (penalty)\" row) already exists. But it is DARK: Wanderer's Guide encodes `save` and `perception` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go. The trust gate's \"only a benefit goes dark\" rule covers record fields, not stars: entriesFor suppresses an off id's penalty rows too.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/eye-slash-greater",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-2206-1905",
+   "quote": "The tattoo also grants you a +1 item bonus to Perception checks that involve sight.",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"eye-slash-greater\"] already exists. But it is DARK: Wanderer's Guide encodes `perception` (and a prose `note`) on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/eye-slash-major",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-2206-1906",
+   "quote": "The tattoo also grants you a +2 item bonus to Perception checks that involve sight.",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"eye-slash-major\"] already exists. But it is DARK: Wanderer's Guide encodes `perception` (and a prose `note`) on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/eye-slash-true",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-2206-1907",
+   "quote": "The tattoo also grants you a +3 item bonus to Perception checks that involve sight.",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"eye-slash-true\"] already exists. But it is DARK: Wanderer's Guide encodes `perception` (and a prose `note`) on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/holy-chain",
+   "key": "FlatModifier",
+   "selector": "diplomacy",
+   "families": [
+    "target"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-3273",
+   "quote": "giving you a +2 item bonus to Diplomacy checks against all creatures except fiends",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"holy-chain\"] (its \"-2 item (the chain's Diplomacy bonus does not apply)\" row against fiends) already exists. But it is DARK: Wanderer's Guide encodes `ac`, `save` and `skill` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go. The number is right against every creature but a fiend; the dark star is what would say so.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/mirror-goggles-greater",
+   "key": "FlatModifier",
+   "selector": "perception,saving-throw",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-2315-2164",
+   "quote": "The item bonus is +3, and the DC is 40.",
+   "why": "Flat +3 removed; the existing star carries it, its \"(already in your total …)\" wording corrected. Dark under the trust gate. test/lost-condition-fixes-stars.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/mirror-goggles-lesser",
+   "key": "FlatModifier",
+   "selector": "perception,saving-throw",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-2315-2162",
+   "quote": "you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"mirror-goggles-lesser\"] already exists. But it is DARK: Wanderer's Guide encodes `perception` and `save` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/mirror-goggles-moderate",
+   "key": "FlatModifier",
+   "selector": "perception,saving-throw",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-2315-2163",
+   "quote": "The item bonus is +2, and the DC is 30.",
+   "why": "Flat +2 removed; the existing star carries it, its \"(already in your total …)\" wording corrected. Dark under the trust gate. test/lost-condition-fixes-stars.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/obsidian-goggles-greater",
+   "key": "Sense",
+   "selector": "darkvision",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "fixed",
+   "fixedIn": "blocked lane, 2026-10-17",
+   "aonId": "equipment-3097-3040",
+   "quote": "the goggles can be activated any number of times per day, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you",
+   "why": "Print makes the darkvision the Activate—Darkvision action's, so by ruling Q11 (it can be shut down) the carrier is the toggle mode modes/item-obsidian-goggles-greater (created by overlay row: senses darkvision, duration until deactivated or no longer invested, \"any number of times per day\"); passiveEffects is null. test/consumable-modes.test.ts counts 381 item modes with the premise line. Dark under the trust gate (the record and the new mode alike), so nothing changed on a sheet. test/lost-condition-blocked-modes.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/obsidian-goggles-major",
+   "key": "Sense",
+   "selector": "greater-darkvision",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "fixed",
+   "fixedIn": "blocked lane, 2026-10-17",
+   "aonId": "equipment-3097-3041",
+   "quote": "the activation grants greater darkvision, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you",
+   "why": "As the Greater grade, with greater darkvision: the toggle mode modes/item-obsidian-goggles-major carries it; passiveEffects is null. Dark under the trust gate.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/persona-mask-greater",
+   "key": "FlatModifier",
+   "selector": "performance",
+   "families": [
+    "other roll option"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-3099-3045",
+   "quote": "Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"persona-mask-greater\"] already exists. But it is DARK: Wanderer's Guide encodes `skill` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go. (The Greater grade: \"The mask grants a +2 bonus\".)",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/persona-mask",
+   "key": "FlatModifier",
+   "selector": "performance",
+   "families": [
+    "other roll option"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-3099-3044",
+   "quote": "Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"persona-mask\"] already exists. But it is DARK: Wanderer's Guide encodes `skill` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/razmiri-wayfinder",
+   "key": "FlatModifier",
+   "selector": "deception",
+   "families": [
+    "roll context"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-470-832",
+   "quote": "provides its wearer a +1 item bonus to Deception checks to Lie or Impersonate",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"razmiri-wayfinder\"] already exists. But it is DARK: Wanderer's Guide encodes `skill` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/resonant-guitar",
+   "key": "FlatModifier",
+   "selector": "performance",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-2616",
+   "quote": "grants a +2 item bonus to Performance checks attempted while using it",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"resonant-guitar\"] already exists. But it is DARK: Wanderer's Guide encodes `skill` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/shining-hackle",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "item"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-3978",
+   "quote": "you gain a +1 item bonus to Perception checks based on sight",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"shining-hackle\"] already exists. But it is DARK: Wanderer's Guide encodes `perception` and `skill` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go. Its printed -1 Stealth penalty is unconditional and stays a number.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "items/spectacles-of-piercing-sight",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-2317",
+   "quote": "spectacles of piercing sight grant you a +3 item bonus to visual Perception checks.",
+   "why": "Flat +3 removed; the existing star carries it, its \"(already in your total …)\" wording corrected. Dark under the trust gate. test/lost-condition-fixes-stars.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/violin-of-the-waves",
+   "key": "FlatModifier",
+   "selector": "performance",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "fixed",
+   "aonId": "equipment-2199",
+   "quote": "When you make a Performance check using the violin of the waves, you gain a +2 item bonus to the check.",
+   "why": "Flat +2 removed; the star gains the +2 row beside its +3 aboard-ship row. Dark under the trust gate. test/lost-condition-fixes-stars.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "items/wardrobe-stone-greater",
+   "key": "FlatModifier",
+   "selector": "perception",
+   "families": [
+    "effect trait"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "equipment-1323-1222",
+   "quote": "You gain +3 item bonus to Perception checks involving sight",
+   "why": "Print restricts the bonus, so ruling B makes it a star — and the star FEAT_SITUATIONAL[\"wardrobe-stone-greater\"] already exists. But it is DARK: Wanderer's Guide encodes `perception` on this record and not `conditional`, so the trust ledger puts the id on lanes.situational, and no approval, rule or later ruling (docs/trust-gate.md §2b) names it. Removing the lit number would leave the player nothing, so the number is KEPT and listed (the instruction for this lane). Lighting the star needs an owner ruling filed through scripts/add-owner-question.mjs → desk-answers → an approvals row; then this passive row can go.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/ceremony-of-growth",
+   "key": "CreatureSize",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "default-state",
+   "aonId": "feat-2788",
+   "quote": "You constantly gain the effects of enlarge",
+   "why": "Agrees with the check lane's entry: the default state is enlarged, and dismissing it is the player's deliberate action. Note for later: ruling Q11 (\"if the effect can be shut down, it is a mode\") reads \"You can dismiss or resume these effects as an action\" as a mode; dark under the trust gate today (no Wanderer's Guide encoding), so nothing reaches a sheet.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "feats/fang-sharpener",
+   "key": "Strike",
+   "selector": "jaws",
+   "families": [
+    "heritage/ancestry/trait"
+   ],
+   "verdict": "fixed",
+   "fixedIn": "blocked lane, 2026-10-17",
+   "aonId": "feat-1000",
+   "quote": "If you're an irongut goblin, you gain a jaws unarmed attack that deals 1d4 piercing damage",
+   "why": "The 1d4 Jaws carries GrantedStrike.whenHeritage [\"irongut-goblin\"] (overlay row), tested in src/rules/build.ts collectGrantedNaturals BEFORE its name dedup, so a razortooth goblin keeps its own heritage Jaws (1d6 finesse) instead of losing it behind the feat's. Still open, an UNDER-grant and not this check's business: print's razortooth upgrade (\"your jaws unarmed attack deals 1d8 piercing damage and loses the finesse trait\") and the critical persistent bleed are not authored. Dark under the trust gate (theirsUnencoded). test/lost-condition-blocked-strikes.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "feats/scalding-spit",
+   "key": "Strike",
+   "selector": "boilingspit",
+   "families": [
+    "self effect/condition"
+   ],
+   "verdict": "fixed",
+   "aonId": "feat-1010",
+   "quote": "As long as you are taking persistent fire damage, you gain a boiling spit ranged unarmed attack with a range of 30 feet that deals 1d6 fire damage.",
+   "why": "The feat-level grantedStrikes removed; the attack moved to the new toggle modes/cat-scalding-spit (ModeDef.grantedStrikes, gated feats:[\"scalding-spit\"]) — the sheet tracks persistent damage without its type, so the state cannot be evaluated. Dark under the trust gate (the mode's carrier is unencoded). test/lost-condition-fixes-modes.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "feats/iruxi-armaments",
+   "key": "Strike",
+   "selector": "tail",
+   "families": [
+    "self effect/condition"
+   ],
+   "verdict": "default-state",
+   "aonId": "feat-5633",
+   "quote": "You gain a tail unarmed attack that deals 1d6 bludgeoning damage, is in the brawling group, and has the sweep trait.",
+   "why": "The only condition is \"not under Shed Tail\": Shed Tail (feat-5641) is a reaction the player takes deliberately — \"Until it does, you can't use your tail unarmed attack\" — so the default state has the tail (Principle P: the player knows they did the thing).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/warding-jewel",
+   "key": "Resistance",
+   "counterparts": [
+    "piercing",
+    "slashing"
+   ],
+   "families": [
+    "other roll option"
+   ],
+   "verdict": "default-state",
+   "aonId": "feat-6921",
+   "quote": "While you possess your head gem, you gain resistance 2 to piercing damage and resistance 1 to slashing damage.",
+   "why": "Every sarangay has a head gem from birth (ancestry-89: \"From birth, every sarangay has a giant gleaming stone upon their brow known as their head gem\"; \"it's typically impossible for another creature to forcibly remove or destroy your head gem unless you're killed or permanently incapacitated first\"). The default state possesses it. Wanderer's Guide agrees (defense, unconditional).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/fey-ascension",
+   "key": "Strike",
+   "selector": "leaves",
+   "families": [
+    "other roll option"
+   ],
+   "verdict": "fixed",
+   "fixedIn": "blocked lane, 2026-10-17",
+   "aonId": "feat-4048",
+   "quote": "You gain a leaves ranged unarmed attack that deals 1d6 slashing damage.",
+   "why": "The Leaves belong to the Dryad option only (\"this must be the same animal or fey type as you chose for Fey Influence\"). collectGrantedNaturals' feat push now reads the record's own effectChoices answer (<featId>:<choiceId>) when the feat has no `choice` answer, the heritage push's shape; the row carries choiceValue \"dryad\" (overlay row). Gate ON: a Dryad has the Leaves, every other branch has none, and an UNANSWERED branch has none (UNKNOWN is not \"dryad\": the builder still asks, and resolvePick grants no other branch's payload unanswered either; nothing is written back). LIT, so this is a visible change for every non-Dryad (and unanswered) Fey Ascension holder. test/lost-condition-blocked-strikes.test.ts.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/sprites-spark",
+   "key": "Strike",
+   "counterparts": [
+    "dijiang",
+    "draxie",
+    "gandharva",
+    "grig",
+    "kanchil",
+    "leungli",
+    "luminoussprite",
+    "melixie",
+    "nyktera",
+    "pixie"
+   ],
+   "families": [
+    "heritage/ancestry/trait"
+   ],
+   "verdict": "fixed",
+   "fixedIn": "blocked lane, 2026-10-17",
+   "aonId": "feat-2635",
+   "quote": "The damage type and name of the unarmed attack depends on your heritage",
+   "why": "Each of the ten rows carries whenHeritage on its own heritage (overlay row), tested before the name dedup: a sprite gets exactly its own spark. Not authored, by decision: print's \"most sprite heritages not presented in this book also use luminous spark\" is hedged (\"most\"), and the Tian Xia sidebar shows later heritages getting sparks of their own, so a default would hand an unlisted (homebrew) heritage an attack its author may not mean; the player can add one by hand. Still open (display, dark): the row names are Foundry's heritage labels (\"LuminousSprite\"), not print's attack names (euphoric spark …), because the check matches a Strike counterpart by that name; and the four Tian Xia sparks' damage-type traits are not authored. Dark under the trust gate. test/lost-condition-blocked-strikes.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "feats/juvenile-flight",
+   "key": "FlatModifier",
+   "selector": "fly-speed",
+   "families": [
+    "feature/class/feat",
+    "other roll option"
+   ],
+   "verdict": "fixed",
+   "aonId": "feat-2653",
+   "quote": "The fly Speed you gain from Fledgling Flight increases to 25 feet.",
+   "why": "Fledgling Flight (feat-2649) grants its fly Speed only \"for this movement\", so the standing speeds.fly 25 was a permanent fly Speed (Fully Flighted, feat-2657, is the feat that prints one). Removed; the raise is a mark on Fledgling Flight, RECORD_MARKERS[\"juvenile-flight\"] (Principle C). Dark under the trust gate. test/lost-condition-fixes-modes.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "feats/strength-of-eight-legions",
+   "key": "CreatureSize",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "feat-6988",
+   "quote": "You permanently gain the effects of enlarge",
+   "why": "Agrees with the check lane's entry. Not covered here: enlarge (spell-1514) also prints \"The creature is clumsy 1.\" — a cost no field carries on this record (an under-encoding, not an over-grant).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/strength-of-eight-legions",
+   "key": "FlatModifier",
+   "selector": "hp",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "feat-6988",
+   "quote": "your maximum Hit Points increase by your level",
+   "why": "Agrees with the check lane's entry (Foundry's own toggle is the only predicate).",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/strength-of-eight-legions",
+   "key": "FlatModifier",
+   "selector": "melee-strike-damage",
+   "families": [
+    "melee-only selector"
+   ],
+   "verdict": "fixed",
+   "aonId": "feat-6988",
+   "quote": "You permanently gain the effects of enlarge",
+   "why": "strikeDamage appliesTo \"all\" -> \"melee\": enlarge (spell-1514) gives \"a +2 status bonus to damage rolls on melee Strikes\", and Wanderer's Guide encodes MELEE_ATTACK_DAMAGE_BONUS. Gate ON: a longbow's damage is unchanged by the feat (was \"plus 2 untyped\"), a longsword keeps the +2. The \"own toggle\" family on the same counterpart is the check lane's print-unconditional entry. Blocked lane (2026-10-17): its type is \"status\" now, not \"untyped\" — enlarge prints a STATUS bonus, so a second status bonus to the same Strike takes the higher value instead of adding (the longsword reads \"plus 2 status\"). test/lost-condition-fixes-eight-legions.test.ts.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/strength-of-eight-legions",
+   "key": "FlatModifier",
+   "selector": "melee-strike-damage",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "feat-6988",
+   "quote": "You permanently gain the effects of enlarge",
+   "why": "Foundry's own toggle is the only predicate on this counterpart; print makes it permanent. Agrees with the check lane's entry.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/morphic-strike",
+   "key": "Strike",
+   "counterparts": [
+    "claw",
+    "elementalcurrent",
+    "root",
+    "spirittouch",
+    "strikingsurface"
+   ],
+   "families": [
+    "heritage/ancestry/trait",
+    "other roll option"
+   ],
+   "verdict": "fixed",
+   "fixedIn": "blocked lane, 2026-10-17",
+   "aonId": "feat-6991",
+   "quote": "You gain a melee unarmed Strike depending on your heritage, described below.",
+   "why": "Each row carries whenHeritage on its heritage (born-of-animal claw, -celestial spirit touch, -elements elemental current, -item striking surface, -vegetation root); each of the eight elemental currents also whenHeritageChoice, Born of Elements' own cantrip answer (born-of-elements:cantrip), so the first current no longer wins the name for every element and an unanswered cantrip grants none; the striking surface is two rows on the feat's own damage-type choice instead of an unsubstituted Foundry template as its damage type; names are print's (\"Spirit Touch\", not \"SpiritTouch\"). Dark under the trust gate (theirsUnencoded). test/lost-condition-blocked-strikes.test.ts.",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "feats/claws-of-the-dragon",
+   "key": "Strike",
+   "selector": "claw",
+   "families": [
+    "feature/class/feat",
+    "self effect/condition"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "feat-1941",
+   "quote": "Your claws are agile, finesse unarmed attacks that deal 1d6 slashing damage and are in the brawling weapon group.",
+   "why": "Agrees with the check lane's entry: Foundry's nand predicate only avoids a duplicate with the dragon claws spell for draconic sorcerers; the claws themselves are unconditional.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/rope-runner",
+   "key": "BaseSpeed",
+   "selector": "climb",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "route",
+   "routeKind": "no-lit-route",
+   "aonId": "feat-6380",
+   "quote": "You gain a climb Speed of 15 feet, but only when climbing ropes and similar objects.",
+   "why": "Q7 / the 2026-08-22 speed ruling make this a '*', and both carriers already exist — the record's own `situational` star and the mode modes/cat-rope-runner — but both are DARK: Wanderer's Guide encodes `speed` and a prose `note` here, not `conditional`, so the ledger keeps `situational` on this record's OFF list and the mode on lanes.modes, and no approval names them. Removing speeds.climb would leave the player nothing, so it is KEPT and listed. (scripts/conditional-speed-check.mjs's GATE pattern does not match \"only when climbing\", which is why it never flagged this record.)",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/werecreature-dedication",
+   "key": "Strike",
+   "counterparts": [
+    "antler",
+    "claw",
+    "fangs",
+    "jaws",
+    "tusk"
+   ],
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "fixed",
+   "aonId": "feat-5486",
+   "quote": "You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type.",
+   "why": "The attacks come WITH the shape. The feat-level grantedStrikes removed; the same attacks ship on the eighteen shape modes modes/were-<type>-animal|hybrid as ModeDef.grantedStrikes (lit: the modes' carrier encodes `conditional`). Gate ON, a werebear: humanoid shape Fist only (was Jaws, Claw, Fist), hybrid/animal Jaws 1d8, Claw 1d6 agile, Fist. Side effect, print-correct: a ratfolk werewolf's own ancestry Jaws (1d4) is back in humanoid shape — the feat's Jaws had claimed the name in build's dedup. Wanderer's Guide gives the attack items outside its ACTIVE_MODES conditional (attacks always) — a contradiction of print already ruled for this record: authorised exception #124 (2026-08-22, \"the BOOK wins\"), whose record list names werecreature-dedication. Round 3 (import path): a WG import stores those always-on items as build.naturalAttacks (\"Werewolf Jaws\" d8); with the feat no longer re-stating them they stayed in humanoid shape and doubled in hybrid shape, so buildCharacter now lets a stored attack yield to a shape mode the character's own feat answer unlocks (featGatedModeStrikes in src/rules/build.ts, the same sameNaturalAttack test the feat-level row used). test/lost-condition-fixes-werecreature.test.ts.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/thoughtsense",
+   "key": "Sense",
+   "selector": "thoughtsense",
+   "families": [
+    "self effect/condition"
+   ],
+   "verdict": "print-unconditional",
+   "aonId": "feat-8330",
+   "quote": "You gain thoughtsense as a vague sense that has a range of 30 feet",
+   "why": "Agrees with the check lane's entry: the vague 30-foot sense is unconditional; the imprecise upgrade \"While your Psyche is Unleashed\" is the record's whileActive.",
+   "trustBefore": "lit"
+  },
+  {
+   "record": "feats/sanguine-tenacity",
+   "key": "FlatModifier",
+   "selector": "hp",
+   "families": [
+    "self effect/condition"
+   ],
+   "verdict": "fixed",
+   "aonId": "feat-7762",
+   "quote": "the penalties and lost HP from drained both affect you as if the condition values were 1 lower than they actually are",
+   "why": "The imported maxHpBonus {perLevel:1} paid +level HP to a character who is never drained; removed. The printed reduction belongs in Feat.drainedReduction (the Svetocher shape, conditions.ts), deliberately NOT added: that field is outside the trust gate's strippable universe, so on this record (no Wanderer's Guide row) it would switch on a mechanic the gate keeps off. Dark today. test/lost-condition-fixes-modes.test.ts.",
+   "followUp": "drainedReduction: 1 once a ruling or approval lights the record (and the enfeebled half has no carrier at all).",
+   "trustBefore": "dark"
+  },
+  {
+   "record": "heritages/beastkin",
+   "key": "Strike",
+   "selector": "jaws",
+   "families": [
+    "own toggle"
+   ],
+   "verdict": "default-state",
+   "aonId": "heritage-119",
+   "quote": "A beastkin's hybrid form is their natural shape.",
+   "why": "The beastkin Change Shape (action-700) prints \"most beastkin remain in their hybrid shapes by default. … While in hybrid shape, you gain a jaws unarmed Strike\". The default state is the hybrid shape, so the standing Jaws is the default; humanoid shape is the player's deliberate action. Dark under the trust gate.",
+   "trustBefore": "dark"
+  }
+ ]
+}

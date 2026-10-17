@@ -3927,7 +3927,10 @@ function collectGrantedNaturals(
   /** `build.effectChoices` — a HERITAGE's Strike can hang on one of its own `effectChoices` answers
    *  (the four awakened-animal heritages: *"choose your animal attack"*), tagged `choiceValue` like a
    *  feat's. Without the answers every tagged row was dropped by `push`'s guard, so a climbing animal
-   *  who chose Jaws got only the baseline Fist. Absent for the caller that only wants the NAMES. */
+   *  who chose Jaws got only the baseline Fist. Absent for the caller that only wants the NAMES.
+   *  Also read for a FEAT that asks through `effectChoices` (Fey Ascension's Dryad Leaves) and for a
+   *  feat row gated on the heritage's own answer (`whenHeritageChoice`, Morphic Strike's elemental
+   *  current) — so without it those rows are not granted, never granted wrongly. */
   effectChoices?: Record<string, string>,
   /*
    * batch 035: animal-instinct#no-reader — `build.featChoices`, so a CLASS FEATURE's own answer can
@@ -3946,9 +3949,26 @@ function collectGrantedNaturals(
    * WHICH record granted it — Deadly Aspect upgrades *"the unarmed attack you gained from Draconic
    * Aspect"*, and a nephilim's Bestial Manifestation claw must not qualify. Nothing assigned it before,
    * so that gate matched nothing and the feat was inert. */
+  /*
+   * A row printed for ONE HERITAGE (GrantedStrike.whenHeritage / whenHeritageChoice). Fang Sharpener
+   * (AoN feat-1000): *"If you're an irongut goblin, you gain a jaws unarmed attack that deals 1d4 piercing
+   * damage"*; Sprite's Spark (feat-2635): *"The damage type and name of the unarmed attack depends on your
+   * heritage"*; Morphic Strike (feat-6991): *"You gain a melee unarmed Strike depending on your heritage"*,
+   * its elemental current *"the same damage type … of the cantrip you gained from your heritage"*. Every
+   * sprite got all ten sparks and every yaoguai all twelve strikes before this.
+   *
+   * Tested HERE, before `seen` claims the name, and never in derive: a razortooth goblin's own heritage
+   * Jaws (1d6, finesse) sits behind Fang Sharpener's irongut 1d4 Jaws in push order, so a row dropped
+   * any later would still hide it (41 ancestry/heritage records grant a Jaws, 32 a Claw). No heritage
+   * yet, or a heritage question not answered yet, grants none of the rows — it is still an open question.
+   */
+  const heritageAnswered = (v: string) => !!heritageId && Object.entries(effectChoices ?? {}).some(([k, a]) => k.startsWith(`${heritageId}:`) && a === v);
+  const heritageAllows = (g: GrantedStrike) =>
+    (!g.whenHeritage?.length || (!!heritageId && g.whenHeritage.includes(heritageId))) && (!g.whenHeritageChoice || heritageAnswered(g.whenHeritageChoice));
   const push = (gs: GrantedStrike[] | undefined, sourceId: string, pick?: string, dieSteps = 0, dieNote?: string, requiresState?: string) => {
     for (const g of gs ?? []) {
       if (g.choiceValue && g.choiceValue !== pick) continue;
+      if (!heritageAllows(g)) continue;
       const key = g.name.toLowerCase();
       if (seen.has(key)) continue;
       seen.add(key);
@@ -3988,10 +4008,22 @@ function collectGrantedNaturals(
     const stanceDef = content.stances?.[f.featId];
     if ((enhRec?.traits ?? []).includes('stance') && stanceDef?.strikes?.length) continue;
     const dieSteps = enhancedFeatIds?.has(f.featId) ? enhRec?.enhancement?.strikeDieStep ?? 0 : 0;
+    /*
+     * A feat that asks through `effectChoices` rather than `choice` picks its tagged row by THAT answer
+     * (`<featId>:<choiceId>`), the heritage push's shape below. Fey Ascension (AoN feat-4048): *"You gain
+     * one of the following features and abilities; this must be the same animal or fey type as you chose
+     * for Fey Influence"* — and only *"Dryad … You gain a leaves ranged unarmed attack"*. Reading
+     * `f.choice` alone, a row tagged `choiceValue: 'dryad'` could never match, so the Leaves went to every
+     * branch. Unanswered = no Leaves: the branch is still an open question on the builder, and
+     * `resolvePick` grants no other branch's payload for it either.
+     */
+    const ecPick = f.choice?.value
+      ? undefined
+      : Object.entries(effectChoices ?? {}).find(([k, v]) => k.startsWith(`${f.featId}:`) && enhRec?.grantedStrikes?.some((g) => g.choiceValue === v))?.[1];
     push(
       enhRec?.grantedStrikes,
       f.featId,
-      f.choice?.value,
+      f.choice?.value ?? ecPick,
       dieSteps,
       dieSteps ? `Its damage die is stepped up by ${enhRec?.name ?? f.featId}'s Enhancement.` : undefined,
     );
@@ -4626,12 +4658,61 @@ export function optionDragon(
  */
 export function sameNaturalAttack(a: { name: string; die?: string; damageType?: string; group?: string }, b: { name: string; die?: string; damageType?: string; group?: string }): boolean {
   if (a.name.toLowerCase() === b.name.toLowerCase()) return true;
+  return sameAttackShape(a, b);
+}
+
+/** Same die, damage type and group — the SHAPE half of `sameNaturalAttack`. */
+function sameAttackShape(a: { die?: string; damageType?: string; group?: string }, b: { die?: string; damageType?: string; group?: string }): boolean {
   /* batch P02: unfurling-brocade#two-handed-die — '1d4' and 'd4' are ONE die. 14 shipped granted
    * Strikes wrote a leading count and the fix writes the bare size, so a raw string compare left a
    * save stored before such a row as a second, manual copy of the same attack (the P02 verifier
    * measured three fabric rows on a rebuilt pre-row save). Only a count of one is dropped: 3d6 is not d6. */
   const die = (d?: string) => (d ?? '').replace(/^1(?=d\d)/, '');
   return !!a.die && die(a.die) === die(b.die) && !!a.damageType && a.damageType === b.damageType && (a.group ?? 'brawling') === (b.group ?? 'brawling');
+}
+
+/**
+ * The Strikes a SHAPE (or stance) mode carries that this character's own feats unlock: every
+ * `content.modes` entry gated through `feats` on a feat the build holds — by id, or by the
+ * `<featId>:<answer>` key `modeGateIds` (derive.ts) builds from that feat's answer. Item modes
+ * (`fromItemId`) and ungated modes are not the character's own and claim nothing.
+ *
+ * Why it exists: a stored attack (a WG import, an older save) yields to the GRANT that re-states it
+ * (`sameNaturalAttack`, below in buildCharacter). Werecreature Dedication's attacks moved off the feat
+ * onto its eighteen shape modes (lost-condition lane, AoN feat-5486: *"You transform into your hybrid
+ * or animal shape. … You gain … unarmed attacks … based on your werecreature type"*), and Wanderer's
+ * Guide hands the same attacks over as always-on `unarmed_attack` items ("Werewolf Jaws", d8 piercing
+ * brawling). With nothing re-stating them any more, an imported werewolf kept Jaws in humanoid shape
+ * and showed it twice in hybrid shape. The shape mode now claims the stored copy (`restatesModeStrike`).
+ */
+function featGatedModeStrikes(content: ContentDatabase, feats: readonly { featId: string; choice?: { value: string } }[]): Parameters<typeof sameNaturalAttack>[1][] {
+  const held = new Set<string>();
+  for (const f of feats) {
+    held.add(f.featId);
+    if (f.choice?.value) held.add(`${f.featId}:${f.choice.value}`);
+  }
+  // A mode's Strike is a StanceStrike (`ModeDef.grantedStrikes`); only the fields sameNaturalAttack reads matter.
+  const out: Parameters<typeof sameNaturalAttack>[1][] = [];
+  for (const m of Object.values(content.modes ?? {})) {
+    if (m.fromItemId || !m.grantedStrikes?.length || !m.feats?.some((g) => held.has(g))) continue;
+    out.push(...m.grantedStrikes);
+  }
+  return out;
+}
+
+/**
+ * Is a STORED attack the same attack as a mode's Strike? Stricter than `sameNaturalAttack`, on purpose:
+ * the same name, or the same die, damage type and group AND a name ending in the Strike's own name
+ * ("Werewolf Jaws" is the werewolf's Jaws, "Werebear Claw" the werebear's Claw). Shape alone is not
+ * enough here: a claimed copy is gone from the sheet and then from the save, and a mode claims it on
+ * every build, shape on or off — so a stone brawler's own "Tail" d8 bludgeoning must never vanish for
+ * looking like Stonestrike, nor a werebat's "Jaws" d8 piercing for looking like its Fangs.
+ */
+function restatesModeStrike(stored: { name: string; die?: string; damageType?: string; group?: string }, g: Parameters<typeof sameNaturalAttack>[1]): boolean {
+  const s = stored.name.trim().toLowerCase();
+  const n = g.name.trim().toLowerCase();
+  if (s === n) return true;
+  return s.endsWith(` ${n}`) && sameAttackShape(stored, g);
 }
 
 export function buildCharacter(build: BuildState, content: ContentDatabase): Character {
@@ -9467,7 +9548,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Granted melee strikes from feats/heritage/ancestry/class features (Iruxi Fangs, Razortooth jaws,
   // …). Seeded with any WG-imported natural-attack names so a feat grant doesn't duplicate one the
   // import already produced; the rest are appended so they appear in Strikes (handwraps-buffed).
-  const naturalSeen = new Set((build.naturalAttacks ?? []).map((n) => n.name.toLowerCase()));
+  // A stored attack one of the character's own SHAPE modes re-states yields to that mode (the mode
+  // grants it while the shape is on — featGatedModeStrikes). It is dropped BEFORE it seeds the dedup
+  // set: a ratfolk werewolf's imported "Jaws" d8 must not make the build skip the ratfolk's own 1d4
+  // Jaws as "already imported" and then vanish itself, leaving no Jaws at all.
+  const shapeStrikes = featGatedModeStrikes(content, feats);
+  const storedNaturals = (build.naturalAttacks ?? []).filter((na) => !shapeStrikes.some((g) => restatesModeStrike(na, g)));
+  const naturalSeen = new Set(storedNaturals.map((n) => n.name.toLowerCase()));
   const grantedNaturals = collectGrantedNaturals(
     content,
     feats,
@@ -9507,7 +9594,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // A stored attack that a grant re-states (by name or by shape) yields to the grant: the grant is the
   // live source and carries the feat's riders; the stored copy is an older save or an import.
   const naturalAttacks = [
-    ...(build.naturalAttacks ?? []).filter((na) => !grantedNaturals.some((g) => sameNaturalAttack(na, g))),
+    ...storedNaturals.filter((na) => !grantedNaturals.some((g) => sameNaturalAttack(na, g))),
     ...grantedNaturals,
   ];
 

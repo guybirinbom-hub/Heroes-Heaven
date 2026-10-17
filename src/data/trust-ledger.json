@@ -1,5 +1,5 @@
 {
- "coreSha": "2c5495b8ef924ef71a749fb0b5c68f842fb3684cb7cbd91469d9885272b7d171",
+ "coreSha": "1987a3fd0f03122ed17d97ccf223a1d2ef00d8edefbeda8075fe31d896befb6c",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -806,6 +806,7 @@
    "cat-inner-fire-stoked-flame",
    "cat-phlogistonic-regulator-overdrive",
    "cat-rope-runner",
+   "cat-scalding-spit",
    "close-formation",
    "crawling-form",
    "critter-shape",
@@ -1080,6 +1081,8 @@
    "item-navigators-feather",
    "item-necrobinding-serum",
    "item-obsidian-goggles",
+   "item-obsidian-goggles-greater",
+   "item-obsidian-goggles-major",
    "item-oily-button",
    "item-olfactory-obfuscator-greater",
    "item-olfactory-obfuscator-lesser",
@@ -1592,6 +1595,7 @@
    "bullseye",
    "burn-it",
    "busine-of-divine-reinforcement",
+   "busine-of-divine-reinforcements",
    "buzzsaw-axe",
    "buzzsaw-axe-greater",
    "buzzsaw-axe-major",
@@ -5070,9 +5074,6 @@
   "feats/jungle-strider": [
    "recordMarks"
   ],
-  "feats/juvenile-flight": [
-   "speeds"
-  ],
   "feats/kaiju-defense-oath": [
    "situational"
   ],
@@ -5543,11 +5544,7 @@
    "critSpecWeapons"
   ],
   "feats/sanguine-tenacity": [
-   "maxHpBonus",
    "resistances"
-  ],
-  "feats/scalding-spit": [
-   "grantedStrikes"
   ],
   "feats/scales-of-steel": [
    "unarmoredAc"
@@ -6448,28 +6445,13 @@
   "items/broken-tusk-pendant-greater": [
    "passiveEffects.skills"
   ],
-  "items/brooch-of-inspiration": [
-   "passiveEffects.loreBonus"
-  ],
-  "items/brooch-of-inspiration-greater": [
-   "passiveEffects.loreBonus"
-  ],
-  "items/brooch-of-inspiration-major": [
-   "passiveEffects.loreBonus"
-  ],
   "items/burnished-plating": [
    "situational"
-  ],
-  "items/busine-of-divine-reinforcements": [
-   "passiveEffects.skills"
   ],
   "items/canopy-bulwark": [
    "passiveEffects.bulkLimitBonus"
   ],
   "items/cassock-of-devotion": [
-   "passiveEffects.skills"
-  ],
-  "items/cauthooj-bagpipes": [
    "passiveEffects.skills"
   ],
   "items/charm-of-resistance": [
@@ -6500,12 +6482,6 @@
    "passiveEffects.skills"
   ],
   "items/clarity-goggles": [
-   "passiveEffects.perception"
-  ],
-  "items/clarity-goggles-lesser": [
-   "passiveEffects.perception"
-  ],
-  "items/clarity-goggles-moderate": [
    "passiveEffects.perception"
   ],
   "items/clay-sphere-greater": [
@@ -6985,12 +6961,6 @@
   "items/mirror-goggles": [
    "passiveEffects.perception"
   ],
-  "items/mirror-goggles-greater": [
-   "passiveEffects.perception"
-  ],
-  "items/mirror-goggles-moderate": [
-   "passiveEffects.perception"
-  ],
   "items/mirror-of-sleeping-vigil": [
    "situational"
   ],
@@ -7032,12 +7002,6 @@
   ],
   "items/oathlamp-of-accord": [
    "passiveEffects.skills"
-  ],
-  "items/obsidian-goggles-greater": [
-   "passiveEffects.senses"
-  ],
-  "items/obsidian-goggles-major": [
-   "passiveEffects.senses"
   ],
   "items/oculus-of-abaddon": [
    "passiveEffects.senses",
@@ -7297,9 +7261,6 @@
   "items/specialists-ring-transmutation": [
    "passiveEffects.skills"
   ],
-  "items/spectacles-of-piercing-sight": [
-   "passiveEffects.perception"
-  ],
   "items/spider-chair": [
    "passiveEffects.speeds"
   ],
@@ -7447,9 +7408,6 @@
   "items/venom-glands": [
    "grantedStrikes"
   ],
-  "items/violin-of-the-waves": [
-   "passiveEffects.skills"
-  ],
   "items/viridian-crown": [
    "apexAttribute"
   ],
@@ -7568,5 +7526,5 @@
   "items/waterproof-carrying-case",
   "items/wave-warding-tattoo"
  ],
- "wgSha": "9980360e576dac4a377f2827c0375b6453ade36a0f3486e9d799b74bcef6fdcc"
+ "wgSha": "ff15c8185dd1ebd97e3a680e0dcc4e10a80226aa5d96fd56778cac2878fc57f5"
 }

@@ -851,9 +851,8 @@
   "category": "feats",
   "id": "juvenile-flight",
   "field": "speeds",
-  "value": {
-   "fly": 25
-  }
+  "value": null,
+  "why": "lost-condition lane: AoN feat-2653 \"The fly Speed you gain from Fledgling Flight increases to 25 feet.\" and AoN feat-2649 (Fledgling Flight) \"If you don't normally have a fly Speed, you gain a fly Speed of 15 feet for this movement.\" The fly Speed exists only for that action's movement, so a standing speeds.fly 25 gave every strix with the feat a permanent fly Speed (Fully Flighted, feat-2657, is the feat that prints \"You have a fly Speed of 25 feet at all times\"). Removed; the raise is now a mark on Fledgling Flight (RECORD_MARKERS[\"juvenile-flight\"]). Dark under the trust gate today."
  },
  {
   "category": "feats",
@@ -3506,15 +3505,14 @@
   "id": "axe-of-the-dwarven-lords",
   "field": "passiveEffects",
   "value": {
-   "skills": {
-    "crafting": 4
-   },
    "senses": [
     {
-     "name": "greater-darkvision"
+     "name": "greater-darkvision",
+     "whenCreatureTrait": "dwarf"
     }
    ]
-  }
+  },
+  "why": "lost-condition lane: AoN equipment-609 prints \"While the axe is in your possession, you gain a +4 item bonus when Crafting armor, jewelry, metalworking, stonemasonry, snares, traps, and weapons.\" and \"If you are a dwarf, you gain greater darkvision while holding the axe.\" The +4 sat in passiveEffects.skills.crafting, so EVERY Crafting check rose by 4 (ruling B: a flat bonus the rules restrict moves to a star) — the star FEAT_SITUATIONAL[\"axe-of-the-dwarven-lords\"] already carries the printed list and is lit (Wanderer's Guide encodes `conditional` on this record). The greater darkvision reached every holder; it is now gated on the dwarf creature trait (SenseEntry.whenCreatureTrait, read by deriveDefenses through hasCreatureTrait)."
  },
  {
   "category": "items",
@@ -4365,11 +4363,8 @@
   "category": "items",
   "id": "violin-of-the-waves",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 2
-   }
-  }
+  "value": null,
+  "why": "lost-condition lane (ruling B, \"Move it to a star\"): AoN equipment-2199 prints \"When you make a Performance check using the violin of the waves , you gain a +2 item bonus to the check.\" — a restricted bonus, so it leaves passiveEffects, where it applied to EVERY check of that statistic. The star FEAT_SITUATIONAL[\"violin-of-the-waves\"] carries the printed restriction. The record is dark under the trust gate today (no Wanderer's Guide encoding), so nothing changes on a sheet now; this keeps the over-grant from switching on with it. The star gains the +2 row beside its existing +3 aboard-ship row."
  },
  {
   "category": "items",
@@ -4584,17 +4579,15 @@
   "category": "items",
   "id": "clarity-goggles-lesser",
   "field": "passiveEffects",
-  "value": {
-   "perception": 1
-  }
+  "value": null,
+  "why": "lost-condition lane (ruling B, \"Move it to a star\"): AoN equipment-2314-2159 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" — a restricted bonus, so it leaves passiveEffects, where it applied to EVERY check of that statistic. The star FEAT_SITUATIONAL[\"clarity-goggles-lesser\"] carries the printed restriction. The record is dark under the trust gate today (no Wanderer's Guide encoding), so nothing changes on a sheet now; this keeps the over-grant from switching on with it."
  },
  {
   "category": "items",
   "id": "clarity-goggles-moderate",
   "field": "passiveEffects",
-  "value": {
-   "perception": 2
-  }
+  "value": null,
+  "why": "lost-condition lane (ruling B, \"Move it to a star\"): AoN equipment-2314-2160 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" — a restricted bonus, so it leaves passiveEffects, where it applied to EVERY check of that statistic. The star FEAT_SITUATIONAL[\"clarity-goggles-moderate\"] carries the printed restriction. The record is dark under the trust gate today (no Wanderer's Guide encoding), so nothing changes on a sheet now; this keeps the over-grant from switching on with it. The Moderate grade prints \"The goggles grant a +2 item bonus.\""
  },
  {
   "category": "items",
@@ -4624,17 +4617,15 @@
   "category": "items",
   "id": "mirror-goggles-moderate",
   "field": "passiveEffects",
-  "value": {
-   "perception": 2
-  }
+  "value": null,
+  "why": "lost-condition lane (ruling B, \"Move it to a star\"): AoN equipment-2315-2163 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects.\" — a restricted bonus, so it leaves passiveEffects, where it applied to EVERY check of that statistic. The star FEAT_SITUATIONAL[\"mirror-goggles-moderate\"] carries the printed restriction. The record is dark under the trust gate today (no Wanderer's Guide encoding), so nothing changes on a sheet now; this keeps the over-grant from switching on with it. The Moderate grade prints \"The item bonus is +2, and the DC is 30.\" The star's \"(already in your total …)\" wording is corrected in the same change."
  },
  {
   "category": "items",
   "id": "mirror-goggles-greater",
   "field": "passiveEffects",
-  "value": {
-   "perception": 3
-  }
+  "value": null,
+  "why": "lost-condition lane (ruling B, \"Move it to a star\"): AoN equipment-2315-2164 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects.\" — a restricted bonus, so it leaves passiveEffects, where it applied to EVERY check of that statistic. The star FEAT_SITUATIONAL[\"mirror-goggles-greater\"] carries the printed restriction. The record is dark under the trust gate today (no Wanderer's Guide encoding), so nothing changes on a sheet now; this keeps the over-grant from switching on with it. The Greater grade prints \"The item bonus is +3, and the DC is 40.\" The star's \"(already in your total …)\" wording is corrected in the same change."
  },
  {
   "category": "items",
@@ -4648,9 +4639,8 @@
   "category": "items",
   "id": "spectacles-of-piercing-sight",
   "field": "passiveEffects",
-  "value": {
-   "perception": 3
-  }
+  "value": null,
+  "why": "lost-condition lane (ruling B, \"Move it to a star\"): AoN equipment-2317 prints \"With lenses set in a silver frame, spectacles of piercing sight grant you a +3 item bonus to visual Perception checks.\" — a restricted bonus, so it leaves passiveEffects, where it applied to EVERY check of that statistic. The star FEAT_SITUATIONAL[\"spectacles-of-piercing-sight\"] carries the printed restriction. The record is dark under the trust gate today (no Wanderer's Guide encoding), so nothing changes on a sheet now; this keeps the over-grant from switching on with it. The star's \"(already in your total …)\" wording is corrected in the same change."
  },
  {
   "category": "items",
@@ -5828,25 +5818,15 @@
   "category": "items",
   "id": "obsidian-goggles-greater",
   "field": "passiveEffects",
-  "value": {
-   "senses": [
-    {
-     "name": "darkvision"
-    }
-   ]
-  }
+  "value": null,
+  "why": "lost-condition blocked lane (ruling Q11, it can be shut down: a mode): AoN equipment-3097-3040 prints \"the goggles can be activated any number of times per day, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first\" — the darkvision is the Activate—Darkvision action's, not a standing sense. It moves to the toggle mode modes/item-obsidian-goggles-greater. Dark under the trust gate (Wanderer's Guide encodes only perception here)."
  },
  {
   "category": "items",
   "id": "obsidian-goggles-major",
   "field": "passiveEffects",
-  "value": {
-   "senses": [
-    {
-     "name": "greater-darkvision"
-    }
-   ]
-  }
+  "value": null,
+  "why": "lost-condition blocked lane (ruling Q11): AoN equipment-3097-3041 prints \"the activation grants greater darkvision, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first\". The greater darkvision moves to the toggle mode modes/item-obsidian-goggles-major. Dark under the trust gate."
  },
  {
   "category": "items",
@@ -6133,11 +6113,8 @@
   "category": "items",
   "id": "cauthooj-bagpipes",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 2
-   }
-  }
+  "value": null,
+  "why": "lost-condition lane (ruling B, \"Move it to a star\"): AoN equipment-3221 prints \"The pipes grant a +2 item bonus to Performance checks while playing music with them.\" — a restricted bonus, so it leaves passiveEffects, where it applied to EVERY check of that statistic. The star FEAT_SITUATIONAL[\"cauthooj-bagpipes\"] carries the printed restriction. The record is dark under the trust gate today (no Wanderer's Guide encoding), so nothing changes on a sheet now; this keeps the over-grant from switching on with it."
  },
  {
   "category": "items",
@@ -7391,11 +7368,8 @@
   "category": "items",
   "id": "busine-of-divine-reinforcements",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 2
-   }
-  }
+  "value": null,
+  "why": "lost-condition lane (ruling B): AoN equipment-1566 (Busine of Divine Reinforcement, the page this unsourced plural twin of items/busine-of-divine-reinforcement reprints) prints \"When played as an instrument, the busine generates powerful and harmonious notes and grants a +2 item bonus to Performance checks.\" The bonus is for Performance checks made playing it, so it leaves passiveEffects, where it rose EVERY Performance check; the star FEAT_SITUATIONAL[\"busine-of-divine-reinforcements\"] carries it, as FEAT_SITUATIONAL[\"busine-of-divine-reinforcement\"] already did for the canonical record, which never carried the number. Dark under the trust gate today (Wanderer's Guide has no row), so nothing changes on a sheet now."
  },
  {
   "category": "items",
@@ -13528,25 +13502,22 @@
   "category": "items",
   "id": "brooch-of-inspiration",
   "field": "passiveEffects",
-  "value": {
-   "loreBonus": 1
-  }
+  "value": null,
+  "why": "lost-condition blocked lane (ruling B): AoN equipment-1434 prints \"While wearing the brooch, you gain a +1 item bonus to checks to Recall Knowledge with Lore skills.\" The flat loreBonus raised EVERY Lore check (Earn Income with Lore too); the bonus is restricted, so it leaves passiveEffects and the star FEAT_SITUATIONAL[\"brooch-of-inspiration\"] carries it. Dark under the trust gate, so nothing changes on a sheet today."
  },
  {
   "category": "items",
   "id": "brooch-of-inspiration-greater",
   "field": "passiveEffects",
-  "value": {
-   "loreBonus": 2
-  }
+  "value": null,
+  "why": "lost-condition blocked lane (ruling B): AoN equipment-1434-1355 prints \"you gain a +1 item bonus to checks to Recall Knowledge with Lore skills\" and for this grade \"The item bonus is +2\". Restricted to Recall Knowledge, so the flat loreBonus 2 leaves passiveEffects; the star FEAT_SITUATIONAL[\"brooch-of-inspiration-greater\"] carries it. Dark under the trust gate."
  },
  {
   "category": "items",
   "id": "brooch-of-inspiration-major",
   "field": "passiveEffects",
-  "value": {
-   "loreBonus": 3
-  }
+  "value": null,
+  "why": "lost-condition blocked lane (ruling B): AoN equipment-1434-1356 prints for this grade \"The item bonus is +3 and applies to all checks to Recall Knowledge with any skill.\" The flat loreBonus 3 raised every Lore check and no Recall Knowledge with any other skill; the star FEAT_SITUATIONAL[\"brooch-of-inspiration-major\"] carries the printed scope. Dark under the trust gate."
  },
  {
   "category": "feats",
@@ -95368,11 +95339,12 @@
   "field": "strikeDamage",
   "value": [
    {
-    "type": "untyped",
+    "type": "status",
     "flat": 2,
-    "appliesTo": "all"
+    "appliesTo": "melee"
    }
-  ]
+  ],
+  "why": "lost-condition blocked lane: AoN feat-6988 \"You permanently gain the effects of enlarge\", and enlarge (AoN spell-1514, Player Core) gives \"a +2 status bonus to damage rolls on melee Strikes\". The +2 is a STATUS bonus, so it carries type status (a second status bonus to the same Strikes takes the higher value rather than adding) instead of untyped; melee-only as before."
  },
  {
   "category": "feats",
@@ -130482,138 +130454,8 @@
   "category": "feats",
   "id": "werecreature-dedication",
   "field": "grantedStrikes",
-  "value": [
-   {
-    "name": "Fangs",
-    "die": "d8",
-    "damageType": "piercing",
-    "traits": [
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "werebat"
-   },
-   {
-    "name": "Jaws",
-    "die": "d8",
-    "damageType": "piercing",
-    "traits": [
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "werebear"
-   },
-   {
-    "name": "Claw",
-    "die": "d6",
-    "damageType": "slashing",
-    "traits": [
-     "agile",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "werebear"
-   },
-   {
-    "name": "Tusk",
-    "die": "d8",
-    "damageType": "slashing",
-    "traits": [
-     "sweep",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "wereboar"
-   },
-   {
-    "name": "Jaws",
-    "die": "d8",
-    "damageType": "piercing",
-    "traits": [
-     "grapple",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "werecrocodile"
-   },
-   {
-    "name": "Antler",
-    "die": "d8",
-    "damageType": "piercing",
-    "traits": [
-     "shove",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "weremoose"
-   },
-   {
-    "name": "Jaws",
-    "die": "d6",
-    "damageType": "piercing",
-    "traits": [
-     "finesse",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "wererat"
-   },
-   {
-    "name": "Claw",
-    "die": "d4",
-    "damageType": "slashing",
-    "traits": [
-     "agile",
-     "finesse",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "wererat"
-   },
-   {
-    "name": "Jaws",
-    "die": "d8",
-    "damageType": "piercing",
-    "traits": [
-     "grapple",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "wereshark"
-   },
-   {
-    "name": "Jaws",
-    "die": "d8",
-    "damageType": "piercing",
-    "traits": [
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "weretiger"
-   },
-   {
-    "name": "Claw",
-    "die": "d6",
-    "damageType": "slashing",
-    "traits": [
-     "agile",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "weretiger"
-   },
-   {
-    "name": "Jaws",
-    "die": "d8",
-    "damageType": "piercing",
-    "traits": [
-     "trip",
-     "unarmed"
-    ],
-    "group": "brawling",
-    "choiceValue": "werewolf"
-   }
-  ]
+  "value": null,
+  "why": "lost-condition lane: AoN feat-5486, Change Shape: \"You transform into your hybrid or animal shape. … You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" The attacks come WITH the shape, so a werecreature in humanoid shape has none; the feat-level grantedStrikes put the type's jaws and claws on the Strikes tab at all times. They move onto the eighteen shape modes (modes/were-<type>-animal|hybrid), which ModeDef.grantedStrikes applies only while the mode is on. Same attack data, per the type table on the page. Wanderer's Guide gives the attack items OUTSIDE its ACTIVE_MODES conditional (attacks always, only the Speeds gated) — a contradiction of print the owner has already settled for this very record: authorised exception #124 (2026-08-22), \"Where WG's data provably contradicts the printed text, the BOOK wins\", whose record list names werecreature-dedication."
  },
  {
   "category": "feats",
@@ -191348,5 +191190,868 @@
    "crossbow"
   ],
   "why": "deity-528 (Malthus, Divine Mysteries pg. 314) prints \"**Favored Weapon** [Light Crossbow](/Weapons.aspx?ID=425)\": the Archives' own link names weapon-425, Crossbow (Player Core; legacy_id weapon-67, the Core Rulebook Crossbow), which ships as items/crossbow (aonId weapon-425). No weapon page is titled Light Crossbow, so the record's 'light-crossbow' (the link text) was no item, and a Malthus warpriest's or cloistered cleric's doctrine critical specialization (doctrine-5, doctrine-4: \"using your deity's favored weapon\") reached no weapon at all. scripts/deity-fields-check.mjs now reads an unmatched printed name through the page's link. Package M round 3."
+ },
+ {
+  "category": "modes",
+  "id": "were-werebat-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Fangs",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the werebat's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-werebat-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Fangs",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the werebat's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-werebear-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed"
+    ]
+   },
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the werebear's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-werebear-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed"
+    ]
+   },
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the werebear's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-wereboar-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Tusk",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "sweep",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the wereboar's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-wereboar-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Tusk",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "sweep",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the wereboar's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-werecrocodile-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "grapple",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the werecrocodile's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-werecrocodile-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "grapple",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the werecrocodile's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-weremoose-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Antler",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "shove",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the weremoose's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-weremoose-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Antler",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "shove",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the weremoose's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-wererat-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "finesse",
+     "unarmed"
+    ]
+   },
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d4",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the wererat's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-wererat-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "finesse",
+     "unarmed"
+    ]
+   },
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d4",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the wererat's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-wereshark-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "grapple",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the wereshark's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-wereshark-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "grapple",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the wereshark's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-weretiger-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed"
+    ]
+   },
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the weretiger's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-weretiger-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed"
+    ]
+   },
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the weretiger's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-werewolf-animal",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "trip",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the werewolf's row of the Werecreature Types table, on its animal shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "modes",
+  "id": "were-werewolf-hybrid",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "trip",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "lost-condition lane: AoN feat-5486 Change Shape \"You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type. These unarmed attacks are in the brawling group.\" — the werewolf's row of the Werecreature Types table, on its hybrid shape. Moved here from feats/werecreature-dedication.grantedStrikes, which granted them in humanoid shape too."
+ },
+ {
+  "category": "feats",
+  "id": "scalding-spit",
+  "field": "grantedStrikes",
+  "value": null,
+  "why": "lost-condition lane: AoN feat-1010 \"As long as you are taking persistent fire damage, you gain a boiling spit ranged unarmed attack with a range of 30 feet that deals 1d6 fire damage.\" The importer granted it at all times. The sheet tracks persistent damage without its type, so the state cannot be evaluated; it moves to the toggle modes/cat-scalding-spit, whose ModeDef.grantedStrikes applies only while it is on. Dark under the trust gate today (Wanderer's Guide carries the row unencoded)."
+ },
+ {
+  "category": "modes",
+  "id": "cat-scalding-spit",
+  "create": true,
+  "value": {
+   "id": "cat-scalding-spit",
+   "name": "Taking Persistent Fire Damage (Scalding Spit)",
+   "category": "Ancestry",
+   "feats": [
+    "scalding-spit"
+   ],
+   "duration": "as long as you are taking persistent fire damage",
+   "modifiers": [],
+   "grantedStrikes": [
+    {
+     "name": "Boiling Spit",
+     "dice": 1,
+     "die": "d6",
+     "damageType": "fire",
+     "group": "brawling",
+     "traits": [
+      "unarmed"
+     ],
+     "range": 30
+    }
+   ],
+   "note": "Scalding Spit: as long as you are taking persistent fire damage, you gain a boiling spit ranged unarmed attack with a range of 30 feet that deals 1d6 fire damage.",
+   "aonOrigin": "authored"
+  },
+  "why": "lost-condition lane: AoN feat-1010 \"As long as you are taking persistent fire damage, you gain a boiling spit ranged unarmed attack with a range of 30 feet that deals 1d6 fire damage.\" — the attack the importer granted unconditionally, behind the state print names."
+ },
+ {
+  "category": "feats",
+  "id": "sanguine-tenacity",
+  "field": "maxHpBonus",
+  "value": null,
+  "why": "lost-condition lane: AoN feat-7762 prints \"The penalties from enfeebled and the penalties and lost HP from drained both affect you as if the condition values were 1 lower than they actually are.\" — a reduction of the CONDITION, not extra Hit Points; the imported maxHpBonus {perLevel:1} paid +level HP to a character who was never drained (the Svetocher defect conditions.ts describes). Removed. The printed reduction (Feat.drainedReduction) is NOT added here: that field is outside the trust gate's universe, so on this record (no Wanderer's Guide row) it would switch a mechanic on that the gate keeps off — left for a ruling."
+ },
+ {
+  "category": "feats",
+  "id": "fey-ascension",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Leaves",
+    "die": "d6",
+    "damageType": "slashing",
+    "traits": [
+     "magical",
+     "unarmed"
+    ],
+    "group": "dart",
+    "range": 20,
+    "choiceValue": "dryad"
+   }
+  ],
+  "why": "lost-condition blocked lane: AoN feat-4048 prints \"You gain one of the following features and abilities; this must be the same animal or fey type as you chose for Fey Influence\" and only under Dryad \"You gain a leaves ranged unarmed attack that deals 1d6 slashing damage.\" The Leaves went to every branch; tagged choiceValue \"dryad\", the record's own effectChoices answer (fey-ascension:fey-ascension-branch), which collectGrantedNaturals now reads for a feat that asks through effectChoices. Unanswered = no Leaves. Die, group, traits and range are the shipped row's."
+ },
+ {
+  "category": "feats",
+  "id": "fang-sharpener",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Jaws",
+    "die": "d4",
+    "damageType": "piercing",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "irongut-goblin"
+    ]
+   }
+  ],
+  "why": "lost-condition blocked lane: AoN feat-1000 prints \"If you're an irongut goblin, you gain a jaws unarmed attack that deals 1d4 piercing damage, and if you're a razortooth goblin, your jaws unarmed attack deals 1d8 piercing damage and loses the finesse trait.\" The 1d4 Jaws is the irongut goblin's; gated whenHeritage irongut-goblin, read in collectGrantedNaturals before the name dedup, so a razortooth goblin keeps its heritage Jaws (heritage-252) instead of losing it behind this one. The razortooth upgrade is a separate under-grant, not authored here."
+ },
+ {
+  "category": "feats",
+  "id": "sprites-spark",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Draxie",
+    "die": "d4",
+    "damageType": "mental",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "draxie"
+    ]
+   },
+   {
+    "name": "LuminousSprite",
+    "die": "d4",
+    "damageType": "fire",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "luminous-sprite"
+    ]
+   },
+   {
+    "name": "Grig",
+    "die": "d4",
+    "damageType": "sonic",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "grig"
+    ]
+   },
+   {
+    "name": "Melixie",
+    "die": "d4",
+    "damageType": "poison",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "melixie"
+    ]
+   },
+   {
+    "name": "Nyktera",
+    "die": "d4",
+    "damageType": "sonic",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "nyktera"
+    ]
+   },
+   {
+    "name": "Pixie",
+    "die": "d4",
+    "damageType": "mental",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "pixie"
+    ]
+   },
+   {
+    "name": "Dijiang",
+    "die": "d4",
+    "damageType": "spirit",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "dijiang"
+    ]
+   },
+   {
+    "name": "Gandharva",
+    "die": "d4",
+    "damageType": "sonic",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "gandharva"
+    ]
+   },
+   {
+    "name": "Kanchil",
+    "die": "d4",
+    "damageType": "mental",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "kanchil"
+    ]
+   },
+   {
+    "name": "Leungli",
+    "die": "d4",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "sling",
+    "range": 20,
+    "whenHeritage": [
+     "leungli"
+    ]
+   }
+  ],
+  "why": "lost-condition blocked lane: AoN feat-2635 prints \"The damage type and name of the unarmed attack depends on your heritage, described below\" and lists one spark per heritage (Draxie euphoric spark (mental), Firefly Sprite luminous spark (fire), Grig dissonant note (sonic), Melixie sting shot (poison), Nyktera ultrasonic pulse (sonic), Pixie pixie dust (mental); Dijiang primordial pulse (spirit), Gandharva celestial song (sonic), Kanchil puzzling bolt (mental), Leungli surging splash (bludgeoning)). Every sprite got all ten; each row is now gated whenHeritage on its own heritage (luminous-sprite is heritage-142, the page's Firefly Sprite), read in collectGrantedNaturals before the name dedup. Die, damage type, group and range are the shipped rows'. Not authored: print's hedged default (\"most sprite heritages not presented in this book also use luminous spark\") for a heritage no row names."
+ },
+ {
+  "category": "feats",
+  "id": "morphic-strike",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Claw",
+    "die": "d6",
+    "damageType": "slashing",
+    "traits": [
+     "unarmed",
+     "agile",
+     "finesse"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-animal"
+    ]
+   },
+   {
+    "name": "Spirit Touch",
+    "die": "d4",
+    "damageType": "spirit",
+    "traits": [
+     "unarmed",
+     "magical",
+     "sanctified",
+     "spirit"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-celestial"
+    ]
+   },
+   {
+    "name": "Elemental Current",
+    "die": "d4",
+    "damageType": "electricity",
+    "traits": [
+     "unarmed",
+     "magical",
+     "electricity"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-elements"
+    ],
+    "whenHeritageChoice": "electric-arc"
+   },
+   {
+    "name": "Elemental Current",
+    "die": "d4",
+    "damageType": "cold",
+    "traits": [
+     "unarmed",
+     "magical",
+     "cold"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-elements"
+    ],
+    "whenHeritageChoice": "frostbite"
+   },
+   {
+    "name": "Elemental Current",
+    "die": "d4",
+    "damageType": "fire",
+    "traits": [
+     "unarmed",
+     "magical",
+     "fire"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-elements"
+    ],
+    "whenHeritageChoice": "ignition"
+   },
+   {
+    "name": "Elemental Current",
+    "die": "d4",
+    "damageType": "piercing",
+    "traits": [
+     "unarmed",
+     "magical",
+     "metal"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-elements"
+    ],
+    "whenHeritageChoice": "needle-darts"
+   },
+   {
+    "name": "Elemental Current",
+    "die": "d4",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "magical",
+     "wood"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-elements"
+    ],
+    "whenHeritageChoice": "timber"
+   },
+   {
+    "name": "Elemental Current",
+    "die": "d4",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "magical",
+     "earth"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-elements"
+    ],
+    "whenHeritageChoice": "scatter-scree"
+   },
+   {
+    "name": "Elemental Current",
+    "die": "d4",
+    "damageType": "slashing",
+    "traits": [
+     "unarmed",
+     "magical",
+     "air"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-elements"
+    ],
+    "whenHeritageChoice": "slashing-gust"
+   },
+   {
+    "name": "Elemental Current",
+    "die": "d4",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "magical",
+     "water"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-elements"
+    ],
+    "whenHeritageChoice": "spout"
+   },
+   {
+    "name": "Striking Surface",
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "sweep"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-item"
+    ],
+    "choiceValue": "bludgeoning"
+   },
+   {
+    "name": "Striking Surface",
+    "die": "d8",
+    "damageType": "slashing",
+    "traits": [
+     "unarmed",
+     "sweep"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-item"
+    ],
+    "choiceValue": "slashing"
+   },
+   {
+    "name": "Root",
+    "die": "d6",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "reach"
+    ],
+    "group": "brawling",
+    "whenHeritage": [
+     "born-of-vegetation"
+    ]
+   }
+  ],
+  "why": "lost-condition blocked lane: AoN feat-6991 prints \"You gain a melee unarmed Strike depending on your heritage, described below\": Animal claw (agile, finesse) 1d6 slashing; Celestial spirit touch (magical, sanctified, spirit) 1d4 spirit; Elements elemental current (magical) 1d4, \"this ability deals the same damage type and gains the same elemental traits of the cantrip you gained from your heritage\"; Object striking surface (sweep) \"1d8 bludgeoning or slashing (chosen when you gain this feat)\"; Vegetation root (reach) 1d6 bludgeoning. Every yaoguai got every row. Each row is now gated whenHeritage on its heritage (born-of-animal, -celestial, -elements, -item, -vegetation; heritage-412 to heritage-416); each elemental current on Born of Elements' own cantrip answer (whenHeritageChoice, heritage-414 \"Choose electric arc, frostbite, ignition, needle darts, timber, scatter scree, slashing gust, or spout\"), so the first one no longer wins the name for every element; striking surface by the feat's own damage-type choice instead of an unsubstituted Foundry template as its damage type. Names are print's words (the shipped rows carried Foundry label slugs such as SpiritTouch)."
+ },
+ {
+  "category": "modes",
+  "id": "item-obsidian-goggles-greater",
+  "create": true,
+  "value": {
+   "id": "item-obsidian-goggles-greater",
+   "name": "Obsidian Goggles (Greater)",
+   "fromItemId": "obsidian-goggles-greater",
+   "duration": "until you deactivate it as an Interact action or the goggles are no longer invested by you",
+   "modifiers": [],
+   "senses": [
+    {
+     "name": "darkvision"
+    }
+   ],
+   "note": "Activate—Darkvision (1 action, manipulate), any number of times per day: you gain darkvision until you deactivate it as an Interact action or the goggles are no longer invested by you."
+  },
+  "why": "AoN equipment-3097-3040 (Obsidian Goggles (Greater)) prints \"the goggles can be activated any number of times per day, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first\" for the base grade's \"Activate—Darkvision (manipulate) … you gain darkvision\". Ruling Q11: an effect the player can shut down is a mode. Shape copied from modes/item-obsidian-goggles (the base grade's 1-hour activation)."
+ },
+ {
+  "category": "modes",
+  "id": "item-obsidian-goggles-major",
+  "create": true,
+  "value": {
+   "id": "item-obsidian-goggles-major",
+   "name": "Obsidian Goggles (Major)",
+   "fromItemId": "obsidian-goggles-major",
+   "duration": "until you deactivate it as an Interact action or the goggles are no longer invested by you",
+   "modifiers": [],
+   "senses": [
+    {
+     "name": "greater-darkvision"
+    }
+   ],
+   "note": "Activate—Darkvision (1 action, manipulate), any number of times per day: you gain greater darkvision until you deactivate it as an Interact action or the goggles are no longer invested by you."
+  },
+  "why": "AoN equipment-3097-3041 (Obsidian Goggles (Major)) prints \"the goggles can be activated any number of times per day, the activation grants greater darkvision, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first\". Ruling Q11: a mode. Shape copied from modes/item-obsidian-goggles."
  }
 ]

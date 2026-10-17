@@ -506,6 +506,18 @@ export interface SenseEntry {
    * sheet per-object (deriveDefenses writes `superseded` onto the same object).
    */
   note?: string;
+  /**
+   * The sense belongs only to a character who HAS this creature trait — the sense twin of
+   * `IwrEntry.whenCreatureTrait`, read by the same `hasCreatureTrait` in deriveDefenses so it cannot
+   * disagree with the Details tab.
+   *
+   * Axe of the Dwarven Lords (AoN equipment-609): *"If you are a dwarf, you gain greater darkvision
+   * while holding the axe."* With no gate the sense was handed to every holder, so a human wielding the
+   * axe read greater darkvision on the Senses row. Whether the holder is a dwarf is a fact the sheet
+   * already holds, so it is evaluated rather than starred (the `speedsIf` reasoning). Absent means
+   * unconditional, which is every other sense in the database.
+   */
+  whenCreatureTrait?: string;
   /** DISPLAY ONLY, set by `deriveDefenses` when a stronger rung of the same vision ladder is present
    *  (Q13: "Show only darkvision when it supersedes low-light"). The sense is still HELD — it stays in
    *  `defenses.senses` so rules consults and the Wanderer's Guide export keep seeing it, which matters
@@ -5758,8 +5770,30 @@ export interface GrantedStrike {
   group: string;
   /** Range increment in feet for a RANGED natural/unarmed attack (Spined Azarketi's spine); undefined = melee. */
   range?: number;
-  /** Set only when gated by a ChoiceSet pick (e.g. Iruxi 'fangs'/'tail'); undefined = unconditional. */
+  /** Set only when gated by a ChoiceSet pick (e.g. Iruxi 'fangs'/'tail'); undefined = unconditional.
+   *  A FEAT's pick is its `choice` answer or, for a record that asks through `effectChoices` (Fey
+   *  Ascension's "the same animal or fey type as you chose for Fey Influence"), that answer. */
   choiceValue?: string;
+  /**
+   * The HERITAGE(S) this attack belongs to — a feat that prints one attack per heritage. Fang
+   * Sharpener (AoN feat-1000): *"If you're an irongut goblin, you gain a jaws unarmed attack that deals
+   * 1d4 piercing damage"*; Sprite's Spark (feat-2635): *"The damage type and name of the unarmed attack
+   * depends on your heritage"*; Morphic Strike (feat-6991): *"You gain a melee unarmed Strike depending
+   * on your heritage"*. Absent = every heritage.
+   *
+   * Read in `collectGrantedNaturals` BEFORE its name dedup, never in derive: a gated row dropped later
+   * would still have claimed its name, and a razortooth goblin's own heritage Jaws (or any of the 41
+   * ancestry/heritage Jaws and 32 Claws) would vanish behind a feat Jaws it does not get. No heritage
+   * chosen yet = not granted (the heritage is still an open question, not "none of these").
+   */
+  whenHeritage?: string[];
+  /**
+   * …and the heritage's OWN answer this attack follows: Morphic Strike's elemental current *"deals the
+   * same damage type and gains the same elemental traits of the cantrip you gained from your heritage"*
+   * (feat-6991) — Born of Elements asks its cantrip through `effectChoices`, keyed
+   * `<heritageId>:<choiceId>`. Unanswered = not granted (no damage type to give it).
+   */
+  whenHeritageChoice?: string;
 }
 
 /** One stack of an item in the character's inventory. */

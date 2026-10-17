@@ -808,23 +808,59 @@ describe('multiclass dedication class DC', () => {
   });
 });
 
-describe('Brooch of Inspiration — Lore-group bonus', () => {
-  it('grants an item bonus to every Lore skill (scaling by tier)', async () => {
+/*
+ * lost-condition blocked lane (2026-10-17) premise: equipment-1434 "While wearing the brooch, you gain a +1
+ * item bonus to checks to Recall Knowledge with Lore skills." — and the Major grade (equipment-1434-1356)
+ * "The item bonus is +3 and applies to all checks to Recall Knowledge with any skill." The bonus is for
+ * RECALL KNOWLEDGE, not for every Lore check (Earn Income with Lore, a Lore-based Subsist), so ruling B
+ * makes it a star: this test used to pin a flat loreBonus on every Lore skill (an earlier modelling call,
+ * "Lores are used almost only for Recall Knowledge") and now pins the star and the untouched total.
+ */
+describe('Brooch of Inspiration — a Recall Knowledge star, not a Lore number', () => {
+  const GRADES: [string, number, RegExp][] = [
+    ['brooch-of-inspiration', 1, /Recall Knowledge, and only with Lore skills/],
+    ['brooch-of-inspiration-greater', 2, /Recall Knowledge, and only with Lore skills/],
+    ['brooch-of-inspiration-major', 3, /Recall Knowledge, with ANY skill/],
+  ];
+  it('no grade moves a Lore (or any other) total; each carries the printed bonus as a star on the skill', async () => {
+    const { deriveSkill } = await import('../src/rules/derive');
+    const { statHasSituational } = await import('../src/rules/explain');
+    const { FEAT_SITUATIONAL, setSituationalTrustOff } = await import('../src/rules/situationalBonuses');
+    setSituationalTrustOff([]); // the stars are dark under the trust gate today; the gate is not what is tested here
+    const db = content();
+    const c = build('wizard', 17, { ancestryId: 'human' });
+    c.proficiencies.skills['lore:academia'] = 'trained' as never;
+    const wear = (itemId?: string) => (c.inventory = itemId ? ([{ instanceId: 'b', itemId, quantity: 1, worn: true, invested: true }] as never) : ([] as never));
+    const at = (skill: string, itemId?: string) => (wear(itemId), deriveSkill(c, skill as never, db).modifier);
+    for (const [id, bonus, when] of GRADES) {
+      expect(db.items[id]?.passiveEffects?.loreBonus, id).toBeUndefined();
+      expect(at('lore:academia', id), `${id} on Academia Lore`).toBe(at('lore:academia'));
+      expect(at('diplomacy', id), `${id} on Diplomacy`).toBe(at('diplomacy'));
+      const star = (FEAT_SITUATIONAL[id] ?? []).find((s) => s.targets.some((t) => t.kind === 'skill'));
+      expect(star?.when, id).toMatch(when);
+      expect(star?.bonus, id).toBe(`+${bonus} item`);
+      wear(id);
+      expect(statHasSituational(c, { kind: 'skill', skill: 'lore:academia' } as never, db), `${id} stars the Lore skill`).toBe(true);
+    }
+    wear();
+  });
+
+  it('mutation-proof: the old flat loreBonus, planted back, moves the Lore total again', async () => {
     const { deriveSkill } = await import('../src/rules/derive');
     const db = content();
-    const c = build('wizard', 10, { ancestryId: 'human' });
+    const c = build('wizard', 17, { ancestryId: 'human' });
     c.proficiencies.skills['lore:academia'] = 'trained' as never;
-    const lore = (itemId?: string) => {
-      c.inventory = itemId ? ([{ instanceId: 'b', itemId, quantity: 1, worn: true, invested: true }] as never) : ([] as never);
-      return deriveSkill(c, 'lore:academia' as never, db).modifier;
-    };
+    const lore = () => deriveSkill(c, 'lore:academia' as never, db).modifier;
     const base = lore();
-    expect(lore('brooch-of-inspiration') - base).toBe(1);
-    expect(lore('brooch-of-inspiration-major') - base).toBe(3);
-    // A non-Lore skill is unaffected.
-    const dipBase = deriveSkill(c, 'diplomacy', db).modifier;
     c.inventory = [{ instanceId: 'b', itemId: 'brooch-of-inspiration', quantity: 1, worn: true, invested: true }] as never;
-    expect(deriveSkill(c, 'diplomacy', db).modifier).toBe(dipBase);
+    const saved = db.items['brooch-of-inspiration'];
+    (db.items as Record<string, unknown>)['brooch-of-inspiration'] = { ...saved, passiveEffects: { loreBonus: 1 } };
+    try {
+      expect(lore() - base).toBe(1);
+    } finally {
+      db.items['brooch-of-inspiration'] = saved;
+    }
+    expect(lore() - base).toBe(0);
   });
 });
 

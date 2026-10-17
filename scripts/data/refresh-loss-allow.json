@@ -2594,5 +2594,173 @@
   "aon": "deity-528",
   "before": "9689eb4eaaebde22",
   "why": "package M round 3, 2026-10-17: deity-528 (Malthus, Divine Mysteries) prints \"**Favored Weapon** [Light Crossbow](/Weapons.aspx?ID=425)\" and the Archives' own link names weapon-425, Crossbow (Player Core), which ships as items/crossbow (aonId weapon-425). The lost member 'light-crossbow' was the link TEXT, an id no item carries; it is replaced by 'crossbow' (one overlay row), so the one-member list is the same weapon, now resolvable. Held by test/package-m-data3-deity-weapons.test.ts and scripts/deity-fields-check.mjs (reads an unmatched name through the page's link)."
+ },
+ {
+  "key": "items/axe-of-the-dwarven-lords",
+  "field": "passiveEffects.skills.crafting",
+  "aon": "equipment-609",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-609 prints \"While the axe is in your possession, you gain a +4 item bonus when Crafting armor, jewelry, metalworking, stonemasonry, snares, traps, and weapons.\" The +4 had raised EVERY Crafting check; it now lives only in the lit star FEAT_SITUATIONAL[\"axe-of-the-dwarven-lords\"] (ruling B). Held by test/lost-condition-fixes-axe.test.ts."
+ },
+ {
+  "key": "items/axe-of-the-dwarven-lords",
+  "field": "passiveEffects.senses",
+  "aon": "equipment-609",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-609 prints \"If you are a dwarf, you gain greater darkvision while holding the axe.\" The one member is the same sense, now carrying whenCreatureTrait: \"dwarf\" (deriveDefenses skips it for a holder without the dwarf trait), so the array-lost is the gate being added. Held by test/lost-condition-fixes-axe.test.ts."
+ },
+ {
+  "key": "items/violin-of-the-waves",
+  "field": "passiveEffects.skills.performance",
+  "aon": "equipment-2199",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-2199 prints \"When you make a Performance check using the violin of the waves , you gain a +2 item bonus to the check.\" — a restricted bonus (ruling B: it leaves passiveEffects for a star). The star FEAT_SITUATIONAL[\"violin-of-the-waves\"] carries it; the record is dark under the trust gate, so no sheet changes now. Held by test/lost-condition-fixes-stars.test.ts."
+ },
+ {
+  "key": "items/clarity-goggles-lesser",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2314-2159",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-2314-2159 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" — a restricted bonus (ruling B: it leaves passiveEffects for a star). The star FEAT_SITUATIONAL[\"clarity-goggles-lesser\"] carries it; the record is dark under the trust gate, so no sheet changes now. Held by test/lost-condition-fixes-stars.test.ts."
+ },
+ {
+  "key": "items/clarity-goggles-moderate",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2314-2160",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-2314-2160 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" — a restricted bonus (ruling B: it leaves passiveEffects for a star). The star FEAT_SITUATIONAL[\"clarity-goggles-moderate\"] carries it; the record is dark under the trust gate, so no sheet changes now. Held by test/lost-condition-fixes-stars.test.ts."
+ },
+ {
+  "key": "items/mirror-goggles-moderate",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2315-2163",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-2315-2163 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects.\" — a restricted bonus (ruling B: it leaves passiveEffects for a star). The star FEAT_SITUATIONAL[\"mirror-goggles-moderate\"] carries it; the record is dark under the trust gate, so no sheet changes now. Held by test/lost-condition-fixes-stars.test.ts."
+ },
+ {
+  "key": "items/mirror-goggles-greater",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2315-2164",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-2315-2164 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects.\" — a restricted bonus (ruling B: it leaves passiveEffects for a star). The star FEAT_SITUATIONAL[\"mirror-goggles-greater\"] carries it; the record is dark under the trust gate, so no sheet changes now. Held by test/lost-condition-fixes-stars.test.ts."
+ },
+ {
+  "key": "items/spectacles-of-piercing-sight",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2317",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-2317 prints \"spectacles of piercing sight grant you a +3 item bonus to visual Perception checks.\" — a restricted bonus (ruling B: it leaves passiveEffects for a star). The star FEAT_SITUATIONAL[\"spectacles-of-piercing-sight\"] carries it; the record is dark under the trust gate, so no sheet changes now. Held by test/lost-condition-fixes-stars.test.ts."
+ },
+ {
+  "key": "items/cauthooj-bagpipes",
+  "field": "passiveEffects.skills.performance",
+  "aon": "equipment-3221",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-3221 prints \"The pipes grant a +2 item bonus to Performance checks while playing music with them.\" — a restricted bonus (ruling B: it leaves passiveEffects for a star). The star FEAT_SITUATIONAL[\"cauthooj-bagpipes\"] carries it; the record is dark under the trust gate, so no sheet changes now. Held by test/lost-condition-fixes-stars.test.ts."
+ },
+ {
+  "key": "items/busine-of-divine-reinforcements",
+  "field": "passiveEffects.skills.performance",
+  "aon": "equipment-1566",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): equipment-1566 (Busine of Divine Reinforcement; this record is its unsourced plural twin) prints \"When played as an instrument, the busine generates powerful and harmonious notes and grants a +2 item bonus to Performance checks.\" The +2 now lives in the new star FEAT_SITUATIONAL[\"busine-of-divine-reinforcements\"], worded like the canonical record's (ruling B); dark under the trust gate. Held by test/lost-condition-fixes-stars.test.ts."
+ },
+ {
+  "key": "feats/scalding-spit",
+  "field": "grantedStrikes",
+  "aon": "feat-1010",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): feat-1010 prints \"As long as you are taking persistent fire damage, you gain a boiling spit ranged unarmed attack with a range of 30 feet that deals 1d6 fire damage.\" The importer granted it at all times; the same attack now ships on the new toggle modes/cat-scalding-spit (ModeDef.grantedStrikes), on only while the player says they are burning. Dark under the trust gate. Held by test/lost-condition-fixes-modes.test.ts."
+ },
+ {
+  "key": "feats/juvenile-flight",
+  "field": "speeds.fly",
+  "aon": "feat-2653",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): feat-2653 prints \"The fly Speed you gain from Fledgling Flight increases to 25 feet.\" and Fledgling Flight (feat-2649) grants its fly Speed only \"for this movement\", so a standing fly 25 was a permanent fly Speed print never gives (Fully Flighted, feat-2657, is the one that does). The raise is now a mark on Fledgling Flight (RECORD_MARKERS[\"juvenile-flight\"]). Dark under the trust gate. Held by test/lost-condition-fixes-modes.test.ts."
+ },
+ {
+  "key": "feats/werecreature-dedication",
+  "field": "grantedStrikes",
+  "aon": "feat-5486",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): feat-5486 Change Shape prints \"You transform into your hybrid or animal shape. … You gain a movement speed, unarmed attacks, and potentially other abilities based on your werecreature type.\" The attacks come with the shape, so the feat-level grantedStrikes put them on a humanoid-shape sheet too; the same attacks (same dice, damage types and traits, per the page's type table) now ship on the eighteen shape modes modes/were-<type>-animal|hybrid as ModeDef.grantedStrikes. Held by test/lost-condition-fixes-werecreature.test.ts."
+ },
+ {
+  "key": "feats/strength-of-eight-legions",
+  "field": "strikeDamage",
+  "aon": "feat-6988",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): feat-6988 \"You permanently gain the effects of enlarge\" and enlarge (spell-1514) gives \"a +2 status bonus to damage rolls on melee Strikes\". The one member is the same +2 narrowed from appliesTo \"all\" to \"melee\", so a longbow no longer gains it, and (blocked lane, same day) typed \"status\" instead of \"untyped\", as enlarge prints. Held by test/lost-condition-fixes-eight-legions.test.ts."
+ },
+ {
+  "key": "feats/sanguine-tenacity",
+  "field": "maxHpBonus.perLevel",
+  "aon": "feat-7762",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition lane, 2026-10-17 (a print fix, not an Archives change): feat-7762 prints \"The penalties from enfeebled and the penalties and lost HP from drained both affect you as if the condition values were 1 lower than they actually are.\" — a reduction of the condition, not +level Hit Points for a character who is never drained (the Svetocher defect src/rules/conditions.ts describes). Removed; dark under the trust gate. Held by test/lost-condition-fixes-modes.test.ts."
+ },
+ {
+  "key": "items/brooch-of-inspiration",
+  "field": "passiveEffects.loreBonus",
+  "aon": "equipment-1434",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): equipment-1434 prints \"While wearing the brooch, you gain a +1 item bonus to checks to Recall Knowledge with Lore skills.\" The flat loreBonus raised EVERY Lore check; the bonus is restricted, so it leaves passiveEffects for the star FEAT_SITUATIONAL[\"brooch-of-inspiration\"] (ruling B). Dark under the trust gate. Held by test/fix-campaign.test.ts and test/lost-condition-blocked-check.test.ts."
+ },
+ {
+  "key": "items/brooch-of-inspiration-greater",
+  "field": "passiveEffects.loreBonus",
+  "aon": "equipment-1434-1355",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): equipment-1434-1355 prints the base grade's \"+1 item bonus to checks to Recall Knowledge with Lore skills\" and for this grade \"The item bonus is +2\". The flat loreBonus 2 leaves passiveEffects for the star FEAT_SITUATIONAL[\"brooch-of-inspiration-greater\"] (ruling B). Dark under the trust gate. Held by test/fix-campaign.test.ts."
+ },
+ {
+  "key": "items/brooch-of-inspiration-major",
+  "field": "passiveEffects.loreBonus",
+  "aon": "equipment-1434-1356",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): equipment-1434-1356 prints for this grade \"The item bonus is +3 and applies to all checks to Recall Knowledge with any skill.\" The flat loreBonus 3 raised every Lore check and no Recall Knowledge with another skill; the star FEAT_SITUATIONAL[\"brooch-of-inspiration-major\"] carries the printed scope (ruling B). Dark under the trust gate. Held by test/fix-campaign.test.ts."
+ },
+ {
+  "key": "items/obsidian-goggles-greater",
+  "field": "passiveEffects.senses",
+  "aon": "equipment-3097-3040",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): equipment-3097-3040 prints \"the goggles can be activated any number of times per day, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you\" — the darkvision is the activation's, not a standing sense. It moved to the new toggle mode modes/item-obsidian-goggles-greater (ruling Q11). Dark under the trust gate. Held by test/lost-condition-blocked-modes.test.ts."
+ },
+ {
+  "key": "items/obsidian-goggles-major",
+  "field": "passiveEffects.senses",
+  "aon": "equipment-3097-3041",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): equipment-3097-3041 prints \"the activation grants greater darkvision, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you\". The greater darkvision moved to the new toggle mode modes/item-obsidian-goggles-major (ruling Q11). Dark under the trust gate. Held by test/lost-condition-blocked-modes.test.ts."
+ },
+ {
+  "key": "feats/fang-sharpener",
+  "field": "grantedStrikes",
+  "aon": "feat-1000",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): feat-1000 prints \"If you're an irongut goblin, you gain a jaws unarmed attack that deals 1d4 piercing damage\". Nothing is lost: the one member is the same Jaws, now carrying whenHeritage [\"irongut-goblin\"] (read by collectGrantedNaturals before its name dedup), so the array-lost is the gate being added. Dark under the trust gate. Held by test/lost-condition-blocked-strikes.test.ts."
+ },
+ {
+  "key": "feats/sprites-spark",
+  "field": "grantedStrikes",
+  "aon": "feat-2635",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): feat-2635 prints \"The damage type and name of the unarmed attack depends on your heritage\". Nothing is lost: the ten members are the same ten sparks, each now carrying whenHeritage on its own heritage, so the array-lost is the gates being added. Dark under the trust gate. Held by test/lost-condition-blocked-strikes.test.ts."
+ },
+ {
+  "key": "feats/fey-ascension",
+  "field": "grantedStrikes",
+  "aon": "feat-4048",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): feat-4048 prints, under Dryad only, \"You gain a leaves ranged unarmed attack that deals 1d6 slashing damage.\" Nothing is lost: the one member is the same Leaves, now carrying choiceValue \"dryad\" (the record's own effectChoices answer, read by collectGrantedNaturals), so the array-lost is the gate being added. Lit: a non-Dryad no longer gets the Leaves. Held by test/lost-condition-blocked-strikes.test.ts."
+ },
+ {
+  "key": "feats/morphic-strike",
+  "field": "grantedStrikes",
+  "aon": "feat-6991",
+  "before": "2c5495b8ef924ef7",
+  "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): feat-6991 prints \"You gain a melee unarmed Strike depending on your heritage, described below.\" Nothing is lost: the twelve strikes are the same (each now whenHeritage on its heritage, each elemental current also whenHeritageChoice on Born of Elements' cantrip answer, names in print's words); the striking surface became two rows on the feat's own damage-type choice (\"1d8 bludgeoning or slashing (chosen when you gain this feat)\") instead of one whose damage type was an unsubstituted Foundry template. Dark under the trust gate. Held by test/lost-condition-blocked-strikes.test.ts."
  }
 ]

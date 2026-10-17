@@ -2869,6 +2869,10 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
      * rather than at author time because it depends on the character: the highest rung reached wins,
      * and an entry carrying no ladder passes through untouched. */
     for (const s of src.senses ?? []) {
+      /* …and one gated on WHAT THE CHARACTER IS — *"If you are a dwarf, you gain greater darkvision while
+       * holding the axe"* (Axe of the Dwarven Lords, AoN equipment-609). The resistance loop below reads
+       * the same gate off the same helper, so a sense and a resistance on one record cannot disagree. */
+      if (s.whenCreatureTrait && !hasCreatureTrait(c, db, s.whenCreatureTrait)) continue;
       const reached = (s.rangeAt ?? []).filter((r) => c.level >= r.level).sort((a, b) => b.range - a.range)[0];
       addSense(reached ? { ...s, range: Math.max(s.range ?? 0, reached.range) } : s);
     }

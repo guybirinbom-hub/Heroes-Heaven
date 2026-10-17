@@ -69,7 +69,12 @@ describe('consumable modes: the data', () => {
     // already shipped as a passive, but the Intimidation half is switched on and off by an activation
     // and is gated on being a member of the Vernai, so a passive would give it to a mask nobody has
     // activated and to a wearer who is not Vernai.
-    expect(itemModes().length).toBe(379);
+    // lost-condition blocked lane (2026-10-17) premise: equipment-3097-3040 "the goggles can be activated
+    // any number of times per day, and the activation lasts until you deactivate it as an Interact action
+    // or the item is no longer invested by you" — +2 for Obsidian Goggles (Greater) and (Major)
+    // (equipment-3097-3041 "the activation grants greater darkvision"): their darkvision is the activation's,
+    // which the player can shut down (ruling Q11: a mode), and it had sat as a standing passive sense.
+    expect(itemModes().length).toBe(381);
   });
 
   it('every item mode points at an item that actually exists', () => {
