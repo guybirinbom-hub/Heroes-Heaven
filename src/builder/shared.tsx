@@ -282,42 +282,18 @@ export function holdOnTitleLookup(ownPage: AstNode | undefined, bucket: string, 
 
 /**
  * Package M round 2 (2026-10-16), Dual Class on the builder's level page: the class each "You gain
- * automatically" row belongs to, one entry per row (null where no class is held). build.ts levelGrants lists
- * the first class's rows, then (Dual Class) the second class's, then a class archetype's substitutes — and
- * drops which class each came from, so the page read every row for the first class: a thaumaturge /
- * swashbuckler's level-5 Weapon Expertise rows both showed the thaumaturge's text. Read back here, in that
- * order:
- *  - a record the first class lists at this level (its subclass variant included; what its subclass or its
- *    class archetype removes left out) is the first class's — the first time it appears;
- *  - a record the second class lists at this level is the second class's (so a record both list, which
- *    appears twice, is the first class's, then the second's);
- *  - a substitute a class archetype adds at this level is the class it substitutes into;
- *  - anything else is the first class's, as before. A single-class build: every row is its class.
+ * automatically" row belongs to, one entry per row (null where no class is held), so a thaumaturge /
+ * swashbuckler's level-5 Weapon Expertise rows are read, text and card, for their own class.
+ *
+ * Round 3: read straight off the row. build.ts levelGrants carries the class it took each row from
+ * (`classId`: the first class's rows, then the second's, then a class archetype's substitutes under the
+ * class they substitute into). Round 2 rebuilt that order and levelGrants' removal rules here and missed
+ * the one row levelGrants keeps after a class archetype removed it — the question it anchors survives
+ * (build.ts substitutedPickFeatures): an investigator taken as the SECOND class with Palatine Detective
+ * Dedication had its kept Methodology row read for the first class.
  */
-export function levelRowClasses(build: BuildState, content: ContentDatabase, level: number, rows: readonly { id: string }[]): (string | null)[] {
-  const [first, second] = heldClasses(build);
-  if (!second?.classId) return rows.map(() => first?.classId ?? null);
-  const arch = resolveClassArchetype(build, content);
-  type Slot = { classId: string | null; subclassId: string | null };
-  const lists = (slot: Slot, id: string): boolean => {
-    const cls = slot.classId ? content.classes[slot.classId] : undefined;
-    if (!cls) return false;
-    const removed = new Set([
-      ...(cls.subclass?.options.find((o) => o.id === slot.subclassId)?.suppressedFeatures ?? []),
-      ...arch.suppressedFor(slot.classId),
-    ]);
-    return cls.features.some((f) => f.level === level && !removed.has(f.featureId) &&
-      (f.featureId === id || (!!slot.subclassId && `${f.featureId}-${slot.subclassId}` === id)));
-  };
-  const firstSeen = new Set<string>();
-  return rows.map((r) => {
-    if (lists(first, r.id) && !firstSeen.has(r.id)) {
-      firstSeen.add(r.id);
-      return first.classId;
-    }
-    if (lists(second, r.id)) return second.classId;
-    return arch.addedFrom.find((a) => a.level === level && a.featureId === r.id)?.classId ?? first.classId;
-  });
+export function levelRowClasses(rows: readonly { classId: string | null }[]): (string | null)[] {
+  return rows.map((r) => r.classId);
 }
 
 export const ABILITY_LABEL: Record<AbilityId, string> = {

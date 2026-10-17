@@ -12,7 +12,7 @@
  * RULE 1 — NARROWED OR QUOTED. Every object in public/core.json, at ANY depth (effectChoices grants, options,
  * riders), whose `critSpec` is truthy must narrow it:
  *   · a record-level grant: `critSpecWeapons` with at least one narrowing key (groups, traits, bases, names,
- *     melee, designated, minRank, categories, deityFavored, maxDieFaces, innovationType), or a gate
+ *     hands, melee, designated, minRank, categories, deityFavored, maxDieFaces, innovationType), or a gate
  *     (`critSpecRequiresModeGroup`, `critSpecRequiresFeat`). `critSpecCondition` alone does NOT count: it is
  *     printed beside the effect, never enforced.
  *   · an `unarmedTraits` rider: a `match` list or a `fromRecord` (a rider with neither reaches every unarmed
@@ -94,6 +94,9 @@ function grantNarrowed(node) {
   if (w && typeof w === 'object') {
     if (NARROW_ARRAYS.some((k) => Array.isArray(w[k]) && w[k].length)) return true;
     if (w.melee === true || w.deityFavored === true || w.designated || w.minRank || w.innovationType) return true;
+    // "weapons that require two hands to wield" (Mauler Dedication, feat-6368) — derive.ts weaponMatches
+    // reads it as one more alternative beside `traits`, so a hands-only block narrows too.
+    if (w.hands === 1 || w.hands === 2) return true;
     if (w.maxDieFaces && typeof w.maxDieFaces === 'object' && Object.keys(w.maxDieFaces).length) return true;
   }
   if (node.critSpecRequiresModeGroup) return true;

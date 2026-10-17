@@ -3363,6 +3363,10 @@ export interface Strike {
   group?: string;
   /** Weapon base/item id (e.g. 'battle-axe') — for crit-spec grants that narrow by base. */
   base?: string;
+  /** The hands the weapon's own record says it needs (`WeaponItem.hands`: 1, 2 or '1+') — for crit-spec
+   *  grants that name *"weapons that require two hands to wield"* (critSpecWeapons.hands, Mauler
+   *  Dedication, feat-6368). Absent on an unarmed attack, a blast or a battle form, which need no hand. */
+  hands?: WeaponItem['hands'];
   /** The weapon's own CATEGORY ('unarmed' for an unarmed attack) — for crit-spec grants that cover
    *  "simple and martial weapons and unarmed attacks" (critSpecWeapons.categories). The printed
    *  category, not the proficiency it rolls at: a familiarity feat moves the second, never the first.
@@ -4371,7 +4375,7 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
  *  none of them matches every Strike, so a grant whose only narrowing resolved away must not keep it. */
 function critSpecNarrowed(w: DefenseGrants['critSpecWeapons']): boolean {
   if (!w) return false;
-  if (w.groups?.length || w.traits?.length || w.bases?.length || w.names?.length || w.categories?.length) return true;
+  if (w.groups?.length || w.traits?.length || w.bases?.length || w.names?.length || w.categories?.length || w.hands != null) return true;
   return !!(w.melee || w.designated || w.minRank || w.deityFavored || w.innovationType || (w.maxDieFaces && Object.keys(w.maxDieFaces).length));
 }
 
@@ -4497,11 +4501,17 @@ function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons'], c?:
     const inv = c?.inventory?.find((i) => i.instanceId === strike.instanceId);
     return (inv?.designations ?? []).includes(w.designated);
   }
-  const narrowed = !!(w.groups?.length || w.traits?.length || w.bases?.length || w.names?.length);
+  const narrowed = !!(w.groups?.length || w.traits?.length || w.bases?.length || w.names?.length || w.hands != null);
   if (!narrowed) return true;
   if (strike.group && w.groups?.includes(strike.group)) return true;
   if (w.traits?.some((t) => strike.traits.includes(t))) return true;
   if (strike.base && w.bases?.includes(strike.base)) return true;
+  /* *"…all melee weapons that require two hands to wield OR have the two-hand trait"* (Mauler Dedication,
+   * feat-6368): the hands the weapon's record prints, one more ALTERNATIVE beside the trait list — a
+   * greatsword (hands 2, no two-hand trait) qualifies through this, a bastard sword (hands 1, two-hand d12)
+   * through `traits`. Read the way WeaponRider.match.hands is: '1+' (a bow) is one-handed, and an unarmed
+   * attack has no hands, so neither is ever "two hands". */
+  if (w.hands != null && strike.hands != null && String(strike.hands).startsWith(String(w.hands))) return true;
   /* By NAME, for a named unarmed attack — "…or with your horns unarmed strike". A natural attack's
    * `base` is `natural:<index>`, never a weapon slug, so `bases` can never reach one; the trait and
    * group routes would light crit spec on every unarmed strike. See the field comment in types.ts. */
@@ -5135,6 +5145,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     reload: w.reload,
     group: w.group,
     base: w.id,
+    ...(w.hands != null ? { hands: w.hands } : {}),
     category: w.category,
     ...(dieFacesOf(effDie) ? { dieFaces: dieFacesOf(effDie) } : {}),
     specDamage: specDamage || undefined,

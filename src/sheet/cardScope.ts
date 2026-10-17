@@ -33,7 +33,7 @@
 import type { AstNode } from './astStore';
 import type { CardScope } from './cardModel';
 import type { Character, ContentDatabase } from '../rules/types';
-import { classFeatureIdsOwned, heldClasses, holdsSubclass } from '../rules/derive';
+import { classArchetypeFor, classFeatureIdsOwned, heldClasses, holdsSubclass, ownedFeatureIds } from '../rules/derive';
 import LEVEL_FOLDS_JSON from '../../scripts/data/level-folds.json';
 // Read here, not through astVisibility.ts pageSliceOf: astVisibility imports canonLabel from this module.
 import PAGE_SLICES_JSON from '../data/page-slices.json';
@@ -717,6 +717,16 @@ export function linkClassOf(trail: readonly { key?: string; slug?: string; class
  * shared Weapon Expertise) cannot be told apart from the record alone and stays the first class's; a surface
  * that knows the row's class passes that instead (FeatsTab's FeatEntry.classId, the builder's level rows,
  * a pin's stored class). Anything that is not a class feature, a single-class character, no character: undefined.
+ *
+ * Package M round 3: what a class holds is what the Feats tab lists under it (FeatsTab featEntries). So a
+ * class loses what its subclass and its own class archetype took away (derive.ts classArchetypeFor; owner
+ * ruling 2026-10-15, "only its own class loses it") — unless a held record hands it back (`grantsClassFeatures`,
+ * the Feats tab's regrantedFeatureIds exception) — and gains the archetype's substitutes, and its stored
+ * picks (`classChoices`: an implement, an element, a thesis, an implement's benefit) count for it: a Warrior
+ * of Legend fighter / guardian's Shield Block is the guardian's alone, and a wizard / thaumaturge's amulet
+ * is the thaumaturge's. A suppressed id takes its `<featureId>-<subclassId>` variant with it (derive.ts
+ * ownedFeatureIds' rule). And the second class's own CLASS PAGE (bucket `classes`) is read for that class,
+ * so a pinned second-class card reopens with its advancement row (withLevelRow).
  */
 export function heldFeatureClassOf(
   ch: Character | null | undefined,
@@ -724,12 +734,39 @@ export function heldFeatureClassOf(
   bucket: string | undefined,
   id: string | undefined,
 ): string | undefined {
-  if (!ch || !content || bucket !== 'classFeatures' || !id) return undefined;
+  if (!ch || !content || !id) return undefined;
   const [first, second] = heldClasses(ch);
   if (!second?.classId || second.classId === first?.classId) return undefined;
+  if (bucket === 'classes') return id === second.classId ? second.classId : undefined;
+  if (bucket !== 'classFeatures') return undefined;
   const level = Number(ch.level) || 0;
-  const holds = (s: { classId: string | null; subclassId: string | null }) =>
-    classFeatureIdsOwned({ classId: s.classId, subclassId: s.subclassId, level }, content).has(id);
+  const rows = (ch.classChoices ?? []).filter((r) => typeof r.id === 'string' && Number(r.level ?? 0) <= level);
+  /* What the character's feats and owned features hand back (`grantsClassFeatures`) — FeatsTab.tsx
+     regrantedFeatureIds' walk, made only when a class lost the record (it walks the owned set). */
+  let back: Set<string> | undefined;
+  const regranted = (): Set<string> =>
+    (back ??= new Set(
+      [...(ch.feats ?? []).map((f) => content.feats[f.featId]), ...[...ownedFeatureIds(ch, content)].map((x) => content.classFeatures[x])]
+        .flatMap((rec) => rec?.grantsClassFeatures ?? []),
+    ));
+  const holds = (s: { classId: string | null; subclassId: string | null }): boolean => {
+    const cls = s.classId ? content.classes[s.classId] : undefined;
+    if (!cls) return false;
+    // The class's own picks: a row whose id is one of its subclass or extra-choice options, or an
+    // implement's benefit (`<tier>-benefit-<implement>`, build.ts pushBenefit) for an implement it offers.
+    const options = new Set([...(cls.subclass?.options ?? []), ...(cls.extraChoices ?? []).flatMap((g) => g.options ?? [])].map((o) => o.id));
+    const ownRow = (rowId: string) => options.has(rowId) || options.has(/^(?:initiate|adept|paragon)-benefit-(.+)$/.exec(rowId)?.[1] ?? '');
+    const own = classFeatureIdsOwned({ classId: s.classId, subclassId: s.subclassId, level, classChoices: rows.filter((r) => ownRow(r.id as string)) }, content);
+    const arch = classArchetypeFor(ch, s.classId);
+    const gone = new Set([...(cls.subclass?.options.find((o) => o.id === s.subclassId)?.suppressedFeatures ?? []), ...(arch?.suppressedFeatures ?? [])]);
+    const suffix = s.subclassId ? `-${s.subclassId}` : undefined;
+    const base = suffix && id.endsWith(suffix) ? id.slice(0, -suffix.length) : id;
+    // …unless a record the character holds hands it back (Spellshield: "You gain the arcane bond class
+    // feature", under War Mage, which took it) — the exception the Feats tab makes.
+    const removed = () => (gone.has(id) || gone.has(base)) && !regranted().has(base);
+    const added = (arch?.addedFeatures ?? []).some((a) => a.featureId === id && a.level <= level && !!content.classFeatures[a.featureId]);
+    return added || (own.has(id) && !removed());
+  };
   return holds(second) && !holds(first) ? second.classId : undefined;
 }
 

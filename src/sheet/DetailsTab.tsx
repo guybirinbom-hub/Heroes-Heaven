@@ -1,9 +1,9 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, type ReactNode } from 'react';
 import type { Character, ContentDatabase, DescRef, ProficiencyRank, SenseEntry, CharacterDetails } from '../rules/types';
 import { RankPill } from './widgets';
 import { RANK_LABEL } from '../rules/explain';
 import { InfoTerm } from './InfoTerm';
-import { deriveDefenses, creatureTraitsOf, deriveSize } from '../rules/derive';
+import { deriveDefenses, creatureTraitsOf, deriveSize, heldClasses } from '../rules/derive';
 import { setAvatar, setDetail, setPortrait, type PlayUpdater } from '../rules/play';
 import { proficiencyDesc, rankDesc, senseDesc, traitDesc, languageDesc, DAILY_LANGUAGE_NOTE } from '../rules/glossary';
 import { useAvatar } from './usePortrait';
@@ -40,14 +40,32 @@ interface ProfRow {
 }
 
 /** One cell of the desktop origin list: its InfoTerm's plain popup, or with `term` a record's 'mine' card
- *  (the Class and Background terms). */
+ *  (the Class and Background terms). `also` is a second term in the same cell, after a slash — the Dual
+ *  Class character's second class. */
 interface OriginCell {
   icon: string;
   label: string;
   name?: string;
   desc?: string;
   refs?: DescRef[];
-  term?: { descKey?: string; descSlug?: string; mine?: { scope?: CardScope }; ours?: OursLine[] };
+  term?: OriginTerm;
+  also?: { name: string; desc?: string; refs?: DescRef[]; term: OriginTerm };
+}
+type OriginTerm = { descKey?: string; descSlug?: string; mine?: { scope?: CardScope }; ours?: OursLine[] };
+
+/** An origin cell's value: its term alone, or (`also`) its term and the second one on one line after a
+ *  slash ("Wizard / Swashbuckler"), each opening its own card. Without `also`, the term exactly as before. */
+function PairTerms({ also, children }: { also?: OriginCell['also']; children: ReactNode }) {
+  if (!also) return <>{children}</>;
+  return (
+    <div className="oval-pair">
+      {children}
+      <span className="oval-sep" aria-hidden="true"> / </span>
+      <InfoTerm className="oval" title={also.name} description={also.desc} descRefs={also.refs} {...also.term}>
+        {also.name}
+      </InfoTerm>
+    </div>
+  );
 }
 
 /** Short bio fields shown as single-line inputs; appearance/personality get textareas. */
@@ -98,6 +116,16 @@ export function DetailsTab({
   const classTerm = cls
     ? { descKey: 'classes', descSlug: cls.id, mine: { scope: scopeOfCharacter(character) } }
     : {};
+  /* Package M round 3 (Dual Class): the SECOND class sits beside the first in the Class cell ("Wizard /
+     Swashbuckler") and opens its own class card scoped to that class (scopeOfCharacter(character, classId):
+     its subclass, its picks, and its advancement table's row for the character's level, withLevelRow). The
+     Details tab named the first class only, so the second class's card was reachable nowhere here. Only
+     under the Dual Class rule (heldClasses): a classId2 left behind with the rule off is no class. */
+  const second = heldClasses(character)[1];
+  const cls2 = second?.classId && second.classId !== cls?.id ? content.classes[second.classId] : undefined;
+  const class2: OriginCell['also'] = cls2
+    ? { name: cls2.name, desc: cls2.description, refs: cls2.descRefs, term: { descKey: 'classes', descSlug: cls2.id, mine: { scope: scopeOfCharacter(character, cls2.id) } } }
+    : undefined;
   /* The Background term opens the background record's 'mine' card the same way, and that card is where
      the background's own `note` is read — "this record works; here is the part you apply yourself"
      (types.ts ContentBase.note): Anti-Magical's DC 3 flat check, Cathedral Child's party reputations.
@@ -119,7 +147,7 @@ export function DetailsTab({
       { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, desc: heritage?.description, refs: heritage?.descRefs },
     ],
     [
-      { icon: 'ti-shield-half', label: 'Class', name: cls?.name, desc: cls?.description, refs: cls?.descRefs, term: classTerm },
+      { icon: 'ti-shield-half', label: 'Class', name: cls?.name, desc: cls?.description, refs: cls?.descRefs, term: classTerm, also: class2 },
       { icon: 'ti-book-2', label: 'Background', name: bgName, desc: bgDesc, refs: background?.descRefs, term: bgTerm },
     ],
   ];
@@ -261,14 +289,16 @@ export function DetailsTab({
                 { icon: 'ti-user', label: 'Ancestry', name: ancestry?.name, title: ancestry?.name ?? 'Ancestry', desc: ancestry?.description, refs: ancestry?.descRefs },
                 { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, title: heritage?.name ?? 'Heritage', desc: heritage?.description, refs: heritage?.descRefs },
                 { icon: 'ti-book-2', label: 'Background', name: bgName, title: bgName ?? 'Background', desc: bgDesc, refs: background?.descRefs, term: bgTerm },
-                { icon: 'ti-shield-half', label: 'Class', name: cls?.name, title: cls?.name ?? 'Class', desc: cls?.description, refs: cls?.descRefs, term: classTerm },
+                { icon: 'ti-shield-half', label: 'Class', name: cls?.name, title: cls?.name ?? 'Class', desc: cls?.description, refs: cls?.descRefs, term: classTerm, also: class2 },
               ].map((o) => (
                 <div className="obox" key={o.label}>
                   <i className={'ti ' + o.icon + ' olead'} aria-hidden="true" />
                   <div className="olabel">{o.label}</div>
-                  <InfoTerm className="oval" title={o.title} description={o.desc} descRefs={o.refs} {...(o.term ?? {})}>
-                    {o.name ?? '—'}
-                  </InfoTerm>
+                  <PairTerms also={o.also}>
+                    <InfoTerm className="oval" title={o.title} description={o.desc} descRefs={o.refs} {...(o.term ?? {})}>
+                      {o.name ?? '—'}
+                    </InfoTerm>
+                  </PairTerms>
                 </div>
               ))}
             </div>
@@ -285,9 +315,11 @@ export function DetailsTab({
                         <i className={'ti ' + o.icon + ' olead'} aria-hidden="true" />
                         <div className="ocell-text">
                           <div className="olabel">{o.label}</div>
-                          <InfoTerm className="oval" title={o.name ?? o.label} description={o.desc} descRefs={o.refs} {...(o.term ?? {})}>
-                            {o.name ?? '—'}
-                          </InfoTerm>
+                          <PairTerms also={o.also}>
+                            <InfoTerm className="oval" title={o.name ?? o.label} description={o.desc} descRefs={o.refs} {...(o.term ?? {})}>
+                              {o.name ?? '—'}
+                            </InfoTerm>
+                          </PairTerms>
                         </div>
                       </div>
                     </Fragment>

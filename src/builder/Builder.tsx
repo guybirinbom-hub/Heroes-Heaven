@@ -2494,9 +2494,9 @@ export function Builder({
               // `build` last: the level list is archetype-aware only when the resolver can see the
               // dedication that carries the class archetype (War Mage: no Arcane Bond row, a War Magic one).
               const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[], build);
-              // Package M round 2 (Dual Class): the class each automatic row belongs to, read back in
-              // levelGrants' order (shared.tsx levelRowClasses) — its text and its card are read for it.
-              const rowClasses = levelRowClasses(build, content, lvl, g.features);
+              // Package M round 2 (Dual Class): the class each automatic row belongs to, as levelGrants
+              // carries it (shared.tsx levelRowClasses) — its text and its card are read for it.
+              const rowClasses = levelRowClasses(g.features);
               const rowClassOf = (f: (typeof g.features)[number]) => rowClasses[g.features.indexOf(f)] ?? build.classId;
               /* Picks at this level under a key no slot above draws — a pick v0.1.40 stranded, a slot a
                  change took away, any key the slot list does not produce. The sheet still grants every

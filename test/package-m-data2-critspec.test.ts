@@ -147,39 +147,35 @@ describe('"…using your deity\'s favored weapon" (doctrine-4, doctrine-5, doctr
    * (deityFavoredWeapons, deityFavorsUnarmed, deityFavorsSimpleOrUnarmed), so every one that is not an item
    * must really be a body part. A weapon name that failed to resolve lands here and fails.
    *
-   * ONE KNOWN CASE, held open on purpose: deity-528 (Malthus) prints "**Favored Weapon** [Light Crossbow]
-   * (/Weapons.aspx?ID=425)" and the record carries the link TEXT, 'light-crossbow' — no item. weapon-425 is
-   * Player Core's Crossbow (items['crossbow']). The one-row fix was authored and taken back out this round:
-   * scripts/deity-fields-check.mjs (npm run verify) compares favored weapons by printed NAME and fails the
-   * corrected record, and that script is outside this lane. Until it resolves an unmatched name through the
-   * link, a Malthus warpriest's doctrine crit spec fails closed (nothing). The entry below must be removed
-   * the day the record is fixed — the stale-entry test says so. */
+   * The one case this round held open is closed (package M round 3): deity-528 (Malthus) prints "**Favored
+   * Weapon** [Light Crossbow](/Weapons.aspx?ID=425)" and the record carried the link TEXT, 'light-crossbow' —
+   * no item. weapon-425 is Player Core's Crossbow (items['crossbow']); scripts/deity-fields-check.mjs now reads
+   * an unmatched printed name through the page's link, and the record names 'crossbow'. KNOWN_UNRESOLVED is
+   * empty and must stay so; test/package-m-data3-deity-weapons.test.ts holds the Malthus sheet and the check. */
   const BODY_PARTS = new Set(['fist', 'claw', 'claws', 'jaw', 'jaws', 'fang', 'fangs', 'tail', 'nails', 'horn', 'horns', 'tentacle', 'tentacles', 'wing', 'wings', 'beak', 'talon', 'talons']);
-  const KNOWN_UNRESOLVED = ['malthus:light-crossbow'];
+  const KNOWN_UNRESOLVED: string[] = [];
   const unresolvedFavored = (d: ContentDatabase) =>
     Object.entries(d.deities).flatMap(([id, dz]) => (dz.favoredWeapons ?? []).filter((w) => !d.items[w] && !BODY_PARTS.has(w)).map((w) => `${id}:${w}`));
-  it('every deity favored weapon is a weapon item or a body part (an unarmed attack) — bar the one known case', () => {
+  it('every deity favored weapon is a weapon item or a body part (an unarmed attack)', () => {
     expect(unresolvedFavored(db).filter((x) => !KNOWN_UNRESOLVED.includes(x))).toEqual([]);
-  });
-  it('the known case is still there (remove it from KNOWN_UNRESOLVED once deities/malthus names items.crossbow)', () => {
-    expect(unresolvedFavored(db)).toEqual(KNOWN_UNRESOLVED);
-    expect(db.items['crossbow']).toMatchObject({ aonId: 'weapon-425', category: 'simple' });
+    expect(KNOWN_UNRESOLVED).toEqual([]);
   });
   it('planted: a second deity on an unresolved weapon name is caught', () => {
     const bad = { ...db, deities: { ...db.deities, abadar: { ...db.deities['abadar'], favoredWeapons: ['heavy-arbalest'] } } } as ContentDatabase;
     expect(unresolvedFavored(bad).filter((x) => !KNOWN_UNRESOLVED.includes(x))).toEqual(['abadar:heavy-arbalest']);
   });
   // batch package-m premise: deity-528 "**Favored Weapon** [Light Crossbow](/Weapons.aspx?ID=425)"
-  it('a Malthus warpriest today: the unresolved favored weapon fails closed — nothing, never every weapon', () => {
+  it('a Malthus warpriest: the crossbow (weapon-425, the page\'s own link) has it; the longsword and the Fist do not', () => {
     const c = wielding(build('cleric', 7, { subclassId: 'warpriest', deityId: 'malthus' }), 'crossbow', 'longsword');
-    expect(shows(c, db, 'Crossbow')).toBe(false);
+    expect(deityFavoredWeapons(c, db)).toEqual({ bases: ['crossbow'], unarmed: [] });
+    expect(shows(c, db, 'Crossbow')).toBe(true);
     expect(shows(c, db, 'Longsword')).toBe(false);
     expect(shows(c, db, 'Fist')).toBe(false);
-    /* …and with the record fixed (in memory), the crossbow is the favored weapon. */
-    const fixed = { ...db, deities: { ...db.deities, malthus: { ...db.deities['malthus'], favoredWeapons: ['crossbow'] } } } as ContentDatabase;
-    expect(deityFavoredWeapons(c, fixed)).toEqual({ bases: ['crossbow'], unarmed: [] });
-    expect(shows(c, fixed, 'Crossbow')).toBe(true);
-    expect(shows(c, fixed, 'Longsword')).toBe(false);
+    /* planted: the old record (in memory) fails closed — nothing, never every weapon. */
+    const old = { ...db, deities: { ...db.deities, malthus: { ...db.deities['malthus'], favoredWeapons: ['light-crossbow'] } } } as ContentDatabase;
+    expect(unresolvedFavored(old)).toEqual(['malthus:light-crossbow']);
+    expect(shows(c, old, 'Crossbow')).toBe(false);
+    expect(shows(c, old, 'Longsword')).toBe(false);
   });
 
   it('with the trust gate on, as the app runs: the narrowing survives with the grant (class features are on)', () => {

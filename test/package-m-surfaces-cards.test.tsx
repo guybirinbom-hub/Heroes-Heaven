@@ -18,7 +18,7 @@ import { StatDetailModal } from '../src/sheet/StatDetailModal';
 import { Builder } from '../src/builder/Builder';
 import { levelRowClasses } from '../src/builder/shared';
 import { heldFeatureClassOf, linkClassOf } from '../src/sheet/cardScope';
-import { SHARED_FEATURE_FOOTER } from '../src/rules/featureText';
+import { SHARED_FEATURE_FOOTER, classFeatureDescription } from '../src/rules/featureText';
 import { pinOf, samePin, togglePinnedDesc, type PlayState } from '../src/rules/play';
 import type { StatBreakdown } from '../src/rules/explain';
 import type { Character, ContentDatabase, PinnedDesc } from '../src/rules/types';
@@ -70,6 +70,15 @@ import type { Character, ContentDatabase, PinnedDesc } from '../src/rules/types'
  *    cases red.
  *  - shared.tsx levelRowClasses without its second-class line → its unit and the builder case red.
  *  - cardScope.ts linkClassOf without `if (n?.classId) return n.classId;` → the linkClassOf unit red.
+ *
+ * Round 3 (2026-10-17; levelRowClasses now reads build.ts levelGrants' own `classId` per row, and the
+ * builder case also reads the row's own description off the pin it stores — test/package-m-ui3-dual-class
+ * holds the rest of round 3). Each measured red, one at a time, the file restored byte-exact (sha1 checked):
+ *  - Builder.tsx `flavor={classFeatureDescription(…, rowClassOf(f), content)}` → `build.classId` → the
+ *    builder case red (the pin's text is the thaumaturge's cut). Round 2 had no case that saw it.
+ *  - shared.tsx levelRowClasses → `rows.map(() => null)` → its unit and the builder case red.
+ *  - build.ts levelGrants `classId: f.of ?? null` → `classId: classId ?? null` → its unit and the builder
+ *    case red.
  */
 
 const db: ContentDatabase = content({ trustGate: true });
@@ -230,9 +239,16 @@ describe('package M round 2 (a): a cleric pins the linked Perception Expertise',
 
   it('an OLD pin of it (no class stored) reopens exactly as before: the record\'s own page', async () => {
     const old: PinnedDesc = { title: db.classFeatures['perception-expertise'].name, description: 'stored snapshot', key: 'classFeatures', slug: 'perception-expertise' };
+    /* Round 3: compared with the record's own browse card rather than with its words — the data lane may
+       re-point which printing the shared record's page is (2026-10-17: the Thaumaturge's "master" page became
+       the Exemplar's "expert" one), and this case is about the pin, not the page. */
+    const b = await mount(<RecordCard record={{ bucket: 'classFeatures', id: 'perception-expertise' }} mode="browse" chrome="popup" onExit={noop} />);
+    const ownPage = txt(popup(b.host)?.querySelector('.ast-modal'));
+    b.stop();
+    expect(ownPage, 'the record\'s own page drew').toMatch(/Perception/);
     const p = await mount(<PinnedDescCard pin={old} content={db} character={build('cleric', 5)} onClose={noop} />);
     try {
-      expect(txt(popup(p.host))).toMatch(SHARED_PE_PAGE);
+      expect(txt(popup(p.host)?.querySelector('.ast-modal'))).toBe(ownPage);
       expect(p.host.querySelector('.card-nopage')).toBeNull();
     } finally { p.stop(); }
   });
@@ -360,28 +376,29 @@ describe('package M round 2 (b): the builder\'s level rows are read for their ow
     const b = thaumSwash5();
     const rowsOf = (value: ContentDatabase) => levelGrants(5, b.classId, value, b.subclassId, b.variantRules, b.classId2, b.subclassId2, false, [], b).features;
     const live = rowsOf(db);
-    const liveClasses = levelRowClasses(b, db, 5, live);
+    const liveClasses = levelRowClasses(live);
     expect(liveClasses[live.findIndex((f) => f.id === 'weapon-expertise')]).toBe('thaumaturge');
     expect(liveClasses[live.findIndex((f) => f.id === 'weapon-expertise-swashbuckler')]).toBe('swashbuckler');
     // Planted: the record both list at 5th is two rows — the first class's, then the second's.
     const planted = rowsOf(swashShared);
     const at = planted.map((f, i) => (f.id === 'weapon-expertise' ? i : -1)).filter((i) => i >= 0);
     expect(at).toHaveLength(2);
-    const plantedClasses = levelRowClasses(b, swashShared, 5, planted);
+    const plantedClasses = levelRowClasses(planted);
     expect(at.map((i) => plantedClasses[i])).toEqual(['thaumaturge', 'swashbuckler']);
     // Live data, a pair that lists the same record at 1st (Shield Block): one row each.
     const fg = { ...emptyBuild(), name: 't', level: 1, classId: 'fighter', variantRules: { dualClass: true }, classId2: 'guardian' } as BuildState;
     const fgRows = levelGrants(1, 'fighter', db, null, fg.variantRules, 'guardian', null, false, [], fg).features;
     const sb = fgRows.map((f, i) => (f.id === 'shield-block' ? i : -1)).filter((i) => i >= 0);
     expect(sb).toHaveLength(2);
-    expect(sb.map((i) => levelRowClasses(fg, db, 1, fgRows)[i])).toEqual(['fighter', 'guardian']);
+    expect(sb.map((i) => levelRowClasses(fgRows)[i])).toEqual(['fighter', 'guardian']);
     // A single class: every row is its class.
     const one = { ...b, variantRules: {}, classId2: null } as BuildState;
-    expect(new Set(levelRowClasses(one, db, 5, levelGrants(5, 'thaumaturge', db, one.subclassId, {}, null, null, false, [], one).features))).toEqual(new Set(['thaumaturge']));
+    expect(new Set(levelRowClasses(levelGrants(5, 'thaumaturge', db, one.subclassId, {}, null, null, false, [], one).features))).toEqual(new Set(['thaumaturge']));
   });
 
   it('thaumaturge + swashbuckler 5, the swashbuckler listing the shared record: the second Weapon Expertise row\'s Details is the swashbuckler\'s paragraph, the first the Thaumaturge\'s page', async () => {
-    const m = await mount(<Builder content={swashShared} initial={thaumSwash5()} onCancel={noop} onCreate={noop} />, swashShared);
+    let saved: BuildState | undefined;
+    const m = await mount(<Builder content={swashShared} initial={thaumSwash5()} onCancel={noop} onCreate={(b) => { saved = b; }} />, swashShared);
     try {
       await click([...m.host.querySelectorAll('button')].find((b) => txt(b) === '5'));
       const blocks = [...m.host.querySelectorAll('.lvl-gain-block')].filter((b) => txt(b.querySelector('.lvl-gain-name')) === 'Weapon Expertise');
@@ -391,10 +408,33 @@ describe('package M round 2 (b): the builder\'s level rows are read for their ow
       expect(swash).toMatch(SWASH_CRIT);
       expect(swash).not.toMatch(THAUMATURGE_WE);
       expect(txt(popup(m.host)?.querySelector('.card-nopage'))).toBe(SHARED_FEATURE_FOOTER);
+      /* Package M round 3 (d): the row's own description — Builder.tsx `flavor={classFeatureDescription(…,
+         rowClassOf(f), content)}` — is the card's root text, which the shared-feature lane above does not draw
+         (it reads the record for the scope's class), so the stored pin is where it shows: starring the second
+         row stores the swashbuckler's paragraph as the pin's text, never the first class's. */
+      await click(starOf(m.host));
       await click(popup(m.host)?.querySelector('.picker-close'));
       await click(blocks[0].querySelector('.cc-det'));
       expect(txt(popup(m.host))).toMatch(THAUMATURGE_WE);
+      await click(popup(m.host)?.querySelector('.picker-close'));
+      await click(m.host.querySelector('.b-create'));
+      // "Save with choices left?" (the synthesized build answers nothing): save anyway.
+      const anyway = [...document.querySelectorAll('.confirm-modal button')].find((b) => txt(b) === 'Save anyway');
+      if (anyway) await click(anyway);
     } finally { m.stop(); }
+    expect(saved, 'the build was saved').toBeTruthy();
+    const pins = saved!.pinnedDescs ?? [];
+    expect(pins.map(shape)).toEqual([{ key: 'classFeatures', slug: 'weapon-expertise', mode: 'mine', classId: 'swashbuckler' }]);
+    /* The record's text names a paragraph per class ("**Swashbuckler** …", "**Thaumaturge** …"); the row keeps
+       its own class's and drops the other held class's. (A paragraph led by a class whose book the build has
+       switched off stays: the builder cuts with the classes it offers.) */
+    const raw = swashShared.classFeatures['weapon-expertise'].description ?? '';
+    expect(raw, 'the shared text has the thaumaturge\'s paragraph').toContain('**Thaumaturge**');
+    expect(raw, 'the shared text has the swashbuckler\'s paragraph').toContain('**Swashbuckler**');
+    expect(classFeatureDescription(raw, 'thaumaturge', swashShared), 'the revert\'s text would be the thaumaturge\'s').not.toMatch(SWASH_CRIT);
+    expect(pins[0].description, 'the second row\'s text is the swashbuckler\'s paragraph').toMatch(SWASH_CRIT);
+    expect(pins[0].description).toContain('**Swashbuckler**');
+    expect(pins[0].description, 'not the first class\'s paragraph').not.toContain('**Thaumaturge**');
   }, 120_000);
 
   it('live data: the level-5 "Weapon Expertise (Swashbuckler)" row opens the swashbuckler\'s own page', async () => {

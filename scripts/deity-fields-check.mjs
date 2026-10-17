@@ -18,18 +18,34 @@
  * (its choice shape is the owner's UX — compared, listed, and repaired only where the mapping is
  * mechanical), edict/anathema prose absent from the description, and current mirror deities we do not
  * ship at all.
+ *
+ * A FAVOURED WEAPON IS READ THROUGH THE PAGE'S OWN LINK when its printed name is no item of ours (package M
+ * round 3, 2026-10-17). deity-528 (Malthus, Divine Mysteries) prints "**Favored Weapon** [Light
+ * Crossbow](/Weapons.aspx?ID=425)": the label is a name no weapon carries, and the Archives' own link names
+ * weapon-425, Player Core's Crossbow — items/crossbow. Compared by name only, the record had to keep the label
+ * ('light-crossbow', no item), and a Malthus warpriest's doctrine critical specialization reached no weapon.
+ * So an unmatched name follows the page's link for that name to its weapon document, then that document's
+ * reprint links (remaster_id, or a newer page's legacy_id naming it) to the newest printing, and resolves to
+ * the ONE shipped item whose aonId is a document on that chain, newest first. Refused — the printed name is
+ * kept, as before — when the link is missing, the chain reaches no item or two, or the item is an unarmed
+ * attack: AoN links a deity's "jaw", "claws", "nails" or "fang" to the Fist page (weapon-356, weapon-1), and
+ * a natural attack is never the Fist. Those names are body parts (BODY_PARTS below).
+ *
+ * CORE_JSON, CORE_DESCRIPTIONS and AON_MIRROR relocate the three inputs (test/package-m-data3-deity-weapons
+ * proves this check red on planted copies with them, never in the tree).
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const MIRROR = 'C:/wonderers guide/aon-2e-archive/data/by-category/deity';
+const MIRROR_ROOT = process.env.AON_MIRROR || 'C:/wonderers guide/aon-2e-archive/data/by-category';
+const MIRROR = join(MIRROR_ROOT, 'deity');
 const WRITE = process.argv.includes('--write');
 const VERBOSE = process.argv.includes('--verbose');
 
-const core = JSON.parse(readFileSync(join(ROOT, 'public/core.json'), 'utf8'));
-const descs = JSON.parse(readFileSync(join(ROOT, 'public/core-descriptions.json'), 'utf8'));
+const core = JSON.parse(readFileSync(process.env.CORE_JSON || join(ROOT, 'public/core.json'), 'utf8'));
+const descs = JSON.parse(readFileSync(process.env.CORE_DESCRIPTIONS || join(ROOT, 'public/core-descriptions.json'), 'utf8'));
 const itemIds = new Set(Object.keys(core.items ?? {}));
 const spellIds = new Set(Object.keys(core.spells ?? {}));
 const descOf = (id) => {
@@ -120,7 +136,79 @@ const rows = [];
 let checked = 0;
 
 const KNOWN_SKILLS = new Set(['acrobatics', 'arcana', 'athletics', 'crafting', 'deception', 'diplomacy', 'intimidation', 'medicine', 'nature', 'occultism', 'performance', 'religion', 'society', 'stealth', 'survival', 'thievery']);
-const UNARMED = new Set(['fist', 'claw', 'jaws', 'bite', 'tail', 'horn', 'hoof', 'tentacle', 'wing']);
+/* A favoured "weapon" that is a body part: an unarmed attack, never an item (derive.ts deityFavoredWeapons
+ * reads it so). The printed spellings, singular and plural — jaw/claws/nails/fang are what the shipped
+ * deity pages print (Nalinivati, Atrogine, the Spirit Wall, Yig …); the same set
+ * test/package-m-data2-critspec.test.ts checks every record against. */
+const BODY_PARTS = new Set(['fist', 'claw', 'claws', 'jaw', 'jaws', 'fang', 'fangs', 'bite', 'tail', 'nails', 'horn', 'horns', 'hoof', 'hooves', 'tentacle', 'tentacles', 'wing', 'wings', 'beak', 'talon', 'talons']);
+
+/* The link-target fallback (see the header). The mirror's weapon pages, by address and by id, with each
+ * page's reprint links — the deity pages link /Weapons.aspx?ID=N and nothing else (measured: 748 links). */
+const weaponDir = join(MIRROR_ROOT, 'weapon');
+const weaponByUrl = new Map();
+const weaponDoc = new Map();
+if (existsSync(weaponDir)) {
+  for (const f of readdirSync(weaponDir)) {
+    if (!/^weapon-\d+\.json$/.test(f)) continue;
+    const w = JSON.parse(readFileSync(join(weaponDir, f), 'utf8'));
+    weaponDoc.set(w.id, w);
+    if (w.url) weaponByUrl.set(String(w.url), w.id);
+  }
+}
+/** doc id -> the page that replaces it: its own remaster_id, or a newer page whose legacy_id names it; the
+ *  newest release wins when there are several (scripts/lib/reprint.mjs buildReprintMap's rule). */
+const replacedBy = new Map();
+const offerReprint = (oldId, newId) => {
+  if (oldId === newId || !weaponDoc.has(oldId) || !weaponDoc.has(newId)) return;
+  const cur = replacedBy.get(oldId);
+  const date = (x) => String(weaponDoc.get(x)?.release_date ?? '');
+  if (cur && (date(cur) > date(newId) || (date(cur) === date(newId) && cur <= newId))) return;
+  replacedBy.set(oldId, newId);
+};
+for (const [id, w] of weaponDoc) {
+  for (const r of arr(w.remaster_id)) offerReprint(id, String(r));
+  for (const l of arr(w.legacy_id)) offerReprint(String(l), id);
+}
+const itemsByAon = new Map();
+for (const [iid, it] of Object.entries(core.items ?? {})) {
+  if (!it?.aonId) continue;
+  (itemsByAon.get(String(it.aonId)) ?? itemsByAon.set(String(it.aonId), []).get(String(it.aonId))).push(iid);
+}
+/** The page's own `[Label](/Weapons.aspx?ID=N)` link for one printed favoured-weapon name, as a doc id. */
+const linkedWeapon = (doc, name) => {
+  for (const m of String(doc.favored_weapon_markdown ?? '').matchAll(/\[([^\]]+)\]\((\/Weapons\.aspx\?ID=\d+)\)/g)) {
+    if (slug(m[1]) === slug(name)) return weaponByUrl.get(m[2]) ?? null;
+  }
+  return null;
+};
+/** The shipped item the page's link (and its reprint chain) names for an unmatched name, or null. */
+const weaponByLink = (doc, name) => {
+  const start = linkedWeapon(doc, name);
+  if (!start) return null;
+  const chain = [start];
+  for (let cur = start, hop = 0; replacedBy.has(cur) && hop < 8; hop++) {
+    cur = replacedBy.get(cur);
+    if (chain.includes(cur)) break;
+    chain.push(cur);
+  }
+  for (const id of chain.reverse()) {
+    const hits = itemsByAon.get(id) ?? [];
+    if (!hits.length) continue; // this printing is not shipped: try the next older one
+    if (hits.length > 1) return null; // two items on one page: ambiguous, refused (never a guess)
+    const it = core.items[hits[0]];
+    if (it?.category === 'unarmed' || (it?.traits ?? []).includes('unarmed')) return null; // the Fist page: a natural attack is not the Fist
+    return { id: hits[0], doc: id };
+  }
+  return null;
+};
+/** Printed favoured-weapon names -> our ids: the name's slug when it is an item or a body part, else the
+ *  item the page's own link names, else the slug (then reported as unresolved). */
+const favoredIds = (doc) => arr(doc.favored_weapon).map((name) => {
+  const s = slug(name);
+  if (itemIds.has(s) || BODY_PARTS.has(s)) return { id: s, name };
+  const hit = weaponByLink(doc, name);
+  return hit ? { id: hit.id, name, via: hit.doc } : { id: s, name };
+});
 
 for (const [id, d] of Object.entries(core.deities ?? {})) {
   if (!/^deity-\d+$/.test(String(d.aonId ?? ''))) { noPage.push(id + ' (no aonId)'); continue; }
@@ -152,14 +240,18 @@ for (const [id, d] of Object.entries(core.deities ?? {})) {
   // rarity
   if (slug(doc.rarity || 'common') !== slug(d.rarity || 'common')) { diffs.rarity.push(`${id}: ours ${d.rarity} | print ${doc.rarity}`); push('rarity', slug(doc.rarity || 'common'), `rarity ${doc.rarity}`); }
 
-  // favoured weapons — names → item ids
-  const pWpn = arr(doc.favored_weapon).map(slug);
+  // favoured weapons — names → item ids (an unmatched name through the page's own link, see the header)
+  const pFav = favoredIds(doc);
+  const pWpn = pFav.map((x) => x.id);
   const oWpn = (d.favoredWeapons ?? []).map(slug);
   if (!sameSet(pWpn, oWpn)) {
     diffs.favoredWeapons.push(`${id}: ours ${oWpn.join(',') || '-'} | print ${pWpn.join(',') || '-'}`);
-    const bad = pWpn.filter((w) => !itemIds.has(w) && !UNARMED.has(w));
+    const bad = pWpn.filter((w) => !itemIds.has(w) && !BODY_PARTS.has(w));
     if (bad.length) unresolved.favoredWeapons.push(`${id}: ${bad.join(', ')}`);
-    else push('favoredWeapons', pWpn, `favored weapon ${arr(doc.favored_weapon).join(', ')}`);
+    else {
+      const said = pFav.map((x) => (x.via ? `${x.name} (its link names ${x.via}, ${weaponDoc.get(x.via)?.name ?? '?'} = items/${x.id})` : x.name));
+      push('favoredWeapons', pWpn, `favored weapon ${said.join(', ')}`);
+    }
   }
 
   // skill — one string on our side

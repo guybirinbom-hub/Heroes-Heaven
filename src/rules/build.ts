@@ -12394,7 +12394,15 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
 
 /** What a given character level offers: auto features, feat slots, skill increase, boosts. */
 export interface LevelGrants {
-  features: { id: string; name: string }[];
+  /**
+   * The level's automatic class features. `classId` is the held class each row came from (package M
+   * round 3, Dual Class): the first class's rows, then the second class's, then a class archetype's
+   * substitutes under the class they substitute into. The Builder's level page reads each row's text and
+   * card for that class (shared.tsx levelRowClasses). A record both classes list at this level is two
+   * rows, one per class. A row the class archetype took away but whose question survives (Palatine
+   * Detective's methodology, `substitutedPickFeatures`) keeps its own class.
+   */
+  features: { id: string; name: string; classId: string | null }[];
   featSlots: FeatCategory[];
   skillIncrease: boolean;
   /** A SECOND skill increase at this level, granted by a record rather than the class ladder (the
@@ -12467,7 +12475,7 @@ export function levelGrants(
     .filter((f) => !arch?.suppressedFor(f.of).has(f.featureId) || substituted.has(f.featureId))
     .map((f) => {
       const id = variantOf(f.featureId, f.sub);
-      return { id, name: content.classFeatures[id]?.name ?? id };
+      return { id, name: content.classFeatures[id]?.name ?? id, classId: f.of ?? null };
     });
   const featSlots: FeatCategory[] = [];
   if (cls) {

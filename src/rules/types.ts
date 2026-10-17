@@ -1655,6 +1655,17 @@ export interface DefenseGrants {
      * Matched case-insensitively as a substring, so "horns" finds "Horns" and "Horns (agile)".
      */
     names?: string[];
+    /**
+     * Match a Strike whose weapon REQUIRES this many hands to wield — Mauler Dedication's *"You have
+     * familiarity with all melee weapons that require two hands to wield or have the two-hand trait. … If
+     * you are at least an expert in such a weapon, you gain access to the critical specialization effect
+     * with that weapon."* (feat-6368). One of the ALTERNATIVES, like `groups`/`traits`/`bases`/`names`: any
+     * one of them admits the Strike (print's "or"), while `melee`, `minRank`, `categories` and the other
+     * gates must hold as well — unlike `WeaponRider.match.hands`, which is a gate. Tested against the
+     * weapon record's printed `hands` (Strike.hands), read the same way: '1+' (a bow, held in one hand)
+     * is one-handed, and an unarmed attack has no hands, so neither ever matches `hands: 2`.
+     */
+    hands?: 1 | 2;
     melee?: boolean;
     /** Only the DESIGNATED item — "your innovation gains critical specialization". Without this the
      *  grant is unnarrowed, and weaponMatches returns true for an unnarrowed entry, so it would light

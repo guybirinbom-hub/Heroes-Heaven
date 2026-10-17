@@ -110047,9 +110047,11 @@
     "two-hand-d10",
     "two-hand-d12"
    ],
+   "hands": 2,
    "melee": true,
    "minRank": "expert"
-  }
+  },
+  "why": "feat-6368 (Mauler Dedication, Player Core 2 pg. 207) prints \"You have familiarity with all melee weapons that require two hands to wield or have the two-hand trait. … If you are at least an expert in such a weapon, you gain access to the critical specialization effect with that weapon.\" The row before this one carried only the second half of that OR (the six two-hand trait spellings), so a greatsword, greataxe or maul (hands 2, no two-hand trait) never matched. `hands: 2` is one more alternative beside the trait list (derive.ts weaponMatches: a weapon whose record says it needs two hands); melee and the expert gate are unchanged. Package M round 3."
  },
  {
   "category": "feats",
@@ -191337,5 +191339,14 @@
   "field": "critSpecCondition",
   "value": "using the brawling group's effect (or another group's, if the GM finds it fits the improvised weapon better)",
   "why": "package M round 2 fix: feat-1223 prints \"you apply the critical specialization of a brawling weapon to it. Depending on the shape and nature of the improvised weapon, your GM might determine another weapon group's critical specialization is more appropriate.\" An improvised weapon has no group of its own, so which effect applies is said beside it."
+ },
+ {
+  "category": "deities",
+  "id": "malthus",
+  "field": "favoredWeapons",
+  "value": [
+   "crossbow"
+  ],
+  "why": "deity-528 (Malthus, Divine Mysteries pg. 314) prints \"**Favored Weapon** [Light Crossbow](/Weapons.aspx?ID=425)\": the Archives' own link names weapon-425, Crossbow (Player Core; legacy_id weapon-67, the Core Rulebook Crossbow), which ships as items/crossbow (aonId weapon-425). No weapon page is titled Light Crossbow, so the record's 'light-crossbow' (the link text) was no item, and a Malthus warpriest's or cloistered cleric's doctrine critical specialization (doctrine-5, doctrine-4: \"using your deity's favored weapon\") reached no weapon at all. scripts/deity-fields-check.mjs now reads an unmatched printed name through the page's link. Package M round 3."
  }
 ]
