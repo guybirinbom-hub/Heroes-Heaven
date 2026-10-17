@@ -38,15 +38,56 @@ const realAllow = JSON.parse(readFileSync(join(ROOT, 'scripts/data/lost-conditio
 };
 type Ledger = { records: Record<string, string[]>; lanes: Record<string, unknown> };
 const realLedger = JSON.parse(readFileSync(join(ROOT, 'src/data/trust-ledger.json'), 'utf8')) as Ledger;
-/** A real kept-over-grant entry and its real snapshot rows (2026-10-17 reconcile). */
-const realEntry = (record: string): Entry => {
-  const e = realAllow.entries.find((x) => x.record === record && x.verdict === 'kept-over-grant');
-  if (!e) throw new Error(`no kept-over-grant entry for ${record} in the allow file`);
-  return structuredClone(e);
-};
 const realRows = (record: string): Row[] => realAllow.snapshot.rows.filter((r) => r.r === record);
 const BAGPIPES = 'items/bagpipes-of-turmoil';
 const ROPE = 'feats/rope-runner';
+/*
+ * Two kept-over-grant entries as the REAL allow file held them from 3ba8939 until 2026-10-17, frozen here.
+ * The owner then approved all sixteen Ruling-B stars (desk #177, 'Yes, stars on (Recommended)',
+ * work/desk-answers-2026-10-17.json): the stars are lit, the numbers retired and the entries gone, so the real
+ * tree no longer has a kept over-grant to exercise. A fixture that asks for `preApproval` gets that world back
+ * in its scratch copies — the number on the record, the star (or record star + mode) dark — and the guard is
+ * still proved on it.
+ */
+const KEPT: Record<string, Entry> = {
+  [BAGPIPES]: {
+    record: BAGPIPES,
+    key: 'FlatModifier',
+    selector: 'performance',
+    families: ['own toggle'],
+    verdict: 'kept-over-grant',
+    trust: 'lit',
+    awaitsApproval: 126,
+    aonId: 'equipment-2265',
+    quote: 'While playing the bagpipes, you gain a +1 item bonus to Performance checks',
+    why: 'KEPT, not carried: a real over-grant (+1 on every Performance check). The star FEAT_SITUATIONAL["bagpipes-of-turmoil"] is DARK and no approval names it.',
+    blockedBy: { gate: ['star:bagpipes-of-turmoil'] },
+    followUp: 'Light the star, then retire passiveEffects.skills.performance with one overlay row, then remove this entry.',
+  },
+  [ROPE]: {
+    record: ROPE,
+    key: 'BaseSpeed',
+    selector: 'climb',
+    families: ['own toggle'],
+    verdict: 'kept-over-grant',
+    trust: 'lit',
+    awaitsApproval: 126,
+    aonId: 'feat-6380',
+    quote: 'You gain a climb Speed of 15 feet, but only when climbing ropes and similar objects.',
+    why: "KEPT, not carried: a real over-grant (a standing climb Speed 15 off the ropes); the record's own star and modes/cat-rope-runner are DARK.",
+    blockedBy: { gate: ['record-star', 'mode:cat-rope-runner'] },
+    followUp: 'Light the record star and the mode, then retire speeds.climb with one overlay row, then remove this entry.',
+  },
+};
+const realEntry = (record: string): Entry => structuredClone(KEPT[record]);
+/** The world before #177's approval, in the scratch copies only: the two numbers back, their carriers dark. */
+const plantPreApproval = (core: Core, ledger: Ledger) => {
+  core.items['bagpipes-of-turmoil'].passiveEffects = { skills: { performance: 1 } };
+  core.feats['rope-runner'].speeds = { climb: 15 };
+  ledger.lanes.situational = [...((ledger.lanes.situational as string[]) ?? []), 'bagpipes-of-turmoil'];
+  ledger.lanes.modes = [...((ledger.lanes.modes as string[]) ?? []), 'cat-rope-runner'];
+  ledger.records[ROPE] = [...(ledger.records[ROPE] ?? []), 'situational'];
+};
 /*
  * A DARK kept over-grant (synthetic). Until 2026-10-17 the real Sprite's Spark entry played this part —
  * dark, blocked by a FILE — but it is fixed now (heritage-gated Strikes, test/lost-condition-blocked-*), and
@@ -143,6 +184,8 @@ interface Fixture {
   approvals?: Record<string, unknown>;
   packs?: string;
   snapshotRows?: Row[];
+  /** Plant the world before desk #177's approval (plantPreApproval) — for the frozen kept-over-grant entries. */
+  preApproval?: boolean;
 }
 /** Write one scratch fixture and run the check on it. */
 function run(fx: Fixture = {}) {
@@ -155,12 +198,13 @@ function run(fx: Fixture = {}) {
   // the synthetic DARK kept over-grant: an ungated Claw (the over-grant), and the dark mode that would carry it
   core.feats[CLAWS.split('/')[1]] = { id: 'zz-lc-claws', name: 'Zz Claws', level: 1, aonId: CLAWS_PAGE, grantedStrikes: [{ name: 'Claw', die: 'd6', damageType: 'slashing', traits: ['unarmed'], group: 'brawling' }] };
   core.modes[CLAWS_MODE] = { id: CLAWS_MODE, name: 'Zz Claws Form', feats: ['zz-lc-claws'], modifiers: [], note: 'Synthetic.' };
-  fx.plant?.(core);
   const rows = fx.snapshotRows ?? [...realAllow.snapshot.rows.filter((r) => REAL.includes(r.r)), ...SYNTH_ROWS, ...(fx.rows ?? [])];
   const allow = { _: 'test fixture', entries: fx.entries ?? [maskEntry(), pipesEntry()], snapshot: { rows } };
   const ledger = structuredClone(realLedger);
   ledger.records[CLAWS] = ['grantedStrikes'];
   ledger.lanes.modes = [...((ledger.lanes.modes as string[]) ?? []), CLAWS_MODE];
+  if (fx.preApproval) plantPreApproval(core, ledger);
+  fx.plant?.(core);
   fx.ledger?.(ledger);
   const questions = fx.questions ?? { open: [{ n: 9001 }], deferred: [], ruled: [], authorisedExceptions: [{ n: 126 }] };
   const approvals = fx.approvals ?? { approvals: [], noMechanic: [], engine: [], unruled: [{ n: 126, id: null, status: 'authorisedException' }] };
@@ -283,8 +327,8 @@ describe('lost-condition-check: the allow file is held to print', () => {
 const waitLine = (rest: string) => `WARN waiting for the owner's approval of the Ruling-B star ${rest}`;
 describe('lost-condition-check: a kept over-grant stays visible and tied to its blocker', () => {
   const base = [maskEntry(), pipesEntry()];
-  it('green: the real Bagpipes of Turmoil entry (its star is dark) prints as a waiting line tied to ruling #126, exit 0', () => {
-    const r = run({ rows: realRows(BAGPIPES), entries: [...base, realEntry(BAGPIPES)] });
+  it('green: the pre-approval Bagpipes of Turmoil entry (its star dark) prints as a waiting line tied to ruling #126, exit 0', () => {
+    const r = run({ preApproval: true, rows: realRows(BAGPIPES), entries: [...base, realEntry(BAGPIPES)] });
     expect(r.status, r.out).toBe(0);
     expect(r.out).toContain(waitLine(`[lit] ${BAGPIPES} | FlatModifier selector performance | own toggle | on passiveEffects.skills.performance | ruling #126 is unruled in `));
     expect(r.out).toMatch(/ruling #126 is unruled in [^|]*approvals\.json \| blocked by dark star:bagpipes-of-turmoil \(equipment-2265\)/);
@@ -294,6 +338,7 @@ describe('lost-condition-check: a kept over-grant stays visible and tied to its 
 
   it('planted: the star is LIT now (an approval landed) — the entry fails as STALE until the number goes', () => {
     const r = run({
+      preApproval: true,
       rows: realRows(BAGPIPES),
       entries: [...base, realEntry(BAGPIPES)],
       ledger: (l) => void (l.lanes.situational = (l.lanes.situational as string[]).filter((id) => id !== 'bagpipes-of-turmoil')),
@@ -303,16 +348,16 @@ describe('lost-condition-check: a kept over-grant stays visible and tied to its 
   });
 
   it('planted: no blockedBy, no followUp, a star of ANOTHER record, a file that does not exist — each fails', () => {
-    const noBlock = run({ rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), blockedBy: undefined }] });
+    const noBlock = run({ preApproval: true, rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), blockedBy: undefined }] });
     expect(noBlock.status).toBe(1);
     expect(noBlock.out).toContain('a kept-over-grant entry needs `blockedBy`');
-    const noFollow = run({ rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), followUp: ' ' }] });
+    const noFollow = run({ preApproval: true, rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), followUp: ' ' }] });
     expect(noFollow.status).toBe(1);
     expect(noFollow.out).toContain('a kept-over-grant entry needs `followUp`');
-    const other = run({ rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), blockedBy: { gate: ['star:borts-blessing'] } }] });
+    const other = run({ preApproval: true, rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), blockedBy: { gate: ['star:borts-blessing'] } }] });
     expect(other.status).toBe(1);
     expect(other.out).toContain("star:borts-blessing: a star is keyed by the record's own id (star:bagpipes-of-turmoil)");
-    const file = run({ rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), blockedBy: { files: ['src/rules/no-such-file.ts'] } }] });
+    const file = run({ preApproval: true, rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), blockedBy: { files: ['src/rules/no-such-file.ts'] } }] });
     expect(file.status).toBe(1);
     expect(file.out).toContain('blockedBy.files names "src/rules/no-such-file.ts", which is not a file in the repo');
   });
@@ -333,45 +378,45 @@ describe('lost-condition-check: a kept over-grant stays visible and tied to its 
     const files = run({ entries: [maskEntry({ verdict: 'kept-over-grant', trust: 'lit', awaitsApproval: 126, blockedBy: { files: ['src/rules/build.ts'] }, followUp: 'Synthetic: gate it in build.ts.' }), pipesEntry()] });
     expect(files.status).toBe(1);
     expect(files.out).toContain("a known over-grant FAILS (the owner's rule, 2026-10-17) — blockedBy names only files (src/rules/build.ts)");
-    const beside = run({ rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), blockedBy: { gate: ['star:bagpipes-of-turmoil'], files: ['src/rules/build.ts'] } }] });
+    const beside = run({ preApproval: true, rows: realRows(BAGPIPES), entries: [...base, { ...realEntry(BAGPIPES), blockedBy: { gate: ['star:bagpipes-of-turmoil'], files: ['src/rules/build.ts'] } }] });
     expect(beside.status, beside.out).toBe(0);
     expect(beside.out).toContain('blocked by dark star:bagpipes-of-turmoil, src/rules/build.ts (equipment-2265)');
   });
 
   it('planted: no awaitsApproval, a number that is no desk question, an approval that LANDED, a number disposed as engine — each fails', () => {
     const rows = realRows(BAGPIPES);
-    const none = run({ rows, entries: [...base, { ...realEntry(BAGPIPES), awaitsApproval: undefined }] });
+    const none = run({ preApproval: true, rows, entries: [...base, { ...realEntry(BAGPIPES), awaitsApproval: undefined }] });
     expect(none.status).toBe(1);
     expect(none.out).toContain('a kept-over-grant entry needs `awaitsApproval`');
-    const bogus = run({ rows, entries: [...base, { ...realEntry(BAGPIPES), awaitsApproval: 9001.5 }] });
+    const bogus = run({ preApproval: true, rows, entries: [...base, { ...realEntry(BAGPIPES), awaitsApproval: 9001.5 }] });
     expect(bogus.status).toBe(1);
     expect(bogus.out).toContain('a kept-over-grant entry needs `awaitsApproval`');
-    const unknown = run({ rows, entries: [...base, { ...realEntry(BAGPIPES), awaitsApproval: 4242 }] });
+    const unknown = run({ preApproval: true, rows, entries: [...base, { ...realEntry(BAGPIPES), awaitsApproval: 4242 }] });
     expect(unknown.status).toBe(1);
     expect(unknown.out).toContain('awaitsApproval #4242 is not a desk number');
-    const landed = run({ rows, entries: [...base, realEntry(BAGPIPES)], approvals: { approvals: [{ n: 126, record: BAGPIPES, fields: ['situational'] }], noMechanic: [], engine: [], unruled: [] } });
+    const landed = run({ preApproval: true, rows, entries: [...base, realEntry(BAGPIPES)], approvals: { approvals: [{ n: 126, record: BAGPIPES, fields: ['situational'] }], noMechanic: [], engine: [], unruled: [] } });
     expect(landed.status).toBe(1);
     expect(landed.out).toMatch(/STALE allow entry 3 \(items\/bagpipes-of-turmoil FlatModifier performance\): awaitsApproval #126 has LANDED — .* approves items\/bagpipes-of-turmoil \(situational\)/);
-    const elsewhere = run({ rows, entries: [...base, realEntry(BAGPIPES)], approvals: { approvals: [{ n: 126, record: 'items/borts-blessing', fields: ['situational'] }], noMechanic: [], engine: [], unruled: [] } });
+    const elsewhere = run({ preApproval: true, rows, entries: [...base, realEntry(BAGPIPES)], approvals: { approvals: [{ n: 126, record: 'items/borts-blessing', fields: ['situational'] }], noMechanic: [], engine: [], unruled: [] } });
     expect(elsewhere.status, elsewhere.out).toBe(0);
     expect(elsewhere.out).toContain('ruling #126 is approved in');
-    const engine = run({ rows, entries: [...base, realEntry(BAGPIPES)], approvals: { approvals: [], noMechanic: [], engine: [{ n: 126 }], unruled: [] } });
+    const engine = run({ preApproval: true, rows, entries: [...base, realEntry(BAGPIPES)], approvals: { approvals: [], noMechanic: [], engine: [{ n: 126 }], unruled: [] } });
     expect(engine.status).toBe(1);
     expect(engine.out).toContain('awaitsApproval #126 is disposed as engine');
   });
 
-  it('the real Rope Runner entry (record star + mode, both dark) is green, and each going LIT is STALE', () => {
-    const rope = run({ rows: realRows(ROPE), entries: [...base, realEntry(ROPE)] });
+  it('the pre-approval Rope Runner entry (record star + mode, both dark) is green, and each going LIT is STALE', () => {
+    const rope = run({ preApproval: true, rows: realRows(ROPE), entries: [...base, realEntry(ROPE)] });
     expect(rope.status, rope.out).toBe(0);
     expect(rope.out).toContain(waitLine(`[lit] ${ROPE} | BaseSpeed selector climb | own toggle | on speeds.climb | ruling #126 is unruled in `));
     expect(rope.out).toContain('blocked by dark record-star, dark mode:cat-rope-runner (feat-6380)');
-    const starLit = run({ rows: realRows(ROPE), entries: [...base, realEntry(ROPE)], ledger: (l) => void (l.records[ROPE] = (l.records[ROPE] || []).filter((p) => p !== 'situational')) });
+    const starLit = run({ preApproval: true, rows: realRows(ROPE), entries: [...base, realEntry(ROPE)], ledger: (l) => void (l.records[ROPE] = (l.records[ROPE] || []).filter((p) => p !== 'situational')) });
     expect(starLit.status).toBe(1);
     expect(starLit.out).toContain('record-star is LIT now');
-    const modeLit = run({ rows: realRows(ROPE), entries: [...base, realEntry(ROPE)], ledger: (l) => void (l.lanes.modes = (l.lanes.modes as string[]).filter((id) => id !== 'cat-rope-runner')) });
+    const modeLit = run({ preApproval: true, rows: realRows(ROPE), entries: [...base, realEntry(ROPE)], ledger: (l) => void (l.lanes.modes = (l.lanes.modes as string[]).filter((id) => id !== 'cat-rope-runner')) });
     expect(modeLit.status).toBe(1);
     expect(modeLit.out).toContain('mode:cat-rope-runner is LIT now');
-    const foreign = run({ rows: realRows(ROPE), entries: [...base, { ...realEntry(ROPE), blockedBy: { gate: ['record-star', 'mode:item-obsidian-goggles'] } }] });
+    const foreign = run({ preApproval: true, rows: realRows(ROPE), entries: [...base, { ...realEntry(ROPE), blockedBy: { gate: ['record-star', 'mode:item-obsidian-goggles'] } }] });
     expect(foreign.status).toBe(1);
     expect(foreign.out).toContain('mode:item-obsidian-goggles: that mode does not belong to feats/rope-runner');
   });
@@ -420,6 +465,7 @@ describe('lost-condition-check: a kept over-grant keeps the trust state it was w
     expect(bad.status).toBe(1);
     expect(bad.out).toContain('a kept-over-grant entry needs `trust`');
     const darker = run({
+      preApproval: true,
       rows: realRows(BAGPIPES),
       entries: [...base, realEntry(BAGPIPES)],
       ledger: (l) => void (l.records[BAGPIPES] = [...(l.records[BAGPIPES] || []), 'passiveEffects.skills.performance']),
@@ -428,14 +474,24 @@ describe('lost-condition-check: a kept over-grant keeps the trust state it was w
     expect(darker.out).toContain("STALE allow entry 3 (items/bagpipes-of-turmoil FlatModifier performance): trust says lit but the over-granting field is dark now (passiveEffects.skills.performance) — set trust to 'dark'");
   });
 
-  it('every kept-over-grant entry in the real allow file names its trust (matching the fixes lane\'s trustBefore), a dark gate and the approval it waits on', () => {
+  /*
+   * Until 2026-10-17 the real allow file held sixteen kept entries, all waiting on ruling #126. The owner then
+   * approved them (desk #177, 'Yes, stars on (Recommended)'): the stars are lit, the numbers retired, the
+   * entries removed. None of the sixteen may come back as a kept entry (its approval has landed: its number
+   * must stay gone, test/lost-condition-blocked-check.test.ts plants each one back), and any kept entry a later
+   * lane writes still needs its trust, a dark gate and a desk number to wait on.
+   */
+  it('the real allow file keeps none of the sixteen #177 approved, and any other kept entry names its trust (the fixes lane\'s trustBefore), a dark gate and its desk number', () => {
     const verdicts = JSON.parse(readFileSync(join(ROOT, 'work/lost-condition-verdicts.json'), 'utf8')) as { entries: Entry[] };
+    const approvals = JSON.parse(readFileSync(join(ROOT, 'scripts/data/trust-approvals.json'), 'utf8')) as { approvals: { n: number; record: string }[] };
+    const approved177 = approvals.approvals.filter((a) => a.n === 177).map((a) => a.record);
+    expect(approved177).toHaveLength(16);
     const kept = realAllow.entries.filter((e) => e.verdict === 'kept-over-grant');
-    expect(kept.length).toBeGreaterThan(0);
+    expect(kept.filter((e) => approved177.includes(String(e.record))).map((e) => e.record)).toEqual([]);
     for (const e of kept) {
       expect(['dark', 'partly', 'lit'], `${e.record}`).toContain(e.trust);
       expect((e.blockedBy as { gate?: string[] })?.gate?.length, `${e.record} waits on a gate`).toBeGreaterThan(0);
-      expect(e.awaitsApproval, `${e.record}`).toBe(126);
+      expect(Number.isInteger(e.awaitsApproval), `${e.record}`).toBe(true);
       const v = verdicts.entries.find((x) => x.record === e.record && x.key === e.key && (x.selector ?? x.type ?? null) === (e.selector ?? e.type ?? null));
       if (v?.trustBefore) expect(e.trust, `${e.record} ${e.key}`).toBe(v.trustBefore);
     }

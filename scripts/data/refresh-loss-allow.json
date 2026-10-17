@@ -2762,5 +2762,124 @@
   "aon": "feat-6991",
   "before": "2c5495b8ef924ef7",
   "why": "lost-condition blocked lane, 2026-10-17 (a print fix, not an Archives change): feat-6991 prints \"You gain a melee unarmed Strike depending on your heritage, described below.\" Nothing is lost: the twelve strikes are the same (each now whenHeritage on its heritage, each elemental current also whenHeritageChoice on Born of Elements' cantrip answer, names in print's words); the striking surface became two rows on the feat's own damage-type choice (\"1d8 bludgeoning or slashing (chosen when you gain this feat)\") instead of one whose damage type was an unsubstituted Foundry template. Dark under the trust gate. Held by test/lost-condition-blocked-strikes.test.ts."
+ },
+ {
+  "key": "items/bagpipes-of-turmoil",
+  "field": "passiveEffects.skills.performance",
+  "aon": "equipment-2265",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (the owner's 'Yes, stars on (Recommended)'; a print fix, not an Archives change): equipment-2265 prints \"While playing the bagpipes, you gain a +1 item bonus to Performance checks\". The flat +1 raised EVERY Performance check; with the approval the star FEAT_SITUATIONAL[\"bagpipes-of-turmoil\"] is lit and carries it. Lit: a player no longer gets +1 on singing or dancing. Held by test/ruling-b-stars-lit.test.ts and test/lost-condition-blocked-check.test.ts."
+ },
+ {
+  "key": "items/borts-blessing",
+  "field": "passiveEffects.skills.diplomacy",
+  "aon": "equipment-476",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-476 prints \"the wearer receives a +1 item bonus to Diplomacy checks to Make an Impression\". The flat +1 raised every Diplomacy check; the now-lit star FEAT_SITUATIONAL[\"borts-blessing\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/clarity-goggles-greater",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2314-2161",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change), the example the owner was shown: equipment-2314-2161 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" (+3 for this grade). The flat +3 raised every Perception check; the now-lit star FEAT_SITUATIONAL[\"clarity-goggles-greater\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/day-goggles",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-1146",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-1146 prints \"while wearing the goggles, you take a -2 item penalty to visual Perception checks\". A restricted penalty; the now-lit star FEAT_SITUATIONAL[\"day-goggles\"] (its -2 row) carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/eye-slash-greater",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2206-1905",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2206-1905 prints \"The tattoo also grants you a +1 item bonus to Perception checks that involve sight.\" The flat +1 left passiveEffects (the far-sight sense stays); the now-lit star FEAT_SITUATIONAL[\"eye-slash-greater\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/eye-slash-major",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2206-1906",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2206-1906 prints \"The tattoo also grants you a +2 item bonus to Perception checks that involve sight.\" The flat +2 left passiveEffects (the far-sight sense stays); the now-lit star FEAT_SITUATIONAL[\"eye-slash-major\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/eye-slash-true",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2206-1907",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2206-1907 prints \"The tattoo also grants you a +3 item bonus to Perception checks that involve sight.\" The flat +3 left passiveEffects (the far-sight sense stays); the now-lit star FEAT_SITUATIONAL[\"eye-slash-true\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/holy-chain",
+  "field": "passiveEffects.skills.diplomacy",
+  "aon": "equipment-3273",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-3273 prints \"giving you a +2 item bonus to Diplomacy checks against all creatures except fiends\". A number cannot carry the fiend exception (ruling B), so the flat +2 left passiveEffects and the now-lit star FEAT_SITUATIONAL[\"holy-chain\"] states the +2 against every creature but a fiend. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/mirror-goggles-lesser",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-2315-2162",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2315-2162 prints \"you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects\". The flat +1 raised every Perception check; the now-lit star FEAT_SITUATIONAL[\"mirror-goggles-lesser\"] carries both halves. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/persona-mask",
+  "field": "passiveEffects.skills.performance",
+  "aon": "equipment-3099-3044",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-3099-3044 prints \"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" The flat +1 raised every Performance check; the now-lit star FEAT_SITUATIONAL[\"persona-mask\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/persona-mask-greater",
+  "field": "passiveEffects.skills.performance",
+  "aon": "equipment-3099-3045",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-3099-3045 prints \"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" (+2 for this grade). The flat +2 raised every Performance check; the now-lit star FEAT_SITUATIONAL[\"persona-mask-greater\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/razmiri-wayfinder",
+  "field": "passiveEffects.skills.deception",
+  "aon": "equipment-470-832",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-470-832 prints \"provides its wearer a +1 item bonus to Deception checks to Lie or Impersonate\". The flat +1 raised every Deception check; the now-lit star FEAT_SITUATIONAL[\"razmiri-wayfinder\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/resonant-guitar",
+  "field": "passiveEffects.skills.performance",
+  "aon": "equipment-2616",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-2616 prints \"grants a +2 item bonus to Performance checks attempted while using it\". The flat +2 raised every Performance check; the now-lit star FEAT_SITUATIONAL[\"resonant-guitar\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/shining-hackle",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-3978",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-3978 prints \"you gain a +1 item bonus to Perception checks based on sight\". The flat +1 left passiveEffects (the printed -1 Stealth penalty stays a number); the now-lit star FEAT_SITUATIONAL[\"shining-hackle\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "items/wardrobe-stone-greater",
+  "field": "passiveEffects.perception",
+  "aon": "equipment-1323-1222",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): equipment-1323-1222 prints \"You gain +3 item bonus to Perception checks involving sight\". The flat +3 raised every Perception check; the now-lit star FEAT_SITUATIONAL[\"wardrobe-stone-greater\"] carries it. Held by test/ruling-b-stars-lit.test.ts."
+ },
+ {
+  "key": "feats/rope-runner",
+  "field": "speeds.climb",
+  "aon": "feat-6380",
+  "before": "1987a3fd0f03122e",
+  "why": "desk #177, 2026-10-17 (a print fix, not an Archives change): feat-6380 prints \"You gain a climb Speed of 15 feet, but only when climbing ropes and similar objects.\" A gated Speed is a star (ruling #126), so the standing climb 15 goes; the record's own star and the On Ropes mode modes/cat-rope-runner (climb 15 while it is on), both lit by the approval, carry it. Held by test/ruling-b-stars-lit.test.ts and test/conditional-speed-check.test.ts."
+ },
+ {
+  "key": "feats/mauler-dedication",
+  "field": "critSpecWeapons.hands",
+  "aon": "feat-6368",
+  "before": "1987a3fd0f03122e",
+  "why": "2026-10-17, the owner's decision (not an Archives change): feat-6368 prints \"all melee weapons that require two hands to wield or have the two-hand trait\"; package M round 3 had added the `hands: 2` half, past Wanderer's Guide's trait-only shape. Asked, he said 'so now if you find these write them but we will adress them later', so the record is back to Wanderer's Guide's shape (the value before 7916e1c) and the gap is in chat-todo.md's 'Future correctness pass' list. Held by test/package-m-data3-mauler.test.ts."
  }
 ]

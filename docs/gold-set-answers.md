@@ -1089,3 +1089,46 @@ fixes are queued in the app folder's work list (`chat-todo.md`), not built by th
   *"Overwrite anyway"*; two chained between-session Updates that are refused visibly are *"OK as is"*; two
   tabs of one browser profile inside the 400 ms persist window: *"Fix it"* — a player's change must never
   be overwritten by the app; an "HP only" GM update: *"very low priority task"* (his words).
+
+## 2026-10-17 · package M
+
+Asked in chat; each line quotes his answer exactly. #176 and #177 moved open → ruled through
+`scripts/rule-owner-questions.mjs` with `work/desk-answers-2026-10-17.json`; the Mauler answer has no desk
+number, because it is not a ruling on Mauler but a decision about when such things are decided.
+
+- **#177 · the sixteen Ruling-B stars the trust gate kept dark.** Asked: *"16 items/feats show a bonus on EVERY
+  roll although the book limits it (e.g. Clarity Goggles +3 to all Perception, book: only checks that use
+  sight). Their correct starred note exists but is switched off because Wanderer's Guide has no note there.
+  Switch those stars on and remove the too-broad numbers?"* — *"Yes, stars on (Recommended)"*. Filed for its
+  number with `scripts/add-owner-question.mjs` (id `ruling-b-stars-past-wg`). What changed: sixteen `situational`
+  approvals in `scripts/data/trust-approvals.json` light the star of Bagpipes of Turmoil, Bort's Blessing,
+  Clarity Goggles (Greater), Day Goggles, Eye Slash (Greater, Major, True), Holy Chain, Mirror Goggles (Lesser),
+  Persona Mask and its Greater grade, Razmiri Wayfinder, Resonant Guitar, Shining Hackle and Wardrobe Stone
+  (Greater), and Rope Runner's own star and its On Ropes mode (`modes/cat-rope-runner`); one overlay row per
+  record removes the number that applied to every check (Clarity Goggles (Greater) no longer adds +3 to all
+  Perception; Rope Runner no longer gives a standing climb Speed 15 — the mode gives it while on a rope). The
+  Holy Chain's Diplomacy star now states the +2 itself, *"against all creatures except fiends"*
+  (equipment-3273); the Shining Hackle keeps its unconditional −1 Stealth. The lost-condition check waits on
+  nothing now; `scripts/conditional-speed-check.mjs` also reads *"only when"* (Rope Runner's clause), so a
+  standing Speed behind it fails. Guards: `test/ruling-b-stars-lit.test.ts` (gate on),
+  `test/lost-condition-blocked-check.test.ts` (each number planted back fails), `test/conditional-speed-check.test.ts`.
+- **#176 · Expert Strikes** (class-feature-938, *"When you get a critical hit with an unarmed attack in the
+  brawling group, you get its critical specialization effect"*; Wanderer's Guide: "brawling weapons"):
+  *"Unarmed only (Recommended)"* — print. One overlay row narrows the record to unarmed attacks in the brawling
+  group, so a 5th-level monk's Fist shows the effect and a gauntlet, knuckle-duster or spiked gauntlet does not.
+  Brawling Focus (feat-438, which names "weapons in the brawling group" itself) is unchanged.
+- **Mauler Dedication** (feat-6368, "melee weapons that require two hands to wield or have the two-hand trait";
+  Wanderer's Guide: the two-hand trait only). Asked whether to keep print (built in 7916e1c) or match Wanderer's
+  Guide: *"alot of these things are things related to impleneting corretcky the things of pf2e , i want to adress
+  these in the future in a large endevor not now with small things. we will do in the future a new pass on every
+  player selecteble thing. so now if you find these write them but we will adress them later"*. What changed:
+  the record is back to Wanderer's Guide's shape (the six two-hand traits, melee, expert — the value before
+  7916e1c), so a greatsword, greataxe or maul no longer shows the effect; the engine keeps its
+  `critSpecWeapons.hands` key (no record uses it) for the later pass. The gap is written in `chat-todo.md`.
+
+**Standing principle (his Mauler answer):** a place where print and Wanderer's Guide differ, or where the app
+does less than the book, found in the middle of a job, is WRITTEN into `chat-todo.md`'s "Future correctness
+pass" list — not fixed and not asked. It waits for the one large pass over every player-selectable thing. A
+question already on the desk is still answered the documented way when he answers it, as #176 was. Two things
+are not held back by it: a fix he explicitly approves, and an over-grant his own rules already settle (Ruling B
+and authorised exception #126: a value is a real number only when it is always on, otherwise a star).

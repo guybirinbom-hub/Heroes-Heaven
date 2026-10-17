@@ -1,5 +1,5 @@
 {
- "coreSha": "1987a3fd0f03122ed17d97ccf223a1d2ef00d8edefbeda8075fe31d896befb6c",
+ "coreSha": "6aa0887e0190d7a8108b7ff2a05eae830e7e260ed1b23fd91eae8df14d6fcf23",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -805,7 +805,6 @@
    "cat-harmonic-oscillator-overdrive",
    "cat-inner-fire-stoked-flame",
    "cat-phlogistonic-regulator-overdrive",
-   "cat-rope-runner",
    "cat-scalding-spit",
    "close-formation",
    "crawling-form",
@@ -1436,7 +1435,6 @@
    "azarketi-purification",
    "backfire-mantle",
    "backfire-mantle-greater",
-   "bagpipes-of-turmoil",
    "bagpipes-of-turmoil-greater",
    "bagpipes-of-turmoil-major",
    "bangles-of-crowns",
@@ -1550,7 +1548,6 @@
    "born-of-vegetation",
    "born-to-the-trees",
    "borrowed-ability",
-   "borts-blessing",
    "bottled-lightning-greater",
    "bottled-lightning-major",
    "bottled-lightning-moderate",
@@ -1672,7 +1669,6 @@
    "clandestine-cloak-greater",
    "clans-edge",
    "clarity-goggles",
-   "clarity-goggles-greater",
    "clarity-goggles-lesser",
    "clarity-goggles-moderate",
    "clay-sphere",
@@ -1808,7 +1804,6 @@
    "darkvision-scope",
    "darkvision-scope-greater",
    "dawnfire-beacon-major",
-   "day-goggles",
    "daywalker",
    "daywalker-vampire",
    "dazzling-display",
@@ -2100,9 +2095,6 @@
    "eye-of-the-unseen",
    "eye-of-the-unseen-greater",
    "eye-of-the-wise",
-   "eye-slash-greater",
-   "eye-slash-major",
-   "eye-slash-true",
    "eyecatcher",
    "eyes-of-god",
    "eyes-of-the-cat",
@@ -2378,7 +2370,6 @@
    "hoax-hunters-kit",
    "hold-mark",
    "hollow-robes",
-   "holy-chain",
    "holy-steam-ball",
    "hongruis-gratitude",
    "hopeful",
@@ -2682,7 +2673,6 @@
    "minotaur-chair",
    "mirror-goggles",
    "mirror-goggles-greater",
-   "mirror-goggles-lesser",
    "mirror-goggles-moderate",
    "mnemonic-feather",
    "monkey-pin",
@@ -2842,8 +2832,6 @@
    "pernicious-spore-bomb-greater",
    "pernicious-spore-bomb-major",
    "pernicious-spore-bomb-moderate",
-   "persona-mask",
-   "persona-mask-greater",
    "pervasive-superstition",
    "pesh-paste",
    "peshpine-grenade-greater",
@@ -2985,7 +2973,6 @@
    "razmiri-mask-gold",
    "razmiri-mask-porcelain",
    "razmiri-mask-silver",
-   "razmiri-wayfinder",
    "reactive-shield",
    "read-shibboleths",
    "reading-the-signs",
@@ -3024,7 +3011,6 @@
    "resilient-mind",
    "resilient-touch",
    "resolute-mind-wrap",
-   "resonant-guitar",
    "resonating-fork",
    "resonating-fork-greater",
    "resonating-fork-major",
@@ -3175,7 +3161,6 @@
    "shield-your-eyes",
    "shielding-salve",
    "shining-glory",
-   "shining-hackle",
    "shining-symbol",
    "shining-symbol-greater",
    "shining-symbol-major",
@@ -3775,7 +3760,6 @@
    "warding-tattoo-fiend",
    "warding-tattoo-trail",
    "warding-tattoo-wave",
-   "wardrobe-stone-greater",
    "wardrobe-stone-moderate",
    "warleaders-bulwark",
    "warleaders-bulwark-greater",
@@ -5510,9 +5494,6 @@
   ],
   "feats/rogue-dedication": [
    "classDcGrant"
-  ],
-  "feats/rope-runner": [
-   "situational"
   ],
   "feats/rotten-slurry": [
    "grantsClassFeatures"
@@ -7526,5 +7507,5 @@
   "items/waterproof-carrying-case",
   "items/wave-warding-tattoo"
  ],
- "wgSha": "ff15c8185dd1ebd97e3a680e0dcc4e10a80226aa5d96fd56778cac2878fc57f5"
+ "wgSha": "2b87079480019d715471869097a04c8a70f223ff328f30fe29528be3d3953912"
 }

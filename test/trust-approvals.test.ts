@@ -187,11 +187,19 @@ describe('trust-approvals.json — completeness', () => {
    * one cantrip fewer) and #175 basic-cleric-spellcasting#deity-spells ("start K", after reading feat-5067:
    * the deity's spells can be prepared in the cleric archetype's slots). Both are `approvals`. Roster 173 -> 175.
    */
+  /*
+   * Then package M filed #176 expert-strikes open (2026-10-16), and on 2026-10-17 he answered it and one chat
+   * question, both ruled from work/desk-answers-2026-10-17.json: #176 'Unarmed only (Recommended)' (print,
+   * class-feature-938: only unarmed attacks in the brawling group) is `noMechanic` (a narrowed value on a
+   * class-owned record), and #177 ruling-b-stars-past-wg — filed for its number by add-owner-question.mjs —
+   * 'Yes, stars on (Recommended)' (the 16 records' Ruling-B stars switched on, their too-broad numbers gone)
+   * is sixteen `approvals` rows. Roster 176 -> 177.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
   // batch P02: enhanced-familiar#ability-budget
-  it('the desk roster is every number in work/owner-questions.json — 176: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29, the one ruled in chat on 2026-09-30, the three filed open on 2026-10-15, the two package K filed and ruled the same day, and the one package M filed open on 2026-10-16 — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 177: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29, the one ruled in chat on 2026-09-30, the three filed open on 2026-10-15, the two package K filed and ruled the same day, the one package M filed open on 2026-10-16, and the chat ruling filed and ruled on 2026-10-17 — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
     // reprint lane 2026-09-25: #165 reprint-cross-kind-sub-pages, #166 book-names-different-book-folds, #167 reprint-grade-to-grade
     // batch P02: enhanced-familiar#ability-budget — #168 enhanced-familiar#fixed-budget-grants (open, so `unruled`)
@@ -200,8 +208,9 @@ describe('trust-approvals.json — completeness', () => {
     // 2026-10-15: desk #171 expanded-necromancy#archetype-ninth-rank and #172 cantrip-expansion#dual-class-pool (open, so `unruled`)
     // 2026-10-15: desk #173 adaptive-adept#repertoire-place (open, so `unruled`)
     // package K 2026-10-15: desk #174 adapted-cantrip#repertoire-cantrip-count and #175 basic-cleric-spellcasting#deity-spells (ruled, `approvals`)
-    // package M 2026-10-16: desk #176 expert-strikes (open, so `unruled`): class-feature-938 "an unarmed attack in the brawling group" vs Wanderer's Guide's "brawling weapons"
-    expect(deskNumbers.length).toBe(176);
+    // package M 2026-10-16: desk #176 expert-strikes: class-feature-938 "an unarmed attack in the brawling group" vs Wanderer's Guide's "brawling weapons" — ruled 2026-10-17 'Unarmed only (Recommended)', `noMechanic`
+    // 2026-10-17: desk #177 ruling-b-stars-past-wg (his 'Yes, stars on (Recommended)'; ruled, `approvals`)
+    expect(deskNumbers.length).toBe(177);
   });
 
   it('every desk number has exactly one disposition', () => {
@@ -372,6 +381,39 @@ describe('trust-approvals.json — the plan’s add-a-mechanic list is covered',
     for (const r of ['classFeatures/energy-shot', 'feats/fulminating-shot', 'classFeatures/dispelling-bullet']) {
       expect(has(163, r, 'situational'), `#163 ${r} situational`).toBe(true);
     }
+  });
+
+  /*
+   * #177 (2026-10-17), his 'Yes, stars on (Recommended)' to "Switch those stars on and remove the too-broad
+   * numbers?": EXACTLY the sixteen records scripts/lost-condition-check.mjs held as kept over-grants waiting
+   * on the approval (awaitsApproval 126 in scripts/data/lost-condition-allow.json at 3ba8939), each approving
+   * only `situational` — the Ruling-B star (and, on Rope Runner, the record star that also lights
+   * modes/cat-rope-runner). A seventeenth record, or a second field, approves past what he was asked.
+   */
+  const RULING_B_SIXTEEN = [
+    'feats/rope-runner',
+    'items/bagpipes-of-turmoil', 'items/borts-blessing', 'items/clarity-goggles-greater', 'items/day-goggles',
+    'items/eye-slash-greater', 'items/eye-slash-major', 'items/eye-slash-true', 'items/holy-chain',
+    'items/mirror-goggles-lesser', 'items/persona-mask', 'items/persona-mask-greater', 'items/razmiri-wayfinder',
+    'items/resonant-guitar', 'items/shining-hackle', 'items/wardrobe-stone-greater',
+  ];
+  const sixteenOf = (a: Approval[]) => a.filter((e) => e.n === 177);
+  /** Every way a #177 row can approve past what he was asked: a record not in the sixteen, a field other than `situational`, another answers file. */
+  const pastTheAsk = (a: Approval[]) =>
+    sixteenOf(a).filter((e) => !RULING_B_SIXTEEN.includes(e.record) || JSON.stringify(e.fields) !== '["situational"]' || e.answers !== 'work/desk-answers-2026-10-17.json').map((e) => e.record);
+  it('#177 approves exactly the sixteen Ruling-B stars, `situational` only, citing work/desk-answers-2026-10-17.json', () => {
+    const rows = sixteenOf(approvals.approvals);
+    expect(rows.map((e) => e.record).sort()).toEqual([...RULING_B_SIXTEEN].sort());
+    expect(pastTheAsk(approvals.approvals)).toEqual([]);
+    // planted: a seventeenth record, and a second field on one of the sixteen, are each caught
+    expect(pastTheAsk([...approvals.approvals, { ...rows[0], record: 'items/clarity-goggles' }])).toEqual(['items/clarity-goggles']);
+    expect(pastTheAsk([...approvals.approvals.filter((e) => e !== rows[0]), { ...rows[0], fields: ['situational', 'passiveEffects'] }])).toEqual([rows[0].record]);
+  });
+
+  it('#176 (Expert Strikes, \'Unarmed only (Recommended)\') is noMechanic on classFeatures/expert-strikes — a narrowed value on a class-owned record', () => {
+    const rows = approvals.noMechanic.filter((e) => e.n === 176);
+    expect(rows.map((e) => [e.record, e.answers])).toEqual([['classFeatures/expert-strikes', 'work/desk-answers-2026-10-17.json']]);
+    expect(dispositionsOf(176)).toEqual(['noMechanic']);
   });
 
   it('#145 is the documented exception and lives in `engine`', () => {

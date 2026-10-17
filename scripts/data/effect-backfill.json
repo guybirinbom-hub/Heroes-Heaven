@@ -3367,11 +3367,8 @@
   "category": "items",
   "id": "razmiri-wayfinder",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "deception": 1
-   }
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-470-832 prints \"provides its wearer a +1 item bonus to Deception checks to Lie or Impersonate\" — the flat +1 rose every Deception check; the lit star FEAT_SITUATIONAL[\"razmiri-wayfinder\"] carries it."
  },
  {
   "category": "items",
@@ -3390,11 +3387,8 @@
   "category": "items",
   "id": "borts-blessing",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "diplomacy": 1
-   }
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-476 prints \"the wearer receives a +1 item bonus to Diplomacy checks to Make an Impression\" — the flat +1 rose every Diplomacy check; the lit star FEAT_SITUATIONAL[\"borts-blessing\"] carries it."
  },
  {
   "category": "items",
@@ -3799,9 +3793,8 @@
   "category": "items",
   "id": "day-goggles",
   "field": "passiveEffects",
-  "value": {
-   "perception": -2
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-1146 prints \"while wearing the goggles, you take a -2 item penalty to visual Perception checks\" — a restricted penalty, so the flat -2 on every Perception check leaves passiveEffects; the lit star FEAT_SITUATIONAL[\"day-goggles\"] carries it (its -2 row on visual Perception)."
  },
  {
   "category": "items",
@@ -3947,9 +3940,8 @@
   "category": "items",
   "id": "wardrobe-stone-greater",
   "field": "passiveEffects",
-  "value": {
-   "perception": 3
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-1323-1222 prints \"You gain +3 item bonus to Perception checks involving sight\" — the flat +3 rose every Perception check; the lit star FEAT_SITUATIONAL[\"wardrobe-stone-greater\"] carries it."
  },
  {
   "category": "items",
@@ -4383,39 +4375,39 @@
   "id": "eye-slash-greater",
   "field": "passiveEffects",
   "value": {
-   "perception": 1,
    "senses": [
     {
      "name": "see four times farther than normal"
     }
    ]
-  }
+  },
+  "why": "desk #177 (2026-10-17): AoN equipment-2206-1905 prints \"The tattoo also grants you a +1 item bonus to Perception checks that involve sight.\" — the flat +1 Perception leaves passiveEffects (the lit star FEAT_SITUATIONAL[\"eye-slash-greater\"] carries it); the far-sight sense stays as it was."
  },
  {
   "category": "items",
   "id": "eye-slash-major",
   "field": "passiveEffects",
   "value": {
-   "perception": 2,
    "senses": [
     {
      "name": "see four times farther than normal"
     }
    ]
-  }
+  },
+  "why": "desk #177 (2026-10-17): AoN equipment-2206-1906 prints \"The tattoo also grants you a +2 item bonus to Perception checks that involve sight.\" — the flat +2 Perception leaves passiveEffects (the lit star FEAT_SITUATIONAL[\"eye-slash-major\"] carries it); the far-sight sense stays."
  },
  {
   "category": "items",
   "id": "eye-slash-true",
   "field": "passiveEffects",
   "value": {
-   "perception": 3,
    "senses": [
     {
      "name": "see four times farther than normal"
     }
    ]
-  }
+  },
+  "why": "desk #177 (2026-10-17): AoN equipment-2206-1907 prints \"The tattoo also grants you a +3 item bonus to Perception checks that involve sight.\" — the flat +3 Perception leaves passiveEffects (the lit star FEAT_SITUATIONAL[\"eye-slash-true\"] carries it); the far-sight sense stays."
  },
  {
   "category": "items",
@@ -4551,11 +4543,8 @@
   "category": "items",
   "id": "bagpipes-of-turmoil",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 1
-   }
-  }
+  "value": null,
+  "why": "desk #177, his 'Yes, stars on (Recommended)' (2026-10-17; work/desk-answers-2026-10-17.json): AoN equipment-2265 prints \"While playing the bagpipes, you gain a +1 item bonus to Performance checks\" — a restricted bonus, so the flat +1 (which rose EVERY Performance check) leaves passiveEffects; the star FEAT_SITUATIONAL[\"bagpipes-of-turmoil\"], lit by #177's approval, carries it (ruling #126 / ruling B)."
  },
  {
   "category": "items",
@@ -4593,9 +4582,8 @@
   "category": "items",
   "id": "clarity-goggles-greater",
   "field": "passiveEffects",
-  "value": {
-   "perception": 3
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17), the example he was shown: AoN equipment-2314-2161 prints \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" (the Greater grade: +3) — the flat +3 rose every Perception check; the lit star FEAT_SITUATIONAL[\"clarity-goggles-greater\"] carries it."
  },
  {
   "category": "items",
@@ -4609,9 +4597,8 @@
   "category": "items",
   "id": "mirror-goggles-lesser",
   "field": "passiveEffects",
-  "value": {
-   "perception": 1
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-2315-2162 prints \"you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects\" — the flat +1 rose every Perception check; the lit star FEAT_SITUATIONAL[\"mirror-goggles-lesser\"] carries both halves."
  },
  {
   "category": "items",
@@ -5037,11 +5024,8 @@
   "category": "items",
   "id": "resonant-guitar",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 2
-   }
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-2616 prints \"grants a +2 item bonus to Performance checks attempted while using it\" — the flat +2 rose every Performance check (singing, dancing, acting); the lit star FEAT_SITUATIONAL[\"resonant-guitar\"] carries it."
  },
  {
   "category": "items",
@@ -5852,21 +5836,15 @@
   "category": "items",
   "id": "persona-mask",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 1
-   }
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-3099-3044 prints \"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" — the flat +1 rose every Performance check; the lit star FEAT_SITUATIONAL[\"persona-mask\"] carries it."
  },
  {
   "category": "items",
   "id": "persona-mask-greater",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 2
-   }
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-3099-3045 prints \"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" (the Greater grade: +2) — the flat +2 rose every Performance check; the lit star FEAT_SITUATIONAL[\"persona-mask-greater\"] carries it."
  },
  {
   "category": "items",
@@ -6142,11 +6120,8 @@
   "category": "items",
   "id": "holy-chain",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "diplomacy": 2
-   }
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN equipment-3273 prints \"giving you a +2 item bonus to Diplomacy checks against all creatures except fiends\" — a bonus a number cannot restrict, so the flat +2 Diplomacy leaves passiveEffects; the lit star FEAT_SITUATIONAL[\"holy-chain\"] carries it (its Diplomacy row now states the +2 against every creature but a fiend)."
  },
  {
   "category": "items",
@@ -7105,9 +7080,9 @@
   "value": {
    "skills": {
     "stealth": -1
-   },
-   "perception": 1
-  }
+   }
+  },
+  "why": "desk #177 (2026-10-17): AoN equipment-3978 prints \"you gain a +1 item bonus to Perception checks based on sight\" — the flat +1 Perception leaves passiveEffects (the lit star FEAT_SITUATIONAL[\"shining-hackle\"] carries it); the printed -1 Stealth penalty is unconditional and stays a number."
  },
  {
   "category": "items",
@@ -110019,11 +109994,10 @@
     "two-hand-d10",
     "two-hand-d12"
    ],
-   "hands": 2,
    "melee": true,
    "minRank": "expert"
   },
-  "why": "feat-6368 (Mauler Dedication, Player Core 2 pg. 207) prints \"You have familiarity with all melee weapons that require two hands to wield or have the two-hand trait. … If you are at least an expert in such a weapon, you gain access to the critical specialization effect with that weapon.\" The row before this one carried only the second half of that OR (the six two-hand trait spellings), so a greatsword, greataxe or maul (hands 2, no two-hand trait) never matched. `hands: 2` is one more alternative beside the trait list (derive.ts weaponMatches: a weapon whose record says it needs two hands); melee and the expert gate are unchanged. Package M round 3."
+  "why": "Back to Wanderer's Guide's shape, the value before package M round 3 (7916e1c): the six two-hand trait spellings, melee, expert. feat-6368 prints \"all melee weapons that require two hands to wield or have the two-hand trait\"; the `hands: 2` half was the app going past WG, and asked whether to keep it, the owner said (2026-10-17): 'alot of these things are things related to impleneting corretcky the things of pf2e , i want to adress these in the future in a large endevor not now with small things. we will do in the future a new pass on every player selecteble thing. so now if you find these write them but we will adress them later'. The gap is written in chat-todo.md's 'Future correctness pass' list; the engine's critSpecWeapons.hands key stays (unused by any shipped record)."
  },
  {
   "category": "feats",
@@ -132408,9 +132382,8 @@
   "category": "feats",
   "id": "rope-runner",
   "field": "speeds",
-  "value": {
-   "climb": 15
-  }
+  "value": null,
+  "why": "desk #177 (2026-10-17): AoN feat-6380 prints \"You gain a climb Speed of 15 feet, but only when climbing ropes and similar objects.\" — a gated Speed is a star, never a number (ruling #126), so the standing climb 15 goes; the record's own situational star and the mode modes/cat-rope-runner (climb 15 while on a rope), both lit by #177's approval, carry it."
  },
  {
   "category": "feats",
@@ -192053,5 +192026,19 @@
    "note": "Activate—Darkvision (1 action, manipulate), any number of times per day: you gain greater darkvision until you deactivate it as an Interact action or the goggles are no longer invested by you."
   },
   "why": "AoN equipment-3097-3041 (Obsidian Goggles (Major)) prints \"the goggles can be activated any number of times per day, the activation grants greater darkvision, and the activation lasts until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first\". Ruling Q11: a mode. Shape copied from modes/item-obsidian-goggles."
+ },
+ {
+  "category": "classFeatures",
+  "id": "expert-strikes",
+  "field": "critSpecWeapons",
+  "value": {
+   "groups": [
+    "brawling"
+   ],
+   "categories": [
+    "unarmed"
+   ]
+  },
+  "why": "desk #176, his 'Unarmed only (Recommended)' (2026-10-17; work/desk-answers-2026-10-17.json): AoN class-feature-938 (Expert Strikes, Player Core 2 pg. 114) prints \"When you get a critical hit with an unarmed attack in the brawling group, you get its critical specialization effect.\" The imported narrowing {groups:['brawling']} (Wanderer's Guide's \"brawling weapons\") also lit brawling-group WEAPONS (gauntlet, knuckle-duster, spiked gauntlet); `categories: ['unarmed']` is the gate the Strike must pass beside the group (derive.ts weaponMatches), so only an unarmed attack in the brawling group matches."
  }
 ]

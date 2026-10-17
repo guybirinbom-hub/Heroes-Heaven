@@ -20,8 +20,9 @@ import { TRUST_LEDGER } from '../src/data/trustGate';
  * check.mjs now refuses a new one): the Ruffian racket (weapons within its dice, off-guard target), the four
  * "your deity's favored weapon" grants (Warpriest Third Doctrine, Cloistered Cleric Fourth Doctrine, Battle
  * Creed's Lesser Creed, the Avenger racket), seven exemplar epithets whose own on-crit ability was shown as
- * each weapon group's effect, and five archetype/ancestry feats. Expert Strikes (print: unarmed attacks only) is
- * held at its shipped brawling-group shape: Wanderer's Guide differs from print there, so it is desk #176.
+ * each weapon group's effect, and five archetype/ancestry feats. Expert Strikes (print: unarmed attacks only) was
+ * held at its shipped brawling-group shape because Wanderer's Guide differs from print there (desk #176); he ruled
+ * 'Unarmed only (Recommended)' on 2026-10-17 and the block below now pins print.
  * Each case quotes its printed clause; each has a planted bad case — an in-memory copy of the database with
  * the fix taken back out — that the same assertion catches.
  */
@@ -221,36 +222,51 @@ describe('the exemplar\'s Dominion Epithets — "a critical specialization abili
   });
 });
 
-/* Expert Strikes is NOT narrowed here, on purpose. Print (class-feature-938) says "When you get a critical hit
+/* Expert Strikes, RULED (desk #176, 2026-10-17). Print (class-feature-938) says "When you get a critical hit
  * with an unarmed attack in the brawling group, you get its critical specialization effect." — unarmed only —
- * but Wanderer's Guide row 31261 encodes WEAPON_CRITICAL_SPECIALIZATIONS "brawling weapons", the whole group.
- * WG contradicting print is the owner's call, never ours (CLAUDE.md, docs/gold-set-answers.md), so the round-2
- * row that added categories:['unarmed'] was retracted and desk #176 `expert-strikes` asks him. Until he rules,
- * this pins the shipped shape: every brawling-group Strike, the same as WG. When he rules, change this block. */
-describe('Expert Strikes — held at the shipped brawling-group shape while desk #176 is open (class-feature-938 vs WG "brawling weapons")', () => {
+ * while Wanderer's Guide row 31261 encodes WEAPON_CRITICAL_SPECIALIZATIONS "brawling weapons", the whole group.
+ * Until he ruled, this block pinned WG's shape. Asked "(a) Unarmed attacks only, as print says - the gauntlet
+ * and other brawling weapons lose it. (b) Every brawling-group Strike", his pick was 'Unarmed only
+ * (Recommended)' (work/desk-answers-2026-10-17.json), so one overlay row now narrows the record to
+ * { groups: ['brawling'], categories: ['unarmed'] }: `categories` is a gate the Strike must pass and the group
+ * narrowing must match too (derive.ts weaponMatches). */
+describe('Expert Strikes — unarmed attacks in the brawling group only (desk #176 ruled 2026-10-17: \'Unarmed only (Recommended)\', class-feature-938)', () => {
   const monk = () => wielding(build('monk', 5), 'gauntlet', 'longsword');
-  const desk = JSON.parse(readFileSync('work/owner-questions.json', 'utf8').replace(/^﻿/, '')) as Record<string, { n?: number; id?: string }[]>;
-  const openIds = new Set([...(desk.open ?? []), ...(desk.deferred ?? [])].map((q) => q.id));
+  const desk = JSON.parse(readFileSync('work/owner-questions.json', 'utf8').replace(/^﻿/, '')) as Record<string, { n?: number; id?: string; ruling?: string }[]>;
 
-  it('the question is on the desk, open — the reason this record is left as WG has it', () => {
-    expect(openIds.has('expert-strikes')).toBe(true);
-    expect([...(desk.open ?? []), ...(desk.deferred ?? [])].find((q) => q.id === 'expert-strikes')?.n).toBe(176);
+  it('the question is ruled — his words are on the desk entry', () => {
+    const e = (desk.ruled ?? []).find((q) => q.id === 'expert-strikes');
+    expect(e?.n).toBe(176);
+    expect(e?.ruling).toContain("'Unarmed only (Recommended)'");
+    expect([...(desk.open ?? []), ...(desk.deferred ?? [])].some((q) => q.id === 'expert-strikes')).toBe(false);
   });
 
-  it('the record is narrowed by the brawling group alone (no unarmed-only category) while #176 is open', () => {
-    expect(db.classFeatures['expert-strikes'].critSpecWeapons).toEqual({ groups: ['brawling'] });
+  // batch package-m premise: class-feature-938 "When you get a critical hit with an unarmed attack in the brawling group, you get its critical specialization effect."
+  it('the record: the brawling group AND the unarmed category', () => {
+    expect(db.classFeatures['expert-strikes'].critSpecWeapons).toEqual({ groups: ['brawling'], categories: ['unarmed'] });
   });
 
-  it('a 5th-level monk: the Fist and the gauntlet (a brawling-group weapon) both show it, as WG does; a longsword does not', () => {
+  it('a 5th-level monk: the Fist shows it; the gauntlet (a brawling-group WEAPON) and a longsword do not', () => {
+    expect(strikeNamed(monk(), db, 'Fist')).toMatchObject({ group: 'brawling', category: 'unarmed' });
+    expect(strikeNamed(monk(), db, 'Gauntlet')).toMatchObject({ group: 'brawling', category: 'simple' });
     expect(shows(monk(), db, 'Fist')).toBe(true);
-    expect(shows(monk(), db, 'Gauntlet')).toBe(true);
+    expect(shows(monk(), db, 'Gauntlet')).toBe(false);
     expect(shows(monk(), db, 'Longsword')).toBe(false);
+    // a 4th-level monk has not reached Expert Strikes: the Fist does not show it either
+    expect(shows(wielding(build('monk', 4), 'gauntlet'), db, 'Fist')).toBe(false);
   });
 
-  it('planted: an unarmed-only narrowing authored before the ruling takes the gauntlet away — this pin catches it', () => {
-    const bad = patched('classFeatures', 'expert-strikes', { critSpecWeapons: { groups: ['brawling'], categories: ['unarmed'] } });
-    expect(shows(monk(), bad, 'Gauntlet')).toBe(false);
-    expect((bad.classFeatures['expert-strikes'] as { critSpecWeapons?: unknown }).critSpecWeapons).not.toEqual({ groups: ['brawling'] });
+  it("planted: Wanderer's Guide's old brawling-group-only shape lights the gauntlet again — this pin catches it", () => {
+    const old = patched('classFeatures', 'expert-strikes', { critSpecWeapons: { groups: ['brawling'] } });
+    expect(shows(monk(), old, 'Gauntlet')).toBe(true);
+    expect(shows(monk(), old, 'Fist')).toBe(true);
+  });
+
+  it('with the trust gate on, as the app runs: the class feature and its narrowing are on together', () => {
+    const gated = content({ trustGate: true });
+    expect((gated.classFeatures['expert-strikes'] as { critSpecWeapons?: unknown }).critSpecWeapons).toEqual({ groups: ['brawling'], categories: ['unarmed'] });
+    expect(shows(monk(), gated, 'Fist')).toBe(true);
+    expect(shows(monk(), gated, 'Gauntlet')).toBe(false);
   });
 });
 

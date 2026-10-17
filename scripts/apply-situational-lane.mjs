@@ -137,6 +137,17 @@ const handEdited = new Set([
    *     of hits you with a Strike or a spell attack" — the lane's "melee Strike or melee spell attack
    *     roll" was the legacy feat-2855 trigger. */
   'spirit-sheath', 'emergency-targe',
+  /* lost-condition work (3ba8939) and desk #177 (2026-10-17, Guy: "Yes, stars on"): the flat item
+   * bonus left passiveEffects and the star now carries it, so each row was re-worded in place.
+   *   holy-chain: equipment-3273 "+2 item bonus to Diplomacy checks against all creatures except
+   *     fiends" — the lane's "-2 item (the chain's Diplomacy bonus does not apply)" assumed the +2 was
+   *     still in the total.
+   *   clarity-goggles-greater, mirror-goggles-lesser / -moderate / -greater,
+   *   spectacles-of-piercing-sight: the lane's "already in your total" is false once the number is gone.
+   *   violin-of-the-waves: its Performance bonus moved from the total to the star the same way. */
+  'holy-chain', 'clarity-goggles-greater',
+  'mirror-goggles-lesser', 'mirror-goggles-moderate', 'mirror-goggles-greater',
+  'spectacles-of-piercing-sight', 'violin-of-the-waves',
 ]);
 
 const src = readFileSync(REGISTRY, 'utf8');

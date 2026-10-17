@@ -20,16 +20,19 @@
  *
  *   node scripts/conditional-speed-check.mjs            # guard
  *   node scripts/conditional-speed-check.mjs --list     # every candidate with its sentence
+ *
+ * CORE_JSON / CORE_DESCRIPTIONS_JSON point it at scratch copies (test/conditional-speed-check.test.ts
+ * proves the guard red on a planted record that way, never in the tree).
  */
 import { readFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { join, dirname, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const LIST = process.argv.includes('--list');
-const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8').replace(/^﻿/, ''));
-const core = read('public/core.json');
-const descs = read('public/core-descriptions.json');
+const read = (p) => JSON.parse(readFileSync(isAbsolute(p) ? p : join(ROOT, p), 'utf8').replace(/^﻿/, ''));
+const core = read(process.env.CORE_JSON || 'public/core.json');
+const descs = read(process.env.CORE_DESCRIPTIONS_JSON || 'public/core-descriptions.json');
 
 /*
  * Settled: read against the printed text and confirmed to belong in `speeds`. The reason is the part
@@ -42,8 +45,12 @@ const SETTLED = {
   'summiting-dragonblood': 'the "if" varies the amount (20, or +5 on an existing climb Speed); the grant itself is unconditional',
 };
 
-/* A clause that GATES rather than varies. "if you already"/"if you have" describe a permanent state. */
-const GATE = /\b(while|whenever|when you(?:'re| are)?|as long as|during|until the (?:start|end)|in your favored|for \d+ (?:round|minute|hour))\b/i;
+/* A clause that GATES rather than varies. "if you already"/"if you have" describe a permanent state.
+ * "only when" (2026-10-17, desk #177): Rope Runner, feat-6380 — *"You gain a climb Speed of 15 feet, but
+ * only when climbing ropes and similar objects."* — carried a standing climb 15 that this pattern never
+ * saw, because none of the alternatives below matched "only when climbing"; the lost-condition check
+ * found it instead. */
+const GATE = /\b(while|whenever|when you(?:'re| are)?|only when|as long as|during|until the (?:start|end)|in your favored|for \d+ (?:round|minute|hour))\b/i;
 const VARIES = /\bif you (?:already|have|had)\b/i;
 
 const candidates = [];

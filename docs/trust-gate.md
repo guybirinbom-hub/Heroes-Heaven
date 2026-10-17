@@ -101,7 +101,9 @@ numbers no answers file speaks for are pinned to the eleven known ones (1, 2, 6,
 question names the one it replaces (rule-owner-questions refuses to re-rule a number, and a number is answered in one
 file only); the old number's disposition is then changed by hand to match. The first use filed the sixteen numbers of
 the 2026-09-12 and 2026-10-15 passes and #174 (Adapted Cantrip) and #175 (Basic Cleric Spellcasting's deity
-spells). A desk number is required on purpose — rather than letting a row cite a `docs/gold-set-answers.md`
+spells). On 2026-10-17 it ruled #176 (Expert Strikes, `noMechanic`) and #177 (a chat question filed for its
+number: the sixteen Ruling-B stars the lost-condition check held as kept over-grants, sixteen `situational`
+approvals) from `work/desk-answers-2026-10-17.json`. A desk number is required on purpose — rather than letting a row cite a `docs/gold-set-answers.md`
 section — because the number is what makes "one disposition per ruling" checkable; the gold-set section is
 quoted in the row's `why` and in the answers file.
 

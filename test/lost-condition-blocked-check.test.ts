@@ -2,12 +2,17 @@
  * scripts/lost-condition-check.mjs after the blocked lane (2026-10-17): the 21 kept-over-grant lines whose
  * fix only needed files the first lane could not touch are FIXED and their allow entries are gone, so the
  * check must FAIL the moment any of those over-grants comes back — and a known over-grant may no longer be
- * kept for a file at all (the owner's rule: known over-grants fail, lit or dark). The 16 left are tied to
- * the approval they wait on (ruling #126 in scripts/data/trust-approvals.json) and say so.
+ * kept for a file at all (the owner's rule: known over-grants fail, lit or dark). The 16 left were tied to
+ * the approval they waited on (ruling #126 in scripts/data/trust-approvals.json) — and on 2026-10-17 he gave
+ * it (desk #177, 'Yes, stars on (Recommended)', work/desk-answers-2026-10-17.json): their stars are lit,
+ * their numbers retired and their entries gone, so the tree waits on nothing and each number planted back
+ * FAILS. The kept-entry rules are still proved, on a planted pre-approval copy (one entry, its number back,
+ * its star dark).
  *
  * Every case runs the REAL check in a child process on scratch copies (its env overrides), never the tree:
  * the shipped core.json with one thing planted, the REAL allow file (its snapshot is the measured set — no
- * Foundry packs), the real ledger and owner questions, a scratch approvals file where the case needs one.
+ * Foundry packs), the real ledger and owner questions, a scratch approvals file or ledger where the case
+ * needs one.
  */
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { spawnSync } from 'node:child_process';
@@ -27,6 +32,8 @@ type Entry = Record<string, unknown>;
 const ALLOW = JSON.parse(readFileSync(join(ROOT, 'scripts/data/lost-condition-allow.json'), 'utf8')) as { entries: Entry[]; snapshot: unknown };
 const APPROVALS = JSON.parse(readFileSync(join(ROOT, 'scripts/data/trust-approvals.json'), 'utf8')) as Record<string, { n: number; record?: string }[]>;
 const CORE_TEXT = readFileSync(join(ROOT, 'public/core.json'), 'utf8');
+type Ledger = { records: Record<string, string[]>; lanes: Record<string, unknown> };
+const LEDGER = JSON.parse(readFileSync(join(ROOT, 'src/data/trust-ledger.json'), 'utf8')) as Ledger;
 
 let dir = '';
 let n = 0;
@@ -37,7 +44,7 @@ afterAll(() => {
   if (dir) rmSync(dir, { recursive: true, force: true });
 });
 
-function run(fx: { plant?: (c: Core) => void; entries?: (e: Entry[]) => Entry[]; approvals?: (a: typeof APPROVALS) => void } = {}) {
+function run(fx: { plant?: (c: Core) => void; entries?: (e: Entry[]) => Entry[]; approvals?: (a: typeof APPROVALS) => void; ledger?: (l: Ledger) => void } = {}) {
   const d = join(dir, `case-${++n}`);
   mkdirSync(d);
   const env: NodeJS.ProcessEnv = { ...process.env, FOUNDRY_PACKS: join(d, 'no-packs') };
@@ -52,23 +59,86 @@ function run(fx: { plant?: (c: Core) => void; entries?: (e: Entry[]) => Entry[];
     fx.approvals(a);
     writeFileSync((env.TRUST_APPROVALS = join(d, 'approvals.json')), JSON.stringify(a));
   }
+  if (fx.ledger) {
+    const l = structuredClone(LEDGER);
+    fx.ledger(l);
+    writeFileSync((env.TRUST_LEDGER = join(d, 'ledger.json')), JSON.stringify(l));
+  }
   const r = spawnSync(process.execPath, [JITI, CHECK], { cwd: ROOT, env, encoding: 'utf8', maxBuffer: 1 << 26 });
   return { status: r.status, out: `${r.stdout}\n${r.stderr}` };
 }
 const strikesOf = (c: Core, id: string) => c.feats[id].grantedStrikes as Record<string, unknown>[];
 const BAGPIPES = 'items/bagpipes-of-turmoil';
 
-describe('lost-condition-check: green on the tree, and every kept line says what it waits on', () => {
-  it('exit 0; the 16 kept lines are "waiting for the owner\'s approval of the Ruling-B star", tied to ruling #126', () => {
+/*
+ * THE SIXTEEN desk #177 approved (2026-10-17), each with the too-broad number it carried until then and the
+ * Foundry counterpart the check names it by. Print, per record: scripts/data/trust-approvals.json's #177 rows
+ * (e.g. equipment-2314-2161 "+1 item bonus to visual Perception checks", feat-6380 "but only when climbing
+ * ropes and similar objects").
+ */
+const SIXTEEN: { record: string; old: Record<string, unknown>; line: string }[] = [
+  { record: 'items/bagpipes-of-turmoil', old: { passiveEffects: { skills: { performance: 1 } } }, line: 'FlatModifier selector performance' },
+  { record: 'items/borts-blessing', old: { passiveEffects: { skills: { diplomacy: 1 } } }, line: 'FlatModifier selector diplomacy' },
+  { record: 'items/clarity-goggles-greater', old: { passiveEffects: { perception: 3 } }, line: 'FlatModifier selector perception' },
+  { record: 'items/day-goggles', old: { passiveEffects: { perception: -2 } }, line: 'FlatModifier selector perception' },
+  { record: 'items/eye-slash-greater', old: { passiveEffects: { perception: 1, senses: [{ name: 'see four times farther than normal' }] } }, line: 'FlatModifier selector perception' },
+  { record: 'items/eye-slash-major', old: { passiveEffects: { perception: 2, senses: [{ name: 'see four times farther than normal' }] } }, line: 'FlatModifier selector perception' },
+  { record: 'items/eye-slash-true', old: { passiveEffects: { perception: 3, senses: [{ name: 'see four times farther than normal' }] } }, line: 'FlatModifier selector perception' },
+  { record: 'items/holy-chain', old: { passiveEffects: { skills: { diplomacy: 2 } } }, line: 'FlatModifier selector diplomacy' },
+  { record: 'items/mirror-goggles-lesser', old: { passiveEffects: { perception: 1 } }, line: 'FlatModifier selector perception,saving-throw' },
+  { record: 'items/persona-mask', old: { passiveEffects: { skills: { performance: 1 } } }, line: 'FlatModifier selector performance' },
+  { record: 'items/persona-mask-greater', old: { passiveEffects: { skills: { performance: 2 } } }, line: 'FlatModifier selector performance' },
+  { record: 'items/razmiri-wayfinder', old: { passiveEffects: { skills: { deception: 1 } } }, line: 'FlatModifier selector deception' },
+  { record: 'items/resonant-guitar', old: { passiveEffects: { skills: { performance: 2 } } }, line: 'FlatModifier selector performance' },
+  { record: 'items/shining-hackle', old: { passiveEffects: { skills: { stealth: -1 }, perception: 1 } }, line: 'FlatModifier selector perception' },
+  { record: 'items/wardrobe-stone-greater', old: { passiveEffects: { perception: 3 } }, line: 'FlatModifier selector perception' },
+  { record: 'feats/rope-runner', old: { speeds: { climb: 15 } }, line: 'BaseSpeed selector climb' },
+];
+const plantOld = (c: Core, which = SIXTEEN) => {
+  for (const s of which) {
+    const [bucket, id] = s.record.split('/');
+    Object.assign(c[bucket][id], structuredClone(s.old));
+  }
+};
+
+describe('lost-condition-check: green on the tree, and nothing waits on the owner any more', () => {
+  it('exit 0; no kept line — desk #177 approved the sixteen Ruling-B stars on 2026-10-17 ("Yes, stars on (Recommended)")', () => {
     const r = run();
     expect(r.status, r.out).toBe(0);
-    const waiting = r.out.split('\n').filter((l) => l.includes("WARN waiting for the owner's approval of the Ruling-B star"));
-    expect(waiting).toHaveLength(16);
-    for (const l of waiting) expect(l, l).toMatch(/\| ruling #126 is unruled in .*trust-approvals\.json \| blocked by dark /);
-    expect(r.out).toContain("16 over-grant line(s) WAITING for the owner's approval of the Ruling-B star, 16 of them lit");
+    expect(r.out.split('\n').filter((l) => l.includes("WARN waiting for the owner's approval of the Ruling-B star"))).toEqual([]);
+    expect(r.out).toContain("0 waiting for the owner's approval");
+    expect(ALLOW.entries.filter((e) => e.verdict === 'kept-over-grant')).toEqual([]);
+    for (const s of SIXTEEN) expect(r.out, s.record).not.toMatch(new RegExp(`(WARN|allowed|OVER-GRANT).*${s.record.replace('/', '\\/')} \\|`));
     // nothing is kept for a FILE any more, and none of the fixed records is excused
     expect(r.out).not.toMatch(/blocked by (src|test)\//);
     for (const rec of ['fey-ascension', 'fang-sharpener', 'sprites-spark', 'morphic-strike', 'brooch-of-inspiration', 'obsidian-goggles']) expect(r.out).not.toMatch(new RegExp(`(WARN|allowed).*\\b${rec}`));
+  });
+
+  it('the sixteen stars are lit in the shipped ledger, and their numbers are gone from core.json', () => {
+    const core = JSON.parse(CORE_TEXT) as Core;
+    const sit = LEDGER.lanes.situational as string[];
+    for (const s of SIXTEEN) {
+      const [bucket, id] = s.record.split('/');
+      if (bucket === 'items') expect(sit, `${id}: its star is off the suppressed list`).not.toContain(id);
+      for (const [field, value] of Object.entries(s.old)) {
+        const now = core[bucket][id][field] as Record<string, unknown> | undefined;
+        if (field === 'passiveEffects') {
+          expect(now?.perception, `${id} perception`).toBeUndefined();
+          for (const k of Object.keys((value as { skills?: object }).skills ?? {})) if (k !== 'stealth') expect((now?.skills as Record<string, unknown> | undefined)?.[k], `${id} ${k}`).toBeUndefined();
+        } else expect(now, `${id} ${field}`).toBeUndefined();
+      }
+    }
+    expect(core.items['shining-hackle'].passiveEffects, 'its printed -1 Stealth stays a number').toEqual({ skills: { stealth: -1 } });
+    expect(LEDGER.records['feats/rope-runner'], "Rope Runner's own star is on").toBeUndefined();
+    expect(LEDGER.lanes.modes as string[], 'modes/cat-rope-runner is on').not.toContain('cat-rope-runner');
+  });
+});
+
+describe('lost-condition-check: an approved number that comes back FAILS (its star is lit, no entry excuses it)', () => {
+  it('planted: each of the sixteen numbers put back — every one is an OVER-GRANT', () => {
+    const r = run({ plant: (c) => plantOld(c) });
+    expect(r.status).toBe(1);
+    for (const s of SIXTEEN) expect(r.out, s.record).toMatch(new RegExp(`OVER-GRANT \\[\\w+\\] ${s.record.replace('/', '\\/')} \\| ${s.line}`));
   });
 });
 
@@ -149,17 +219,54 @@ describe('lost-condition-check: only a wait on the OWNER keeps an over-grant', (
     expect(r.out).toContain("a known over-grant FAILS (the owner's rule, 2026-10-17) — blockedBy names only files (src/rules/build.ts)");
   });
 
+  /*
+   * The world BEFORE desk #177's approval, planted in scratch copies: Bagpipes of Turmoil's +1 back on the record,
+   * its star back on the suppressed list, and its kept entry as the real allow file held it until 2026-10-17
+   * (waiting on ruling #126, which the real approvals file still holds in `unruled` as an authorised exception).
+   */
+  const keptBagpipes = (over: Entry = {}): Entry => ({
+    record: BAGPIPES,
+    key: 'FlatModifier',
+    selector: 'performance',
+    families: ['own toggle'],
+    verdict: 'kept-over-grant',
+    trust: 'lit',
+    awaitsApproval: 126,
+    aonId: 'equipment-2265',
+    quote: 'While playing the bagpipes, you gain a +1 item bonus to Performance checks',
+    why: 'Planted: the pre-approval kept entry (a real over-grant, its star dark).',
+    blockedBy: { gate: ['star:bagpipes-of-turmoil'] },
+    followUp: 'Light the star, then retire passiveEffects.skills.performance with one overlay row, then remove this entry.',
+    ...over,
+  });
+  const preApproval = (over: Entry = {}) => ({
+    plant: (c: Core) => plantOld(c, SIXTEEN.filter((s) => s.record === BAGPIPES)),
+    ledger: (l: Ledger) => void (l.lanes.situational = [...(l.lanes.situational as string[]), 'bagpipes-of-turmoil']),
+    entries: (e: Entry[]) => [...e, keptBagpipes(over)],
+  });
+
+  it('green: the planted pre-approval entry is a wait on the owner — exit 0, one waiting line tied to ruling #126', () => {
+    const r = run(preApproval());
+    expect(r.status, r.out).toBe(0);
+    expect(r.out).toMatch(/WARN waiting for the owner's approval of the Ruling-B star \[lit\] items\/bagpipes-of-turmoil \| FlatModifier selector performance \| own toggle \| on passiveEffects\.skills\.performance \| ruling #126 is unruled in .*trust-approvals\.json \| blocked by dark star:bagpipes-of-turmoil/);
+    // …and the same planted number with NO entry is a plain over-grant
+    const bare = run({ plant: preApproval().plant, ledger: preApproval().ledger });
+    expect(bare.status).toBe(1);
+    expect(bare.out).toContain('OVER-GRANT [lit] items/bagpipes-of-turmoil | FlatModifier selector performance | families: own toggle');
+  });
+
   it('planted: a kept entry with no awaitsApproval, or a number that is no desk question, fails', () => {
-    const none = run({ entries: (e) => e.map((x) => (x.record === BAGPIPES ? { ...x, awaitsApproval: undefined } : x)) });
+    const none = run(preApproval({ awaitsApproval: undefined }));
     expect(none.status).toBe(1);
     expect(none.out).toContain('a kept-over-grant entry needs `awaitsApproval`');
-    const bogus = run({ entries: (e) => e.map((x) => (x.record === BAGPIPES ? { ...x, awaitsApproval: 99999 } : x)) });
+    const bogus = run(preApproval({ awaitsApproval: 99999 }));
     expect(bogus.status).toBe(1);
     expect(bogus.out).toContain('awaitsApproval #99999 is not a desk number');
   });
 
   it('planted: the approval LANDED for the record — STALE until the ledger is re-stamped and the number retired', () => {
     const r = run({
+      ...preApproval(),
       approvals: (a) => {
         a.unruled = a.unruled.filter((x) => x.n !== 126);
         a.approvals.push({ n: 126, record: BAGPIPES, fields: ['situational'], why: 'planted' } as never);
@@ -171,6 +278,7 @@ describe('lost-condition-check: only a wait on the OWNER keeps an over-grant', (
 
   it('planted: #126 disposed as noMechanic — no approval can come through it, so nothing is waited on', () => {
     const r = run({
+      ...preApproval(),
       approvals: (a) => {
         a.unruled = a.unruled.filter((x) => x.n !== 126);
         a.noMechanic.push({ n: 126, why: 'planted' } as never);
@@ -178,5 +286,11 @@ describe('lost-condition-check: only a wait on the OWNER keeps an over-grant', (
     });
     expect(r.status).toBe(1);
     expect(r.out).toContain('awaitsApproval #126 is disposed as noMechanic');
+  });
+
+  it('planted: the real tree (star LIT) with the old entry put back — STALE, the approval has landed', () => {
+    const r = run({ plant: preApproval().plant, entries: preApproval().entries });
+    expect(r.status).toBe(1);
+    expect(r.out).toMatch(/STALE allow entry \d+ \(items\/bagpipes-of-turmoil FlatModifier performance\): star:bagpipes-of-turmoil is LIT now/);
   });
 });

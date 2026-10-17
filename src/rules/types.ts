@@ -1676,6 +1676,10 @@ export interface DefenseGrants {
      * gates must hold as well — unlike `WeaponRider.match.hands`, which is a gate. Tested against the
      * weapon record's printed `hands` (Strike.hands), read the same way: '1+' (a bow, held in one hand)
      * is one-handed, and an unarmed attack has no hands, so neither ever matches `hands: 2`.
+     * ⚠ No shipped record uses it since 2026-10-17: Mauler Dedication went back to Wanderer's Guide's
+     * trait-only shape until the owner's "Future correctness pass" (docs/gold-set-answers.md, "2026-10-17 ·
+     * package M"). The key stays for that pass; test/package-m-data3-mauler.test.ts proves it on a synthetic
+     * narrowing.
      */
     hands?: 1 | 2;
     melee?: boolean;

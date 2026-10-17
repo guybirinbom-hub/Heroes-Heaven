@@ -1,0 +1,21 @@
+{
+ "_": "Two rulings Guy gave in chat on 2026-10-17 (package M), as multiple-choice picks; his exact words are quoted in each `answer` and `note`. #177 is the chat question about the 16 Ruling-B stars the trust gate kept dark (filed with scripts/add-owner-question.mjs for its number, so it can carry trust approvals); #176 is the open desk question package M filed on 2026-10-16 (Expert Strikes). Same shape as work/desk-answers-2026-10-15-package-k.json, so scripts/rule-owner-questions.mjs moves both open -> ruled. A third answer the same day (Mauler Dedication: keep print or match Wanderer's Guide) is NOT a ruling and has no number here: his words were 'alot of these things are things related to impleneting corretcky the things of pf2e , i want to adress these in the future in a large endevor not now with small things. we will do in the future a new pass on every player selecteble thing. so now if you find these write them but we will adress them later' — so Mauler goes back to Wanderer's Guide's shape and the gap is written in chat-todo.md's 'Future correctness pass' list (docs/gold-set-answers.md, section '2026-10-17 · package M').",
+ "answers": [
+  {
+   "ns": [
+    177
+   ],
+   "answer": "'Yes, stars on (Recommended)': switch on the Ruling-B star of each of the 16 records and remove its too-broad number, so the bonus applies only where print limits it",
+   "rule": "ruling #126 (2026-08-22, a value is a real number only when it is ALWAYS on; a condition the sheet cannot see is a star) and print on each record, e.g. equipment-2314-2161 (Clarity Goggles): \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" and feat-6380 (Rope Runner): \"You gain a climb Speed of 15 feet, but only when climbing ropes and similar objects.\"",
+   "note": "His pick in chat, 2026-10-17: 'Yes, stars on (Recommended)'. The question, as asked: '16 items/feats show a bonus on EVERY roll although the book limits it (e.g. Clarity Goggles +3 to all Perception, book: only checks that use sight). Their correct starred note exists but is switched off because Wanderer's Guide has no note there. Switch those stars on and remove the too-broad numbers?' The 16: items bagpipes-of-turmoil, borts-blessing, clarity-goggles-greater, day-goggles, eye-slash-greater, eye-slash-major, eye-slash-true, holy-chain, mirror-goggles-lesser, persona-mask, persona-mask-greater, razmiri-wayfinder, resonant-guitar, shining-hackle, wardrobe-stone-greater, and feats rope-runner (its situational star and the cat-rope-runner mode; its standing climb 15 goes). Fix: one `situational` approval per record in scripts/data/trust-approvals.json, then one overlay row per record retiring the number through scripts/apply-parity-fixes.mjs."
+  },
+  {
+   "ns": [
+    176
+   ],
+   "answer": "'Unarmed only (Recommended)': option (a), as print says - only unarmed attacks in the brawling group get the critical specialization effect from Expert Strikes; brawling WEAPONS (gauntlet, knuckle-duster, spiked gauntlet) lose it",
+   "rule": "print, class-feature-938 (Expert Strikes, Monk, Player Core 2 pg. 114): \"When you get a critical hit with an unarmed attack in the brawling group, you get its critical specialization effect.\"",
+   "note": "His pick in chat, 2026-10-17: 'Unarmed only (Recommended)'. Fix: one overlay row on classFeatures/expert-strikes, critSpecWeapons { groups: ['brawling'], categories: ['unarmed'] } (derive.ts weaponMatches: `categories` is a gate the Strike must pass AND the group narrowing must match), why citing class-feature-938 and desk #176. A 5th-level monk's Fist keeps the effect; a gauntlet does not."
+  }
+ ]
+}

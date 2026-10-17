@@ -353,6 +353,118 @@
    "fields": ["spellListAdditions"],
    "answers": "work/desk-answers-2026-10-15-package-k.json",
    "why": "The ruling ADDS what print says and WG does not encode: feat-5067 \"You can prepare your deity's spells in your spell slots of the appropriate rank from the cleric archetype.\" (his 'start K' after the home chat showed him the live page). Built as spellListAdditions { from: 'deity', as: 'list', entryId: 'cleric-dedication-casting' } — the shape classFeatures/deity-cleric uses for the class — so each deity spell is offered in the archetype's slots of its own rank or higher, and only once such a slot exists. WG encodes only giveSpellSlot here (weOnly, theirKinds=[spellSlot]), and spellListAdditions maps to `spell`, so it would ship dark without this row."
+  },
+  {
+   "n": 177,
+   "record": "items/bagpipes-of-turmoil",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "'Yes, stars on (Recommended)' (chat, 2026-10-17): the Ruling-B star FEAT_SITUATIONAL['bagpipes-of-turmoil'] is lit and the standing +1 Performance retired. Print, equipment-2265: \"While playing the bagpipes, you gain a +1 item bonus to Performance checks\". WG encodes `skill`, not `conditional`, so without this row the id stays on lanes.situational and the star is dark. `situational` maps to the `conditional` kind, which is all this row turns on."
+  },
+  {
+   "n": 177,
+   "record": "items/borts-blessing",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['borts-blessing'] is lit and the standing +1 Diplomacy retired. Print, equipment-476: \"the wearer receives a +1 item bonus to Diplomacy checks to Make an Impression\". WG encodes `skill`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/clarity-goggles-greater",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling, the example he was shown (Clarity Goggles +3 to all Perception): the star FEAT_SITUATIONAL['clarity-goggles-greater'] is lit and the standing +3 Perception retired. Print, equipment-2314-2161: \"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\" (the Greater grade: +3). WG encodes `perception`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/day-goggles",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['day-goggles'] (its -2 penalty row on visual Perception and its +1 save row) is lit and the standing -2 on every Perception check retired. Print, equipment-1146: \"while wearing the goggles, you take a -2 item penalty to visual Perception checks\". WG encodes `save` and `perception`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/eye-slash-greater",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['eye-slash-greater'] is lit and the standing +1 Perception retired (the far-sight sense stays). Print, equipment-2206-1905: \"The tattoo also grants you a +1 item bonus to Perception checks that involve sight.\" WG encodes `perception` and a prose note, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/eye-slash-major",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling, the Major grade: the star FEAT_SITUATIONAL['eye-slash-major'] is lit and the standing +2 Perception retired (the far-sight sense stays). Print, equipment-2206-1906: \"The tattoo also grants you a +2 item bonus to Perception checks that involve sight.\""
+  },
+  {
+   "n": 177,
+   "record": "items/eye-slash-true",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling, the True grade: the star FEAT_SITUATIONAL['eye-slash-true'] is lit and the standing +3 Perception retired (the far-sight sense stays). Print, equipment-2206-1907: \"The tattoo also grants you a +3 item bonus to Perception checks that involve sight.\""
+  },
+  {
+   "n": 177,
+   "record": "items/holy-chain",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['holy-chain'] is lit and the standing +2 Diplomacy retired; its Diplomacy row now carries the +2 itself, against every creature but a fiend. Print, equipment-3273: \"giving you a +2 item bonus to Diplomacy checks against all creatures except fiends\". WG encodes `ac`, `save` and `skill`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/mirror-goggles-lesser",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['mirror-goggles-lesser'] (visual Perception and saves against visual effects) is lit and the standing +1 Perception retired. Print, equipment-2315-2162: \"you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects\". WG encodes `perception` and `save`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/persona-mask",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['persona-mask'] is lit and the standing +1 Performance retired. Print, equipment-3099-3044: \"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" WG encodes `skill`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/persona-mask-greater",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling, the Greater grade: the star FEAT_SITUATIONAL['persona-mask-greater'] is lit and the standing +2 Performance retired. Print, equipment-3099-3045: \"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" (the Greater grade: +2). WG encodes `skill`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/razmiri-wayfinder",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['razmiri-wayfinder'] is lit and the standing +1 Deception retired. Print, equipment-470-832: \"provides its wearer a +1 item bonus to Deception checks to Lie or Impersonate\". WG encodes `skill`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/resonant-guitar",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['resonant-guitar'] is lit and the standing +2 Performance retired. Print, equipment-2616: \"grants a +2 item bonus to Performance checks attempted while using it\". WG encodes `skill`, not `conditional`; the same star's Chord +2 status AC row lights with it, as print gives it."
+  },
+  {
+   "n": 177,
+   "record": "items/shining-hackle",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['shining-hackle'] is lit and the standing +1 Perception retired; its printed -1 Stealth penalty is unconditional and stays a number. Print, equipment-3978: \"you gain a +1 item bonus to Perception checks based on sight\". WG encodes `perception` and `skill`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "items/wardrobe-stone-greater",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling: the star FEAT_SITUATIONAL['wardrobe-stone-greater'] (sight-based Perception and the outfit's Lore) is lit and the standing +3 Perception retired. Print, equipment-1323-1222: \"You gain +3 item bonus to Perception checks involving sight\". WG encodes `perception`, not `conditional`."
+  },
+  {
+   "n": 177,
+   "record": "feats/rope-runner",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-17.json",
+   "why": "Same ruling, the one feat of the sixteen: the record's own `situational` star (\"climb Speed 15 — it applies only there\") and the mode modes/cat-rope-runner (carrier feats: ['rope-runner']) are lit, and the standing speeds.climb 15 retired. Print, feat-6380: \"You gain a climb Speed of 15 feet, but only when climbing ropes and similar objects.\" WG encodes `speed` and a prose note, not `conditional`; approving `situational` gives the record that kind, which is what takes the mode off lanes.modes."
   }
  ],
 
@@ -464,7 +576,8 @@
   { "n": 160, "record": "feats/dimensional-disappearance", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: 'Dimensional Disappearance: keep both prerequisites, drop the stray comma' (feat-9073). Prerequisites only; nothing the gate touches." },
   { "n": 161, "record": "feats/spell-parry", "answers": "work/desk-answers-2026-09-12.json", "why": "'same as the live Archives page: Spell Parry (feat-9049, Impossible Magic pg. 18) shows NO action icon → no action cost (passive).' `actionCost` is excluded from the gate (docs/trust-gate.md §1); the ruling says nothing about the record's star, which stays as the ledger decides." },
   { "n": 171, "record": "feats/expanded-necromancy", "answers": "work/desk-answers-2026-10-15.json", "why": "'only when the dirge can cast that rank, as print says' (feat-9132) — what the app already does since be93069. The grant is `spellListAdditions` (kind spell), which WG encodes on this row (agree: spell, conditional), so it is on without an approval." },
-  { "n": 173, "record": "feats/adaptive-adept", "answers": "work/desk-answers-2026-10-15.json", "why": "'(a) the spell is added for free and uses none of the repertoire caster's places' (feat-4481) — what the app already does since fa9287e. The spell arrives through the feat's `choice` (builder structure the gate never strips); the record carries no strippable path." }
+  { "n": 173, "record": "feats/adaptive-adept", "answers": "work/desk-answers-2026-10-15.json", "why": "'(a) the spell is added for free and uses none of the repertoire caster's places' (feat-4481) — what the app already does since fa9287e. The spell arrives through the feat's `choice` (builder structure the gate never strips); the record carries no strippable path." },
+  { "n": 176, "record": "classFeatures/expert-strikes", "answers": "work/desk-answers-2026-10-17.json", "why": "'Unarmed only (Recommended)' (chat, 2026-10-17) — print, class-feature-938: \"When you get a critical hit with an unarmed attack in the brawling group, you get its critical specialization effect.\" A narrowed VALUE: one overlay row sets critSpecWeapons { groups: ['brawling'], categories: ['unarmed'] }, so a brawling-group weapon (gauntlet, knuckle-duster, spiked gauntlet) loses the effect. Expert Strikes is a monk class feature the monk's own table hands over, on under the 2026-09-11 class-owned-features rule, so the gate strips nothing here and no approval is needed." }
  ],
 
  "engine": [
@@ -561,7 +674,6 @@
   { "n": 166, "id": "book-names-different-book-folds", "status": "ruled" },
   { "n": 167, "id": "reprint-grade-to-grade", "status": "ruled" },
   { "n": 169, "id": "shop-respects-sources", "status": "ruled" },
-  { "n": 170, "id": "sources-apply-to-everything", "status": "ruled" },
-  { "n": 176, "id": "expert-strikes", "status": "open" }
+  { "n": 170, "id": "sources-apply-to-everything", "status": "ruled" }
  ]
 }

@@ -8,21 +8,24 @@ import { critSpecSources, deriveStrikes, strikeShowsCritSpec, type Strike } from
 import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
 
 /**
- * PACKAGE M, ROUND 3 (c) — Mauler Dedication reaches the weapons that REQUIRE two hands, not only the
- * two-hand trait.
+ * MAULER DEDICATION — back to WANDERER'S GUIDE'S SHAPE (2026-10-17), the engine's `hands` key kept.
  *
  * feat-6368 (Mauler Dedication, Player Core 2 pg. 207) prints "You have familiarity with all melee weapons
  * that require two hands to wield or have the two-hand trait. … If you are at least an expert in such a
- * weapon, you gain access to the critical specialization effect with that weapon." The record narrowed by
- * the six two-hand trait spellings + melee + expert, so a greatsword, greataxe or maul (hands 2, no
- * two-hand trait) never matched. `critSpecWeapons.hands: 2` (types.ts) is one more ALTERNATIVE beside
- * `traits` (derive.ts weaponMatches), tested against the weapon record's own `hands` that every Strike now
- * carries; melee and the expert gate still hold.
+ * weapon, you gain access to the critical specialization effect with that weapon." Wanderer's Guide (their id
+ * 31986) encodes WEAPON_CRITICAL_SPECIALIZATIONS as the six two-hand trait ids (2528 Two-Hand, 2749/2750/1831/
+ * 1644/1597 Two-Hand d6/d4/d8/d10/d12) under an expert-or-better test: the trait half of print's OR only.
  *
- * Wanderer's Guide (their id 31986) encodes WEAPON_CRITICAL_SPECIALIZATIONS as the six two-hand trait ids
- * (2528 Two-Hand, 2749/2750/1831/1644/1597 Two-Hand d6/d4/d8/d10/d12) under an expert-or-better test: the
- * trait half of print's OR and nothing that contradicts it. Ours now has the hands half too (MORE than WG,
- * gold-set R10 — reported, never silently).
+ * Package M round 3 (7916e1c) added print's other half — `critSpecWeapons.hands: 2` (types.ts), one more
+ * ALTERNATIVE beside `traits` in derive.ts weaponMatches — so a greatsword, greataxe or maul (hands 2, no
+ * two-hand trait) matched. Asked whether to keep print or match Wanderer's Guide, the owner said
+ * (2026-10-17): "alot of these things are things related to impleneting corretcky the things of pf2e , i want
+ * to adress these in the future in a large endevor not now with small things. we will do in the future a new
+ * pass on every player selecteble thing. so now if you find these write them but we will adress them later".
+ * So the record is back to the pre-7916e1c value (the six traits + melee + expert, a superseding overlay row)
+ * and the gap is written in chat-todo.md's "Future correctness pass" list. The ENGINE keeps the `hands` key:
+ * no shipped record uses it now, and the block below proves it on a synthetic narrowing so the future pass
+ * finds it working.
  */
 const db = content();
 
@@ -45,9 +48,10 @@ function mauler(rank: 'trained' | 'expert', opts: { feat?: boolean } = {}): Char
     feats: opts.feat === false ? c.feats : [...c.feats, { featId: 'mauler-dedication', level: 2, category: 'class' } as Character['feats'][number]],
   };
 }
-/** The database with the record's narrowing patched — the planted bad case, in memory only. */
+/** The database with the record's narrowing patched — a synthetic or planted case, in memory only. */
 const patchedNarrowing = (w: Record<string, unknown>): ContentDatabase =>
   ({ ...db, feats: { ...db.feats, 'mauler-dedication': { ...db.feats['mauler-dedication'], critSpecWeapons: w } } }) as ContentDatabase;
+const TWO_HAND_TRAITS = ['two-hand', 'two-hand-d4', 'two-hand-d6', 'two-hand-d8', 'two-hand-d10', 'two-hand-d12'];
 
 describe('the shipped weapons and record are what this file assumes', () => {
   it('hands and traits', () => {
@@ -60,12 +64,9 @@ describe('the shipped weapons and record are what this file assumes', () => {
   });
 
   // batch package-m premise: feat-6368 "You have familiarity with all melee weapons that require two hands to wield or have the two-hand trait."
-  it('the record: the two-hand traits OR hands 2, melee, expert', () => {
-    expect(db.feats['mauler-dedication']).toMatchObject({
-      aonId: 'feat-6368',
-      critSpec: true,
-      critSpecWeapons: { traits: ['two-hand', 'two-hand-d4', 'two-hand-d6', 'two-hand-d8', 'two-hand-d10', 'two-hand-d12'], hands: 2, melee: true, minRank: 'expert' },
-    });
+  it("the record: Wanderer's Guide's shape — the six two-hand traits, melee, expert; no `hands` (the owner, 2026-10-17: \"we will address them later\")", () => {
+    expect(db.feats['mauler-dedication']).toMatchObject({ aonId: 'feat-6368', critSpec: true });
+    expect(db.feats['mauler-dedication'].critSpecWeapons).toEqual({ traits: TWO_HAND_TRAITS, melee: true, minRank: 'expert' });
   });
 
   it('a Strike carries its weapon\'s hands; the Fist none', () => {
@@ -76,55 +77,68 @@ describe('the shipped weapons and record are what this file assumes', () => {
   });
 });
 
-describe('a Mauler — "If you are at least an expert in such a weapon, you gain access to the critical specialization effect"', () => {
+describe('a Mauler, as Wanderer\'s Guide has it — "If you are at least an expert in such a weapon, you gain access to the critical specialization effect"', () => {
   // batch package-m premise: feat-6368 "If you are at least an expert in such a weapon, you gain access to the critical specialization effect with that weapon."
-  it('expert greatsword yes (requires two hands, no two-hand trait) — and the greataxe and maul', () => {
-    const c = mauler('expert');
-    expect(strikeNamed(c, db, 'Greatsword').rank).toBe('expert');
-    expect(shows(c, db, 'Greatsword')).toBe(true);
-    expect(shows(c, db, 'Greataxe')).toBe(true);
-    expect(shows(c, db, 'Maul')).toBe(true);
-  });
-
-  it('expert bastard sword yes (the two-hand trait, one hand to wield)', () => {
+  it('expert bastard sword yes (the two-hand trait)', () => {
     expect(shows(mauler('expert'), db, 'Bastard Sword')).toBe(true);
   });
 
-  it('expert longsword no (one hand, no two-hand trait); expert crossbow no (two hands, but not melee); the Fist no', () => {
+  it('expert greatsword, greataxe and maul NO — they require two hands but carry no two-hand trait (the future-pass gap, chat-todo.md)', () => {
+    const c = mauler('expert');
+    expect(strikeNamed(c, db, 'Greatsword').rank).toBe('expert');
+    expect(shows(c, db, 'Greatsword')).toBe(false);
+    expect(shows(c, db, 'Greataxe')).toBe(false);
+    expect(shows(c, db, 'Maul')).toBe(false);
+  });
+
+  it('expert longsword no; expert crossbow no (not melee); the Fist no', () => {
     const c = mauler('expert');
     expect(shows(c, db, 'Longsword')).toBe(false);
     expect(shows(c, db, 'Crossbow')).toBe(false);
     expect(shows(c, db, 'Fist')).toBe(false);
   });
 
-  it('trained greatsword no (the expert gate); and without the feat, nothing', () => {
+  it('trained bastard sword no (the expert gate); and without the feat, nothing', () => {
     const t = mauler('trained');
-    expect(strikeNamed(t, db, 'Greatsword').rank).toBe('trained');
-    expect(shows(t, db, 'Greatsword')).toBe(false);
+    expect(strikeNamed(t, db, 'Bastard Sword').rank).toBe('trained');
     expect(shows(t, db, 'Bastard Sword')).toBe(false);
-    expect(shows(mauler('expert', { feat: false }), db, 'Greatsword')).toBe(false);
+    expect(shows(mauler('expert', { feat: false }), db, 'Bastard Sword')).toBe(false);
   });
 
   it('with the trust gate on, as the app runs: the grant and its narrowing stay on together', () => {
     const gated = content({ trustGate: true });
     expect((gated.feats['mauler-dedication'] as { critSpecWeapons?: unknown }).critSpecWeapons).toEqual(db.feats['mauler-dedication'].critSpecWeapons);
-    expect(shows(mauler('expert'), gated, 'Greatsword')).toBe(true);
-    expect(shows(mauler('expert'), gated, 'Longsword')).toBe(false);
+    expect(shows(mauler('expert'), gated, 'Bastard Sword')).toBe(true);
+    expect(shows(mauler('expert'), gated, 'Greatsword')).toBe(false);
   });
 
-  it('planted: the old trait-only row misses the greatsword (what shipped before this round)', () => {
-    const old = patchedNarrowing({ traits: ['two-hand', 'two-hand-d4', 'two-hand-d6', 'two-hand-d8', 'two-hand-d10', 'two-hand-d12'], melee: true, minRank: 'expert' });
-    expect(shows(mauler('expert'), old, 'Greatsword')).toBe(false);
-    expect(shows(mauler('expert'), old, 'Bastard Sword')).toBe(true);
+  it('planted: the round-3 row (hands: 2 beside the traits) lights the greatsword again — this pin catches it coming back', () => {
+    const round3 = patchedNarrowing({ traits: TWO_HAND_TRAITS, hands: 2, melee: true, minRank: 'expert' });
+    expect(shows(mauler('expert'), round3, 'Greatsword')).toBe(true);
+    expect(db.feats['mauler-dedication'].critSpecWeapons).not.toHaveProperty('hands');
+  });
+});
+
+/* The ENGINE's `critSpecWeapons.hands` (derive.ts weaponMatches) stays for the future correctness pass, proved
+ * on a SYNTHETIC narrowing (the Mauler record in memory, patched): an alternative beside `traits`, read from the
+ * weapon record's own `hands`, never from a Strike that does not carry it. */
+describe('the engine key `critSpecWeapons.hands` (kept, synthetic narrowing)', () => {
+  const synthetic = patchedNarrowing({ traits: TWO_HAND_TRAITS, hands: 2, melee: true, minRank: 'expert' });
+  it('hands 2 matches the greatsword, greataxe and maul; the trait still matches the bastard sword; melee and expert still hold', () => {
+    const c = mauler('expert');
+    for (const w of ['Greatsword', 'Greataxe', 'Maul', 'Bastard Sword']) expect(shows(c, synthetic, w), w).toBe(true);
+    expect(shows(c, synthetic, 'Longsword')).toBe(false);
+    expect(shows(c, synthetic, 'Crossbow')).toBe(false);
+    expect(shows(mauler('trained'), synthetic, 'Greatsword')).toBe(false);
   });
 
   it('planted: a Strike that does not carry its hands is never "two hands" — the match reads the weapon\'s own field', () => {
     const c = mauler('expert');
-    const gs = strikeNamed(c, db, 'Greatsword');
-    expect(strikeShowsCritSpec(gs, critSpecSources(c, db), c)).toBe(true);
-    expect(strikeShowsCritSpec({ ...gs, hands: undefined }, critSpecSources(c, db), c)).toBe(false);
+    const gs = strikeNamed(c, synthetic, 'Greatsword');
+    expect(strikeShowsCritSpec(gs, critSpecSources(c, synthetic), c)).toBe(true);
+    expect(strikeShowsCritSpec({ ...gs, hands: undefined }, critSpecSources(c, synthetic), c)).toBe(false);
     // and a one-handed-or-more weapon ('1+', a bow) is not two-handed
-    expect(strikeShowsCritSpec({ ...gs, hands: '1+' }, critSpecSources(c, db), c)).toBe(false);
+    expect(strikeShowsCritSpec({ ...gs, hands: '1+' }, critSpecSources(c, synthetic), c)).toBe(false);
   });
 });
 
