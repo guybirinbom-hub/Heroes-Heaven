@@ -14,6 +14,7 @@ import { CORE_BOOKS, storedSources } from '../src/rules/sources';
 import { AddItemsModal } from '../src/sheet/AddItemsModal';
 import { InventoryTab } from '../src/sheet/InventoryTab';
 import { reprintTwinGaps } from '../scripts/lib/reprint-twin-gaps.mjs';
+import { loadTwinPipAllow, printedPips, twinPipGaps } from '../scripts/lib/twin-pips.mjs';
 import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
 
 /*
@@ -189,6 +190,94 @@ describe('a hidden reprint twin stands in when its legacy record is filtered out
       const id = k.slice('items/'.length);
       for (const f of Object.keys(fields)) expect(carries(db.items[id] as unknown as Record<string, unknown>, f), `${k}.${f}`).toBe(false);
     }
+  });
+
+  /*
+   * package I, lane L6b (2026-10-17): the VALUE, not the field. The tests above ask whether a twin CARRIES a field;
+   * they passed while five Major spellhearts tracked one use a day where their page prints two separate
+   * "Frequency once per day" Cast a Spell activations (equipment-5153-4636 and its four siblings), and while two
+   * Gatewalkers spellhearts showed FOUR pips (an old overlay row said {max:3} and the frequency fill added the
+   * page's one more) where equipment-4030-3712 / equipment-4031-3715 print two. The measure is the pips
+   * itemCounters hands out for the record a player is given (the trust gate on), summed, against the Frequency
+   * lines in the twin's own block of its own page (scripts/lib/twin-pips.mjs; scripts/reprint-check.mjs CHECK 11
+   * runs the same measure inside `npm run verify`).
+   */
+  const gatedDb = () => content({ trustGate: true });
+  const countersOf = (rec: unknown) => itemCounters(rec as never, { instanceId: 'pips', itemId: (rec as { id: string }).id, quantity: 1 } as InventoryItem);
+  const pipGaps = (items: Record<string, unknown>, allow?: Map<string, string>) =>
+    twinPipGaps({ twins: gatedDb().hiddenTwins!.keys(), items, countersOf, ...(allow ? { allow } : {}) });
+  const pipRows = (r: ReturnType<typeof pipGaps>) => r.rows.map((x: { key: string; shown: number; printed: number }) => `${x.key} shows ${x.shown}, page prints ${x.printed}`);
+  const TWO_PER_DAY = ['per day 1/1', 'per day 1/1'];
+  // The five Major spellhearts the Impossible Magic page gives two activations, and the legacy half each one is a reprint of.
+  const SPELLHEARTS: Record<string, string> = {
+    'major-flaming-star': 'flaming-star-major', 'major-five-feather-wreath': 'five-feather-wreath-major', 'major-grim-sandglass': 'grim-sandglass-major',
+    'major-perfect-droplet': 'perfect-droplet-major', 'major-trinity-geode': 'trinity-geode-major',
+  };
+
+  // package I (L6b): every offered twin's pips against its own page, the exceptions named, and the measure shown to bite.
+  it.runIf(existsSync(MIRROR))('every twin findHiddenTwins offers shows the use pips its own Archives page prints, with the trust gate on', () => {
+    const items = gatedDb().items as unknown as Record<string, Record<string, unknown>>;
+    const now = pipGaps(items);
+    expect({ rows: pipRows(now), missing: now.missing, unusedAllow: now.unusedAllow }).toEqual({ rows: [], missing: [], unusedAllow: [] });
+    expect(gatedDb().hiddenTwins!.size).toBeGreaterThanOrEqual(57);
+
+    // The five spellhearts read straight: two separate once-per-day activations are two pips, in the legacy half's own shape.
+    for (const [twin, legacy] of Object.entries(SPELLHEARTS)) {
+      expect(countersOf(items[twin]).map((c) => `${c.label} ${c.current}/${c.max}`), twin).toEqual(TWO_PER_DAY);
+      expect(items[twin].counters, `${twin} against ${legacy}`).toEqual(items[legacy].counters);
+      expect(items[twin].frequency, twin).toEqual({ max: 1, per: 'day' });
+    }
+    // The two Gatewalkers spellhearts: the stale {max:3} row is gone, so there are two pips and no fourth.
+    for (const twin of ['major-pickled-demon-tongue', 'major-polished-demon-horn']) {
+      expect(items[twin].frequency, twin).toEqual({ max: 1, per: 'day' });
+      expect(countersOf(items[twin]).map((c) => `${c.label} ${c.current}/${c.max}`), twin).toEqual(TWO_PER_DAY);
+    }
+    // …and the legacy half of the tongue carries the same two (the horn's legacy half is a Future-correctness-pass item).
+    expect(items['major-pickled-demon-tongue'].counters).toEqual(items['pickled-demon-tongue-major'].counters);
+
+    // Mutation proof 1: a spellheart back at one counter reads as exactly that gap.
+    const one = { ...items['major-flaming-star'], counters: (items['major-flaming-star'].counters as unknown[]).slice(0, 1) };
+    expect(pipRows(pipGaps({ ...items, 'major-flaming-star': one }))).toEqual(['items/major-flaming-star shows 1, page prints 2']);
+    // Mutation proof 2: the old {max:3} shape (three pips and the fill's one) reads as four against two.
+    const four = { ...items['major-polished-demon-horn'], frequency: { max: 3, per: 'day' }, counters: [
+      { id: 'freq', label: 'per day', max: 3, per: 'day', resetsOnRest: true }, { id: 'freq2', label: 'per day', max: 1, per: 'day', resetsOnRest: true }] };
+    expect(pipRows(pipGaps({ ...items, 'major-polished-demon-horn': four }))).toEqual(['items/major-polished-demon-horn shows 4, page prints 2']);
+    // Mutation proof 3: a twin with a printed Frequency and no counter at all is caught too (a field-exists test would say "frequency: yes").
+    const none = { ...items['major-grim-sandglass'] };
+    delete none.counters;
+    delete none.frequency;
+    expect(pipRows(pipGaps({ ...items, 'major-grim-sandglass': none }))).toEqual(['items/major-grim-sandglass shows 0, page prints 2']);
+    // The allow file: a reasoned entry excuses exactly its twin; one that matches its page is reported for removal.
+    const planted = { ...items, 'major-flaming-star': one };
+    const allowed = pipGaps(planted, new Map([['items/major-flaming-star', 'equipment-5153-4636 restates the number on purpose'], ['items/greater-flaming-star', 'equipment-5153-4635 already matches']]));
+    expect(allowed.rows).toEqual([]);
+    expect(allowed.excused).toEqual(['items/major-flaming-star']);
+    expect(allowed.unusedAllow).toEqual(['items/greater-flaming-star']);
+    // The real allow file: every entry names its print evidence (an entry with no reason is dropped by the loader and would excuse nothing).
+    const file = JSON.parse(readFileSync('scripts/data/twin-pip-allow.json', 'utf8')) as Record<string, string>;
+    for (const [k, why] of Object.entries(file)) if (k !== '_') expect(why, k).toMatch(/equipment-\d+/);
+    expect([...loadTwinPipAllow().keys()].sort()).toEqual(Object.keys(file).filter((k) => k !== '_').sort());
+  });
+
+  // package I (L6b): the page side of the measure, on text, so a reader bug cannot hide behind the data.
+  it('the printed pips are the Frequency lines of the twin\'s own block, repeats kept, and an unreadable wording is flagged', () => {
+    const page = (own: string, head = '') => ({
+      name: 'Major Star',
+      markdown: `<title level="1">Star</title>\n${head}\n<title level="2" right="Item 3">Star</title>\n<title level="2" right="Item 12">Major Star</title>\n${own}\n`,
+    });
+    const act = (f: string) => `**Activate** <actions string="" /> Cast a Spell **Frequency** ${f};   **Effect** You cast fireball.`;
+    // The same "once per day" printed on two activations is two pips (a family page's dedup would call it one).
+    expect(printedPips(page(`${act('once per day')}\n${act('once per day')}`)).pips).toBe(2);
+    // Different periods are separate activations too, and a count is its max.
+    expect(printedPips(page(`${act('once per hour')}\n${act('three times per day')}`)).pips).toBe(4);
+    // The base item's block (the page head) is every grade's; a SIBLING grade's block is not.
+    const sibling = { name: 'Major Star', markdown: `<title level="1">Star</title>\n<title level="2">Greater Star</title>\n${act('once per day')}\n<title level="2">Major Star</title>\n${act('twice per day')}\n` };
+    expect(printedPips(sibling).pips).toBe(2);
+    expect(printedPips(page(act('once per day'), act('once per round'))).pips).toBe(2);
+    // A wording that starts like a count and does not parse is reported, never counted as zero.
+    const odd = printedPips(page(act('once per fortnight')));
+    expect(odd.pips).toBe(0);
+    expect(odd.unread).toEqual(['once per fortnight']);
   });
 
   // package I (I7b): i7b-healers-gel-base-grade — the level-5 Healer's Gel (equipment-5055-4573) is offered.

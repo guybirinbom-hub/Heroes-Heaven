@@ -36,7 +36,8 @@
  * baseline of the older exceptions, which only shrinks); CHECK 9: a legacy item's "Remastered as" is an
  * item the hide-legacy shop offers (a baseline of the older exceptions, which only shrinks); CHECK 10: a
  * same-price reprint twin carries every rule field its legacy half carries (a baseline of the older
- * exceptions, which only shrinks).
+ * exceptions, which only shrinks); CHECK 11: the use pips a hide-legacy twin shows are the Frequency
+ * activations its own Archives page prints (the VALUE, where CHECK 10 asks only that the field exists).
  *
  * Anything else is a failure: re-run `npm run data`, whose chain applies the rule in
  * scripts/lib/reprint.mjs (the importer's join + the AST writer, and build-map.mjs so the stamp
@@ -54,10 +55,13 @@ import { fileURLToPath } from 'node:url';
 import { loadReprintIndex, repointDoc, shippedTwin, slugify, whyUnpaired } from './lib/reprint.mjs';
 import { movedProseVerdict } from './lib/moved-prose.mjs';
 import { reprintTwinGaps } from './lib/reprint-twin-gaps.mjs';
+import { MIRROR_DIR, twinPipGaps } from './lib/twin-pips.mjs';
 import { bookTitle, foldedBook } from './lib/aon-facets.mjs';
 import { BOOK_SPLITS, CHOOSABLE_SOURCE_MAPS } from '../src/rules/sources';
 import { seedContent } from '../src/rules/seed';
 import { findCombinationFormIds, findDuplicateIds, findHiddenTwins, findUmbrellaIds, shopItems } from '../src/data';
+import { applyTrustGate } from '../src/data/trustGate';
+import { itemCounters } from '../src/rules/itemUses';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CORE = process.env.CORE_JSON || join(ROOT, 'public/core.json');
@@ -663,6 +667,40 @@ const twinGapProblems = [];
   console.log(`${rows.length} same-price reprint twin(s) lack a rule field their legacy half carries; ${Object.keys(baseline).filter((k) => k !== '_').length} in ${BASELINE} (it only shrinks).`);
 }
 
+/*
+ * CHECK 11 — THE PIPS A HIDE-LEGACY TWIN SHOWS ARE THE FREQUENCY ACTIVATIONS ITS OWN PAGE PRINTS
+ * (package I, L6b, 2026-10-17).
+ *
+ * CHECK 10 asks whether a twin CARRIES each rule field its legacy half carries; it passed while five Major
+ * spellhearts tracked one use a day where print gives two separate "Frequency once per day" activations, and
+ * two Gatewalkers spellhearts showed FOUR pips (an old overlay row said {max:3}, the frequency fill added the
+ * page's one more) where print gives two. This is the VALUE check: for every twin findHiddenTwins offers, the
+ * `freq*` counters itemCounters hands out for the record the player is given (the trust gate on), their max
+ * summed, against the `**Frequency**` lines in the twin's own block of its own Archives page
+ * (scripts/lib/twin-pips.mjs). scripts/data/twin-pip-allow.json names a twin whose page restates a number on
+ * purpose, with the print evidence. Skipped, and said so, on a machine with no Archives mirror.
+ */
+const pipProblems = [];
+{
+  if (!existsSync(MIRROR_DIR)) console.log(`CHECK 11 skipped: no Archives mirror at ${MIRROR_DIR}.`);
+  else {
+    const gated = applyTrustGate(core);
+    const db = {};
+    for (const k of new Set([...Object.keys(seedContent), ...Object.keys(gated)])) db[k] = { ...(seedContent[k] ?? {}), ...(gated[k] ?? {}) };
+    db.duplicateIds = findDuplicateIds(db);
+    db.hiddenTwins = findHiddenTwins(db, db.duplicateIds);
+    const { rows, missing, excused, unusedAllow } = twinPipGaps({
+      twins: db.hiddenTwins.keys(),
+      items: db.items,
+      countersOf: (rec) => itemCounters(rec, { instanceId: 'pip-check', itemId: rec.id, quantity: 1 }),
+    });
+    for (const r of rows) pipProblems.push(`${r.key} shows ${r.shown} use pip(s) (${r.shownCounters} counter(s)); ${r.aonId} prints ${r.printed} (${r.printedLines} Frequency line(s))${r.note}`);
+    for (const k of missing) pipProblems.push(`${k}: its Archives page is not in the mirror — nothing to read the pips from`);
+    for (const k of unusedAllow) pipProblems.push(`${k} is in scripts/data/twin-pip-allow.json but its pips match its page — remove the entry`);
+    console.log(`${db.hiddenTwins.size} offered twin(s): ${rows.length} show other pips than their page prints; ${excused.length} excused in scripts/data/twin-pip-allow.json.`);
+  }
+}
+
 if (twinGapProblems.length) {
   console.error('\nreprint-check: FAIL — a same-price reprint twin lacks a rule its legacy half carries (CHECK 10):');
   for (const p of twinGapProblems.slice(0, 40)) console.error('   ' + p);
@@ -670,6 +708,16 @@ if (twinGapProblems.length) {
   console.error('   Repair: overlay rows through scripts/apply-parity-fixes.mjs from the twin\'s OWN page (work/package-i/');
   console.error('   september-a.json is the pattern), or — only where neither printing prints the field — a reasoned entry in');
   console.error('   scripts/data/twin-gap-allow.json.');
+  process.exit(1);
+}
+
+if (pipProblems.length) {
+  console.error('\nreprint-check: FAIL — a hide-legacy twin shows other use pips than its own page prints (CHECK 11):');
+  for (const p of pipProblems.slice(0, 40)) console.error('   ' + p);
+  if (pipProblems.length > 40) console.error(`   … and ${pipProblems.length - 40} more`);
+  console.error('   Repair: a `counters` overlay row (one freq / freq2 / … counter per printed Frequency line, the legacy half\'s shape)');
+  console.error('   and a `frequency` row through scripts/apply-parity-fixes.mjs from the twin\'s OWN page — or, only where the page');
+  console.error('   restates a number on purpose, a reasoned entry in scripts/data/twin-pip-allow.json.');
   process.exit(1);
 }
 

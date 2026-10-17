@@ -75774,9 +75774,10 @@
   "id": "major-pickled-demon-tongue",
   "field": "frequency",
   "value": {
-   "max": 3,
+   "max": 1,
    "per": "day"
-  }
+  },
+  "why": "equipment-4030-3712 (the twin's own page) prints two separate \"Frequency once per day\" Cast a Spell activations in the Major Pickled Demon Tongue block (4th-rank acid grip; 4th-rank acidic burst), each its own once per day; the older {max:3} row made the item show three pips plus the frequency fill's one (four) where print gives two; the legacy printing equipment-2414-2219 (items/pickled-demon-tongue-major) carries {max:1} and two counters; package I lane L6b, gold-set R12 / desk #158"
  },
  {
   "category": "items",
@@ -75792,9 +75793,10 @@
   "id": "major-polished-demon-horn",
   "field": "frequency",
   "value": {
-   "max": 3,
+   "max": 1,
    "per": "day"
-  }
+  },
+  "why": "equipment-4031-3715 (the twin's own page) prints two separate \"Frequency once per day\" Cast a Spell activations in the Major Polished Demon Horn block (outcast's curse; vision of death), each its own once per day; the older {max:3} row made the item show three pips plus the frequency fill's one (four) where print gives two; package I lane L6b, gold-set R12 / desk #158"
  },
  {
   "category": "items",
@@ -196561,5 +196563,159 @@
    "license": "OGL"
   },
   "why": "rules-1893 \"Ingredients\", Kingmaker Companion Guide pg. 109, prints special ingredients (\"special meals sometimes also require special ingredients\"); the record has no aonId of its own (map.json: a sub-block of rules-1893 found by text). Desk #166: it names that book, not the \"Pathfinder Kingmaker\" key that spans two books. Licence carried over unchanged."
+ },
+ {
+  "category": "items",
+  "id": "major-flaming-star",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   },
+   {
+    "id": "freq2",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5153-4636 (the twin's own page) prints two separate \"Frequency once per day\" Cast a Spell activations in the Major Flaming Star block (4th-rank fireball; wall of fire), as the legacy printing equipment-1014-975 (items/flaming-star-major, whose two counters this copies) does; the twin tracked one use a day; package I lane L6b, gold-set R12 / desk #158"
+ },
+ {
+  "category": "items",
+  "id": "major-five-feather-wreath",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   },
+   {
+    "id": "freq2",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5152-4633 (the twin's own page) prints two separate \"Frequency once per day\" Cast a Spell activations in the Major Five-feather Wreath block (4th-rank wall of wind; fly), as the legacy printing equipment-1013-972 (items/five-feather-wreath-major, whose two counters this copies) does; the twin tracked one use a day; package I lane L6b, gold-set R12 / desk #158"
+ },
+ {
+  "category": "items",
+  "id": "major-grim-sandglass",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   },
+   {
+    "id": "freq2",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5154-4639 (the twin's own page) prints two separate \"Frequency once per day\" Cast a Spell activations in the Major Grim Sandglass block (4th-rank harm; whispers of the void), as the legacy printing equipment-1015-978 (items/grim-sandglass-major, whose two counters this copies) does; the twin tracked one use a day; package I lane L6b, gold-set R12 / desk #158"
+ },
+ {
+  "category": "items",
+  "id": "major-perfect-droplet",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   },
+   {
+    "id": "freq2",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5157-4648 (the twin's own page) prints two separate \"Frequency once per day\" Cast a Spell activations in the Major Perfect Droplet block (4th-rank aqueous orb or feet to fins; hydraulic torrent), as the legacy printing equipment-1016-981 (items/perfect-droplet-major, whose two counters this copies) does; the twin tracked one use a day; package I lane L6b, gold-set R12 / desk #158"
+ },
+ {
+  "category": "items",
+  "id": "major-trinity-geode",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   },
+   {
+    "id": "freq2",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5160-4656 (the twin's own page) prints two separate \"Frequency once per day\" Cast a Spell activations in the Major Trinity Geode block (4th-rank one with stone; mountain resilience), as the legacy printing equipment-1017-984 (items/trinity-geode-major, whose two counters this copies) does; the twin tracked one use a day; package I lane L6b, gold-set R12 / desk #158"
+ },
+ {
+  "category": "items",
+  "id": "major-pickled-demon-tongue",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   },
+   {
+    "id": "freq2",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-4030-3712 (the twin's own page) prints two separate \"Frequency once per day\" activations (4th-rank acid grip; 4th-rank acidic burst), as the legacy printing equipment-2414-2219 (items/pickled-demon-tongue-major, whose two counters this copies) does; package I lane L6b, gold-set R12 / desk #158"
+ },
+ {
+  "category": "items",
+  "id": "major-polished-demon-horn",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   },
+   {
+    "id": "freq2",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-4031-3715 (the twin's own page) prints two separate \"Frequency once per day\" activations (outcast's curse; vision of death); the legacy printing equipment-2415-2222 (items/polished-demon-horn-major) prints the same two in its Major block; package I lane L6b, gold-set R12 / desk #158"
  }
 ]

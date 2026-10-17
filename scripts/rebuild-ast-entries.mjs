@@ -23,6 +23,14 @@
  * fallback); reading it as the base meant a stale raw file would overwrite every OTHER page of the bucket in
  * the shipped .gz. The raw file is read only when no .gz exists, and both are written back identical.
  *
+ * THE RELINK RULE (package I lane L8, 2026-10-17). After the aonId resolve, every link goes through
+ * scripts/lib/ast-link-ref.mjs planLink(), the rule scripts/relink-carried-pages.mjs applies to the shipped
+ * trees: a link opens its page's own record (or its reprint), a plain auto-link never opens an `aon-` record
+ * (resolving by carrier alone would light up the Kingmaker army-condition words "lost" and "destroyed"),
+ * and a common word sent to another class's feature is inert. Without it a rebuilt page fails
+ * scripts/ast-link-carrier-check.mjs RULE 3. The library is found beside this file, else under the working
+ * directory's scripts/lib (the tests run scratch copies of this file from another directory, from the repo).
+ *
  * REBUILD_ROOT relocates the repo root and AON_EXPORT the export directory (used by
  * test/package-m-data3-rebuild-ast.test.ts to run this against a scratch fixture, never the tree).
  *
@@ -31,10 +39,14 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { gzipSync, gunzipSync } from 'node:zlib';
 import { join, dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = process.env.REBUILD_ROOT ? resolve(process.env.REBUILD_ROOT) : join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXPORT = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
+const LIB = [join(dirname(fileURLToPath(import.meta.url)), 'lib'), join(process.cwd(), 'scripts/lib')].find((d) => existsSync(join(d, 'ast-link-ref.mjs')));
+if (!LIB) { console.error('rebuild-ast-entries: no scripts/lib/ast-link-ref.mjs beside this file or under the working directory'); process.exit(2); }
+const { loadReprintIndex } = await import(pathToFileURL(join(LIB, 'reprint.mjs')).href);
+const { linkContext, planLink } = await import(pathToFileURL(join(LIB, 'ast-link-ref.mjs')).href);
 const targets = process.argv.slice(2).filter((a) => a.includes('/'));
 if (!targets.length) { console.error('usage: node scripts/rebuild-ast-entries.mjs <bucket>/<slug> …'); process.exit(2); }
 
@@ -86,6 +98,20 @@ for (const f of readdirSync(EXPORT).filter((x) => x.endsWith('.json'))) {
   for (const [id, d] of Object.entries(raw.docs ?? {})) if (!docs.has(id)) docs.set(id, d);
 }
 
+// The relink rule's context (see the header): page names, levels and books, the reprint index, the created set.
+const linkCtx = linkContext({ core, reprints: loadReprintIndex(EXPORT), createdRefs });
+/** Every link of the rebuilt page through planLink, the rule the shipped trees are held to. */
+function relink(bucket, slug, tree) {
+  const page = { bucket, key: slug, tree };
+  const walk = (n) => {
+    if (!n || typeof n !== 'object') return;
+    if (Array.isArray(n)) { n.forEach(walk); return; }
+    if (n.t === 'link' && n.to != null) n.ref = planLink(n, page, linkCtx).ref ?? null;
+    if (n.c) walk(n.c);
+  };
+  walk(tree);
+}
+
 function resolveAst(node) {
   if (!node || typeof node !== 'object') return node;
   const out = Array.isArray(node) ? [] : {};
@@ -116,6 +142,7 @@ for (const t of targets) {
   const tree = resolveAst(doc.ast);
   // PROVENANCE, the importer's stamp: the archive document this page was copied from (see the header).
   tree.aon = String(doc.id ?? rec.aonId);
+  relink(bucket, slug, tree);
   byBucket.get(bucket)[slug] = tree;
   console.log('  ✓', t, '→ rebuilt from', tree.aon, '(' + (doc.name ?? '') + ')');
   done++;

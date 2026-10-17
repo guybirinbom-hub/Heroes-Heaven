@@ -133,10 +133,14 @@ describe('the shipped trees (the repair, scripts/repair-subpage-link-refs.mjs)',
     if (n.c) walk(n.c);
   })(classes.swashbuckler);
 
-  it("the swashbuckler's \"Evasion\" opens classFeatures/evasion, the record whose page it names", () => {
+  // package I L8: I10c — the resolver above still sends class-feature-25 to classFeatures/evasion, never the
+  // Alchemist class; the shipped auto-link is then made inert because classFeatures/evasion is in no class table
+  // and its page (class-feature-25) is the ALCHEMIST's Evasion: an auto-link sending one word to another class's
+  // feature from the swashbuckler's page is plain text (scripts/lib/ast-link-ref.mjs classWordInert).
+  it("the swashbuckler's \"Evasion\" never opens the Alchemist class; since package I it is plain text (the Alchemist's feature is another class's page)", () => {
     const evasion = links.filter((l) => l.to === 'class-feature-25');
     expect(evasion.map((l) => l.text)).toEqual(['Evasion']);
-    expect(evasion[0].ref).toBe('classFeatures:evasion');
+    expect(evasion[0].ref).toBeNull();
     expect(core.classFeatures.evasion.aonId).toBe('class-feature-25');
   });
 

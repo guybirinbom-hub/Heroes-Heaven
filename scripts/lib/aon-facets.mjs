@@ -744,14 +744,27 @@ export const frequencyResets = (per) => !['week', 'month'].includes(per);
  */
 export function printedFrequencies(text) {
   const read = new Map();
+  const { lines, unread } = printedFrequencyLines(text);
+  for (const f of lines) read.set(`${f.max}/${f.per}/${f.every ?? 1}`, f);
+  return { read: [...read.values()], unread };
+}
+
+/**
+ * EVERY printed frequency in `text`, one entry per `**Frequency**` line, repeats kept (package I, L6b,
+ * 2026-10-17). printedFrequencies above collapses a repeat to one pool because a PAGE restates its Greater
+ * and Major siblings' blocks; this is for a caller that has already cut the text down to ONE item's own
+ * activations (scripts/lib/twin-pips.mjs), where "once per day" printed twice is two activations and two pips.
+ */
+export function printedFrequencyLines(text) {
+  const lines = [];
   const unread = [];
   for (const m of String(text ?? '').matchAll(FREQ_LABEL)) {
     const raw = m[1].trim().toLowerCase().replace(/\s+/g, ' ');
     const f = parseFrequency(raw);
-    if (f) read.set(`${f.max}/${f.per}/${f.every ?? 1}`, f);
+    if (f) lines.push(f);
     else if (FREQ_COUNTISH.test(raw)) unread.push(raw);
   }
-  return { read: [...read.values()], unread };
+  return { lines, unread };
 }
 
 /** A printed value as a counter in itemUses.ts `counterDefs` shape. `taken` = how many freq* ids are used. */

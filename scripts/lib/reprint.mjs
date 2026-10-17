@@ -396,9 +396,11 @@ export function loadReprintIndex(exportDir = EXPORT_DIR, { text = false } = {}) 
         level: d?.data?.level ?? d?.level, price: d?.data?.price ?? d?.price,
         // remaster_name / legacy_name are rule A's statement (see the header): without them this index
         // and the importer's, which holds whole documents, would compute two different maps.
+        // `archetype` (with `level` above): scripts/lib/ast-link-ref.mjs carrierRefusal refuses a record whose
+        // "(Suffix)" names an archetype its page is not in (package I lane L8).
         data: {
           legacy_id: d?.data?.legacy_id, remaster_id: d?.data?.remaster_id, class: d?.data?.class,
-          remaster_name: d?.data?.remaster_name, legacy_name: d?.data?.legacy_name,
+          remaster_name: d?.data?.remaster_name, legacy_name: d?.data?.legacy_name, archetype: d?.data?.archetype,
         },
         ...(text ? { text: String(d?.data?.markdown ?? d?.data?.text ?? '') } : {}),
       });
