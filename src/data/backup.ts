@@ -8,6 +8,7 @@
  */
 import { APP_VERSION } from '../version';
 import { notifyReset } from '../../tracker/src/store/persistBus';
+import { LINEAGE_KEY } from './rosterLineage';
 import type { HomebrewContent, HomebrewSource } from './storage';
 
 /** The GM-device mirror's per-key history (src/data/trackerSync.ts's STAMP_PREFIX, one file per
@@ -261,6 +262,11 @@ export function restoreBackup(env: BackupEnvelope): number {
     // cloud has moved on, so the next pull replaces the data the user just restored. Left out, every
     // key meets the cloud as first contact and is UNIONED with it instead.
     if (key.startsWith(TRACKER_SYNC_STAMP_PREFIX)) continue;
+    // …and the roster's lineage record (H1, 2026-10-18): it says which roster the stored one was built
+    // on, for ANOTHER TAB of this browser to merge against. A restore is no edit on top of anything —
+    // left out, another open tab finds no lineage and merges the restore against its own last known
+    // roster: whatever it had not saved yet stays, everything else is the restore (src/data/rosterTabs.ts).
+    if (key === LINEAGE_KEY) continue;
     toWrite.push([key, value]);
   }
 

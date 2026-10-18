@@ -17,7 +17,7 @@ detail panel. Nothing else changes.
 | HH file | What the integration added | To remove |
 |---|---|---|
 | `src/sheet/CampaignsPage.tsx` | `integration/` imports (`TrackerTools` + `CampaignTracker` are `React.lazy`, each in its own `<Suspense fallback={null}>`, so a player who never opens a campaign doesn't download the tracker); `<TrackerTools/>` + the `ti-palette` Customize button in the chrome; the `cmp-body-tracker` class; `<CampaignTracker>` in place of `<CampaignDetail>` on desktop; the two `TRACKER_IN_CAMPAIGN`-gated last-campaign-memory blocks; `CampaignForm`'s `localOnly` fallback; `onOpenOwn`'s second argument `fromTracker` (the own card was tapped in the tracker — `trackerView` — so App can offer "← Tracker" on that sheet) | Delete the imports and restore `<CampaignDetail>` (which already has its own Settings / Delete / share code); drop `localOnly` and its branches; pass `onOpenOwn` straight through again |
-| `src/sheet/CampaignsPage.tsx` (phone) | `useIsMobile` → `isPhone`, which hides every GM tool at ≤720px (Create/Edit, the tracker, the tools row, the Customize button) and renders `<CampaignDetail gmTools={false}>` + `<JoinRow/>` instead. NOT part of the seam — it is HH's own player-facing campaigns page | Keep. Only the `TRACKER_IN_CAMPAIGN && !isPhone` terms go with the integration |
+| `src/sheet/CampaignsPage.tsx` (phone) | `useIsMobile` → `isPhone`, which hides every GM tool at ≤720px (Create/Edit, the tracker, the tools row, the Customize button) and renders `<CampaignDetail gmTools={false}>` + `<JoinRow/>` instead. NOT part of the seam — it is HH's own player-facing campaigns page. EXCEPT `&& !gmSheetOpen` (package H2, 2026-10-18): while the tracker reports a GM sheet covering it (`useTrackerUi().sheetOpen`), a window narrowed below 720px keeps the GM layout, so the sheet and its unsent edits are not swapped out (test/bug-gm-edit-narrow-window.test.tsx) | Keep. Only the `TRACKER_IN_CAMPAIGN && !isPhone` terms and the `useTrackerUi` / `gmSheetOpen` term go with the integration |
 | `src/sheet/gmSync.ts` | `pendingEditStillStands` compares the published sheet with the pending edit through `canonicalJson` (key order ignored — the `sheet` column is jsonb, which hands keys back in its own order), found while closing the seam's never-overwrite door; `gmPushBuiltOn` — the sheet a seam push builds on (his pending edit while it stands on THIS fresh read — the read is still the very publish the edit was built on, by stamp equality AND by the authored hash, and no refusal receipt for it — on his OWN character too, else the published sheet) and WHICH push of his it is (`on`, carried in `gm_base.on`); `gmPushBase` is now its `.sheet`; `rememberGmEdit` records a push on the base it was built on (it used to keep the older of that and the replaced edit's, which made a push built on their newer publish look overtaken); `resolvePendingGmEdit` judges its drop on the edit it HOLDS, so his own character's edit is pruned like any other (it was never dropped at all); the `gmPendingEdit` doc names the seam's own-push test as a reader, and the `baseUpdatedAt` / `pendingEditStillStands` docs say a seam push depends on those rules | Keep `canonicalJson`, the held-edit drop and the recorded base: HH's own overlay rules, with no tracker names in them. `gmPushBuiltOn` and `gmPushBase` have no other caller: delete them with the seam (keep `pendingEditStandsOnFreshRead` — GmEditSheet's Update uses it through `gmUpdateBase`). The docs' mentions of the seam go too |
 | `src/sheet/memberSheets.ts` | comments only: two notes name the tracker seam (its pushes as what used to re-join every channel, and the seam as a reader of the re-pulled map) | Delete those two mentions; nothing in the code knows the tracker |
 | `src/theme/theme-manager.ts` | `resolveAppearanceVars` — the token-resolution half of `applyResolved`, extracted + exported so a scoped appearance (the tracker's own theme) can be built without writing `<html>` | A pure refactor with no tracker names in it; harmless to keep. To fully revert, inline it back into `applyResolved` |
@@ -501,11 +501,33 @@ touching either direction: it is where the never-overwrite rules live.
   synced to the cloud (its 3-second upload debounce), the same window in kind; and the GM's
   own knowing **Overwrite anyway** on the full-sheet Update, shown "changed since your copy", pushes on
   their current sheet, so their app applies it over those changes — his choice, never the app's.
-- **Two tabs of one browser profile**: a GM apply in the background tab inside the other tab's 400 ms
-  persist debounce can win the cross-tab write — a pre-existing class (the applier before F1 had the
-  same window), open since 2026-09-13 ("two tabs both editing within 400 ms, last flush wins") and
-  ruled 2026-10-15: FIX IT (docs/gold-set-answers.md, 2026-10-15 evening) — not built yet; between
-  DEVICES the cloud merge keeps the player's change.
+- **Two tabs of one browser profile** — FIXED 2026-10-18 (package H1; ruled "fix it",
+  docs/gold-set-answers.md, 2026-10-15 evening). The loss: a GM apply in the background tab inside the
+  other tab's 400 ms persist debounce won the cross-tab write, and the player's edit was taken back
+  (open since 2026-09-13 as "two tabs both editing within 400 ms, last flush wins"). Another tab's
+  roster write is no longer adopted whole or written over: it is MERGED into this tab's roster against
+  the roster both grew from (`src/data/rosterTabs.ts` finds the write and its base,
+  `src/data/rosterMerge.ts` merges value by value, list records by their `id` / `instanceId`). What only
+  one tab changed comes from that tab; a value both changed keeps this tab's, except that a GM push this
+  tab applied gives way (App's `gmApplyYields`): an apply not consumed yet gives way WHOLE and the
+  after-commit effect folds the other tab's write in before it consumes anything, so the row is judged
+  again — it waits, and is refused with a receipt once their change publishes, as any push that meets a
+  change of theirs is. The write is folded in on the `storage` event, before each of this tab's own
+  writes (the persist module's reconcile step) and into the write queue at once (`foldIntoPersist`),
+  so no write lands over a change it has not seen, even before React renders the merge. Each write
+  leaves a lineage record (`src/data/rosterLineage.ts`: the roster it replaced), so a write built on an
+  OLDER roster than the one it landed on (each tab writing before hearing of the other) is merged against
+  what it was really built on. `test/bug-two-tabs-roster.test.tsx` runs two whole apps on one
+  localStorage — legs 1–4, with the tabs rendering every frame and with neither rendering — all red on
+  the old code. What remains, narrow: a push already applied AND consumed in one tab when the player's
+  change from the other arrives is merged, not refused — the player's value wins every value both
+  changed, the GM's other values land, and no "not applied" is written (the row is gone); his card shows
+  their sheet. A write with no usable lineage (an app version older than this one, or two writes inside
+  the same few milliseconds whose lineage records interleave) is merged against this tab's last known
+  roster, which reads it as having taken back this tab's last write; an older version's echo of an
+  earlier write of ours is recognised and written over. One value changed in both tabs inside one
+  debounce keeps this tab's (the player overwrote themselves); a character deleted in one tab and changed
+  in the other comes back. Between DEVICES the per-character cloud merge decides, as before.
 - **A hung cloud pull holds every apply**: the player's GM-edit pass gives up on any one network answer
   after 20 s and ends, but a pull that never answers leaves cloud sync's `syncing` flag set until it
   settles, so every APPLY waits for the rest of that session — nothing is lost, the GM sees "waiting".

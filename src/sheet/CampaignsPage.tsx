@@ -9,7 +9,7 @@ import { useBuilderActions, RuleCards } from '../builder/shared';
 import { TRACKER_IN_CAMPAIGN, TEST_CAMPAIGNS_WITHOUT_LOGIN } from '../integration/enabled';
 import { getRememberedCampaign, rememberCampaign } from '../integration/lastCampaignView';
 import { loadLocalDefaults, saveLocalDefaults, deleteLocalDefaults } from '../integration/localCampaignDefaults';
-import { trackerUi } from '../integration/trackerUiStore';
+import { trackerUi, useTrackerUi } from '../integration/trackerUiStore';
 /*
  * LAZY, both of them. The tracker is ~747 KB — a fifth of the main bundle — and every player who
  * never opens a campaign was downloading it to look at their own character sheet. These are the only
@@ -144,8 +144,18 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
    * joining by code and the player's view of a campaign (the party, their teammates' sheets), and
    * every GM tool — create/edit defaults, the tracker, the GM screen, encounters, custom creatures —
    * is replaced by one line saying where to find them. The desktop/web path below is untouched.
+   *
+   * ⚠ …BUT NOT IN THE MIDDLE OF A GM EDIT (package H2, 2026-10-18). This is the live viewport, so a
+   * GM who narrowed a desktop window below phone width while a player's sheet was open over the tracker
+   * had the tracker — and the sheet, and his unsent working copy — swapped out for the phone's campaign
+   * view, without a word. While the tracker reports a sheet covering it (`sheetOpen`, the same report
+   * that hides the title bar), the page keeps the GM layout; the sheet takes the phone layout by itself
+   * (CharacterSheet reads the viewport). When the GM leaves the sheet through its own question, the page
+   * follows the window again. The page-replacing editor (`useMemberViewer`) holds its own answer from
+   * the moment it opened.
    */
-  const isPhone = useIsMobile();
+  const { sheetOpen: gmSheetOpen } = useTrackerUi();
+  const isPhone = useIsMobile() && !gmSheetOpen;
   /*
    * SIGNED OUT, ON DESKTOP → this page IS the local table, and nothing else. No list, no create, no
    * join, no party: every one of those needs the server, which refuses without auth. See LOCAL_TABLE.

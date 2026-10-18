@@ -186,6 +186,18 @@ describe('restoreBackup', () => {
     expect(written).toBe(nonEmpty - 1); // everything except the stamp file
   });
 
+  it('never writes back the roster’s lineage record (H1, 2026-10-18): a restore is not an edit on top of anything', () => {
+    // The record names the roster the stored one was built on, so another open tab of this browser can
+    // merge a write against the right base (src/data/rosterLineage.ts). Restored, it would name a roster
+    // of the EXPORT's moment; left out, the other tab merges the restore against its own last known one.
+    // Deleting `if (key === LINEAGE_KEY) continue;` from restoreBackup:
+    //   AssertionError: expected '{"sig":"2.0000000000000a","on":null}' to be null
+    const env = parseBackup(createBackup());
+    env.data['wanderers-codex:roster-lineage:v1'] = '{"sig":"2.0000000000000a","on":null}';
+    restoreBackup(env);
+    expect(localStorage.getItem('wanderers-codex:roster-lineage:v1')).toBe(null);
+  });
+
   it('replaces roster + homebrew even when restoring a fresh device’s backup', () => {
     const freshFile = createBackup(); // nothing stored yet → empty required keys
     localStorage.setItem('wanderers-codex:roster:v1', '[{"id":"c-old","character":{}}]');

@@ -51,6 +51,16 @@ interface ViewingState {
    * means the account was not known when the card was opened, which is neither yes nor no.
    */
   myId: string | null;
+  /**
+   * Was GM editing offered WHEN THIS SHEET OPENED? (package H2, 2026-10-18)
+   *
+   * ⚠ Decided once, at open, and held for as long as the sheet is open. The host offers it from the
+   * viewport (CampaignsPage: not on a phone), and read on every render, the GM narrowing the window
+   * below phone width turned his open editor into the read-only sheet — unmounting GmEditSheet and his
+   * unsent working copy with it, without a word. A sheet opened on a phone-width window is read-only,
+   * as before; one opened as an editor stays one until the GM leaves it through its own question.
+   */
+  gmEdit: boolean;
 }
 
 /**
@@ -172,7 +182,7 @@ export function useMemberViewer(
     }
     const { sheet, summary } = await fetchMemberRow(campaignId, charId);
     if (sheet && sheet.character) {
-      setViewing({ campaignId, ownerId, charId, sheet, summary, myId: uid });
+      setViewing({ campaignId, ownerId, charId, sheet, summary, myId: uid, gmEdit: !!options?.gmEdit });
       return true;
     }
     return false;
@@ -262,7 +272,7 @@ export function useMemberViewer(
      * sheet then reads without the label — never edits. See knownToBeOther.
      */
     const ownElsewhere = !!viewing.myId && viewing.ownerId === viewing.myId;
-    if (options?.gmEdit && knownToBeOther(viewing.ownerId, viewing.myId)) {
+    if (viewing.gmEdit && knownToBeOther(viewing.ownerId, viewing.myId)) {
       sheetEl = (
         <div className="party-viewer">
           <GmEditSheet

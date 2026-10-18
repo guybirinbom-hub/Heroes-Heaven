@@ -31,6 +31,9 @@ type OnResult = (ok: boolean) => void;
 
 let writer: Writer = () => true;
 let onResult: OnResult = () => {};
+/** Turns the roster about to be written into the roster to write — App folds in another tab's write
+ *  here (src/data/rosterTabs.ts), so a write never lands over a change it has not seen. */
+let reconcile: (roster: any) => any = (r) => r;
 let afterPersist: (roster: any) => void = () => {};
 let timer: ReturnType<typeof setTimeout> | null = null;
 let pending: { roster: Roster } | null = null;
@@ -38,10 +41,11 @@ let pending: { roster: Roster } | null = null;
 const RECENT_WRITES = 8;
 let written: Roster[] = [];
 
-/** Wire up the writer + result callback. Call once at app startup. */
-export function setupPersist(w: Writer, r: OnResult): void {
+/** Wire up the writer + result callback (+ the optional reconcile step). Call once at app startup. */
+export function setupPersist(w: Writer, r: OnResult, rec: (roster: any) => any = (x) => x): void {
   writer = w;
   onResult = r;
+  reconcile = rec;
 }
 
 /** Register a callback invoked after every local persist, with the roster just written. Cloud sync
@@ -52,12 +56,15 @@ export function setOnPersisted(cb: (roster: any) => void): void {
 
 function writePending(): void {
   if (!pending) return;
-  const { roster } = pending;
+  const queued = pending.roster;
   pending = null;
   if (timer !== null) {
     clearTimeout(timer);
     timer = null;
   }
+  // What is written — and remembered, and handed to cloud sync — is the RECONCILED roster: the edit
+  // that was queued, with any other tab's write folded in (App's reconcile; identity when none).
+  const roster = reconcile(queued);
   written.push(roster);
   if (written.length > RECENT_WRITES) written.shift();
   onResult(writer(roster));
@@ -66,8 +73,9 @@ function writePending(): void {
 
 /** The roster OBJECTS recently written to storage, oldest first (empty before the first write).
  *
- *  The cross-tab guard compares an incoming `storage` event against these to recognise an echo of our
- *  own work: another tab that adopts one of our writes re-persists that identical value a debounce
+ *  The cross-tab guard compares another tab's write against these to recognise an echo of our own work
+ *  (src/data/rosterTabs.ts, for a write that carries no lineage — an OLDER app version; this one never
+ *  echoes): such a tab adopts one of our writes and re-persists that identical value a debounce
  *  later, and by then this tab's React state — and its own last write — can already be newer. Only
  *  the LAST write was remembered at first, and that is not enough: a backgrounded tab's timers are
  *  throttled to a second or more, so its echo routinely arrives after we have written again, and
@@ -89,6 +97,23 @@ export function schedulePersist(roster: Roster): void {
   pending = { roster };
   if (timer !== null) clearTimeout(timer);
   timer = setTimeout(writePending, PERSIST_DEBOUNCE_MS);
+}
+
+/**
+ * Fold a change that reaches this tab BETWEEN RENDERS into the next write, at once: the queued roster
+ * is rewritten in place (its timer kept), or — nothing queued — `fn(current)` is queued.
+ *
+ * Another tab's write is folded into React state by an updater that runs at the next render (H1,
+ * 2026-10-18; src/data/rosterTabs.ts). Two things can happen before that render: the debounce timer (or
+ * a flush on close, or cloud sync's flush) writes the roster queued at the LAST commit — without the
+ * other tab's change, over it, under a lineage record claiming it was built on it; or, nothing being
+ * queued, the tab closes with the merge only in React's queue while the disk holds the other tab's
+ * roster without this tab's change. So the fold goes into the write queue the moment it is handed to
+ * React. A write equal to what the key holds is skipped (storage.ts saveRoster).
+ */
+export function foldIntoPersist(fn: (roster: any) => any, current: Roster): void {
+  if (pending) pending = { roster: fn(pending.roster) };
+  else schedulePersist(fn(current));
 }
 
 /** Persist `roster` immediately (structural changes that must not be lost on a crash). Supersedes
@@ -113,8 +138,9 @@ export function cancelPersist(): void {
   }
 }
 
-/** True when a write is queued but not yet flushed. The cross-tab guard reads it: while one of our
- *  own edits is still inside the debounce, THIS tab holds the newest state and must not adopt. */
+/** True when a write is queued but not yet flushed. (The cross-tab guard used to read it and ignore
+ *  another tab's write while one of ours was queued — which then wrote over that tab's change. Another
+ *  tab's write is merged now, queued edit or not: src/data/rosterTabs.ts, H1 2026-10-18.) */
 export function hasPendingPersist(): boolean {
   return pending !== null;
 }

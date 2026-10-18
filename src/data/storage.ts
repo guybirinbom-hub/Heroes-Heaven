@@ -22,6 +22,7 @@ import type {
 } from '../rules/types';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 import { authoredKey, hash53 } from './authored';
+import { knownRoster, noteRosterKnown, rosterSig, writeLineage } from './rosterLineage';
 import { loadSettingsUpdated, markLocalDataChanged, markCampaignHbDirty, saveSettingsUpdated, loadCustomizationUpdated, saveCustomizationUpdated } from './syncBus';
 import { notifyReset } from '../../tracker/src/store/persistBus';
 import type { CampaignMembership } from './campaigns';
@@ -83,8 +84,18 @@ export function loadedAuthoredAs(hash: string): string | undefined {
 }
 
 export function loadRoster(): SavedChar[] {
+  let raw: string | null;
   try {
-    const raw = localStorage.getItem(KEY);
+    raw = localStorage.getItem(KEY);
+  } catch {
+    return [];
+  }
+  return parseRoster(raw);
+}
+
+/** The roster a raw stored value holds — loadRoster's parse, for a value already read. */
+export function parseRoster(raw: string | null): SavedChar[] {
+  try {
     const parsed = raw ? JSON.parse(raw) : null;
     if (!Array.isArray(parsed)) return [];
     // Drop structurally-broken entries (interrupted write / external edit) and normalize the
@@ -107,10 +118,29 @@ export function loadRoster(): SavedChar[] {
   }
 }
 
-/** Result of a save attempt: `true` on success, `false` when storage rejected it (e.g. quota). */
+/**
+ * Result of a save attempt: `true` on success, `false` when storage rejected it (e.g. quota).
+ *
+ * Every roster write this tab makes goes through here (the persist debounce, and cloud sync's adopt via
+ * writeCloudBundle), so this is where the two-tabs bookkeeping lives (src/data/rosterLineage.ts): the
+ * value written becomes what this tab KNOWS the key holds, and a lineage record says what it replaced.
+ * The caller must already have folded in whatever the key held (rosterTabs.takeForeignRoster, or cloud
+ * sync's read of the current bundle) — so that value is what this write was built on.
+ *
+ * A value the key already holds is not written again: no `storage` event goes out for it, so another
+ * tab never sees an "echo" of a roster it wrote itself.
+ */
 export function saveRoster(roster: SavedChar[]): boolean {
   try {
-    localStorage.setItem(KEY, JSON.stringify(roster));
+    const raw = JSON.stringify(roster);
+    const cur = localStorage.getItem(KEY);
+    const k = knownRoster();
+    const sig = rosterSig(raw);
+    if (cur !== raw) {
+      writeLineage(sig, cur === null ? null : cur === k.raw ? k.sig : rosterSig(cur));
+      localStorage.setItem(KEY, raw);
+    }
+    noteRosterKnown(raw, roster, sig);
     return true;
   } catch {
     // Storage unavailable or over quota — the roster won't persist. Surfaced to the user by the

@@ -191,16 +191,22 @@ describe('a storage event from another tab never undoes a local edit', () => {
   }, APP_TIMEOUT);
 
   // bug 2026-09-13: edits overwritten (D1)
-  it('(b2) keeps OUR queued edit rather than adopting over it, even from a genuinely different roster', async () => {
-    // While one of our own edits is still inside the debounce, THIS tab holds the newest state: the
-    // other tab was necessarily writing a version that predates it. Adopting would rewind the edit the
-    // player is looking at. (The other tab's own work is then overwritten when our write lands — the
-    // two-tabs-both-editing case, which is a decision for the owner, not something this guard settles.)
+  it('(b2) keeps OUR queued edit — and the other tab’s work too — when a genuinely different roster arrives', async () => {
+    // While one of our own edits is still inside the debounce, adopting the other tab's roster would
+    // rewind the edit the player is looking at. This guard used to keep ours and then write it over the
+    // other tab's work — the two-tabs-both-editing case. The owner ruled "fix it" (2026-10-15), and
+    // since H1 (2026-10-18) the two are MERGED: our potion and their rename both stay
+    // (test/bug-two-tabs-roster.test.tsx is the two-app version).
     const app = await openInventory([saved('c1', 'Echo')]);
     act(() => flushPersist());
     app.plusOnce(); // queued, 400 ms
     app.otherTabWrote(JSON.stringify([saved('c1', 'Tab Two')]));
     expect(app.qty(), 'an edit still inside our own debounce was rewound by another tab').toBe('4');
+    expect(app.host.textContent, 'the other tab’s rename was dropped').toContain('Tab Two');
+    act(() => flushPersist());
+    const stored = JSON.parse(localStorage.getItem(ROSTER_KEY)!) as SavedChar[];
+    expect(stored[0].character.name, 'on disk: their rename').toBe('Tab Two');
+    expect(stored[0].play?.inventory?.find((i) => i.itemId === 'healing-potion-minor')?.quantity, 'on disk: our potion').toBe(4);
   }, APP_TIMEOUT);
 
   // bug 2026-09-13: edits overwritten (D1)

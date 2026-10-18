@@ -31,7 +31,9 @@ import { getPrefs, subscribePrefs } from './data/prefs';
 import { useIsMobile, useShowUndoButtons } from './sheet/useIsMobile';
 import { gmEditVerdict, boundGmBase, editsToApply, sameInstant, type GmChainRecord } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
-import { setupPersist, schedulePersist, persistNow, flushPersist, hasPendingPersist, recentPersists } from './data/persist';
+import { setupPersist, schedulePersist, persistNow, flushPersist, foldIntoPersist } from './data/persist';
+import { loadRosterKnown, takeForeignRoster } from './data/rosterTabs';
+import { mergeRosterEdits, type Yield } from './data/rosterMerge';
 import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
 import { useUndoableState } from './useUndoableState';
@@ -104,7 +106,28 @@ type GmMarked = SavedChar & { [GM_APPLIED]?: string; [GM_JUDGED]?: string };
 function initialRoster(): SavedChar[] {
   // A fresh install starts with an EMPTY roster — no demo character is injected. The RosterScreen
   // renders a friendly empty state that guides the user to create their first character.
-  return loadRoster();
+  // Read as this tab's KNOWN roster: another tab's later write is merged against it (rosterTabs.ts).
+  return loadRosterKnown();
+}
+
+/**
+ * H1 (2026-10-18): WHO GIVES WAY when another tab's write and this tab's entry both changed one
+ * character (src/data/rosterMerge.ts — otherwise this tab's value keeps a conflict). A GM push this tab
+ * applied is never the player's own change, so it never wins against one:
+ *  - an apply not consumed yet (its record still waits for the commit that holds it) gives way WHOLE —
+ *    the after-commit effect then finds the entry replaced and the row is judged again: it waits, and is
+ *    refused with a receipt once their change publishes, as any push that meets a change of theirs is;
+ *  - an apply already consumed, made after the roster the other tab built on (the mark is on this entry
+ *    and not on the base's), loses every value both changed — the other tab's write cannot have seen it.
+ * `applied` is the record map keyed by mark (gmAppliedRef).
+ */
+function gmApplyYields(applied: Map<string, unknown>): (local: SavedChar, base: SavedChar | undefined) => Yield {
+  return (local, base) => {
+    const mark = (local as GmMarked)[GM_APPLIED];
+    if (!mark) return null;
+    if (applied.has(mark)) return 'whole';
+    return (base as GmMarked | undefined)?.[GM_APPLIED] === mark ? null : 'conflicts';
+  };
 }
 
 export default function App() {
@@ -135,7 +158,7 @@ export default function App() {
   const isPhone = useIsMobile();
   const [activeId, setActiveId] = useState<string>(() => {
     // Reopen the last-active character if it still exists, else the first (or '' on an empty roster).
-    const r = initialRoster();
+    const r = loadRoster();
     const saved = loadActiveId();
     return r.some((c) => c.id === saved) ? (saved as string) : (r[0]?.id ?? '');
   });
@@ -399,13 +422,20 @@ export default function App() {
   // after a short idle gap, instead of JSON-stringifying the whole roster (portraits included) on
   // every event — the Android input-lag fix. Teardown handlers below flush any pending write so
   // nothing is lost when the app closes or is backgrounded.
+  //
+  // H1 (2026-10-18): every write first folds in whatever ANOTHER TAB of this browser wrote that this tab
+  // has not seen yet (`reconcileWrite`, below), so a write never lands over a change it never saw.
   useEffect(() => {
-    setupPersist(saveRoster, (ok) => {
-      setSaveFailed(!ok);
-      // Warn well before the browser's hard cap (~5MB web / more on the installed app).
-      const limit = (isTauri ? 9 : 4.5) * 1024 * 1024;
-      if (ok && !storageDismissed.current) setStorageWarn(localStorageBytes() > limit);
-    });
+    setupPersist(
+      saveRoster,
+      (ok) => {
+        setSaveFailed(!ok);
+        // Warn well before the browser's hard cap (~5MB web / more on the installed app).
+        const limit = (isTauri ? 9 : 4.5) * 1024 * 1024;
+        if (ok && !storageDismissed.current) setStorageWarn(localStorageBytes() > limit);
+      },
+      (queued: SavedChar[]) => reconcileWriteRef.current(queued),
+    );
   }, []);
   // Web build: once signed in, mirror the roster to/from the cloud — pull+merge on login, push on
   // change/background. `disabled` (desktop) never starts it. Applying the merged roster replaces
@@ -888,6 +918,17 @@ export default function App() {
   useLayoutEffect(() => {
     const done = gmAppliedRef.current;
     if (!done.size) return;
+    /* H1 (2026-10-18): ANOTHER TAB WROTE FIRST. The roster key holds a write of another tab of this
+     * browser that this tab has not folded in (its `storage` event has not been handled yet — a busy
+     * tab hears late): the player's change, possibly, made where this apply could not see it. Consuming
+     * now would write the apply over it. So it is folded in first and nothing is consumed in this
+     * commit: an apply it touched gives way whole (`gmApplyYields`), and the commit that holds the fold
+     * finds that entry replaced — the row is judged again (test/bug-two-tabs-roster.test.tsx leg 2). */
+    const foreign = takeForeignRoster();
+    if (foreign?.kind === 'write') {
+      foldForeignRef.current(foreign);
+      return;
+    }
     const committed = new Map(roster.map((c) => [c.id, c]));
     /* LANDED = the committed entry IS the apply, or was COMPOSED UPON it — it carries the apply's
      * GM_APPLIED mark (see GM_APPLIED at the top of this file). F1 (2026-10-09, rounds 6–7): a player
@@ -1048,39 +1089,71 @@ export default function App() {
     };
   }, [undo, redo, setRoster]);
 
-  // Cross-tab guard: the whole roster is one localStorage key written on every change, so a SECOND
-  // context (another browser tab, or a dev tab open alongside the Tauri webview) would silently
-  // overwrite this tab's characters — whoever saves last wins, and the other tab never notices its
-  // work vanished. The `storage` event fires only in OTHER tabs when a key changes, so when the
-  // roster key is written elsewhere we adopt that value (reloading it into our timeline) instead of
-  // continuing to overwrite it. Three things are NOT another tab's work and must never be adopted:
-  // our current serialization, an echo of any RECENT write of ours, and anything at all while an edit
-  // of ours is still queued — adopting any of them hands the player back a version they moved past.
-  // Desktop/web-relevant; the lone Tauri webview rarely hits it, so this stays lightweight.
+  /*
+   * TWO TABS OF ONE BROWSER PROFILE (H1, 2026-10-18; ruled "fix it" 2026-10-15). The whole roster is
+   * one localStorage key, so a SECOND context (another browser tab, or a dev tab beside the Tauri
+   * webview) writes the same key. This guard used to CHOOSE between the two copies — adopt the other
+   * tab's roster, or ignore it while an edit of ours was still queued and write over it — and either
+   * choice lost one tab's change: a GM push applied in the background tab inside the 400 ms debounce of
+   * the player's own edit in this one took that edit back (test/bug-two-tabs-roster.test.tsx).
+   *
+   * Now the other tab's write is MERGED into ours against the roster both grew from
+   * (src/data/rosterTabs.ts finds it, src/data/rosterMerge.ts merges it): whatever only one side
+   * changed comes from that side; a value both changed keeps OUR value, except that a GM push this tab
+   * applied gives way to the other tab's change (`gmApplyYields`). It is folded in wherever this tab
+   * meets it: here on the `storage` event, before each of our own writes (`reconcileWrite`), and before
+   * an apply is consumed (the after-commit effect above). Taking it is a DERIVED refresh for the
+   * characters it carries as they are — those are not stamped "updated now" here (the writer stamped
+   * them); a character that also holds an edit of ours keeps its edit and is stamped with it.
+   *
+   * The key is read, never `e.newValue`: an event can arrive late or out of order, and only what the key
+   * holds NOW is the other tab's latest. An old app version's echo of an earlier write of ours is put
+   * right by writing ours again (`echo`, rosterTabs.ts).
+   */
+  const foldForeign = (f: { base: SavedChar[]; incoming: SavedChar[] }) => {
+    const yieldTo = gmApplyYields(gmAppliedRef.current);
+    const theirs = new Set(f.incoming);
+    const fold = (r: SavedChar[]) => {
+      const next = mergeRosterEdits(f.base, r, f.incoming, { yieldTo });
+      if (next !== r) noteDerivedRefresh(next.filter((c) => theirs.has(c)));
+      return next;
+    };
+    // The write is KNOWN from here on (rosterTabs), so the next write must carry it too — the debounce
+    // can fire, or the tab close, before React renders the updater below (persist.ts foldIntoPersist).
+    foldIntoPersist(fold, rosterRef.current);
+    setRoster(fold);
+  };
+  const foldForeignRef = useRef(foldForeign);
+  foldForeignRef.current = foldForeign;
+  /** The persist module's reconcile step (setupPersist above): the roster about to be written, with
+   *  any unseen write of another tab folded in — and the screen told, rebasing anything newer on it. */
+  const reconcileWrite = (queued: SavedChar[]): SavedChar[] => {
+    const f = takeForeignRoster();
+    if (!f || f.kind === 'echo') return queued; // an old version's echo: our roster goes back over it
+    const yieldTo = gmApplyYields(gmAppliedRef.current);
+    const out = mergeRosterEdits(f.base, queued, f.incoming, { yieldTo });
+    if (out === queued) return queued;
+    const theirs = new Set(f.incoming);
+    noteDerivedRefresh(out.filter((c) => theirs.has(c)));
+    setRoster((cur) => (cur === queued ? out : mergeRosterEdits(queued, cur, out, { yieldTo })));
+    return out;
+  };
+  const reconcileWriteRef = useRef(reconcileWrite);
+  reconcileWriteRef.current = reconcileWrite;
   useEffect(() => {
     const onStorage = (e: StorageEvent) => {
-      if (e.key !== ROSTER_KEY || e.newValue === null) return;
-      if (e.newValue === JSON.stringify(roster)) return; // our own write echoed back — ignore
-      // An edit of ours is still inside the persist debounce, so THIS tab holds the newest state and
-      // adopting would undo it: t=0 we edit, t=400 we write v2, the other tab adopts v2, t=500 we
-      // edit again (v3, pending), t=800 the other tab re-persists v2. Keep v3 AND its pending write —
-      // it lands a moment later and the other tab adopts it in turn.
-      if (hasPendingPersist()) return;
-      // An echo of an OLDER write of ours is not another tab's work either: the `roster` above is this
-      // effect's closure, and the other tab's echo of what it adopted from us can arrive several of our
-      // own writes later (a backgrounded tab's debounce timer is throttled to a second or more), so it
-      // is checked against every recent write, newest first, not just the last one.
-      if ([...recentPersists()].reverse().some((r) => e.newValue === JSON.stringify(r))) return;
-      // Another tab wrote the roster. Taking their version is a DERIVED refresh, NOT an edit — tell
-      // cloud sync so the echo isn't stamped "updated now" and pushed as the newest copy of every
-      // character (the two-device loss described on noteDerivedRefresh).
-      const adopted = loadRoster();
-      noteDerivedRefresh(adopted);
-      setRoster(adopted);
+      // `null` is another tab's storage.clear(): read the key, like any other change.
+      if (e.key !== ROSTER_KEY && e.key !== null) return;
+      const f = takeForeignRoster();
+      if (!f) return;
+      // An echo: our roster goes back on disk — the write already queued if there is one (it may carry a
+      // fold React has not rendered yet), else the committed roster.
+      if (f.kind === 'echo') foldIntoPersist((r) => r, rosterRef.current);
+      else foldForeignRef.current(f);
     };
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);
-  }, [roster, setRoster]);
+  }, []);
 
   const active = roster.find((c) => c.id === activeId) ?? roster[0];
   zoomTargetRef.current = active ? { id: active.id, zoom: active.character.customization?.zoom } : null;

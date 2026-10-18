@@ -1,0 +1,188 @@
+/*
+ * THREE-WAY MERGE OF TWO ROSTERS THAT GREW FROM ONE (package H1, 2026-10-18).
+ *
+ * Two tabs of one browser profile share ONE roster key in localStorage. Each tab holds its own copy in
+ * React state and writes the whole roster 400 ms after an edit (src/data/persist.ts). When one tab's
+ * write reaches the other, the other may be holding an edit of its own that is not written yet — the
+ * player's potion, or the GM's push it has just applied. Taking either roster whole loses the other
+ * one's change: that was the "last flush wins" loss (open since 2026-09-13, ruled "fix it" 2026-10-15).
+ *
+ * So the two are MERGED against the roster both grew from (`base`): whatever only one side changed is
+ * taken from that side, at every depth; a value BOTH changed, differently, is a conflict, and the LOCAL
+ * side keeps it unless `yieldTo` says otherwise. Arrays of records that carry their own key (`id`, or an
+ * inventory entry's `instanceId`) merge record by record — one tab drinking a potion and the other
+ * buying a rope both stay — and any other array is one value.
+ *
+ * Nothing here knows about tabs, storage or React: src/data/rosterTabs.ts finds the base and the other
+ * tab's roster, and App decides who yields. Pure, so test/roster-merge.test.ts can pin every case.
+ *
+ * JSON semantics throughout (both rosters went through JSON on the way here): a key whose value is
+ * `undefined` is the same as no key, and symbol-keyed marks (App's GM_APPLIED) never count as content
+ * and are never copied onto a merged object — a merged entry is new content nobody's mark answers for.
+ */
+
+/** Who gives way when both sides changed one roster entry. `whole`: take the incoming entry as it is.
+ *  `conflicts`: merge, but a value both sides changed takes the incoming one. Null: the local side keeps
+ *  its conflicts (the default). */
+export type Yield = 'whole' | 'conflicts' | null;
+
+export interface RosterMergeOptions<T> {
+  /** Asked only for an entry BOTH sides changed: `local` is this tab's entry, `base` the one both grew
+   *  from (undefined when the entry is new on both sides). */
+  yieldTo?: (local: T, base: T | undefined) => Yield;
+}
+
+type Rec = Record<string, unknown>;
+const isRec = (v: unknown): v is Rec => !!v && typeof v === 'object' && !Array.isArray(v);
+
+/** Deep equality as JSON sees it: an `undefined` property is absent, an `undefined` array slot is null. */
+export function jsonEqual(a: unknown, b: unknown): boolean {
+  if (a === b) return true;
+  if (Array.isArray(a) || Array.isArray(b)) {
+    if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) if (!jsonEqual(a[i] ?? null, b[i] ?? null)) return false;
+    return true;
+  }
+  if (isRec(a) && isRec(b)) {
+    const ka = Object.keys(a).filter((k) => a[k] !== undefined);
+    const kb = Object.keys(b).filter((k) => b[k] !== undefined);
+    if (ka.length !== kb.length) return false;
+    for (const k of ka) if (!(k in b) || !jsonEqual(a[k], b[k])) return false;
+    return true;
+  }
+  // Two numbers, strings, booleans or nulls that are not ===; or an undefined against a value.
+  return false;
+}
+
+/** The key an array's records merge by: `id` or `instanceId`, when EVERY record in all three versions
+ *  is an object carrying it as a string and no version holds it twice. Null otherwise (one value). */
+function arrayKey(...arrays: unknown[][]): 'id' | 'instanceId' | null {
+  for (const key of ['id', 'instanceId'] as const) {
+    let ok = true;
+    for (const arr of arrays) {
+      const seen = new Set<string>();
+      for (const el of arr) {
+        const k = isRec(el) ? el[key] : undefined;
+        if (typeof k !== 'string' || seen.has(k)) {
+          ok = false;
+          break;
+        }
+        seen.add(k);
+      }
+      if (!ok) break;
+    }
+    if (ok) return key;
+  }
+  return null;
+}
+
+/**
+ * The order of a merged list: the side that REORDERED (its shared keys no longer in the base's order)
+ * leads, else the incoming side; every kept key the leading side lacks goes in before the key that
+ * follows it on its own side — at the end when nothing placed follows it there.
+ */
+function mergeOrder(baseKeys: string[], localKeys: string[], incomingKeys: string[], kept: Set<string>): string[] {
+  const inOrder = (side: string[]) => {
+    const shared = side.filter((k) => baseKeys.includes(k));
+    const baseShared = baseKeys.filter((k) => side.includes(k));
+    return shared.every((k, i) => k === baseShared[i]);
+  };
+  const [lead, other] = !inOrder(localKeys) ? [localKeys, incomingKeys] : [incomingKeys, localKeys];
+  const out = lead.filter((k) => kept.has(k));
+  const placed = new Set(out);
+  // Last to first, so a run of new keys keeps its own order (each goes in before the one after it).
+  for (let i = other.length - 1; i >= 0; i--) {
+    const k = other[i];
+    if (!kept.has(k) || placed.has(k)) continue;
+    let at = out.length;
+    for (let j = i + 1; j < other.length; j++) {
+      const idx = out.indexOf(other[j]);
+      if (idx >= 0) {
+        at = idx;
+        break;
+      }
+    }
+    out.splice(at, 0, k);
+    placed.add(k);
+  }
+  // Anything kept that neither list placed (cannot happen — kept ⊆ local ∪ incoming) is appended.
+  for (const k of kept) if (!placed.has(k)) out.push(k);
+  return out;
+}
+
+/** Merge one value three ways. `incomingWins`: a conflict takes the incoming side. */
+export function mergeValue(base: unknown, local: unknown, incoming: unknown, incomingWins = false): unknown {
+  if (local === incoming || jsonEqual(local, incoming)) return local;
+  if (jsonEqual(local, base)) return incoming;
+  if (jsonEqual(incoming, base)) return local;
+  // Both sides changed it, differently.
+  if (isRec(local) && isRec(incoming)) {
+    const b = isRec(base) ? base : {};
+    const out: Rec = {};
+    for (const k of new Set([...Object.keys(local), ...Object.keys(incoming)])) {
+      const v = mergeValue(b[k], local[k], incoming[k], incomingWins);
+      if (v !== undefined) out[k] = v;
+    }
+    return out;
+  }
+  if (Array.isArray(local) && Array.isArray(incoming)) {
+    const b = Array.isArray(base) ? base : [];
+    const key = arrayKey(b, local, incoming);
+    if (key) {
+      const byKey = (arr: unknown[]) => new Map(arr.map((el) => [(el as Rec)[key] as string, el]));
+      const bm = byKey(b);
+      const lm = byKey(local);
+      const im = byKey(incoming);
+      const merged = new Map<string, unknown>();
+      for (const k of new Set([...lm.keys(), ...im.keys(), ...bm.keys()])) {
+        const v = mergeValue(bm.get(k), lm.get(k), im.get(k), incomingWins);
+        if (v !== undefined) merged.set(k, v);
+      }
+      const order = mergeOrder([...bm.keys()], [...lm.keys()], [...im.keys()], new Set(merged.keys()));
+      return order.map((k) => merged.get(k));
+    }
+  }
+  return incomingWins ? incoming : local;
+}
+
+/**
+ * Merge `incoming` (another tab's roster) into `local` (this tab's), both grown from `base`, by roster
+ * id. An entry only one side changed comes from that side, whole and as the same object. An entry one
+ * side DELETED and the other changed is kept — the change is newer than what was deleted, and deleting
+ * again costs a click where the change could not be got back. An entry both sides changed is merged
+ * value by value (see `mergeValue`), unless `yieldTo` hands it to the incoming side.
+ *
+ * Returns `local` itself when nothing changed, so a no-op merge makes no undo step and no write.
+ */
+export function mergeRosterEdits<T extends { id: string }>(base: T[], local: T[], incoming: T[], opts: RosterMergeOptions<T> = {}): T[] {
+  const bm = new Map(base.map((c) => [c.id, c]));
+  const lm = new Map(local.map((c) => [c.id, c]));
+  const im = new Map(incoming.map((c) => [c.id, c]));
+  const out = new Map<string, T>();
+  for (const id of new Set([...lm.keys(), ...im.keys()])) {
+    const b = bm.get(id);
+    const l = lm.get(id);
+    const i = im.get(id);
+    let v: T | undefined;
+    if (l === i || jsonEqual(l, i)) v = l; // the same on both sides: ours, as the same object
+    else if (jsonEqual(l, b)) v = i; // only the other tab changed it (or deleted it)
+    else if (jsonEqual(i, b)) v = l; // only this tab changed it (or deleted it)
+    else if (!l) v = i; // we deleted it, they changed it: keep their change
+    else if (!i) v = l; // they deleted it, we changed it: keep ours
+    else {
+      const y = opts.yieldTo?.(l, b) ?? null;
+      v = y === 'whole' ? i : (mergeValue(b, l, i, y === 'conflicts') as T);
+      if (v !== l && jsonEqual(v, l)) v = l;
+      else if (v !== i && jsonEqual(v, i)) v = i;
+    }
+    if (v) out.set(id, v);
+  }
+  const order = mergeOrder(
+    base.map((c) => c.id),
+    local.map((c) => c.id),
+    incoming.map((c) => c.id),
+    new Set(out.keys()),
+  );
+  const next = order.map((id) => out.get(id)!);
+  return next.length === local.length && next.every((c, n) => c === local[n]) ? local : next;
+}
