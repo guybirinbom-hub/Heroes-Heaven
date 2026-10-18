@@ -792,7 +792,10 @@ const BESIDE_IN_SWEEP: string[] = [
   'Sheltering Hand chip=1 printed=12',
 ];
 /** Measured 2026-10-06 (fixer round 2): action pages whose title prints no glyph. */
-const NO_GLYPH_PAGES = 71;
+// package I: Quick Recovery (2026-10-18): 71 -> 70. feats/quick-recovery moved off feat-3923 "Quick Recovery
+// (Kingdom)" (no glyph in its title) onto its own page, feat-7004 "Quick Recovery (Yaoguai)", whose title prints
+// "Free Action" — the stored cost (free) — so the record now has a printed glyph and left the no-glyph count.
+const NO_GLYPH_PAGES = 70;
 /** Measured 2026-10-06 (fixer round 2): stored action cost ≠ the page's printed title glyph. */
 const PRINT_DIFFERS: string[] = [
   'actions:pick-a-lock printed=Two Actions stored=none',

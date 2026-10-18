@@ -725,13 +725,17 @@ hardcover and 2 in the *Season of Ghosts* compilation, each over its Adventure P
 (`findHiddenTwins`, src/data/index.ts). Since package I (2026-10-17) each such twin carries its legacy half's
 rules — copied only where its own page prints the same mechanic, written from the reprint where the print
 changed (this rule, R12) — and reprint-check CHECK 10 fails a same-price twin that lacks one. That does not
-cover every link: under "Hide legacy data", 9 legacy items link to a record the shop never offers, each to a
+cover every link: under "Hide legacy data", 8 legacy items link to a record the shop never offers, each to a
 family page whose grades ship as their own records (Universal Solvent → Absolute Solvent ×5, Awakened … Shot →
-Awakened Metal Shot ×3, and Lantern Implement → Lantern, a wrong link that is parked). A tenth was a real loss
-to the player: Healer's Gel (Lesser) linked to `items/healers-gel`, the level-5 *Impossible Magic* Healer's Gel,
+Awakened Metal Shot ×3). A ninth was a wrong link, now fixed: Lantern Implement linked to Lantern, the Player
+Core light source that only shared its name. Since the package I rebuild (2026-10-18) the record sits on its
+own page, *Dark Archive (Remastered)* implement-20, as Mirror Implement does on implement-21 and Master Spotter
+(Investigator) on its *Player Core 2* page (feat-6209), so each opens its own printing and none links to a
+record that merely shares its name. A tenth was a real loss to the player: Healer's Gel (Lesser) linked to
+`items/healers-gel`, the level-5 *Impossible Magic* Healer's Gel,
 which the app held only as an unpriced family summary (hidden by `findUmbrellaIds`); package I pinned that
 record to its grade (equipment-5055-4573, 25 gp) and gave it the lesser gel's rules, so it is the twin offered
-in its place. The nine sit in `scripts/data/never-offered-links-baseline.json` (reprint-check CHECK 9), where a
+in its place. The eight sit in `scripts/data/never-offered-links-baseline.json` (reprint-check CHECK 9), where a
 new one fails. "Whole" includes the plain description (the search text and the popup's fallback), which a move does
 not re-read: a record on a reprint may not read like the printing it replaced (reprint-check CHECK 8). The two
 the lane moved (Cantrip Deck (5-pack), the barbarian's Greater Weapon Specialization) carry their new page's

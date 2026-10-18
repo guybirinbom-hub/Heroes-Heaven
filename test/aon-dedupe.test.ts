@@ -182,4 +182,25 @@ describe('aon- duplicate suppression', () => {
     expect(names.length).toBe(new Set(names).size);
   });
 
+  // package I: Roll with It (2026-10-18): the rebuild's manual join moved feats/roll-with-it-kingmaker onto feat-3903,
+  // the page feats/roll-with-it-ranger is built from, so one printed feat (level 12, ranger, Giant Hunter, a reaction)
+  // was two records the exact-name pass cannot pair ("Roll with it (Kingmaker)" / "Roll with It (Ranger)").
+  it('the picker offers Roll with It (feat-3903) once, as the page-named record, and the hidden twin still resolves', () => {
+    const aon = (id: string) => (c.feats[id] as { aonId?: string } | undefined)?.aonId;
+    expect(aon('roll-with-it-kingmaker')).toBe('feat-3903');
+    expect(aon('roll-with-it-ranger')).toBe('feat-3903');
+    expect(NEAR_DUPLICATE_IDS.has('roll-with-it-kingmaker')).toBe(true);
+    expect(NEAR_DUPLICATE_IDS.has('roll-with-it-ranger')).toBe(false);
+    const build = { ...emptyBuild(), level: 20, classId: 'ranger', ancestryId: 'human' };
+    const slot = { level: 12, category: 'class', idx: 0 } as const;
+    const offered = (db: typeof c) => eligibleFeatsForSlot(build, db, slot).filter((f) => aon(f.id) === 'feat-3903').map((f) => f.id).sort();
+    expect(offered(c)).toEqual(['roll-with-it-ranger']);
+    // Mutation proof: take the entry out and the same slot offers the printed feat twice.
+    const without = { ...c, duplicateIds: new Set([...c.duplicateIds!].filter((id) => id !== 'roll-with-it-kingmaker')) } as typeof c;
+    expect(offered(without)).toEqual(['roll-with-it-kingmaker', 'roll-with-it-ranger']);
+    // Hidden, never deleted: a saved pick of the Kingmaker record still resolves.
+    expect(c.feats['roll-with-it-kingmaker']).toBeTruthy();
+    expect(c.duplicateIds!.has('roll-with-it-kingmaker')).toBe(true);
+  });
+
 });

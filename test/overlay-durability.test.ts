@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { content } from './_content';
+import { CHILD_TIMEOUT } from './_timeouts';
 import { backgroundGrantedFeats } from '../src/rules/build';
 import { loadBaseline } from '../scripts/lib/embedded-descriptions.mjs';
 import { loadCreated, unbakedRows } from '../scripts/lib/overlay-replay.mjs';
@@ -87,7 +88,10 @@ describe('mechanical data survives a re-import', () => {
     const drift = unbakedRows(core, descs, overlay, { keep: embeddedKeep, created: loadCreated('.') })
       .stale.map((s: { label: string }) => s.label);
     expect(drift, 'overlay entries that no longer match core.json').toEqual([]);
-  });
+    // package I: overlay replay timing (2026-10-18): this case parses core.json and core-descriptions.json whole and
+    // replays every overlay row. MEASURED: 1.4 s alone, but "Test timed out in 5000ms" in both full-suite runs of
+    // the package I rebuild (the other 852 files passed). Only the clock was too short, as in test/_timeouts.ts.
+  }, CHILD_TIMEOUT);
 
   it('every nested patch resolves to a real object', () => {
     // A `path` typo produces a record that LOOKS backfilled and isn't — the exact failure mode this

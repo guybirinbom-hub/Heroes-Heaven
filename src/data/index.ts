@@ -149,6 +149,16 @@ export const NEAR_DUPLICATE_IDS = new Set([
   // Hidden, never deleted: a saved character that already picked the twin keeps resolving it.
   // batch 032: knowledge-is-power
   'knowledge-is-power-wizard', // -> knowledge-is-power
+  // package I (2026-10-18): TWO imports of AoN feat-3903 ("Roll with It (Ranger)", Kingmaker Companion Guide
+  // pg. 23, Feat 12, prerequisite Giant Hunter, a reaction). The exact-name pass cannot pair "Roll with it
+  // (Kingmaker)" with "Roll with It (Ranger)", and until the rebuild the Kingmaker one sat on feat-1009 (the
+  // goblin "Roll with It (Goblin)", a different feat) so no shared-document test saw them either. The manual
+  // join (scripts/data/manual-joins.json) moved it to its own page, feat-3903, and "Hide legacy data" then
+  // offered a level-12 ranger the same printed feat twice. MEASURED: the two records are identical apart from
+  // id, name and the OGL licence stamp on the Kingmaker one. THE KEPT ID IS `roll-with-it-ranger`, the record
+  // named as its page is (R9: both options are correct, so no owner question). Hidden, never deleted: a saved
+  // character that already picked the Kingmaker one keeps resolving it.
+  'roll-with-it-kingmaker', // -> roll-with-it-ranger
 ]);
 
 /**

@@ -1,5 +1,5 @@
 {
-  "_": "scripts/spell-print-lines-check.mjs (batch P02, conjurers-countermeasure#cast-duration / conjurers-countermeasure#description / turbulent-tide#requirements). The spells that, when the check went in, (header) open their description with the scraped '<Name> \\nSource ...' page header, (cast) carry no cast although their AoN page prints an action cost, (duration) carry no duration although the page prints one, (requirements) show no Requirements line although the page prints one. Measured AFTER batch P02's spell rows (node scripts/spell-print-lines-check.mjs --list --pending work/.bP02-rows-*.json). A new offender fails; a listed one that is now right fails until its entry is removed - the list only shrinks.",
+  "_": "scripts/spell-print-lines-check.mjs (batch P02, conjurers-countermeasure#cast-duration / conjurers-countermeasure#description / turbulent-tide#requirements). The spells that, when the check went in, (header) open their description with the scraped '<Name> \\nSource ...' page header, (cast) carry no cast although their AoN page prints an action cost, (duration) carry no duration although the page prints one, (requirements) show no Requirements line although the page prints one. Measured AFTER batch P02's spell rows (node scripts/spell-print-lines-check.mjs --list --pending work/.bP02-rows-*.json). A new offender fails; a listed one that is now right fails until its entry is removed - the list only shrinks. Package I (I6d, 2026-10-18): the Spell record gained a `requirements` field, the rebuild filled it for 46 spells, and all 18 requirements entries were right then, so that list is empty.",
   "header": [
     "amalgamizing-leap",
     "anchoring-air",
@@ -594,24 +594,5 @@
     "whispers-of-a-dead-goddess",
     "zombie-horde"
   ],
-  "requirements": [
-    "commanding-lash",
-    "cutting-eye",
-    "deitys-strike",
-    "divine-armageddon",
-    "entreat-spirit",
-    "exchange-image",
-    "for-love-for-lightning",
-    "mimic-undead",
-    "natures-bounty",
-    "seize-soul",
-    "shadow-jump",
-    "shadows-web",
-    "slashing-gust",
-    "storm-lord",
-    "summon-deific-herald",
-    "summoners-precaution",
-    "unblinking-flame-revelation",
-    "weapon-of-judgment"
-  ]
+  "requirements": []
 }

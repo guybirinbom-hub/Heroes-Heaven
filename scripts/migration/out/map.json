@@ -1,9 +1,9 @@
 {
  "tally": {
-  "doc": 26148,
+  "doc": 26149,
   "drop": 143,
   "subblock": 572,
-  "authored": 990,
+  "authored": 993,
   "table": 21,
   "scraped": 1,
   "derived": 22
@@ -47014,8 +47014,9 @@
    "healers-gel": {
     "name": "Healer's Gel",
     "status": "doc",
-    "docId": "equipment-5055",
-    "how": "importer:the doc this record was built from"
+    "docId": "equipment-5055-4573",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-5055"
    },
    "greater-healers-gel": {
     "name": "Greater Healer's Gel",
@@ -54013,15 +54014,10 @@
    },
    "lantern-implement": {
     "name": "Lantern Implement",
-    "how": "reclass:suffix:implement",
+    "how": "reclass:suffix:implement -> newest printing (was implement-4)",
     "status": "doc",
-    "docId": "implement-4",
-    "archiveName": "Lantern",
-    "remasteredAs": {
-     "bucket": "items",
-     "id": "lantern",
-     "name": "Lantern"
-    }
+    "docId": "implement-20",
+    "archiveName": "Lantern"
    },
    "lapis-lazuli-pendant": {
     "name": "Lapis lazuli pendant",
@@ -54223,15 +54219,10 @@
    },
    "mirror-implement": {
     "name": "Mirror Implement",
-    "how": "reclass:suffix:implement",
+    "how": "reclass:suffix:implement -> newest printing (was implement-5)",
     "status": "doc",
-    "docId": "implement-5",
-    "archiveName": "Mirror",
-    "remasteredAs": {
-     "bucket": "items",
-     "id": "mirror",
-     "name": "Mirror"
-    }
+    "docId": "implement-21",
+    "archiveName": "Mirror"
    },
    "mitigation-mail-greater": {
     "name": "Mitigation Mail (Greater)",
@@ -60718,8 +60709,9 @@
    "perception-expertise": {
     "name": "Perception Expertise",
     "status": "doc",
-    "docId": "class-feature-1183",
-    "how": "importer:the doc this record was built from"
+    "docId": "class-feature-1075",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-1183"
    },
    "kinetic-quickness": {
     "name": "Kinetic Quickness",
@@ -66957,6 +66949,12 @@
     "name": "Ooze Eidolon",
     "status": "doc",
     "docId": "eidolon-23",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "perception-expertise-thaumaturge": {
+    "name": "Perception Expertise",
+    "status": "doc",
+    "docId": "class-feature-1183",
     "how": "record carries its own aonId (targeted merge)"
    },
    "weapon-expertise-magus": {
@@ -105486,8 +105484,8 @@
    "quick-recovery": {
     "name": "Quick Recovery",
     "status": "doc",
-    "docId": "feat-3923",
-    "how": "slug-noparen"
+    "docId": "feat-7004",
+    "how": "manual:key-exact join (scripts/data/manual-joins.json)"
    },
    "specialized-companion-animal-trainer": {
     "name": "Specialized Companion (Animal Trainer)",
@@ -105695,15 +105693,10 @@
     "how": "fts"
    },
    "master-spotter-investigator": {
-    "name": "Master Spotter (Investigator)",
+    "name": "Master Spotter",
     "status": "doc",
-    "docId": "feat-1850",
-    "how": "importer:the doc this record was built from",
-    "remasteredAs": {
-     "bucket": "feats",
-     "id": "master-spotter",
-     "name": "Master Spotter"
-    }
+    "docId": "feat-6209",
+    "how": "importer:the doc this record was built from"
    },
    "guarded-advance-knight-vigilante": {
     "name": "Guarded Advance (Knight Vigilante)",
@@ -106097,8 +106090,8 @@
    "roll-with-it-kingmaker": {
     "name": "Roll with it (Kingmaker)",
     "status": "doc",
-    "docId": "feat-1009",
-    "how": "slug-noparen"
+    "docId": "feat-3903",
+    "how": "manual:key-exact join (scripts/data/manual-joins.json)"
    },
    "the-harder-they-fall-kingmaker": {
     "name": "The Harder They Fall (Kingmaker)",
@@ -106109,8 +106102,8 @@
    "the-harder-they-fall": {
     "name": "The Harder They Fall",
     "status": "doc",
-    "docId": "feat-3901",
-    "how": "slug-noparen"
+    "docId": "feat-4938",
+    "how": "manual:key-exact join (scripts/data/manual-joins.json)"
    },
    "counterspell-prepared": {
     "name": "Counterspell (Prepared)",
@@ -121571,8 +121564,8 @@
    "aon-concealed-army": {
     "name": "Concealed (Army)",
     "status": "doc",
-    "docId": "condition-62",
-    "how": "slug-noparen"
+    "docId": "condition-44",
+    "how": "manual:key-exact join (scripts/data/manual-joins.json)"
    },
    "aon-defeated": {
     "name": "Defeated",
@@ -167388,6 +167381,21 @@
    },
    "item-mask-of-the-mantis-major": {
     "name": "Vernai's Ire",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "cat-scalding-spit": {
+    "name": "Taking Persistent Fire Damage (Scalding Spit)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-obsidian-goggles-greater": {
+    "name": "Obsidian Goggles (Greater)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-obsidian-goggles-major": {
+    "name": "Obsidian Goggles (Major)",
     "status": "authored",
     "how": "hand-authored bucket"
    }

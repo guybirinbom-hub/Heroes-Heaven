@@ -2338,5 +2338,75 @@
   "field": "description",
   "aon": "feat-9057",
   "why": "batch P02 running-recharge#description-header: page header (name, Source) stripped so the body opens with feat-9057's \"Preparing in every way for your next assault\"; shorter by the header; guarded by scripts/description-header-check.mjs."
+ },
+ {
+  "key": "items/lantern-implement",
+  "field": "remasteredAs.bucket",
+  "aon": "implement-20",
+  "before": "70136d4c67d06585",
+  "why": "implement-20 (Lantern, Dark Archives (Remastered) pg. 38, legacy_id implement-4) is now this record's own page (package I, I7c): the record moved onto its reprint, so there is no older printing left to link forward from. The dropped link opened items/lantern, the Player Core light source (equipment-2730), a record that only shared the reprint's name."
+ },
+ {
+  "key": "items/lantern-implement",
+  "field": "remasteredAs.id",
+  "aon": "implement-20",
+  "before": "70136d4c67d06585",
+  "why": "implement-20 (Lantern, Dark Archives (Remastered) pg. 38, legacy_id implement-4) is now this record's own page (package I, I7c): the record moved onto its reprint, so there is no older printing left to link forward from. The dropped link opened items/lantern, the Player Core light source (equipment-2730), a record that only shared the reprint's name."
+ },
+ {
+  "key": "items/lantern-implement",
+  "field": "remasteredAs.name",
+  "aon": "implement-20",
+  "before": "70136d4c67d06585",
+  "why": "implement-20 (Lantern, Dark Archives (Remastered) pg. 38, legacy_id implement-4) is now this record's own page (package I, I7c): the record moved onto its reprint, so there is no older printing left to link forward from. The dropped link opened items/lantern, the Player Core light source (equipment-2730), a record that only shared the reprint's name."
+ },
+ {
+  "key": "items/mirror-implement",
+  "field": "remasteredAs.bucket",
+  "aon": "implement-21",
+  "before": "70136d4c67d06585",
+  "why": "implement-21 (Mirror, Dark Archives (Remastered) pg. 38, legacy_id implement-5) is now this record's own page (package I, I7c): the record moved onto its reprint. The dropped link opened items/mirror, the 1 gp hand mirror (equipment-2735), a record that only shared the reprint's name."
+ },
+ {
+  "key": "items/mirror-implement",
+  "field": "remasteredAs.id",
+  "aon": "implement-21",
+  "before": "70136d4c67d06585",
+  "why": "implement-21 (Mirror, Dark Archives (Remastered) pg. 38, legacy_id implement-5) is now this record's own page (package I, I7c): the record moved onto its reprint. The dropped link opened items/mirror, the 1 gp hand mirror (equipment-2735), a record that only shared the reprint's name."
+ },
+ {
+  "key": "items/mirror-implement",
+  "field": "remasteredAs.name",
+  "aon": "implement-21",
+  "before": "70136d4c67d06585",
+  "why": "implement-21 (Mirror, Dark Archives (Remastered) pg. 38, legacy_id implement-5) is now this record's own page (package I, I7c): the record moved onto its reprint. The dropped link opened items/mirror, the 1 gp hand mirror (equipment-2735), a record that only shared the reprint's name."
+ },
+ {
+  "key": "feats/master-spotter-investigator",
+  "field": "remasteredAs.bucket",
+  "aon": "feat-6209",
+  "before": "70136d4c67d06585",
+  "why": "feat-6209 (Master Spotter, Investigator archetype, Player Core 2 pg. 178, legacy_id feat-1850) is now this record's own page (package I, I7c). The dropped link opened feats/master-spotter, the Overwatch feat (feat-3124), a record that only shared the reprint's name."
+ },
+ {
+  "key": "feats/master-spotter-investigator",
+  "field": "remasteredAs.id",
+  "aon": "feat-6209",
+  "before": "70136d4c67d06585",
+  "why": "feat-6209 (Master Spotter, Investigator archetype, Player Core 2 pg. 178, legacy_id feat-1850) is now this record's own page (package I, I7c). The dropped link opened feats/master-spotter, the Overwatch feat (feat-3124), a record that only shared the reprint's name."
+ },
+ {
+  "key": "feats/master-spotter-investigator",
+  "field": "remasteredAs.name",
+  "aon": "feat-6209",
+  "before": "70136d4c67d06585",
+  "why": "feat-6209 (Master Spotter, Investigator archetype, Player Core 2 pg. 178, legacy_id feat-1850) is now this record's own page (package I, I7c). The dropped link opened feats/master-spotter, the Overwatch feat (feat-3124), a record that only shared the reprint's name."
+ },
+ {
+  "key": "feats/master-spotter-investigator",
+  "field": "name",
+  "aon": "feat-6209",
+  "before": "70136d4c67d06585",
+  "why": "feat-6209 is titled \"Master Spotter\" (Player Core 2 pg. 178; its legacy_name is \"Master Spotter (Investigator)\", feat-1850): the record takes its newest printing whole (gold-set R12), the name included. The key stays master-spotter-investigator, so saved characters resolve; the old title is kept on the record as legacyNames."
  }
 ]

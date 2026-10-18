@@ -1,5 +1,5 @@
 {
- "coreSha": "70136d4c67d065852ac68a363cbac0be1d9667f718f42a7fab0678e07eb39415",
+ "coreSha": "571ca23254e68de248d5fbf5c9518889e617caf3b29d1e93740d117429431014",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -7460,8 +7460,7 @@
   "items/awakened-metal-shot",
   "items/bravery-baldric-healthful-greater",
   "items/guiding-starknife",
-  "items/lantern",
   "items/waterproof-carrying-case"
  ],
- "wgSha": "207bdce4f521b9213e6e4fc2e2340feca2ec722d5da5adee1721b735100e6bc9"
+ "wgSha": "36a0406df59eba73190cab60e3fe0bf23bff1c1266226043046be5302e1fa349"
 }

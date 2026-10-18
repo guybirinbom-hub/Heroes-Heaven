@@ -7,6 +7,5 @@
  "items/universal-solvent-major": { "to": "items/absolute-solvent", "reason": "family-page", "note": "Absolute Solvent (equipment-3351) is the family page; its grades ship as absolute-solvent-lesser, -moderate and -greater." },
  "items/awakened-adamantine-shot": { "to": "items/awakened-metal-shot", "reason": "family-page", "note": "Awakened Metal Shot (equipment-1189) is the family page; this grade ships as awakened-metal-shot-awakened-adamantine-shot (equipment-1189-1117)." },
  "items/awakened-cold-iron-shot": { "to": "items/awakened-metal-shot", "reason": "family-page", "note": "Awakened Metal Shot (equipment-1189) is the family page; this grade ships as awakened-metal-shot-awakened-cold-iron-shot (equipment-1189-1118)." },
- "items/awakened-silver-shot": { "to": "items/awakened-metal-shot", "reason": "family-page", "note": "Awakened Metal Shot (equipment-1189) is the family page; this grade ships as awakened-metal-shot-awakened-silver-shot (equipment-1189-1119)." },
- "items/lantern-implement": { "to": "items/lantern", "reason": "family-page", "note": "Lantern (equipment-2730) is the light source's family page; its grades ship as lantern-bulls-eye and lantern-hooded. The link itself is wrong (CHECK 5 OFF_PAGE_TWINS: the reprint is the Lantern implement, implement-20), parked." }
+ "items/awakened-silver-shot": { "to": "items/awakened-metal-shot", "reason": "family-page", "note": "Awakened Metal Shot (equipment-1189) is the family page; this grade ships as awakened-metal-shot-awakened-silver-shot (equipment-1189-1119)." }
 }

@@ -329,7 +329,10 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
     // batch card premise: feat-1092 "You cannot select another dedication feat until you have gained two" —
     // round 5: 242 — Knight Vigilant Dedication's page is its own (RIGHT_OWN_PAGE: every line is its words or
     // its own printed Special line), so it reads the whole page again.
-    expect(Object.keys(residue).length).toBe(242);
+    // package I: Roll with It, Quick Recovery, The Harder They Fall, Concealed Army (2026-10-18): 242 -> 238 — the
+    // rebuild joined these four records to their own Archives pages (scripts/data/manual-joins.json: feat-3903,
+    // feat-7004, feat-4938, condition-44), so none sits on another printing's page any more and each left the residue.
+    expect(Object.keys(residue).length).toBe(238);
     const left = residueWithoutSlices(residue, PAGE_SLICES.slices);
     // Round 3: 166 (was 147) — the 17 records whose family page prints their variant as a LINE (six instinct
     // crowns, five drake rifles, four elemental familiars) or as a section spelt "Splinter" (two splintering
@@ -346,7 +349,9 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
     // batch card premise: class-feature-15 "See specific research fields for more information" — round 4: 11
     // (was 21), the eleven perpetual alchemy variants whose shared feature page lacks their field's line.
     expect(ids.length).toBe(11);
-    expect(ids.length + Object.keys(NOT_OWN_PAGE.keptOnPage).length).toBe(71);
+    // package I: Roll with It, Quick Recovery, The Harder They Fall, Concealed Army (2026-10-18): 71 -> 67 — the same
+    // four left keptOnPage (11 fall back to their own text, 56 stay on their page).
+    expect(ids.length + Object.keys(NOT_OWN_PAGE.keptOnPage).length).toBe(67);
     for (const k of ids) expect((NOT_OWN_PAGE.coverage as Record<string, number>)[k], k).toBeGreaterThanOrEqual(COVERAGE_GATE);
     // No sliced record is listed (a slice wins, so it would never read the list).
     for (const k of [...ids, ...Object.keys(NOT_OWN_PAGE.keptOnPage)]) expect(k in PAGE_SLICES.slices, k).toBe(false);

@@ -293,7 +293,9 @@ describe('a hidden reprint twin stands in when its legacy record is filtered out
     expect(ids(listValues(db, db.items)).has('healers-gel')).toBe(false);
     const baseline = JSON.parse(readFileSync('scripts/data/never-offered-links-baseline.json', 'utf8')) as Record<string, unknown>;
     expect('items/healers-gel-lesser' in baseline).toBe(false);
-    expect(Object.keys(baseline).filter((k) => k !== '_')).toHaveLength(9);
+    // package I: Lantern Implement link (2026-10-18) — 9 -> 8: items/lantern-implement moved onto its own Dark Archive
+    // (Remastered) page (implement-20) at the rebuild, so it no longer links to the Player Core lantern and its line left.
+    expect(Object.keys(baseline).filter((k) => k !== '_')).toHaveLength(8);
   });
 
   // package I (I7b): i7b-greater-codex-of-unimpeded-sight — once per hour, ONE pip. The record's text is the

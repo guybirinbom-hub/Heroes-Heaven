@@ -32,8 +32,13 @@ describe('umbrella detection', () => {
     // (throneglass-shard equipment-5212-4727 at 10 gp, throneglass-plate equipment-5212-4728 at
     // 100 gp). Measured against the commit that last set this constant: `throneglass` is the ONLY id
     // that joined the set, and nothing left it.
+    // package I: Healer's Gel (2026-10-18): 441 -> 440. `healers-gel` left the set when package I (I7b, commit
+    // 08572ad) pinned items/healers-gel to its Impossible Magic grade (equipment-5055-4573, Item 5, 25 gp): a priced
+    // grade is no longer an unpriced family summary. MEASURED on the committed data: 441 at 1998f86, 440 at 08572ad,
+    // 4c16360, cd63c44 and the rebuilt tree; `healers-gel` is the only id that left and none joined. The test sat red
+    // from 08572ad on because that commit did not move this constant.
     // batch 034 premise: equipment-5212 "Throneglass is an incredibly rare resource created during the violence of Earthfall 10,000 years ago"
-    expect(umbrellas().size).toBe(441);
+    expect(umbrellas().size).toBe(440);
   });
 
   it('hides the summaries the owner named', () => {

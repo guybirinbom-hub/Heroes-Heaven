@@ -1,8 +1,8 @@
 {
  "_generated": "scripts/stub-names.mjs --write — never hand-edit; the name of each embedded page stub whose aon id names no record (Archives mirror), and the record that page is (by the mirror's printing link, from either side, in the page's own category; never by name); two-way checked by test/card-stubs.test.tsx",
  "_counts": {
-  "ids": 244,
-  "linked": 171,
+  "ids": 243,
+  "linked": 170,
   "plain": 73
  },
  "_notes": {
@@ -543,11 +543,6 @@
    "name": "Familiar",
    "ref": "feats:familiar",
    "right": "Feat 1"
-  },
-  "feat-6209": {
-   "name": "Master Spotter",
-   "ref": "feats:master-spotter-investigator",
-   "right": "Feat 12"
   },
   "feat-622": {
    "name": "Magic Sense",

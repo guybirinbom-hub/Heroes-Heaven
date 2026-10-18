@@ -7,6 +7,5 @@
  "items/judgement-thurible": ["effectChoices", "usage"],
  "items/judgement-thurible-greater": ["effectChoices", "usage"],
  "items/judgement-thurible-major": ["effectChoices", "usage"],
- "items/lantern": ["usage"],
  "items/waterproof-carrying-case": ["hands", "usage"]
 }

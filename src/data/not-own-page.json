@@ -1,10 +1,10 @@
 {
  "_generated": "scripts/not-own-page.mjs --write — never hand-edit; gate 0.6 own-sentence coverage against the mirror section by aonId; the card guard checks it both ways against the census",
  "_counts": {
-  "residue": 242,
+  "residue": 238,
   "sliced": 171,
   "ids": 11,
-  "keptOnPage": 60
+  "keptOnPage": 56
  },
  "ids": [
   "classFeatures:perpetual-infusions-bomber",
@@ -21,17 +21,13 @@
  ],
  "keptOnPage": {
   "classFeatures:perpetual-infusions-chirurgeon": 0.5,
-  "conditions:aon-concealed-army": 0,
   "deities:norns": 0.5,
   "feats:animal-companion-ranger": 0.5,
   "feats:counterspell-spontaneous": 0.29,
   "feats:guarded-advance": 0.5,
   "feats:inner-fire-monk": 0,
   "feats:inner-fire-naari": 0.33,
-  "feats:quick-recovery": 0,
-  "feats:roll-with-it-kingmaker": 0,
   "feats:signature-spell-expansion-psychic": 0,
-  "feats:the-harder-they-fall": 0,
   "feats:the-harder-they-fall-kingmaker": 0.33,
   "feats:tusks-half-orc": 0,
   "items:anima-robe-heroic": 0,

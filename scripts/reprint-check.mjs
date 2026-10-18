@@ -196,9 +196,11 @@ const crossNewer = (D) => {
 };
 
 /*
- * AWAITING THE NEXT `npm run data` (package I, I7c, 2026-10-18) — shrink-only, EMPTY after that run.
+ * AWAITING THE NEXT `npm run data` (package I, I7c, 2026-10-18) — shrink-only, EMPTY after that run. It is
+ * empty now: the run happened (Lantern Implement, Mirror Implement and Master Spotter (Investigator) sit on
+ * implement-20, implement-21 and feat-6209), and a record added here again fails if it is not in its one state.
  *
- * The page-aware twin test (scripts/lib/reprint.mjs, exception 2) moves these three records onto their
+ * The page-aware twin test (scripts/lib/reprint.mjs, exception 2) moved these three records onto their
  * reprint's page, but only the chain moves a record: import-core-v2.mjs builds it from the reprint,
  * build-map.mjs -> stamp-aonid.mjs stamp the page and backfill-ast-edition.mjs draws it. Until that run the
  * shipped artefact still carries the old twin link ("Remastered as" the Player Core lantern / the hand
@@ -207,11 +209,7 @@ const crossNewer = (D) => {
  * instead of failing CHECK 3. Any other state fails, so a record the regen has moved fails as "remove the
  * entry" and the list empties itself.
  */
-const AWAITING_REGEN = {
-  'items/lantern-implement': { from: 'implement-4', to: 'implement-20' },
-  'items/mirror-implement': { from: 'implement-5', to: 'implement-21' },
-  'feats/master-spotter-investigator': { from: 'feat-1850', to: 'feat-6209' },
-};
+const AWAITING_REGEN = {};
 const awaiting = [];
 const awaitingProblems = [];
 const awaitingSeen = new Set();
@@ -495,7 +493,7 @@ const TWIN_NUMBERS_DIFFER = {
  * check use one list. Each listed record must still be that twin on exactly the listed pages, and an unlisted
  * off-page link fails (it can only arise where the chain could not name a page: `true` from hasKey). The
  * three links this list used to park as wrong and open (Master Spotter (Investigator), Mirror Implement,
- * Lantern Implement) move at the next npm run data (AWAITING_REGEN above); loadOffPageTwins refuses a reason
+ * Lantern Implement) moved at the 2026-10-18 npm run data (AWAITING_REGEN above, now empty); loadOffPageTwins refuses a reason
  * marked WRONG, so a wrong link cannot be parked here again.
  */
 const OFF_PAGE_TWINS = Object.fromEntries(loadOffPageTwins().map((t) => [t.record, t]));

@@ -403,7 +403,7 @@ const flat = (n: AstNode): string => (n.t === 'text' ? String(n.v ?? '') : (n.c 
 
 describe('card step 14b: a stub no record\'s page answers draws its name', () => {
   // batch card: #card-STUBS — an embedded page drawn once, one level deep
-  it('over every shipped tree: 273 occurrences, each a name link when a record exists, else a plain name', () => {
+  it('over every shipped tree: 271 occurrences, each a name link when a record exists, else a plain name', () => {
     const idx = aonIndex(db);
     let total = 0, link = 0, plain = 0;
     const plainIds = new Set<string>();
@@ -430,9 +430,13 @@ describe('card step 14b: a stub no record\'s page answers draws its name', () =>
     // category: identity by id, section 2 rule 2, never by display name), 74 a plain name (73 ids: no record
     // is that page by id). Card truth's STUBS section lists only the plain ones (a link is no offender):
     // 74 page|stub entries, exactly these 73 ids (scripts/lib/card-scope.mjs computeLedger).
+    // package I: Master Spotter (Investigator) (2026-10-18): 273 -> 271 and [199, 74] -> [197, 74]. The rebuild moved
+    // feats/master-spotter-investigator onto feat-6209, its newest printing (R12), so feat-6209 is now a record's own
+    // page by id: its two stubs draw that page (see the embedded count below), not a name link. The 74 plain names
+    // are untouched, and so is the ledger count under them.
     // batch card: #card-STUBS — an embedded page drawn once, one level deep
-    expect(total).toBe(273);
-    expect([link, plain]).toEqual([199, 74]);
+    expect(total).toBe(271);
+    expect([link, plain]).toEqual([197, 74]);
     expect(plainIds.size).toBe(73);
     const ledgerStubs = (JSON.parse(readFileSync('scripts/data/card-truth-baseline.json', 'utf8')) as { STUBS: string[] }).STUBS;
     expect(ledgerStubs.length).toBe(74);
@@ -511,9 +515,13 @@ describe('card step 14b: a stub no record\'s page answers draws its name', () =>
     expect(STUB_NAMES['rules-325']).toEqual({ name: 'Spell Attack Rolls', ref: 'rules:spell-attack-rolls', right: 'Rules' });
     expect((db as unknown as Record<string, Record<string, { aonId?: string }>>).rules['spell-dc']?.aonId).toBe('rules-2293');
     // feat-6209 "Master Spotter" (Player Core 2) names feat-1850 as its legacy_id, and feat-1850 names it as
-    // its remaster_id: the older printing this app ships.
-    // batch card premise: feat-1850 "Master Spotter"
-    expect(STUB_NAMES['feat-6209']).toEqual({ name: 'Master Spotter', ref: 'feats:master-spotter-investigator', right: 'Feat 12' });
+    // its remaster_id. The premise that this app ships the OLDER printing (feats/master-spotter-investigator on
+    // feat-1850, so feat-6209 was a stub linking it) no longer holds.
+    // package I: Master Spotter (Investigator) (2026-10-18): the rebuild moved that record onto feat-6209 itself
+    // (gold-set R12, the newest printing whole; feat-1850 is kept as a legacy name), so the page is a record's own
+    // by id and needs no stub name. The printing-link-from-either-side cases are rules-330 and rules-325 above.
+    expect(STUB_NAMES['feat-6209']).toBeUndefined();
+    expect((db as unknown as Record<string, Record<string, { aonId?: string }>>).feats['master-spotter-investigator']?.aonId).toBe('feat-6209');
     // sidebar-47 "Affliction Example" names rules-2389 "Afflictions" as its remaster_id: a sidebar is not a
     // printing of a rules page, so no link (own category only).
     // batch card: #card-STUBS — an embedded page drawn once, one level deep
@@ -607,9 +615,11 @@ describe('card step 14b: a self-embedding chain does not loop', () => {
       }
     }
     // Measured 2026-10-08: 1,657 pages carry a stub; 5,583 stubs draw a page or a compact entry.
+    // package I: Master Spotter (Investigator) (2026-10-18): 5,583 -> 5,585 — feat-6209 became a record's own page,
+    // so the two stubs that were name links now draw that page (the 271 total above is the two fewer).
     // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(pages).toBe(1657);
-    expect(embedded).toBe(5583);
+    expect(embedded).toBe(5585);
   });
 });
 
