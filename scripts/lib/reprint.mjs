@@ -103,15 +103,65 @@
  *      `edition: 'legacy'` — hidden by the hide-legacy toggle, NOT always hidden like `superseded` —
  *      and carries `remasteredAs` pointing at the reprint's record. `shippedTwin()` below is that
  *      case named once, for the stamp and the guard to share.
+ *      ⚠ THE SLUG RECORD MUST BE THE REPRINT (package I, I7c, 2026-10-18). A record under the reprint's
+ *      slug is only the shipped twin when it is built from the reprint's own PAGE (`samePage`, below),
+ *      or its own newest printing is that page, or the (old page > its page) pair is an accepted
+ *      off-page twin listed in scripts/data/off-page-twins.json. Any other record of that slug merely
+ *      shares the reprint's NAME, and blocking on it shipped three wrong links: Lantern Implement
+ *      "Remastered as" the Player Core lantern (equipment-2730) instead of moving to implement-20,
+ *      Mirror Implement as the 1 gp hand mirror (equipment-2735) instead of implement-21, Master
+ *      Spotter (Investigator) as the Overwatch feat (feat-3124) instead of moving to feat-6209. So
+ *      `hasKey` answers with the DOCUMENT the slug record is built from (a string); `true` still means
+ *      "a record ships, its page unknown" and keeps the old rule (it blocks), so a caller that cannot
+ *      name the page changes nothing. A page that cannot be resolved also blocks: unknown is not
+ *      "another page".
  *
  * Readers: scripts/import-core-v2.mjs (the join + the AST writer), scripts/migration/build-map.mjs
  * (so stamp-aonid stamps R and the regen is a fixed point), scripts/reprint-check.mjs (the guard).
  */
 import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { CURRENT } from './edition.mjs';
 
 export const EXPORT_DIR = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
+
+/**
+ * The ACCEPTED off-page twins (exception 2, see the header): an old page whose reprint's slug is held by a
+ * record built from another page, where that record IS the remaster's form of the old page all the same —
+ * the legacy Half-Elf ancestry page (ancestry-7) reprinted as the Aiuvarin ANCESTRY page (ancestry-69), whose
+ * heritages-bucket form is heritages/aiuvarin (heritage-281). One list for the chain (repointDoc) and the
+ * guard (scripts/reprint-check.mjs CHECK 5), so the two cannot disagree.
+ */
+export const OFF_PAGE_TWINS_FILE = join(dirname(fileURLToPath(import.meta.url)), '..', 'data', 'off-page-twins.json');
+
+const DOC_ID = /^[a-z][a-z-]*[a-z]-\d+(?:-\d+)*$/;
+
+/**
+ * Read scripts/data/off-page-twins.json: `{ twins: [{ record, from, reprint, twin, why }] }` — `record` is
+ * `bucket/key` of the old record, `from` its own page, `reprint` the page it would move to, `twin` the page
+ * the record holding the reprint's slug is built from. Refuses a malformed entry rather than skipping it: a
+ * row that silently stopped matching would turn an accepted twin into a repoint at the next regen.
+ */
+export function loadOffPageTwins(file = OFF_PAGE_TWINS_FILE) {
+  const raw = JSON.parse(readFileSync(file, 'utf8'));
+  const twins = Array.isArray(raw?.twins) ? raw.twins : null;
+  if (!twins) throw new Error(`${file}: expected { twins: [...] }`);
+  const seen = new Set();
+  for (const t of twins) {
+    const bad = ['record', 'from', 'reprint', 'twin', 'why'].filter((f) => typeof t?.[f] !== 'string' || !t[f].trim());
+    if (bad.length) throw new Error(`${file}: an entry lacks ${bad.join(', ')}: ${JSON.stringify(t)}`);
+    for (const f of ['from', 'reprint', 'twin']) if (!DOC_ID.test(t[f])) throw new Error(`${file}: ${t.record} ${f} "${t[f]}" is not an Archives document id`);
+    if (!/^[A-Za-z]+\/[a-z0-9-]+$/.test(t.record)) throw new Error(`${file}: "${t.record}" is not bucket/key`);
+    if (/\bWRONG\b/.test(t.why)) throw new Error(`${file}: ${t.record} is marked WRONG — a wrong link is repaired, never accepted here`);
+    if (seen.has(t.record)) throw new Error(`${file}: ${t.record} is listed twice`);
+    seen.add(t.record);
+  }
+  return twins;
+}
+
+/** The pair key repointDoc looks an accepted off-page twin up by: old page > the slug record's page. */
+export const offPageKey = (from, twin) => `${from}>${twin}`;
 
 /** The same slug rule import-core-v2.mjs mints record keys with. */
 export const slugify = (s) =>
@@ -139,9 +189,13 @@ const RULED_GRADES = { 'equipment-413-503': 'desk #167' };
  * Returns `{ docs, next, derived }`. `derived` names the pairs the documents did NOT state outright —
  * the class hop and the name-paired categories — so `repointDoc` can hold them to a stricter test than
  * a link AoN wrote down itself.
+ *
+ * `offPageTwins` (optional): the accepted off-page twin list, as loadOffPageTwins() returns it; the
+ * shared file by default. Carried as `offPage` (a set of offPageKey pairs) for repointDoc.
  */
-export function buildReprintMap(entries) {
+export function buildReprintMap(entries, { offPageTwins } = {}) {
   const docs = entries instanceof Map ? entries : new Map(entries);
+  const offPage = new Set((offPageTwins ?? loadOffPageTwins()).map((t) => offPageKey(t.from, t.twin)));
   const next = new Map();
   const derived = new Map();
   const catOf = (d) => d?.category ?? d?.cat;
@@ -329,7 +383,34 @@ export function buildReprintMap(entries) {
     }
   }
 
-  return { docs, next, derived, links, pageOf, subsOn, gradeRefused };
+  return { docs, next, derived, links, pageOf, subsOn, gradeRefused, offPage };
+}
+
+/**
+ * The index document a record's `aonId` names: the id itself, else the id without a synthetic bonus-line
+ * tail (`…-bonus-322`, minted by this pipeline), else its page without a variant tail (`equipment-58-845`
+ * -> `equipment-58`). The walk scripts/reprint-check.mjs `resolve` always did; null when none is held.
+ */
+export function resolveDocId(index, id) {
+  if (id == null || id === '' || typeof id === 'boolean') return null;
+  const a = String(id);
+  const base = a.replace(/-bonus-\d+$/, '');
+  for (const c of [a, base, base.replace(/-\d+$/, '')]) if (index.docs.has(c)) return c;
+  return null;
+}
+
+/**
+ * Are two documents printed on the same Archives PAGE (the same `url` — a grade block and a bonus line
+ * carry their page's url)? `null` when either is not in the index or has no url: unknown, not "no".
+ */
+export function samePage(index, a, b) {
+  const A = resolveDocId(index, a);
+  const B = resolveDocId(index, b);
+  if (!A || !B) return null;
+  const ua = String(index.docs.get(A)?.url ?? '').toLowerCase();
+  const ub = String(index.docs.get(B)?.url ?? '').toLowerCase();
+  if (!ua || !ub) return null;
+  return ua === ub;
 }
 
 /**
@@ -365,8 +446,9 @@ export function whyUnpaired(index, docId) {
  * Build the index by reading the export directly (for scripts that do not already hold the docs).
  * `{ text: true }` also keeps each document's printed markdown as `text` (scripts/reprint-check.mjs
  * CHECK 8 compares a record's prose with its own printing and the one it replaced).
+ * `{ offPageTwins }` is buildReprintMap's (the shared file by default).
  */
-export function loadReprintIndex(exportDir = EXPORT_DIR, { text = false } = {}) {
+export function loadReprintIndex(exportDir = EXPORT_DIR, { text = false, offPageTwins } = {}) {
   const docs = new Map();
   for (const f of readdirSync(exportDir).filter((x) => x.endsWith('.json'))) {
     const cat = f.replace(/\.json$/, '');
@@ -406,7 +488,7 @@ export function loadReprintIndex(exportDir = EXPORT_DIR, { text = false } = {}) 
       });
     }
   }
-  return buildReprintMap(docs);
+  return buildReprintMap(docs, { offPageTwins });
 }
 
 /**
@@ -428,8 +510,27 @@ export function newestPrinting({ next }, id) {
 }
 
 /**
+ * Exception 2's test, given what the caller's `hasKey(slug)` answered for the reprint's slug: does that
+ * record stand for the reprint (block the move: it is the desk #158 twin), or does it merely share the
+ * reprint's name (move)? See the ⚠ under exception 2 in the header.
+ *   · `true` (or any non-string truthy answer): a record ships, its page unknown — blocks, the old rule.
+ *   · a document id: blocks when it is on R's page, when its own newest printing is (the slug record moves
+ *     onto R's page itself, so the two would collapse), when either page cannot be resolved (unknown is
+ *     not "another page"), or when the (old page > its page) pair is an accepted off-page twin.
+ */
+function slugRecordIsTwin(index, docId, R, held) {
+  if (typeof held !== 'string') return true;
+  if (samePage(index, held, R) !== false) return true;
+  const own = resolveDocId(index, held);
+  const moves = newestPrinting(index, own);
+  if (moves && samePage(index, moves, R) !== false) return true;
+  return !!index.offPage?.has(offPageKey(resolveDocId(index, docId) ?? String(docId), own));
+}
+
+/**
  * THE RULE. The document a record keyed `key` should be built from, or `null` to leave it where it is.
- * `hasKey(slug)` answers "does this bucket already ship a record under that slug?" — exception 2.
+ * `hasKey(slug)` answers "does this bucket already ship a record under that slug?" — exception 2 — with
+ * the DOCUMENT that record is built from where the caller knows it, else `true`, else falsy.
  * Exception 1 (an overlay aonId ruling) is the caller's, because only the caller knows about the pin.
  */
 export function repointDoc(index, docId, key, hasKey) {
@@ -467,7 +568,10 @@ export function repointDoc(index, docId, key, hasKey) {
     if (!derived.sub) return R;
   }
   const s = slugify(index.docs.get(R)?.name ?? '');
-  if (s && s !== key && hasKey?.(s)) return null;
+  if (s && s !== key) {
+    const held = hasKey?.(s);
+    if (held && slugRecordIsTwin(index, docId, R, held)) return null;
+  }
   return R;
 }
 

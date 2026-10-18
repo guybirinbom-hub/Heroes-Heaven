@@ -203,6 +203,36 @@ const MANUAL = {
   'trait|Metamagic': { status: 'doc', docId: 'trait-107', how: 'manual:the trait page, not the sidebar of the same title' },
 };
 
+/*
+ * KEY-EXACT JOINS (package I, I7d, 2026-10-18) — scripts/data/manual-joins.json, each with the page it cites.
+ *
+ * MANUAL above is keyed by NAME, and a name is exactly what put these records on another record's page: the
+ * stage-1 matcher filed `feats/roll-with-it-kingmaker` ("Roll with it (Kingmaker)") under feat-1009, the goblin
+ * "Roll with It (Goblin)", by its bare name (how "slug-noparen"), and three more the same way. Keyed by
+ * `bucket/key` so a join names one record and nothing that happens to share its title. A JOIN fix, not an
+ * overlay aonId pin: a pin leaves the join's page as `joinDocId`, the page import-core-v2.mjs builds from.
+ *
+ * Refused, never skipped, because each would ship a provenance known to be false: an entry naming a record
+ * core.json does not hold (stale — remove it), a page the export does not hold, or a record the importer
+ * built from ANOTHER page this run (used-docs.json) — the map would then stamp a page the record's values do
+ * not come from (the reason usedDocs outranks every rule below).
+ */
+const MANUAL_JOINS_FILE = 'scripts/data/manual-joins.json';
+const MANUAL_BY_KEY = (() => {
+  const raw = JSON.parse(readFileSync(MANUAL_JOINS_FILE, 'utf8'));
+  const joins = raw?.joins;
+  if (!joins || typeof joins !== 'object' || Array.isArray(joins)) throw new Error(`${MANUAL_JOINS_FILE}: expected { joins: { "<bucket>/<key>": { docId, why } } }`);
+  const out = new Map();
+  for (const [where, j] of Object.entries(joins)) {
+    const m = /^([A-Za-z]+)\/([a-z0-9-]+)$/.exec(where);
+    if (!m) throw new Error(`${MANUAL_JOINS_FILE}: "${where}" is not <bucket>/<key>`);
+    if (typeof j?.docId !== 'string' || !/^[a-z][a-z-]*[a-z]-\d+(?:-\d+)*$/.test(j.docId)) throw new Error(`${MANUAL_JOINS_FILE}: ${where} has no Archives document id`);
+    if (typeof j.why !== 'string' || !j.why.includes(j.docId)) throw new Error(`${MANUAL_JOINS_FILE}: ${where}'s why must cite ${j.docId}`);
+    out.set(`${m[1]}|${m[2]}`, j.docId);
+  }
+  return out;
+})();
+
 // Records recovered by the targeted #220 scrape, keyed by name.
 const scrapedNames = new Map();
 const scrapedDir = pjoin(OUT, 'scraped');
@@ -240,6 +270,27 @@ const reprints = loadReprintIndex();
 let repointed = 0;
 let twinned = 0;
 
+const joinProblems = [];
+for (const [id, docId] of MANUAL_BY_KEY) {
+  const [bucket, key] = id.split('|');
+  if (!core[bucket]?.[key]) joinProblems.push(`${bucket}/${key}: no such record in public/core.json — remove the entry`);
+  if (!reprints.docs.has(docId)) joinProblems.push(`${bucket}/${key}: ${docId} is not a document of the export`);
+  const built = usedDocs[bucket]?.[key];
+  if (built && built !== docId) joinProblems.push(`${bucket}/${key}: the importer built this record from ${built} (used-docs.json), not the joined ${docId}`);
+}
+if (joinProblems.length) {
+  console.error(`build-map: REFUSING — ${MANUAL_JOINS_FILE} names a join the map cannot make true:`);
+  for (const p of joinProblems) console.error(`   ${p}`);
+  process.exit(1);
+}
+
+/*
+ * PASS 1 — every record's join, before the newest-printing step. Done for the whole database first so the
+ * step in pass 2 can ask exception 2's question — "which PAGE is the record holding the reprint's slug built
+ * from?" (scripts/lib/reprint.mjs, package I I7c) — of a record that comes later in the loop just as of one
+ * that came earlier: the answer must not depend on key order.
+ */
+const joined = {}; // bucket -> key -> entry, before the newest-printing step
 for (const [bucket, records] of Object.entries(core)) {
   if (!records || typeof records !== 'object' || Array.isArray(records)) continue;
   for (const [key, rec] of Object.entries(records)) {
@@ -255,6 +306,7 @@ for (const [bucket, records] of Object.entries(core)) {
     }
     else if (dropped.has(byName)) entry = { status: 'drop', how: 'adventure loot (user decision)' };
     else if (DROP_ABSENT.has(name)) entry = { status: 'drop', how: 'absent from the Archives (user decision)' };
+    else if (MANUAL_BY_KEY.has(id)) entry = { status: 'doc', docId: MANUAL_BY_KEY.get(id), how: `manual:key-exact join (${MANUAL_JOINS_FILE})` };
     else if (MANUAL[byName]) entry = MANUAL[byName];
     else if (usedDocs[bucket]?.[key]) entry = { status: 'doc', docId: usedDocs[bucket][key], how: 'importer:the doc this record was built from' };
     else if (joinRes.matched?.[bucket]?.[key]) {
@@ -312,6 +364,35 @@ for (const [bucket, records] of Object.entries(core)) {
       entry = { status: 'open', how: null };
       open.push({ bucket, key, name, book: (rec.source || {}).book || '' });
     }
+    (joined[bucket] ??= {})[key] = entry;
+  }
+}
+
+/*
+ * PASS 2 — the newest-printing step and the owner's rulings, over the joins pass 1 made.
+ */
+for (const [bucket, records] of Object.entries(core)) {
+  if (!records || typeof records !== 'object' || Array.isArray(records)) continue;
+  /*
+   * Exception 2's answer for a slug (scripts/lib/reprint.mjs): `false` when no record holds it, else the PAGE
+   * that record is built from — an owner's aonId ruling (the page stamp-aonid.mjs re-applies; `true` for a
+   * "no page" ruling), else its join from pass 1, else the aonId it carries; `true` (a record ships, its page
+   * unknown — the old rule, which blocks) when none names one. A slug record that is still on an OLDER page
+   * of the reprint is caught by the lib too (its own newest printing is R's page).
+   */
+  const hasSlug = (k) => {
+    if (!records[k]) return false;
+    const pk = `${bucket}|${k}`;
+    if (AON_PINNED.has(pk)) return typeof AON_PINNED.get(pk) === 'string' ? AON_PINNED.get(pk) : true;
+    const e = joined[bucket]?.[k];
+    if ((e?.status === 'doc' || e?.status === 'scraped') && e.docId) return String(e.docId);
+    return records[k].aonId ? String(records[k].aonId) : true;
+  };
+  for (const [key, rec] of Object.entries(records)) {
+    if (!rec || typeof rec !== 'object') continue;
+    const name = rec.name ?? key;
+    const id = `${bucket}|${key}`;
+    let entry = joined[bucket][key];
 
     /*
      * THE NEWEST PRINTING WINS — the last thing that happens to a document link, so every branch above
@@ -320,10 +401,9 @@ for (const [bucket, records] of Object.entries(core)) {
      * `data.remaster_id` — see scripts/lib/reprint.mjs. This is what makes stamp-aonid.mjs stamp the
      * REPRINT rather than the doc the join found, so the regen is a fixed point: re-running it changes
      * nothing. Exception 1 (an owner ruling) is AON_PINNED; exception 2 (the reprint already ships as
-     * its own record) is the `records` lookup, which is core.json's own keys for this bucket.
+     * its own record, built from the reprint's own page) is `hasSlug` above.
      */
     if ((entry.status === 'doc' || entry.status === 'scraped') && entry.docId && !AON_PINNED.has(id)) {
-      const hasSlug = (k) => !!records[k];
       const R = repointDoc(reprints, String(entry.docId), key, hasSlug);
       if (R) {
         entry = { ...entry, docId: R, how: `${entry.how} -> newest printing (was ${entry.docId})` };
@@ -371,7 +451,7 @@ for (const [bucket, records] of Object.entries(core)) {
      * follows the numbers to the right grade instead of the title to the wrong one.
      */
     if ((entry.status === 'doc' || entry.status === 'scraped') && typeof pin === 'string') {
-      const twin = shippedTwin(reprints, pin, key, (k) => !!records[k]);
+      const twin = shippedTwin(reprints, pin, key, hasSlug);
       if (twin) { entry = { ...entry, remasteredAs: { bucket, id: twin.id, name: records[twin.id]?.name ?? twin.name } }; twinned++; }
     }
     (map[bucket] ??= {})[key] = { name, ...entry };

@@ -18,6 +18,8 @@ import { readFileSync, writeFileSync, readdirSync, copyFileSync, existsSync, mkd
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
+import { readBackfill } from './lib/write-backfill.mjs';
+import { fillSpellRequirements } from './lib/spell-requirements.mjs';
 import { aonFacets, backgroundFacets, packOf, fillFrequencyCounters, prerequisitesFrom, foldBookSpellings } from './lib/aon-facets.mjs';
 import { loadLivePages, liveEdition } from './lib/live-pages.mjs';
 import { loadReprintIndex, repointDoc } from './lib/reprint.mjs';
@@ -222,6 +224,18 @@ try {
   console.warn('WARNING: scripts/migration/out/map.json not found — falling back to slug dedup, which');
   console.warn('         picks the wrong twin when two different records share a name.');
 }
+/*
+ * `<bucket>|<id>` -> the page an OWNER'S aonId RULING names (an `aonId` row in scripts/data/effect-backfill.json,
+ * or an `aonId` inside a `create` row; `null` = "no page") — the same reading as build-map.mjs AON_PINNED.
+ * stamp-aonid.mjs re-applies these last, so a pinned record's page is the ruling, whatever this run joins it
+ * to. Read here for the questions below that need "which page is this record on" before the overlay is
+ * applied: the reprint rule's exception 2 (hasSlug, package I I7c) and a spell's Requirements line (I6d).
+ */
+const aonPins = new Map(readBackfill('.')
+  .filter((r) => r && !r.path?.length && r.category && r.id && (r.field === 'aonId' || (r.create && r.value?.aonId !== undefined)))
+  .map((r) => [`${r.category}|${r.id}`, (r.field === 'aonId' ? r.value : r.value.aonId) ?? null]));
+/** The ruled page as a slug-record answer for exception 2: the page, or `true` for a "no page" ruling. */
+const pinnedPage = (bucket, k) => (aonPins.has(`${bucket}|${k}`) ? (aonPins.get(`${bucket}|${k}`) ?? true) : undefined);
 
 const baseItemIndex = new Map();
 const BASE_CATS = ['weapon', 'armor', 'shield'];
@@ -778,7 +792,18 @@ for (const bucket of AON_BUCKETS) {
   const allKeysSorted = [...new Set([...Object.keys(oldMap), ...Object.keys(newMap)])].sort();
   // Every slug this bucket can end up holding — the test for reprint exception 2 (see reprint.mjs).
   const keySet = new Set(allKeysSorted);
-  const hasSlug = (k) => keySet.has(k);
+  /*
+   * …answered with the PAGE that slug's record is built from (package I, I7c): exception 2 only blocks a
+   * move when that record is the reprint itself, not a record that merely shares its name (the Player Core
+   * lantern held items/lantern-implement's reprint slug). Order-independent on purpose — none of these
+   * depends on how far this loop has got: an owner's aonId ruling, else the page the last chain stamped on
+   * it, else the verified join's, else this run's per-slug pick; `true` (the old rule: it blocks) when the
+   * slug ships and none of them names a page. build-map.mjs answers the same question from this run's
+   * used-docs.json, which agrees wherever the record did not change pages between the two runs.
+   */
+  const hasSlug = (k) => (keySet.has(k)
+    ? (pinnedPage(bucket, k) ?? shippedCore[bucket]?.[k]?.aonId ?? mapDocFor(bucket, k) ?? newMap[k]?.rec?.id ?? true)
+    : false);
   const kinCount = (s) => {
     let n = 0;
     for (let i = allKeysSorted.indexOf(s) + 1; i > 0 && i < allKeysSorted.length && allKeysSorted[i].startsWith(`${s}-`); i++) n++;
@@ -900,12 +925,29 @@ for (const bucket of AON_BUCKETS) {
      * name). `edition` is deliberately NOT taken from it — the shipped-twin ruling decides that later,
      * in stamp-aonid.mjs.
      */
-    const pdoc = REFERENCE_BUCKETS.has(bucket) ? null : prunedBest[bucket]?.[s]?.rec;
+    const ownPage = REFERENCE_BUCKETS.has(bucket) ? null : prunedBest[bucket]?.[s]?.rec;
+    /*
+     * …UNLESS THE NEWEST-PRINTING RULE MOVES IT (package I, I7c, 2026-10-18). A pruned page whose reprint
+     * is RENAMED reaches this branch (a same-name reprint is the slug pick above), and while the reprint's
+     * slug was held by any record at all the rule called it a desk #158 twin, so building it from its own
+     * old page was always right. The rule now moves it when that slug's record is built from another page
+     * (scripts/lib/reprint.mjs, exception 2): feats/master-spotter-investigator (feat-1850, APG) moves to
+     * feat-6209 (Player Core 2), whose slug `master-spotter` is the Overwatch feat (feat-3124). Then the
+     * record is built from the reprint WHOLE, like a step-1 record — facets, book and edition — or
+     * build-map.mjs would stamp feat-6209 on a record still carrying the APG book (reprint-check CHECK 2).
+     * And it is not the "superseded half" below: that test reads the reprint's SLUG (`supers`), which is
+     * the other page's record here — the same name collision — and `superseded` would hide the record
+     * always, with no twin link left to undo it. An owner's aonId ruling is never moved (exception 1).
+     */
+    const movedTo = ownPage && !aonPins.has(`${bucket}|${s}`) ? repointDoc(reprints, ownPage.id, s, hasSlug) : null;
+    const pdoc = (movedTo && docById.get(movedTo)) || ownPage;
+    const moved = !!pdoc && pdoc !== ownPage;
     const base = pdoc
-      ? { ...oldMap[s], ...overlayContent(pdoc, oldMap[s], bucket, shippedCore[bucket]?.[s]?.name), id: s }
+      ? { ...oldMap[s], ...overlayContent(pdoc, oldMap[s], bucket, shippedCore[bucket]?.[s]?.name), id: s, ...(moved ? { edition: pdoc.edition } : {}) }
       : oldMap[s];
     if (pdoc) { fromPruned++; (usedDocs[bucket] ??= {})[s] = pdoc.id; }
-    if (replacement && replacement in out) { out[s] = { ...base, edition: 'superseded' }; superseded++; }
+    if (moved) { out[s] = base; repointed++; }
+    else if (replacement && replacement in out) { out[s] = { ...base, edition: 'superseded' }; superseded++; }
     /*
      * A KEPT ORPHAN is left exactly as it is. Overlaying Archives facets onto orphans was tried and
      * REVERTED: it brought 1,897 more records under Archives sourcing but broke four tests, because an
@@ -1307,6 +1349,22 @@ if (existsSync('scripts/data/subclass-features.json')) {
 // silently land on a different apparition. A path that does not resolve is REPORTED, not skipped
 // quietly: a typo there produces a record that looks backfilled and isn't.
 let backfillCount = 0;
+/*
+ * A SPELL'S PRINTED REQUIREMENTS LINE (package I, I6d, 2026-10-18) — display-only, read from each spell's OWN
+ * page: an owner's aonId ruling first (the page the record is stamped with at the end of the chain), else the
+ * document this run built it from (usedDocs — the overlaid, the fresh and the pruned-page records), else the
+ * page the last chain stamped (a kept orphan or a revived key, built from no document this run). Before the
+ * overlay, so a row can still override it. scripts/lib/spell-requirements.mjs has the rule; SpellsTab.tsx
+ * spellStatRows prints it; scripts/spell-print-lines-check.mjs `requirements` (npm run verify) holds it.
+ */
+{
+  const pageOf = (id) => {
+    const docId = aonPins.has(`spells|${id}`) ? aonPins.get(`spells|${id}`) : usedDocs.spells?.[id] ?? shippedCore.spells?.[id]?.aonId;
+    return docId ? docById.get(String(docId)) ?? null : null;
+  };
+  const { set, cleared } = fillSpellRequirements(db.spells, pageOf);
+  console.log(`[import-v2] ${set} spell(s) carry their page's Requirements line${cleared ? ` (${cleared} cleared: the page prints none)` : ''}`);
+}
 {
   const { applied, unresolved } = applyBackfill(db);
   backfillCount = applied;
@@ -1412,6 +1470,11 @@ for (const bucket of [...AON_BUCKETS, REFERENCE]) {
   const newMap = bestByBucket[bucket] || {};
   const astOut = {};
   treeAon[bucket] = {};
+  // Exception 2 asks for the PAGE the slug's record is built from (scripts/lib/reprint.mjs, package I I7c) —
+  // the same resolution order as a tree's own below; `true` (the old rule: it blocks) when none is known.
+  const slugPage = (k) => (k in (db[bucket] || {})
+    ? (pinnedPage(bucket, k) ?? db[bucket][k]?.aonId ?? usedDocs[bucket]?.[k] ?? shippedCore[bucket]?.[k]?.aonId ?? true)
+    : false);
   for (const s in newMap) {
     if (!(s in (db[bucket] || {}))) continue;
     /* The AST must be the SHIPPED record's OWN page. bestByBucket picks per-slug by edition rank,
@@ -1456,7 +1519,7 @@ for (const bucket of [...AON_BUCKETS, REFERENCE]) {
     const pinnedId = db[bucket][s]?.aonId;
     const joinedId = pinnedId ?? usedDocs[bucket]?.[s] ?? shippedCore[bucket]?.[s]?.aonId;
     const ownId = pinnedId ? pinnedId
-      : (repointDoc(reprints, joinedId && String(joinedId), s, (k) => k in (db[bucket] || {})) ?? joinedId);
+      : (repointDoc(reprints, joinedId && String(joinedId), s, slugPage) ?? joinedId);
     const own = ownId ? docById.get(String(ownId)) : null;
     const rec = (own?.ast ? own : null) ?? newMap[s].rec;
     // PROVENANCE: the archive document this page was built from, so a guard can be exact rather than

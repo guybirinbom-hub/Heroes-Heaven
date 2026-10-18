@@ -52,7 +52,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadReprintIndex, repointDoc, shippedTwin, slugify, whyUnpaired } from './lib/reprint.mjs';
+import { loadOffPageTwins, loadReprintIndex, repointDoc, resolveDocId, shippedTwin, slugify, whyUnpaired } from './lib/reprint.mjs';
 import { movedProseVerdict } from './lib/moved-prose.mjs';
 import { reprintTwinGaps } from './lib/reprint-twin-gaps.mjs';
 import { MIRROR_DIR, twinPipGaps } from './lib/twin-pips.mjs';
@@ -79,13 +79,13 @@ try {
 } catch { /* the overlay is optional to this check */ }
 
 const index = loadReprintIndex(undefined, { text: true });
-const stripSynthetic = (a) => String(a).replace(/-bonus-\d+$/, '');
-/** The same walk resolveDoc() does in scripts/lib/aonid-categories.mjs: our suffix, then a variant tail. */
-const resolve = (aonId) => {
-  const base = stripSynthetic(aonId);
-  for (const c of [String(aonId), base, base.replace(/-\d+$/, '')]) if (index.docs.has(c)) return c;
-  return null;
-};
+/** The same walk resolveDoc() does in scripts/lib/aonid-categories.mjs: our suffix, then a variant tail —
+ *  scripts/lib/reprint.mjs resolveDocId, the one the rule's page test (samePage) uses. */
+const resolve = (aonId) => resolveDocId(index, aonId);
+/** Exception 2 asks for the PAGE the slug's record is built from (scripts/lib/reprint.mjs): its aonId's
+ *  document, or `true` (a record ships, page unknown — the old rule, it blocks) when that id resolves to
+ *  nothing. The shipped aonId already carries every overlay pin (stamp-aonid.mjs re-applies them last). */
+const slugPageIn = (records) => (k) => (records[k] ? (resolve(records[k].aonId) ?? true) : false);
 
 /*
  * CHECK 2 — the record's BOOK has to follow its document to the newer printing.
@@ -195,9 +195,30 @@ const crossNewer = (D) => {
   return [...(index.links.get(D) ?? [])].filter((n) => index.docs.get(n)?.category !== cat && String(index.docs.get(n)?.release_date ?? '') > when);
 };
 
+/*
+ * AWAITING THE NEXT `npm run data` (package I, I7c, 2026-10-18) — shrink-only, EMPTY after that run.
+ *
+ * The page-aware twin test (scripts/lib/reprint.mjs, exception 2) moves these three records onto their
+ * reprint's page, but only the chain moves a record: import-core-v2.mjs builds it from the reprint,
+ * build-map.mjs -> stamp-aonid.mjs stamp the page and backfill-ast-edition.mjs draws it. Until that run the
+ * shipped artefact still carries the old twin link ("Remastered as" the Player Core lantern / the hand
+ * mirror / the Overwatch feat) that the rule no longer computes. Each entry is the ONE state allowed: the
+ * record still on `from`, the rule moving it to `to`; its old link and the move are then reported here
+ * instead of failing CHECK 3. Any other state fails, so a record the regen has moved fails as "remove the
+ * entry" and the list empties itself.
+ */
+const AWAITING_REGEN = {
+  'items/lantern-implement': { from: 'implement-4', to: 'implement-20' },
+  'items/mirror-implement': { from: 'implement-5', to: 'implement-21' },
+  'feats/master-spotter-investigator': { from: 'feat-1850', to: 'feat-6209' },
+};
+const awaiting = [];
+const awaitingProblems = [];
+const awaitingSeen = new Set();
+
 for (const [bucket, records] of Object.entries(core)) {
   if (!records || typeof records !== 'object' || Array.isArray(records)) continue;
-  const hasSlug = (k) => !!records[k];
+  const hasSlug = slugPageIn(records);
   for (const [key, rec] of Object.entries(records)) {
     if (!rec || typeof rec !== 'object' || !rec.aonId) continue;
     withAon++;
@@ -205,6 +226,13 @@ for (const [bucket, records] of Object.entries(core)) {
     if (!D) { unknown++; continue; }
     const R = repointDoc(index, D, key, hasSlug);
     const where = `${bucket}/${key}`;
+    const waiting = AWAITING_REGEN[where];
+    const isWaiting = !!waiting && D === waiting.from && R === waiting.to;
+    if (waiting) {
+      awaitingSeen.add(where);
+      if (isWaiting) awaiting.push(`${where}  ${D} -> ${R}${rec.remasteredAs ? ` (still "Remastered as" ${rec.remasteredAs.bucket}/${rec.remasteredAs.id})` : ''}`);
+      else awaitingProblems.push(`${where} is in AWAITING_REGEN (${waiting.from} -> ${waiting.to}) but is on ${D} and the rule says ${R ?? 'stay'} — remove the entry`);
+    }
 
     /*
      * CHECK 3, WIDENED — every `remasteredAs` IS the shipped twin. The branch below insists a twin carries
@@ -213,7 +241,7 @@ for (const [bucket, records] of Object.entries(core)) {
      * screen. stamp-aonid.mjs clears and rewrites the field on every regen, so this fails only when the
      * chain did not run or a hand edit put the field there.
      */
-    if (rec.remasteredAs) {
+    if (rec.remasteredAs && !isWaiting) {
       const t = shippedTwin(index, D, key, hasSlug);
       if (!t || rec.remasteredAs.bucket !== bucket || rec.remasteredAs.id !== t.id) {
         staleLink.push(`${where}  remasteredAs ${JSON.stringify(rec.remasteredAs)}, but shippedTwin() is ${t ? `${bucket}/${t.id}` : 'null'}`);
@@ -285,6 +313,7 @@ for (const [bucket, records] of Object.entries(core)) {
       continue;
     }
     if (pinned.has(where)) { byRuling.push(`${where}  pinned at ${D}; the reprint is ${R}`); continue; }
+    if (isWaiting) continue;
     bad.push(`${where}  ${D} "${index.docs.get(D)?.name}" (${index.docs.get(D)?.book}) -> ${R} "${index.docs.get(R)?.name}" (${index.docs.get(R)?.book})`);
   }
 }
@@ -302,6 +331,11 @@ const unmarkedRecords = new Set(unmarked.map((u) => u.split('  ')[0]));
 console.log(`${byTwin.length - unmarkedRecords.size} of ${byTwin.length} shipped twin(s) carry edition legacy + remasteredAs (desk #158).`);
 
 console.log(`${staleBook.length} record(s) whose source.book stayed on the printing their document replaced.`);
+for (const where of Object.keys(AWAITING_REGEN)) {
+  if (!awaitingSeen.has(where)) awaitingProblems.push(`${where} is in AWAITING_REGEN but no such record carries an aonId — remove the entry`);
+}
+console.log(`${awaiting.length} record(s) the rule moves at the next npm run data (AWAITING_REGEN, shrink-only — empty after that run):`);
+for (const a of awaiting) console.log(`   awaiting regen: ${a}`);
 
 console.log(`${refused.length} cross-kind link(s) left unlinked on purpose (refused pairs, counted, not failed):`);
 for (const r of refused) console.log(`   refused: ${r}`);
@@ -455,21 +489,16 @@ const TWIN_NUMBERS_DIFFER = {
 /*
  * …and a link whose record is not on the reprint's page at all is not a numbers question: the twin is found
  * by SLUG in the record's own bucket, so where the reprint has no record there, a record of the same name
- * built from another document answers. Listed here with what it is, and any new one fails.
+ * built from another document answers. Since package I (I7c, 2026-10-18) the chain itself refuses such a twin
+ * (scripts/lib/reprint.mjs, exception 2: the record moves to its reprint's page instead) unless the pair is an
+ * ACCEPTED off-page twin in scripts/data/off-page-twins.json — the list repointDoc reads, so the chain and this
+ * check use one list. Each listed record must still be that twin on exactly the listed pages, and an unlisted
+ * off-page link fails (it can only arise where the chain could not name a page: `true` from hasKey). The
+ * three links this list used to park as wrong and open (Master Spotter (Investigator), Mirror Implement,
+ * Lantern Implement) move at the next npm run data (AWAITING_REGEN above); loadOffPageTwins refuses a reason
+ * marked WRONG, so a wrong link cannot be parked here again.
  */
-const OFF_PAGE_TWINS = {
-  'heritages/aon-half-elf': 'the legacy Half-Elf page (ancestry-7) is reprinted as the Aiuvarin page (ancestry-69), which no heritage record is built from; the link opens the heritage of that name (heritage-281), the remaster\'s form of it.',
-  'heritages/aon-half-orc': 'the legacy Half-Orc page is reprinted as the Dromaar page (ancestry-70), which no heritage record is built from; the link opens the heritage of that name (heritage-282).',
-  'heritages/aon-aasimar': 'the legacy Aasimar page is reprinted as the Nephilim page (ancestry-68), which no heritage record is built from; the link opens the heritage of that name (heritage-280).',
-  'heritages/aon-tiefling': 'the legacy Tiefling page is reprinted as the Nephilim page (ancestry-68), which no heritage record is built from; the link opens the heritage of that name (heritage-280).',
-  'heritages/aon-aphorite': 'the legacy Aphorite page is reprinted as the Nephilim page (ancestry-68), which no heritage record is built from; the link opens the heritage of that name (heritage-280).',
-  'trait/half-elf': 'the legacy Half-Elf page is reprinted as the Aiuvarin page (ancestry-69); the link opens the trait of that name (trait-515).',
-  'trait/half-orc': 'the legacy Half-Orc page is reprinted as the Dromaar page (ancestry-70); the link opens the trait of that name (trait-516).',
-  'trait/gnoll': 'the legacy Gnoll page is reprinted as the Kholo page (ancestry-79); the link opens the trait of that name (trait-758).',
-  'feats/master-spotter-investigator': 'WRONG, open: the reprint is feat-6209 (Master Spotter, Investigator, Player Core 2), which ships no record; the slug belongs to the Overwatch feat feat-3124, which the link opens.',
-  'items/mirror-implement': 'WRONG, open: the reprint is implement-21 (Mirror, Dark Archive (Remastered)), whose records are classFeatures/mirror and implement/mirror; the items slug belongs to the 1 gp hand mirror (equipment-2735), which the link opens.',
-  'items/lantern-implement': 'WRONG, open: the reprint is implement-20 (Lantern, Dark Archive (Remastered)), whose records are classFeatures/lantern and implement/lantern; the items slug belongs to the lantern light source (equipment-2730), which the link opens.',
-};
+const OFF_PAGE_TWINS = Object.fromEntries(loadOffPageTwins().map((t) => [t.record, t]));
 const numberProblems = [];
 {
   const differing = new Set();
@@ -478,16 +507,21 @@ const numberProblems = [];
   const urlOf = (docId) => String(index.docs.get(String(docId ?? ''))?.url ?? '').toLowerCase();
   for (const [bucket, records] of Object.entries(core)) {
     if (!records || typeof records !== 'object' || Array.isArray(records)) continue;
+    const hasSlug = slugPageIn(records);
     for (const [key, rec] of Object.entries(records)) {
       const ra = rec?.remasteredAs;
       const t = ra ? core[ra.bucket]?.[ra.id] : null;
       const D = t && rec.aonId ? resolve(rec.aonId) : null;
-      const twin = D ? shippedTwin(index, D, key, (k) => !!records[k]) : null;
+      const twin = D ? shippedTwin(index, D, key, hasSlug) : null;
       if (!twin) continue;
       const where = `${bucket}/${key}`;
       if (!t.aonId || urlOf(resolve(t.aonId)) !== urlOf(twin.docId)) {
         offPage.add(where);
-        if (!OFF_PAGE_TWINS[where]) numberProblems.push(`${where} is "Remastered as" ${ra.bucket}/${ra.id}, which is not built from the reprint ${twin.docId} — a record of the same slug from another page`);
+        const listed = OFF_PAGE_TWINS[where];
+        if (!listed) numberProblems.push(`${where} is "Remastered as" ${ra.bucket}/${ra.id}, which is not built from the reprint ${twin.docId} — a record of the same slug from another page`);
+        else if (listed.from !== D || listed.reprint !== twin.docId || listed.twin !== resolve(t.aonId)) {
+          numberProblems.push(`${where} is listed in scripts/data/off-page-twins.json as ${listed.from} -> ${listed.reprint} (opening ${listed.twin}), but it is ${D} -> ${twin.docId} (opening ${resolve(t.aonId)}) — correct the entry`);
+        }
         continue;
       }
       if (!['items', 'itemBonus'].includes(bucket) || shapeOf(D) !== shapeOf(twin.docId)) continue;
@@ -498,9 +532,9 @@ const numberProblems = [];
     }
   }
   for (const where of Object.keys(TWIN_NUMBERS_DIFFER)) if (!differing.has(where)) numberProblems.push(`${where} is listed in TWIN_NUMBERS_DIFFER but its twin now prints the same level and price (or it has no twin) — remove the entry`);
-  for (const where of Object.keys(OFF_PAGE_TWINS)) if (!offPage.has(where)) numberProblems.push(`${where} is listed in OFF_PAGE_TWINS but its link now opens the reprint's own record (or it has none) — remove the entry`);
-  console.log(`${compared} grade/page twin(s) compared on level and price; ${differing.size} differ, each with its reason. ${offPage.size} link(s) open a same-slug record from another page, each listed:`);
-  for (const where of offPage) console.log(`   off-page twin: ${where} — ${OFF_PAGE_TWINS[where] ?? '(unlisted)'}`);
+  for (const where of Object.keys(OFF_PAGE_TWINS)) if (!offPage.has(where)) numberProblems.push(`${where} is listed in scripts/data/off-page-twins.json but its link now opens the reprint's own record (or it has none) — remove the entry`);
+  console.log(`${compared} grade/page twin(s) compared on level and price; ${differing.size} differ, each with its reason. ${offPage.size} link(s) open a same-slug record from another page, each an accepted twin in scripts/data/off-page-twins.json:`);
+  for (const where of offPage) console.log(`   off-page twin: ${where} — ${OFF_PAGE_TWINS[where]?.why ?? '(unlisted)'}`);
 }
 
 /*
@@ -772,6 +806,13 @@ if (aliasProblems.length) {
   console.error('   An escaped spelling gets its row in scripts/data/book-names.json (and a reason where it renames the title);');
   console.error('   the chain\'s foldBookSpellings (scripts/lib/aon-facets.mjs) folds it at the next `npm run data`. Where the old');
   console.error('   spelling shared its book\'s Sources row at v0.1.40, add a src/rules/sources.ts BOOK_FOLDS pair too.');
+  process.exit(1);
+}
+
+if (awaitingProblems.length) {
+  console.error('\nreprint-check: FAIL — AWAITING_REGEN lists a record that is not in the one state it allows:');
+  for (const p of awaitingProblems) console.error('   ' + p);
+  console.error('   The list only shrinks: after `npm run data` has moved a record, delete its entry.');
   process.exit(1);
 }
 

@@ -1,0 +1,61 @@
+{
+  "_": "ACCEPTED OFF-PAGE TWINS (scripts/lib/reprint.mjs exception 2; package I, I7c, 2026-10-18). A record whose own page (`from`) is reprinted as `reprint`, where the record holding the reprint's slug in the same bucket is built from ANOTHER page (`twin`) and is nevertheless the remaster's form of the old page, so the old record stays a desk #158 twin (edition legacy, \"Remastered as\") instead of moving onto `reprint`. Read by repointDoc (the chain: import-core-v2, build-map -> stamp-aonid) and by scripts/reprint-check.mjs CHECK 5 (the guard): one list for both. Any other slug record built from another page merely shares the reprint's NAME and no longer blocks the move. Moved here from reprint-check.mjs OFF_PAGE_TWINS with their reasons; the three entries that list marked \"WRONG, open\" (feats/master-spotter-investigator, items/mirror-implement, items/lantern-implement) are not accepted and repoint at the next npm run data. loadOffPageTwins refuses a malformed entry and any reason marked WRONG; CHECK 5 fails an entry whose record is no longer such a twin on exactly these pages (correct or remove it) and an off-page twin that is not listed.",
+  "twins": [
+    {
+      "record": "heritages/aon-half-elf",
+      "from": "ancestry-7",
+      "reprint": "ancestry-69",
+      "twin": "heritage-281",
+      "why": "the legacy Half-Elf page (ancestry-7) is reprinted as the Aiuvarin page (ancestry-69), which no heritage record is built from; the link opens the heritage of that name (heritage-281), the remaster's form of it."
+    },
+    {
+      "record": "heritages/aon-half-orc",
+      "from": "ancestry-8",
+      "reprint": "ancestry-70",
+      "twin": "heritage-282",
+      "why": "the legacy Half-Orc page (ancestry-8) is reprinted as the Dromaar page (ancestry-70), which no heritage record is built from; the link opens the heritage of that name (heritage-282)."
+    },
+    {
+      "record": "heritages/aon-aasimar",
+      "from": "ancestry-24",
+      "reprint": "ancestry-68",
+      "twin": "heritage-280",
+      "why": "the legacy Aasimar page (ancestry-24) is reprinted as the Nephilim page (ancestry-68), which no heritage record is built from; the link opens the heritage of that name (heritage-280)."
+    },
+    {
+      "record": "heritages/aon-tiefling",
+      "from": "ancestry-26",
+      "reprint": "ancestry-68",
+      "twin": "heritage-280",
+      "why": "the legacy Tiefling page (ancestry-26) is reprinted as the Nephilim page (ancestry-68), which no heritage record is built from; the link opens the heritage of that name (heritage-280)."
+    },
+    {
+      "record": "heritages/aon-aphorite",
+      "from": "ancestry-28",
+      "reprint": "ancestry-68",
+      "twin": "heritage-280",
+      "why": "the legacy Aphorite page (ancestry-28) is reprinted as the Nephilim page (ancestry-68), which no heritage record is built from; the link opens the heritage of that name (heritage-280)."
+    },
+    {
+      "record": "trait/half-elf",
+      "from": "ancestry-7",
+      "reprint": "ancestry-69",
+      "twin": "trait-515",
+      "why": "the legacy Half-Elf page (ancestry-7) is reprinted as the Aiuvarin page (ancestry-69); the link opens the trait of that name (trait-515)."
+    },
+    {
+      "record": "trait/half-orc",
+      "from": "ancestry-8",
+      "reprint": "ancestry-70",
+      "twin": "trait-516",
+      "why": "the legacy Half-Orc page (ancestry-8) is reprinted as the Dromaar page (ancestry-70); the link opens the trait of that name (trait-516)."
+    },
+    {
+      "record": "trait/gnoll",
+      "from": "ancestry-44",
+      "reprint": "ancestry-79",
+      "twin": "trait-758",
+      "why": "the legacy Gnoll page (ancestry-44) is reprinted as the Kholo page (ancestry-79); the link opens the trait of that name (trait-758)."
+    }
+  ]
+}

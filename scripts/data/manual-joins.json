@@ -1,0 +1,21 @@
+{
+  "_": "KEY-EXACT JOINS (package I, I7d, 2026-10-18), read by scripts/migration/build-map.mjs. A record the stage-1 matcher filed on ANOTHER record's page by name (map.json how \"slug-noparen\": the bare name without its parenthesis) is joined here to its own Archives page, so map.json names that page, stamp-aonid.mjs stamps it as aonId and backfill-ast-edition.mjs draws its popup from it. A JOIN fix, not an overlay aonId pin: a pin keeps the join's page as joinDocId, which scripts/import-core-v2.mjs mapDocFor builds a record from (build-map.mjs's trait|Metamagic entry says the same). Keyed by bucket/key, not by name: the name is what matched the wrong page. All four are kept orphans today (no export page slugs to their key), so import-core-v2.mjs builds their facets and prose from the Foundry reference and never reads the join; build-map.mjs refuses an entry whose record the importer built from another page (used-docs.json), names a page the export does not hold, or names a record core.json does not hold. Each why cites the page.",
+  "joins": {
+    "feats/roll-with-it-kingmaker": {
+      "docId": "feat-3903",
+      "why": "feat-3903 is \"Roll with It (Ranger)\", Kingmaker Companion Guide pg. 23 — the record's own feat (traits ranger, level 12, prose \"Your hunted prey, which must be a giant, hits you with a melee attack\"). The matcher stamped feat-1009 by name: the goblin feat \"Roll with It (Goblin)\", Character Guide pg. 39, which feats/roll-with-it carries."
+    },
+    "conditions/aon-concealed-army": {
+      "docId": "condition-44",
+      "why": "condition-44 is \"Concealed (Army)\", Kingmaker Adventure Path pg. 582 — the record's own condition (prose \"A concealed army is tougher to target\"). The matcher stamped condition-62 by name: the Player Core \"Concealed\" condition, which conditions/concealed carries."
+    },
+    "feats/quick-recovery": {
+      "docId": "feat-7004",
+      "why": "feat-7004 is \"Quick Recovery (Yaoguai)\", Tian Xia Character Guide pg. 87 — the record's own feat (traits yaoguai, level 9, Frequency once per day, prose \"You use your command over your form to repair\" … \"Reduce your wounded condition by 1.\"). The matcher stamped feat-3923 by name: the kingdom feat \"Quick Recovery (Kingdom)\", Kingmaker Adventure Path pg. 532, which feats/quick-recovery-kingdom carries."
+    },
+    "feats/the-harder-they-fall": {
+      "docId": "feat-4938",
+      "why": "feat-4938 is \"The Harder They Fall (Rogue)\", Player Core pg. 172 — the record's own feat (traits rogue, level 4, prose \"When you successfully Trip an off-guard foe\"). The matcher stamped feat-3901 by name: the ranger feat \"The Harder They Fall (Ranger)\", Kingmaker Companion Guide pg. 23, which feats/the-harder-they-fall-kingmaker carries."
+    }
+  }
+}

@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { readFileSync } from 'node:fs';
-import { buildReprintMap, newestPrinting, repointDoc, shippedTwin, slugify, whyUnpaired } from '../scripts/lib/reprint.mjs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import {
+  buildReprintMap, loadOffPageTwins, newestPrinting, OFF_PAGE_TWINS_FILE, repointDoc, resolveDocId, samePage, shippedTwin, slugify, whyUnpaired,
+} from '../scripts/lib/reprint.mjs';
 
 /**
  * WHY THIS FILE EXISTS.
@@ -557,6 +561,133 @@ describe('reprint.mjs — the newest printing wins', () => {
       expect(index.derived.get('equipment-5-2')).toEqual({ name: 'Lamp (Major)', class: '', sub: true, grade: true });
       expect(repointDoc(index, 'equipment-5-2', 'some-other-record', never)).toBeNull();
       expect(repointDoc(index, 'equipment-5-2', 'lamp-major', never)).toBe('equipment-6-2');
+    });
+  });
+
+  /*
+   * package I (I7c, 2026-10-18): exception 2 asks for the slug record's PAGE. A record that merely shares the
+   * reprint's NAME used to block the move — items/lantern-implement (implement-4) stayed "Remastered as" the
+   * Player Core lantern light source (equipment-2730) instead of moving to implement-20; the same for Mirror
+   * Implement (the 1 gp hand mirror) and Master Spotter (Investigator) (the Overwatch feat, feat-3124). The shapes
+   * below are that data, shrunk. Mutation-proof: make slugRecordIsTwin answer "twin" for every string (the page
+   * test removed) and the lantern case goes red; make it answer "not a twin" and the acid-splash, older-page,
+   * unknown-page and accepted off-page cases go red.
+   */
+  describe('exception 2 asks for the slug record\'s page (package I, I7c)', () => {
+    const NONE = { offPageTwins: [] as never[] };
+    const lantern = () => buildReprintMap([
+      doc('implement-4', 'implement', { name: 'Lantern', url: '/Implements.aspx?ID=4' }),
+      doc('implement-20', 'implement', { name: 'Lantern', url: '/Implements.aspx?ID=20', edition: 'remaster', release_date: '2026-02-04', data: { legacy_id: ['implement-4'] } }),
+      doc('equipment-2730', 'equipment', { name: 'Lantern', url: '/Equipment.aspx?ID=2730', edition: 'remaster', release_date: '2023-08-02' }),
+    ], NONE);
+
+    it('a slug record built from ANOTHER page does not block the move (Lantern Implement -> implement-20)', () => {
+      const index = lantern();
+      // items/lantern is the light source, built from equipment-2730: it shares the name, it is not the reprint
+      const held = (k: string) => (k === 'lantern' ? 'equipment-2730' : false);
+      expect(repointDoc(index, 'implement-4', 'lantern-implement', held)).toBe('implement-20');
+      expect(shippedTwin(index, 'implement-4', 'lantern-implement', held)).toBeNull();
+    });
+
+    it('`true` (a record ships, its page unknown) keeps the old rule: it blocks', () => {
+      const index = lantern();
+      const ships = (k: string) => k === 'lantern';
+      expect(repointDoc(index, 'implement-4', 'lantern-implement', ships)).toBeNull();
+      expect(shippedTwin(index, 'implement-4', 'lantern-implement', ships)?.id).toBe('lantern');
+    });
+
+    it('a slug record built from the reprint\'s own page still blocks — the desk #158 twin (acid splash)', () => {
+      const index = buildReprintMap([
+        doc('t-1', 'spell', { name: 'Acid Splash', url: '/Spells.aspx?ID=1' }),
+        doc('t-2', 'spell', { name: 'Caustic Blast', url: '/Spells.aspx?ID=2', release_date: '2023-11-15', data: { legacy_id: ['t-1'] } }),
+        doc('t-2-1', 'spell', { name: 'Caustic Blast (Greater)', url: '/Spells.aspx?ID=2', release_date: '2023-11-15' }),
+      ], NONE);
+      expect(repointDoc(index, 't-1', 'acid-splash', (k) => (k === 'caustic-blast' ? 't-2' : false))).toBeNull();
+      expect(shippedTwin(index, 't-1', 'acid-splash', (k) => (k === 'caustic-blast' ? 't-2' : false))?.id).toBe('caustic-blast');
+      // a block printed on the reprint's page (same url) is that page too
+      expect(repointDoc(index, 't-1', 'acid-splash', (k) => (k === 'caustic-blast' ? 't-2-1' : false))).toBeNull();
+    });
+
+    it('a slug record still on an OLDER printing of the reprint blocks too — the two would collapse onto one page', () => {
+      const index = buildReprintMap([
+        doc('o-1', 'feat', { name: 'Old Name', url: '/Feats.aspx?ID=1' }),
+        doc('o-0', 'feat', { name: 'New Name', url: '/Feats.aspx?ID=0', data: { remaster_id: ['o-2'] } }),
+        doc('o-2', 'feat', { name: 'New Name', url: '/Feats.aspx?ID=2', release_date: '2023-11-15', data: { legacy_id: ['o-1'] } }),
+      ], NONE);
+      expect(repointDoc(index, 'o-1', 'old-name', (k) => (k === 'new-name' ? 'o-0' : false))).toBeNull();
+    });
+
+    it('a slug record whose page cannot be resolved blocks — unknown is not "another page"', () => {
+      const index = lantern();
+      expect(repointDoc(index, 'implement-4', 'lantern-implement', (k) => (k === 'lantern' ? 'equipment-99999' : false))).toBeNull();
+      expect(samePage(index, 'equipment-99999', 'implement-20')).toBeNull();
+    });
+
+    it('an ACCEPTED off-page twin (scripts/data/off-page-twins.json) stays a twin; unlisted, the same pair repoints', () => {
+      const docs = [
+        doc('ancestry-7', 'ancestry', { name: 'Half-Elf', url: '/Ancestries.aspx?ID=7' }),
+        doc('ancestry-69', 'ancestry', { name: 'Aiuvarin', url: '/Ancestries.aspx?ID=69', release_date: '2024-07-31', data: { legacy_id: ['ancestry-7'] } }),
+        doc('heritage-281', 'heritage', { name: 'Aiuvarin', url: '/Heritages.aspx?ID=281', release_date: '2024-07-31' }),
+      ];
+      const aiuvarin = (k: string) => (k === 'aiuvarin' ? 'heritage-281' : false);
+      const listed = buildReprintMap(docs, { offPageTwins: [{ record: 'heritages/aon-half-elf', from: 'ancestry-7', reprint: 'ancestry-69', twin: 'heritage-281', why: 'test' }] });
+      expect(repointDoc(listed, 'ancestry-7', 'aon-half-elf', aiuvarin)).toBeNull();
+      expect(shippedTwin(listed, 'ancestry-7', 'aon-half-elf', aiuvarin)?.id).toBe('aiuvarin');
+      expect(repointDoc(buildReprintMap(docs, NONE), 'ancestry-7', 'aon-half-elf', aiuvarin)).toBe('ancestry-69');
+    });
+
+    it('resolveDocId walks a synthetic bonus-line tail and a variant tail to the page; samePage compares urls', () => {
+      const index = lantern();
+      expect(resolveDocId(index, 'implement-20-bonus-7')).toBe('implement-20');
+      expect(resolveDocId(index, 'implement-20-3')).toBe('implement-20');
+      expect(resolveDocId(index, true)).toBeNull();
+      expect(samePage(index, 'implement-20', 'implement-4')).toBe(false);
+      expect(samePage(index, 'implement-20-3', 'implement-20')).toBe(true);
+    });
+
+    it('the shipped list loads, and none of its reasons parks a wrong link', () => {
+      const twins = loadOffPageTwins();
+      expect(twins.length).toBe(8);
+      expect(twins.filter((t: { why: string }) => /WRONG/.test(t.why))).toEqual([]);
+      expect(OFF_PAGE_TWINS_FILE.replace(/\\/g, '/')).toMatch(/scripts\/data\/off-page-twins\.json$/);
+    });
+
+    it('loadOffPageTwins refuses a malformed list rather than skipping an entry', () => {
+      const dir = mkdtempSync(join(tmpdir(), 'off-page-'));
+      try {
+        const ok = { record: 'heritages/aon-half-elf', from: 'ancestry-7', reprint: 'ancestry-69', twin: 'heritage-281', why: 'the remaster form' };
+        const file = join(dir, 'twins.json');
+        const write = (twins: unknown) => writeFileSync(file, JSON.stringify({ twins }));
+        write([ok]);
+        expect(loadOffPageTwins(file)).toHaveLength(1);
+        write([{ ...ok, twin: '' }]);
+        expect(() => loadOffPageTwins(file)).toThrow(/lacks twin/);
+        write([{ ...ok, from: 'Half-Elf page' }]);
+        expect(() => loadOffPageTwins(file)).toThrow(/not an Archives document id/);
+        write([ok, ok]);
+        expect(() => loadOffPageTwins(file)).toThrow(/listed twice/);
+        write([{ ...ok, why: 'WRONG, open: parked' }]);
+        expect(() => loadOffPageTwins(file)).toThrow(/WRONG/);
+        writeFileSync(file, JSON.stringify({ heritages: [ok] }));
+        expect(() => loadOffPageTwins(file)).toThrow(/expected/);
+      } finally {
+        rmSync(dir, { recursive: true, force: true });
+      }
+    });
+
+    it('every caller answers with the page, never a bare boolean (import-core-v2, build-map, reprint-check)', () => {
+      const importer = readFileSync('scripts/import-core-v2.mjs', 'utf8');
+      const map = readFileSync('scripts/migration/build-map.mjs', 'utf8');
+      const check = readFileSync('scripts/reprint-check.mjs', 'utf8');
+      // the old boolean answers are gone …
+      expect(importer).not.toMatch(/const hasSlug = \(k\) => keySet\.has\(k\);/);
+      expect(importer).not.toMatch(/repointDoc\(reprints, joinedId && String\(joinedId\), s, \(k\) => k in/);
+      expect(map).not.toMatch(/const hasSlug = \(k\) => !!records\[k\];/);
+      expect(map).not.toMatch(/shippedTwin\(reprints, pin, key, \(k\) => !!records\[k\]\)/);
+      expect(check).not.toMatch(/\(k\) => !!records\[k\]/);
+      // … and CHECK 5 reads the one shared list
+      expect(check).toMatch(/loadOffPageTwins\(\)/);
+      expect(check).not.toMatch(/WRONG, open/);
     });
   });
 

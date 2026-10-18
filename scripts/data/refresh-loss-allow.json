@@ -2338,19 +2338,5 @@
   "field": "description",
   "aon": "feat-9057",
   "why": "batch P02 running-recharge#description-header: page header (name, Source) stripped so the body opens with feat-9057's \"Preparing in every way for your next assault\"; shorter by the header; guarded by scripts/description-header-check.mjs."
- },
- {
-  "key": "items/major-pickled-demon-tongue",
-  "field": "counters",
-  "aon": "equipment-4030-3712",
-  "before": "d53f43edc1a3250a",
-  "why": "package I (L6b), 2026-10-17: equipment-4030-3712 prints two separate \"Frequency once per day\" activations in the Major Pickled Demon Tongue block (4th-rank acid grip; 4th-rank acidic burst). The twin shipped a per-day counter of 3 (an older frequency {max:3} row) beside the frequency fill's per-day 1, four pips where print gives two. Two overlay rows in scripts/data/effect-backfill.json (frequency {max:1}, counters freq 1 + freq2 1) replace the counter of 3: one member replaced (max 3 -> 1), none dropped, 2 before and after."
- },
- {
-  "key": "items/major-polished-demon-horn",
-  "field": "counters",
-  "aon": "equipment-4031-3715",
-  "before": "d53f43edc1a3250a",
-  "why": "package I (L6b), 2026-10-17: equipment-4031-3715 prints two separate \"Frequency once per day\" activations in the Major Polished Demon Horn block (outcast's curse; vision of death). The twin shipped a per-day counter of 3 (an older frequency {max:3} row) beside the frequency fill's per-day 1, four pips where print gives two. Two overlay rows in scripts/data/effect-backfill.json (frequency {max:1}, counters freq 1 + freq2 1) replace the counter of 3: one member replaced (max 3 -> 1), none dropped, 2 before and after."
  }
 ]

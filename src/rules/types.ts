@@ -4271,6 +4271,13 @@ export interface Spell extends ContentBase {
   area?: string;
   targets?: string;
   duration?: string;
+  /**
+   * The printed Requirements line of the record's own (newest) Archives page — "You’re wielding a melee
+   * weapon in two hands." (Thunderous Strike, spell-2885). DISPLAY-ONLY: filled by scripts/import-core-v2.mjs
+   * from the page (scripts/lib/spell-requirements.mjs) and read only by SpellsTab.tsx spellStatRows, the
+   * popup's field lane (no page loaded, a homebrew copy). Nothing computes with it. Package I, I6d.
+   */
+  requirements?: string;
   /** Saving throw the target rolls, if any. */
   save?: { type: SaveId; basic?: boolean };
   /** What the spell attacks against (spell attack roll vs AC, or a save). */

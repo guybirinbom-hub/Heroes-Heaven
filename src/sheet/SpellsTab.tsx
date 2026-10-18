@@ -104,6 +104,9 @@ export function spellStatRows(spell: Spell): [string, string | undefined][] {
   // is "5-foot <%RULES%2387%%>emanation<%END>".
   return [
     ['Cast', undefined],
+    // Package I (I6d): the page's Requirements line, where the page prints it beside Cast
+    // ("Cast [one-action]; Requirements You’re wielding a melee weapon in two hands.").
+    ['Requirements', spell.requirements && cleanRun(spell.requirements)],
     ['Range', spell.range && cleanRun(spell.range)],
     ['Area', spell.area && cleanRun(spell.area)],
     ['Targets', spell.targets && cleanRun(spell.targets)],

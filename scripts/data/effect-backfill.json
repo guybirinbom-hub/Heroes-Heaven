@@ -111564,7 +111564,8 @@
   "category": "items",
   "id": "lantern-implement",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "implement-20 (Lantern, Dark Archives (Remastered) pg. 38, released 2026-02-04, legacy_id implement-4) is the newest printing of this record's page implement-4 (Dark Archive pg. 38); gold-set R12, the newest printing wins whole. The old row (no why) held \"legacy\" only because the chain took items/lantern (equipment-2730, the light source) for this item's reprint by slug, a wrong twin (reprint-check CHECK 5 OFF_PAGE_TWINS \"WRONG, open\"). The other six implement items (implement-17/18/19/22/23/24) already read \"remaster\"."
  },
  {
   "category": "items",
@@ -111660,7 +111661,8 @@
   "category": "items",
   "id": "mirror-implement",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "implement-21 (Mirror, Dark Archives (Remastered) pg. 38, released 2026-02-04, legacy_id implement-5) is the newest printing of this record's page implement-5 (Dark Archive pg. 38); gold-set R12, the newest printing wins whole. The old row (no why) held \"legacy\" only because the chain took items/mirror (equipment-2735, the 1 gp hand mirror) for this item's reprint by slug, a wrong twin (reprint-check CHECK 5 OFF_PAGE_TWINS \"WRONG, open\"). The other six implement items already read \"remaster\"."
  },
  {
   "category": "items",
@@ -118980,7 +118982,8 @@
   "category": "feats",
   "id": "quick-recovery",
   "field": "edition",
-  "value": "neutral"
+  "value": "remaster-era",
+  "why": "feat-7004 carries edition \"remaster-era\" in the export (Tian Xia Character Guide, 2024-08-28). The old \"neutral\" came from the wrong page feat-3923 (Kingmaker Adventure Path). Visible either way; this only makes the record agree with its page."
  },
  {
   "category": "feats",
@@ -119287,7 +119290,8 @@
   "category": "feats",
   "id": "roll-with-it-kingmaker",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "neutral",
+  "why": "feat-3903 carries edition \"neutral\" in the export (Kingmaker Companion Guide, 2022-10-26), as every other Kingmaker record does. The old \"legacy-era\" came from the wrong page feat-1009 (Character Guide) and hid this Kingmaker ranger feat under \"Hide legacy data\"."
  },
  {
   "category": "feats",
@@ -119299,7 +119303,8 @@
   "category": "feats",
   "id": "the-harder-they-fall",
   "field": "edition",
-  "value": "neutral"
+  "value": "remaster",
+  "why": "feat-4938 carries edition \"remaster\" in the export (Player Core, 2023-11-15). The old \"neutral\" came from the wrong page feat-3901 (Kingmaker Companion Guide)."
  },
  {
   "category": "feats",
@@ -120973,7 +120978,8 @@
   "category": "conditions",
   "id": "aon-concealed-army",
   "field": "edition",
-  "value": "remaster"
+  "value": "neutral",
+  "why": "condition-44 carries edition \"neutral\" in the export (Kingmaker Adventure Path, 2022-10-26), like the other 13 Kingmaker army conditions. The old \"remaster\" came from the wrong page condition-62 (Player Core \"Concealed\")."
  },
  {
   "category": "conditions",
@@ -196717,5 +196723,235 @@
    }
   ],
   "why": "equipment-4031-3715 (the twin's own page) prints two separate \"Frequency once per day\" activations (outcast's curse; vision of death); the legacy printing equipment-2415-2222 (items/polished-demon-horn-major) prints the same two in its Major block; package I lane L6b, gold-set R12 / desk #158"
+ },
+ {
+  "category": "feats",
+  "id": "roll-with-it-kingmaker",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Kingmaker Companion Guide",
+   "license": "OGL"
+  },
+  "why": "feat-3903 \"Roll with It (Ranger)\" is printed in Kingmaker Companion Guide pg. 23. Desk #166: the record names its own document's book, not the \"Pathfinder Kingmaker\" key that spans two books. Licence carried over unchanged."
+ },
+ {
+  "category": "conditions",
+  "id": "aon-concealed-army",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Kingmaker Adventure Path",
+   "license": "ORC"
+  },
+  "why": "condition-44 \"Concealed (Army)\" is printed in Kingmaker Adventure Path pg. 582. Desk #166: the record names its own document's book, not the \"Pathfinder Kingmaker\" key that spans two books. Licence carried over unchanged."
+ },
+ {
+  "category": "items",
+  "id": "greater-ouroboros-flail",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per hour",
+    "max": 1,
+    "per": "hour",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5023-4554 (the twin's own page) prints \"Frequency once per hour\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "major-ouroboros-flail",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per hour",
+    "max": 1,
+    "per": "hour",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5023-4555 (the twin's own page) prints \"Frequency once per hour\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "greater-singing-shortbow",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per hour",
+    "max": 1,
+    "per": "hour",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5028-4557 (the twin's own page) prints \"Frequency once per hour\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "greater-sonic-tuning-mace",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5029-4559 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "greater-five-feather-wreath",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5152-4632 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "greater-flaming-star",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5153-4635 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "greater-grim-sandglass",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5154-4638 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "greater-perfect-droplet",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5157-4647 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "greater-trinity-geode",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5160-4655 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "trail-warding-tattoo",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5181-4684 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "wave-warding-tattoo",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5181-4685 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "fiend-warding-tattoo",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5181-4686 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "greater-stampede-medallion",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5189-4692 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "items",
+  "id": "major-stampede-medallion",
+  "field": "counters",
+  "value": [
+   {
+    "id": "freq",
+    "label": "per day",
+    "max": 1,
+    "per": "day",
+    "resetsOnRest": true
+   }
+  ],
+  "why": "equipment-5189-4693 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
  }
 ]
