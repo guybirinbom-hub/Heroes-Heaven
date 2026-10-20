@@ -135,6 +135,89 @@ describe('takeForeignRoster: the other tab’s write, and the roster it grew fro
   });
 });
 
+describe('another tab signs in as ANOTHER ACCOUNT (S3, 2026-10-20)', () => {
+  /*
+   * cloudSync's startSync, in the other tab: the account-scoped keys wiped, the new sync owner saved,
+   * then the new account's roster written by its first adopt — onto an EMPTY key, so its lineage says it
+   * replaced nothing (`on: null`). On 6393b29 this tab merged it against its old-account roster: an
+   * old-account character it held an edit on was kept ("they deleted it, we changed it") and written back
+   * into the new account's key (the App-level leg is test/bug-two-tabs-roster.test.tsx (8)).
+   */
+  const OWNER_KEY = 'pf2e-codex.syncOwner';
+  async function switched() {
+    const m = await modules();
+    localStorage.setItem(OWNER_KEY, 'acct-old');
+    localStorage.setItem(ROSTER_KEY, JSON.stringify([pc('old', 'Old Account Hero')]));
+    m.tabs.loadRosterKnown();
+    // The other tab switches accounts.
+    localStorage.removeItem(ROSTER_KEY);
+    localStorage.setItem(OWNER_KEY, 'acct-new');
+    return m;
+  }
+
+  it('while the key is emptied and not filled yet: nothing to take, and this tab may write nothing', async () => {
+    const { tabs } = await switched();
+    expect(tabs.takeForeignRoster()).toBeNull();
+    expect(tabs.rosterOwnerSwitched()).toBe(true);
+  });
+
+  it('the new account’s roster is taken WHOLE — never merged with the old one — and the switch is then over', async () => {
+    const { tabs, lineage } = await switched();
+    otherTabWrites([pc('new', 'New Account Hero')], null, lineage.rosterSig);
+    const f = tabs.takeForeignRoster();
+    expect(f?.kind).toBe('replace');
+    if (f?.kind === 'replace') expect(f.incoming.map((c) => c.id)).toEqual(['new']);
+    expect(tabs.rosterOwnerSwitched()).toBe(false);
+    expect(tabs.takeForeignRoster(), 'taken once').toBeNull();
+  });
+
+  it('a FIRST sign-in (no owner before) is not a switch: the write merges as any other', async () => {
+    const { tabs, lineage } = await modules();
+    const p = [pc('a', 'Ayla')];
+    const pRaw = JSON.stringify(p);
+    localStorage.setItem(ROSTER_KEY, pRaw);
+    tabs.loadRosterKnown();
+    localStorage.setItem(OWNER_KEY, 'acct-first');
+    expect(tabs.rosterOwnerSwitched()).toBe(false);
+    otherTabWrites([pc('a', 'Ayla', 1)], lineage.rosterSig(pRaw), lineage.rosterSig);
+    expect(tabs.takeForeignRoster()?.kind).toBe('write');
+  });
+
+  /*
+   * …and the player is TOLD (a checker's finding, 2026-10-20): a held write used to be dropped without a
+   * word, so in a tab whose key stayed empty every edit was lost with no "can't save" banner. The result
+   * callback (App: the save-failed banner) now hears `false`; the next write that lands clears it.
+   * MUTATION (run 2026-10-20): `if (roster === HOLD_WRITE) return;` (no onResult) in persist.writePending —
+   * this fails on `the player is told it was not saved: expected [] to deeply equal [ false ]`.
+   * Fix-up F2 (2026-10-20): the result says WHY — 'held' — so App's banner names the account switch
+   * instead of blaming browser storage. MUTATION (run 2026-10-20): `onResult(false)` (no reason) in
+   * writePending → `held back, not refused by storage: expected [ undefined ] to deeply equal [ 'held' ]`.
+   */
+  it('persist: a roster the reconcile step holds back is not written, remembered or handed to cloud sync — and is reported unsaved', async () => {
+    const { persist } = await modules();
+    const writer = vi.fn((_r: unknown) => true);
+    const after = vi.fn();
+    const results: boolean[] = [];
+    const reasons: unknown[] = [];
+    persist.setupPersist(
+      writer,
+      (ok, reason) => {
+        results.push(ok);
+        reasons.push(reason);
+      },
+      () => persist.HOLD_WRITE,
+    );
+    persist.setOnPersisted(after);
+    persist.persistNow([pc('old', 'Old Account Hero')]);
+    expect(writer).not.toHaveBeenCalled();
+    expect(after).not.toHaveBeenCalled();
+    expect(persist.recentPersists()).toEqual([]);
+    expect(persist.hasPendingPersist()).toBe(false);
+    expect(results, 'the player is told it was not saved').toEqual([false]);
+    expect(reasons, 'held back, not refused by storage').toEqual(['held']);
+  });
+});
+
 describe('two tabs settle', () => {
   it('a parsed roster re-parses to itself — a tab writing back what it parsed from the other tab’s write ends the exchange', async () => {
     // Each tab writes what it merged; a merge of a write it only adopted is that write PARSED (normalised

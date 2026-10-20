@@ -31,9 +31,10 @@ import { getPrefs, subscribePrefs } from './data/prefs';
 import { useIsMobile, useShowUndoButtons } from './sheet/useIsMobile';
 import { gmEditVerdict, boundGmBase, editsToApply, sameInstant, type GmChainRecord } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
-import { setupPersist, schedulePersist, persistNow, flushPersist, foldIntoPersist } from './data/persist';
-import { loadRosterKnown, takeForeignRoster } from './data/rosterTabs';
-import { mergeRosterEdits, type Yield } from './data/rosterMerge';
+import { setupPersist, schedulePersist, persistNow, flushPersist, foldIntoPersist, HOLD_WRITE } from './data/persist';
+import { loadRosterKnown, takeForeignRoster, rosterOwnerSwitched, type ForeignRoster } from './data/rosterTabs';
+import { mergeRosterEdits } from './data/rosterMerge';
+import { gmApplyYields as gmApplyYieldsBy, revertOwnStep, settleMergedBuild } from './data/rosterFold';
 import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
 import { useUndoableState } from './useUndoableState';
@@ -112,23 +113,12 @@ function initialRoster(): SavedChar[] {
 
 /**
  * H1 (2026-10-18): WHO GIVES WAY when another tab's write and this tab's entry both changed one
- * character (src/data/rosterMerge.ts — otherwise this tab's value keeps a conflict). A GM push this tab
- * applied is never the player's own change, so it never wins against one:
- *  - an apply not consumed yet (its record still waits for the commit that holds it) gives way WHOLE —
- *    the after-commit effect then finds the entry replaced and the row is judged again: it waits, and is
- *    refused with a receipt once their change publishes, as any push that meets a change of theirs is;
- *  - an apply already consumed, made after the roster the other tab built on (the mark is on this entry
- *    and not on the base's), loses every value both changed — the other tab's write cannot have seen it.
- * `applied` is the record map keyed by mark (gmAppliedRef).
+ * character — a GM push this tab applied never wins against the player's change. The rule, and S1
+ * (2026-10-20: an unconsumed push is taken out of the entry rather than the entry given away whole, so a
+ * tap made on top of it stays), live in src/data/rosterFold.ts. `applied` is gmUnlandedRef's records.
  */
-function gmApplyYields(applied: Map<string, unknown>): (local: SavedChar, base: SavedChar | undefined) => Yield {
-  return (local, base) => {
-    const mark = (local as GmMarked)[GM_APPLIED];
-    if (!mark) return null;
-    if (applied.has(mark)) return 'whole';
-    return (base as GmMarked | undefined)?.[GM_APPLIED] === mark ? null : 'conflicts';
-  };
-}
+const gmApplyYields = (applied: Map<string, { entry: SavedChar; over: SavedChar }>) =>
+  gmApplyYieldsBy(applied, (c) => (c as GmMarked)[GM_APPLIED]);
 
 export default function App() {
   const [content, setContent] = useState<ContentDatabase | null>(null);
@@ -150,7 +140,12 @@ export default function App() {
   const bypassLogin = devBypass || localSkip;
   // Roster lives in an undo/redo timeline: every character-data change (all sheet mutations funnel
   // through setRoster) becomes an undoable step, driving Ctrl+Z / Ctrl+Shift+Z below.
-  const { state: roster, set: setRoster, undo, redo, canUndo, canRedo } = useUndoableState<SavedChar[]>(initialRoster);
+  // Another tab's write and a cloud adopt are NOT steps (`record: false` below); an undo carries this
+  // tab's own last step back onto the roster as it is now, three ways (S4, 2026-10-20: revertRosterStep).
+  // An entry that revert MADE has its character re-derived from its build (rosterFold.revertOwnStep).
+  const { state: roster, set: setRoster, undo, redo, canUndo, canRedo } = useUndoableState<SavedChar[]>(initialRoster, {
+    revert: (present, from, to) => revertOwnStep(contentRef.current)(present, from, to),
+  });
   // Settings → Interface can hide the undo/redo arrows (and 'auto' hides them on phones). The keyboard
   // shortcuts below are NOT gated on this — the setting is about header clutter, not about undo.
   const showUndoButtons = useShowUndoButtons();
@@ -221,8 +216,10 @@ export default function App() {
   // The build being edited: a BuildState (edit existing) or null (creating new).
   const [editing, setEditing] = useState<{ id: string; build: BuildState } | null>(null);
   // True when the last persist attempt was rejected (e.g. localStorage quota) — surfaced as a banner
-  // so the user knows their changes aren't being saved rather than losing them silently.
-  const [saveFailed, setSaveFailed] = useState(false);
+  // so the user knows their changes aren't being saved rather than losing them silently. 'held' = the
+  // write was held back because another tab switched accounts (persist HOLD_WRITE) — storage is fine, so
+  // the banner says that instead of blaming storage.
+  const [saveFailed, setSaveFailed] = useState<false | 'storage' | 'held'>(false);
   // Proactive "storage almost full" heads-up (before the hard quota failure that sets saveFailed).
   const [storageWarn, setStorageWarn] = useState(false);
   /* How much banner is currently showing, published as --app-banner-h. The pinned screens are sized to
@@ -428,8 +425,8 @@ export default function App() {
   useEffect(() => {
     setupPersist(
       saveRoster,
-      (ok) => {
-        setSaveFailed(!ok);
+      (ok, reason) => {
+        setSaveFailed(ok ? false : reason === 'held' ? 'held' : 'storage');
         // Warn well before the browser's hard cap (~5MB web / more on the installed app).
         const limit = (isTauri ? 9 : 4.5) * 1024 * 1024;
         if (ok && !storageDismissed.current) setStorageWarn(localStorageBytes() > limit);
@@ -451,6 +448,7 @@ export default function App() {
     // and the database has to follow even when nothing that account pulls differs from the empty
     // storage — else its sheets resolve the previous account's campaign homebrew until a relaunch.
     const ownerBefore = loadSyncOwner();
+    let historyCleared = false;
     void startCloudSync((merged) => {
       if (cancelled) return;
       // A pulled copy was derived by whichever app version last saved it — re-derive it here, and
@@ -458,7 +456,13 @@ export default function App() {
       const db = contentRef.current;
       const next = db ? rebuildRoster(merged, db) : merged;
       noteDerivedRefresh(next);
-      setRoster(next);
+      // Not an undo step (S4, 2026-10-20): Ctrl+Z must never take back another device's change. And once
+      // another account owns this browser's data, no step of the old one may be undone into it (S3) —
+      // cleared at the first adopt after the switch (startSync's emptied roster: it saves the new owner
+      // first), and only then: a later adopt must not take this account's own steps away.
+      const switched = !historyCleared && ownerBefore !== null && loadSyncOwner() !== ownerBefore;
+      if (switched) historyCleared = true;
+      setRoster(next, { record: false, resetHistory: switched });
     }).then((c) => {
       if (cancelled) {
         c();
@@ -507,10 +511,17 @@ export default function App() {
   /** The serialised pull, for the publish effect to call once a waiting key has published. */
   const gmPullRef = useRef<() => void>(() => undefined);
   /** Applies decided INSIDE the setRoster updater, consumed by the after-commit effect. Keyed by
-   *  campaign|char|stamp, so an updater React re-invokes writes the same entries. */
+   *  campaign|char|stamp, so an updater React re-invokes writes the same entries. `over`: the queued
+   *  entry the apply replaced — what taking the push back out of a later entry restores (rosterFold.ts). */
   const gmAppliedRef = useRef<
-    Map<string, { e: GmEdit; key: string; mark: string; base: string; stamp: string; result: string; entry: SavedChar; judged: SavedChar }>
+    Map<string, { e: GmEdit; key: string; mark: string; base: string; stamp: string; result: string; entry: SavedChar; judged: SavedChar; over: SavedChar }>
   >(new Map());
+  /** Every apply NOT LANDED yet, by mark — what a fold of another tab's write takes back out of an entry
+   *  (`gmApplyYields`). Unlike gmAppliedRef, a record the after-commit effect DROPS stays here: React can
+   *  still commit that apply later, from the result it computed at dispatch, without running the updater
+   *  again (2026-10-20, test/bug-two-tabs-roster.test.tsx leg 7 — the push landed on the sheet while its
+   *  row was refused "not applied"). Only an apply that landed leaves. */
+  const gmUnlandedRef = useRef<Map<string, { entry: SavedChar; over: SavedChar }>>(new Map());
   /** The chain records written THIS session, beside the stored ones (storage can fail). */
   const gmChainSession = useRef<Record<string, GmChainRecord>>({});
   /** Successful publishes seen while a key waits — a sheet that never matches its own published copy
@@ -820,7 +831,9 @@ export default function App() {
             (k.judged as GmMarked)[GM_JUDGED] = mark;
             (cur as GmMarked)[GM_JUDGED] = mark;
             const applied: GmMarked = { ...k.e.sheet, id: c.id, archived: c.archived ?? false, [GM_APPLIED]: mark };
+            const over = cur;
             cur = applied;
+            gmUnlandedRef.current.set(mark, { entry: applied, over });
             gmAppliedRef.current.set(mark, {
               e: k.e,
               key: k.key,
@@ -830,6 +843,7 @@ export default function App() {
               result: hash53(authoredKey(cur)),
               entry: cur,
               judged: k.judged,
+              over,
             });
             changed = true;
           }
@@ -922,10 +936,12 @@ export default function App() {
      * browser that this tab has not folded in (its `storage` event has not been handled yet — a busy
      * tab hears late): the player's change, possibly, made where this apply could not see it. Consuming
      * now would write the apply over it. So it is folded in first and nothing is consumed in this
-     * commit: an apply it touched gives way whole (`gmApplyYields`), and the commit that holds the fold
-     * finds that entry replaced — the row is judged again (test/bug-two-tabs-roster.test.tsx leg 2). */
+     * commit: an apply it touched is taken back out of the entry (`gmApplyYields`; a tap made on top of
+     * it stays — S1, 2026-10-20), and the commit that holds the fold finds that entry replaced — the row
+     * is judged again (test/bug-two-tabs-roster.test.tsx legs 2 and 7). Another account's roster
+     * (`replace`) replaces the whole roster the same way. */
     const foreign = takeForeignRoster();
-    if (foreign?.kind === 'write') {
+    if (foreign && foreign.kind !== 'echo') {
       foldForeignRef.current(foreign);
       return;
     }
@@ -956,6 +972,7 @@ export default function App() {
       if (c && (c === a.entry || c[GM_APPLIED] === a.mark || hash53(authoredKey(c)) === a.result)) {
         landed.push(a);
         done.delete(k);
+        gmUnlandedRef.current.delete(k);
       } else if (c && (c === a.judged || c[GM_JUDGED] === a.mark)) {
         continue; // not rendered yet — kept for the commit that holds it
       } else {
@@ -963,7 +980,10 @@ export default function App() {
         done.delete(k);
       }
     }
-    if (dropped) gmPullRef.current(); // never landed, and never will: judge them again
+    // Not landed: judge them again. (React may still commit such an apply later, from the result it
+    // computed at dispatch, if a fold replaced the entry in between — the fold re-run then takes it back
+    // out: gmUnlandedRef keeps it for that, leg 7.)
+    if (dropped) gmPullRef.current();
     if (!landed.length) return;
     persistNow(roster);
     for (const a of landed) {
@@ -1109,33 +1129,56 @@ export default function App() {
    * The key is read, never `e.newValue`: an event can arrive late or out of order, and only what the key
    * holds NOW is the other tab's latest. An old app version's echo of an earlier write of ours is put
    * right by writing ours again (`echo`, rosterTabs.ts).
+   *
+   * 2026-10-20 (a checker's findings on 6393b29): an entry the merge MADE has its character re-derived
+   * from its merged build (`settleMergedBuild`, S2); another ACCOUNT's roster (another tab signed in as
+   * someone else) replaces this tab's whole, and nothing of the old account is written meanwhile
+   * (`replace`, rosterOwnerSwitched — S3); and no fold is an undo step (`record: false` — S4), so Ctrl+Z
+   * takes back this tab's own last action, never the other tab's.
    */
-  const foldForeign = (f: { base: SavedChar[]; incoming: SavedChar[] }) => {
-    const yieldTo = gmApplyYields(gmAppliedRef.current);
+  const mergeOpts = () => ({
+    yieldTo: gmApplyYields(gmUnlandedRef.current),
+    settle: settleMergedBuild(contentRef.current, noteDerivedRefresh),
+  });
+  const foldForeign = (f: Exclude<ForeignRoster, { kind: 'echo' }>) => {
+    if (f.kind === 'replace') {
+      noteDerivedRefresh(f.incoming);
+      foldIntoPersist(() => f.incoming, rosterRef.current);
+      setRoster(f.incoming, { record: false, resetHistory: true });
+      return;
+    }
+    const opts = mergeOpts();
     const theirs = new Set(f.incoming);
     const fold = (r: SavedChar[]) => {
-      const next = mergeRosterEdits(f.base, r, f.incoming, { yieldTo });
+      const next = mergeRosterEdits(f.base, r, f.incoming, opts);
       if (next !== r) noteDerivedRefresh(next.filter((c) => theirs.has(c)));
       return next;
     };
     // The write is KNOWN from here on (rosterTabs), so the next write must carry it too — the debounce
     // can fire, or the tab close, before React renders the updater below (persist.ts foldIntoPersist).
     foldIntoPersist(fold, rosterRef.current);
-    setRoster(fold);
+    setRoster(fold, { record: false });
   };
   const foldForeignRef = useRef(foldForeign);
   foldForeignRef.current = foldForeign;
   /** The persist module's reconcile step (setupPersist above): the roster about to be written, with
    *  any unseen write of another tab folded in — and the screen told, rebasing anything newer on it. */
-  const reconcileWrite = (queued: SavedChar[]): SavedChar[] => {
+  const reconcileWrite = (queued: SavedChar[]): SavedChar[] | typeof HOLD_WRITE => {
     const f = takeForeignRoster();
+    if (f?.kind === 'replace') {
+      noteDerivedRefresh(f.incoming);
+      setRoster(f.incoming, { record: false, resetHistory: true });
+      return f.incoming; // what the key already holds: not written again (saveRoster)
+    }
+    // Another account's key, not filled yet: nothing this tab holds may go there.
+    if (!f && rosterOwnerSwitched()) return HOLD_WRITE;
     if (!f || f.kind === 'echo') return queued; // an old version's echo: our roster goes back over it
-    const yieldTo = gmApplyYields(gmAppliedRef.current);
-    const out = mergeRosterEdits(f.base, queued, f.incoming, { yieldTo });
+    const opts = mergeOpts();
+    const out = mergeRosterEdits(f.base, queued, f.incoming, opts);
     if (out === queued) return queued;
     const theirs = new Set(f.incoming);
     noteDerivedRefresh(out.filter((c) => theirs.has(c)));
-    setRoster((cur) => (cur === queued ? out : mergeRosterEdits(queued, cur, out, { yieldTo })));
+    setRoster((cur) => (cur === queued ? out : mergeRosterEdits(queued, cur, out, opts)), { record: false });
     return out;
   };
   const reconcileWriteRef = useRef(reconcileWrite);
@@ -1197,9 +1240,11 @@ export default function App() {
   const closeSubpage = () => setMode(uiReturn);
   // "← Tracker" belongs to the visit that came from the tracker, and to nothing after it: any other
   // screen, or another character on this one, ends it (a sheet reached later from the menu, the roster
-  // or the builder is an ordinary sheet). Removable tracker seam.
+  // or the builder is an ordinary sheet). Settings is the one exception: it is a detour that returns to
+  // this same sheet (closeSubpage), so the visit survives it; leaving Settings for anywhere else still
+  // ends it (test/bug-tracker-sheet-top-row.test.tsx (e)). Removable tracker seam.
   useEffect(() => {
-    setOwnFromTracker((f) => (f !== null && (mode !== 'sheet' || f !== activeId) ? null : f));
+    setOwnFromTracker((f) => (f !== null && (f !== activeId || (mode !== 'sheet' && mode !== 'settings')) ? null : f));
   }, [mode, activeId]);
   // Reactive device-global customization default + this character's effective customization (default +
   // its overrides), provided to the sheet subtree so every consumer resolves the same values.
@@ -1494,6 +1539,8 @@ export default function App() {
         modes={readyContent.modes}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
+        // The GM's edit sheets write homebrew through these same persisting handlers (GmEditSheet).
+        onCreateItem={addCustomItem}
       />
     );
   } else if (which === 'settings') {
@@ -1619,7 +1666,11 @@ export default function App() {
         {saveFailed && (
           <div className="save-warning" role="alert">
             <i className="ti ti-alert-triangle" aria-hidden="true" />
-            <span>Changes can’t be saved — browser storage is full or unavailable. Export your characters so you don’t lose work.</span>
+            {saveFailed === 'held' ? (
+              <span>Another tab of this app signed in to a different account. Changes made in this tab right now are not saved — reload this tab.</span>
+            ) : (
+              <span>Changes can’t be saved — browser storage is full or unavailable. Export your characters so you don’t lose work.</span>
+            )}
             <button className="save-warning-x" onClick={() => setSaveFailed(false)} aria-label="Dismiss">
               <i className="ti ti-x" aria-hidden="true" />
             </button>

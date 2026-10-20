@@ -21,14 +21,29 @@
  *    recovery removes it, and "nothing stored" must never read as "every character deleted".
  *
  * Taking the write marks it known, so it is folded once.
+ *
+ * ANOTHER ACCOUNT (S3, 2026-10-20). Signing in as a different account in another tab wipes the roster key
+ * and fills it with that account's roster (cloudSync startSync, its first adopt). That write is built on
+ * nothing this tab knows (its lineage says it replaced an empty key), and merged against this tab's
+ * old-account roster it read as "they deleted every character" — so a character this tab held an unsaved
+ * edit on was KEPT ("they deleted it, we changed it"), written back, folded in by the switching tab and
+ * pushed into the NEW account's cloud. So every value this tab knows carries the account it belonged to
+ * (rosterLineage `owner`); when the sync owner has changed since, the write is the other account's roster
+ * and is taken WHOLE (`replace`), and until one arrives this tab writes nothing (`rosterOwnerSwitched`,
+ * App's reconcile step): what it holds belongs to the old account, which this browser no longer syncs.
+ * A device no account had synced (owner null) gaining one is the first sign-in, not a switch — its local
+ * roster is that account's (the same rule as startSync).
  */
 import { knownRoster, lineageOf, noteRosterKnown, rosterFromHistory, rosterSig } from './rosterLineage';
-import { ROSTER_KEY, parseRoster, type SavedChar } from './storage';
+import { ROSTER_KEY, loadSyncOwner, parseRoster, type SavedChar } from './storage';
 import { recentPersists } from './persist';
 
 export type ForeignRoster =
   /** Another tab's roster, and the roster it and this tab's state both grew from. */
   | { kind: 'write'; base: SavedChar[]; incoming: SavedChar[] }
+  /** Another ACCOUNT's roster (another tab signed in as someone else): this tab's roster is replaced by
+   *  it, whole — nothing of the old account's is merged into it. */
+  | { kind: 'replace'; incoming: SavedChar[] }
   /** An OLD app version (no lineage) wrote back a roster this tab wrote earlier — the echo of what it
    *  adopted from us, arriving after we moved on. Not another tab's work: this tab's newer roster has
    *  to go back on disk over it. */
@@ -43,8 +58,17 @@ export function loadRosterKnown(): SavedChar[] {
     /* unreadable storage: nothing known */
   }
   const roster = parseRoster(raw);
-  noteRosterKnown(raw, roster);
+  noteRosterKnown(raw, roster, undefined, loadSyncOwner());
   return roster;
+}
+
+/** The account this tab's roster belongs to is no longer the one this browser syncs (another tab signed
+ *  in as someone else). Nothing this tab holds may be written until the new account's roster is taken. */
+export function rosterOwnerSwitched(): boolean {
+  const k = knownRoster();
+  const owner = loadSyncOwner();
+  if (k.owner === null && owner !== null) noteRosterKnown(k.raw, k.roster, k.sig, owner); // a first sign-in
+  return k.owner !== null && owner !== k.owner;
 }
 
 /** What another tab wrote to the roster key that this tab has not folded in yet, or null. */
@@ -54,6 +78,13 @@ export function takeForeignRoster(): ForeignRoster | null {
     raw = localStorage.getItem(ROSTER_KEY);
   } catch {
     return null;
+  }
+  if (rosterOwnerSwitched()) {
+    // Emptied by the switch and not filled yet: nothing to take (and nothing of ours may go there).
+    if (raw === null) return null;
+    const incoming = parseRoster(raw);
+    noteRosterKnown(raw, incoming, undefined, loadSyncOwner());
+    return { kind: 'replace', incoming };
   }
   const k = knownRoster();
   if (raw === null || raw === k.raw) return null;

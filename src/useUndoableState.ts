@@ -5,12 +5,26 @@ import { useCallback, useRef, useState } from 'react';
  * `set` records a new history step (or coalesces rapid edits sharing a tag into the current step,
  * so typing into a field is one undo, not one-per-keystroke); `undo`/`redo` walk the timeline.
  * History is in-memory (session-scoped) and depth-capped so it can't grow unbounded.
+ *
+ * NOT EVERY CHANGE IS AN UNDO STEP (S4, 2026-10-20). A change that is not this screen's own action —
+ * another tab's write folded in, a cloud copy adopted — is set with `record: false`: it moves the present
+ * and leaves the steps alone. A step is kept as the pair it was (`before` → `after`), so undoing it once
+ * such a change came in carries the step back onto the present with `revert` (App: a three-way revert,
+ * src/data/rosterMerge.ts revertRosterStep) rather than restoring the old snapshot — which took back the
+ * other tab's change and kept this tab's own (Ctrl+Z after the other tab gave a dagger removed the
+ * dagger, everywhere). Without `revert` (or with nothing come in since the step) undo restores `before`
+ * exactly, as it always did.
  */
 
+interface Step<T> {
+  before: T;
+  after: T;
+}
+
 interface History<T> {
-  past: T[];
+  past: Step<T>[];
   present: T;
-  future: T[];
+  future: Step<T>[];
 }
 
 const MAX_DEPTH = 60;
@@ -19,23 +33,47 @@ const COALESCE_MS = 350;
 
 export interface Undoable<T> {
   state: T;
-  /** Record a change as a new (or coalesced) history step. */
-  set: (updater: T | ((prev: T) => T), opts?: { coalesce?: boolean; tag?: string }) => void;
+  /** Record a change as a new (or coalesced) history step. `record: false`: a change that is not an undo
+   *  step (another tab's, the cloud's) — the present moves, the steps stay; `resetHistory` also clears
+   *  every step (the value now belongs to someone else: another account). */
+  set: (updater: T | ((prev: T) => T), opts?: { coalesce?: boolean; tag?: string; record?: boolean; resetHistory?: boolean }) => void;
   undo: () => void;
   redo: () => void;
   canUndo: boolean;
   canRedo: boolean;
 }
 
-export function useUndoableState<T>(initial: T | (() => T)): Undoable<T> {
+export interface UndoableOptions<T> {
+  /** Carry a step from `from` to `to` onto `present`, which changed since the step without a step of its
+   *  own. Default: `to` (the snapshot). */
+  revert?: (present: T, from: T, to: T) => T;
+}
+
+export function useUndoableState<T>(initial: T | (() => T), options: UndoableOptions<T> = {}): Undoable<T> {
   const [hist, setHist] = useState<History<T>>(() => ({
     past: [],
     present: typeof initial === 'function' ? (initial as () => T)() : initial,
     future: [],
   }));
   const lastPush = useRef<{ time: number; tag?: string }>({ time: 0 });
+  const revertRef = useRef(options.revert);
+  revertRef.current = options.revert;
+  /** `present` carried along the step `from` → `to`: the snapshot when nothing came in since. */
+  const carry = (present: T, from: T, to: T): T => (present === from || !revertRef.current ? to : revertRef.current(present, from, to));
 
   const set = useCallback<Undoable<T>['set']>((updater, opts) => {
+    if (opts?.record === false) {
+      // Not a step — and the next edit must not coalesce into the step before it, which would then
+      // carry this change as part of that step.
+      lastPush.current = { time: 0 };
+      const reset = !!opts.resetHistory;
+      setHist((h) => {
+        const next = typeof updater === 'function' ? (updater as (p: T) => T)(h.present) : updater;
+        if (reset) return { past: [], present: next, future: [] };
+        return next === h.present ? h : { past: h.past, present: next, future: h.future };
+      });
+      return;
+    }
     // Coalescing is decided ONCE here, from lastPush.current as it stood before this call — never
     // inside the updater below. React 18 StrictMode double-invokes a setState updater function in dev
     // builds (both calls get the same `h`); a version of this that read AND wrote lastPush.current
@@ -49,14 +87,18 @@ export function useUndoableState<T>(initial: T | (() => T)): Undoable<T> {
     setHist((h) => {
       const next = typeof updater === 'function' ? (updater as (p: T) => T)(h.present) : updater;
       if (next === h.present) return h;
-      if (coalesce) {
+      const last = h.past[h.past.length - 1];
+      if (coalesce && last && last.after === h.present) {
         // Extend the current step in place — no new past entry, and any redo branch is dropped.
-        return { past: h.past, present: next, future: [] };
+        return { past: [...h.past.slice(0, -1), { before: last.before, after: next }], present: next, future: [] };
       }
-      const past = h.past.length >= MAX_DEPTH ? [...h.past.slice(1), h.present] : [...h.past, h.present];
+      const step = { before: h.present, after: next };
+      const past = h.past.length >= MAX_DEPTH ? [...h.past.slice(1), step] : [...h.past, step];
       return { past, present: next, future: [] };
     });
     lastPush.current = { time: now, tag: opts?.tag };
+    // `carry` reads a ref only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const undo = useCallback(() => {
@@ -67,16 +109,20 @@ export function useUndoableState<T>(initial: T | (() => T)): Undoable<T> {
     lastPush.current = { time: 0 }; // a fresh edit after undo starts a new step
     setHist((h) => {
       if (!h.past.length) return h;
-      return { past: h.past.slice(0, -1), present: h.past[h.past.length - 1], future: [h.present, ...h.future] };
+      const s = h.past[h.past.length - 1];
+      return { past: h.past.slice(0, -1), present: carry(h.present, s.after, s.before), future: [s, ...h.future] };
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const redo = useCallback(() => {
     lastPush.current = { time: 0 }; // same call-time reset as undo(), see comment above
     setHist((h) => {
       if (!h.future.length) return h;
-      return { past: [...h.past, h.present], present: h.future[0], future: h.future.slice(1) };
+      const s = h.future[0];
+      return { past: [...h.past, s], present: carry(h.present, s.before, s.after), future: h.future.slice(1) };
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { state: hist.present, set, undo, redo, canUndo: hist.past.length > 0, canRedo: hist.future.length > 0 };

@@ -31,13 +31,19 @@
 
 /** Who gives way when both sides changed one roster entry. `whole`: take the incoming entry as it is.
  *  `conflicts`: merge, but a value both sides changed takes the incoming one. Null: the local side keeps
- *  its conflicts (the default). */
-export type Yield = 'whole' | 'conflicts' | null;
+ *  its conflicts (the default). `{ base, local }`: merge THESE as the base and this side's entry instead —
+ *  this side's entry with a change taken out of it that must not count as this side's (S1, 2026-10-20:
+ *  an unconfirmed GM push is taken out, a player tap made on top of it stays). */
+export type Yield<T = unknown> = 'whole' | 'conflicts' | null | { base: T | undefined; local: T };
 
 export interface RosterMergeOptions<T> {
   /** Asked only for an entry BOTH sides changed: `local` is this tab's entry, `base` the one both grew
    *  from (undefined when the entry is new on both sides). */
-  yieldTo?: (local: T, base: T | undefined) => Yield;
+  yieldTo?: (local: T, base: T | undefined) => Yield<T>;
+  /** Called for an entry the merge MADE — both sides changed it and the result is neither side's entry
+   *  (`local` is the entry this side merged with, after any `yieldTo` rebase). What it returns is kept.
+   *  App re-derives such an entry's `character` from its merged `build` here (S2, 2026-10-20). */
+  settle?: (merged: T, local: T, incoming: T) => T;
 }
 
 type Rec = Record<string, unknown>;
@@ -196,9 +202,15 @@ export function mergeRosterEdits<T extends { id: string }>(base: T[], local: T[]
     else if (!i) v = l; // they deleted it, we changed it: keep ours
     else {
       const y = opts.yieldTo?.(l, b) ?? null;
-      v = y === 'whole' ? i : (mergeValue(b, l, i, y === 'conflicts') as T);
+      let mine = l;
+      if (y === 'whole') v = i;
+      else if (y && typeof y === 'object') {
+        mine = y.local;
+        v = mergeValue(y.base, y.local, i) as T;
+      } else v = mergeValue(b, l, i, y === 'conflicts') as T;
       if (v !== l && jsonEqual(v, l)) v = l;
       else if (v !== i && jsonEqual(v, i)) v = i;
+      if (v && v !== l && v !== i && opts.settle) v = opts.settle(v, mine, i);
     }
     if (v) out.set(id, v);
   }
@@ -210,4 +222,34 @@ export function mergeRosterEdits<T extends { id: string }>(base: T[], local: T[]
   );
   const next = order.map((id) => out.get(id)!);
   return next.length === local.length && next.every((c, n) => c === local[n]) ? local : next;
+}
+
+/**
+ * UNDO (or redo) ONE STEP OF THIS TAB'S OWN on the roster as it is NOW (S4, 2026-10-20): carry what the
+ * step changed from `from` back to `to` (undo: `from` is the step's result and `to` what it was made on;
+ * redo: the other way round). Another tab's write and a cloud adopt are folded in without
+ * being undo steps (App), so `present` can hold changes made after the step by someone else; taking the
+ * step's snapshot back whole would take those back too (the other tab's dagger, the GM's change). So the
+ * step is carried back three ways: `mergeRosterEdits(from, present, to)` — whatever only the step
+ * changed goes back, whatever changed since stays, and a value both the step and a later change touched
+ * keeps the later one. One rule more than a merge: a character the step left in place that is gone now
+ * was deleted by someone since, and undoing the step does not bring it back.
+ *
+ * `present === from` (nothing came in since the step) is the plain snapshot `to`, as the same objects.
+ *
+ * `opts.settle` is the merge's (S2): an entry the revert MADE — the step's build change taken back over
+ * another tab's later build change — gets its character re-derived from that build (App passes
+ * rosterFold.settleMergedBuild; a checker's finding on S4, 2026-10-20: the undone fighter kept the HP of
+ * the build it no longer had).
+ */
+export function revertRosterStep<T extends { id: string }>(present: T[], from: T[], to: T[], opts: RosterMergeOptions<T> = {}): T[] {
+  if (present === from) return to;
+  const live = new Set(present.map((c) => c.id));
+  const inFrom = new Set(from.map((c) => c.id));
+  return mergeRosterEdits(
+    from,
+    present,
+    to.filter((c) => live.has(c.id) || !inFrom.has(c.id)),
+    opts,
+  );
 }

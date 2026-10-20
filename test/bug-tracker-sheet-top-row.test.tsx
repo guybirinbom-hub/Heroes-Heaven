@@ -7,7 +7,9 @@ import { content } from './_content';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import { initialPlay } from '../src/rules/play';
 import { computeSummary } from '../src/sheet/partySummary';
-import { ROSTER_KEY, type SavedChar } from '../src/data/storage';
+import { ROSTER_KEY, loadHomebrewItems, saveHomebrewItem, type SavedChar } from '../src/data/storage';
+import { CORE_BOOKS, storedSources } from '../src/rules/sources';
+import type { ContentDatabase, Item, ModeDef } from '../src/rules/types';
 import type { CampaignMembership } from '../src/data/campaigns';
 import type { PartyMember } from '../src/data/party';
 import { useCombatStore } from '../tracker/src/store/combatStore';
@@ -41,12 +43,28 @@ import { useMemberViewer } from '../src/sheet/PartyMembers';
 const srv = vi.hoisted(() => ({
   party: [] as PartyMember[],
   sheets: new Map<string, unknown>(),
+  /** Characters the tracker's own sheet feed does not have (yet): their card falls through to the
+   *  page's loader (useMemberViewer) — the page-replacing GM sheet. */
+  trackerMiss: new Set<string>(),
 }));
 
 // A RELEASE build.
 vi.mock('../src/integration/enabled', () => ({
   TRACKER_IN_CAMPAIGN: true,
   TEST_CAMPAIGNS_WITHOUT_LOGIN: false,
+}));
+
+// The DESKTOP app's window controls. The real one renders nothing outside Tauri (isDesktopApp), which
+// would let every assertion about where they sit pass on an empty tree; this stand-in renders the same
+// `.chrome-btns` group wherever the real one is mounted.
+vi.mock('../src/sheet/WindowControls', () => ({
+  WindowControls: () => (
+    <div className="chrome-btns" data-test="window-controls">
+      <button type="button" className="chrome-btn" aria-label="Minimize" />
+      <button type="button" className="chrome-btn" aria-label="Maximize" />
+      <button type="button" className="chrome-btn close" aria-label="Close" />
+    </div>
+  ),
 }));
 
 vi.mock('../src/data/useAuth', () => ({
@@ -58,7 +76,7 @@ vi.mock('../src/data/party', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../src/data/party')>()),
   currentUserId: async () => 'gm-1',
   fetchParty: async () => srv.party,
-  fetchMemberSheet: async (_campaignId: string, charId: string) => srv.sheets.get(charId) ?? null,
+  fetchMemberSheet: async (_campaignId: string, charId: string) => (srv.trackerMiss.has(charId) ? null : srv.sheets.get(charId) ?? null),
   fetchMemberRow: async (_campaignId: string, charId: string) => ({
     sheet: (srv.sheets.get(charId) as SavedChar | undefined) ?? null,
     summary: undefined,
@@ -198,6 +216,7 @@ beforeEach(() => {
   localStorage.clear();
   srv.party = [];
   srv.sheets.clear();
+  srv.trackerMiss.clear();
   rememberCampaign(null);
   setOnCampaignsPage(false);
   trackerUi.reset();
@@ -228,21 +247,25 @@ afterEach(() => {
 const PC_A = () => saved('char-a', 'Ayla Brightwood', 5);
 
 /** The campaigns page, with the campaign opened — the tracker in the body, its tools in the title bar. */
-async function openCampaign(): Promise<HTMLElement> {
+async function openCampaign(
+  writers?: { onDeleteMode?: (id: string) => void; onSaveMode?: (m: ModeDef) => void; onCreateItem?: (it: Item) => void },
+  db: ContentDatabase = content(),
+): Promise<HTMLElement> {
   await import('../src/integration/CampaignTracker');
   await import('../src/integration/TrackerTools');
   const { CampaignsPage } = await import('../src/sheet/CampaignsPage');
   localStorage.setItem('pf2e-codex.campaigns', JSON.stringify([CAMPAIGN]));
   const el = render(
     <CampaignsPage
-      content={content()}
+      content={db}
+      onCreateItem={writers?.onCreateItem}
       onClose={() => undefined}
       onOpenRoster={() => undefined}
       onOpenHomebrew={() => undefined}
       characters={[]}
       modes={{}}
-      onSaveMode={() => undefined}
-      onDeleteMode={() => undefined}
+      onSaveMode={writers?.onSaveMode ?? (() => undefined)}
+      onDeleteMode={writers?.onDeleteMode ?? (() => undefined)}
     />,
   );
   await flush();
@@ -289,9 +312,8 @@ describe('(a) no top row while a player’s sheet covers the tracker', () => {
     expect(qq('.ct-sheet-full button[aria-label="Back to tracker"]')).toHaveLength(1);
     expect(qq('.ct-sheet-full button[aria-label="Back to campaign"]')).toHaveLength(0);
     // The desktop app draws its own title bar, and both bars above are hidden: this row is the drag
-    // region now, padded so the window controls (WindowControls renders null on the web) sit flush.
+    // region now (the window controls are the next test's).
     expect(identity.hasAttribute('data-tauri-drag-region')).toBe(true);
-    expect(identity.style.getPropertyValue('--chrome-pad-y')).toBe('10px');
 
     click(btn('Back to tracker'));
     await flush(3);
@@ -299,6 +321,47 @@ describe('(a) no top row while a player’s sheet covers the tracker', () => {
     expect(q('.party-grid .party-card')).not.toBeNull(); // back where the GM came from
     expect(titleBar()!.hidden).toBe(false);
     expect(sheetOpenNow()).toBe(false);
+  }, 180_000);
+
+  it('pins the window controls to the corner of the sheet layer, above the GM strip, and lets the strip drag the window', async () => {
+    /*
+     * U1 (2026-10-20): the desktop app's minimise / maximise / close sat ~23 px too low on a player's
+     * sheet over the tracker — they were rendered inside the identity row, BELOW the "GM editing X"
+     * strip (and below any pending / live banner GmEditSheet draws first). jsdom has no layout, so
+     * this pins the structure that puts them in the corner and the stylesheet rule that does it.
+     * Fails on b8f8a6e: `.ct-sheet-full > .chrome-btns` is null (they were in `.identity`).
+     */
+    srv.party = [publish(PC_A(), 'owner-a')];
+    await openCampaign();
+    await openSheet();
+
+    const full = q('.ct-sheet-full')!;
+    // (The sheet's own `.chrome` title bar still holds a set, hidden with it by `.ct-sheet-full .chrome`.)
+    const ctl = qq('.ct-sheet-full .chrome-btns').filter((e) => !e.closest('.chrome'));
+    expect(ctl, 'one set of window controls on the sheet layer').toHaveLength(1);
+    expect(ctl[0].parentElement, 'a direct child of the layer, not of the identity row').toBe(full);
+    expect(qq('.ct-sheet-full .identity .chrome-btns')).toHaveLength(0);
+    // The strip is the sheet's top edge now: it drags the window like the identity row.
+    expect(q('.ct-sheet-full .gm-edit-tab')!.hasAttribute('data-tauri-drag-region')).toBe(true);
+    // The old inline padding override (it cancelled only the row's own padding) is gone.
+    expect(q('.ct-sheet-full .identity')!.style.getPropertyValue('--chrome-pad-y')).toBe('');
+
+    const css = readFileSync('src/integration/campaign-tracker.css', 'utf8');
+    const rule = /\.ct-sheet-full > \.chrome-btns\s*\{([^}]*)\}/.exec(css)?.[1] ?? '';
+    expect(rule).toMatch(/position:\s*absolute/);
+    expect(rule).toMatch(/top:\s*0/);
+    expect(rule).toMatch(/right:\s*0/);
+    // Above the GM strip, whose z-index is 6 (src/sheet.css .gm-edit-tab).
+    const z = Number(/z-index:\s*(\d+)/.exec(rule)?.[1] ?? 0);
+    const stripZ = Number(/\.gm-edit-tab\s*\{[^}]*z-index:\s*(\d+)/.exec(readFileSync('src/sheet.css', 'utf8'))?.[1] ?? 99);
+    expect(z).toBeGreaterThan(stripZ);
+    // …and the identity row (with the strips) keeps its buttons out from under them.
+    expect(css).toMatch(/\.ct-sheet-full:has\(> \.chrome-btns\) \.identity\s*\{[^}]*padding-right:/);
+
+    // Closed, the layer takes its controls with it.
+    click(btn('Back to tracker'));
+    await flush(3);
+    expect(qq('.ct-sheet-full .chrome-btns')).toHaveLength(0);
   }, 180_000);
 
   it('brings the bar back when Escape closes the sheet, and when the tracker asks for the party', async () => {
@@ -413,6 +476,239 @@ describe('(b) the flag never outlives the view', () => {
     expect(css).toMatch(/\.ct-sheet-full > \.ws-app,\s*\.ct-sheet-full > \.builder\s*\{/);
   });
 });
+
+describe('(f) the sheet over the tracker writes homebrew through the page’s writers', () => {
+  it('a mode the GM deletes there reaches CampaignsPage’s onDeleteMode (App’s persisting one)', async () => {
+    /*
+     * U3 (2026-10-20) wiring: test/bug-gm-edit-homebrew-persists.test.tsx proves GmEditSheet calls the
+     * writers it is given; this proves the tracker hands it the page's. MUTATION (run 2026-10-20): drop
+     * `onDeleteMode={homebrew?.onDeleteMode}` from CampaignTracker's <GmEditSheet> —
+     *   AssertionError: expected [] to have a length of 1 but got +0
+     */
+    const deleted: string[] = [];
+    srv.party = [publish(PC_A(), 'owner-a')];
+    await openCampaign({ onDeleteMode: (id) => deleted.push(id) });
+    await openSheet();
+
+    click(q('.ct-sheet-full .add-btn')!);
+    await flush(2);
+    const tab = [...document.querySelectorAll('button')].find((b) => (b.textContent ?? '').trim() === 'Modes');
+    expect(tab, 'fixture: the Modes tab').toBeTruthy();
+    click(tab!);
+    await flush(2);
+    const edit = document.querySelector('button.mode-edit[aria-label="Edit"]');
+    expect(edit, 'fixture: the fixture database has a saved mode to edit').not.toBeNull();
+    click(edit!);
+    await flush(2);
+    click(document.querySelector('button.me-delete')!);
+    await flush(2);
+    expect(deleted).toHaveLength(1);
+  }, 180_000);
+
+  /*
+   * Checker finding (2026-10-20): mode SAVE had no wiring test — `onSaveMode={homebrew?.onSaveMode}` in
+   * CampaignTracker and `onSaveMode={options?.homebrew?.onSaveMode}` in PartyMembers could each be
+   * dropped with every test green, and a mode the GM saved on a player's sheet lasted one session again.
+   * MUTATIONS (run 2026-10-20): drop the CampaignTracker line → the tracker-route test; drop the
+   * PartyMembers line → the page-replacing test (`expected [] to have a length of 1 but got +0`).
+   */
+  /** In the open GM sheet (under `scope`): Add → Modes → a saved mode's Edit → Save mode. */
+  async function saveModeFromSheet(scope: string): Promise<void> {
+    const add = q(`${scope} .add-btn`);
+    expect(add, `fixture: the rail's "Add" in ${scope}`).not.toBeNull();
+    click(add!);
+    await flush(2);
+    const byText = (t: string) => [...document.querySelectorAll('button')].find((b) => (b.textContent ?? '').trim() === t);
+    expect(byText('Modes'), 'fixture: the Modes tab').toBeTruthy();
+    click(byText('Modes')!);
+    await flush(2);
+    const edit = document.querySelector('button.mode-edit[aria-label="Edit"]');
+    expect(edit, 'fixture: the fixture database has a saved mode to edit').not.toBeNull();
+    click(edit!);
+    await flush(2);
+    expect(byText('Save mode'), 'fixture: the mode editor').toBeTruthy();
+    click(byText('Save mode')!);
+    await flush(2);
+  }
+
+  it('a mode the GM saves there reaches CampaignsPage’s onSaveMode (App’s persisting one)', async () => {
+    const saved: ModeDef[] = [];
+    srv.party = [publish(PC_A(), 'owner-a')];
+    await openCampaign({ onSaveMode: (m) => saved.push(m) });
+    await openSheet();
+    await saveModeFromSheet('.ct-sheet-full');
+    expect(saved).toHaveLength(1);
+    expect(saved[0].id).toBeTruthy();
+  }, 180_000);
+
+  it('…and from the page-replacing GM sheet', async () => {
+    const saved: ModeDef[] = [];
+    srv.party = [publish(PC_A(), 'owner-a')];
+    srv.trackerMiss.add('char-a');
+    await openCampaign({ onSaveMode: (m) => saved.push(m) });
+    openSheetFor('Ayla Brightwood');
+    await flush(6);
+    expect(q('.ct-sheet-full'), 'fixture: not the tracker’s sheet').toBeNull();
+    expect(q('.party-viewer .gm-edit-tab'), 'fixture: the page-replacing GM sheet').not.toBeNull();
+    await saveModeFromSheet('.party-viewer');
+    expect(saved).toHaveLength(1);
+  }, 180_000);
+
+  it('…and a mode the GM deletes on the page-replacing GM sheet reaches CampaignsPage’s onDeleteMode, with its id', async () => {
+    /*
+     * Fix-up F1 (2026-10-20): `onDeleteMode={options?.homebrew?.onDeleteMode}` in useMemberViewer
+     * (src/sheet/PartyMembers.tsx) had no test — dropped, a mode the GM deleted on that sheet came back
+     * next session. MUTATION (run 2026-10-20): drop that line → `the page's writer hears the delete:
+     * expected [] to have a length of 1 but got +0`.
+     */
+    const deleted: string[] = [];
+    srv.party = [publish(PC_A(), 'owner-a')];
+    srv.trackerMiss.add('char-a');
+    await openCampaign({ onDeleteMode: (id) => deleted.push(id) });
+    openSheetFor('Ayla Brightwood');
+    await flush(6);
+    expect(q('.ct-sheet-full'), 'fixture: not the tracker’s sheet').toBeNull();
+    expect(q('.party-viewer .gm-edit-tab'), 'fixture: the page-replacing GM sheet').not.toBeNull();
+
+    click(q('.party-viewer .add-btn')!);
+    await flush(2);
+    const tab = [...document.querySelectorAll('button')].find((b) => (b.textContent ?? '').trim() === 'Modes');
+    expect(tab, 'fixture: the Modes tab').toBeTruthy();
+    click(tab!);
+    await flush(2);
+    const edit = document.querySelector('button.mode-edit[aria-label="Edit"]');
+    expect(edit, 'fixture: the fixture database has a saved mode to edit').not.toBeNull();
+    click(edit!);
+    await flush(2);
+    // The mode the editor opened on: its name, and the database ids that carry that name.
+    const name = document.querySelector<HTMLInputElement>('.mode-editor .me-field input')?.value ?? '';
+    expect(name, 'fixture: the editor shows the mode’s name').not.toBe('');
+    const idsNamed = Object.values(content().modes).filter((m) => m.name === name).map((m) => m.id);
+    click(document.querySelector('button.me-delete')!);
+    await flush(2);
+    expect(deleted, 'the page’s writer hears the delete').toHaveLength(1);
+    expect(idsNamed, 'the id handed over is the edited mode’s').toContain(deleted[0]);
+  }, 180_000);
+
+  /*
+   * Checker finding (2026-10-20): the ITEM writer's wiring had no test — App's `onCreateItem=
+   * {addCustomItem}` on CampaignsPage, CampaignTracker's `onCreateItem={homebrew?.onCreateItem}` and
+   * useMemberViewer's three lines could each be dropped with every test green (the props are
+   * optional, so tsc cannot see it), and the GM sheet's Add-items "Delete" was session-only again.
+   * MUTATIONS (run 2026-10-20), each turning exactly its own test red:
+   *  • drop `onCreateItem={homebrew?.onCreateItem}` in CampaignTracker → the tracker-route test;
+   *  • drop `onCreateItem={options?.homebrew?.onCreateItem}` in PartyMembers, or `homebrew: gmHomebrew`
+   *    from CampaignsPage's useMemberViewer options → the page-replacing test
+   *    (`expected [] to have a length of 1 but got +0`);
+   *  • drop `onCreateItem={addCustomItem}` from App's <CampaignsPage> → the App test
+   *    (`expected undefined to be true`).
+   * (Dropping CampaignTracker's line also reddens the App test, which goes through it.)
+   */
+  const AUTHORED: Item = {
+    id: 'custom-brass-compass-k7w3',
+    name: 'Brass Compass of Shoals',
+    itemType: 'equipment',
+    level: 1,
+    bulk: 0.1,
+    traits: [],
+    rarity: 'common',
+    price: { gp: 4 },
+    description: 'A compass that points to the nearest shallows.',
+    source: { license: 'homebrew', book: 'My Homebrew' },
+  } as Item;
+  /** A player whose sheet offers the GM's homebrew book in the Add-items search. */
+  const PC_HB = (): SavedChar => {
+    const db = content();
+    const build = { ...buildOf('Teodor Vance', 3), enabledSources: storedSources([...CORE_BOOKS, 'My Homebrew']) } as BuildState;
+    const character = buildCharacter(build, db);
+    return { id: 'char-hb', character, build, play: initialPlay(character, db) };
+  };
+  const withAuthored = (): ContentDatabase => ({ ...content(), items: { ...content().items, [AUTHORED.id]: AUTHORED } }) as ContentDatabase;
+
+  /** In the open GM sheet (under `scope`): Inventory → Add item → search → Delete → the app's confirm. */
+  async function retireFromSheet(scope: string): Promise<void> {
+    const sheet = q(scope);
+    expect(sheet, `fixture: the GM sheet (${scope}) is open`).not.toBeNull();
+    const byText = (root: ParentNode, t: string) =>
+      [...root.querySelectorAll('button')].find((b) => (b.textContent ?? '').trim() === t) as HTMLButtonElement | undefined;
+    click(byText(sheet!, 'Inventory')!);
+    await flush(2);
+    click(byText(sheet!, 'Add item')!);
+    await flush(2);
+    const input = document.querySelector<HTMLInputElement>('.fsel-results-search input');
+    expect(input, 'fixture: the Add-items search box').not.toBeNull();
+    await act(async () => {
+      Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!.call(input, 'Brass Compass');
+      input!.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    await flush(2);
+    const del = document.querySelector<HTMLButtonElement>(`button.del[aria-label="Delete ${AUTHORED.name}"]`);
+    expect(del, 'fixture: the search offers Delete on the GM’s own item').not.toBeNull();
+    click(del!);
+    await flush(2);
+    const ok = byText(document, 'Delete');
+    expect(ok, 'fixture: the app’s own confirm').toBeTruthy();
+    click(ok!);
+    await flush(3);
+  }
+
+  it('an item the GM retires in the tracker’s sheet reaches CampaignsPage’s onCreateItem, as a retire', async () => {
+    const written: Item[] = [];
+    srv.party = [publish(PC_HB(), 'owner-hb')];
+    await openCampaign({ onCreateItem: (it) => written.push(it) }, withAuthored());
+    openSheetFor('Teodor Vance');
+    await flush(4);
+    expect(q('.ct-sheet-full .ws-app'), 'fixture: the tracker’s own GM sheet (not the page-replacing one)').not.toBeNull();
+    await retireFromSheet('.ct-sheet-full');
+    expect(written).toHaveLength(1);
+    expect(written[0]).toMatchObject({ id: AUTHORED.id, retired: true });
+  }, 180_000);
+
+  it('…and from the page-replacing GM sheet (a card the tracker has no sheet for yet)', async () => {
+    const written: Item[] = [];
+    srv.party = [publish(PC_HB(), 'owner-hb')];
+    srv.trackerMiss.add('char-hb');
+    await openCampaign({ onCreateItem: (it) => written.push(it) }, withAuthored());
+    openSheetFor('Teodor Vance');
+    await flush(6);
+    expect(q('.ct-sheet-full'), 'fixture: not the tracker’s sheet').toBeNull();
+    expect(q('.party-viewer .gm-edit-tab'), 'fixture: the page-replacing GM sheet').not.toBeNull();
+    await retireFromSheet('.party-viewer');
+    expect(written).toHaveLength(1);
+    expect(written[0]).toMatchObject({ id: AUTHORED.id, retired: true });
+  }, 180_000);
+
+  it('in the app: the retire is saved to homebrew storage (App’s addCustomItem), not kept for the session', async () => {
+    saveHomebrewItem(AUTHORED); // the GM authored it earlier, on his own sheet
+    localStorage.setItem('pf2e-codex.campaigns', JSON.stringify([CAMPAIGN]));
+    srv.party = [publish(PC_HB(), 'owner-hb')];
+    const { setPref } = await import('../src/data/prefs');
+    setPref('startupScreen', 'characters');
+    await import('../src/integration/CampaignTracker');
+    await import('../src/integration/TrackerTools');
+    const { default: App } = await import('../src/App');
+    render(<App />);
+    await flush(8);
+    click(btn('Menu'));
+    await flush(1);
+    click(btn('Campaigns'));
+    await flush(4);
+    click(q('.cmp-card-btn')!);
+    await flush(6);
+    openSheetFor('Teodor Vance');
+    await flush(4);
+    expect(q('.ct-sheet-full .ws-app'), 'fixture: the GM sheet over the tracker').not.toBeNull();
+    await retireFromSheet('.ct-sheet-full');
+    expect(loadHomebrewItems()[AUTHORED.id]?.retired).toBe(true);
+  }, 240_000);
+});
+
+/** Click the dashboard card of the member named `name`. */
+function openSheetFor(name: string): void {
+  const card = qq('.party-grid .party-card').find((c) => (c.querySelector('.party-card-name')?.textContent ?? '').includes(name));
+  expect(card, `fixture: ${name}'s card is on the dashboard`).toBeTruthy();
+  click(card!);
+}
 
 describe('(c) the way back still asks', () => {
   it('"← Tracker" with an unsent edit asks Update / Discard / Cancel, and Cancel keeps the sheet', async () => {
@@ -541,6 +837,74 @@ describe('(e) your own card in the tracker', () => {
     click(btn('Menu'));
     await flush(1);
     click(btn('Characters'));
+    await flush(4);
+    click(q('.rcard-open')!);
+    await flush(4);
+    expect(q('.char-name-text')?.textContent).toBe('Ilsabet Corrow');
+    expect(qq('button[aria-label="Back to tracker"]')).toHaveLength(0);
+  }, 240_000);
+
+  it('keeps "← Tracker" through a trip to Settings and back — and still drops it when Settings leads elsewhere', async () => {
+    /*
+     * U2 (2026-10-20): App's clearing effect ended the tracker visit on ANY mode but 'sheet', and
+     * Settings is a mode of its own — so Menu → Settings → back returned to the same sheet without
+     * its way back to the tracker. Fails on b8f8a6e at the first `toHaveLength(1)` after Escape
+     * (`expected [] to have a length of 1 but got +0`).
+     */
+    const mine = saved('char-me', 'Ilsabet Corrow', 3);
+    localStorage.setItem(ROSTER_KEY, JSON.stringify([mine]));
+    localStorage.setItem('pf2e-codex.campaigns', JSON.stringify([CAMPAIGN]));
+    srv.party = [publish(mine, 'gm-1'), publish(PC_A(), 'owner-a')];
+    const { setPref } = await import('../src/data/prefs');
+    setPref('startupScreen', 'characters');
+    await import('../src/integration/CampaignTracker');
+    await import('../src/integration/TrackerTools');
+    const { default: App } = await import('../src/App');
+    render(<App />);
+    await flush(8);
+
+    click(btn('Menu'));
+    await flush(1);
+    click(btn('Campaigns'));
+    await flush(4);
+    click(q('.cmp-card-btn')!);
+    await flush(6);
+    const ownCard = () =>
+      qq('.party-grid .party-card').find((c) => (c.querySelector('.party-card-name')?.textContent ?? '').includes('Ilsabet Corrow'));
+    click(ownCard()!);
+    await flush(6);
+    expect(qq('button[aria-label="Back to tracker"]'), 'fixture: the own sheet from the tracker').toHaveLength(1);
+
+    // Menu → Settings → Escape: the same sheet, with its way back.
+    const menuItem = (label: string): HTMLElement => {
+      const el = qq('.topmenu-item').find((b) => (b.textContent ?? '').trim() === label);
+      if (!el) throw new Error(`no menu item "${label}"`);
+      return el as HTMLElement;
+    };
+    click(btn('Menu'));
+    await flush(1);
+    click(menuItem('Settings'));
+    await flush(4);
+    expect(q('.char-name-text'), 'fixture: Settings replaced the sheet').toBeNull();
+    escape();
+    await flush(4);
+    expect(q('.char-name-text')?.textContent).toBe('Ilsabet Corrow');
+    expect(qq('button[aria-label="Back to tracker"]')).toHaveLength(1);
+    click(btn('Back to tracker'));
+    await flush(8);
+    expect(q('.campaign-tracker'), 'the campaign reopened').not.toBeNull();
+
+    // Settings → Characters → the same sheet: an ordinary sheet now.
+    click(ownCard()!);
+    await flush(6);
+    expect(qq('button[aria-label="Back to tracker"]')).toHaveLength(1);
+    click(btn('Menu'));
+    await flush(1);
+    click(menuItem('Settings'));
+    await flush(4);
+    click(btn('Menu'));
+    await flush(1);
+    click(menuItem('Characters'));
     await flush(4);
     click(q('.rcard-open')!);
     await flush(4);

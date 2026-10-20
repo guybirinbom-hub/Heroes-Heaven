@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Character, ContentDatabase, Customization, Item, ModeDef } from '../rules/types';
 import {
   addXp,
@@ -192,7 +192,8 @@ export function CharacterSheet({
    *  `inTracker`: opened over the campaign's initiative tracker, whose title bar is hidden while this
    *  sheet is open (the owner, 2026-10). The identity row then carries the ONE way back — a labelled
    *  "← Tracker" first in the row, calling `onBack`, in place of the trailing arrow — and, since the
-   *  desktop app draws its own title bar, the window's drag region and controls. Removable seam: see
+   *  desktop app draws its own title bar, the window's drag region (with the GM strip above it). The
+   *  window's controls are drawn by GmEditSheet in the corner of .ct-sheet-full. Removable seam: see
    *  src/integration/README.md. */
   gmEdit?: { onUpdate: () => void; onExport: () => void; busy?: boolean; inTracker?: boolean };
   onBack?: () => void;
@@ -567,7 +568,12 @@ export function CharacterSheet({
         </div>
       )}
       {gmEdit && (
-        <div className={'gm-edit-tab' + (isMobile ? ' is-mobile' : '')}>
+        <div
+          className={'gm-edit-tab' + (isMobile ? ' is-mobile' : '')}
+          // Over the tracker both title bars are hidden and this strip is the sheet's top edge, so on
+          // the desktop app (decorations: false) it drags the window too, like the identity row below.
+          data-tauri-drag-region={inTracker || undefined}
+        >
           <i className="ti ti-wand" aria-hidden="true" /> GM editing {character.name} — changes reach the player only when you <strong>Update</strong>
         </div>
       )}
@@ -591,10 +597,11 @@ export function CharacterSheet({
       <div
         className="identity"
         // In the tracker the sheet's own title bar and the campaign's are both hidden, so on the
-        // desktop app (decorations: false) this row is the window's drag region and holds its controls;
-        // --chrome-pad-y matches this row's 10px padding so those controls sit flush in the corner.
+        // desktop app (decorations: false) this row (with the GM strip above it) is the window's drag
+        // region. The window's controls are NOT in this row: GmEditSheet pins them to the top-right
+        // corner of .ct-sheet-full, above the strips (campaign-tracker.css), and this row's right
+        // padding keeps its own buttons out from under them.
         data-tauri-drag-region={inTracker || undefined}
-        style={inTracker ? ({ '--chrome-pad-y': '10px' } as CSSProperties) : undefined}
       >
         {trackerBack && (
           // The ONE way back to the tracker, first in the row and labelled — the owner asked for the
@@ -763,13 +770,13 @@ export function CharacterSheet({
             <button className="btn-primary gm-update-btn" disabled={gmEdit.busy} onClick={gmEdit.onUpdate}>
               <i className="ti ti-cloud-upload" aria-hidden="true" /> Update
             </button>
-            {/* In the tracker the labelled "← Tracker" at the front of this row is the way back. */}
+            {/* In the tracker the labelled "← Tracker" at the front of this row is the way back (the
+                window's controls are GmEditSheet's, pinned to the corner of .ct-sheet-full). */}
             {!inTracker && (
               <button className="icon-btn" title="Back to campaign" aria-label="Back to campaign" onClick={onBack}>
                 <i className="ti ti-arrow-left" aria-hidden="true" />
               </button>
             )}
-            {inTracker && <WindowControls />}
           </>
         ) : readOnly ? (
           <button className="icon-btn" title="Back to party" aria-label="Back to party" onClick={onBack}>

@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import '../builder/builder.css';
-import type { ContentDatabase, ModeDef } from '../rules/types';
+import type { ContentDatabase, Item, ModeDef } from '../rules/types';
+import type { GmHomebrewWriters } from './GmEditSheet';
 import { emptyBuild, type BuildState } from '../rules/build';
 import { enabledBookSet, sourceCatalog, sourceIdToken, storedSources } from '../rules/sources';
 import { useBuilderActions, RuleCards } from '../builder/shared';
@@ -115,12 +116,21 @@ interface CampaignsPageProps {
   modes: Record<string, ModeDef>;
   onSaveMode: (m: ModeDef) => void;
   onDeleteMode: (id: string) => void;
+  /** App's persisting item writer (addCustomItem). With onSaveMode / onDeleteMode it is what the GM's
+   *  edit sheets write homebrew through, so an item or mode made or deleted there is saved and synced
+   *  like one made on his own sheet (GmEditSheet). Absent → those sheets keep it for the session only. */
+  onCreateItem?: (item: Item) => void;
 }
 
 /** Campaigns page — GM-only management. Lists the campaigns you RUN; open one to edit its settings and
  *  see the players in it (and view their sheets / kick). Players don't manage campaigns here — they
  *  JOIN by entering a code in a character's Setup, and reach the party from that character. */
-export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, onOpenSettings, characters, onOpenOwn, modes, onSaveMode, onDeleteMode }: CampaignsPageProps) {
+export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, onOpenSettings, characters, onOpenOwn, modes, onSaveMode, onDeleteMode, onCreateItem }: CampaignsPageProps) {
+  // What the GM's edit sheets (the tracker's and the page-replacing one) write homebrew through.
+  const gmHomebrew = useMemo<GmHomebrewWriters>(
+    () => ({ onCreateItem, onSaveMode, onDeleteMode }),
+    [onCreateItem, onSaveMode, onDeleteMode],
+  );
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   // Re-open on the campaign the user was last in, rather than always on the list — a GM running a
   // campaign lives inside it. (Removable integration; see src/integration/README.md.)
@@ -186,6 +196,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
     gmEdit: !isPhone,
     roster: characters,
     onOpenOwn: onOpenOwn && ((id) => onOpenOwn(id, trackerView)),
+    homebrew: gmHomebrew,
   });
   // Back navigation, one step at a time. Campaign settings (edit) was opened FROM a campaign, so back
   // returns to that campaign's tracker — not all the way out to the list, which would lose the GM's
@@ -483,6 +494,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
                 // dismiss stack (Escape + the Back arrow) and calls this once it's safe to unmount.
                 onLeave={goBack}
                 onViewMember={(mem) => void open(view.m.id, mem.charId, mem.ownerId)}
+                homebrew={gmHomebrew}
               />
             </Suspense>
           ) : (

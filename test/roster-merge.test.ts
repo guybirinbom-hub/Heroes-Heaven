@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { jsonEqual, mergeRosterEdits, mergeValue } from '../src/data/rosterMerge';
+import { jsonEqual, mergeRosterEdits, mergeValue, revertRosterStep } from '../src/data/rosterMerge';
 import { addInventoryItem, emptyPlay, type PlayState } from '../src/rules/play';
 import type { InventoryItem } from '../src/rules/types';
 
@@ -227,6 +227,44 @@ describe('the H1 shape', () => {
       character: { name: 'GM Version' },
       play: { heroPoints: 1, inventory: [{ instanceId: 'inv-0', quantity: 4 }] },
     });
+  });
+});
+
+describe('revertRosterStep — undo carries THIS tab’s step back onto the roster as it is now (S4, 2026-10-20)', () => {
+  /*
+   * Another tab's write is folded in without being an undo step, so Ctrl+Z must take back this tab's own
+   * last step and nothing that came in after it. On 6393b29 undo restored the step's old snapshot: the
+   * other tab's dagger went, this tab's potion stayed (the App-level leg is
+   * test/bug-two-tabs-roster.test.tsx (9)).
+   */
+  const inv = (...rows: [string, number][]) => rows.map(([instanceId, quantity]) => ({ instanceId, quantity }));
+  const before = [e('pc', { play: { inventory: inv(['potion', 3]) } }), e('other', { hp: 5 })];
+  const after = [e('pc', { play: { inventory: inv(['potion', 4]) } }), before[1]]; // this tab: a fourth potion
+
+  it('nothing came in since the step: the old snapshot itself, as the same objects', () => {
+    expect(revertRosterStep(after, after, before)).toBe(before);
+  });
+
+  it('the other tab gave a dagger after the step: undo takes the potion back and keeps the dagger', () => {
+    const now = [e('pc', { play: { inventory: inv(['potion', 4], ['dagger', 1]) } }), before[1]];
+    expect(revertRosterStep(now, after, before)[0]).toEqual(e('pc', { play: { inventory: inv(['potion', 3], ['dagger', 1]) } }));
+    // …and redo puts it back, the dagger still there.
+    const undone = revertRosterStep(now, after, before);
+    expect(revertRosterStep(undone, before, after)[0]).toEqual(now[0]);
+  });
+
+  it('a value the step changed and the other tab changed again keeps the other tab’s', () => {
+    const now = [e('pc', { play: { inventory: inv(['potion', 7]) } }), before[1]];
+    expect(revertRosterStep(now, after, before)).toBe(now);
+  });
+
+  it('a character the step left alone that is gone now stays gone; one the step deleted comes back; one it added goes (unless changed since)', () => {
+    expect(revertRosterStep([after[0]], after, before).map((c) => c.id), 'deleted elsewhere since: stays deleted').toEqual(['pc']);
+    const deleted = [before[0]]; // the step deleted `other`
+    expect(revertRosterStep([e('pc', { hp: 1 })], deleted, before).map((c) => c.id)).toEqual(['pc', 'other']);
+    const added = [...before, e('new', { hp: 1 })]; // the step added `new`
+    expect(revertRosterStep([...before, e('new', { hp: 1 }), e('theirs')], added, before).map((c) => c.id)).toEqual(['pc', 'other', 'theirs']);
+    expect(revertRosterStep([...before, e('new', { hp: 9 })], added, before).map((c) => c.id), 'changed by someone since: kept').toEqual(['pc', 'other', 'new']);
   });
 });
 

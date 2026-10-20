@@ -41,14 +41,25 @@ export interface KnownRoster {
   raw: string | null;
   sig: string | null;
   roster: unknown[];
+  /** The account (cloud sync owner) the roster belonged to when this tab read or wrote it — null for a
+   *  device no account has synced yet. Another tab switching accounts changes the owner under this tab
+   *  (S3, 2026-10-20): src/data/rosterTabs.ts then takes the new account's roster whole and writes
+   *  nothing of the old one. */
+  owner: string | null;
 }
 
-let known: KnownRoster = { raw: null, sig: null, roster: [] };
+let known: KnownRoster = { raw: null, sig: null, roster: [], owner: null };
 const history = new Map<string, unknown[]>();
 
-/** This tab's state is now based on `raw` (it wrote it, read it at launch, or merged it in). */
-export function noteRosterKnown(raw: string | null, roster: unknown[], sig: string | null = raw === null ? null : rosterSig(raw)): void {
-  known = { raw, sig, roster };
+/** This tab's state is now based on `raw` (it wrote it, read it at launch, or merged it in), which
+ *  belongs to `owner` (the account's sync owner as it stands now; unchanged when not given). */
+export function noteRosterKnown(
+  raw: string | null,
+  roster: unknown[],
+  sig: string | null = raw === null ? null : rosterSig(raw),
+  owner: string | null = known.owner,
+): void {
+  known = { raw, sig, roster, owner };
   if (sig === null) return;
   history.delete(sig);
   history.set(sig, roster);

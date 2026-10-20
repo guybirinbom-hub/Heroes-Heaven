@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CampaignMembership } from '../data/campaigns';
 import { loadRoster, type SavedChar } from '../data/storage';
-import { GmEditSheet, type GmEditHandle } from '../sheet/GmEditSheet';
+import { GmEditSheet, type GmEditHandle, type GmHomebrewWriters } from '../sheet/GmEditSheet';
 import { RecordCard } from '../sheet/RecordCard';
 import type { OpenAt } from '../sheet/cardModel';
 import { PinStar } from '../sheet/PinStar';
@@ -304,6 +304,7 @@ export function CampaignTracker({
   onOpenSettings,
   onLeave,
   onViewMember,
+  homebrew,
 }: {
   m: CampaignMembership;
   /** Needed to compute each local character's party summary (AC/HP/saves on the card). */
@@ -326,6 +327,9 @@ export function CampaignTracker({
   onLeave: () => void;
   /** Open a member's sheet — the same GM view the old campaign detail panel offered. */
   onViewMember: (mem: PartyMember) => void;
+  /** The host's persisting homebrew writers, handed to the GM sheet over the tracker so an item or
+   *  mode made or deleted there is saved and synced, not kept for the session only (GmEditSheet). */
+  homebrew?: GmHomebrewWriters;
 }) {
   const { searchOpen, monsterSearchOpen, customOpen, encountersOpen, appearanceOpen, mainView, paneRequest, settingsRequest } = useTrackerUi();
   /*
@@ -1769,6 +1773,9 @@ export function CampaignTracker({
               // carries the one way back ("← Tracker", through its own doExit → confirmLeave) and, in
               // the desktop app, the window's drag region and controls.
               inTracker
+              onCreateItem={homebrew?.onCreateItem}
+              onSaveMode={homebrew?.onSaveMode}
+              onDeleteMode={homebrew?.onDeleteMode}
               onExit={() => setFullSheetId(null)}
             />
             </DismissUnder.Provider>

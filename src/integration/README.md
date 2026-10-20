@@ -528,6 +528,50 @@ touching either direction: it is where the never-overwrite rules live.
   earlier write of ours is recognised and written over. One value changed in both tabs inside one
   debounce keeps this tab's (the player overwrote themselves); a character deleted in one tab and changed
   in the other comes back. Between DEVICES the per-character cloud merge decides, as before.
+- **Two tabs, after a checker's review of 6393b29** (2026-10-20; legs 7–9 of
+  `test/bug-two-tabs-roster.test.tsx`, red on b8f8a6e). Changed since the paragraph above: a GM push not
+  landed yet no longer gives way WHOLE — it is taken back OUT of the entry (`src/data/rosterFold.ts`
+  `gmApplyYields`), so a tap the player made on top of it stays, and it stays known by mark until it lands
+  (App's `gmUnlandedRef`: React can commit an apply from the result it computed at dispatch after the
+  after-commit effect dropped its record — on 6393b29 that push landed on the sheet while its row was
+  refused "not applied"). An entry the merge makes has its `character` re-derived from its merged
+  `build` (`settleMergedBuild`, a derived refresh). Another ACCOUNT's roster (another tab signed in as
+  someone else) replaces this tab's whole, and this tab writes nothing while the key belongs to the new
+  account and holds nothing of it yet (`rosterTabs.rosterOwnerSwitched`, persist `HOLD_WRITE`); the undo
+  history is cleared with it. Another tab's write and a cloud adopt are no longer undo steps: Ctrl+Z
+  carries this tab's own last step back onto the roster as it is now (`rosterMerge.revertRosterStep`;
+  `rosterFold.revertOwnStep` re-derives an entry the revert makes, as a fold does). The SWITCHING tab
+  (the one that signed in) knows it emptied the key itself (`storage.wipeSyncedLocalData`) and keeps
+  saving even when its first pull fails, and saves the new owner before it announces the empty roster, so
+  its undo history is cleared once, at the switch (`test/bug-account-switch-this-tab.test.tsx`).
+  Still open, each narrow: (a) in the OTHER tab every edit made while the key is empty (from the switch
+  until the switching tab first writes — its emptied roster, a debounce later, or the new account's
+  pulled one) is dropped, never written to either account — the price of never writing it into the new
+  one; the "can't save" banner shows while that lasts, in its own words — "Another tab of this app
+  signed in to a different account. Changes made in this tab right now are not saved — reload this
+  tab." (persist reports a held write as `'held'`; a real storage failure keeps the storage text). That
+  tab IS told about the switch (an earlier line here said its sync is never restarted — wrong):
+  supabase-js (`@supabase/auth-js` GoTrueClient) posts every auth event on a BroadcastChannel named
+  after its storage key, and every other tab of the app passes the SIGNED_OUT and SIGNED_IN it hears
+  there to its own `onAuthStateChange` (`useAuth`). So its `auth.status` goes `signed-out` (the sign-in
+  screen) and then `signed-in`, and its sync effect stops and starts again for the new account; its
+  restarted `startSync` finds the new owner already saved, or saves it and wipes the keys itself,
+  depending on which tab gets there first — traced, not tested. A browser with no BroadcastChannel gets
+  no message at all. Until the new roster arrives its screen can still show, and its publish loop can
+  still try to publish, the old account's characters; a GM apply
+  that lands there while its writes are held is still consumed (App's after-commit effect calls
+  `persistNow`, then `consumeGmEdit`) with its result never written — traced, not reproduced. (b) A
+  write with no lineage but the SAME account (another tab writing onto a key emptied some other way —
+  `storage.clear()`, a crash-recovery `clearRoster`) is merged against this tab's last known roster, not
+  taken whole: taking it whole would drop this tab's unsaved edit, so the "every character deleted"
+  reading stays possible there. (c) A value the push set and the tap then changed again keeps the tap's
+  value, which was built on the push's. (d) The launch rebuild, a mid-session re-derive (trust gate,
+  homebrew) and a GM apply in THIS tab are still undo steps — Ctrl+Z right after one takes it back, as
+  before. (e) Undoing a step whose character was deleted elsewhere since leaves it deleted; undoing a
+  step that ADDED a character another tab has since changed keeps that character. (f) A tab still
+  running an OLDER app version (opened before an update, never reloaded) has none of the above: if it
+  saves after an account switch it can put the old account's characters into the new account. Close or
+  reload every other tab of the app before switching accounts.
 - **A hung cloud pull holds every apply**: the player's GM-edit pass gives up on any one network answer
   after 20 s and ends, but a pull that never answers leaves cloud sync's `syncing` flag set until it
   settles, so every APPLY waits for the rest of that session — nothing is lost, the GM sees "waiting".

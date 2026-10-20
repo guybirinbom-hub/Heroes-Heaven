@@ -17,7 +17,7 @@ import {
 import { memberCardSummary, useMemberSheets } from './memberSheets';
 import { memberConditions, memberSummary, type PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
-import { GmEditSheet, type GmEditHandle } from './GmEditSheet';
+import { GmEditSheet, type GmEditHandle, type GmHomebrewWriters } from './GmEditSheet';
 import { confirmDialog, type DialogStyle } from './confirm';
 import { RankPill } from './widgets';
 import { useBackHandler } from './useEscapeClose';
@@ -141,6 +141,8 @@ export function useMemberViewer(
     roster?: { id: string; name: string }[];
     /** Navigate to one of this device's own characters. Absent → no own-sheet route from here. */
     onOpenOwn?: (charId: string) => void;
+    /** The host's persisting homebrew writers for the GM edit sheet (see GmEditSheet). */
+    homebrew?: GmHomebrewWriters;
   },
 ) {
   const [viewing, setViewing] = useState<ViewingState | null>(null);
@@ -284,6 +286,9 @@ export function useMemberViewer(
             content={content}
             campaignId={viewing.campaignId}
             playerOwnerId={viewing.ownerId}
+            onCreateItem={options?.homebrew?.onCreateItem}
+            onSaveMode={options?.homebrew?.onSaveMode}
+            onDeleteMode={options?.homebrew?.onDeleteMode}
             onExit={() => setViewing(null)}
           />
         </div>

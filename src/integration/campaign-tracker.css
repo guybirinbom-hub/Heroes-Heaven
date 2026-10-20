@@ -699,7 +699,8 @@ body:has(.campaign-tracker) .picker-overlay.confirm-overlay { z-index: 1600; }
 /* A card opens the player's sheet as a layer over the whole tracker view. It does not cover HH's
    chrome above it: that bar is HIDDEN while the sheet is open instead (TrackerTools, off trackerUi's
    `sheetOpen`; the rule just below), and the sheet's identity row carries "← Tracker" and, in the
-   desktop app, the window's drag region and controls. */
+   desktop app, the window's drag region (with the GM strip); the window's controls are pinned to this
+   layer's corner (`.ct-sheet-full > .chrome-btns`, below). */
 .ct-sheet-full {
   position: absolute;
   inset: 0;
@@ -744,12 +745,36 @@ body:has(.campaign-tracker) .picker-overlay.confirm-overlay { z-index: 1600; }
  * The sheet's own "Heroes Heaven" titlebar stays hidden here: it is a second title bar over a view
  * whose job is one character, and the campaign's own bar is hidden too while the sheet is open (see
  * `[hidden]` above). Safe, because nothing in it is needed: the sheet's way back ("← Tracker") and,
- * in the desktop app, the drag region and window controls live in its identity row when it is opened
- * from the tracker (CharacterSheet's `gmEdit.inTracker`). The "GM editing X" strip is a separate
- * element and stays (the owner, 2026-09-16, and again 2026-10: "keep the gm editing strip").
+ * in the desktop app, the drag region live in its identity row (and the GM strip) when it is opened
+ * from the tracker (CharacterSheet's `gmEdit.inTracker`), and the window controls in the rule below.
+ * The "GM editing X" strip is a separate element and stays (the owner, 2026-09-16, and again 2026-10:
+ * "keep the gm editing strip").
  */
 .ct-sheet-full .chrome {
   display: none;
+}
+
+/*
+ * The desktop app's minimise / maximise / close over the tracker's sheet. GmEditSheet renders them as
+ * a direct child of this layer (WindowControls renders nothing on the web), and they sit in the
+ * WINDOW's corner like every title bar's: absolute, top 0, right 0, above the GM strip (z 6). In the
+ * identity row they sat below the strip and any "saved and waiting" / "changed on the player's device"
+ * banner — ~23 px too low with the strip alone. The strips and the identity row get right padding so
+ * their text and buttons never slide under them (:has, so the web, with no controls, keeps its
+ * padding). test/bug-tracker-sheet-top-row.test.tsx pins these rules.
+ */
+.ct-sheet-full > .chrome-btns {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  height: 32px;
+  margin: 0;
+}
+.ct-sheet-full:has(> .chrome-btns) > .gm-pending-strip,
+.ct-sheet-full:has(> .chrome-btns) > .gm-live-banner,
+.ct-sheet-full:has(> .chrome-btns) .identity {
+  padding-right: 152px;
 }
 
 /* The workspace's empty state — also the drop target for a combatant dragged out of the order

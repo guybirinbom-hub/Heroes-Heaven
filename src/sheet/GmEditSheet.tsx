@@ -5,6 +5,7 @@ import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, t
 import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, type PlayState } from '../rules/play';
 import { Builder } from '../builder/Builder';
 import { CharacterSheet } from './CharacterSheet';
+import { WindowControls } from './WindowControls';
 import { exportNative } from '../data/transfer';
 import { downloadText, fileSlug } from './download';
 import { pushGmEdit, fetchPublishedSheet } from '../data/party';
@@ -13,6 +14,14 @@ import { acknowledgeGmEditRefused, gmEditRefused, gmHeldEdit, gmPendingEdit, gmP
 import { canonicalJson } from '../data/authored';
 import { memberConditions, type PartySummary } from './partySummary';
 import { carryStoredOverrides } from '../data/rebuild';
+
+/** The host's persisting homebrew writers, threaded App → CampaignsPage → (CampaignTracker |
+ *  useMemberViewer) → GmEditSheet. See the props of the same names below. */
+export interface GmHomebrewWriters {
+  onCreateItem?: (item: Item) => void;
+  onSaveMode?: (mode: ModeDef) => void;
+  onDeleteMode?: (id: string) => void;
+}
 
 export interface GmEditHandle {
   /**
@@ -49,6 +58,17 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   /** Opened over the campaign's tracker, whose title bar steps aside meanwhile: the sheet leads with
    *  "← Tracker" (still through doExit → confirmLeave) and holds the window's controls. Removable seam. */
   inTracker?: boolean;
+  /*
+   * The host's PERSISTING homebrew writers (App's addCustomItem / saveModeDef / removeModeDef, passed
+   * down through the campaigns page): an item or mode the GM creates, edits or deletes here is his own
+   * homebrew, and those write it to storage, mark cloud + campaign-homebrew sync dirty and record the
+   * tombstone. This sheet still updates its own content copy at once; absent (a host with no storage),
+   * that local copy is all there is. A "delete" from the Add-items search is a RETIRE — a save of the
+   * record with `retired: true` — so it comes through onCreateItem, never a removal.
+   */
+  onCreateItem?: (item: Item) => void;
+  onSaveMode?: (mode: ModeDef) => void;
+  onDeleteMode?: (id: string) => void;
   onExit: () => void;
 }>(function GmEditSheet({
   initial,
@@ -58,6 +78,9 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   campaignId,
   playerOwnerId,
   inTracker,
+  onCreateItem,
+  onSaveMode,
+  onDeleteMode,
   onExit,
 }, ref) {
   const [work, setWork] = useState<SavedChar>(initial);
@@ -179,14 +202,19 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     setDirty(true);
   };
 
+  // Local copy first (resolves at once in this sheet), then the host's persisting writer, so what the
+  // GM authors or deletes here outlives the session (test/bug-gm-edit-homebrew-persists.test.tsx).
   const addCustomItem = (item: Item) => {
     setContent((c) => ({ ...c, items: { ...c.items, [item.id]: item } }));
+    onCreateItem?.(item);
   };
   const saveModeDef = (mode: ModeDef) => {
     setContent((c) => ({ ...c, modes: { ...c.modes, [mode.id]: mode } }));
+    onSaveMode?.(mode);
   };
   const removeModeDef = (id: string) => {
     setContent((c) => ({ ...c, modes: Object.fromEntries(Object.entries(c.modes).filter(([k]) => k !== id)) }));
+    onDeleteMode?.(id);
   };
 
   const openBuilder = () => {
@@ -378,6 +406,11 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
 
   return (
     <>
+      {/* Over the tracker both title bars are hidden, so the desktop app's minimise / maximise / close
+          live here: a direct child of .ct-sheet-full, pinned to its top-right corner above the GM strip
+          and the strips below (campaign-tracker.css). Inside the sheet's identity row they sat under
+          the strip and every banner, ~23 px or more below the window's corner. Null on the web. */}
+      {inTracker && <WindowControls />}
       {/* Pushed, on the server, not yet on the player's device. The sheet above already SHOWS the
           edit; this says why the player might not have it. It clears itself the moment their app
           publishes a version that carries the change (or anything newer). */}

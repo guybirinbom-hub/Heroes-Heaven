@@ -8,6 +8,7 @@ import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build'
 import { addInventoryItem, initialPlay } from '../src/rules/play';
 import { ROSTER_KEY, type SavedChar } from '../src/data/storage';
 import { authoredKey, hash53 } from '../src/data/authored';
+import { LINEAGE_KEY, rosterSig } from '../src/data/rosterLineage';
 
 /**
  * TWO TABS OF ONE BROWSER PROFILE (package H1; ruled "fix it", docs/gold-set-answers.md, 2026-10-15
@@ -52,6 +53,8 @@ const net = vi.hoisted(() => ({
   /** While set, every read of the roster key returns this instead (a tab whose copy of storage has
    *  not caught up with another tab's write yet). */
   staleRoster: null as string | null,
+  /** While set, the GM-edit pass's "pull before an apply" answers with this (leg 7 taps inside it). */
+  cloud: null as null | (() => Promise<boolean>),
 }));
 
 vi.mock('../src/data/useAuth', () => ({
@@ -107,7 +110,7 @@ const partyMock = (tab: number) => async (importOriginal: () => Promise<unknown>
 vi.mock('../src/data/cloudSync', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../src/data/cloudSync')>()),
   startCloudSync: async () => () => undefined,
-  pullForGmApply: () => null,
+  pullForGmApply: () => (net.cloud ? net.cloud() : null),
 }));
 
 // Production update priorities (see test/bug-gm-edit-race.test.tsx): `window.event` is jsdom's real
@@ -167,6 +170,7 @@ afterEach(() => {
   net.hold = false;
   net.held = [];
   net.staleRoster = null;
+  net.cloud = null;
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
@@ -263,6 +267,8 @@ interface Tab {
   closePicker: () => void;
   /** The names on this tab's inventory cards (a duplicate's copy number included: "Rope 1"). */
   cardNames: () => string[];
+  /** Press this tab's own Undo button (Ctrl+Z would reach every tab here: they share one window). */
+  undo: () => void;
 }
 
 /** Open the app in a NEW tab: its own module graph, the same localStorage. */
@@ -324,6 +330,11 @@ async function openTab(): Promise<Tab> {
     cardNames: () => {
       openInventory();
       return [...host.querySelectorAll<HTMLElement>('.inv-card .inv-name')].map((e) => (e.textContent ?? '').trim());
+    },
+    undo: () => {
+      const b = host.querySelector<HTMLButtonElement>('button[aria-label="Undo"]');
+      if (!b || b.disabled) throw new Error('fixture: this tab has no step to undo');
+      act(() => b.dispatchEvent(new MouseEvent('click', { bubbles: true })));
     },
   };
 }
@@ -512,6 +523,142 @@ describe(`two tabs of one browser profile never lose the player’s change (rend
       const names = t.cardNames();
       expect(count(names, 'Waterskin'), `${tab}: ${names.join(', ')}`).toBe(1);
       expect(count(names, 'Dagger'), `${tab}: ${names.join(', ')}`).toBe(1);
+    }
+  }, TIMEOUT);
+
+  /*
+   * (7)–(9): A CHECKER'S FINDINGS ON 6393b29 (2026-10-20). RED ON HEAD b8f8a6e (run 2026-10-20, a `git
+   * archive` copy with this file and its new helpers; legs 1–6 pass there): see each leg.
+   */
+  it('(7) S1: tab B applies the GM’s push and the player spends a hero point on top of it in the same render batch, while tab A’s potion waits unread — the hero point stays, the push does not', async () => {
+    /*
+     * What happens (traced 2026-10-20): the tap commits first, alone (a click outranks the apply's
+     * background update), and that commit's after-commit effect folds A's write in — so the entry is a
+     * merge, and the apply's record is DROPPED as "replaced". React then commits the apply from the result
+     * it computed at dispatch, without running the updater again, the tap rebased on it (carrying its
+     * mark) and the fold re-run on top. On HEAD that fold found no record for the push, merged it as a
+     * consumed one ('conflicts'), and the push LANDED while its row was refused "not applied" — fails on
+     * `a push built before the player’s change never lands over it: expected true to be false`. Now an apply
+     * not landed stays known by mark (App's gmUnlandedRef) and the fold takes it back out of the entry,
+     * keeping the tap (src/data/rosterFold.ts gmApplyYields).
+     * MUTATION (run 2026-10-20): `yieldTo: gmApplyYields(gmAppliedRef.current)` in App's mergeOpts — fails
+     * the same way. MUTATION: `if (rec) return 'whole';` in gmApplyYields (6393b29's rule, the record
+     * found) — fails on `on disk: the hero point spent in tab B: expected 1 to be +0`.
+     */
+    const { a, b } = await twoTabs('t7');
+    net.gmTab = b.n;
+    let open = () => undefined as void;
+    net.publishGate = new Promise<void>((r) => {
+      open = () => r();
+    }); // the server still holds the three-potion sheet when B judges
+    net.hold = true; // tab B hears of A's write only later
+    a.plusOnce();
+    for (let i = 0; i < 100 && storedPotions('t7') !== 4; i++) await wait(50);
+    expect(storedPotions('t7'), 'fixture: tab A’s write landed').toBe(4);
+    const row = push('t7', gmRenamed('t7', 'GM Version'));
+    net.edits = [row];
+    // The pull before the apply answers "level"; the player taps in the next task — after the pass made
+    // its roster update and before the act scope lets React render it (as race leg 41).
+    let tapped = false;
+    net.cloud = () => {
+      setTimeout(() => {
+        if (tapped) return;
+        tapped = true;
+        b.host.querySelector('button[aria-label="Set hero points to 0"]')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      }, 0);
+      return Promise.resolve(true);
+    };
+    await focus();
+    net.cloud = null;
+    expect(tapped, 'fixture: the tap landed inside the window').toBe(true);
+    releaseEvents();
+    await wait(1200);
+    net.publishGate = null;
+    open();
+    await wait(1500);
+    expect(stored('t7').play?.heroPoints, 'on disk: the hero point spent in tab B').toBe(0);
+    expect(b.heroPointSpent(), 'tab B: its own hero point').toBe(true);
+    expect(a.heroPointSpent(), 'tab A: tab B’s hero point').toBe(true);
+    expect(storedPotions('t7'), 'on disk: tab A’s potion').toBe(4);
+    expect(a.qty()).toBe('4');
+    expect(b.qty()).toBe('4');
+    expect(a.shows('GM Version') || b.shows('GM Version'), 'a push built before the player’s change never lands over it').toBe(false);
+    expect(net.receipts.some((r) => r.charId === 't7' && r.at === row.updatedAt), 'the GM is told “not applied”').toBe(true);
+  }, TIMEOUT);
+
+  it('(8) S3: another tab signs this browser in as ANOTHER ACCOUNT while tab A holds an unsaved edit — nothing of the old account is written into the new one', async () => {
+    /*
+     * What startSync does in the switching tab: wipe the account's keys, save the new owner, and (after
+     * its pull) write the new account's roster onto the empty key — lineage `on: null`. On HEAD tab A's
+     * debounce wrote its old roster into the emptied key (fails on `nothing of the old account is written
+     * while the key is empty: expected '[{"id":"t8",…' to be null`), and, that held back, merged the new
+     * roster against the old one and kept its edited old character ("they deleted it, we changed it").
+     * MUTATION (run 2026-10-20): drop the HOLD_WRITE line in App's reconcileWrite — fails on the same
+     * empty-key assertion. MUTATION: skip the `rosterOwnerSwitched()` block in rosterTabs
+     * takeForeignRoster — fails on `tab A shows the new account: expected false to be true`.
+     */
+    const OWNER = 'pf2e-codex.syncOwner';
+    localStorage.setItem(OWNER, 'acct-old');
+    const { a, b } = await twoTabs('t8');
+    const writes: string[] = [];
+    a.plusOnce(); // queued behind A's debounce: the old account's last edit
+    // The other tab switches accounts — every roster write from here on is recorded (each one is
+    // announced as a `storage` event: shareStorage).
+    const record = (e: StorageEvent) => {
+      if (e.key === ROSTER_KEY && e.newValue !== null) writes.push(e.newValue);
+    };
+    window.addEventListener('storage', record);
+    localStorage.removeItem(ROSTER_KEY);
+    localStorage.removeItem(ACTIVE_KEY);
+    localStorage.setItem(OWNER, 'acct-new');
+    await wait(800); // A's debounce fires while the key is empty
+    expect(localStorage.getItem(ROSTER_KEY), 'nothing of the old account is written while the key is empty').toBe(null);
+    // …and tab A says so (2026-10-20, a checker's finding: the held write was dropped without a word).
+    const banner = (t: Tab) => t.host.querySelector('.save-warning:not(.storage-warning)');
+    expect(banner(a), 'tab A: the “can’t save” banner while its write is held').not.toBeNull();
+    // Fix-up F2 (2026-10-20): it names the account switch and never blames storage, which is fine here.
+    // MUTATION (run 2026-10-20): App's banner always shows the storage text → `the banner names the
+    // account switch: expected 'Changes can’t be saved — browser stor…' to contain 'different account'`.
+    const bannerText = banner(a)?.textContent ?? '';
+    expect(bannerText, 'the banner names the account switch').toContain('different account');
+    expect(bannerText, 'the banner says to reload this tab').toContain('reload this tab');
+    expect(bannerText, 'the banner does not blame storage').not.toContain('storage');
+    const fresh = JSON.stringify([saved('n8', 'New Account Hero')]);
+    localStorage.setItem(LINEAGE_KEY, JSON.stringify({ sig: rosterSig(fresh), on: null }));
+    localStorage.setItem(ROSTER_KEY, fresh);
+    await wait(2000);
+    window.removeEventListener('storage', record);
+    const ids = (JSON.parse(localStorage.getItem(ROSTER_KEY)!) as SavedChar[]).map((c) => c.id);
+    expect(ids, 'on disk: the new account’s roster only').toEqual(['n8']);
+    expect(writes.filter((w) => w.includes('"t8"')), 'no write carried the old account’s character').toEqual([]);
+    for (const [tab, t] of [['tab A', a], ['tab B', b]] as const) {
+      expect(t.shows('New Account Hero'), `${tab} shows the new account`).toBe(true);
+      expect(t.shows('Player Version'), `${tab} still shows the old account’s character`).toBe(false);
+      expect(banner(t), `${tab}: no “can’t save” banner once the new account’s roster is taken`).toBeNull();
+    }
+  }, TIMEOUT);
+
+  it('(9) S4: Ctrl+Z in tab B after tab A’s dagger was folded in takes back B’s own potion — never A’s dagger', async () => {
+    /*
+     * Every fold of another tab's write was its own undo step: on HEAD Undo in B removed the dagger, on
+     * disk and in A, and B's potion stayed (fails on `tab B: its own potion is taken back: expected '4'
+     * to be '3'`).
+     */
+    const { a, b } = await twoTabs('t9');
+    b.plusOnce(); // tab B's own last action
+    await wait(1000);
+    a.give('Dagger');
+    a.closePicker();
+    await wait(1500); // A writes; B folds the dagger in
+    expect(count(b.cardNames(), 'Dagger'), 'fixture: tab B holds A’s dagger').toBe(1);
+    b.undo();
+    await wait(1500);
+    expect(b.qty(), 'tab B: its own potion is taken back').toBe('3');
+    expect(storedPotions('t9'), 'on disk: the potion').toBe(3);
+    expect(storedRows('t9', 'dagger'), 'on disk: tab A’s dagger stays').toEqual([expect.objectContaining({ quantity: 1 })]);
+    for (const [tab, t] of [['tab A', a], ['tab B', b]] as const) {
+      expect(count(t.cardNames(), 'Dagger'), `${tab}: the dagger`).toBe(1);
+      expect(t.qty(), `${tab}: the potions`).toBe('3');
     }
   }, TIMEOUT);
 });

@@ -140,7 +140,7 @@ export function saveRoster(roster: SavedChar[]): boolean {
       writeLineage(sig, cur === null ? null : cur === k.raw ? k.sig : rosterSig(cur));
       localStorage.setItem(KEY, raw);
     }
-    noteRosterKnown(raw, roster, sig);
+    noteRosterKnown(raw, roster, sig, loadSyncOwner());
     return true;
   } catch {
     // Storage unavailable or over quota — the roster won't persist. Surfaced to the user by the
@@ -780,8 +780,15 @@ export function saveSyncOwner(uid: string): void {
   }
 }
 /** Wipe only the ACCOUNT-scoped synced data (roster, homebrew, modes, campaigns, sync meta, tombstones)
- *  — NOT device-global prefs/appearance. Used when a different account signs in on this browser. */
+ *  — NOT device-global prefs/appearance. Used when a different account signs in on this browser.
+ *
+ *  This tab emptied the roster key itself, so it KNOWS the key is empty and holds no account's roster
+ *  (owner null: the account now signing in takes it, as on a first sign-in — rosterTabs.ts). Left naming
+ *  the old account, this tab read its own wipe as "another tab switched accounts" and held every write
+ *  until its first pull succeeded — offline, a character made in the new account was never saved (a
+ *  checker's finding on S3, 2026-10-20; test/bug-account-switch-this-tab.test.tsx). */
 export function wipeSyncedLocalData(): void {
+  noteRosterKnown(null, [], null, null);
   for (const k of [
     ROSTER_KEY,
     ACTIVE_KEY,

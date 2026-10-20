@@ -401,6 +401,10 @@ async function startSync(onRosterReplaced: (roster: SavedChar[]) => void): Promi
   const uid = await currentUserId();
   const prevOwner = loadSyncOwner();
   if (uid && prevOwner && prevOwner !== uid) {
+    // The new owner is saved BEFORE the emptied roster is announced: App's adopt reads it to know the
+    // undo history belongs to another account now — read after, every old-account step survived, and
+    // Ctrl+Z on one put an old character into this account (test/bug-account-switch-this-tab.test.tsx).
+    saveSyncOwner(uid);
     wipeSyncedLocalData();
     applyRoster([]); // reflect the wipe immediately; the pull below fills in this account's characters
     cancelPersist(); // drop any pending debounced write so the stale empty roster can't flush post-pull

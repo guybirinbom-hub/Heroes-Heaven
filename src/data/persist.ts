@@ -26,11 +26,20 @@ type Roster = unknown;
  *  is `any` so a concrete writer (e.g. saveRoster(SavedChar[])) is assignable — this module is
  *  roster-shape-agnostic and only stores/forwards the value opaquely. */
 type Writer = (roster: any) => boolean;
-/** Reports the latest write's success/failure so the UI can surface a "can't save" banner. */
-type OnResult = (ok: boolean) => void;
+/** Why a write did not land, when it is not storage's fault: `'held'` — the reconcile step held it back
+ *  (HOLD_WRITE: another tab signed this browser in as a different account). Absent for a storage
+ *  rejection (quota, storage unavailable). */
+export type NotSavedReason = 'held';
+/** Reports the latest write's success/failure so the UI can surface a "can't save" banner — and, for a
+ *  write held back rather than rejected, why (the banner must not blame storage for it). */
+type OnResult = (ok: boolean, reason?: NotSavedReason) => void;
 
 let writer: Writer = () => true;
 let onResult: OnResult = () => {};
+/** What the reconcile step returns for a queued roster that must NOT be written at all: another tab
+ *  signed this browser in as a different account, and what this tab queued belongs to the old one (S3,
+ *  2026-10-20; src/data/rosterTabs.ts rosterOwnerSwitched). The queued write is dropped, unwritten. */
+export const HOLD_WRITE: unique symbol = Symbol('hh.holdWrite');
 /** Turns the roster about to be written into the roster to write — App folds in another tab's write
  *  here (src/data/rosterTabs.ts), so a write never lands over a change it has not seen. */
 let reconcile: (roster: any) => any = (r) => r;
@@ -65,6 +74,13 @@ function writePending(): void {
   // What is written — and remembered, and handed to cloud sync — is the RECONCILED roster: the edit
   // that was queued, with any other tab's write folded in (App's reconcile; identity when none).
   const roster = reconcile(queued);
+  // Nothing of it may be written (another account's key: rosterTabs.ts) — and the player is told it was
+  // not saved (App's save-failed banner, in its account-switch wording: storage is not at fault), never
+  // left to lose it in silence; the next landed write clears it.
+  if (roster === HOLD_WRITE) {
+    onResult(false, 'held');
+    return;
+  }
   written.push(roster);
   if (written.length > RECENT_WRITES) written.shift();
   onResult(writer(roster));
