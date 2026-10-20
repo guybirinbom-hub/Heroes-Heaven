@@ -39,6 +39,8 @@ const SAMPLE: Required<BuildOverrides> = {
   addedSpells: [{ spellId: 'shield', rank: 0 }],
   maxHp: 30,
   contentEdits: { feats: { toughness: { name: 'Tougher' } } },
+  blocks: [{ id: 't1', kind: 'number.add', v: 1, target: 'skill:athletics', value: 1 }],
+  meta: { 'proficiencies:athletics': { reason: 'Guild training', of: 'expert' } },
 };
 
 /** The keys `interface BuildOverrides` declares (its own two-space-indented members). */

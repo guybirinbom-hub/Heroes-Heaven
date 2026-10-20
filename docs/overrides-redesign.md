@@ -101,6 +101,19 @@ Guy, 2026-10-20 (after Tweaks, every PF2e record will be re-implemented in a new
     own chat, which first asks Guy what exactly he disliked about the batches. The blocks must not
     depend on the batch tools.
 
+Guy, 2026-10-20 (part A check-in: he saw looks 1–3, asked for a mix, and picked that mix, "look 4"):
+
+26. **Where Tweaks sits.** A "Tweaks" button with a count in the Builder's top bar (where look 2 put
+    it). It opens a page in place of the level page, like look 1, so the Character panel with the stats
+    stays in view. Clicking a level closes it.
+27. **Each tweak folds open.** The list shows one short line per tweak (what, reason, from level, on/off).
+    Clicking a tweak opens its editor under it; only one is open at a time, so many tweaks fit on the
+    screen.
+28. **Only after Options.** The Tweaks button appears only when Tweaks is switched on in Setup →
+    Options. That switch is the on/off switch of decision 8 (pauses every tweak, after the confirm).
+29. **The list is grouped by kind** (Numbers, Ranks, Feats, Languages, Spells…). "Add a tweak" sits
+    under the list; Advanced folds out under it.
+
 ## What Overrides can do today
 
 Builder → Setup → Options → switch on "Overrides". A card then appears with 9 parts:
@@ -986,7 +999,9 @@ How to work:
 ### Phase 1 part B scope (for the part B prompt that part A writes)
 
 The Tweaks base on the blocks (features 1, 2, 4, 30-33, 40, 44, 46; problems 1, 5, 6, 7, 8, 9, 10):
-- The look Guy picked at the part A check-in (decision 21).
+- The look Guy picked at the part A check-in: decisions 26–29 (top-bar button, a page in place of the
+  level page with the stats still in view, one line per tweak that folds open one at a time, shown only
+  when Tweaks is on in Options, grouped by kind).
 - The player sees "Tweaks" everywhere the old card said "Overrides". The stored names stay
   (spec item 1).
 - Each tweak has a reason, an on/off switch and a start level (phase 1 builds the start level only, not

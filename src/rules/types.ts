@@ -6423,6 +6423,34 @@ export interface BuildOverrides {
     feats?: Record<string, Partial<Feat>>;
     classFeatures?: Record<string, Partial<ClassFeature>>;
   };
+  /**
+   * TWEAKS (docs/overrides-redesign.md, Building blocks): the new number blocks (+/-, set, at least N),
+   * as stored elements read by `src/rules/blocks/stored.ts`. `unknown[]` on purpose: an element of a
+   * kind or version this app does not know (written by a newer app) is kept byte for byte, never
+   * dropped (item 13). The kinds that wrap the keys above keep storing there.
+   */
+  blocks?: unknown[];
+  /** Reason / on-off / start level for the entries of the keys above, keyed `<key>:<id>`
+   *  (`proficiencies:stealth`, `addedFeats:fleet@3`, `~2` only for a true repeat), so those keys keep
+   *  their old shape for older apps. */
+  meta?: Record<string, TweakMeta>;
+}
+
+/** What Tweaks adds to an entry of an old Overrides key (see `BuildOverrides.meta`). */
+export interface TweakMeta {
+  reason?: string;
+  /** false = paused. Absent = on. */
+  on?: boolean;
+  /** The character level the entry starts at. */
+  from?: number;
+  /** A rank entry: "at least" or "exactly". Absent = stored before Tweaks; behaves as today. */
+  mode?: 'atLeast' | 'exactly';
+  /** A set number: the book number when the set was made (decision 9 warns when it changes). */
+  baseline?: number;
+  /** The entry this meta was written for (its rank, value or `id@level`). Meta whose `of` no longer
+   *  matches the entry is ignored, so an entry an older app deleted and re-added does not inherit a stale
+   *  "paused" or reason. */
+  of?: string;
 }
 
 export interface Character {

@@ -1,0 +1,222 @@
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
+import { describe, expect, it } from 'vitest';
+import { checkBlocks, featureNumbers, laneKeys, type BlocksCheckInput } from '../src/rules/blocks/check';
+import { BLOCK_KINDS, EDITOR_PARTS, SOURCE_KINDS, STILL_TO_ADD, blockKind } from '../src/rules/blocks/registry';
+import { OWNERS, TARGETS } from '../src/rules/blocks/targets';
+
+/**
+ * The blocks guard (scripts/blocks-check.mjs, in `npm run verify`). docs/overrides-redesign.md, Building
+ * blocks item 11: each guard is made to fail once on a planted bad case. The bad cases are planted HERE,
+ * in memory, on a small valid input — never in the repo's files. The last test runs the guard on the
+ * real files.
+ */
+
+const ROOT = join(__dirname, '..');
+const read = (p: string) => (existsSync(join(ROOT, p)) ? readFileSync(join(ROOT, p), 'utf8') : null);
+
+const DESIGN =
+  '# x\n\n## Feature list\n\n### A. Numbers\n\n1. **One**\n2. ⭐ **Two**\n   more text\n3. ~~Three~~: dropped (decision 3).\n\n## Dropped ideas\n\n4. **Not a feature**\n';
+const LANES = [
+  '## A. Proficiency',
+  '',
+  '| lane | the text says | satisfied by |',
+  '|---|---|---|',
+  '| `laneOne` | "x" | `fieldX` |',
+  '| `laneTwo` / `laneThree` | "y" | `fieldY` |',
+  '',
+  '| `laneCont` | a row after a blank line still belongs to the table above | `fieldZ` |',
+  '',
+  '### `laneOne` — a sub-table that is not a lane table',
+  '',
+  '| shape | means |',
+  '|---|---|',
+  '| `notALane` | z |',
+  '',
+  '## ⚠ Lanes this app does NOT have',
+  '',
+  '| lane | the text says | status |',
+  '|---|---|---|',
+  '| `laneMissing` | "w" | no field |',
+  '',
+  '## ⚠⚠ DECIDED SCOPE — rulings',
+  '',
+  '| ruling | means |',
+  '|---|---|',
+  '| `scopeThing` | not a lane table |',
+  '',
+  '### `laneLate` — a later section adds a lane',
+  '',
+  '| lane | the text says | satisfied by |',
+  '|---|---|---|',
+  '| `laneLate` | "v" | `fieldV` |',
+].join('\n');
+
+const row = (over: Record<string, unknown> = {}) => ({
+  id: 'number.add',
+  family: 'number',
+  title: 'Bonus or penalty',
+  phase: 1,
+  place: 'main',
+  status: 'built',
+  registry: true,
+  features: [1],
+  lanes: ['laneOne'],
+  bookFields: [...(blockKind('number.add')!.bookFields ?? [])],
+  bookOnly: false,
+  note: 'x',
+  ...over,
+});
+
+function good(): BlocksCheckInput {
+  return {
+    registry: [{ ...blockKind('number.add')!, test: 'test/fake.test.ts' }],
+    stillToAdd: [{ id: 'number.add', why: 'part B builds the screen' }],
+    editorParts: EDITOR_PARTS,
+    sourceKinds: SOURCE_KINDS,
+    targets: TARGETS,
+    owners: OWNERS,
+    catalog: {
+      families: ['number', 'grant'],
+      rows: [
+        row(),
+        row({ id: 'grant.action', family: 'grant', title: 'Give an action', phase: 3, place: 'advanced', status: 'to-add', registry: undefined, features: [2], lanes: ['laneTwo', 'laneThree', 'laneCont', 'laneLate'] }),
+      ],
+      notBlocks: [
+        { lanes: ['laneMissing'], why: 'no field exists' },
+        { features: [3], why: 'dropped (decision 3)' },
+      ],
+    },
+    designDoc: DESIGN,
+    lanesDoc: LANES,
+    blockFiles: [{ path: 'src/rules/blocks/a.ts', text: "import { x } from './targets';\nimport type { T } from '../types';" }],
+    readFile: (p) => (p === 'test/fake.test.ts' ? "it('number.add', () => {})" : null),
+  };
+}
+
+const errorsOf = (mutate: (i: BlocksCheckInput) => void) => {
+  const input = good();
+  mutate(input);
+  return checkBlocks(input).errors.join('\n');
+};
+const cat = (i: BlocksCheckInput) => i.catalog as { rows: Record<string, unknown>[]; notBlocks: Record<string, unknown>[]; families: string[] };
+
+describe('the doc readers', () => {
+  it('reads the Feature list numbers, dropped ones included (not the Dropped ideas section)', () => {
+    expect(featureNumbers(DESIGN)).toEqual([1, 2, 3]);
+  });
+  it('reads lane keys from "lane" tables only, rows after a blank line included', () => {
+    expect(laneKeys(LANES).sort()).toEqual(['laneCont', 'laneLate', 'laneMissing', 'laneOne', 'laneThree', 'laneTwo']);
+  });
+});
+
+describe('blocks guard: the planted small input passes', () => {
+  it('has no errors', () => {
+    expect(checkBlocks(good()).errors).toEqual([]);
+  });
+});
+
+describe('blocks guard: each bad case fails once', () => {
+  it('a catalog row with no status', () => {
+    expect(errorsOf((i) => delete cat(i).rows[1].status)).toMatch(/grant\.action: no status/);
+  });
+  it('a "ruled" row with no ruling', () => {
+    expect(errorsOf((i) => (cat(i).rows[1].status = 'ruled'))).toMatch(/grant\.action: status "ruled" names no ruling/);
+  });
+  it('an id twice, a family not on the list, a bad phase or place', () => {
+    expect(errorsOf((i) => cat(i).rows.push(row()))).toMatch(/number\.add: id appears twice/);
+    expect(errorsOf((i) => (cat(i).rows[1].family = 'magic'))).toMatch(/family "magic" is not in "families"/);
+    expect(errorsOf((i) => (cat(i).rows[1].phase = 9))).toMatch(/phase must be 1–6/);
+    expect(errorsOf((i) => (cat(i).rows[1].place = 'hidden'))).toMatch(/place must be "main" or "advanced"/);
+  });
+  it('a feature of the Feature list that no row covers', () => {
+    expect(errorsOf((i) => (cat(i).rows[1].features = []))).toMatch(/feature 2 of the design's Feature list is in no catalog row/);
+  });
+  it('a lane of the manual that no row covers, and a lane the manual does not have', () => {
+    expect(errorsOf((i) => (cat(i).notBlocks = []))).toMatch(/lane "laneMissing" .* is in no catalog row/);
+    expect(errorsOf((i) => (cat(i).rows[0].lanes = ['laneOne', 'laneTypo']))).toMatch(/names lane "laneTypo", which docs\/mechanic-lanes\.md does not have/);
+  });
+  it('a dropped feature that no entry covers', () => {
+    expect(errorsOf((i) => cat(i).notBlocks.pop())).toMatch(/feature 3 of the design's Feature list is in no catalog row/);
+  });
+  it('a notBlocks entry with no reason', () => {
+    expect(errorsOf((i) => (cat(i).notBlocks[0].why = ''))).toMatch(/notBlocks #0: no "why"/);
+  });
+  it('a registry entry with no built catalog row', () => {
+    expect(errorsOf((i) => (cat(i).rows[0].status = 'to-add'))).toMatch(/registry number\.add: no catalog row with status "built"/);
+  });
+  it('a built catalog row with no registry entry', () => {
+    expect(errorsOf((i) => (i.registry = []))).toMatch(/catalog row number\.add: status "built" but the registry has no entry/);
+  });
+  it('a registry entry whose Tweaks place differs from the catalog', () => {
+    expect(errorsOf((i) => (cat(i).rows[0].place = 'advanced'))).toMatch(/editor place "main" but the catalog says "advanced"/);
+  });
+  it('a registry entry not in Tweaks yet and not on the still-to-add list (decision 24)', () => {
+    // An editor that is only planned (built: false) is "not in Tweaks yet" exactly like no editor.
+    expect(errorsOf((i) => (i.stillToAdd = []))).toMatch(/not in Tweaks yet and not on STILL_TO_ADD/);
+    expect(errorsOf((i) => (i.stillToAdd = [{ id: 'number.add', why: ' ' }]))).toMatch(/not in Tweaks yet and not on STILL_TO_ADD/);
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], editor: null }]))).toBe('');
+    expect(
+      errorsOf((i) => {
+        i.registry = [{ ...i.registry[0], editor: null }];
+        i.stillToAdd = [];
+      }),
+    ).toMatch(/not in Tweaks yet and not on STILL_TO_ADD/);
+  });
+  it('a built editor still on the still-to-add list', () => {
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], editor: { ...i.registry[0].editor!, built: true } }]))).toMatch(/its editor is built, but STILL_TO_ADD still lists it/);
+  });
+  it('a built catalog row whose bookFields differ from the registry entry', () => {
+    expect(errorsOf((i) => (cat(i).rows[0].bookFields = ['saveBonuses']))).toMatch(/registry number\.add: bookFields \[.*\] but the catalog says \[saveBonuses\]/);
+  });
+  it('an editor part that does not exist', () => {
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], editor: { ...i.registry[0].editor!, parts: ['target', 'colour' as never] } }]))).toMatch(/editor part "colour" is not in EDITOR_PARTS/);
+  });
+  it('a target kind the target registry does not have', () => {
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], accepts: { aspect: 'number', kinds: ['ac', 'luck' as never] } }]))).toMatch(/accepts target "luck" \(number\), which the target registry does not have/);
+  });
+  it('an old Overrides key that does not exist', () => {
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], storage: { in: 'legacy', key: 'favouriteColour' as never } }]))).toMatch(/"favouriteColour" is not one of today's Overrides keys/);
+  });
+  it('a missing test file, and a test file with no test titled with the id', () => {
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], test: 'test/nowhere.test.ts' }]))).toMatch(/test file test\/nowhere\.test\.ts does not exist/);
+    expect(errorsOf((i) => (i.readFile = () => "it('something else', () => {})"))).toMatch(/no it\(\)\/describe\(\) title .* names 'number\.add'/);
+    // The id in a list of ids, but in no test's title, is not a test of the kind.
+    expect(errorsOf((i) => (i.readFile = () => "const ids = ['number.add'];\nit('lists the ids', () => {})"))).toMatch(/no it\(\)\/describe\(\) title/);
+    expect(errorsOf((i) => (i.readFile = () => 'describe("the \'number.add\' kind", () => {})'))).toBe('');
+    // A longer name that starts with the id is not the id.
+    expect(errorsOf((i) => (i.readFile = () => "it('number.addLater works', () => {})"))).toMatch(/no it\(\)\/describe\(\) title/);
+  });
+  it('a target whose owner is not built while the target is', () => {
+    expect(errorsOf((i) => (i.targets = [...TARGETS, { ...TARGETS[0], kind: 'damage', owner: 'companion', built: true }]))).toMatch(/built, but its owner "companion" is not/);
+  });
+  it('a blocks file that imports from scripts/, work/ or the batch tools (item 12)', () => {
+    expect(errorsOf((i) => i.blockFiles.push({ path: 'src/rules/blocks/b.ts', text: "import { x } from '../../../scripts/wg-batch-run.mjs';" }))).toMatch(/b\.ts: imports .* must not depend on/);
+    expect(errorsOf((i) => i.blockFiles.push({ path: 'src/rules/blocks/c.ts', text: "const m = await import('../../../work/x.json');" }))).toMatch(/c\.ts: imports/);
+    expect(errorsOf((i) => i.blockFiles.push({ path: 'src/rules/blocks/sub/d.ts', text: "import '../../../../scripts/trust-ledger.mjs';" }))).toMatch(/sub\/d\.ts: imports/);
+  });
+});
+
+describe('blocks guard on the real files', () => {
+  it('passes, and prints the not-in-Tweaks-yet list', () => {
+    const dir = 'src/rules/blocks';
+    const { errors, info } = checkBlocks({
+      registry: BLOCK_KINDS,
+      stillToAdd: STILL_TO_ADD,
+      editorParts: EDITOR_PARTS,
+      sourceKinds: SOURCE_KINDS,
+      targets: TARGETS,
+      owners: OWNERS,
+      catalog: JSON.parse(read(`${dir}/catalog.json`) ?? 'null'),
+      designDoc: read('docs/overrides-redesign.md') ?? '',
+      lanesDoc: read('docs/mechanic-lanes.md') ?? '',
+      blockFiles: readdirSync(join(ROOT, dir), { recursive: true })
+        .map((f) => String(f).replace(/\\/g, '/'))
+        .filter((f) => f.endsWith('.ts'))
+        .map((f) => ({ path: `${dir}/${f}`, text: read(`${dir}/${f}`)! })),
+      readFile: read,
+    });
+    expect(errors).toEqual([]);
+    expect(info.join('\n')).toMatch(/not in Tweaks yet/);
+  });
+});
