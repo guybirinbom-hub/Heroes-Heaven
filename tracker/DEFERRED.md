@@ -1,90 +1,61 @@
-# Deferred work — needs the Heroes Heaven app
+# Deferred work — status
 
-The tracker is deliberately **not connected** to the character builder yet. Everything below is
-blocked on that connection (or is queued behind it). Recorded so it isn't lost.
+This list was written (v0.1.15) while the tracker was still a separate app. The tracker is now
+embedded in Heroes Heaven (the Campaign page's initiative tracker; the seam is described in
+`src/integration/README.md`), and most of it is built. Last checked 2026-10-20 against the code and git.
 
-Legend: 🔴 blocked on connection · 🟡 doable standalone, queued · ✅ done
-
----
-
-## 🔴 Blocked on connecting the two apps
-
-### 1. Tracker settings must live in the whole-app Settings
-**Goal:** there is ONE Settings, Heroes Heaven's, and the tracker's sections are part of it — not a
-separate modal.
-
-**Why it's blocked:** the tracker is its own Vite/Tauri app with its own `SettingsModal`. HH's
-Settings is a full page (`src/sheet/SettingsPage.tsx`) driven by a `SECTIONS` list, rendering cards
-on mobile and a nav+pane on desktop. Merging means the two apps are one build.
-
-**When we connect:** move these tracker sections into HH's `SECTIONS` array —
-Display · Stat Blocks · **Sources** · Turn Timer · Player Characters · Conditions ·
-Encounter Tables. Drop the tracker's own modal shell entirely.
-
-**Interim:** the tracker's SettingsModal is being restyled to *look* like HH's Settings so the
-eventual move is cosmetic, not a redesign.
-
-### 2. Export / import via the whole-app backup
-**Goal:** the tracker has no export/import of its own; HH's app-wide backup covers everything.
-
-**⚠ GAP THIS OPENS:** removing the tracker's "Backup & Data" section leaves the tracker with **no
-export at all** until the apps are connected. Its data (current combat, encounters, parties, custom
-creatures, custom conditions) lives in localStorage under `pf2e-*` keys and would be
-unrecoverable if lost. **Decide:** either accept the gap, or keep a hidden/temporary export until
-HH's backup can see the tracker's keys.
-
-**When we connect:** teach HH's `src/data/backup.ts` envelope about the tracker's localStorage keys:
-`pf2e-current-combat`, `pf2e-encounters`, `pf2e-custom-conditions`, `pf2e-party-level`, plus the
-party / settings / sources / encounter-tables / custom-themes / dm-average stores.
-
-### 3. Parties should become Heroes Heaven's parties
-The tracker has its OWN `partyStore` (PCs + allied NPCs, with `pcStats` sheets typed by hand). HH
-has real characters. Today the initiative tracker is being scoped **per party** using the tracker's
-own parties; once connected, a "party" should be an HH campaign/party and PCs should be real HH
-characters.
-
-**Design note carried forward:** join on a stable `characterId`, NOT the name-as-key the original
-app uses (`syncCurrentHpByName`, `addTurnsToPlayerByName`). Name-matching breaks silently on rename
-and is the acknowledged weak point of the original.
-
-### 4. One logo / one shell
-Using HH's real `Logo` + `PageMenu` now (imported live via `@hh`), but the hamburger's destinations
-(Characters / Homebrew / Campaigns) only exist in HH. Until connected, the tracker's menu can only
-offer its own Settings.
+Legend: ✅ done · 🟡 open
 
 ---
 
-## 🟡 Doable standalone — queued
+## ✅ 1. Tracker settings inside Heroes Heaven's Settings
+Built in 321a03d (v0.1.15) and finished in 97c0cf5. HH's Settings page has an "Initiative tracker"
+section (`src/sheet/SettingsPage.tsx`, section id `tracker`), rendered by
+`src/integration/TrackerSettingsSection.tsx`. It is hidden on phones on purpose.
 
-### 5. Per-party initiative tracker
-Combat state is currently global (one `pf2e-current-combat`). It should be scoped per party, so each
-party has its own initiative order. Internal to the tracker — no HH needed. Touches `combatStore`
-persistence + `partyStore`.
+## ✅ 2. Export / import through HH's backup
+Built in 041e5a5 (v0.1.17): `src/data/backup.ts` `APP_KEY_PREFIXES` includes `pf2e-`, so every
+tracker key is in the HH backup, and a restore tells the tracker to reload (`notifyReset`).
+Since 34cdc9d, `src/data/trackerSync.ts` also syncs the GM's tracker keys to the cloud.
 
-### 6. Conditions section restyled to match HH
-Match HH's player-facing Conditions + custom **Modes** UI, while still being called **Custom
-Conditions** here. The tracker's `AdvancedConditionEditor` (33 stat-mod keys, typed
-bonus/penalty selectors, situational `*` toggles) is far richer than HH's mode editor — the match
-should be *visual*, and must not throw away that editor's capability.
+## ✅ 3. Parties joined on a stable character id, not the name
+Built. Campaign parties mirror the campaign's characters by `charId` (`partyStore.syncCampaignParty`);
+rows carry `charId` and `partyMemberId`; HP and max HP go through `partyStore.partyCardOfRow`.
+The last name join, the turn timer's "Save to Averages", now also goes through `partyCardOfRow`
+(`partyStore.addTurnsToRow`, 2026-10-20). The name is only the fallback for a row with no id.
 
-### 7. Zoom axis
-HH scales the app via `--zoom`; the tracker ignores it (`initZoom()` runs, variable unused).
+## ✅ 4. One logo / one shell
+Built for the embedded tracker: it lives inside HH's own page and menu. The standalone dev app
+(`tracker/`, port 1421) already uses HH's logo and menu component (`@hh/sheet/Logo`, `@hh/sheet/PageMenu`,
+with an empty menu); only its page frame is its own, on purpose.
 
-### 8. Electron → web/Tauri shims
-8 files still reference Electron: `App.tsx` (window controls), `CombatantDetail`, `MonsterSearch`,
-`SettingsModal`, `TurnTimerWidget` (`WebkitAppRegion`), `UpdateNotice` (electron-updater),
-`types/electron.d.ts`, `utils/themeIcon.ts` (taskbar icon).
+## ✅ 5. Per-campaign initiative
+Built in 97c0cf5: each campaign keeps its own order under `pf2e-current-combat:<campaignId>`.
 
-### 9. The data
-Deferred by decision. `data/dataStore.ts` is already `fetch()`-based, so it only needs files in
-`public/data/` extracted from `C:\trying ai 2\Archives of GuyB\data`. See README for the sizing and
-the ⚠ strike-parsing risk.
+## 🟡 6. Conditions section restyled to match HH's Modes — OPEN
+Still open: it waits on the owner's decision about the look. The match should be visual only; the
+tracker's `AdvancedConditionEditor` (typed bonus/penalty, situational toggles) must keep what it can do.
+
+## ✅ 7. Zoom axis — 🟡 leftover open
+Built: HH's zoom (`src/theme/zoom.ts`) reaches the tracker, and `tracker/src/utils/zoomFix.ts` (44bff33)
+corrects the modal and window sizes for it.
+Leftover, open: about ten non-modal size caps still use CSS `vh`/`vw`, which ignore the zoom —
+`GlobalSearch.tsx` (12vh, 70vh), `TurnTimerWidget.tsx` (70vh), `FloatingWindow.tsx` (min(88vh, 680px)),
+`TextConverter.tsx` (92vw / 90vh). Needs a screen check at zoom 1.5 before changing them.
+
+## ✅ 8. Electron shims
+Built in 97c0cf5 (the Electron types and updater are gone). Inert `WebkitAppRegion` styles remain in
+the standalone `tracker/src/App.tsx`; a browser ignores them.
+
+## ✅ 9. The data
+Built by another route: the bestiary and rules files are tracked in `public/data/`, first built from
+the Archives (4837736), then replaced by the verified bestiary corpus (c725a17 … ce9f842).
+Images stay deferred (the artwork is Paizo's and not for redistribution).
 
 ---
 
-## ✅ Kept deliberately
+## Kept deliberately
 
-### Sources stays in the tracker's settings
-Even once HH has its own source filtering, **the tracker keeps its own Sources section**: a GM may
-run stat blocks from a book the players shouldn't have access to. GM-side source access and
-player-side source access are different questions and must not be merged into one setting.
+### The tracker keeps its own Sources setting
+A GM may run stat blocks from a book the players should not have. GM-side and player-side source
+access are different questions and stay separate settings. Still honoured.

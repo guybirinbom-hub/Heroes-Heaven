@@ -5,9 +5,14 @@ export interface TurnRecord {
   id: string
   combatantId: string
   name: string
-  /** PC turns are attributed to a party member by name; non-PC turns all fold
-   *  into the single universal "DM" average. */
+  /** PC turns are attributed to the party card their row IS (charId, then partyMemberId, the name
+   *  only for a row with neither — partyStore.addTurnsToRow); non-PC turns all fold into the single
+   *  universal "DM" average. */
   isPC: boolean
+  /** The row's campaign character and party member when the turn was taken. Absent on records saved
+   *  before they were kept (and on rows typed in by hand): those fall back to the name. */
+  charId?: string
+  partyMemberId?: string
   /** Counted duration of the turn, in whole seconds (paused time excluded). */
   seconds: number
 }
@@ -17,6 +22,9 @@ export interface TurnTimerState {
   combatantId: string
   name: string
   isPC: boolean
+  /** The row's ids, carried onto the TurnRecord (absent on a timer saved before they were kept). */
+  charId?: string
+  partyMemberId?: string
   /** Wall-clock ms when the current counting window began; null while paused. */
   startedAt: number | null
   /** Counted ms banked from previous windows (before the latest pause). */

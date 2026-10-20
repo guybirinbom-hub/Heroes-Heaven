@@ -77,9 +77,14 @@ interface PartyStore {
   getSortedParties: () => Party[]
   findPlayerByName: (combatantName: string) => { party: Party; player: PartyPlayer } | null
   /** Cumulatively fold a batch of turn times into every party member whose
-   *  name matches (case-insensitive). Used by the turn timer's Save to
-   *  Averages. */
+   *  name matches (case-insensitive). Only the fallback of `addTurnsToRow`, for
+   *  a row with no character id and no party stamp. */
   addTurnsToPlayerByName: (name: string, sumSeconds: number, count: number) => void
+  /** Fold a batch of turn times into the ONE party card a PC row is (`partyCardOfRow`, the HP bridge's
+   *  join: its party stamp, then its character id). A row with no id at all (typed in by hand, or a turn
+   *  recorded before the ids were kept) falls back to `addTurnsToPlayerByName`. A row with an id that no
+   *  card answers writes nothing — never every card that shares its name. Used by Save to Averages. */
+  addTurnsToRow: (row: PcRowIds, sumSeconds: number, count: number) => void
   /** Push a PC row's CURRENT hp from the combat tracker back onto the party card that row IS
    *  (`partyCardOfRow`: its party stamp, then its character id, its name only when neither side has an
    *  id and exactly one card answers). Keeps the card's HP live as they take damage in a fight. No-op
@@ -124,7 +129,9 @@ interface PartyStore {
  *
  *  - NPC: one row per party member — skipped when its row is already in the order
  *    (encounter.isRowOfPartyNpc: a row stamped with this member, or an older unstamped row of its
- *    name that is plainly it — never a hostile copy of the creature it is named after). Added as an
+ *    name that is plainly it — never a hostile copy of the creature it is named after, and never a
+ *    name-only row while the NPC has a stat block: that row has no level, so refusing the add left
+ *    the NPC neither in the order nor counted). Added as an
  *    ALLY, stamped with the member's id. Its level is its stat block's (encounter.partyOf).
  *  - PC: addCombatant's own dedupe decides (isSamePc: charId first, the name only when a side has
  *    none); stamped with the member's id too.
@@ -148,7 +155,8 @@ export interface PcRowIds { name: string; charId?: string; partyMemberId?: strin
 /**
  * WHICH PARTY CARD A PC ROW IS — for the tracker's own HP bridge between the board and the party cards:
  * combatStore's syncPcHp (the row's HP onto the card, `syncCurrentHp`) and setPcMaxHP (a card's max HP
- * onto its row) both ask THIS, so a card and a row can never disagree about whose HP they share.
+ * onto its row) both ask THIS, so a card and a row can never disagree about whose HP they share. The turn
+ * timer's Save to Averages asks it too (`addTurnsToRow`), so a row's turns land on the same card.
  *  1. The row's party stamp (`partyMemberId`, set on every add from the party): that member, in
  *     whichever party holds it.
  *  2. Else its character id: the one PC card carrying that id, in the active party (in every party
@@ -185,6 +193,20 @@ function locate(parties: readonly Party[], card: PartyPlayer): [number, number] 
     if (j >= 0) return [i, j]
   }
   return null
+}
+
+/** Fold a batch of turn times into one card's running average (an immer draft), and append the batch's
+ *  average as a dated timeline point — capped so a long-lived party's blob can't grow without bound (the
+ *  per-day graph only ever shows a handful of recent days). */
+function foldTurns(pl: PartyPlayer, sumSeconds: number, count: number): void {
+  const oldAvg = pl.turnAvgSeconds ?? 0
+  const oldCount = pl.turnCount ?? 0
+  const newCount = oldCount + count
+  pl.turnAvgSeconds = (oldAvg * oldCount + sumSeconds) / newCount
+  pl.turnCount = newCount
+  if (!pl.turnHistory) pl.turnHistory = []
+  pl.turnHistory.push({ at: Date.now(), avgSeconds: sumSeconds / count, turnCount: count })
+  if (pl.turnHistory.length > 500) pl.turnHistory = pl.turnHistory.slice(-500)
 }
 
 /** A Heroes Heaven campaign's player character, as the host hands it to the mirror. */
@@ -378,19 +400,24 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
           // absorb the PC's turns.
           if (pl.memberType === 'npc') continue
           if (pl.name.trim().toLowerCase() !== lower) continue
-          const oldAvg = pl.turnAvgSeconds ?? 0
-          const oldCount = pl.turnCount ?? 0
-          const newCount = oldCount + count
-          pl.turnAvgSeconds = (oldAvg * oldCount + sumSeconds) / newCount
-          pl.turnCount = newCount
-          // Append this session's average as a dated timeline point, capped so a long-lived party's
-          // blob can't grow without bound (the per-day graph only ever shows a handful of recent days).
-          if (!pl.turnHistory) pl.turnHistory = []
-          pl.turnHistory.push({ at: Date.now(), avgSeconds: sumSeconds / count, turnCount: count })
-          if (pl.turnHistory.length > 500) pl.turnHistory = pl.turnHistory.slice(-500)
+          foldTurns(pl, sumSeconds, count)
         }
       }
     })
+    saveToStorage(get().parties)
+  },
+
+  addTurnsToRow(row, sumSeconds, count) {
+    if (count <= 0) return
+    if (row.charId === undefined && row.partyMemberId === undefined) {
+      get().addTurnsToPlayerByName(row.name, sumSeconds, count)
+      return
+    }
+    const { parties, activePartyId } = get()
+    const card = partyCardOfRow(row, parties, activePartyId)
+    const at = card ? locate(parties, card) : null
+    if (!at) return
+    set(s => { foldTurns(s.parties[at[0]].players[at[1]], sumSeconds, count) })
     saveToStorage(get().parties)
   },
 

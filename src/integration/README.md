@@ -69,7 +69,7 @@ There is otherwise deliberately **nothing else to unwind**:
 - **HH's build is untouched.** No Tailwind, no PostCSS, no vite/tsconfig edits. The tracker's styles
   arrive as ONE pre-built plain `.css` file (`tracker/dist-css/tracker.scoped.css`), so removing the
   integration is removing an import — not disentangling a build.
-- **The tracker still runs standalone** on port 1421 exactly as before, with its own 654 tests. The
+- **The tracker still runs standalone** on port 1421 exactly as before, with its own test suite. The
   dependency only ever points HH → tracker: where the tracker needs something only the host knows, it
   declares a context in `tracker/src/data/` with a **null default**, and HH provides the value. With
   no provider each one falls back to the tracker's original behaviour, so the standalone app is

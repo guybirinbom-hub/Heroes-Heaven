@@ -483,9 +483,23 @@ describe('sidesOf / classify — who is the party, who is the opposition', () =>
     expect(isRowOfPartyNpc(makeCombatant({ partyMemberId: 'p-npc', name: 'Renamed' }), hireling)).toBe(true)
     expect(isRowOfPartyNpc(makeCombatant({ partyMemberId: 'other', name: 'Hired Blade' }), hireling)).toBe(false)
     expect(isRowOfPartyNpc(legacyNpcRow('Hired Blade', 5, 'Sellsword'), hireling)).toBe(true)
-    expect(isRowOfPartyNpc(makeCombatant({ name: 'Hired Blade', isAlly: true, creature: null }), hireling)).toBe(true)
+    expect(isRowOfPartyNpc(makeCombatant({ name: 'Hired Blade', isAlly: true, creature: ally('x', 5).creature }), hireling)).toBe(true)
     expect(isRowOfPartyNpc(legacyNpcRow('Goblin Warrior', 1), gob)).toBe(false)
     expect(isRowOfPartyNpc(makeCombatant({ name: 'Hired Blade', isPC: true, creature: null }), hireling)).toBe(false)
+  })
+  // Item 2 (2026-10-20): a row with only a name (typed in by hand, or added before the NPC had a stat
+  // block) blocked the NPC WITH a stat block from joining — and, having no level, was not counted either.
+  // Fails if isRowOfPartyNpc matches any name-only row again (`c.creature == null` alone).
+  it('isRowOfPartyNpc: a name-only row is the NPC only while the NPC has no stat block either', () => {
+    const hireling = npcRef('p-npc', 'Hired Blade', 'Sellsword')
+    const blockless: PartyNpcRef = { id: 'p-npc', name: 'Hired Blade', memberType: 'npc', creature: null }
+    const nameOnly = makeCombatant({ name: 'Hired Blade', creature: null })
+    const nameOnlyAlly = makeCombatant({ name: 'Hired Blade', isAlly: true, creature: null })
+    expect(isRowOfPartyNpc(nameOnly, hireling)).toBe(false)
+    expect(isRowOfPartyNpc(nameOnlyAlly, hireling)).toBe(false)
+    expect(isRowOfPartyNpc(nameOnly, blockless)).toBe(true)
+    expect(isRowOfPartyNpc(nameOnlyAlly, blockless)).toBe(true)
+    expect(isRowOfPartyNpc(nameOnly, { ...blockless, creature: undefined })).toBe(true)
   })
 })
 
@@ -595,11 +609,17 @@ describe('describeParty — what the "i" table says was counted', () => {
     const p = partyOf([pc('A1'), pc('A2'), pc('A3'), ally('Hired Blade', 6)], {
       pcLevel: c => ({ A1: 5, A2: 5, A3: 4 } as Record<string, number>)[c.name], fallback: 1,
     })
-    expect(describeParty(p)).toBe('3 PCs (5, 5, 4) + 1 NPC (6) → party level 5, +0 extra')
+    // Each member by NAME and level (owner, 2026-10-20: the line listed only levels).
+    expect(describeParty(p)).toBe('3 PCs (A1 5, A2 5, A3 4) + 1 NPC (Hired Blade 6) → party level 5, +0 extra')
   })
   it('says how many are down — they still chose the level', () => {
     const p = partyOf([pc('A1', { isDefeated: true }), pc('A2')], { pcLevel: () => 5, fallback: 1 })
-    expect(describeParty(p)).toBe('2 PCs (5, 5), 1 down → party level 5, +0 extra')
+    expect(describeParty(p)).toBe('2 PCs (A1 5, A2 5), 1 down → party level 5, +0 extra')
+  })
+  it('an NPC with no usable level shows its name and "?"', () => {
+    const broken = makeCombatant({ name: 'Odd Snapshot', isAlly: true, creature: { name: 'Odd Snapshot' } as unknown as Creature })
+    const p = partyOf([pc('Wren Ashdown'), broken], { fallback: 3 })
+    expect(describeParty(p)).toBe('1 PC (Wren Ashdown 3) + 1 NPC (Odd Snapshot ?) → party level 3, +0 extra')
   })
 })
 

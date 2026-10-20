@@ -74,7 +74,8 @@ export function EncounterTablesModal({ current, party, budget, onClose }: Props)
         {party && (
           <div data-testid="encounter-party" style={{ fontFamily: 'var(--font-ui)', fontSize: 12.5, color: 'var(--text)', lineHeight: 1.5 }}>
             <div className="pf-label" style={{ marginBottom: 4 }}>This fight is rated against</div>
-            <div style={{ fontFamily: 'var(--font-mono)', color: 'var(--linked)' }}>{describeParty(party)}</div>
+            {/* Names make the line long: it wraps inside the modal, even through one long name. */}
+            <div style={{ fontFamily: 'var(--font-mono)', color: 'var(--linked)', whiteSpace: 'normal', overflowWrap: 'anywhere', minWidth: 0 }}>{describeParty(party)}</div>
             <div style={{ marginTop: 4, fontSize: 11.5, color: 'var(--text-muted)' }}>
               Only the party members in the initiative order count, each at their own level. Party level per GM Core
               pg. 57: the highest level if only one or two are behind, otherwise the average; a member 2 or more

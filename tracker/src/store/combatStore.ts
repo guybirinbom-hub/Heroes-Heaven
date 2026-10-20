@@ -9,7 +9,7 @@ import { roundTurnAbilityKeys } from '../utils/limitedUses'
 import { rollDamageExpr } from '../utils/dice'
 import { recallKnowledgeFromPage } from '../utils/parseCreature'
 import { useSettingsStore } from './settingsStore'
-import { usePartyStore, partyCardOfRow } from './partyStore'
+import { usePartyStore, partyCardOfRow, type PcRowIds } from './partyStore'
 import { useDmAverageStore } from './dmAverageStore'
 import { notifyPersist } from './persistBus'
 import type { TurnRecord, TurnTimerState } from '../utils/turnTimer'
@@ -33,6 +33,8 @@ function beginTurn(s: TimerDraft, c: Combatant | undefined | null) {
   if (c.pausedTurnSeconds !== undefined) c.pausedTurnSeconds = undefined
   s.turnTimer = {
     combatantId: c.id, name: c.name, isPC: c.isPC,
+    ...(c.charId !== undefined ? { charId: c.charId } : {}),
+    ...(c.partyMemberId != null ? { partyMemberId: c.partyMemberId } : {}),
     startedAt: Date.now(), accumMs: resumeSeconds * 1000, paused: false,
   }
 }
@@ -44,7 +46,12 @@ function commitTurn(s: TimerDraft) {
   const ms = t.accumMs + (t.startedAt != null && !t.paused ? Date.now() - t.startedAt : 0)
   const seconds = Math.round(ms / 1000)
   if (seconds > 0) {
-    s.turns.push({ id: ntid(), combatantId: t.combatantId, name: t.name, isPC: t.isPC, seconds })
+    s.turns.push({
+      id: ntid(), combatantId: t.combatantId, name: t.name, isPC: t.isPC,
+      ...(t.charId !== undefined ? { charId: t.charId } : {}),
+      ...(t.partyMemberId !== undefined ? { partyMemberId: t.partyMemberId } : {}),
+      seconds,
+    })
   }
 }
 
@@ -2043,20 +2050,36 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   saveTurnsToAverages() {
     const turns = get().turns
     if (!turns.length) return
-    // Group PC turns by name; everything non-PC folds into the DM bucket.
-    const pcByName = new Map<string, { sum: number; count: number }>()
+    // Group PC turns by the ROW they were taken on — its character id, else its party stamp, else (a
+    // row typed in by hand, or a record saved before the ids were kept) its name — and fold each group
+    // into the one card that row is (partyStore.addTurnsToRow → partyCardOfRow, the HP bridge's join).
+    // By name alone, two same-named PCs both took the merged batch, and turns taken before a rename
+    // missed the renamed card. Everything non-PC folds into the DM bucket.
+    const board = get().combatants
+    const pcByRow = new Map<string, { row: PcRowIds; sum: number; count: number }>()
     let dmSum = 0, dmCount = 0
     for (const t of turns) {
       if (t.isPC) {
-        const e = pcByName.get(t.name) ?? { sum: 0, count: 0 }
+        // An older record carries no ids: its row, if still on the board, still says who it was.
+        const live = t.charId === undefined && t.partyMemberId === undefined
+          ? board.find(c => c.id === t.combatantId) : undefined
+        const row: PcRowIds = {
+          name: t.name,
+          charId: t.charId ?? live?.charId,
+          partyMemberId: t.partyMemberId ?? (live?.partyMemberId ?? undefined),
+        }
+        const key = row.charId !== undefined ? `c:${row.charId}`
+          : row.partyMemberId !== undefined ? `m:${row.partyMemberId}`
+          : `n:${t.name.trim().toLowerCase()}`
+        const e = pcByRow.get(key) ?? { row, sum: 0, count: 0 }
         e.sum += t.seconds; e.count += 1
-        pcByName.set(t.name, e)
+        pcByRow.set(key, e)
       } else {
         dmSum += t.seconds; dmCount += 1
       }
     }
     const party = usePartyStore.getState()
-    for (const [name, e] of pcByName) party.addTurnsToPlayerByName(name, e.sum, e.count)
+    for (const e of pcByRow.values()) party.addTurnsToRow(e.row, e.sum, e.count)
     if (dmCount > 0) useDmAverageStore.getState().addTurns(dmSum, dmCount)
     set(s => { s.turns = [] })
   },

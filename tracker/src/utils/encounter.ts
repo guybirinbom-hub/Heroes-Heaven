@@ -120,15 +120,22 @@ const stamped = (c: Combatant) => c.partyMemberId != null
 /**
  * Is this board row ALREADY the given party NPC's (so adding it again would double it)? A row the
  * party add stamped with its id; or, for rows from before the stamp existed, an unstamped non-PC row
- * of its name that was added as an ally (the party page's old route), has no stat block, or is the
- * old dialog route's unflagged row the heal recognises. A hostile copy of a creature the NPC is named
- * after is none of these, so it never blocks the real NPC from joining.
+ * of its name that is plainly it:
+ *  - a row WITHOUT a stat block only while the NPC has none either (the old adds of a block-less NPC
+ *    made exactly that row). Once the NPC has a stat block, a name-only row of its name — typed in by
+ *    hand, or added before the block was linked — is not it: it has no level, sidesOf rates it
+ *    'ignored', so refusing the add would leave the NPC neither in the order nor counted;
+ *  - a stat-blocked row added as an ally (the party page's old route);
+ *  - the old dialog route's unflagged stat-blocked row the heal recognises (looksLikePartyNpc).
+ * A hostile copy of a creature the NPC is named after is none of these, so it never blocks the real
+ * NPC from joining.
  */
 export function isRowOfPartyNpc(c: Combatant, n: PartyNpcRef): boolean {
   if (c.isPC) return false
   if (stamped(c)) return c.partyMemberId === n.id
   if (!sameName(c.name, n.name)) return false
-  return c.isAlly || c.creature == null || looksLikePartyNpc(c, n)
+  if (c.creature == null) return !n.creature
+  return c.isAlly || looksLikePartyNpc(c, n)
 }
 
 /**
@@ -280,10 +287,15 @@ export function partyOf(
   }
 }
 
-/** "3 PCs (5, 5, 4) + 1 NPC (6) → party level 5, +0 extra" — what the rating counted, for the "i"
- *  table; ", 1 down" when members are defeated (they still chose the level, not the size). */
+/** "2 PCs (Kyra 11, Ezren 3) + 1 NPC (Hired Blade 5) → party level 11, +0 extra" — who the rating
+ *  counted, each by name and level ("?" for no usable level), for the "i" table; ", 1 down" when
+ *  members are defeated (they still chose the level, not the size). */
 export function describeParty(p: PartyInFight): string {
-  const lv = (m: PartyMemberInFight) => (m.level === null ? '?' : String(m.level))
+  const lv = (m: PartyMemberInFight) => {
+    const level = m.level === null ? '?' : String(m.level)
+    const name = (m.name ?? '').trim()
+    return name ? `${name} ${level}` : level
+  }
   const pcs = p.members.filter(m => m.isPC)
   const npcs = p.members.filter(m => !m.isPC)
   const down = p.members.filter(m => m.defeated).length

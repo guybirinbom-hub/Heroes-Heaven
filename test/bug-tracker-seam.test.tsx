@@ -421,7 +421,7 @@ describe('the campaign ↔ tracker seam', () => {
     //  - InitiativeTracker: `partyNpcs` handed to the rating as [] (the read-only heal switched off):
     //    FAILS at ROUTE (c) — the old board's NPC row is an enemy again, "120 XP" "Severe".
     //  - InitiativeTracker: `pcLevel: c => hostPcLevel(c.name)` removed: FAILS at the "i" table — every
-    //    PC reads the campaign's level, "(5, 5, 5, 5)". Put back as `hostPcLevel(c.name)` instead of
+    //    PC reads the campaign's level, "(Ayla Brightwood 5, …, Tobin Reed 5)". Put back as `hostPcLevel(c.name)` instead of
     //    `pcLevelOf(…)`: FAILS at the renamed row — "Tobin the Tall" reads the campaign's 5.
     //  - InitiativeTracker: the modal handed `party` only when `party.size > 0`: FAILS at the last
     //    assertion — a party knocked flat lost its "rated against" block.
@@ -462,11 +462,14 @@ describe('the campaign ↔ tracker seam', () => {
     expect(badge()).toContain('80 XP');
     expect(badge()).toContain('Low');
 
-    // The "i" table says who was counted, at what level, and this party's thresholds.
+    // The "i" table says who was counted — each member by NAME and level (owner, 2026-10-20: it
+    // listed only levels) — and this party's thresholds.
     click(tablesBtn()!);
     await flush(1);
     const counted = el.querySelector('[data-testid="encounter-party"]');
-    expect(counted?.textContent).toContain('4 PCs (5, 5, 5, 4) + 1 NPC (5) → party level 5, +0 extra');
+    expect(counted?.textContent).toContain(
+      '4 PCs (Ayla Brightwood 5, Doran Vex 5, Mira Holloway 5, Tobin Reed 4) + 1 NPC (Hired Blade 5) → party level 5, +0 extra',
+    );
     expect(el.textContent).toContain('This party (5)');
     act(() => void el.querySelector('.modal-overlay')!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
     await flush(1);
@@ -481,7 +484,9 @@ describe('the campaign ↔ tracker seam', () => {
     expect(useCombatStore.getState().combatants.find((c) => c.name === 'Tobin the Tall')?.partyMemberId).toEqual(expect.any(String));
     click(tablesBtn()!);
     await flush(1);
-    expect(el.querySelector('[data-testid="encounter-party"]')?.textContent).toContain('4 PCs (5, 5, 5, 4) + 1 NPC (5)');
+    expect(el.querySelector('[data-testid="encounter-party"]')?.textContent).toContain(
+      '4 PCs (Ayla Brightwood 5, Doran Vex 5, Mira Holloway 5, Tobin the Tall 4) + 1 NPC (Hired Blade 5)',
+    );
     act(() => void el.querySelector('.modal-overlay')!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
     await flush(1);
 
@@ -559,8 +564,8 @@ describe('the campaign ↔ tracker seam', () => {
   it('a PC row nobody can place counts at the campaign’s level — from the live sheet, not a stale summary', async () => {
     /*
      * MUTATION (tried 2026-10-13): partyLevels as `members.map((mem) => mem.summary?.level || 0)`
-     * (src/integration/CampaignTracker.tsx) and this fails at “the live sheet’s level” ('1 PC (3) → party
-     * level 3' where 6 was due).
+     * (src/integration/CampaignTracker.tsx) and this fails at “the live sheet’s level” ('1 PC (Wandering
+     * Sellsword 3) → party level 3' where 6 was due).
      */
     const member = publish(saved('char-a', 'Ayla Brightwood', 6), 'owner-a');
     // The summary published before their level-up; their sheet is level 6.
@@ -576,7 +581,7 @@ describe('the campaign ↔ tracker seam', () => {
     click(tablesBtn!);
     await flush(1);
     expect(el.querySelector('[data-testid="encounter-party"]')?.textContent, 'the live sheet’s level').toContain(
-      '1 PC (6) → party level 6',
+      '1 PC (Wandering Sellsword 6) → party level 6',
     );
   }, 120_000);
 
@@ -584,7 +589,7 @@ describe('the campaign ↔ tracker seam', () => {
     /*
      * MUTATION (tried 2026-10-13): drop `|| mem.summary?.level` from partyLevels
      * (src/integration/CampaignTracker.tsx) and this fails at “the summary’s level” — the campaign party's
-     * own placeholder level 1 is used instead ('1 PC (1) → party level 1').
+     * own placeholder level 1 is used instead ('1 PC (Wandering Sellsword 1) → party level 1').
      */
     const member = publish(saved('char-a', 'Ayla Brightwood', 6), 'owner-a');
     srv.sheets.delete('char-a'); // no sheet to read: only the card's summary
@@ -598,7 +603,7 @@ describe('the campaign ↔ tracker seam', () => {
     click(el.querySelector('button[aria-label="Encounter building reference tables"]')!);
     await flush(1);
     expect(el.querySelector('[data-testid="encounter-party"]')?.textContent, 'the summary’s level').toContain(
-      '1 PC (3) → party level 3',
+      '1 PC (Wandering Sellsword 3) → party level 3',
     );
   }, 120_000);
 

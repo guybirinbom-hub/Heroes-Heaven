@@ -4,27 +4,25 @@ A Pathfinder 2e initiative tracker / encounter builder — a **port** of the Ele
 `C:\pf2e-tracker` (v1.5.1, ~32k LOC) onto Heroes Heaven's stack and look, backed by the
 Archives of GuyB data instead of the old app's bundled bestiary.
 
-**Status: Phase 0 complete** (skeleton + design-system proof). No tracker features yet.
+**Status (2026-10-20): built and embedded in Heroes Heaven.** It is the Campaign page's initiative
+tracker, and its settings are a section of HH's Settings. How HH and the tracker are joined (the
+contexts HH provides, the scoped CSS, what to delete to remove it) is described in
+**`../src/integration/README.md`**. What is still open is in `DEFERRED.md`.
 
 ## Ground rules
 
 | Rule | Why |
 |---|---|
-| Never modify `../src` or any Heroes Heaven file | User constraint. `git status` in the HH project must only ever show `?? tracker/`. |
 | Never modify `C:\pf2e-tracker` | It's the reference implementation and still in use. |
-| Data comes ONLY from `C:\trying ai 2\Archives of GuyB\data` | User constraint — the old app's bestiary is not to be reused. |
-| Not connected to the character builder yet | Deliberate. The PC/party model is designed so a later connection is a data contract, not a merge. |
+| Data comes ONLY from the Archives of GuyB and the verified bestiary corpus | User constraint — the old app's bestiary is not to be reused. |
+| The dependency points HH → tracker only | The tracker never imports HH's rules or cloud code; where it needs something only HH knows, it declares a context with a null default and HH provides it (see `../src/integration/README.md`). |
 
-## Why a separate app (not part of Heroes Heaven's build)
+## Why it is still its own npm project
 
-Sharing HH's build would require editing four HH files (`package.json`, `vite.config.ts`,
-`tsconfig.json`, `src-tauri/tauri.conf.json` — one `src-tauri` = one binary, and HH's Cargo has no
-`[workspace]`). That breaks the "don't change existing code" rule, so the tracker is its own npm +
-Vite project nested inside the HH folder. Nesting is safe: HH's tsconfig compiles only `src`, and
-HH's Vite only bundles what its own `index.html` imports.
-
-This does **not** make the later "connect them" step harder — that connection will be a *data*
-contract (an exported character JSON), not a shared bundle.
+The tracker keeps its own `package.json`, Vite config and test config under `tracker/`. HH does not
+build it with its own toolchain: the tracker's styles arrive in HH as one pre-built, scoped CSS file
+(`dist-css/tracker.scoped.css`, `npm run build:css` here), and its components are imported through
+`src/integration/`. The standalone dev app (below) still runs on its own.
 
 ## How it matches the character builder
 
@@ -32,73 +30,34 @@ Two tiers, because the design system is two different things:
 
 - **Tokens — imported LIVE.** `@hh` aliases `../src`, so `@hh/theme/tokens.css` +
   `@hh/theme/theme-manager` are the *same files* HH uses. One source of truth: add a palette to HH
-  and it appears here for free. Verified import-clean — `themes/styles/fonts/zoom/tokens.css` have
-  zero imports, and `theme-manager` pulls only its siblings plus the 65-line `data/syncBus` (no
-  Supabase). Keep this alias surface narrow: **never** import `@hh/rules/*` or `@hh/data/cloudSync`.
+  and it appears here for free. Keep this alias surface narrow: **never** import `@hh/rules/*` or
+  `@hh/data/cloudSync`.
 - **Components — vendored.** `src/ui.css` copies only the ~10 reusable blocks from HH's
-  `sheet.css` (which is ~10k lines of character-sheet layout, not a component library), each tagged
-  with its origin. **Rule: no raw hex in `ui.css`** — every value must come from a token, or the
-  tracker will drift out of sync with HH's themes.
+  `sheet.css`, each tagged with its origin. **Rule: no raw hex in `ui.css`** — every value must come
+  from a token, or the tracker will drift out of sync with HH's themes.
 
 ## Platform
 
-Full parity with Heroes Heaven: **web + PWA + desktop + Android**. This rules out the otherwise
-attractive SQLite-in-Rust data layer; instead the bestiary is built to compact JSON and cached at
-runtime by the service worker (`CacheFirst` on `/data/`) — the same pattern HH uses for its ~19 MB
-`core.json`.
+Full parity with Heroes Heaven: **web + PWA + desktop + Android**, because it ships inside HH. The
+bestiary is compact JSON fetched at runtime and cached by HH's service worker.
 
 ## Data
 
-`npm run data` (Phase 1) will extract from `C:\trying ai 2\Archives of GuyB\data` into
-`public/data/` (gitignored — large and regenerable).
-
-- The archive is 1.1 GB (`images` 729 MB, `by-category` 351 MB). The tracker needs 9 categories /
-  ~13.6k docs = **135 MB raw**: creature 4714, hazard 634, spell 2461, action 3979, trait 907,
-  creature-family 646, condition 98, creature-ability 85, creature-adjustment 60.
-- Most of that is fields the app never reads (`*_scale`, `*_scale_number`, `search_markdown`,
-  `*_raw`, duplicate `*_markdown`) — trim to a small always-loaded search index + lazily fetched
-  stat blocks.
-- **Dedupe is already solved in the source data**: a 5-way edition model (`legacy` / `remaster` /
-  `neutral` / `legacy-era` / `remaster-era`) with `superseded_by` set on exactly 954 creatures.
-- **Images: deferred** (user decision). 722 MB, and the Archives PLAN.md marks the artwork as
-  Paizo's and not for redistribution.
-
-### ⚠ The biggest risk: AoN has no structured attacks
-
-A creature's real strike — `jaws +37 (…), Damage 4d10+17 piercing plus 3d6 fire` — exists **only
-inside the `markdown` prose**. The structured fields are `attack_bonus: [35,35,37,37]` (unlabeled)
-and `strike_damage_average` (*averages, not dice*). The old app's `Attack{name, attack, damage,
-isAgile}` and its damage scaling cannot be fed from AoN's fields, so Phase 2 must parse strikes out
-of the prose at build time.
-
-**Free test oracle:** parse the dice, compute expected value, assert it ≈ `strike_damage_average`
-across all 4,714 creatures.
+The tracker has no data folder of its own: it reads HH's `public/data/` (tracked in git; the
+standalone dev server serves it through `publicDir`). The stat blocks were first built from the
+Archives (4837736), then replaced by the verified bestiary corpus (`scripts/import-bestiary-corpus.mjs`
+at the HH root; c725a17 … ce9f842). **Images: deferred** (user decision) — the artwork is Paizo's and
+not for redistribution.
 
 ## Toolchain gotchas (this machine)
 
 - **node/npm are NOT on PATH** (node is at `C:\Program Files\nodejs`). Bash: prepend
   `export PATH="/c/Program Files/nodejs:$PATH"`.
-- The dev server is launched (see `C:\wonderers guide\.claude\launch.json` → `hh-tracker`, port
-  **1421**; HH holds 1420) by calling `node.exe` directly on `vite.js`, because vite's `.cmd` shim
-  shells out to a bare `node`. `runtimeExecutable` cannot contain spaces (use `C:/PROGRA~1/...`),
-  but `runtimeArgs` can. Use **long** paths in the args — mixing 8.3 and long paths made Vite
-  resolve `/@vite/client` against a different root and 404, leaving a blank page.
+- The standalone dev server is `hh-tracker` in HH's own `.claude/launch.json` (port **1421**; HH
+  holds 1420). It calls `node.exe` directly on `vite.js`, because vite's `.cmd` shim shells out to a
+  bare `node`. `runtimeExecutable` cannot contain spaces (use `C:/PROGRA~1/...`), but `runtimeArgs`
+  can. Use **long** paths in the args — mixing 8.3 and long paths made Vite resolve `/@vite/client`
+  against a different root and 404, leaving a blank page.
+- Tests: from the HH root, `node scripts/vt.mjs run --config tracker/vitest.config.ts [files]`
+  (the shared heavy-job lock; never bare `npx vitest`).
 - `python` on PATH is a broken Anaconda; use `C:\Users\r2g2\AppData\Local\Programs\Python\Python310\python.exe`.
-
-## Phases
-
-0. ✅ **Skeleton + design-system proof** — themes/styles/fonts switch live from HH.
-1. **Data pipeline + bestiary + read-only stat block** — biggest foundational chunk.
-2. **Strike/ability/spell extractor** ⚠ — the AoN-shape gap; highest risk.
-3. **Combat engine** — the ordered `nextTurn` pipeline, HP/temp/defeat, undo/redo.
-4. **Conditions** — typed stacking, the two tick phases, badges, custom editor.
-5. **Encounter math** — XP/difficulty (ports nearly verbatim; it's pure), weak/elite, scale-to-level.
-6. **Parties/PCs** — the HH-connection seam. Use a stable `characterId`, not the old app's
-   name-as-join-key (which breaks silently on rename).
-7. **Floating windows / GM screen** — largest UI surface, least rules risk; can ship later.
-8. **Custom creatures + text converter**.
-9. **Polish** — turn timer, backup/restore, encounter tables.
-
-Full subsystem surveys (every feature + rules formula of the old app) are in this session's
-workflow journal; the combat/encounter/condition rules were captured in detail because they must
-port exactly.

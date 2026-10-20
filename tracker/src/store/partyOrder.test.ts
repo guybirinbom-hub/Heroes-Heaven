@@ -83,6 +83,24 @@ describe('addPartyMemberToOrder — the one way a party member enters the order'
     expect(sidesOf(st().combatants, [gremlinNpc])).toEqual(['enemy'])
   })
 
+  // Item 2 (2026-10-20): a row with only a name of the NPC's (typed in by hand) made the add skip the
+  // NPC WITH a stat block — and the name-only row has no level, so the NPC was neither in the order
+  // nor counted. Fails if encounter.isRowOfPartyNpc takes any name-only row as the NPC's again.
+  it('a name-only row of its name does not keep a party NPC with a stat block out', () => {
+    st().addCombatant(null, { name: 'Hired Blade' })
+    addPartyMemberToOrder(npc())
+    expect(st().combatants).toHaveLength(2)
+    const added = st().combatants[1]
+    expect([added.isAlly, added.partyMemberId, added.creature?.name]).toEqual([true, 'pl-blade', 'Party Order Blade'])
+    expect(sidesOf(st().combatants, [npc()])).toEqual(['ignored', 'ally'])
+  })
+  it('…while an NPC WITHOUT a stat block is still that old name-only row, and is not added twice', () => {
+    st().addCombatant(null, { name: 'Hired Blade' })
+    addPartyMemberToOrder(npc({ creature: null }))
+    expect(st().combatants).toHaveLength(1)
+    expect(st().combatants[0].partyMemberId).toBeUndefined()
+  })
+
   it('adds a PC as a PC, carrying the character and the member', () => {
     addPartyMemberToOrder(pcPlayer())
     addPartyMemberToOrder(pcPlayer()) // addCombatant's own isSamePc dedupe
