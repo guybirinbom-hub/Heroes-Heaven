@@ -12,7 +12,7 @@ import { FeatsTab, featEntries } from '../src/sheet/FeatsTab';
 import { FeatDetail, featPageOf, type FeatPinNode } from '../src/sheet/FeatDetail';
 import { recordTree } from '../src/sheet/astVisibility';
 import { descId, togglePinnedDesc, type PlayState } from '../src/rules/play';
-import { applyOverrides } from '../src/rules/build';
+import { contentFor } from '../src/rules/blocks/content';
 import type { Character, ContentDatabase, Feat, PinnedDesc } from '../src/rules/types';
 
 /**
@@ -343,7 +343,7 @@ describe('card step 11: the Feats-tab popup is the row\'s mine card', () => {
     expect(boxOf(luck)).toContain('Reliable Luck: changes this to 1/hour; your use counter follows it.');
     expect(pageParas(pageCard(luck).body).filter((p) => squash(p.textContent).startsWith('Frequency')).length, 'the page\'s Frequency line, once').toBe(1);
     const ch = { ...withFeats(base, 'caustic-nectar'), overrides: { contentEdits: { feats: { 'caustic-nectar': { description: 'Synthesized override words.' } } } } } as unknown as Character;
-    const cdb = applyOverrides(db, ch.overrides);
+    const cdb = contentFor(db, ch.overrides);
     // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
     const ov = await openRow(ch, 'Caustic Nectar', cdb);
     expect(boxOf(ov)).toContain('Your override: Synthesized override words.');

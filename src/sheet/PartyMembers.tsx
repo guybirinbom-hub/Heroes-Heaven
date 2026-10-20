@@ -19,6 +19,7 @@ import { memberConditions, memberSummary, type PartySummary } from './partySumma
 import { CharacterSheet } from './CharacterSheet';
 import { ContentContext } from './ContentContext';
 import { foreignContent } from '../data/carried';
+import { contentFor } from '../rules/blocks/content';
 import { GmEditSheet, type GmEditHandle, type GmHomebrewWriters } from './GmEditSheet';
 import { confirmDialog, type DialogStyle } from './confirm';
 import { RankPill } from './widgets';
@@ -310,13 +311,22 @@ export function useMemberViewer(
       // the one that goes quiet about a condition the card is showing.
       const merged = memberConditions(live.conditions ?? [], summary?.conditions);
       if (merged !== (live.conditions ?? [])) live = { ...live, conditions: merged };
+      /*
+       * The sheet's NUMBERS read the player's Overrides content edits laid over that view — carried
+       * records first, then the edits (../rules/blocks/content.ts, the one content path) — exactly as
+       * their own sheet does (App.tsx `sheetContent`): before 2026-10-20 a teammate read the plain view,
+       * and an edit of a feat's max HP or save never reached them. Cached, so a re-render gets the same
+       * object. The popups keep the plain view through the context, as the player's own sheet and the GM
+       * sheet do (showing an edited name or text on a card is phase 4).
+       */
+      const sheetDb = contentFor(view, viewing.sheet.character.overrides);
       sheetEl = (
         <div className="party-viewer">
           {/* Popups and links resolve through the context: the same view. */}
           <ContentContext.Provider value={view}>
             <CharacterSheet
               character={live}
-              content={view}
+              content={sheetDb}
               charKey="party-member"
               characters={[]}
               readOnly

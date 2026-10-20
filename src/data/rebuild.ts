@@ -1,4 +1,4 @@
-import { applyOverrides, buildCharacter } from '../rules/build';
+import { buildCharacter } from '../rules/build';
 import type { Character, ContentDatabase } from '../rules/types';
 import type { SavedChar } from './storage';
 import { CARRIED_CHARACTER_FIELDS } from './authored';
@@ -52,7 +52,10 @@ export function rebuildRoster(roster: SavedChar[], content: ContentDatabase, tom
   return roster.map((c) => {
     if (!c.build) return c;
     try {
-      const fresh = buildCharacter(c.build, applyOverrides(ownContent(content, c, tomb), c.build.overrides));
+      // buildCharacter lays the build's own content edits over this view itself — carried records first,
+      // then the edits (../rules/blocks/content.ts, the one content path) — exactly what this line did by
+      // hand before, so a launch rebuild re-derives the same character (test/content-path-pin.test.tsx).
+      const fresh = buildCharacter(c.build, ownContent(content, c, tomb));
       return { ...c, character: carryStoredOverrides(fresh, c.character) };
     } catch (e) {
       console.warn(`[HeavesRebuild] kept the stored snapshot for "${c.character?.name ?? c.id}" — rebuild threw:`, e);

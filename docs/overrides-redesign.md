@@ -5,6 +5,10 @@ its findings are in Part 2's "Phase 1 build spec"). Nothing is built yet. Each b
 own chat; the phase 1 prompt is in Part 3. The new name is **Tweaks** (Guy, 2026-10-14).
 2026-10-20: phase 1 was redone. Tweaks is now built on shared building blocks that the books will also
 use when every PF2e record is re-implemented later (decisions 22–25; Part 2 "Building blocks").
+2026-10-20 night: phase 1 PART A is built and committed (b36c9c8 catalog + registry, 4f6bae6 term lists,
+978677c book blocks, 55accab rank seams, 3e27a16 given feats work like picked, then the one content
+path, item 7). A browser test passed: a character built with the old Overrides card opens with every
+change kept and the same numbers, except case D. Part B's prompt is in Part 3 ("Phase 1 part B prompt").
 
 - **Part 1** is for Guy: what exists, what is broken, the feature ideas, the names, the questions.
 - **Part 2** is for the chat that builds it: the code facts behind every line of Part 1.
@@ -653,6 +657,16 @@ by a second agent and a checker; counts marked "about" were not).
    pooling; each needs its own handling. Known bypasses to cover or justify in writing:
    `useLocalCampaignMembers` (summary without `applyPlayState`), Builder previews built from a raw
    `buildCharacter`, `baseSkills`.
+   **As built (2026-10-20):** one door, `contentFor(db, overrides)` in `src/rules/blocks/content.ts`
+   (the raw overlay is private there; cached by base db, then by the contentEdits object; idempotent).
+   Order: the carried-records view first, then the edits on top (edits patch only ids the viewing db
+   holds). It is applied inside `buildCharacter`, `deriveBuildFromCharacter`, `applyPlayState`,
+   `deriveMaxHp` (so `initialPlay` and every HP write), `computeSummary`, `computePcStats` and
+   `exportWg`, plus the sheet content in App, the Builder, the GM sheet and the party viewer. Left on
+   the plain view on purpose: popups and links (`ContentContext`; showing edited text is phase 4),
+   carried copies and the native export (edits are never baked into them), and `reconcileFormulaBook`
+   (it writes on the next play edit). Not yet read by `contentFor`: the Tweaks switch and per-entry
+   on/off (part B, C3). Guard: blocks-check fails on any other use of the raw overlay name.
 8. **Rank order.** "At least" is a floor seeded before the skill-increase loop; "exactly" is a final
    clamp AFTER every `maxRank` raise. Today FEAT_GRANTS raises run after the rank override and can undo a
    rank the player lowered.
@@ -1095,3 +1109,79 @@ The Tweaks base on the blocks (features 1, 2, 4, 30-33, 40, 44, 46; problems 1, 
   decision 25).
 - At the end: update the doc's status line and "Decisions so far", update the memory note, and tell Guy
   that phase 2 (Choices) is next.
+
+### Phase 1 part B prompt (written by part A, 2026-10-20)
+
+Paste this into a new chat started in `C:\trying ai 2\pf2e codex`:
+
+```text
+Build phase 1, PART B, of Tweaks in Heroes Heaven: the Tweaks screen and base, on the building blocks
+that part A built. Tweaks is the redesign and new name of the per-character "Overrides" card in the
+Builder. No check-in: Guy already picked the look (decisions 26-29) and answered the taste questions at
+the part A check-in. Start building.
+
+Read first, in this order:
+1. docs/overrides-redesign.md: Part 1 (decisions 1-29 are final; 26-29 are the look), Part 2's "Phase 1
+   build spec" and "Building blocks" with every "As built" line (they say what part A really built and
+   its limits), then Part 3's "Phase 1 part B scope" — that list is your scope. Line numbers drift: find
+   code by symbol name.
+2. docs/gold-set-answers.md, as the repo's CLAUDE.md requires.
+3. The memory note project_hh_tweaks_design_2026_10_14.md, and work/tweaks-part-a-notes/ (untracked;
+   tweaks-part-a-next-steps.md "For the part B prompt" holds the open points listed below in full).
+
+What part A left for you (src/rules/blocks/ is the base; never write a second switch, reader or path):
+- stored.ts reads overrides (old keys, meta, unknown kinds kept) and holds tweaksSwitchOn and
+  activeGivenFeats; active.ts holds activeNumberBlocks and rankTweaks; terms.ts the term lists that the
+  number and its breakdown both read; book.ts the book blocks; heldFeats.ts the one way to walk held
+  feats; content.ts contentFor, the one content path. Part A never writes overrides.v: your real Builder
+  save writes v: 2 and options.overridesEnabled together (spec item 2, C4).
+- Guards in npm run verify (scripts/blocks-check.mjs): the catalog and registry, the book-field readers,
+  the featPicks / addedFeats readers (src/rules/blocks/feat-readers.json ratchets both ways: lower an
+  entry when you route a read), and the one content path. The check prints the blocks "not in Tweaks
+  yet": the Tweaks screen is built from the registry, so each phase 1 block gets its editor and a place
+  (main or Advanced) and leaves that list.
+- Open points you must handle (details in the notes file):
+  1. Keys of given feats / features / spells are featId@level, featureId@level, spellId@rank: an edit
+     that changes the level or rank MOVES its meta to the new key (test it). Every meta you write carries
+     `of`; a test asserts it on every write.
+  2. Read-time migration (spec items 2, 3, 5): sort each old proficiencies entry into "at least" or
+     "exactly" (lower than computed = exactly); old Lore entries then move to the loreKey row. Loading is
+     never an edit: no new authoredKey, no push, no timestamp; test it.
+  3. A tweaked character's ranks cannot tell a class-skill pick from a rank tweak, so
+     deriveBuildFromCharacter drops a real pick under a live floor or hold. Make every edit path keep the
+     stored build (App.tsx `build ?? deriveBuildFromCharacter`, GmEditSheet.tsx, the transfer.ts import)
+     or store the picks; then add the test "wizard classSkills [athletics] + exactly expert Athletics
+     keeps athletics". Never fix it by dropping tweaks from the 'granted' rebuild.
+  4. The skill-increase picker greys out a skill held "exactly", flags an increase a floor made
+     useless, and the skill timeline (explain.ts) names the floor or hold. Decide whether "exactly" also
+     caps firearmProf and dailySkillRank (the C16 limit line).
+  5. A given feat's own questions (choice, bonus skill feat, pick-a-feat, Lore, sanctification) get
+     controls in the "Give a feat" editor under override:<id>; route the levelChoices follow-ups and
+     sanctificationsOffDeity through heldFeats.ts (case D, D2). The Builder's baseSkills counts only
+     tweaks whose start level is at or below the viewed level (D8, spec 9).
+  6. The old "Change attributes" input shows the score WITH attribute.add tweaks; the new editor shows
+     and takes the score without them. A tweak a number ignores (battle-form AC, fixed spell DC, manual
+     max HP) shows a 0-value line "Tweak: +1 — not during a battle form" instead of vanishing.
+  7. Release notes: the Initiative popup's Roll button now rolls Initiative; a given Flexible Spellcaster
+     Dedication (and other given feats) now works like the picked one; contentEdits now reach the party
+     card, tracker and HP; older apps show the old Overrides card and ignore the new fields.
+  8. Case D shows only after the character is rebuilt (its next Builder save), not on load (browser test
+     2026-10-20). A cleric given Flexible Spellcaster then turns spontaneous 2/2, and spells prepared in
+     that entry are dropped by that save, exactly as when the feat is picked. Before that first save, the
+     Builder should say what will change (a confirm that names the casting entry), never drop it silently.
+
+How to work:
+- This touches saving and Guy's characters: effort ladder level 3 or higher; every build loop ends on a
+  checker. Other chats edit the same files: run git status first and never overwrite their uncommitted
+  edits; if one blocks you, say in one line which chat holds the file.
+- Tests only through scripts/vt.mjs; npm run verify before every commit; commit locally by file name;
+  do not push. The before/after instrument is scripts/blocks-parity-snapshot.mjs (baseline
+  work/.blocks-parity-baseline.json, untracked; re-take it only after npm run data): every number equal
+  except cases A, B, C and D.
+- Test like a user in the browser preview (dev-skip login, test characters only): a test character
+  built with today's Overrides opens with every change kept and the same sheet numbers, except cases
+  A-D; then use the new Tweaks page at desktop and phone width.
+- Bugs outside this scope go to chat-todo.md.
+- At the end: the doc's status line and "Decisions so far", the memory note, and tell Guy that phase 2
+  (Choices) is next, in a new chat.
+```

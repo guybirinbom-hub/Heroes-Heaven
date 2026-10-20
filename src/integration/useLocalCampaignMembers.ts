@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { loadRoster } from '../data/storage';
 import { ownContent } from '../data/carried';
 import { computeSummary } from '../sheet/partySummary';
+import { applyPlayState } from '../rules/play';
 import type { PartyMember } from '../data/party';
 import type { ContentDatabase } from '../rules/types';
 
@@ -25,16 +26,31 @@ export function useLocalCampaignMembers(campaignId: string, content: ContentData
     return loadRoster()
       // `archived` lives on the SavedChar wrapper, not the Character itself.
       .filter((e) => !e.archived && (e.character.campaignIds ?? []).includes(campaignId))
-      .map((e) => ({
-        // No accounts offline: the roster id stands in for both. storage.ts calls it a "unique
-        // roster id (distinct from character.id, which can collide on name)" — so it's exactly the
-        // stable characterId join we want long term, rather than matching on name.
-        ownerId: e.id,
-        charId: e.id,
-        name: e.character.name,
+      .map((e) => {
         // This device's OWN characters, so their own view (../data/carried.ts ownContent): what one
         // carries fills only what this device lacks, and a record deleted here stays deleted.
-        summary: computeSummary(e.character, ownContent(content, e)),
-      }));
+        const view = ownContent(content, e);
+        /*
+         * The PLAYED character, as the real publish summarises it (App.tsx: applyPlayState, then
+         * computeSummary, both against this view): docs/overrides-redesign.md Building blocks item 7 named
+         * this shim's summary-without-play a bypass — its card showed the built HP, not the damage taken.
+         * Both lay the character's own content edits over the view themselves (../rules/blocks/content.ts).
+         */
+        let live = e.character;
+        try {
+          live = applyPlayState(e.character, e.play, view);
+        } catch {
+          /* a play state that won't apply: the built character, as before */
+        }
+        return {
+          // No accounts offline: the roster id stands in for both. storage.ts calls it a "unique
+          // roster id (distinct from character.id, which can collide on name)" — so it's exactly the
+          // stable characterId join we want long term, rather than matching on name.
+          ownerId: e.id,
+          charId: e.id,
+          name: e.character.name,
+          summary: computeSummary(live, view),
+        };
+      });
   }, [campaignId, content]);
 }

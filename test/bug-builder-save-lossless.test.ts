@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { readdirSync, readFileSync } from 'node:fs';
 import { content, mainCasting } from './_content';
-import { applyOverrides, buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { contentFor } from '../src/rules/blocks/content';
 import {
   addRepertoireSpell,
   addSpellTrade,
@@ -226,7 +227,7 @@ const oracle = (level: number, spells: Record<number, string[]>): BuildState =>
 const ragingCleric = (level: number): BuildState =>
   ({ ...preparedCleric(level), featPicks: { '2:class:0': 'barbarian-dedication' } }) as BuildState;
 
-const built = (b: BuildState): Character => buildCharacter(b, applyOverrides(db, b.overrides));
+const built = (b: BuildState): Character => buildCharacter(b, contentFor(db, b.overrides));
 
 /**
  * The EXACT chain App.tsx's builder `onCreate` runs (and GmEditSheet's, line for line): build the

@@ -49,6 +49,7 @@ import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFro
 import { maxTakes } from '../rules/featGrants';
 import { CORE_BOOKS, sourceCatalog, storedSources } from '../rules/sources';
 import { applyPlayState } from '../rules/play';
+import { contentFor } from '../rules/blocks/content';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 import { sanitize } from '../sheet/sanitizeHtml';
 import {
@@ -301,6 +302,15 @@ function contentSnapshot(ch: Character, content: ContentDatabase): unknown {
 /** Wanderer's Guide v4 export. Spec-shaped; see the file header for what does and does
  *  not transfer into WG's build engine. */
 export function exportWg(saved: SavedChar, content: ContentDatabase): string {
+  /*
+   * The readable `content` snapshot is "the resolved character": the numbers (and feat names) the
+   * player's sheet shows, so the character's own Overrides content edits are laid over the view the
+   * caller passed (rules/blocks/content.ts — the one content path; carried records first, then the
+   * edits). The WG `character` itself carries no `overrides` at all — Wanderer's Guide has nowhere to
+   * put them (docs/overrides-redesign.md, Building blocks item 6: part B makes this export warn and list
+   * what it cannot carry) — so the edits reach the file only as their effect on that snapshot.
+   */
+  content = contentFor(content, saved.character.overrides);
   const ch = applyPlayState(saved.character, saved.play, content);
   const d = ch.details ?? {};
 

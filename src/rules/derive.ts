@@ -73,6 +73,7 @@ import { armorSpecEffect, armorSpecValue } from './armorSpec';
 import { modeModifiersFor, modeNumberBonus, modeTypedMods, poolTypedMods, type ModeTarget, type TypedMod } from './modes';
 import { resolveTerms, takenByTerm, termsTotal, type Term, type TermPart } from './blocks/terms';
 import { numberTweakTerms } from './blocks/active';
+import { contentFor } from './blocks/content';
 import { heldFeatSlots, type HeldInput } from './heldFeats';
 import { blockNumber, bookBlocksOf, clauseNumberBlocks, growingValue, itemChoiceBlocks, paramsOf, standingNumberBlocks, type BookCollection } from './blocks/book';
 import type { BlockInstance, BlockValue } from './blocks/registry';
@@ -1215,9 +1216,16 @@ export function maxHpTerms(c: Character, db: ContentDatabase): Term[] {
   return out;
 }
 
+/**
+ * Maximum HP. The character's own Overrides content edits are laid over `db` here (blocks/content.ts —
+ * the one content path): this is the number every HP WRITE is computed from — initialPlay's damage seed,
+ * the HP buttons, and the GM tracker's write-back (pcSheetTruth `sheetWithVitals`: damage = max − current)
+ * — so a surface handing it the plain view cannot write a raw max over the player's HP. A database the
+ * sheet already prepared comes back as the same object.
+ */
 export function deriveMaxHp(c: Character, db: ContentDatabase): number {
   if (c.hitPoints.maxOverride != null) return Math.max(0, c.hitPoints.maxOverride - drainedHpLoss(c));
-  return Math.max(0, termsTotal(maxHpTerms(c, db)));
+  return Math.max(0, termsTotal(maxHpTerms(c, contentFor(db, c.overrides))));
 }
 
 export interface WornArmor {

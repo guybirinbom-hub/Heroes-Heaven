@@ -38,7 +38,8 @@ import { loadRosterKnown, takeForeignRoster, rosterOwnerSwitched, type ForeignRo
 import { mergeRosterEdits } from './data/rosterMerge';
 import { gmApplyYields as gmApplyYieldsBy, revertOwnStep, settleMergedBuild } from './data/rosterFold';
 import { chooseDialog } from './sheet/confirm';
-import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
+import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
+import { contentFor } from './rules/blocks/content';
 import { useUndoableState } from './useUndoableState';
 import { applyPlayState, initialPlay, ownedRestIds, playForRebuild, reconcileFormulaBook, rest, toggleMode, type PlayState } from './rules/play';
 import { abilityMod } from './rules/derive';
@@ -359,7 +360,7 @@ export default function App() {
     stopBootCancel.current = stopCancel;
     // Descriptions arrive in a second file after the app is already interactive, and the loader
     // re-merges so they come back as a NEW database. Swapping it in is what makes them appear:
-    // several layers downstream memoise on the database identity (applyOverrides, the sheet's
+    // several layers downstream memoise on the database identity (contentFor, the sheet's
     // player-facing copy), so mutating records in place left every description blank — the failure
     // mode this split could have shipped with. Subscribed BEFORE the load so a database that is
     // already complete (main.tsx prefetches before React mounts) still reaches us.
@@ -1306,10 +1307,13 @@ export default function App() {
     }
   }, [activeContent, active?.character, active?.play]);
 
-  // Content the SHEET sees, with this character's Overrides content-edits (feat/feature text) overlaid.
-  // applyOverrides returns the same ref when there are no edits, so memoization downstream is preserved.
+  // Content the SHEET sees, with this character's Overrides content-edits (feat/feature fields) laid over
+  // its own view — carried records first, then the edits (rules/blocks/content.ts, the one content path).
+  // contentFor returns the same ref when there are no edits, and the same object for the same view and
+  // edits — the very object applyPlayState lays over `activeContent` for `character` above — so
+  // memoization downstream is preserved.
   const sheetContent = useMemo(
-    () => (activeContent ? applyOverrides(activeContent, active?.character.overrides) : activeContent),
+    () => (activeContent ? contentFor(activeContent, active?.character.overrides) : activeContent),
     [activeContent, active?.character.overrides],
   );
   // …and the builder's, when it is editing a character that carries records (a GM-made feat must stay
@@ -1617,7 +1621,8 @@ export default function App() {
           setMode('sheet');
         }}
         onCreate={(build) => {
-          const built = buildCharacter(build, applyOverrides(buildDb, build.overrides));
+          // buildCharacter lays the build's own content edits over this view itself (rules/blocks/content.ts).
+          const built = buildCharacter(build, buildDb);
           commitStructural(); // create/rebuild a character — persist immediately
           if (editing) {
             const id = editing.id;

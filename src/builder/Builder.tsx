@@ -6,7 +6,6 @@ import {
   GRADUAL_BOOST_SETS,
   type BuildState,
   buildCharacter,
-  applyOverrides,
   applySources,
   applyContentToggles,
   applyEditionFilter,
@@ -42,6 +41,8 @@ import { eligibleFeatsForSlot, findHiddenFeatMatches, fitsSlot, moveTargetFor, s
 // Case D (docs/overrides-redesign.md spec item 2): a feat given through Tweaks is held like a picked one.
 import { heldFeatIds, heldFeatSlots } from '../rules/heldFeats';
 import { classFeatureDescription } from '../rules/featureText';
+// Item 7 (docs/overrides-redesign.md, Building blocks): the one content path for Overrides content edits.
+import { contentFor } from '../rules/blocks/content';
 import {
   resolveBackground,
   restrictedSkillIncreaseAllowed,
@@ -315,7 +316,9 @@ export function Builder({
   // `ovContent` is the FULL (override-applied) DB used for the live character + grants; `content` is
   // that DB with disabled source books filtered out — what the pickers offer. Already-chosen ids are
   // always kept so disabling a book a character already used never breaks it.
-  const ovContent = useMemo(() => applyOverrides(baseContent, build.overrides), [baseContent, build.overrides]);
+  // contentFor (rules/blocks/content.ts): the host passes the character's view (its carried records), the
+  // edits go over it last; the same object for the same view and edits.
+  const ovContent = useMemo(() => contentFor(baseContent, build.overrides), [baseContent, build.overrides]);
   const sourceCat = useMemo(() => sourceCatalog(baseContent), [baseContent]);
   // desk #170: the Sources rows that print a Mythic Calling, named by the Level 0 picker's hint when every
   // calling's book is off (read off the unfiltered database; `content` below has them removed).

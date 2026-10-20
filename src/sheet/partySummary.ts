@@ -3,6 +3,7 @@
 // odd character must never throw the publish/sync path.
 import type { ActiveCondition, Character, ContentDatabase, ProficiencyRank } from '../rules/types';
 import { deriveMaxHp, deriveAc, derivePerception } from '../rules/derive';
+import { contentFor } from '../rules/blocks/content';
 
 export interface PartySummary {
   name: string;
@@ -41,8 +42,12 @@ function cap(s: string): string {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 }
 
-/** Build the small card summary from a live (play-applied) character. Never throws. */
+/** Build the small card summary from a live (play-applied) character. Never throws.
+ *  Against the character's own Overrides content edits laid over `content` (rules/blocks/content.ts — the
+ *  one content path), so the card's max HP, AC and Perception are the sheet's: before 2026-10-20 every
+ *  caller passed the plain view and an edit of a feat's numbers never reached a card. */
 export function computeSummary(c: Character, content: ContentDatabase): PartySummary {
+  content = contentFor(content, c?.overrides);
   const safe = <T,>(fn: () => T, fallback: T): T => {
     try {
       return fn();

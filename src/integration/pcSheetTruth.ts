@@ -5,6 +5,7 @@ import { deriveMaxHp } from '../rules/derive';
 import { fetchPublishedSheet, pushGmEdit, type PartyMember } from '../data/party';
 import { livePlay } from '../sheet/memberSheets';
 import { foreignContent, withCarriedAttached } from '../data/carried';
+import { contentFor } from '../rules/blocks/content';
 import type { SavedChar } from '../data/storage';
 import type { Character, ContentDatabase } from '../rules/types';
 import { isSamePc, moveBeforeActive, releaseSteps, takeVitalsGesture, useCombatStore } from '../../tracker/src/store/combatStore';
@@ -179,9 +180,16 @@ function known(list: { id: string; value?: number }[], content: ContentDatabase)
   return list.filter((c) => !!content.conditions?.[c.id]);
 }
 
+/*
+ * The sheet's max HP, against the character's own Overrides content edits laid over the carried view
+ * (../rules/blocks/content.ts — the one content path; deriveMaxHp lays them too, this says it where the
+ * write is decided). GM_EDITS_PC_HP writes damage = max − current HP from this number
+ * (`sheetWithVitals`): a raw max — one missing a player's edit that raised it — wrote a heal or a hit the
+ * player never had over their HP.
+ */
 function maxHpOf(live: Character, content: ContentDatabase): number {
   try {
-    return deriveMaxHp(live, content);
+    return deriveMaxHp(live, contentFor(content, live.overrides));
   } catch {
     return live.hitPoints?.current ?? 0;
   }

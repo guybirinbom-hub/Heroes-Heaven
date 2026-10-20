@@ -22,6 +22,7 @@ import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
 import { coinsToCp, payFrom } from './wealth';
 import { isDerivedIdOf, mintDerivedId, mintUniqueId } from './recordIds';
+import { contentFor } from './blocks/content';
 
 /** The maximum hero points a character can hold (the rail shows three pips). */
 export const MAX_HERO_POINTS = 3;
@@ -330,6 +331,11 @@ function renderRepertoire(
 /** Overlay the in-play runtime values onto a freshly-built (snapshot) character. */
 export function applyPlayState(ch: Character, play: PlayState | undefined, content: ContentDatabase): Character {
   if (!play) return ch;
+  // The character's own Overrides content edits over the caller's view (blocks/content.ts — the one
+  // content path), so the HP clamp, Encumbered and the drawn spell lists read the same records as the
+  // numbers: before, App's `character` was overlaid against the plain view while the sheet's numbers read
+  // the edited records, and an edit that raised max HP drew "29 / 35" at full health.
+  content = contentFor(content, ch.overrides);
   // A regular apex item (an invested item with an apexAttribute, e.g. Belt of Giant Strength) raises
   // one attribute (to 18, or +2 if already 18+). Bump it on the overlaid character so it ripples
   // through every derived stat (HP, saves, skills…). Only one apex item works at a time — the first

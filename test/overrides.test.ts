@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
-import { buildCharacter, deriveBuildFromCharacter, applyOverrides } from '../src/rules/build';
+import { buildCharacter, deriveBuildFromCharacter } from '../src/rules/build';
+import { contentFor } from '../src/rules/blocks/content';
 import type { FeatCategory } from '../src/rules/types';
 
 const db = content();
@@ -82,14 +83,14 @@ describe('Overrides — creative per-case rule-breaks', () => {
     expect(ch.grantedFeatures?.some((g) => g.featureId === feature.id && g.name === feature.name)).toBe(true);
   });
 
-  it('applyOverrides overlays feat-text edits without mutating the shared db, stable when empty', () => {
+  it('contentFor overlays feat-text edits without mutating the shared db, stable when empty', () => {
     const featId = Object.keys(db.feats)[0];
     const origName = db.feats[featId].name;
     // no content edits → identical reference (memo-safe)
-    expect(applyOverrides(db, {})).toBe(db);
-    expect(applyOverrides(db, { addedFeats: [] })).toBe(db);
+    expect(contentFor(db, {})).toBe(db);
+    expect(contentFor(db, { addedFeats: [] })).toBe(db);
     // with an edit → a new db, the entry changed, the shared base untouched, other fields preserved
-    const eff = applyOverrides(db, { contentEdits: { feats: { [featId]: { name: 'EDITED' } } } });
+    const eff = contentFor(db, { contentEdits: { feats: { [featId]: { name: 'EDITED' } } } });
     expect(eff).not.toBe(db);
     expect(eff.feats[featId].name).toBe('EDITED');
     expect(db.feats[featId].name).toBe(origName);

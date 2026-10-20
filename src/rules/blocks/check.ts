@@ -615,3 +615,85 @@ export function checkFeatReaders(hits: FeatReaderHit[], allow: unknown): BlocksC
   }
   return { errors, info };
 }
+
+/* ───────────── item 7: one content path ───────────── */
+
+/** The one file that lays a character's `overrides.contentEdits` over a database (Building blocks item 7). */
+export const CONTENT_PATH_HOME = 'src/rules/blocks/content.ts';
+/** The raw overlay's name: module-private in CONTENT_PATH_HOME, reached only through `contentFor`. */
+export const RAW_CONTENT_OVERLAY = 'applyOverrides';
+/** The one value CONTENT_PATH_HOME exports. */
+export const CONTENT_PATH_DOOR = 'contentFor';
+/** This guard's own file, which names RAW_CONTENT_OVERLAY as a string (a bracket read is not looked for here). */
+const CONTENT_PATH_GUARD = 'src/rules/blocks/check.ts';
+
+/**
+ * Item 7's guard. Every surface used to lay `contentEdits` over its own database with its own
+ * `applyOverrides(db, overrides)` call, so the party card, the tracker and the GM's HP write each drew a
+ * different max HP from the same character (pin: test/content-path-pin.test.tsx). Now the overlay is
+ * module-private in content.ts and every surface asks `contentFor` (or a derive boundary that does).
+ * Fails on:
+ *   - `applyOverrides` named in CODE anywhere but content.ts (a call, a member call `m.applyOverrides(…)`,
+ *     an import, an alias, a re-export, a bracket read `m['applyOverrides']`); comments and longer strings
+ *     are not code (codeOnly);
+ *   - content.ts exporting anything but `contentFor` (types are fine): a second export is a second door;
+ *   - content.ts no longer defining `function applyOverrides` (the guard would watch a name nothing uses —
+ *     rename RAW_CONTENT_OVERLAY with it), or no longer exporting `contentFor`;
+ *   - content.ts missing from `files` (the scan was fed the wrong tree).
+ * Not seen: a hand-written copy of the overlay under another name in another file.
+ * Pure: scripts/blocks-check.mjs feeds every code file of src/, test/, scripts/ and tracker/; the test
+ * plants bad cases in memory.
+ */
+export function checkContentPath(files: { path: string; text: string }[]): BlocksCheckResult {
+  const errors: string[] = [];
+  const info: string[] = [];
+  const keep = new Set([RAW_CONTENT_OVERLAY]);
+  const named = new RegExp(`(?<![A-Za-z0-9_$])${escapeRe(RAW_CONTENT_OVERLAY)}(?![A-Za-z0-9_$])`, 'g');
+  let home: string | null = null;
+  for (const f of files) {
+    const path = f.path.replace(/\\/g, '/');
+    if (path === CONTENT_PATH_HOME) {
+      home = codeOnly(f.text);
+      continue;
+    }
+    if (!f.text.includes(RAW_CONTENT_OVERLAY)) continue; // no mention at all: nothing to blank
+    // This file spells the name as a string to look for it: here only real code counts, not a bare string.
+    const code = codeOnly(f.text, path === CONTENT_PATH_GUARD ? new Set() : keep);
+    const lines = f.text.split('\n');
+    for (const m of code.matchAll(named)) {
+      const line = code.slice(0, m.index ?? 0).split('\n').length;
+      const text = (lines[line - 1] ?? '').trim();
+      errors.push(
+        `${path}:${line}: names ${RAW_CONTENT_OVERLAY} outside ${CONTENT_PATH_HOME} — lay a character's content-edits over a database only through ${CONTENT_PATH_DOOR}(db, overrides) (Building blocks item 7: one content path, so the sheet, party card, tracker and GM HP write agree): ${text.slice(0, 160)}`,
+      );
+    }
+  }
+  if (home === null) {
+    errors.push(`${CONTENT_PATH_HOME}: not among the scanned files — ${CONTENT_PATH_DOOR}, the one content path, is missing (or the scan was fed the wrong tree)`);
+  } else {
+    if (!new RegExp(`(?<![A-Za-z0-9_$])function\\s+${RAW_CONTENT_OVERLAY}\\s*\\(`).test(home)) {
+      errors.push(`${CONTENT_PATH_HOME}: no longer defines function ${RAW_CONTENT_OVERLAY} — this guard watches a name nothing uses (stale); rename RAW_CONTENT_OVERLAY in check.ts with it`);
+    }
+    const exported = new Set<string>();
+    for (const m of home.matchAll(/(?<![A-Za-z0-9_$])export\s+(default\b|\*|(?:declare\s+)?(?:async\s+)?(?:function\s*\*?|const|let|var|class|enum|namespace)\s+([A-Za-z0-9_$]+))/g)) {
+      exported.add(m[2] ?? (m[1] === '*' ? '* (export *)' : 'default'));
+    }
+    for (const m of home.matchAll(/(?<![A-Za-z0-9_$])export\s+(type\s+)?\{([^}]*)\}/g)) {
+      if (m[1]) continue; // `export type { … }`
+      for (const part of m[2].split(',')) {
+        const spec = part.trim();
+        if (!spec || /^type\s/.test(spec)) continue;
+        const alias = /\bas\s+([A-Za-z0-9_$]+)\s*$/.exec(spec);
+        exported.add(alias ? alias[1] : spec);
+        if (alias && spec.split(/\s+/)[0] !== CONTENT_PATH_DOOR) exported.add(spec.split(/\s+/)[0]);
+      }
+    }
+    for (const name of exported) {
+      if (name === CONTENT_PATH_DOOR) continue;
+      errors.push(`${CONTENT_PATH_HOME}: exports ${name} — its one export is ${CONTENT_PATH_DOOR}; a second export is a second content path (keep ${RAW_CONTENT_OVERLAY} module-private)`);
+    }
+    if (!exported.has(CONTENT_PATH_DOOR)) errors.push(`${CONTENT_PATH_HOME}: no longer exports ${CONTENT_PATH_DOOR} — every surface's content-edits path goes through it`);
+  }
+  info.push(`one content path: ${RAW_CONTENT_OVERLAY} is named only in ${CONTENT_PATH_HOME}, which exports ${CONTENT_PATH_DOOR} alone (${files.length} code files scanned)`);
+  return { errors, info };
+}

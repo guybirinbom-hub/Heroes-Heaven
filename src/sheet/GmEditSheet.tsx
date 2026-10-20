@@ -1,7 +1,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
-import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
+import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
+import { contentFor } from '../rules/blocks/content';
 import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, type PlayState } from '../rules/play';
 import { Builder } from '../builder/Builder';
 import { CharacterSheet } from './CharacterSheet';
@@ -215,8 +216,12 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     return conditions === (live.conditions ?? []) ? live : { ...live, conditions };
   }, [work.character, work.play, viewContent, summary]);
 
+  // The player's Overrides content edits laid over the carried view — carried records first, then the
+  // edits (../rules/blocks/content.ts, the one content path; `character` above gets the same object from
+  // applyPlayState). For deriving and drawing only: a push collects `carried` from `viewContent`, never
+  // from here, so an edit is never baked into the record the player's sheet carries.
   const sheetContent = useMemo(
-    () => applyOverrides(viewContent, work.character.overrides),
+    () => contentFor(viewContent, work.character.overrides),
     [viewContent, work.character.overrides],
   );
 
@@ -295,8 +300,9 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   };
 
   const onCreate = (build: BuildState) => {
-    // Against the sheet's view: a carried feat the player picked stays a feat the rebuild knows.
-    const built = buildCharacter(build, applyOverrides(viewContent, build.overrides));
+    // Against the sheet's view: a carried feat the player picked stays a feat the rebuild knows. The
+    // build's own content edits go over it inside buildCharacter (../rules/blocks/content.ts).
+    const built = buildCharacter(build, viewContent);
     setWork((w) => ({
       ...w,
       character: carryStoredOverrides(built, w.character),

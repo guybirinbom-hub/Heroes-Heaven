@@ -790,7 +790,7 @@ export function loadDescriptions(): Promise<void> {
       // pre-2026-10-16 bare URLs) — 11-16 MB each on a phone. Only when both checked out as current.
       if (!isTauri) void pruneDataCache([dataFileUrl('core.json'), dataFileUrl('core-descriptions.json')]);
       // Write into the RAW core, then rebuild. Mutating the merged database in place is not enough:
-      // several layers downstream snapshot it — applyOverrides copies edited records, and the sheet
+      // several layers downstream snapshot it — contentFor copies edited records, and the sheet
       // memoises a player-facing copy — so a mutation lands in objects nobody is reading any more and
       // every description stays blank. A rebuild gives the database a new identity, which is what
       // those memos are keyed on.

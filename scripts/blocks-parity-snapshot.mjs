@@ -24,9 +24,11 @@
  * card's computeSummary, every explainStat breakdown (totalText, parts, sumOk) and a hash of the stored
  * buildCharacter object (the full object too for record + overrides characters, descriptions stripped).
  *
- * THE PIPELINE IS THE APP'S (src/App.tsx): build with applyOverrides(db, build.overrides), overlay play
- * state with applyPlayState(built, initialPlay(built)+state, db), then the sheet reads
- * playerFacingContent(applyOverrides(db, ov), inventory). The db is merged the way
+ * THE PIPELINE IS THE APP'S (src/App.tsx): build with buildCharacter(build, db) — which lays the
+ * character's own Overrides content-edits over db itself through contentFor (src/rules/blocks/content.ts,
+ * the one content path, Tweaks item 7) — overlay play state with applyPlayState(built,
+ * initialPlay(built)+state, db) (the same door inside), then the sheet reads
+ * playerFacingContent(contentFor(db, ov), inventory). The db is merged the way
  * src/data/index.ts:mergeWithSeed merges it (seed + gated core + catalog modes, EXCLUDED_FEATS dropped,
  * the four hidden-list sets, ensureTraits) with descriptions written back like test/_content.ts.
  *
@@ -307,7 +309,8 @@ if (has('--compare') && has('--against')) {
 /* the engine                                                                                      */
 /* ---------------------------------------------------------------------------------------------- */
 const T0 = Date.now();
-const { buildCharacter, emptyBuild, applyOverrides } = await imp('src/rules/build.ts');
+const { buildCharacter, emptyBuild } = await imp('src/rules/build.ts');
+const { contentFor } = await imp('src/rules/blocks/content.ts');
 const derive = await imp('src/rules/derive.ts');
 const { deriveInitiative } = await imp('src/rules/initiative.ts');
 const { explainStat, sheetLoreKeys } = await imp('src/rules/explain.ts');
@@ -816,7 +819,8 @@ function snapCharacter(spec, gate) {
   const out = { numbers: {}, breakdowns: {} };
   let built;
   try {
-    built = buildCharacter(build, applyOverrides(baseDb, build.overrides));
+    // App.tsx onCreate: the plain db; buildCharacter applies the content-edits itself (contentFor).
+    built = buildCharacter(build, baseDb);
   } catch (e) {
     out.buildError = err(e);
     out.buildHash = out.buildError;
@@ -830,7 +834,7 @@ function snapCharacter(spec, gate) {
   try {
     const play = { ...initialPlay(built, baseDb), ...(spec.play ?? {}) };
     ch = applyPlayState(built, play, baseDb);
-    db = playerFacingContent(applyOverrides(baseDb, built.overrides), ch.inventory);
+    db = playerFacingContent(contentFor(baseDb, built.overrides), ch.inventory);
   } catch (e) {
     out.playError = err(e);
     return out;

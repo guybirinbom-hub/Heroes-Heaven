@@ -28,7 +28,8 @@ import {
 } from '../src/rules/play';
 import { coinsToCp } from '../src/rules/wealth';
 import { itemSpellRow, itemSpellRows } from '../src/rules/itemUses';
-import { applyOverrides, buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { contentFor } from '../src/rules/blocks/content';
 import { mergeRosterEdits } from '../src/data/rosterMerge';
 import { FORMULA_BOOK_ITEM_ID } from '../src/rules/formulaBook';
 import type { CompanionConfig, InventoryItem } from '../src/rules/types';
@@ -364,7 +365,7 @@ describe('DERIVED records — two tabs deriving the same record mint the SAME id
       keyAbility: 'str',
       inventory: [{ itemId: 'longsword', quantity: 1 }, { itemId: 'rations', quantity: 2 }, { itemId: 'torch', quantity: 1 }],
     };
-    const built = (b: BuildState) => buildCharacter(b, applyOverrides(db(), b.overrides));
+    const built = (b: BuildState) => buildCharacter(b, contentFor(db(), b.overrides));
     const prev = built(b0);
     // An old save's own add sits at the id the builder's fourth row will want (`inv-3`).
     const play: PlayState = { ...initialPlay(prev, db()), inventory: [...initialPlay(prev, db()).inventory!, row('inv-3', 'dagger')] };
@@ -465,7 +466,7 @@ describe('a builder Save that REPLACES a row never hands the new item the old ro
     keyAbility: 'str',
     inventory: items,
   });
-  const built = (b: BuildState) => buildCharacter(b, applyOverrides(db(), b.overrides));
+  const built = (b: BuildState) => buildCharacter(b, contentFor(db(), b.overrides));
   const SWORD = { itemId: 'longsword', quantity: 1 };
   const prev = built(gear([SWORD, { itemId: 'rope', quantity: 1 }]));
   const next = built(gear([SWORD, { itemId: 'shortbow', quantity: 1 }]));

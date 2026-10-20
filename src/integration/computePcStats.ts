@@ -12,6 +12,7 @@ import {
   deriveDefenses,
   abilityModifiers,
 } from '../rules/derive';
+import { contentFor } from '../rules/blocks/content';
 import type { PcStats, ProfRank } from '../../tracker/src/utils/pcDetail';
 import type { SavedChar } from '../data/storage';
 import { foreignContent } from '../data/carried';
@@ -49,11 +50,17 @@ const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
  * cannot drift from the player's sheet (2026-10-20, checker finding coverage-F2).
  */
 export function sheetPcStats(sheet: SavedChar, content: ContentDatabase): PcStats {
+  // The carried view here; the character's own content edits go over it inside livePlay (applyPlayState)
+  // and computePcStats — carried records first, then the edits (../rules/blocks/content.ts).
   const view = foreignContent(content, sheet);
   return computePcStats(livePlay(sheet, view), view);
 }
 
 export function computePcStats(c: Character, content: ContentDatabase): PcStats {
+  // The character's own Overrides content edits over `content` (../rules/blocks/content.ts — the one
+  // content path): the GM's row reads the records the player's sheet reads, so an edit of a feat's
+  // numbers (its max HP, a save) is on the row too. Last, over the carried view `sheetPcStats` passes.
+  content = contentFor(content, c?.overrides);
   const safe = <T>(fn: () => T, fallback: T): T => {
     try {
       return fn();

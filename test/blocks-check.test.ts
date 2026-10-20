@@ -1,7 +1,7 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { BOOK_FIELD_ALLOW, checkBlocks, checkBookFieldReaders, codeOnly, featureNumbers, laneKeys, type BlocksCheckInput, type BookReaderAllow } from '../src/rules/blocks/check';
+import { BOOK_FIELD_ALLOW, CONTENT_PATH_HOME, checkBlocks, checkBookFieldReaders, checkContentPath, codeOnly, featureNumbers, laneKeys, type BlocksCheckInput, type BookReaderAllow } from '../src/rules/blocks/check';
 import { BLOCK_KINDS, EDITOR_PARTS, SOURCE_KINDS, STILL_TO_ADD, blockKind } from '../src/rules/blocks/registry';
 import { OWNERS, TARGETS } from '../src/rules/blocks/targets';
 
@@ -321,5 +321,96 @@ describe('item 10: book fields are read only in blocks/book.ts (checkBookFieldRe
     expect(errors).toEqual([]);
     expect(info.join('\n')).toMatch(/read only in src\/rules\/blocks\/book\.ts/);
     for (const a of BOOK_FIELD_ALLOW) expect(a.why.trim().length, a.file).toBeGreaterThan(10);
+  });
+});
+
+describe('item 7: one content path — applyOverrides only inside blocks/content.ts (checkContentPath)', () => {
+  // A minimal valid home: the raw overlay module-private, contentFor the one export.
+  const HOME = [
+    "import type { ContentDatabase } from '../types';",
+    'export type Edits = Record<string, unknown>;',
+    'export interface Shape { a?: number }',
+    'function applyOverrides(base: ContentDatabase, edits: Edits): ContentDatabase { return base; }',
+    'export function contentFor(db: ContentDatabase, ov: { contentEdits?: Edits }): ContentDatabase {',
+    '  return ov.contentEdits ? applyOverrides(db, ov.contentEdits) : db;',
+    '}',
+  ].join('\n');
+  const scan = (extra: { path: string; text: string }[] = [], home: string | null = HOME) =>
+    checkContentPath([...(home === null ? [] : [{ path: CONTENT_PATH_HOME, text: home }]), ...extra]);
+  const errorsOf = (text: string, path = 'src/sheet/Planted.tsx') => scan([{ path, text }]).errors.join('\n');
+
+  it('passes on the planted small input (and finds the home under a Windows path too)', () => {
+    expect(scan().errors).toEqual([]);
+    expect(checkContentPath([{ path: CONTENT_PATH_HOME.replace(/\//g, '\\'), text: HOME }]).errors).toEqual([]);
+  });
+
+  it('fails on applyOverrides named in code anywhere else: a call, a member call, an import, an alias, a re-export, a bracket read', () => {
+    const planted = [
+      'const db = applyOverrides(content, ov);',
+      'const db = build.applyOverrides(content, ov);',
+      "import { applyOverrides } from '../rules/build';",
+      "import { buildCharacter, applyOverrides as overlay } from '../rules/build';",
+      "export { applyOverrides } from './blocks/content';",
+      "const raw = mod['applyOverrides'];",
+      'const pick = { applyOverrides };',
+    ];
+    for (const text of planted) expect(errorsOf(text), text).toMatch(/src\/sheet\/Planted\.tsx:1: names applyOverrides outside src\/rules\/blocks\/content\.ts — lay a character's content-edits over a database only through contentFor/);
+    // in a test, a script or the tracker as much as in src/
+    expect(errorsOf('buildCharacter(b, applyOverrides(db, b.overrides));', 'test/x.test.ts')).toMatch(/test\/x\.test\.ts:1: names applyOverrides/);
+    expect(errorsOf('const o = applyOverrides(baseDb, ov);', 'scripts/x.mjs')).toMatch(/scripts\/x\.mjs:1: names applyOverrides/);
+    // the line number is the planted line's
+    expect(errorsOf('const a = 1;\n\nconst db = applyOverrides(content, ov);')).toMatch(/Planted\.tsx:3: /);
+  });
+
+  it('is not fooled by comments, longer strings, templates or look-alike names', () => {
+    const fine = [
+      '// applyOverrides(db, ov) moved to blocks/content.ts',
+      '/* applyOverrides */ const x = 1;',
+      "const msg = 'applyOverrides was the old name';",
+      'const m = `${n} once called applyOverrides`;',
+      "it('applyOverrides overlays feat-text edits', () => {});",
+      'const db = applyOverridesOld(content, ov);',
+      'const db = reapplyOverrides(content, ov);',
+    ];
+    for (const text of fine) expect(errorsOf(text), text).toBe('');
+  });
+
+  it('the guard file spells the name as a string to look for it; only real code counts there', () => {
+    expect(errorsOf("export const RAW = 'applyOverrides';", 'src/rules/blocks/check.ts')).toBe('');
+    expect(errorsOf('const db = applyOverrides(content, ov);', 'src/rules/blocks/check.ts')).toMatch(/check\.ts:1: names applyOverrides/);
+  });
+
+  it('fails when content.ts exports anything but contentFor', () => {
+    expect(scan([], HOME.replace('function applyOverrides', 'export function applyOverrides')).errors.join('\n')).toMatch(/content\.ts: exports applyOverrides — its one export is contentFor/);
+    expect(scan([], `${HOME}\nexport { applyOverrides as raw };`).errors.join('\n')).toMatch(/exports raw[\s\S]*exports applyOverrides|exports applyOverrides[\s\S]*exports raw/);
+    expect(scan([], `${HOME}\nexport const rawOverlay = applyOverrides;`).errors.join('\n')).toMatch(/exports rawOverlay/);
+    expect(scan([], `${HOME}\nexport default contentFor;`).errors.join('\n')).toMatch(/exports default/);
+    expect(scan([], `${HOME}\nexport * from './other';`).errors.join('\n')).toMatch(/exports \* \(export \*\)/);
+    // types are not a door
+    expect(scan([], `${HOME}\nexport type { Shape as S };`).errors).toEqual([]);
+  });
+
+  it('fails when content.ts no longer defines applyOverrides (stale guard), no longer exports contentFor, or is missing', () => {
+    expect(scan([], HOME.replace(/applyOverrides/g, 'overlay')).errors.join('\n')).toMatch(/no longer defines function applyOverrides — this guard watches a name nothing uses \(stale\)/);
+    expect(scan([], HOME.replace('export function contentFor', 'function contentFor')).errors.join('\n')).toMatch(/no longer exports contentFor/);
+    expect(scan([], null).errors.join('\n')).toMatch(/src\/rules\/blocks\/content\.ts: not among the scanned files/);
+  });
+
+  it('passes on the real src/, test/, scripts/ and tracker/ files', () => {
+    const files: { path: string; text: string }[] = [];
+    const skip = new Set(['node_modules', 'dist', 'out', 'target', 'graphify-out']);
+    const walk = (dir: string) => {
+      for (const e of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
+        const p = `${dir}/${e.name}`;
+        if (e.isDirectory()) {
+          if (!skip.has(e.name)) walk(p);
+        } else if (/\.(ts|tsx|mts|cts|mjs|cjs|js|jsx)$/.test(e.name)) files.push({ path: p, text: read(p) ?? '' });
+      }
+    };
+    for (const d of ['src', 'test', 'scripts', 'tracker']) if (existsSync(join(ROOT, d))) walk(d);
+    expect(files.some((f) => f.path === CONTENT_PATH_HOME), 'the scan reached the home').toBe(true);
+    const { errors, info } = checkContentPath(files);
+    expect(errors).toEqual([]);
+    expect(info.join('\n')).toMatch(/applyOverrides is named only in src\/rules\/blocks\/content\.ts, which exports contentFor alone/);
   });
 });

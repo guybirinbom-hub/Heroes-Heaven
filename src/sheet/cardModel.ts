@@ -106,7 +106,7 @@ export type OursKind =
   | 'noPage'
   /**
    * Card step 8: the player's Overrides edit of this record's text ("Change an existing feat/feature",
-   * BuildOverrides.contentEdits, applied by build.ts applyOverrides). Shown wherever the card draws the
+   * BuildOverrides.contentEdits, applied by rules/blocks/content.ts contentFor). Shown wherever the card draws the
    * Archives page instead of the edited text, so the edit is never silently lost.
    */
   | 'override'

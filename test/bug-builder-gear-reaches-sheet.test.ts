@@ -1,7 +1,8 @@
 // bug 2026-09-12 #3c: builder-gear
 import { describe, expect, it } from 'vitest';
 import { content } from './_content';
-import { applyOverrides, buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { contentFor } from '../src/rules/blocks/content';
 import {
   addInventoryItem,
   applyPlayState,
@@ -28,7 +29,7 @@ import type { Character, InventoryItem } from '../src/rules/types';
 const db = () => content();
 
 /** The exact chain App.tsx runs: build the character, then rebuild it with the play state carried. */
-const build1 = (b: BuildState) => buildCharacter(b, applyOverrides(db(), b.overrides));
+const build1 = (b: BuildState) => buildCharacter(b, contentFor(db(), b.overrides));
 const rebuild = (play: PlayState, prev: Character, next: Character) => playForRebuild(play, next, prev);
 
 const base = (items: BuildState['inventory']): BuildState => ({

@@ -169,7 +169,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
   };
   /**
    * The player's own Overrides edit of this record's text (Overrides → "Change an existing
-   * feat/feature"). applyOverrides (build.ts) writes it into the description, but a record with a page
+   * feat/feature"). contentFor (rules/blocks/content.ts) writes it into the description, but a record with a page
    * draws the page and discards the description — so the edit is carried as an ours line, and
    * FeatDetail shows it wherever the page is shown instead of the edited text.
    */

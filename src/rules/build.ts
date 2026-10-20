@@ -77,6 +77,7 @@ import { apparitionSlots, bookCantripCapacity, bookNoun, cantripsKnown, casterSl
 import { rankTweaks, scoreAddBlocks } from './blocks/active';
 import { featIdAtSlot, heldFeatIds, heldFeatSlots } from './heldFeats';
 import { backgroundTrainings, bookBlocksOf, growingValue, standingNumberBlocks } from './blocks/book';
+import { contentFor } from './blocks/content';
 import { loreKey } from './loreKey';
 
 /**
@@ -4106,30 +4107,9 @@ function collectGrantedNaturals(
   return out;
 }
 
-/**
- * Apply Overrides CONTENT edits as a SHALLOW overlay on top of the shared content database WITHOUT
- * mutating it (the DB is an ~18 MB cached singleton shared by every character). Only ever spreads into
- * new objects, and returns the SAME base reference when there are no edits — so memo identity is
- * preserved and content-keyed memos don't thrash. Overlays feat + class-feature field edits.
- */
-export function applyOverrides(base: ContentDatabase, ov?: BuildOverrides): ContentDatabase {
-  const edits = ov?.contentEdits;
-  const featEdits = edits?.feats && Object.keys(edits.feats).length ? edits.feats : null;
-  const featureEdits = edits?.classFeatures && Object.keys(edits.classFeatures).length ? edits.classFeatures : null;
-  if (!featEdits && !featureEdits) return base;
-  const next: ContentDatabase = { ...base };
-  if (featEdits) {
-    const m = { ...base.feats };
-    for (const [id, patch] of Object.entries(featEdits)) if (m[id]) m[id] = { ...m[id], ...patch };
-    next.feats = m;
-  }
-  if (featureEdits) {
-    const m = { ...base.classFeatures };
-    for (const [id, patch] of Object.entries(featureEdits)) if (m[id]) m[id] = { ...m[id], ...patch };
-    next.classFeatures = m;
-  }
-  return next;
-}
+/* The Overrides CONTENT edits overlay (`contentEdits`) lives in ./blocks/content.ts now: `contentFor` is
+ * the one path, and buildCharacter / deriveBuildFromCharacter below call it themselves (Building blocks
+ * item 7). Callers hand them the plain view. */
 
 /** Every content id the build already references, so a source filter never drops a chosen entry. */
 export function collectChosenIds(build: BuildState, content: ContentDatabase): Set<string> {
@@ -4381,7 +4361,7 @@ export function classSubPickOrder<T extends { value: string; label: string }>(
 
 /** Hide content from disabled source books (the BUILDER's picker content only — never the sheet's).
  *  Keeps any entry whose book is enabled OR whose id is already chosen (`keepIds`). Returns the same
- *  ref when nothing is dropped (memo-safe, like applyOverrides). */
+ *  ref when nothing is dropped (memo-safe, like contentFor). */
 export function applySources(content: ContentDatabase, enabled: Set<string>, keepIds: Set<string>): ContentDatabase {
   const next: ContentDatabase = { ...content };
   let changed = false;
@@ -4755,6 +4735,10 @@ function restatesModeStrike(stored: { name: string; die?: string; damageType?: s
 }
 
 export function buildCharacter(build: BuildState, content: ContentDatabase): Character {
+  // The build's own Overrides content edits, laid over whatever view the caller passed (carried records
+  // first, then the edits — blocks/content.ts). The one content path: no caller can build without them,
+  // and a database the caller already prepared comes back as the same object.
+  content = contentFor(content, build.overrides);
   const { scores: abilities, partial: partialBoosts } = computeAbilitiesDetailed(build, content);
   // Override: force-set raw ability scores (no boost limits). Mutating this object in place flows to
   // HP (Con), spell slots (Cha/Wis), languages (Int), and — via Character.abilities — every derive.ts
@@ -11666,6 +11650,9 @@ function findSecondCasterEntry(c: Character, cls2: ClassDef, cls1?: ClassDef): S
  * the edit flow preserves it separately (see playForRebuild).
  */
 export function deriveBuildFromCharacter(c: Character, content: ContentDatabase): BuildState {
+  // Read back against the records the character was BUILT with: its own content edits laid over the
+  // caller's view (blocks/content.ts — the one content path), like every buildCharacter below.
+  content = contentFor(content, c.overrides);
   const ABIL: AbilityId[] = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
   const b = emptyBuild();
   b.name = c.name;

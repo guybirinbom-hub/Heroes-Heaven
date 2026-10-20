@@ -2,7 +2,9 @@
  * BLOCKS guard — the building-block catalog, the block registry and the target registry agree,
  * (item 10) the moved book fields are read only in src/rules/blocks/book.ts, and (item 9, case D) the raw
  * feat stores are named only where src/rules/blocks/feat-readers.json gives a reason
- * (scripts/lib/feat-readers.mjs scans; every other reader asks src/rules/heldFeats.ts).
+ * (scripts/lib/feat-readers.mjs scans; every other reader asks src/rules/heldFeats.ts), and (item 7, one
+ * content path) the raw contentEdits overlay `applyOverrides` is named only inside
+ * src/rules/blocks/content.ts, whose one export is `contentFor`.
  *
  * docs/overrides-redesign.md, "Building blocks" items 1, 2, 3, 11 and 12, and decision 24 ("a block that
  * is neither in Tweaks nor on that list makes the check fail"). The rules themselves live in
@@ -26,7 +28,7 @@ const read = (p) => (existsSync(join(ROOT, p)) ? readFileSync(join(ROOT, p), 'ut
 
 const registry = await import(src('src/rules/blocks/registry.ts'));
 const targets = await import(src('src/rules/blocks/targets.ts'));
-const { checkBlocks, checkBookFieldReaders, checkFeatReaders, BOOK_FIELD_ALLOW } = await import(src('src/rules/blocks/check.ts'));
+const { checkBlocks, checkBookFieldReaders, checkFeatReaders, checkContentPath, BOOK_FIELD_ALLOW } = await import(src('src/rules/blocks/check.ts'));
 // The scanner is tooling (it lives beside this script); the tree it scans and the allowlist are ROOT's.
 const { readAllow, scanFeatReaders, srcFiles: featSrcFiles, FEAT_READERS_ALLOW } = await import('./lib/feat-readers.mjs');
 
@@ -83,6 +85,30 @@ if (featAllow !== undefined) {
   errors.push(...feats.errors);
   info.push(...feats.info);
 }
+
+/* Item 7, one content path: the raw overlay `applyOverrides` is named only inside
+ * src/rules/blocks/content.ts, which exports `contentFor` alone. Scanned: every code file of the app (src/),
+ * its tests (test/), the tooling (scripts/) and the tracker (tracker/), plus the root config files; a
+ * dependency, build-output or graph folder is skipped. */
+const SKIP_DIRS = new Set(['node_modules', 'dist', 'out', 'target', 'graphify-out', '.git']);
+const CODE_EXT = /\.(ts|tsx|mts|cts|mjs|cjs|js|jsx)$/;
+function codeFilesUnder(rel) {
+  const out = [];
+  const walk = (dir) => {
+    if (!existsSync(join(ROOT, dir))) return;
+    for (const e of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
+      const p = dir ? `${dir}/${e.name}` : e.name;
+      if (e.isDirectory()) {
+        if (dir !== '' && !SKIP_DIRS.has(e.name)) walk(p);
+      } else if (CODE_EXT.test(e.name)) out.push({ path: p, text: read(p) ?? '' });
+    }
+  };
+  walk(rel);
+  return out;
+}
+const contentPath = checkContentPath(['', 'src', 'test', 'scripts', 'tracker'].flatMap(codeFilesUnder));
+errors.push(...contentPath.errors);
+info.push(...contentPath.info);
 
 for (const line of info) console.log(`blocks-check: ${line}`);
 if (errors.length) {

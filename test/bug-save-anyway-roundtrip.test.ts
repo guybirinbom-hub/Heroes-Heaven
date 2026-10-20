@@ -6,7 +6,8 @@ import { describe, expect, it } from 'vitest';
 import { content } from './_content';
 import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
-import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { contentFor } from '../src/rules/blocks/content';
 import { loadRoster, saveRoster, type SavedChar } from '../src/data/storage';
 import { rebuildRoster, carryStoredOverrides } from '../src/data/rebuild';
 import { PROFICIENCY_RANKS } from '../src/rules/types';
@@ -95,7 +96,7 @@ async function saveThroughTheUi(initial: BuildState, answer: 'Save anyway' | 'Ke
  *  (loadRoster + the once-per-launch rebuild), then reopen for editing. */
 function persistAndReopen(build: BuildState): BuildState {
   const db = c();
-  const built = buildCharacter(build, applyOverrides(db, build.overrides));
+  const built = buildCharacter(build, contentFor(db, build.overrides));
   expect(saveRoster([{ id: 'c-1', character: built, build }] as SavedChar[]), 'localStorage rejected the write').toBe(true);
   const entry = rebuildRoster(loadRoster(), db)[0];
   // App.tsx onEdit: the stored build, or a reverse-derived one when there is none.

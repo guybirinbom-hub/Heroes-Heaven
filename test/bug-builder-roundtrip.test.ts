@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { content } from './_content';
-import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { contentFor } from '../src/rules/blocks/content';
 
 /**
  * "there are still times where i change something in the builder, save, go back to edit, and some of
@@ -233,7 +234,7 @@ describe('a builder round-trip loses nothing', () => {
   it.each(Object.keys(FIXTURES))('%s', (label) => {
     const db = content();
     const before = FIXTURES[label];
-    const ov = applyOverrides(db, before.overrides);
+    const ov = contentFor(db, before.overrides);
     const ch = buildCharacter(before, ov);
     const after = deriveBuildFromCharacter(ch, ov);
 
@@ -253,13 +254,13 @@ describe('a builder round-trip loses nothing', () => {
     // 2. …and the thing the player actually looks at, byte for byte. This is what makes the four
     // recomputed lanes above safe to skip: a re-solved boost split that moved a single ability, a
     // dropped spell that was NOT granted, a class skill that was NOT granted — all land here.
-    expect(buildCharacter(after, applyOverrides(db, after.overrides)), `${label}: the CHARACTER changed`).toEqual(ch);
+    expect(buildCharacter(after, contentFor(db, after.overrides)), `${label}: the CHARACTER changed`).toEqual(ch);
   });
 
   // bug 2026-09-15: builder round-trip
   it("keeps a feat that is both a slot pick and a granted chip in its slot", () => {
     const db = content();
-    const ov = applyOverrides(db, GUARDIAN.overrides);
+    const ov = contentFor(db, GUARDIAN.overrides);
     const back = deriveBuildFromCharacter(buildCharacter(GUARDIAN, ov), ov);
     // The guardian's overrides.addedFeats names Fleet, Shield Block and Toughness; two of those are
     // also real general-feat picks. Dropping by feat ID emptied both slots.
@@ -272,7 +273,7 @@ describe('a builder round-trip loses nothing', () => {
   // bug 2026-09-15: builder round-trip
   it("keeps a background-granted feat's sub-choice", () => {
     const db = content();
-    const ov = applyOverrides(db, ROGUE.overrides);
+    const ov = contentFor(db, ROGUE.overrides);
     const back = deriveBuildFromCharacter(buildCharacter(ROGUE, ov), ov);
     // The custom background grants Assurance; the skill it names lives in grantedFeatChoices, keyed
     // by the bare feat id, and went with the row that was dropped to avoid double-granting it.
@@ -282,7 +283,7 @@ describe('a builder round-trip loses nothing', () => {
   // bug 2026-09-15: builder round-trip
   it("keeps a pick-granted feat's answer with the slot its granter lands in", () => {
     const db = content();
-    const ov = applyOverrides(db, BARD.overrides);
+    const ov = contentFor(db, BARD.overrides);
     const back = deriveBuildFromCharacter(buildCharacter(BARD, ov), ov);
     expect(back.featPicks['7:general:0']).toBe('ancestral-paragon');
     expect(back.pickFeatChoices?.['7:general:0']).toBe('well-met-traveler');
@@ -292,7 +293,7 @@ describe('a builder round-trip loses nothing', () => {
   it('never files a granted skill as a class-skill pick', () => {
     const db = content();
     for (const [label, build] of Object.entries(FIXTURES)) {
-      const ov = applyOverrides(db, build.overrides);
+      const ov = contentFor(db, build.overrides);
       const ch = buildCharacter(build, ov);
       const back = deriveBuildFromCharacter(ch, ov);
       const granted = Object.keys(ch.grantedSkills ?? {});
