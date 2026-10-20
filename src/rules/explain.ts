@@ -58,6 +58,7 @@ import {
 import { partsOf, resolveTerms } from './blocks/terms';
 import { scoreAddBlocks } from './blocks/active';
 import { blockKind } from './blocks/registry';
+import { backgroundTrainings } from './blocks/book';
 import { traitLabel } from './glossary';
 import { officialIdOf } from './officialId';
 import { KINETIC_ELEMENTS } from './kineticElements';
@@ -1154,8 +1155,9 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         const bg = c.backgroundId ? db.backgrounds[c.backgroundId] : undefined;
         const cls = c.classId ? db.classes[c.classId] : undefined;
         const fixed = (cls?.trainedSkills.fixed ?? []) as string[];
+        // The background's fixed skill as its book block (blocks/book.ts, Building blocks item 10).
         const src =
-          bg?.trainedSkill === ref.skill
+          bg && backgroundTrainings(bg).skill === ref.skill
             ? `from the ${bg.name} background`
             : fixed.includes(ref.skill)
               ? `from your ${cls!.name}`

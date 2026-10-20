@@ -17,7 +17,9 @@
  *   - an entry uses an editor part, source kind or old Overrides key that does not exist;
  *   - an entry accepts a target kind the target registry does not have for that aspect;
  *   - an entry's test file is missing or has no it()/describe() title naming the entry's id;
- *   - a file under src/rules/blocks/ imports from scripts/, work/ or the batch tools (item 12).
+ *   - a file under src/rules/blocks/ imports from scripts/, work/ or the batch tools (item 12);
+ *   - (checkBookFieldReaders, item 10) a file under src/ READS a moved book field (the registry's
+ *     `bookFields`) anywhere but blocks/book.ts, with no BOOK_FIELD_ALLOW entry — or an entry is stale.
  * It prints (never fails on) the "not in Tweaks yet" list and the kinds that nothing applies yet.
  */
 import type { BlockKindDef } from './registry';
@@ -243,5 +245,283 @@ export function checkBlocks(input: BlocksCheckInput): BlocksCheckResult {
   info.push(`not in Tweaks yet (no editor on the screen): ${notInTweaks.length ? notInTweaks.join(', ') : 'none'}`);
   const notYet = input.registry.filter((k) => k.applies === 'not-yet').map((k) => k.id);
   info.push(`registered but nothing applies them yet: ${notYet.length ? notYet.join(', ') : 'none'}`);
+  return { errors, info };
+}
+
+/* ───────────── item 10: no book field has two code paths ───────────── */
+
+/** The one file allowed to read the book fields (Building blocks item 10). */
+export const BOOK_FIELDS_HOME = 'src/rules/blocks/book.ts';
+
+/** A read of a book field outside book.ts that is NOT a second code path, with the reason. Matched by
+ *  file + field + a snippet of the line; an entry that matches nothing fails the check (stale). */
+export interface BookReaderAllow {
+  file: string;
+  field: string;
+  snippet: string;
+  why: string;
+}
+
+/**
+ * The allowlist. Writers (an assignment), types, comments and the data pipeline are not reads and need
+ * no entry; editors, and fields that only SHARE a name with a book field, do.
+ */
+export const BOOK_FIELD_ALLOW: BookReaderAllow[] = [
+  {
+    file: 'src/rules/build.ts',
+    field: 'trainedSkill',
+    snippet: 'trainedSkill: cb.trainedSkill',
+    why: "resolveBackground reads the player's CustomBackground form (a different type) to WRITE the Background record whose book blocks the build then reads",
+  },
+  {
+    file: 'src/builder/shared.tsx',
+    field: 'trainedSkill',
+    snippet: 'value={cb.trainedSkill',
+    why: "the custom-background editor shows the player's own CustomBackground form value — an editor, not a book record",
+  },
+  {
+    file: 'src/sheet/DetailsTab.tsx',
+    field: 'trainedSkill',
+    snippet: 'customBackground.trainedSkill',
+    why: "the Details tab prints the player's own CustomBackground form value — not a book record",
+  },
+  {
+    file: 'src/sheet/homebrewSchemas.ts',
+    field: 'trainedSkill',
+    snippet: 'trainedSkill: (e.trainedSkill',
+    why: 'the homebrew background editor loads the stored field into its form (an editor; item 10 moves readers that make numbers)',
+  },
+  {
+    file: 'src/sheet/homebrewSchemas.ts',
+    field: 'trainedLore',
+    snippet: 'trainedLore: (e.trainedLore',
+    why: 'the homebrew background editor loads the stored field into its form (an editor)',
+  },
+  {
+    file: 'src/sheet/ItemEditorModal.tsx',
+    field: 'passiveEffects.skills',
+    snippet: 'pe?.skills',
+    why: "the item editor loads the item's passive skill bonuses into its form (an editor)",
+  },
+  {
+    file: 'src/rules/companions.ts',
+    field: 'maxHpBonus',
+    snippet: 'mod.maxHpBonus',
+    why: "a companion specialization's flat HP from the COMPANION_MODS code table (companionGrants.ts) — same name, not a book record's field",
+  },
+];
+
+export interface BookReadersInput {
+  /** Every code file under src/, as text, with a repo-relative path spelled with '/'. */
+  files: { path: string; text: string }[];
+  /** The moved fields: the union of the registry's `bookFields` ("passiveEffects.skills" = a path). */
+  bookFields: string[];
+  allow: BookReaderAllow[];
+}
+
+/**
+ * The code of a TS/TSX file with comments and string/template/regex CONTENTS blanked to spaces (newlines
+ * kept, so offsets and line numbers still match the original). A string whose whole content is one of
+ * `keep` stays as it is, so a bracket read (`rec['maxHpBonus']`) is still seen.
+ */
+export function codeOnly(text: string, keep: ReadonlySet<string> = new Set()): string {
+  const out = text.split('');
+  const blank = (from: number, to: number) => {
+    for (let i = from; i < to; i++) if (out[i] !== '\n' && out[i] !== '\r') out[i] = ' ';
+  };
+  const n = text.length;
+  let i = 0;
+  // Template nesting: each entry is the brace depth at which a `${` opened.
+  const tpl: number[] = [];
+  let depth = 0;
+  const prevSignificant = (at: number): string => {
+    let j = at - 1;
+    while (j >= 0 && /\s/.test(out[j])) j--;
+    if (j < 0) return '';
+    if (/[A-Za-z0-9_$]/.test(out[j])) {
+      let k = j;
+      while (k >= 0 && /[A-Za-z0-9_$]/.test(out[k])) k--;
+      return out.slice(k + 1, j + 1).join('');
+    }
+    return out[j];
+  };
+  const scanTemplate = (start: number): number => {
+    // From just after a backtick (or a closing `}` of `${`): blank to the closing backtick or a `${`.
+    let j = start;
+    while (j < n) {
+      if (text[j] === '\\') {
+        j += 2;
+        continue;
+      }
+      if (text[j] === '`') {
+        blank(start, j);
+        return j + 1;
+      }
+      if (text[j] === '$' && text[j + 1] === '{') {
+        blank(start, j);
+        tpl.push(depth);
+        depth++;
+        return j + 2;
+      }
+      j++;
+    }
+    blank(start, n);
+    return n;
+  };
+  while (i < n) {
+    const ch = text[i];
+    const nx = text[i + 1];
+    if (ch === '/' && nx === '/') {
+      const end = text.indexOf('\n', i);
+      const stop = end < 0 ? n : end;
+      blank(i, stop);
+      i = stop;
+    } else if (ch === '/' && nx === '*') {
+      const end = text.indexOf('*/', i + 2);
+      const stop = end < 0 ? n : end + 2;
+      blank(i, stop);
+      i = stop;
+    } else if (ch === "'" || ch === '"') {
+      let j = i + 1;
+      while (j < n && text[j] !== ch && text[j] !== '\n') j += text[j] === '\\' ? 2 : 1;
+      if (!keep.has(text.slice(i + 1, j))) blank(i + 1, j);
+      i = j + 1;
+    } else if (ch === '`') {
+      i = scanTemplate(i + 1);
+    } else if (ch === '{') {
+      depth++;
+      i++;
+    } else if (ch === '}') {
+      depth--;
+      if (tpl.length && tpl[tpl.length - 1] === depth) {
+        tpl.pop();
+        i = scanTemplate(i + 1);
+      } else i++;
+    } else if (ch === '/') {
+      // A regex literal where an expression starts (after an operator, an opening bracket or a keyword).
+      // Not after `<` and not before `>`: in TSX those are a closing tag (`</span>`, `<i … />`).
+      const prev = prevSignificant(i);
+      if (nx !== '>' && (prev === '' || /^[(,=:[!&|?{};+\-*%>~^]$/.test(prev) || /^(return|typeof|case|in|of|void|delete|throw|new|yield|await)$/.test(prev))) {
+        let j = i + 1;
+        let cls = false;
+        while (j < n && text[j] !== '\n') {
+          if (text[j] === '\\') {
+            j += 2;
+            continue;
+          }
+          if (text[j] === '[') cls = true;
+          else if (text[j] === ']') cls = false;
+          else if (text[j] === '/' && !cls) break;
+          j++;
+        }
+        blank(i + 1, j);
+        i = j + 1;
+      } else i++;
+    } else i++;
+  }
+  return out.join('');
+}
+
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/** `.name`, `?.name` or `!.name` — a property access (not a spread, `...name`). */
+const access = (name: string) => `(?:\\?\\.|!\\.|(?<!\\.)\\.)\\s*${escapeRe(name)}(?![A-Za-z0-9_$])`;
+
+interface ReadPattern {
+  field: string;
+  re: RegExp;
+}
+
+/**
+ * The patterns that find a READ of each moved field:
+ *   - a one-word field (`landSpeedBonus`): `x.landSpeedBonus` / `x?.landSpeedBonus`, a bracket read
+ *     `x['landSpeedBonus']` (not a type's indexed access, `Background['trainedSkill']`), and a
+ *     destructuring (`const { landSpeedBonus } = rec`, `for (const { maxHpBonus } of …)`, a function's
+ *     parameters `({ landSpeedBonus }: T) =>`), and a presence test (`'maxHpBonus' in rec`). NOT seen: a
+ *     computed key (`rec[name]`) and the passive bag under another variable name (`const p = …; p.skills`);
+ *   - a path whose last word is itself a moved field (`whileActive.landSpeedBonus`): covered above;
+ *   - any other path (`passiveEffects.skills`, `effectChoices.grant.passive.skills`): the last two words
+ *     (`passiveEffects.skills`, `passive.skills`) — the last word alone ("skills") is every proficiency
+ *     table in the app. Plus the two names the passive bag goes by in derive.ts: `pe.skills` and a
+ *     `resolvedItemPassives[…].skills` read.
+ */
+export function bookReadPatterns(bookFields: string[]): ReadPattern[] {
+  const words = new Set(bookFields.filter((f) => !f.includes('.')));
+  const out: ReadPattern[] = [];
+  for (const w of words) {
+    out.push({ field: w, re: new RegExp(access(w), 'g') });
+    // A bracket read: right after a name, `)` or `]` (an array literal `['maxHpBonus']` is not one),
+    // unless the name is a type's (PascalCase): `Item['maxHpBonus']` is an indexed access TYPE.
+    out.push({ field: w, re: new RegExp(`(?<=[A-Za-z0-9_$)\\]])(?<!(?<![A-Za-z0-9_$])[A-Z][A-Za-z0-9_$]*)(?:\\?\\.)?\\[\\s*(['"\`])${escapeRe(w)}\\1\\s*\\]`, 'g') });
+    // Destructuring: `{ …, landSpeedBonus, … } =` (not `==`/`=>`), or `{ … } of` in a for loop.
+    out.push({ field: w, re: new RegExp(`\\{[^{}()]*(?<![A-Za-z0-9_$])${escapeRe(w)}(?![A-Za-z0-9_$])\\s*(?:[,:}][^{}()]*)?\\}\\s*(?:=(?![=>])|of\\b)`, 'g') });
+    // Destructuring in a function's PARAMETERS: `({ landSpeedBonus }: any) =>`, `function f({ maxHpBonus = 0 }) {`
+    // — the closing `}`, an optional `: Type` (a name, or one inline `{ … }` object type), `)`, an
+    // optional return type, then `=>` or a body `{`. A call argument (`f({ landSpeedBonus })`) is not
+    // followed by `=>`/`{`, so it is not matched.
+    const type = `(?::(?:\\{[^{}]*\\}|[^(){};=])*)?`;
+    out.push({ field: w, re: new RegExp(`\\{[^{}()]*(?<![A-Za-z0-9_$])${escapeRe(w)}(?![A-Za-z0-9_$])\\s*(?:[,:}=][^{}()]*)?\\}\\s*${type}\\)\\s*${type}(?:=>|\\{)`, 'g') });
+    // A presence test: `'maxHpBonus' in rec` (codeOnly keeps a string that IS a watched name).
+    out.push({ field: w, re: new RegExp(`(['"])${escapeRe(w)}\\1\\s+in(?![A-Za-z0-9_$])`, 'g') });
+  }
+  for (const f of bookFields) {
+    if (!f.includes('.')) continue;
+    const parts = f.split('.');
+    const leaf = parts[parts.length - 1];
+    if (words.has(leaf)) continue;
+    const parent = parts[parts.length - 2];
+    out.push({ field: f, re: new RegExp(`(?<![A-Za-z0-9_$])${escapeRe(parent)}\\s*${access(leaf)}`, 'g') });
+    // `pe` is what derive.ts and the editors call an item's passiveEffects; the answered-choice copy
+    // lives in `Character.resolvedItemPassives`.
+    if (f === 'passiveEffects.skills') out.push({ field: f, re: new RegExp(`(?<![A-Za-z0-9_$])pe\\s*${access('skills')}`, 'g') });
+    if (parent === 'passive' && leaf === 'skills') out.push({ field: f, re: new RegExp(`resolvedItemPassives\\b[^;\\n]*?${access('skills')}`, 'g') });
+  }
+  return out;
+}
+
+/** Is the access that ends at `end` the target of a plain assignment (a WRITER), `x.f = …`? */
+const isAssignment = (code: string, end: number) => /^\s*=(?![=>])/.test(code.slice(end, end + 40));
+
+/**
+ * Item 10's guard: a moved book field is read only in blocks/book.ts. Fails on a read anywhere else in
+ * src/ that no allowlist entry covers, and on an allowlist entry that covers nothing (stale).
+ */
+export function checkBookFieldReaders(input: BookReadersInput): BlocksCheckResult {
+  const errors: string[] = [];
+  const info: string[] = [];
+  const keep = new Set(input.bookFields.filter((f) => !f.includes('.')));
+  const patterns = bookReadPatterns(input.bookFields);
+  const used = new Set<BookReaderAllow>();
+  let allowed = 0;
+  for (const f of input.files) {
+    const path = f.path.replace(/\\/g, '/');
+    if (path === BOOK_FIELDS_HOME) continue;
+    const code = codeOnly(f.text, keep);
+    const lines = f.text.split('\n');
+    const seen = new Set<string>();
+    for (const p of patterns) {
+      for (const m of code.matchAll(p.re)) {
+        const at = m.index ?? 0;
+        const end = at + m[0].length;
+        if (isAssignment(code, end)) continue;
+        const line = code.slice(0, at).split('\n').length;
+        const text = (lines[line - 1] ?? '').trim();
+        const id = `${line}:${p.field}`;
+        if (seen.has(id)) continue;
+        seen.add(id);
+        const ok = input.allow.find((a) => a.file === path && a.field === p.field && text.includes(a.snippet));
+        if (ok) {
+          used.add(ok);
+          allowed++;
+          continue;
+        }
+        errors.push(`${path}:${line}: reads book field "${p.field}" outside ${BOOK_FIELDS_HOME} — read it through bookBlocksOf (or allowlist it in check.ts BOOK_FIELD_ALLOW with a reason): ${text.slice(0, 160)}`);
+      }
+    }
+  }
+  for (const a of input.allow) {
+    if (!a.why.trim()) errors.push(`BOOK_FIELD_ALLOW ${a.file} (${a.field}): no reason`);
+    if (!used.has(a)) errors.push(`BOOK_FIELD_ALLOW ${a.file} (${a.field}, "${a.snippet}"): matches no read any more — remove the entry`);
+  }
+  info.push(`book fields (${input.bookFields.length}) are read only in ${BOOK_FIELDS_HOME}, ${allowed} allowlisted read(s) elsewhere, ${input.files.length} files scanned`);
   return { errors, info };
 }

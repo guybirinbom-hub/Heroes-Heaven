@@ -75,6 +75,8 @@ import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
 import { apparitionSlots, bookCantripCapacity, bookNoun, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
 import { scoreAddBlocks } from './blocks/active';
+import { backgroundTrainings, bookBlocksOf, growingValue, standingNumberBlocks } from './blocks/book';
+import { loreKey } from './loreKey';
 
 /**
  * The kineticist's element rules for one feat slot: the test the Builder's picker asks (`slotTakes`,
@@ -670,7 +672,9 @@ export function passionBackground(
 
 export function backgroundTrainedSkill(build: BuildState, background: Background | undefined): SkillId | undefined {
   if (!background) return undefined;
-  if (background.trainedSkill) return background.trainedSkill;
+  // The fixed skill is the background's book block (blocks/book.ts, Building blocks item 10).
+  const fixed = backgroundTrainings(background).skill;
+  if (fixed) return fixed;
   const choice = background.trainedSkillChoice;
   if (!choice?.length) return undefined;
   return build.backgroundSkillChoice && choice.includes(build.backgroundSkillChoice)
@@ -1673,28 +1677,10 @@ function rankAtLeast(a: ProficiencyRank, b: ProficiencyRank): boolean {
   return PROFICIENCY_RANKS.indexOf(a) >= PROFICIENCY_RANKS.indexOf(b);
 }
 
-/**
- * A Lore subject → the `lore:<slug>` key that stores it, or null when nothing but the word "Lore" is
- * left. THE one keyer: every Lore the app names — typed by a player on any card, printed on a
- * background, listed on an apparition, read off a prerequisite or a Wanderer's Guide import — goes
- * through here, so the same subject can never become two Lores.
- *
- * There were two, and they disagreed: the builder cards stripped "lore" anywhere, the engine only a
- * trailing " lore", so "Lore of the Sea" typed on the Languages card and on a background trained
- * `lore:of-the-sea` and `lore:lore-of-the-sea`. "Lore of the Sea", "sea lore", "Sea Lore " and
- * "lore: sea" are all `lore:sea`. A key passes through unchanged ("lore:sea" → "lore:sea").
- * Measured over every printed Lore subject (514): none keys differently from the old engine keyer.
- */
-export function loreKey(raw: string): ProficiencyKey | null {
-  const slug = raw
-    .trim()
-    .toLowerCase()
-    .replace(/^(?:lore\b[\s:,-]*)+(?:of[\s-]+(?:the[\s-]+)?)?/, '')
-    .replace(/\blore\b/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  return slug ? (`lore:${slug}` as ProficiencyKey) : null;
-}
+/* `loreKey` — THE one Lore keyer — lives in ./loreKey.ts since 2026-10-20 (the book blocks key a
+ * background's printed Lore with it and must not import the build); re-exported here so every
+ * `import { loreKey } from './build'` keeps working. */
+export { loreKey };
 
 /** Whichever rank is lower — used for CEILINGS (a class archetype that removes training). */
 function minRank(a: ProficiencyRank, b: ProficiencyRank): ProficiencyRank {
@@ -5039,13 +5025,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   } else if (bgTrainedSkill) (skills[bgTrainedSkill] = 'trained'), lock(bgTrainedSkill, 'your background');
   // One subject, or several where the background grants several ("Deception, Art Lore, AND Underworld
   // Lore" — an AND, unlike the OR that `trainedLoreOptions` models).
-  for (const subj of [background?.trainedLore ?? []].flat()) {
-    // Through loreKey, so a capitalized data subject ("Labor") can never mint a `lore:Labor` twin of
-    // the `lore:labor` every other writer uses (found on Remittance Agent, batch 20).
+  // Read as the background's book blocks (blocks/book.ts, Building blocks item 10).
+  for (const { key } of backgroundTrainings(background).lores) {
+    // Through loreKey (inside the block), so a capitalized data subject ("Labor") can never mint a
+    // `lore:Labor` twin of the `lore:labor` every other writer uses (found on Remittance Agent, batch 20).
     /* LOCKED like every other background training (the skill above, the choice Lore below), so the
      * builder can say where it came from: an Acolyte typing "Scribing" on the Trained skills card was
      * told only "Already trained in Scribing Lore" — `grantedSkills` is where the source is read. */
-    const key = subj && loreKey(subj);
     if (key) (skills[key] = 'trained'), lock(key, 'your background');
   }
   /*
@@ -5059,10 +5045,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (passion) {
       const s = backgroundTrainedSkill(build, passion);
       if (s) skills[s] = maxRank(skills[s], 'trained');
-      for (const subj of [passion.trainedLore ?? []].flat()) {
-        const key = subj && loreKey(subj);
-        if (key) skills[key] = 'trained';
-      }
+      for (const { key } of backgroundTrainings(passion).lores) if (key) skills[key] = 'trained';
     }
   }
   // The BACKGROUND's own embedded sub-choice ("an Ancestry Lore of your choice", "Guild Lore or
@@ -10997,17 +10980,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Max-HP feats (Toughness = +level, Thick Hide Mask = +20, …) raise maximum HP, and a freshly built
   // character starts at full HP — so fold them into the starting `current` to match deriveMaxHp().
   // Otherwise initialPlay would record the difference as phantom damage (e.g. a new Fighter shows 58/63).
+  /* Read as the feats' BOOK BLOCKS (blocks/book.ts, Building blocks item 10): the same `max-hp` blocks
+   * deriveMaxHp's term list reads, resolved by the same growingValue.
+   *
+   * FEATS ONLY, deliberately — not the worn/invested items deriveMaxHp also counts. This fold sets the
+   * STORED starting `current`, and item 10 moves readers without changing what a build stores (checker
+   * C10: the stored character must not move). Gear bought and worn in play is in `play.inventory`,
+   * which the build never sees. The one gap left as it was: a max-HP item worn and invested in the
+   * builder's starting kit (`build.inventory`; today only Belt of Good Health, flat +4) is counted by
+   * deriveMaxHp but not here, so such a character starts 4 below max — reported, not changed here. */
   let featHp = 0;
+  const archetypeFeats = (a: string) => feats.filter((x) => content.feats[x.featId]?.archetype === a).length;
   for (const f of feats) {
-    const b = content.feats[f.featId]?.maxHpBonus;
-    if (!b) continue;
-    featHp += (b.perLevel ?? 0) * level + (b.flat ?? 0);
-    /* …including the per-archetype-feat kind (Exemplar Resiliency: +3 HP for each archetype feat of
-     * that class, the dedication counting). `deriveMaxHp` already counts these, and this fold did not,
-     * so a character who took them started at max − 9 and the difference was recorded as damage they
-     * had never taken — exactly what this block's own comment exists to prevent. */
-    if (b.perArchetypeFeat && b.archetype) {
-      featHp += b.perArchetypeFeat * feats.filter((x) => content.feats[x.featId]?.archetype === b.archetype).length;
+    for (const b of standingNumberBlocks(bookBlocksOf(content.feats[f.featId], 'feats'), 'max-hp')) {
+      /* …including the per-archetype-feat kind (Exemplar Resiliency: +3 HP for each archetype feat of
+       * that class, the dedication counting). `deriveMaxHp` already counts these, and this fold did not,
+       * so a character who took them started at max − 9 and the difference was recorded as damage they
+       * had never taken — exactly what this block's own comment exists to prevent. */
+      featHp += growingValue(b.value, { level, archetypeFeats });
     }
   }
 
@@ -12223,7 +12213,9 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       .map(([k]) => k);
     const granted = new Set<ProficiencyKey>();
     for (const sk of cls?.trainedSkills.fixed ?? []) granted.add(sk);
-    if (background?.trainedSkill) granted.add(background.trainedSkill);
+    // The background's own printed trainings, as its book blocks (blocks/book.ts, Building blocks item 10).
+    const bgTrainings = backgroundTrainings(background);
+    if (bgTrainings.skill) granted.add(bgTrainings.skill);
     // A choice-skill background: recover which offered skill is trained as the player's pick.
     if (background?.trainedSkillChoice?.length) {
       const pick = background.trainedSkillChoice.find(
@@ -12234,7 +12226,8 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     }
     // Each subject separately — interpolating the field directly would silently produce the single key
     // `lore:art,underworld` for the one background that grants two, and TypeScript accepts that.
-    for (const subj of [background?.trainedLore ?? [], ...grantOptions.map((o) => o.grants?.lores ?? [])].flat()) {
+    for (const { key } of bgTrainings.lores) if (key) granted.add(key);
+    for (const subj of grantOptions.flatMap((o) => o.grants?.lores ?? [])) {
       const key = subj && loreKey(subj);
       if (key) granted.add(key);
     }

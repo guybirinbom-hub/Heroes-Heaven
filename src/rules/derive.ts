@@ -73,6 +73,8 @@ import { armorSpecEffect, armorSpecValue } from './armorSpec';
 import { modeModifiersFor, modeNumberBonus, modeTypedMods, poolTypedMods, type ModeTarget, type TypedMod } from './modes';
 import { resolveTerms, takenByTerm, termsTotal, type Term, type TermPart } from './blocks/terms';
 import { numberTweakTerms } from './blocks/active';
+import { blockNumber, bookBlocksOf, clauseNumberBlocks, growingValue, itemChoiceBlocks, paramsOf, standingNumberBlocks, type BookCollection } from './blocks/book';
+import type { BlockInstance, BlockValue } from './blocks/registry';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
 import {
   mpRefinedLevel,
@@ -321,18 +323,29 @@ export function resilientSaveBonus(c: Character, db: ContentDatabase): number {
  * Heritages + feats + owned class features, the three record kinds that extend `DefenseGrants`.
  * Exported with the source NAME so the save breakdown can list the part instead of leaving the shown
  * parts short of the total.
+ *
+ * Read through the records' BOOK BLOCKS (blocks/book.ts, Building blocks item 10): `saveBonuses` is
+ * read there and nowhere else, and each bonus carries its block's fixed key into the save's term list.
  */
-export function recordSaveBonuses(c: Character, db: ContentDatabase | undefined, save: SaveId): (TypedMod & { name: string })[] {
+export function recordSaveBonuses(c: Character, db: ContentDatabase | undefined, save: SaveId): (TypedMod & { name: string; block: BlockInstance })[] {
   if (!db) return [];
-  const out: (TypedMod & { name: string })[] = [];
-  const read = (rec?: { name?: string; saveBonuses?: DefenseGrants['saveBonuses'] }) => {
-    for (const sb of rec?.saveBonuses ?? []) if (sb.save === save) out.push({ type: sb.type, value: sb.value, name: rec?.name ?? '' });
+  const out: (TypedMod & { name: string; block: BlockInstance })[] = [];
+  const read = (rec: object | undefined, collection: BookCollection) => {
+    for (const b of standingNumberBlocks(bookBlocksOf(rec, collection), `save:${save}`)) out.push({ type: b.bonusType ?? 'untyped', value: blockNumber(b), name: b.source.name ?? '', block: b });
   };
-  for (const h of heritageRecords(c, db)) read(h);
-  for (const f of c.feats) read(db.feats[f.featId]);
-  for (const id of ownedFeatureIds(c, db)) read(db.classFeatures[id]);
+  for (const h of heritageRecords(c, db)) read(h, 'heritages');
+  for (const f of c.feats) read(db.feats[f.featId], 'feats');
+  for (const id of ownedFeatureIds(c, db)) read(db.classFeatures[id], 'classFeatures');
   return out;
 }
+
+/** A book block's term (layer 'book'): the line the breakdown printed before, plus the block's fixed key
+ *  and source, so the number and its breakdown read one list that knows where each line came from. */
+const bookBlockTerm = (b: BlockInstance, label: string, value: number, note?: string): Term => ({
+  ...bookTerm(label, b.bonusType ?? 'untyped', value, note),
+  key: b.key,
+  source: b.source,
+});
 
 /** A saving throw's term list (see TERM LISTS above): the number is its total, the breakdown its parts. */
 export function saveTerms(c: Character, save: SaveId, db?: ContentDatabase): Term[] {
@@ -351,7 +364,7 @@ export function saveTerms(c: Character, save: SaveId, db?: ContentDatabase): Ter
     );
   }
   // A record's own unconditional save bonus, pooled by type with everything else.
-  for (const r of recordSaveBonuses(c, db, save)) out.push(bookTerm(r.name || 'Record', r.type, r.value));
+  for (const r of recordSaveBonuses(c, db, save)) out.push(bookBlockTerm(r.block, r.name || 'Record', r.value));
   out.push(...numberTweakTerms(c, `save:${save}`));
   out.push(...abilityShiftTerms(c, ability));
   /* Fortitude reads the REDUCED Drained value where a feat lowers it — *"calculate the penalty to your
@@ -400,6 +413,27 @@ export function mpSenseSkillItemBonus(c: Character, kind: 'perception' | 'skill'
   return best;
 }
 
+/** An in-use item's ANSWERED "choose one of N" passive skill blocks (`resolvedItemPassives`, read as
+ *  book blocks — blocks/book.ts `itemChoiceBlocks`). The item's name rides along so the cache entry
+ *  stays one per bag. */
+const itemChoiceSkillBlocks = (c: Character, db: ContentDatabase, itemId: string): BlockInstance[] =>
+  itemChoiceBlocks(itemId, c.resolvedItemPassives?.[itemId], db.items[itemId]?.name);
+
+/**
+ * One passive source's bonus to one skill. The `passiveEffects.skills` entry (and the answered-choice
+ * copy of it) is read through the source's BOOK BLOCKS (blocks/book.ts, Building blocks item 10) — the
+ * field has no other reader; the blanket Lore bonus (Brooch of Inspiration, `loreBonus`) is not a
+ * moved field and is read off the passive as before.
+ */
+function passiveSkillValue(blocks: BlockInstance[], pe: ItemPassiveEffects | undefined, skillKey: ProficiencyKey | undefined): { v: number; block?: BlockInstance } {
+  if (!skillKey) return { v: 0 };
+  const b = standingNumberBlocks(blocks, `skill:${skillKey}`)[0];
+  const own = b ? blockNumber(b) : 0;
+  // A blanket Lore bonus (Brooch of Inspiration) applies to every Lore skill.
+  const lore = skillKey.startsWith('lore:') && pe?.loreBonus ? pe.loreBonus : 0;
+  return lore > own ? { v: lore } : { v: own, ...(b ? { block: b } : {}) };
+}
+
 /** The best PASSIVE item bonus of a kind from worn/invested/equipped items (the generic magic-item
  *  lane — Clarity Goggles, Cloak of Social Graces, …). Item bonuses don't stack: callers take the
  *  max of this, ABP, and Monster Parts. Requires the db to read item definitions. */
@@ -411,25 +445,25 @@ export function passiveItemBonus(
 ): number {
   if (!db) return 0;
   let best = 0;
-  const read = (pe?: ItemPassiveEffects) => {
-    if (!pe) return;
-    let v = kind === 'skill' ? (skillKey ? pe.skills?.[skillKey] ?? 0 : 0) : pe[kind] ?? 0;
-    // A blanket Lore bonus (Brooch of Inspiration) applies to every Lore skill.
-    if (kind === 'skill' && skillKey?.startsWith('lore:') && pe.loreBonus) v = Math.max(v, pe.loreBonus);
+  const read = (pe: ItemPassiveEffects | undefined, blocks: BlockInstance[]) => {
+    if (!pe && !blocks.length) return;
+    const v = kind === 'skill' ? passiveSkillValue(blocks, pe, skillKey).v : pe?.[kind] ?? 0;
     best = Math.max(best, v);
   };
   for (const inv of c.inventory) {
     if (!itemInUse(inv)) continue;
-    read(db.items[inv.itemId]?.passiveEffects);
-    read(c.resolvedItemPassives?.[inv.itemId]); // a resolved "choose one of N" item passive
+    const item = db.items[inv.itemId];
+    read(item?.passiveEffects, bookBlocksOf(item, 'items'));
+    read(c.resolvedItemPassives?.[inv.itemId], itemChoiceSkillBlocks(c, db, inv.itemId)); // a resolved "choose one of N" item passive
     /* An ETCHED property rune's passives — Trudd's Strength prints "+1 item bonus to Athletics
      * checks" and the mechanic lives on core.runes, which no reader here consulted; the same class
      * as Assisting's bulk bonus. ⚠ Gate on itemInUse (already above), NOT worn&&invested — a held
      * clan dagger is `equipped`, never `worn`, and the armour-shaped gate would keep this at zero. */
-    for (const r of propertyRuneDefs(inv, db)) read(r.passiveEffects);
+    for (const r of propertyRuneDefs(inv, db)) read(r.passiveEffects, bookBlocksOf(r, 'runes'));
   }
   // …and a BODY rune (tattooed, not etched on gear), once, outside the inventory walk.
-  read(bodyRuneDef(c, db)?.passiveEffects);
+  const br = bodyRuneDef(c, db);
+  read(br?.passiveEffects, bookBlocksOf(br, 'runes'));
   return best;
 }
 
@@ -451,16 +485,26 @@ export function passiveItemBonus(
 export function passiveItemPenalty(c: Character, db: ContentDatabase | undefined, skillKey: ProficiencyKey): number {
   if (!db) return 0;
   let worst = 0;
-  const read = (pe?: ItemPassiveEffects) => {
-    const v = pe?.skills?.[skillKey] ?? 0;
+  // The item's `passiveEffects.skills` and its answered-choice copy, through their book blocks.
+  const read = (blocks: BlockInstance[]) => {
+    const b = standingNumberBlocks(blocks, `skill:${skillKey}`)[0];
+    const v = b ? blockNumber(b) : 0;
     if (v < 0) worst = Math.min(worst, v);
   };
   for (const inv of c.inventory) {
     if (!itemInUse(inv)) continue;
-    read(db.items[inv.itemId]?.passiveEffects);
-    read(c.resolvedItemPassives?.[inv.itemId]);
+    read(bookBlocksOf(db.items[inv.itemId], 'items'));
+    read(itemChoiceSkillBlocks(c, db, inv.itemId));
   }
   return worst;
+}
+
+/** The block of an item PENALTY to the skill this in-use item carries (its own passive, else its
+ *  answered choice), if any. The skill breakdown names the item that `passiveItemPenalty` found. */
+function itemPenaltyBlock(c: Character, db: ContentDatabase, inv: InventoryItem, skillKey: ProficiencyKey): BlockInstance | undefined {
+  if (!itemInUse(inv)) return undefined;
+  const neg = (blocks: BlockInstance[]) => standingNumberBlocks(blocks, `skill:${skillKey}`).find((b) => blockNumber(b) < 0);
+  return neg(bookBlocksOf(db.items[inv.itemId], 'items')) ?? neg(itemChoiceSkillBlocks(c, db, inv.itemId));
 }
 
 /**
@@ -499,25 +543,28 @@ export function passiveItemBonusDetail(
   db: ContentDatabase | undefined,
   kind: 'perception' | 'skill' | 'saves' | 'ac' | 'attack',
   skillKey?: ProficiencyKey,
-): { value: number; name: string } | null {
+  // `block`: for a skill, the book block (blocks/book.ts) whose `passiveEffects.skills` entry won, so the
+  // skill's term carries that block's fixed key.
+): { value: number; name: string; block?: BlockInstance } | null {
   if (!db) return null;
-  let best: { value: number; name: string } | null = null;
-  const read = (pe: ItemPassiveEffects | undefined, name: string) => {
-    if (!pe) return;
-    let v = kind === 'skill' ? (skillKey ? pe.skills?.[skillKey] ?? 0 : 0) : pe[kind] ?? 0;
-    if (kind === 'skill' && skillKey?.startsWith('lore:') && pe.loreBonus) v = Math.max(v, pe.loreBonus);
-    if (v && (!best || v > best.value)) best = { value: v, name };
+  let best: { value: number; name: string; block?: BlockInstance } | null = null;
+  const read = (pe: ItemPassiveEffects | undefined, blocks: BlockInstance[], name: string) => {
+    if (!pe && !blocks.length) return;
+    const s = kind === 'skill' ? passiveSkillValue(blocks, pe, skillKey) : { v: pe?.[kind] ?? 0 };
+    const v = s.v;
+    if (v && (!best || v > best.value)) best = { value: v, name, ...('block' in s && s.block ? { block: s.block } : {}) };
   };
   for (const inv of c.inventory) {
     if (!itemInUse(inv)) continue;
-    const name = db.items[inv.itemId]?.name ?? inv.itemId;
-    read(db.items[inv.itemId]?.passiveEffects, name);
-    read(c.resolvedItemPassives?.[inv.itemId], name);
+    const item = db.items[inv.itemId];
+    const name = item?.name ?? inv.itemId;
+    read(item?.passiveEffects, bookBlocksOf(item, 'items'), name);
+    read(c.resolvedItemPassives?.[inv.itemId], itemChoiceSkillBlocks(c, db, inv.itemId), name);
     // Etched property runes, mirroring passiveItemBonus — so the breakdown names the rune.
-    for (const r of propertyRuneDefs(inv, db)) read(r.passiveEffects, r.name ?? inv.itemId);
+    for (const r of propertyRuneDefs(inv, db)) read(r.passiveEffects, bookBlocksOf(r, 'runes'), r.name ?? inv.itemId);
   }
   const br = bodyRuneDef(c, db);
-  if (br) read(br.passiveEffects, br.name ?? 'Body rune');
+  if (br) read(br.passiveEffects, bookBlocksOf(br, 'runes'), br.name ?? 'Body rune');
   return best;
 }
 
@@ -777,24 +824,28 @@ export function skillTerms(c: Character, key: ProficiencyKey, db?: ContentDataba
   if (itemBonus) {
     const passive = passiveItemBonusDetail(c, db, 'skill', key);
     out.push(
-      itemTerm(
-        passive && passive.value === itemBonus ? passive.name
-        : dynamic === itemBonus ? 'Item bonus'
-        : mp > (abpOn(c) ? abp : 0) ? 'Monster Parts (refined)'
-        : 'ABP skill potency',
-        itemBonus,
-      ),
+      // The passive item's own `passiveEffects.skills` entry won: its book block's term (same line).
+      passive && passive.value === itemBonus && passive.block ? bookBlockTerm(passive.block, passive.name, itemBonus, 'item bonus')
+      : itemTerm(
+          passive && passive.value === itemBonus ? passive.name
+          : dynamic === itemBonus ? 'Item bonus'
+          : mp > (abpOn(c) ? abp : 0) ? 'Monster Parts (refined)'
+          : 'ABP skill potency',
+          itemBonus,
+        ),
     );
   }
   // An item PENALTY is its own term, never folded into the bonus max — RAW an item bonus and an item
   // penalty both apply, and the pool keeps the two apart (shining hackle: −1 Stealth beside whatever
   // item bonus the character's other gear provides).
   const pen = passiveItemPenalty(c, db, key);
-  if (pen) {
-    const src = (c.inventory ?? []).find(
-      (inv) => itemInUse(inv) && ((db?.items[inv.itemId]?.passiveEffects?.skills?.[key] ?? 0) < 0 || (c.resolvedItemPassives?.[inv.itemId]?.skills?.[key] ?? 0) < 0),
-    );
-    out.push(itemTerm(src ? db?.items[src.itemId]?.name ?? src.itemId : 'Item penalty', pen, 'item penalty'));
+  if (pen && db) {
+    const hit = (c.inventory ?? []).map((inv) => ({ inv, block: itemPenaltyBlock(c, db, inv, key) })).find((x) => x.block);
+    const src = hit?.inv;
+    const block = hit?.block;
+    const label = src ? db.items[src.itemId]?.name ?? src.itemId : 'Item penalty';
+    // Keyed by the item's penalty block when the worst one is that item's (the usual case).
+    out.push(block && blockNumber(block) === pen ? bookBlockTerm(block, label, pen, 'item penalty') : itemTerm(label, pen, 'item penalty'));
   }
   /* The worn armor's check penalty hits Strength- and Dexterity-based skills — the PRINTED attribute,
    * as the number always read it — but which skills exactly is a per-skill question once armor traits
@@ -1099,23 +1150,29 @@ export function deriveSpellcasting(c: Character, entry: SpellcastingEntry): Spel
 /** Every max-HP bonus from the character's selected feats (Toughness = +level, etc.) AND from worn or
  *  invested ITEMS, one row per record — a Belt of Good Health is "+4 maximum and current Hit Points" and
  *  had no lane, because this walked feats alone. */
-function hpBonusRecords(c: Character, db: ContentDatabase): { name: string; value: number }[] {
-  const out: { name: string; value: number }[] = [];
+function hpBonusRecords(c: Character, db: ContentDatabase): { name: string; value: number; block: BlockInstance; key: string }[] {
+  const out: { name: string; value: number; block: BlockInstance; key: string }[] = [];
+  // Two in-use rows of one item (or a feat taken twice) read the SAME cached block: the second row's
+  // term key gets `~2`, `~3` (checker C15), so switching one copy off never switches off both.
+  const seen = new Map<string, number>();
+  const rowKey = (k: string) => {
+    const n = (seen.get(k) ?? 0) + 1;
+    seen.set(k, n);
+    return n === 1 ? k : `${k}~${n}`;
+  };
   const takenFeats = c.feats.map((f) => db.feats[f.featId]).filter((f): f is NonNullable<typeof f> => !!f);
   const wornItems = (c.inventory ?? [])
     .filter((inv) => inv.worn || inv.invested || inv.equipped)
     .map((inv) => db.items[inv.itemId])
     .filter((it): it is NonNullable<typeof it> => !!it);
-  for (const f of [...takenFeats, ...(wornItems as unknown as typeof takenFeats)]) {
-    const b = f.maxHpBonus;
-    if (!b) continue;
-    let value = (b.perLevel ?? 0) * c.level + (b.flat ?? 0);
-    // Resiliency feats: +N HP for each archetype feat of that class you have (dedication counts).
-    if (b.perArchetypeFeat && b.archetype) {
-      value += b.perArchetypeFeat * takenFeats.filter((x) => x.archetype === b.archetype).length;
-    }
-    out.push({ name: f.name ?? 'Feat', value });
-  }
+  // Resiliency feats: +N HP for each archetype feat of that class you have (dedication counts).
+  const archetypeFeats = (archetype: string) => takenFeats.filter((x) => x.archetype === archetype).length;
+  // `maxHpBonus` through the records' BOOK BLOCKS (blocks/book.ts, Building blocks item 10).
+  const read = (rec: object, collection: BookCollection) => {
+    for (const b of standingNumberBlocks(bookBlocksOf(rec, collection), 'max-hp')) out.push({ name: b.source.name ?? 'Feat', value: growingValue(b.value, { level: c.level, archetypeFeats }), block: b, key: rowKey(b.key) });
+  };
+  for (const f of takenFeats) read(f, 'feats');
+  for (const it of wornItems) read(it, 'items');
   return out;
 }
 
@@ -1145,7 +1202,7 @@ export function maxHpTerms(c: Character, db: ContentDatabase): Term[] {
     baseTerm('Ancestry HP', base, ancestry?.name),
     baseTerm(`(${hpPer} class + ${con} Con) × ${c.level} levels`, (hpPer + con) * c.level),
     // Every record with a max-HP clause is listed, as the breakdown always listed them, even at +0.
-    ...hpBonusRecords(c, db).map((r): Term => ({ type: 'untyped', value: r.value, label: r.name, layer: 'book' })),
+    ...hpBonusRecords(c, db).map((r): Term => ({ type: 'untyped', value: r.value, label: r.name, layer: 'book', key: r.key, source: r.block.source })),
     ...numberTweakTerms(c, 'max-hp'),
     // A mode on Constitution moves every level's HP.
     ...abilityShiftTerms(c, 'con', c.level),
@@ -1397,9 +1454,18 @@ type WhileActiveClause = NonNullable<DefenseGrants['whileActive']>[number];
  *  record that printed it. Two callers want different slices of the same walk: `activeStateGrants`
  *  wants the ones switched on, `stateGrantSummary` wants all of them so the state's own card can say
  *  what entering it will do. One walk, so the two can never drift. */
-function ownedWhileActive(c: Character, db: ContentDatabase): { from: string; wa: WhileActiveClause }[] {
-  const out: { from: string; wa: WhileActiveClause }[] = [];
-  const scan = (g: (DefenseGrants & { name?: string }) | undefined) => {
+interface OwnedClause {
+  from: string;
+  wa: WhileActiveClause;
+  /** The record (or the `chosenEffects` bag) that holds the clause, its collection, and the clause's
+   *  index there — what the clause's BOOK BLOCKS are found by (blocks/book.ts `clauseNumberBlocks`). */
+  owner: object;
+  collection: BookCollection;
+  index: number;
+}
+function ownedWhileActive(c: Character, db: ContentDatabase): OwnedClause[] {
+  const out: OwnedClause[] = [];
+  const scan = (g: (DefenseGrants & { name?: string }) | undefined, collection: BookCollection) => {
     // minLevel: an instinct is chosen at 1st but prints the damage types for Raging Resistance, a
     // 9th-level feature. Without the gate a 1st-level barbarian would rage with a 9th-level defence.
     /* `wa.from` FIRST: a clause the player CHOSE (Dragon Instinct's breath type, Giant Instinct's
@@ -1408,30 +1474,36 @@ function ownedWhileActive(c: Character, db: ContentDatabase): { from: string; wa
      * on each chosen clause instead; without this read every one of them was attributed to the bare
      * fallback, and a resistance you cannot trace to its feature is what this breakdown exists to
      * prevent. The record-scanned path below is unchanged and still reads its name off the record. */
-    for (const wa of (g?.whileActive ?? []) as (WhileActiveClause & { from?: string })[]) {
-      if (c.level >= (wa.minLevel ?? 0)) out.push({ from: wa.from ?? g?.name ?? 'Active state', wa });
-    }
+    const clauses = (g?.whileActive ?? []) as (WhileActiveClause & { from?: string })[];
+    clauses.forEach((wa, index) => {
+      if (g && c.level >= (wa.minLevel ?? 0)) out.push({ from: wa.from ?? g.name ?? 'Active state', wa, owner: g, collection, index });
+    });
   };
   // `?? []` for the same reason deriveBulk guards it: this is also reached from hand-built partial
   // characters (the container-nesting tests), which carry no feats array at all.
-  for (const f of c.feats ?? []) scan(db.feats[f.featId]);
-  for (const h of heritageRecords(c, db)) scan(h);
-  for (const fid of ownedFeatureIds(c, db)) scan(db.classFeatures[fid]);
+  for (const f of c.feats ?? []) scan(db.feats[f.featId], 'feats');
+  for (const h of heritageRecords(c, db)) scan(h, 'heritages');
+  for (const fid of ownedFeatureIds(c, db)) scan(db.classFeatures[fid], 'classFeatures');
   // A resolved PICK may itself be state-gated — Giant Instinct's "your choice of cold, electricity,
   // or fire" is part of Raging Resistance, not a standing benefit.
-  scan(c.chosenEffects);
+  scan(c.chosenEffects, 'chosenEffects');
   return out;
 }
 
 /** The `whileActive` grants from owned feats/features whose resource STATE is currently toggled on
  *  (Raging Resistance while raging). Shared by deriveDefenses (IWR/senses) and deriveSpeeds (speeds). */
 export function activeStateGrants(c: Character, db: ContentDatabase): (WhileActiveClause & { name: string })[] {
-  const on = (state: string) => (c.classResources?.[state] ?? 0) > 0;
-  // Carry the OWNING record's name through. The IWR breakdown labels every entry with its source, and
-  // dropping `from` here meant each state-gated resistance was attributed to a bare "Active state" —
-  // the reader asked for a `name` no caller had ever put on the clause.
-  return ownedWhileActive(c, db).filter((e) => on(e.wa.state)).map((e) => ({ ...e.wa, name: e.from }));
+  return activeOwnedClauses(c, db).map(clauseGrant);
 }
+/** The owned clauses whose state is on, with where each lives (for its book blocks). */
+function activeOwnedClauses(c: Character, db: ContentDatabase): OwnedClause[] {
+  const on = (state: string) => (c.classResources?.[state] ?? 0) > 0;
+  return ownedWhileActive(c, db).filter((e) => on(e.wa.state));
+}
+// Carry the OWNING record's name through. The IWR breakdown labels every entry with its source, and
+// dropping `from` here meant each state-gated resistance was attributed to a bare "Active state" —
+// the reader asked for a `name` no caller had ever put on the clause.
+const clauseGrant = (e: OwnedClause): WhileActiveClause & { name: string } => ({ ...e.wa, name: e.from });
 
 /**
  * What entering a STATE will grant — whether or not it is on right now.
@@ -1453,7 +1525,7 @@ export function stateGrantSummary(
   state: string,
 ): { from: string; senses: SenseEntry[]; other: string[] }[] {
   const out: { from: string; senses: SenseEntry[]; other: string[] }[] = [];
-  for (const { from, wa } of ownedWhileActive(c, db)) {
+  for (const { from, wa, owner, collection, index } of ownedWhileActive(c, db)) {
     if (wa.state !== state) continue;
     const other: string[] = [];
     for (const r of wa.resistances ?? []) other.push(`resistance to ${r.type}`);
@@ -1470,11 +1542,15 @@ export function stateGrantSummary(
      * NAMED, NOT RESOLVED, like every other line here: Vivacious Speed's value is the formula
      * "10+5*min(4,floor((@actor.level-3)/4))", and the resolved number with its full breakdown already
      * lives on the Speeds rows. This is the index.
+     *
+     * Read from the clause's BOOK BLOCK (blocks/book.ts), not the clause's fields: the Speeds rows read
+     * the same block, so the card and the number cannot disagree about what the clause gives.
      */
-    if (wa.landSpeedBonus !== undefined) {
-      const scope = wa.speedBonusAllSpeeds ? 'all Speeds' : 'Land Speed';
-      const kind = wa.speedBonusType ? `${wa.speedBonusType} bonus` : 'bonus';
-      other.push(typeof wa.landSpeedBonus === 'number' ? `+${wa.landSpeedBonus} ft ${kind} to ${scope}` : `${kind} to ${scope}`);
+    for (const b of bookBlocksOf(owner, collection)) {
+      if (b.kind !== 'number.add' || b.target !== 'speed:land' || !b.gate?.whileState || paramsOf(b).clause !== index) continue;
+      const scope = paramsOf(b).allSpeeds ? 'all Speeds' : 'Land Speed';
+      const kind = b.bonusType ? `${b.bonusType} bonus` : 'bonus';
+      other.push(typeof b.value === 'number' ? `+${b.value} ft ${kind} to ${scope}` : `${kind} to ${scope}`);
     }
     // A state-gated grant that only fires IF you already hold a named sense (Nocturnal Senses) has no
     // entry in `senses`, so without this the Rage card listed nothing for it — the exact blindness this
@@ -6288,7 +6364,9 @@ function speedPipeline(c: Character, db: ContentDatabase, opt: SpeedRun): { spee
   }
   if (c.chosenEffects?.speeds) grantSources.push(synthetic({ speeds: c.chosenEffects.speeds }, 'Your choice', false));
   // A state is switched on in play: the permanent run (`transients: false`) leaves every state out.
-  const stateGrants = tr ? activeStateGrants(c, db) : [];
+  // The owned clauses too (record, collection, index), for the Speed bonus's book block below.
+  const stateClauses = tr ? activeOwnedClauses(c, db) : [];
+  const stateGrants = stateClauses.map(clauseGrant);
   // The breakdown names a state-gated line with its state too, so Speed Boosters' standing +5 and its
   // overdrive +5 are two readable lines, not the same name twice.
   const stateLabel = (wa: { name: string; state: string }) => `${wa.name} (${wa.state})`;
@@ -6305,8 +6383,8 @@ function speedPipeline(c: Character, db: ContentDatabase, opt: SpeedRun): { spee
   /* A LEVEL-SCALING bonus is written as a formula (Vivacious Speed's always-on half steps at 11th and
    * 19th), in the same vocabulary every other speed value uses. Resolved through ONE helper so the
    * three record kinds cannot disagree about what a string means; a plain number passes through. */
-  const landBonusOf = (v: number | string | undefined) =>
-    v == null ? 0 : typeof v === 'number' ? v : resolveFormula(v, { level: c.level, abilities: c.abilities, speeds });
+  const landBonusOf = (v: BlockValue | undefined) =>
+    v == null ? 0 : typeof v === 'number' ? v : 'formula' in v ? resolveFormula(v.formula, { level: c.level, abilities: c.abilities, speeds }) : 0;
   /* batch 037: swashbucklers-speed#typed-all-speeds — *"You gain a +5-foot STATUS bonus to your
    * SpeedS; this increases to a +10-foot status bonus while you have panache"* (feat-6238). Two
    * clauses this loop could not say: the bonus TYPE and the PLURAL target. Every bonus used to be
@@ -6315,26 +6393,29 @@ function speedPipeline(c: Character, db: ContentDatabase, opt: SpeedRun): { spee
    * ever moved. Same-type bonuses now take the HIGHEST; untyped ones (and the leshy's −5 penalty)
    * still stack, which is RAW. Owner ruling 2026-09-10 #127: follow print on both halves. */
   const speedBonuses: { value: number; type?: TypedMod['type']; allSpeeds?: boolean; name: string; transient: boolean; tweak?: boolean }[] = [];
-  const pushSpeedBonus = (
-    src: (Pick<DefenseGrants, 'landSpeedBonus' | 'speedBonusType' | 'speedBonusAllSpeeds'> & { name?: string }) | undefined,
-    transient = false,
-  ) => {
-    const value = landBonusOf(src?.landSpeedBonus);
-    if (!value) return;
-    speedBonuses.push({ value, type: src!.speedBonusType, allSpeeds: src!.speedBonusAllSpeeds, name: src!.name ?? 'Speed increase', transient });
+  /* The records' `landSpeedBonus` / `speedBonusType` / `speedBonusAllSpeeds` (and the same three on a
+   * `whileActive` clause) are read as their BOOK BLOCKS (blocks/book.ts, Building blocks item 10): one
+   * `number.add` on `speed:land` each, typed as printed, `params.allSpeeds` for "your SpeedS". */
+  const pushSpeedBonus = (blocks: BlockInstance[], name: string | undefined, transient = false) => {
+    for (const b of blocks) {
+      const value = landBonusOf(b.value);
+      if (!value) continue;
+      speedBonuses.push({ value, type: b.bonusType, allSpeeds: paramsOf(b).allSpeeds, name: name ?? b.source.name ?? 'Speed increase', transient });
+    }
   };
+  const lasting = (rec: object | undefined, collection: BookCollection) => pushSpeedBonus(standingNumberBlocks(bookBlocksOf(rec, collection), 'speed:land'), undefined);
   // The LASTING record bonuses — left out of the two runs a Speed set compares (SpeedRun.lastingBonuses).
   if (opt.lastingBonuses !== false) {
-    for (const f of c.feats) pushSpeedBonus(db.feats[f.featId]);
-    for (const fid of ownedFeatureIds(c, db)) pushSpeedBonus(db.classFeatures[fid]);
-    for (const h of heritageRecords(c, db)) pushSpeedBonus(h);
+    for (const f of c.feats) lasting(db.feats[f.featId], 'feats');
+    for (const fid of ownedFeatureIds(c, db)) lasting(db.classFeatures[fid], 'classFeatures');
+    for (const h of heritageRecords(c, db)) lasting(h, 'heritages');
   }
   /* desk 154: panache-speed — the same three fields behind the STATE gate. *"While you have panache,
    * you gain a +5-foot status bonus to your Speeds"* (class-feature-1007), raised by Vivacious Speed
    * (class-feature-1017) and printed again on Swashbuckler's Speed (feat-6238). They join the same
    * pool, so `stackSpeedBonuses` makes the with-panache value REPLACE the standing without-panache
    * half — one status bonus, the highest — rather than adding a second one to it. */
-  for (const wa of stateGrants) pushSpeedBonus({ ...wa, name: stateLabel(wa) }, true);
+  for (const e of stateClauses) pushSpeedBonus(clauseNumberBlocks(bookBlocksOf(e.owner, e.collection), e.index, 'speed:land'), stateLabel({ name: e.from, state: e.wa.state }), true);
   /* A TYPED tweak add on land Speed is a bonus of that type like any other, so it joins THIS pool: a
    * "+10 status" tweak beside Vivacious Speed's status bonus is one status bonus, the larger (Building
    * blocks item 4). Untyped tweak adds sum in the last stage instead. */

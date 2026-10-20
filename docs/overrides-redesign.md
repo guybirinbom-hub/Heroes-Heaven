@@ -683,6 +683,21 @@ by a second agent and a checker; counts marked "about" were not).
     parts sum to totals (`test/bug-tracker-pc-row-agrees.test.tsx` is the model). So that the
     comparison proves something, also assert that each made-up character's number DIFFERS from the same
     character without the record; a record whose effect cannot be made to show is listed, not counted.
+    **As built (2026-10-20, `src/rules/blocks/book.ts`, test `blocks-book-fields`):**
+    - `bookBlocksOf(record, collection)` makes a record's blocks from its fields, once per record OBJECT
+      (a WeakMap; a copy or a db COPY with a field stripped gets its own; a field patched in place is
+      read again). Keys: `<collection>/<id>#<field>@<target>`, `~2` on a repeat.
+    - Moved: saves, land Speed (lasting and `whileActive`, with `speedBonusAllSpeeds`; the state card's
+      Speed line too), max HP (derive and the build's starting HP), item skill bonuses and penalties
+      (own passive, answered choice, runes), and a background's skill and Lores (build, the Builder
+      card, the skill timeline). The save, skill and max-HP lines carry the block's key; the Speed lines
+      keep their `speed-bonus:<i>:<name>` stage key (the Speed-set runs match lines by it).
+    - The build's starting HP counts FEATS only, as before (a stored number must not move): a max-HP item
+      worn in the builder's starting kit (Belt of Good Health) still starts 4 below max.
+    - Guard: `blocks-check` fails on a read of a moved field outside `book.ts` (`check.ts`
+      `checkBookFieldReaders`; editors and same-named fields are on `BOOK_FIELD_ALLOW`, each with a reason).
+    - Before/after over all 2,169 snapshot characters (`blocks-parity-snapshot.mjs`): 0 number, 0
+      breakdown-part and 0 sum changes against the run made just before the move.
 11. **Guards in `npm run verify`**, each made to fail once on a planted bad case (a temp copy): every
     registry entry has an editor with a place (main or Advanced) or is on the "still to add" list, which
     the check prints; every catalog row has a status; every target a block uses is in the target

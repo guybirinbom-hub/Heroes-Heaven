@@ -12,7 +12,7 @@
       "registry": true,
       "features": [1, 6],
       "lanes": ["acBonus", "saveBonus", "perception", "hpBonus", "speedBonus", "speedPenalty"],
-      "bookFields": ["saveBonuses", "landSpeedBonus", "speedBonusType", "maxHpBonus", "passiveEffects.skills", "whileActive.landSpeedBonus", "whileActive.speedBonusType", "effectChoices.grant.passive.skills"],
+      "bookFields": ["saveBonuses", "landSpeedBonus", "speedBonusType", "speedBonusAllSpeeds", "maxHpBonus", "passiveEffects.skills", "whileActive.landSpeedBonus", "whileActive.speedBonusType", "whileActive.speedBonusAllSpeeds", "effectChoices.grant.passive.skills"],
       "bookOnly": false,
       "note": "Adds a number to a stat (not attribute scores, see attribute.add); a tweak always adds unless the player picks a PF2e bonus type, and a book bonus keeps its type."
     },

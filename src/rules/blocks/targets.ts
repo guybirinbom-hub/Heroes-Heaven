@@ -21,7 +21,8 @@
  *
  * An instance stores its target as ONE string key: `kind[:detail][@owner:id]`, for example
  * `skill:athletics`, `skill:lore:sailing`, `save:fortitude`, `speed:land`, `score:str`,
- * `spell-dc@casting-entry:wizard`. Lore details are built by `loreKey` (build.ts) and nothing else, so a
+ * `spell-dc@casting-entry:wizard`. Lore details are built by `loreKey` (src/rules/loreKey.ts; build.ts
+ * re-exports it) and nothing else, so a
  * "Sailing Lore" tweak and a background's Sailing Lore are one row (spec item 11).
  */
 import { ABILITIES, SAVES, SKILLS } from '../types';

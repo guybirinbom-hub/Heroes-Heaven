@@ -3557,8 +3557,8 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "staff-of-elemental-power-major": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'lore:*' }], when: "to identify elemental creatures, while wielding the staff", bonus: "+2 circumstance" }],
   /* AoN feat-6238: *"You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot
    * status bonus while you have panache."* The +5 floor is ALWAYS ON, so it belongs in the Speed
-   * number, not in a star — it rides feats/swashbucklers-speed.landSpeedBonus (read at derive.ts
-   * `landBonusOf(db.feats[f.featId]?.landSpeedBonus)`), exactly as classFeatures/vivacious-speed
+   * number, not in a star — it rides feats/swashbucklers-speed.landSpeedBonus (read as a book block,
+   * blocks/book.ts `bookBlocksOf`, by derive.ts speedPipeline `lasting()`), exactly as classFeatures/vivacious-speed
    * carries its own always-on half. (batch 031)
    *
    * desk #154 (2026-09-12): the star states the printed +10 plainly. It used to call it a REMAINDER

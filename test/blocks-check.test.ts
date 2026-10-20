@@ -1,7 +1,7 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { checkBlocks, featureNumbers, laneKeys, type BlocksCheckInput } from '../src/rules/blocks/check';
+import { BOOK_FIELD_ALLOW, checkBlocks, checkBookFieldReaders, codeOnly, featureNumbers, laneKeys, type BlocksCheckInput, type BookReaderAllow } from '../src/rules/blocks/check';
 import { BLOCK_KINDS, EDITOR_PARTS, SOURCE_KINDS, STILL_TO_ADD, blockKind } from '../src/rules/blocks/registry';
 import { OWNERS, TARGETS } from '../src/rules/blocks/targets';
 
@@ -218,5 +218,108 @@ describe('blocks guard on the real files', () => {
     });
     expect(errors).toEqual([]);
     expect(info.join('\n')).toMatch(/not in Tweaks yet/);
+  });
+});
+
+/*
+ * Item 10's guard, "no field has two code paths": a moved book field (the registry's `bookFields`) is
+ * read only in src/rules/blocks/book.ts. Every bad case is planted HERE, in memory.
+ */
+describe('item 10: book fields are read only in blocks/book.ts (checkBookFieldReaders)', () => {
+  const BOOK_FIELDS = [...new Set(BLOCK_KINDS.flatMap((k) => k.bookFields ?? []))];
+  const scan = (text: string, allow: BookReaderAllow[] = [], path = 'src/rules/x.ts') =>
+    checkBookFieldReaders({ files: [{ path, text }], bookFields: BOOK_FIELDS, allow });
+  const errorsIn = (text: string) => scan(text).errors.join('\n');
+
+  it('the registry names every moved field, the whileActive copies and speedBonusAllSpeeds included', () => {
+    for (const f of ['saveBonuses', 'landSpeedBonus', 'speedBonusType', 'speedBonusAllSpeeds', 'maxHpBonus', 'passiveEffects.skills', 'whileActive.landSpeedBonus', 'whileActive.speedBonusType', 'whileActive.speedBonusAllSpeeds', 'effectChoices.grant.passive.skills', 'trainedSkill', 'trainedLore'])
+      expect(BOOK_FIELDS).toContain(f);
+  });
+
+  it('fails on a planted read of each field, in each shape a read takes', () => {
+    const plants: [string, string][] = [
+      ['const n = rec.landSpeedBonus;', 'landSpeedBonus'],
+      ['for (const sb of rec?.saveBonuses ?? []) x(sb);', 'saveBonuses'],
+      ['const t = wa.speedBonusType ?? "status";', 'speedBonusType'],
+      ['if (wa!.speedBonusAllSpeeds) all();', 'speedBonusAllSpeeds'],
+      ["const b = db.feats[id]['maxHpBonus'];", 'maxHpBonus'],
+      ['const b = db.feats[id]?.["maxHpBonus"];', 'maxHpBonus'],
+      ['const { trainedLore } = background;', 'trainedLore'],
+      ['for (const { maxHpBonus: hp } of feats) use(hp);', 'maxHpBonus'],
+      ['return bg?.trainedSkill === key;', 'trainedSkill'],
+      ['const s = item.passiveEffects?.skills;', 'passiveEffects.skills'],
+      ['const v = pe?.skills?.[key] ?? 0;', 'passiveEffects.skills'],
+      ['const v = grant.passive.skills;', 'effectChoices.grant.passive.skills'],
+      ['const v = c.resolvedItemPassives?.[id]?.skills?.[key];', 'effectChoices.grant.passive.skills'],
+      // item 10 fixer: parameter destructuring and a presence test (checker low finding 3)
+      ['const f = ({ landSpeedBonus }: any) => landSpeedBonus;', 'landSpeedBonus'],
+      ['const f2 = ({ speedBonusType }: { speedBonusType?: string }): string => speedBonusType ?? "";', 'speedBonusType'],
+      ['const g = ({ id, maxHpBonus = null }: Feat): number => use(maxHpBonus);', 'maxHpBonus'],
+      ['function h({ saveBonuses }) { return saveBonuses; }', 'saveBonuses'],
+      ['feats.map(({ trainedLore: l }) => l);', 'trainedLore'],
+      ["if ('maxHpBonus' in rec) use(rec);", 'maxHpBonus'],
+      ['const has = "trainedSkill" in bg;', 'trainedSkill'],
+    ];
+    for (const [text, field] of plants) expect(errorsIn(text), text).toMatch(new RegExp(`x\\.ts:1: reads book field "${field.replace(/\./g, '\\.')}"`));
+  });
+
+  it('a read on a later line names that line, after a TSX closing tag and a regex with a quote in it', () => {
+    const text = ["const r = /it's/g;", '<span>{a}</span>{b.trainedSkill}', 'const z = 1;'].join('\n');
+    expect(scan(text, [], 'src/x.tsx').errors.join('\n')).toMatch(/x\.tsx:2: reads book field "trainedSkill"/);
+  });
+
+  it('is not fooled by writers, comments, strings, types, object literals, array literals or look-alike names', () => {
+    const fine = [
+      'rec.landSpeedBonus = 10;',
+      'bg.trainedSkill = pick as SkillId;',
+      '// read rec.landSpeedBonus here',
+      '/* wa.speedBonusType */',
+      "const msg = 'rec.saveBonuses is read in book.ts';",
+      'const m = `${n} uses x.maxHpBonus`;',
+      "type T = Background['trainedSkill'];",
+      'const r = { landSpeedBonus: 5, trainedLore: "Sailing" };',
+      "const fields = ['maxHpBonus'];",
+      'const s = c.proficiencies.skills;',
+      'const g = { ...landSpeedBonus };',
+      'interface X { saveBonuses?: number[]; maxHpBonus?: { flat?: number } }',
+      'const m = rec.landSpeedMin ?? companion.maxHpBonusPerLevel;',
+      // a call ARGUMENT built with shorthand is not a read of a record's field
+      'push({ landSpeedBonus, speedBonusType });',
+      'if (ok({ maxHpBonus })) { go(); }',
+      "for (const k in { trainedSkill: 1 }) use(k);",
+    ];
+    for (const text of fine) expect(scan(text).errors, text).toEqual([]);
+  });
+
+  it('never scans blocks/book.ts itself (the one home)', () => {
+    expect(scan('const n = rec.landSpeedBonus;', [], 'src/rules/blocks/book.ts').errors).toEqual([]);
+  });
+
+  it('an allowlist entry covers its line only; a stale one, or one with no reason, fails', () => {
+    const allow: BookReaderAllow = { file: 'src/rules/x.ts', field: 'trainedSkill', snippet: 'cb.trainedSkill', why: 'an editor' };
+    expect(scan('const v = cb.trainedSkill;', [allow]).errors).toEqual([]);
+    expect(scan('const v = cb.trainedSkill;\nconst w = bg.trainedSkill;', [allow]).errors.join('\n')).toMatch(/x\.ts:2: reads book field "trainedSkill"/);
+    expect(scan('const v = 1;', [allow]).errors.join('\n')).toMatch(/BOOK_FIELD_ALLOW src\/rules\/x\.ts \(trainedSkill, "cb\.trainedSkill"\): matches no read any more/);
+    expect(scan('const v = cb.trainedSkill;', [{ ...allow, why: ' ' }]).errors.join('\n')).toMatch(/no reason/);
+  });
+
+  it('codeOnly keeps offsets and newlines, and keeps a string that IS a watched name', () => {
+    const text = "a.b; // c.d\nconst s = 'x.y', t = 'maxHpBonus';\n";
+    const out = codeOnly(text, new Set(['maxHpBonus']));
+    expect(out.length).toBe(text.length);
+    expect(out.split('\n').length).toBe(text.split('\n').length);
+    expect(out).not.toMatch(/c\.d|x\.y/);
+    expect(out).toMatch(/'maxHpBonus'/);
+  });
+
+  it('passes on the real src/ files, with every allowlist entry still used', () => {
+    const files = readdirSync(join(ROOT, 'src'), { recursive: true })
+      .map((f) => String(f).replace(/\\/g, '/'))
+      .filter((f) => /\.(ts|tsx)$/.test(f))
+      .map((f) => ({ path: `src/${f}`, text: read(`src/${f}`)! }));
+    const { errors, info } = checkBookFieldReaders({ files, bookFields: BOOK_FIELDS, allow: BOOK_FIELD_ALLOW });
+    expect(errors).toEqual([]);
+    expect(info.join('\n')).toMatch(/read only in src\/rules\/blocks\/book\.ts/);
+    for (const a of BOOK_FIELD_ALLOW) expect(a.why.trim().length, a.file).toBeGreaterThan(10);
   });
 });

@@ -230,22 +230,27 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     slot: 'add',
     accepts: { aspect: 'number', kinds: [...SETTABLE_NUMBERS, 'max-hp'] },
     sources: ['book', 'tweak', 'homebrew'],
-    // Item 10: the readers that move onto blocks, deeper copies included.
+    // Item 10: the fields whose READERS moved onto book blocks (blocks/book.ts), deeper copies included.
+    // `scripts/blocks-check.mjs` fails on a read of any of them outside book.ts (check.ts
+    // checkBookFieldReaders), so no field has two code paths.
     bookFields: [
       'saveBonuses',
       'landSpeedBonus',
       'speedBonusType',
+      'speedBonusAllSpeeds',
       'maxHpBonus',
       'passiveEffects.skills',
       'whileActive.landSpeedBonus',
       'whileActive.speedBonusType',
+      'whileActive.speedBonusAllSpeeds',
       'effectChoices.grant.passive.skills',
     ],
     line: (b) => bookOr(b, `${valueText(b.value)}${b.bonusType ? ` ${b.bonusType}` : ''}`),
     editor: { place: 'main', menus: ['Bonus or penalty'], parts: ['target', 'number', 'level', 'reason'], advancedParts: ['bonusType'], built: false },
     missing: 'show-broken',
-    // Tweak blocks reach the term lists in derive.ts through blocks/active.ts (spec items 6–8). The book
-    // fields above still reach the numbers through their own readers until item 10 moves them.
+    // Tweak blocks reach the term lists in derive.ts through blocks/active.ts (spec items 6–8); the book
+    // fields above reach them as book blocks (blocks/book.ts, item 10) — saves, Speeds, max HP and the
+    // item skill bonuses/penalties read `bookBlocksOf`, never the fields.
     applies: 'blocks',
     test: GENERIC_STEP_TEST,
   },
@@ -344,6 +349,9 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     slot: 'atLeast',
     accepts: { aspect: 'rank', kinds: RANK_TRACKS },
     sources: ['book', 'tweak', 'homebrew'],
+    // Item 10: a background's printed training is read as book blocks (blocks/book.ts
+    // backgroundTrainings) by the build, the Builder card and the skill timeline. The tweak side is
+    // still the legacy `overrides.proficiencies` (applies: 'legacy').
     bookFields: ['trainedSkill', 'trainedLore'],
     line: (b) => bookOr(b, `at least ${b.rank ?? '?'}`),
     editor: { place: 'main', menus: ['Rank (skill, save…)', 'Add a Lore'], parts: ['target', 'rank', 'level', 'reason'], built: false },

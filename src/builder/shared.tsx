@@ -59,6 +59,7 @@ import { archetypeCantripCounts, archetypeTradition, choiceFlagAnswer, effectCho
 import { bookCantripLabel, bookTitle } from '../rules/spellcasting';
 import { listValues } from '../data';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
+import { backgroundTrainings } from '../rules/blocks/book';
 import { openChoiceOptions, type OpenOption } from '../rules/openChoice';
 import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
@@ -4065,18 +4066,22 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <ChoiceGrants
             grants={
               <div className="cc-grants">
-                {(background.trainedSkill || background.trainedSkillChoice?.length || background.trainedLore) && (
-                  <span className="cc-g">
-                    <i className="ti ti-bulb" aria-hidden="true" /> Trained:{' '}
-                    {background.trainedSkill
-                      ? cap(background.trainedSkill)
-                      : (background.trainedSkillChoice ?? []).map(cap).join(' or ')}
-                    {/* One subject, or several — Undercover Lotus Guard grants Art Lore AND Underworld Lore. */}
-                    {background.trainedLore
-                      ? `${background.trainedSkill || background.trainedSkillChoice?.length ? ', ' : ''}${[background.trainedLore].flat().map(loreLabel).join(', ')}`
-                      : ''}
-                  </span>
-                )}
+                {/* The printed trainings as the background's book blocks (blocks/book.ts, Building blocks
+                    item 10); the offered choice (`trainedSkillChoice`) is a question, not a block. */}
+                {(() => {
+                  const bt = backgroundTrainings(background);
+                  if (!bt.skill && !background.trainedSkillChoice?.length && !bt.lores.length) return null;
+                  return (
+                    <span className="cc-g">
+                      <i className="ti ti-bulb" aria-hidden="true" /> Trained:{' '}
+                      {bt.skill ? cap(bt.skill) : (background.trainedSkillChoice ?? []).map(cap).join(' or ')}
+                      {/* One subject, or several — Undercover Lotus Guard grants Art Lore AND Underworld Lore. */}
+                      {bt.lores.length
+                        ? `${bt.skill || background.trainedSkillChoice?.length ? ', ' : ''}${bt.lores.map((l) => loreLabel(l.subject)).join(', ')}`
+                        : ''}
+                    </span>
+                  );
+                })()}
                 {backgroundGrantedFeats(background, build.backgroundSkillChoice)
                   .filter((id) => content.feats[id])
                   .map((id) => (

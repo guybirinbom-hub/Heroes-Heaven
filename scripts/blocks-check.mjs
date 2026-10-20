@@ -1,5 +1,6 @@
 /*
- * BLOCKS guard — the building-block catalog, the block registry and the target registry agree.
+ * BLOCKS guard — the building-block catalog, the block registry and the target registry agree, and
+ * (item 10) the moved book fields are read only in src/rules/blocks/book.ts.
  *
  * docs/overrides-redesign.md, "Building blocks" items 1, 2, 3, 11 and 12, and decision 24 ("a block that
  * is neither in Tweaks nor on that list makes the check fail"). The rules themselves live in
@@ -23,7 +24,7 @@ const read = (p) => (existsSync(join(ROOT, p)) ? readFileSync(join(ROOT, p), 'ut
 
 const registry = await import(src('src/rules/blocks/registry.ts'));
 const targets = await import(src('src/rules/blocks/targets.ts'));
-const { checkBlocks } = await import(src('src/rules/blocks/check.ts'));
+const { checkBlocks, checkBookFieldReaders, BOOK_FIELD_ALLOW } = await import(src('src/rules/blocks/check.ts'));
 
 const blockDir = 'src/rules/blocks';
 // Every code file under the folder, subfolders included (item 12's import scan must see them all).
@@ -53,6 +54,17 @@ const { errors, info } = checkBlocks({
   blockFiles,
   readFile: read,
 });
+
+/* Item 10, "no field has two code paths": every code file under src/ is scanned for a read of a moved
+ * book field (the bookFields of the registry's kinds) outside src/rules/blocks/book.ts. */
+const srcFiles = readdirSync(join(ROOT, 'src'), { recursive: true })
+  .map((f) => String(f).replace(/\\/g, '/'))
+  .filter((f) => /\.(ts|tsx)$/.test(f))
+  .map((f) => ({ path: `src/${f}`, text: read(`src/${f}`) ?? '' }));
+const bookFields = [...new Set(registry.BLOCK_KINDS.flatMap((k) => k.bookFields ?? []))];
+const readers = checkBookFieldReaders({ files: srcFiles, bookFields, allow: BOOK_FIELD_ALLOW });
+errors.push(...readers.errors);
+info.push(...readers.info);
 
 for (const line of info) console.log(`blocks-check: ${line}`);
 if (errors.length) {
