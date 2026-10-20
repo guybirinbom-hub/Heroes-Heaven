@@ -168,7 +168,8 @@ describe('an open popup never re-binds to whatever takes its instance id', () =>
   // bug 2026-09-13: edits overwritten (D3)
   it('closes the item detail when its row leaves the inventory, so a reused id cannot capture it', () => {
     const ctl: Ctl = {};
-    // inv-2 is the highest-numbered row, so `nextInstanceId` hands its id straight to the next item.
+    // inv-2 is the highest-numbered row, so a row minted max + 1 (a derived row — play.ts
+    // `derivedInstanceId` — or an old app version) can take its id straight after it goes.
     const { host, click, stop } = renderDom(<TabHarness ctl={ctl} start={INV} />);
     const openName = () => host.querySelector('.sd-head-name')?.textContent;
     click([...host.querySelectorAll<HTMLElement>('.inv-card')].find((e) => (e.textContent ?? '').includes('Chime'))!);

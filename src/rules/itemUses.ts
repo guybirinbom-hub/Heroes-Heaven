@@ -217,6 +217,66 @@ export function chargesFor(info: { max: number; resetsOnRest: boolean }, current
 
 /* --- Spell-holding items (staff / wand / scroll): which counter a cast spends, and how much. --- */
 
+type ItemSpellEntry = Pick<SpellcastingEntry, 'itemInstanceId' | 'itemId' | 'itemHeldSpell' | 'id' | 'type'>;
+
+/**
+ * The inventory row each item spell entry (`type:'items'`, build.ts) casts from, by entry id. The entry
+ * names the row by the BUILD's instance id — the build list's index (`inv-N`) — but the sheet's rows are
+ * the play inventory's, whose ids need not match: a builder Save gives a row a derived `inv-<item>-N`
+ * when its index was another row's (mergeRebuiltInventory), and a builder insert renumbers every index
+ * after it while the play rows keep theirs.
+ *
+ * A row HOLDS an entry when it holds the entry's item — or a copy of it (`basedOn`: a copy-on-write edit
+ * repoints the row to a `custom-…` copy) — and, for a generic scroll/wand, the same chosen spell
+ * (`itemHeldSpell`: a heal scroll and a fear scroll are one item). Then, ONE ROW PER ENTRY:
+ *  1. the row at the entry's own id, while it holds the entry (an entry that predates `itemId` takes
+ *     that row whatever it holds — what it always did);
+ *  2. otherwise the first row holding the entry that no other entry took — its own item before a copy.
+ *  3. otherwise none: the spells show, read-only.
+ * Never a row holding some OTHER item or spell, and never one row for two entries: casting spends the
+ * row it was handed (a scroll-like cast with no counter removes it), so a fear-scroll cast that found the
+ * heal scroll used up the heal scroll, and a second wand that found the first shared its one charge
+ * (checker, 2026-10-20).
+ */
+export function itemSpellRows(
+  entries: readonly ItemSpellEntry[],
+  inventory: readonly InventoryItem[],
+  items: Readonly<Record<string, Pick<Item, 'basedOn'> | undefined>> = {},
+): Map<string, InventoryItem> {
+  const out = new Map<string, InventoryItem>();
+  const used = new Set<InventoryItem>();
+  const take = (e: ItemSpellEntry, iv: InventoryItem) => {
+    out.set(e.id, iv);
+    used.add(iv);
+  };
+  const holds = (e: ItemSpellEntry, iv: InventoryItem, ownItemOnly: boolean) =>
+    (!e.itemHeldSpell || iv.heldSpell === e.itemHeldSpell) &&
+    (iv.itemId === e.itemId || (!ownItemOnly && items[iv.itemId]?.basedOn === e.itemId));
+  const want = entries.filter((e) => e.type === 'items');
+  for (const e of want) {
+    const instId = e.itemInstanceId ?? (e.id.startsWith('item:') ? e.id.slice(5) : undefined);
+    const at = instId ? inventory.find((iv) => iv.instanceId === instId) : undefined;
+    if (at && (!e.itemId || (!used.has(at) && holds(e, at, false)))) take(e, at);
+  }
+  for (const ownItemOnly of [true, false])
+    for (const e of want) {
+      if (out.has(e.id) || !e.itemId) continue;
+      const iv = inventory.find((r) => !used.has(r) && holds(e, r, ownItemOnly));
+      if (iv) take(e, iv);
+    }
+  return out;
+}
+
+/** One entry's row, resolved on its own (itemSpellRows with a list of one). The Spells tab resolves
+ *  every entry together, so two entries never share a row. */
+export function itemSpellRow(
+  entry: ItemSpellEntry,
+  inventory: readonly InventoryItem[],
+  items: Readonly<Record<string, Pick<Item, 'basedOn'> | undefined>> = {},
+): InventoryItem | undefined {
+  return itemSpellRows([entry], inventory, items).get(entry.id);
+}
+
 /** The counter a spell-holding item spends to cast: a staff's shared 'pool' (charges = item level),
  *  a wand's 'freq' (1/day). null = a single-use item (scroll), consumed on cast instead of decremented. */
 export function chargeCounterId(item: Item | undefined): string | null {

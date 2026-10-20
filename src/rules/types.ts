@@ -6240,6 +6240,13 @@ export interface SpellcastingEntry {
   /** For `type:'items'` entries: the inventory instance this casting comes from, so the Spells page
    *  can open the item and read/spend its charge counter (kept in sync with the Inventory). */
   itemInstanceId?: string;
+  /** For `type:'items'` entries: the item's id, so the Spells page finds its row by item when
+   *  `itemInstanceId` (the build's index) names another row of the play inventory (itemSpellRow). */
+  itemId?: string;
+  /** For `type:'items'` entries of a generic scroll/wand: the spell the build row holds (its
+   *  `heldSpell`), so two scrolls of one item holding different spells never resolve to each other's
+   *  row (itemSpellRows). */
+  itemHeldSpell?: string;
   /** A short reminder rendered under the entry header (Bloodrager: spells gain the rage trait while you
    *  rage; casting one drains you 1). Purely informational — no automatic slot/condition effect. */
   note?: string;

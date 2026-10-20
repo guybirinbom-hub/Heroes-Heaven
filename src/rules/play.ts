@@ -21,6 +21,7 @@ import { adjustModes } from './modes';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
 import { coinsToCp, payFrom } from './wealth';
+import { isDerivedIdOf, mintDerivedId, mintUniqueId } from './recordIds';
 
 /** The maximum hero points a character can hold (the rail shows three pips). */
 export const MAX_HERO_POINTS = 3;
@@ -1699,16 +1700,29 @@ export function toggleCompanionMode(play: PlayState, compId: string, id: string,
 
 // --- in-play companion roster (add / remove / configure from the Companions tab) ---
 
-/** A fresh companion id (cmp-N) that won't collide with existing ids. */
-function nextCompanionId(list: CompanionConfig[]): string {
-  const max = list.reduce((m, c) => Math.max(m, Number(/(\d+)$/.exec(c.id)?.[1] ?? -1)), -1);
-  return `cmp-${max + 1}`;
+/** The DERIVED companion id (`cmp-<source>-N`) that making the automatic companion `source` (its
+ *  synthetic id: `eidolon-auto`, `featcmp-pet`) real mints after `list` — the same in every tab that
+ *  makes THAT companion real from the same list, never the same for two different ones (the eidolon in
+ *  one tab and the Pet feat's familiar in the other used to share `cmp-N` and merge into one creature).
+ *  See src/rules/recordIds.ts. */
+export function derivedCompanionId(list: readonly { id: string }[], source: string): string {
+  return mintDerivedId('cmp', source, list.map((c) => c.id));
 }
 
-/** Add a companion in play (id assigned). */
-export function addPlayCompanion(play: PlayState, cfg: Omit<CompanionConfig, 'id'>): PlayState {
+/**
+ * Add a companion in play. A player's Add / Buy gets a UNIQUE id, so a companion added in another tab
+ * (or by the GM) at the same moment can never share it.
+ *
+ * `derivedId`: an automatic companion made real, under the id the caller minted ONCE with
+ * `derivedCompanionId` (and selects — the Companions tab opens the card it made, as NotesTab does with
+ * a new page). Every tab doing it mints that id alike; a list that already holds it already holds that
+ * companion (made real in another tab, folded in since), so nothing is added twice.
+ */
+export function addPlayCompanion(play: PlayState, cfg: Omit<CompanionConfig, 'id'>, derivedId?: string): PlayState {
   const list = play.companions ?? [];
-  return { ...play, companions: [...list, { ...cfg, id: nextCompanionId(list) }] };
+  if (derivedId && list.some((c) => c.id === derivedId)) return play;
+  const id = derivedId || mintUniqueId('cmp', list.map((c) => c.id));
+  return { ...play, companions: [...list, { ...cfg, id }] };
 }
 
 /** Remove a companion (and any tracked conditions/HP on it) in play. */
@@ -1777,7 +1791,7 @@ function patchCompanionInventory(
 
 /** Add a (free) item to a companion's gear. */
 export function addCompanionItem(play: PlayState, compId: string, itemId: string, init?: Partial<InventoryItem>): PlayState {
-  return patchCompanionInventory(play, compId, (inv) => [...inv, { instanceId: nextInstanceId(inv), itemId, quantity: 1, ...init }]);
+  return patchCompanionInventory(play, compId, (inv) => [...inv, { instanceId: newInstanceId(inv), itemId, quantity: 1, ...init }]);
 }
 
 /** Buy an item for a companion — deduct the character's coins, then add it. */
@@ -1867,10 +1881,10 @@ export function setAvatar(play: PlayState, avatar: string | null): PlayState {
   return { ...play, appearance };
 }
 
-/** A gallery id that won't collide with the ones already in use. */
+/** A gallery id no other picture — in this tab, another tab or another device — can share: a picture
+ *  is only ever added by the player, so it is UNIQUE (`img-<token>-N`, src/rules/recordIds.ts). */
 export function nextImageId(gallery: CharacterImage[] | undefined): string {
-  const max = (gallery ?? []).reduce((m, g) => Math.max(m, Number(/(\d+)$/.exec(g.id)?.[1] ?? -1)), -1);
-  return `img-${max + 1}`;
+  return mintUniqueId('img', (gallery ?? []).map((g) => g.id));
 }
 
 /** Add a picture to the gallery (the character's images OTHER than the profile one). */
@@ -1914,8 +1928,11 @@ export function makeProfileImage(play: PlayState, id: string): PlayState {
   const i = gallery.findIndex((g) => g.id === id);
   if (i < 0) return play;
   const incoming = gallery[i];
+  // The outgoing picture is a DIFFERENT record from the one promoted, so it gets its own id: handing it
+  // `incoming.id` made one key name two pictures, and a caption set on the promoted picture in another
+  // tab at the same moment landed on the old profile picture (checker, 2026-10-20; record-ids.test.ts).
   const outgoing = appearance.portrait
-    ? { id: incoming.id, img: appearance.portrait, ...(appearance.portraitRef ? { portraitRef: appearance.portraitRef } : {}) }
+    ? { id: nextImageId(gallery), img: appearance.portrait, ...(appearance.portraitRef ? { portraitRef: appearance.portraitRef } : {}) }
     : undefined;
   if (outgoing) gallery[i] = outgoing;
   else gallery.splice(i, 1);
@@ -1928,15 +1945,31 @@ export function makeProfileImage(play: PlayState, id: string): PlayState {
   return { ...play, appearance };
 }
 
-/** A fresh instanceId that won't collide with existing `inv-N` ids.
- *
- *  It does REUSE a freed one: delete the highest-numbered row and the next allocation takes its id.
- *  Every allocation here is a pure array→array step with no place to keep a counter, so the guard is
- *  on the other side — a holder of an instance id (an open popup, the item editor, a drag in flight)
- *  lets go the moment that instance leaves the inventory. See InventoryTab's stale-id effect. */
-function nextInstanceId(inv: InventoryItem[]): string {
-  const max = inv.reduce((m, i) => Math.max(m, Number(/(\d+)$/.exec(i.instanceId)?.[1] ?? -1)), -1);
-  return `inv-${max + 1}`;
+/**
+ * The instanceId of a row a PLAYER'S ACTION creates (Give, Buy, a kit's container and contents, one
+ * talisman peeled off a stack): `inv-<token>-N`, UNIQUE to this mint. Two tabs (or the GM's device and
+ * the player's) adding at the same moment can never give two items one id, and a deleted row's id is
+ * never handed to the next item — see src/rules/recordIds.ts. N is still the acquisition order.
+ */
+function newInstanceId(inv: InventoryItem[]): string {
+  return mintUniqueId('inv', inv.map((i) => i.instanceId));
+}
+
+/**
+ * The instanceId of a row the app DERIVES from state every tab holds (the formula book a feat grants, a
+ * builder item merged onto the sheet): `inv-<itemId>-N`, the same in every tab that derives that item
+ * from the same list — a unique id per tab would make the merge keep both copies (a duplicated item) —
+ * and never the same for two different items (the formula book in one tab, a builder row in the other).
+ * The merge has no guard for two items under one key (rosterMerge.ts "ONE KEY IS ONE RECORD"): the
+ * guarantee is that no mint hands out an id another row held. Here N is max + 1 of the list, so it is
+ * never a live row's; a number freed by a delete can come back only for the SAME item (the formula book
+ * is granted once, `formulaBookGranted`); a builder Save treats every id its starting inventory and the
+ * previous build held as taken (mergeRebuiltInventory). A holder of an instance id (an open popup, the
+ * item editor, a drag in flight) lets go the moment that instance leaves the inventory — see
+ * InventoryTab's stale-id effect.
+ */
+function derivedInstanceId(inv: InventoryItem[], itemId: string): string {
+  return mintDerivedId('inv', itemId, inv.map((i) => i.instanceId));
 }
 
 /** Kits that, when acquired, expand into a container holding their contents instead of a single
@@ -1966,22 +1999,32 @@ export function packQuantity(item: { packOf?: number } | undefined): number {
 }
 
 /** Add one of `itemId` to the inventory (worn/equipped state defaulted by the caller). A KIT item
- *  (Adventurer's Pack) instead adds its container + each content item nested inside it. */
+ *  (Adventurer's Pack) instead adds its container + each content item nested inside it.
+ *  A player's add: every row it makes gets a UNIQUE id (`newInstanceId`). */
 export function addInventoryItem(play: PlayState, itemId: string, init?: Partial<InventoryItem>): PlayState {
+  return addInventoryRows(play, itemId, init, newInstanceId);
+}
+
+function addInventoryRows(
+  play: PlayState,
+  itemId: string,
+  init: Partial<InventoryItem> | undefined,
+  mint: (inv: InventoryItem[], itemId: string) => string,
+): PlayState {
   const kit = KIT_CONTENTS[itemId];
   if (kit) {
     let inv = play.inventory ?? [];
-    const containerInstanceId = nextInstanceId(inv);
+    const containerInstanceId = mint(inv, kit.container);
     inv = [...inv, { instanceId: containerInstanceId, itemId: kit.container, quantity: 1, worn: true }];
     for (const c of kit.items) {
-      inv = [...inv, { instanceId: nextInstanceId(inv), itemId: c.itemId, quantity: c.quantity ?? 1, containerInstanceId }];
+      inv = [...inv, { instanceId: mint(inv, c.itemId), itemId: c.itemId, quantity: c.quantity ?? 1, containerInstanceId }];
     }
     return { ...play, inventory: inv };
   }
   const inv = play.inventory ?? [];
   return {
     ...play,
-    inventory: [...inv, { instanceId: nextInstanceId(inv), itemId, quantity: 1, ...init }],
+    inventory: [...inv, { instanceId: mint(inv, itemId), itemId, quantity: 1, ...init }],
   };
 }
 
@@ -2009,7 +2052,7 @@ export function attachItem(play: PlayState, attachmentId: string, hostId: string
       ...play,
       inventory: [
         ...inv.map((i) => (i.instanceId === attachmentId ? { ...i, quantity: src.quantity - 1 } : i)),
-        { ...src, instanceId: nextInstanceId(inv), quantity: 1, ...attached },
+        { ...src, instanceId: newInstanceId(inv), quantity: 1, ...attached },
       ],
     };
   }
@@ -2207,7 +2250,10 @@ export function reconcileFormulaBook(play: PlayState, ch: Character, content: Co
     ]);
     if (grants) {
       if (!formulaBooks(out.inventory, content).length && content.items[FORMULA_BOOK_ITEM_ID]) {
-        out = addInventoryItem(out, FORMULA_BOOK_ITEM_ID);
+        // DERIVED, not a player's add: this runs in whichever tab (or the GM's device) touches the
+        // character first, possibly in two at once from the same roster — both must mint the SAME id,
+        // or the merge keeps two books (test/record-ids.test.ts).
+        out = addInventoryRows(out, FORMULA_BOOK_ITEM_ID, undefined, derivedInstanceId);
       }
       out = { ...out, formulaBookGranted: true };
     }
@@ -2544,10 +2590,12 @@ export function toggleResource(play: PlayState, id: string): PlayState {
   return { ...play, resources: { ...(play.resources ?? {}), [id]: cur ? 0 : 1 } };
 }
 
-/** A fresh notes-page id that won't collide with existing `note-N` ids. */
+/** A fresh notes-page id no other page — in this tab, another tab or another device — can share: a page
+ *  is only ever added by the player, so it is UNIQUE (`note-<token>-N`, src/rules/recordIds.ts). Each call
+ *  mints a new one: a caller that needs to know the id (to open the new page) mints it once and passes it
+ *  to `addNotePage`. */
 export function nextNoteId(notes: NotePage[]): string {
-  const max = notes.reduce((m, p) => Math.max(m, Number(/(\d+)$/.exec(p.id)?.[1] ?? -1)), -1);
-  return `note-${max + 1}`;
+  return mintUniqueId('note', notes.map((p) => p.id));
 }
 
 /**
@@ -2557,12 +2605,16 @@ export function nextNoteId(notes: NotePage[]): string {
  * read over their shoulder — a suspicion about an NPC, a plan, a secret the GM handed them alone —
  * and a default of "visible to the whole party" leaks it before the player knows there was a switch
  * to find. Sharing is one click on the lock; un-sharing after the fact isn't.
+ *
+ * `id`: the page's id, minted by the caller with `nextNoteId` so it can open the page it made (ignored
+ * if the list already holds it; omitted, a fresh one is minted here).
  */
-export function addNotePage(play: PlayState, icon = 'ti-note', color?: string): PlayState {
+export function addNotePage(play: PlayState, icon = 'ti-note', color?: string, id?: string): PlayState {
   const notes = play.notes ?? [];
+  const pageId = id && !notes.some((p) => p.id === id) ? id : nextNoteId(notes);
   return {
     ...play,
-    notes: [...notes, { id: nextNoteId(notes), title: 'New page', content: '', icon, private: true, ...(color ? { color } : {}) }],
+    notes: [...notes, { id: pageId, title: 'New page', content: '', icon, private: true, ...(color ? { color } : {}) }],
   };
 }
 
@@ -2638,9 +2690,21 @@ function instanceSig(i: InventoryItem): string {
  *    something still gets it.
  *  • REMOVE an instance only when all three hold: the new build no longer asks for it, it came from
  *    the OLD build (`prevBuilt` = character.inventory before this edit, the rows play was seeded
- *    from — same instance id), and it is still byte-identical to what that build handed over. If we
- *    cannot tell that it was never touched, it STAYS. So does everything on a character rebuilt
+ *    from — same instance id, or the derived id an earlier Save gave it), and it is still byte-identical
+ *    to what that build handed over. If we cannot tell that it was never touched, it STAYS. So does
+ *    everything on a character rebuilt
  *    without a previous inventory to compare against.
+ *  • An added row NEVER takes an id another row held (2026-10-20). A build row's id is its build INDEX,
+ *    so a builder that replaces the rope at `inv-1` with a shortbow hands the shortbow `inv-1` — and
+ *    the rope, removed by this very Save as an untouched leftover, was still `inv-1` in another tab,
+ *    whose click on it then merged into the shortbow (rosterMerge.ts merges by key and cannot tell).
+ *    So every id the play inventory held when this Save began — the rows it removes included — and
+ *    every id the previous build handed over (a row deleted in play just before the Save may still be
+ *    live in another tab) is TAKEN: such a build row gets a derived `inv-<item>-N` instead. A later
+ *    Save that drops it matches it by that derived id of its item plus the same byte-identical test,
+ *    so a second swap at one spot does not leave the first replacement behind; the build's item spells
+ *    (`item:inv-N`, build.ts) find their row by item and held spell, one row per entry, when the index
+ *    names another (`itemSpellRows`, itemUses.ts).
  */
 function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[], prevBuilt: InventoryItem[]): InventoryItem[] {
   const taken = new Set<number>();
@@ -2660,16 +2724,37 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
    * sitting at an index the old build also used was treated as already handed over: replace the torch
    * with a shortbow in the builder and the shortbow (now `inv-2`, the torch's old index) never reached
    * the sheet, which is the very bug this merge exists to fix.
+   *
+   * And whether one is gone is counted by itemId too (2026-10-20): how many rows of the item the
+   * previous build handed over, less how many the play inventory holds. A live row need not sit at
+   * its build index — a row a Save added under a derived id (see the last bullet above), a row the
+   * builder renumbered — and reading "its index is not live" as "deleted" made the next Save swallow
+   * a SECOND copy the builder asked for. A copy-on-write edit (the row now holds a `custom-…` item)
+   * counts as gone, so a Save no longer hands the plain item back beside the player's copy.
+   *
+   * "The item" is the item AND, for a generic scroll or wand, the spell it holds (`kind`, 2026-10-20):
+   * a heal scroll and a fear scroll are one itemId. Matched by itemId alone, a fear scroll the builder
+   * put in the rope's place claimed the player's heal scroll as its counterpart (the fear scroll never
+   * arrived, and the heal build row was then added again beside it), and a heal scroll used up in play
+   * absorbed the new fear scroll and handed the used heal scroll back.
    */
-  const liveIds = new Set(playInv.map((p) => p.instanceId));
+  const kind = (p: InventoryItem) => `${p.itemId}\u0000${p.heldSpell ?? ''}`;
+  const liveCount = new Map<string, number>();
+  for (const p of playInv) liveCount.set(kind(p), (liveCount.get(kind(p)) ?? 0) + 1);
   const deletedInPlay = new Map<string, number>();
-  for (const p of prevBuilt) {
-    if (!liveIds.has(p.instanceId)) deletedInPlay.set(p.itemId, (deletedInPlay.get(p.itemId) ?? 0) + 1);
-  }
+  for (const p of prevBuilt) deletedInPlay.set(kind(p), (deletedInPlay.get(kind(p)) ?? 0) + 1);
+  for (const [k, n] of deletedInPlay) deletedInPlay.set(k, Math.max(0, n - (liveCount.get(k) ?? 0)));
+  /*
+   * A row the player kept never takes ANOTHER spell from the build (checker, 2026-10-20, round 5). The
+   * builder has no scroll or wand spell picker (only a Wanderer's Guide import puts a spell on a build
+   * row), so "same build index, same item, another spell" only happens when removing a row in the builder
+   * moves the later rows up — and re-labelling the kept row by its index then turned the player's packed
+   * heal scroll into the fear scroll they had just used. Rows are matched by `kind` only.
+   */
   const add: InventoryItem[] = [];
   for (const b of built) {
-    const own = claim((p) => p.instanceId === b.instanceId && p.itemId === b.itemId);
-    const i = own >= 0 ? own : claim((p) => p.itemId === b.itemId);
+    const own = claim((p) => p.instanceId === b.instanceId && kind(p) === kind(b));
+    const i = own >= 0 ? own : claim((p) => kind(p) === kind(b));
     if (i >= 0) {
       idMap.set(b.instanceId, playInv[i].instanceId);
       continue;
@@ -2677,23 +2762,33 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
     // No live counterpart. If the previous build handed one of these over and the player got rid of
     // it, re-adding it would undo that — one deleted row absorbs one build row and no more, so a
     // builder that genuinely asks for a SECOND copy still gets it.
-    const deleted = deletedInPlay.get(b.itemId) ?? 0;
-    if (deleted > 0) deletedInPlay.set(b.itemId, deleted - 1);
+    const deleted = deletedInPlay.get(kind(b)) ?? 0;
+    if (deleted > 0) deletedInPlay.set(kind(b), deleted - 1);
     else add.push(b);
   }
-  // Untouched leftovers of build items the builder has since dropped.
+  // Untouched leftovers of build items the builder has since dropped: the row at the old build row's id,
+  // or — for a row an earlier Save added under a DERIVED id (`inv-<item>-N`, the last bullet above) — a
+  // row under a derived id of that very item. Either way it must still be byte-identical to what the
+  // build handed over (instanceSig ignores the id). Only a builder Save and the formula-book grant mint
+  // derived inventory ids; a row the player bought carries a random token and never matches.
   const gone = new Set<number>();
+  const free = (idx: number) => !taken.has(idx) && !gone.has(idx);
   for (const old of prevBuilt) {
-    const i = playInv.findIndex(
-      (p, idx) => !taken.has(idx) && !gone.has(idx) && p.instanceId === old.instanceId && instanceSig(p) === instanceSig(old),
-    );
+    const sig = instanceSig(old);
+    let i = playInv.findIndex((p, idx) => free(idx) && p.instanceId === old.instanceId && instanceSig(p) === sig);
+    if (i < 0) i = playInv.findIndex((p, idx) => free(idx) && isDerivedIdOf(p.instanceId, 'inv', old.itemId) && instanceSig(p) === sig);
     if (i >= 0) gone.add(i);
   }
   const kept = playInv.filter((_, i) => !gone.has(i));
+  // Every id another row held: the play inventory as this Save found it (`gone` rows included) and the
+  // previous build's rows. See the last bullet above.
+  const held = new Set([...playInv, ...prevBuilt].map((p) => p.instanceId));
   const added: InventoryItem[] = [];
   for (const b of add) {
-    const all = [...kept, ...added];
-    const instanceId = all.some((p) => p.instanceId === b.instanceId) ? nextInstanceId(all) : b.instanceId;
+    // DERIVED from the build: a Save that both tabs made from the same build would add the same row,
+    // and must give it the same id (src/rules/recordIds.ts).
+    const instanceId = held.has(b.instanceId) ? mintDerivedId('inv', b.itemId, held) : b.instanceId;
+    held.add(instanceId);
     idMap.set(b.instanceId, instanceId);
     added.push({ ...b, instanceId });
   }

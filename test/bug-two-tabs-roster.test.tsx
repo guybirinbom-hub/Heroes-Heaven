@@ -5,7 +5,7 @@ import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { content } from './_content';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
-import { initialPlay } from '../src/rules/play';
+import { addInventoryItem, initialPlay } from '../src/rules/play';
 import { ROSTER_KEY, type SavedChar } from '../src/data/storage';
 import { authoredKey, hash53 } from '../src/data/authored';
 
@@ -258,6 +258,11 @@ interface Tab {
   /** This tab's rail shows NO hero point (with one, the first pip reads "Set hero points to 0"). */
   heroPointSpent: () => boolean;
   shows: (text: string) => boolean;
+  /** Give (free) the item named `name` from this tab's Add-items picker; the picker stays open. */
+  give: (name: string) => void;
+  closePicker: () => void;
+  /** The names on this tab's inventory cards (a duplicate's copy number included: "Rope 1"). */
+  cardNames: () => string[];
 }
 
 /** Open the app in a NEW tab: its own module graph, the same localStorage. */
@@ -302,6 +307,24 @@ async function openTab(): Promise<Tab> {
       }),
     heroPointSpent: () => !!host.querySelector('button[aria-label="Set hero points to 1"]') && !host.querySelector('button[aria-label="Set hero points to 0"]'),
     shows: (text: string) => (host.textContent ?? '').includes(text),
+    give: (name: string) => {
+      openInventory();
+      const click = (el: Element | null | undefined) => {
+        if (!el) throw new Error(`fixture: nothing to click (giving ${name})`);
+        act(() => el.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+      };
+      if (!host.querySelector('.fsel-results')) click(button('Add item'));
+      const search = host.querySelector<HTMLInputElement>('.fsel-results-search input')!;
+      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')!.set!.call(search, name);
+      act(() => search.dispatchEvent(new Event('input', { bubbles: true })));
+      const row = [...host.querySelectorAll<HTMLElement>('.ai-row')].find((r) => (r.querySelector('.ai-name')?.textContent ?? '').trim() === name);
+      click(row?.querySelector('button.give'));
+    },
+    closePicker: () => act(() => host.querySelector('.fsel .picker-close')!.dispatchEvent(new MouseEvent('click', { bubbles: true }))),
+    cardNames: () => {
+      openInventory();
+      return [...host.querySelectorAll<HTMLElement>('.inv-card .inv-name')].map((e) => (e.textContent ?? '').trim());
+    },
   };
 }
 
@@ -435,5 +458,60 @@ describe(`two tabs of one browser profile never lose the player’s change (rend
     expect(b.qty(), 'tab B').toBe('4');
     expect(storedPotions('t4'), 'on disk').toBe(4);
     expect(stored('t4').character.name, 'the GM’s rename, which nothing of the player’s touched, stays').toBe('GM Version');
+  }, TIMEOUT);
+
+  /*
+   * (5)–(6): ITEMS ADDED AT THE SAME MOMENT (checker finding 1, 2026-10-19). New rows were numbered
+   * `inv-${max + 1}`, so an add in each tab made two items with ONE id, and the merge took them for one
+   * item both tabs had edited: one vanished into the other. Ids a player's add mints are unique now
+   * (src/rules/recordIds.ts; the merge-level legs are test/record-ids.test.ts).
+   * RED ON 6393b29 (run 2026-10-20, `git archive` copy with this file; legs 1–4 pass there): (5) fails
+   * under both cadences on `on disk: tab A’s longsword: expected [] …` (tab B's dagger took its id), and
+   * (6) on `on disk: the GM’s waterskin: expected [] …` (the player's dagger took its id).
+   */
+  const count = (names: string[], name: string) => names.filter((n) => n === name || n.startsWith(`${name} `)).length;
+  const storedRows = (id: string, itemId: string) => (stored(id).play?.inventory ?? []).filter((i) => i.itemId === itemId);
+
+  it('(5) both tabs ADD items inside one debounce — a different item and the same one in each: every item stays, in both tabs and on disk, none mixed', async () => {
+    const { a, b } = await twoTabs('t5');
+    a.give('Longsword');
+    a.give('Rope');
+    a.closePicker();
+    b.give('Dagger');
+    b.give('Rope'); // the same purchase in both tabs: two ropes, not one
+    b.closePicker();
+    await wait(2500);
+    const inv = stored('t5').play?.inventory ?? [];
+    expect(storedRows('t5', 'longsword'), 'on disk: tab A’s longsword').toEqual([expect.objectContaining({ quantity: 1 })]);
+    expect(storedRows('t5', 'dagger'), 'on disk: tab B’s dagger').toEqual([expect.objectContaining({ quantity: 1 })]);
+    expect(storedRows('t5', 'rope'), 'on disk: a rope bought in each tab').toHaveLength(2);
+    expect(storedRows('t5', 'healing-potion-minor'), 'on disk: the potions').toEqual([expect.objectContaining({ quantity: 3 })]);
+    expect(new Set(inv.map((i) => i.instanceId)).size, 'one id, one item').toBe(inv.length);
+    for (const [tab, t] of [['tab A', a], ['tab B', b]] as const) {
+      const names = t.cardNames();
+      expect(count(names, 'Longsword'), `${tab}: ${names.join(', ')}`).toBe(1);
+      expect(count(names, 'Dagger'), `${tab}: ${names.join(', ')}`).toBe(1);
+      expect(count(names, 'Rope'), `${tab}: ${names.join(', ')}`).toBe(2);
+    }
+  }, TIMEOUT);
+
+  it('(6) the GM GIVES an item (applied in tab B) while the player adds one in tab A — both items stay', async () => {
+    const { a, b } = await twoTabs('t6');
+    net.gmTab = b.n;
+    a.give('Dagger'); // queued behind A's debounce
+    a.closePicker();
+    // The GM's device mints the item it gives — its own app, its own ids.
+    const pub = structuredClone(net.own.get(`${CAMP}|t6`)!.sheet) as SavedChar;
+    net.edits = [push('t6', { ...pub, play: addInventoryItem(pub.play!, 'waterskin') })];
+    await focus(); // tab B applies it at once
+    expect(count(b.cardNames(), 'Waterskin'), 'fixture: the GM’s item landed in tab B inside A’s debounce').toBe(1);
+    await wait(2500);
+    expect(storedRows('t6', 'waterskin'), 'on disk: the GM’s waterskin').toEqual([expect.objectContaining({ quantity: 1 })]);
+    expect(storedRows('t6', 'dagger'), 'on disk: the player’s dagger').toEqual([expect.objectContaining({ quantity: 1 })]);
+    for (const [tab, t] of [['tab A', a], ['tab B', b]] as const) {
+      const names = t.cardNames();
+      expect(count(names, 'Waterskin'), `${tab}: ${names.join(', ')}`).toBe(1);
+      expect(count(names, 'Dagger'), `${tab}: ${names.join(', ')}`).toBe(1);
+    }
   }, TIMEOUT);
 });

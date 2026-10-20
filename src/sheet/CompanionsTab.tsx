@@ -27,6 +27,7 @@ import {
   applyCompanionHeal,
   buyCompanion,
   canAfford,
+  derivedCompanionId,
   onCompanionInventory,
   removeCompanionCondition,
   removePlayCompanion,
@@ -1714,9 +1715,13 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
   // The next render resolves `current` to the now-real companion (same predicted id) so edits target it.
   const materializeAuto = (cfg: CompanionConfig) => {
     if (!onPlay) return;
-    const max = explicit.reduce((m, c) => Math.max(m, Number(/(\d+)$/.exec(c.id)?.[1] ?? -1)), -1);
-    setSelId(`cmp-${max + 1}`); // matches play.ts nextCompanionId
-    onPlay((p) => addPlayCompanion(p, { kind: cfg.kind, name: cfg.name || '', typeId: cfg.typeId, abilities: cfg.abilities, eidolon: cfg.eidolon, grantSlug: cfg.grantSlug }));
+    // A DERIVED id (`cmp-<auto id>-N`), not a unique one: two tabs making the same automatic companion
+    // real from the same roster must mint the same id, or the merge keeps two of it; a different
+    // automatic companion gets a different one (src/rules/recordIds.ts). Minted ONCE here and handed to
+    // the add, so the card selected is the companion made (test/record-ids-companions-ui.test.tsx).
+    const id = derivedCompanionId(explicit, cfg.id);
+    setSelId(id);
+    onPlay((p) => addPlayCompanion(p, { kind: cfg.kind, name: cfg.name || '', typeId: cfg.typeId, abilities: cfg.abilities, eidolon: cfg.eidolon, grantSlug: cfg.grantSlug }, id));
   };
   // Switch the card mode; entering an editing mode on the synthetic eidolon materializes it first.
   const enterMode = (m: 'stats' | 'edit' | 'inv') => {

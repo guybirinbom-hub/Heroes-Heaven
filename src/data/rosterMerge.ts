@@ -19,6 +19,14 @@
  * JSON semantics throughout (both rosters went through JSON on the way here): a key whose value is
  * `undefined` is the same as no key, and symbol-keyed marks (App's GM_APPLIED) never count as content
  * and are never copied onto a merged object — a merged entry is new content nobody's mark answers for.
+ *
+ * COUNTS AND COINS merge as VALUES, like everything else (2026-10-20, weighed against the checkers'
+ * "merge them as changes: base + local change + incoming change"): a three-way merge cannot tell two
+ * changes from ONE change seen twice — the same cloud copy adopted in both tabs, which happens on its
+ * own, at once — and adding them up would charge the player twice for one purchase made elsewhere. So
+ * a coin purse or a stack both tabs changed keeps this tab's value, as any value does; the cost is
+ * the case that needs two clicks in two tabs inside one 400 ms debounce (two buys: both items, one
+ * payment). Pinned both ways in test/record-ids.test.ts; telling them apart needs per-change ids.
  */
 
 /** Who gives way when both sides changed one roster entry. `whole`: take the incoming entry as it is.
@@ -128,6 +136,23 @@ export function mergeValue(base: unknown, local: unknown, incoming: unknown, inc
   if (Array.isArray(local) && Array.isArray(incoming)) {
     const b = Array.isArray(base) ? base : [];
     const key = arrayKey(b, local, incoming);
+    /*
+     * ONE KEY IS ONE RECORD. Merging by key is right only because a key names one record: a record a
+     * player ADDS gets a key unique to that mint, and a DERIVED record's key names what was derived
+     * (src/rules/recordIds.ts), so two tabs adding at once — or adding after a delete — never meet on one
+     * key. A key new on BOTH sides holding the SAME item is the same derived record both tabs made from
+     * the same state (a granted formula book, an automatic companion made real) and is merged into ONE,
+     * field by field — never kept twice, which would duplicate it. Chosen 2026-10-20 over "keep both
+     * under two keys" (that duplicates every derived record); pinned in test/roster-merge.test.ts.
+     *
+     * The merge itself holds NO guard for two different items under one key, and must not try to tell
+     * them apart from their contents: a row whose item changed may be one record repointed (a
+     * copy-on-write `custom-…` copy, an alias rewrite) or a different one, and every guess at that
+     * (tried 2026-10-20, removed the same day) broke some case worse than it fixed. So the guarantee
+     * lives entirely where keys are minted: no mint hands an id another record held — not a freed
+     * one, not a builder row's build index (play.ts mergeRebuiltInventory), not a promoted picture's
+     * (makeProfileImage). A key both sides changed is one record, merged field by field.
+     */
     if (key) {
       const byKey = (arr: unknown[]) => new Map(arr.map((el) => [(el as Rec)[key] as string, el]));
       const bm = byKey(b);

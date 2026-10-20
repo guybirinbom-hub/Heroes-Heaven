@@ -690,8 +690,10 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
   const pickIcon = (icon: string, color: string | undefined) => {
     if (!onPlay || !iconPicker) return;
     if (iconPicker.mode === 'new') {
+      // Minted once, here, and handed to the add: a page id is unique per mint (src/rules/recordIds.ts),
+      // so the page this opens has to be the very id the add uses.
       const id = nextNoteId(pages);
-      onPlay((p) => addNotePage(p, icon, color));
+      onPlay((p) => addNotePage(p, icon, color, id));
       setActiveId(id);
       setMobileOpen(true);
     } else {

@@ -10355,6 +10355,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         cantrips: held[0] ?? [],
         repertoire,
         itemInstanceId: instanceId,
+        // The item itself, so the sheet can find the row when `instanceId` (a build INDEX) names another
+        // row of the play inventory — see itemSpellRows (itemUses.ts). A generic scroll's chosen spell
+        // too: two 1st-rank scrolls are one item holding two different spells.
+        itemId: it.itemId,
+        ...(it.heldSpell ? { itemHeldSpell: it.heldSpell } : {}),
       });
     });
 

@@ -377,7 +377,8 @@ describe('drag to reorder (computer)', () => {
 
   it('a drop whose dragged row was replaced by the item that took its id moves nothing', () => {
     // The drag outlives its row: a GM edit, another tab or a cloud pull removes the rope mid-drag, and
-    // `nextInstanceId` (max + 1) hands the freed id to the next item acquired — a dagger, Carried, the
+    // a row minted max + 1 (a derived row — play.ts `derivedInstanceId` — or an old app version; a
+    // player's add is unique since 2026-10-20) takes the freed id — a dagger, Carried, the
     // section the drop aims at. The sheet is already showing the dagger under that id when the drop
     // lands (the tab lets go of a gone drag in an effect, which runs after), so the id alone now names
     // the dagger; only the item the drag GRABBED says this is not the rope.

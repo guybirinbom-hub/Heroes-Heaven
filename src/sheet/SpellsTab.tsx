@@ -37,7 +37,7 @@ import { toggleKnownRitual,
   CANTRIPS_PER_TRADE,
   type PlayUpdater,
 } from '../rules/play';
-import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem, highestSlotRank } from '../rules/itemUses';
+import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem, highestSlotRank, itemSpellRows } from '../rules/itemUses';
 import { ActionGlyph, SituationalStar } from './widgets';
 import { ItemDetail } from './ItemDetail';
 import { useEscapeClose } from './useEscapeClose';
@@ -2349,6 +2349,9 @@ export function SpellsTab({
   // A staff's charge pool is sized by its WIELDER ("charges equal to the rank of your highest-rank
   // spell slot"), not by the staff's own level — see itemUses.ts.
   const staffMax = highestSlotRank(character);
+  // Every item entry's inventory row, resolved TOGETHER so two entries never share one row (two
+  // identical wands sharing one charge; a fear-scroll cast spending the heal scroll) — itemSpellRows.
+  const itemRows = itemSpellRows(itemEntries, character.inventory, content.items);
   // Extra spell sources: staff/wand held spells and innate spells — read-only cards, cast with your spell DC.
   const itemNodes: { id: string; name: string; node: ReactNode }[] = itemEntries.map((entry) => {
     const isInnate = entry.type === 'innate';
@@ -2356,9 +2359,9 @@ export function SpellsTab({
     // Item entries: resolve the inventory instance + def + its live charge counter (the SAME
     // inv.counters the Inventory edits → charges stay in sync both ways for free). The instance
     // id is on `itemInstanceId`, or recoverable from the entry id (`item:<instanceId>`) for
-    // characters built before that field existed.
-    const itemInstId = entry.itemInstanceId ?? (entry.type === 'items' && entry.id.startsWith('item:') ? entry.id.slice(5) : undefined);
-    const itemInv = !isInnate && itemInstId ? character.inventory.find((iv) => iv.instanceId === itemInstId) : undefined;
+    // characters built before that field existed — and, when that id (a build index) names another row
+    // of the play inventory, found by its item (itemSpellRows, above).
+    const itemInv = !isInnate ? itemRows.get(entry.id) : undefined;
     const itemDef = itemInv ? content.items[itemInv.itemId] : undefined;
     const counterId = itemDef ? chargeCounterId(itemDef) : null;
     const counter = itemDef && itemInv && counterId ? itemCounters(itemDef, itemInv, staffMax).find((c) => c.id === counterId) : undefined;

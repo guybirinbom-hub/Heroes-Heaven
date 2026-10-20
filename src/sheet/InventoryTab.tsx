@@ -26,6 +26,7 @@ import {
   type PlayUpdater,
 } from '../rules/play';
 import { parsePrice } from '../rules/wealth';
+import { copyNumbers } from '../rules/recordIds';
 import type { CompanionPick } from './AddItemsModal';
 import { itemCounters, highestSlotRank } from '../rules/itemUses';
 import { formatItemPrice, grp } from '../rules/wealth';
@@ -894,8 +895,9 @@ export function InventoryTab({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addOpen, freshIds, activeTab]);
   /*
-   * An instance id can be REUSED. `nextInstanceId` allocates max(suffix) + 1, so deleting the highest
-   * row frees its id and the next item acquired takes it — and anything still holding that id (an open
+   * An instance id can be REUSED. A player's add mints a unique id now (src/rules/recordIds.ts), but a
+   * DERIVED row (a granted formula book, a builder item) and old saves still number by max(suffix) + 1,
+   * so deleting the highest row can free its id for the next such row — and anything still holding that id (an open
    * detail popup, the item editor, a drag in flight) silently re-binds to a different object: the
    * player edits, or trashes, an item they never opened. Nothing here may outlive its row, so the
    * moment a held id has no instance, whatever holds it lets go.
@@ -1124,19 +1126,9 @@ export function InventoryTab({
   // ACQUISITION order, not list order: the list order is the player's (drag / reorder arrows), and
   // numbering by it made two copies swap numbers when reordered, so the move looked like it did
   // nothing. The acquisition counter is the instanceId's trailing number — the one every new row is
-  // minted from (play.ts `nextInstanceId`: max + 1); an id without one keeps list order, after them.
-  // Recomputes (renumbers) when one is removed.
-  const dupSuffix = ((): Map<string, string> => {
-    const byItem = new Map<string, InventoryItem[]>();
-    for (const iv of character.inventory) byItem.set(iv.itemId, [...(byItem.get(iv.itemId) ?? []), iv]);
-    const acquired = (id: string) => Number(/(\d+)$/.exec(id)?.[1] ?? Number.MAX_SAFE_INTEGER);
-    const out = new Map<string, string>();
-    for (const rows of byItem.values()) {
-      if (rows.length < 2) continue;
-      rows.sort((a, b) => acquired(a.instanceId) - acquired(b.instanceId)).forEach((iv, n) => out.set(iv.instanceId, ` ${n + 1}`));
-    }
-    return out;
-  })();
+  // minted from (src/rules/recordIds.ts: max + 1, after the unique part); an id without one keeps list
+  // order, after them. Recomputes (renumbers) when one is removed.
+  const dupSuffix = copyNumbers(character.inventory);
 
   // --- drag & drop: relocate an item between Equipped / Carried / a container ---
   const draggedInv = dragId ? character.inventory.find((i) => i.instanceId === dragId) : null;
@@ -1191,8 +1183,8 @@ export function InventoryTab({
     return dragId !== dest && !isInside(dest, dragId) && fitsIn(dest, effBulk, draggedInv?.containerInstanceId === dest);
   };
   /** `wasItemId` = the item the gesture GRABBED. A drag or a phone hold outlives its own row (a GM
-   *  edit, another tab, a cloud pull can all delete it mid-gesture) and `nextInstanceId` hands the
-   *  freed id to the next item acquired, so by the time the finger lifts the id can belong to
+   *  edit, another tab, a cloud pull can all delete it mid-gesture) and a derived row (play.ts
+   *  `derivedInstanceId`) can take the freed id, so by the time the finger lifts the id can belong to
    *  something else — a move of an item the player never picked up. The check is INSIDE the updater
    *  because a hold's pointerup handler is the closure from the render the hold started on: the
    *  `character` out here is the one that still had the row, and only `p` knows what is there now. */

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { jsonEqual, mergeRosterEdits, mergeValue } from '../src/data/rosterMerge';
+import { addInventoryItem, emptyPlay, type PlayState } from '../src/rules/play';
+import type { InventoryItem } from '../src/rules/types';
 
 /**
  * H1 (2026-10-18): the three-way merge two tabs of one browser profile fold each other's roster writes
@@ -121,6 +123,97 @@ describe('mergeValue — arrays', () => {
     expect(mergeValue(['a'], ['a', 'b'], ['a', 'c'], true)).toEqual(['a', 'c']);
     const dup = [{ id: 'x' }, { id: 'x', v: 1 }];
     expect(mergeValue([], dup, [{ id: 'y' }])).toBe(dup);
+  });
+});
+
+describe('a record ADDED on both sides (checker finding 1, 2026-10-19)', () => {
+  /*
+   * Inventory ids used to be numbered in sequence (`inv-${max + 1}`), so an add in each tab made two
+   * different rows under ONE key and this merge mixed them into one. A player's add now mints a key no
+   * other tab can (src/rules/recordIds.ts). These legs add through the real helper; on 6393b29 (run
+   * 2026-10-20, `git archive` copy with this file) both fail — the rope comes out `worn` with the
+   * torches gone, and the second chalk is gone.
+   */
+  const base = { id: 'pc', play: addInventoryItem({ ...emptyPlay(), inventory: [] }, 'healing-potion-minor') };
+  const added = (itemId: string, init?: Partial<InventoryItem>) => ({ id: 'pc', play: addInventoryItem(base.play, itemId, init) });
+  const rows = (c: { play: PlayState }, itemId: string) => (c.play.inventory ?? []).filter((i) => i.itemId === itemId);
+
+  it('different content: a rope here, five worn torches there — both kept, neither mixed', () => {
+    const [out] = mergeRosterEdits([base], [added('rope')], [added('torch', { quantity: 5, worn: true })]);
+    expect(rows(out, 'rope')).toEqual([expect.objectContaining({ quantity: 1 })]);
+    expect(rows(out, 'rope')[0].worn).toBeUndefined();
+    expect(rows(out, 'torch')).toEqual([expect.objectContaining({ quantity: 5, worn: true })]);
+  });
+
+  it('IDENTICAL content: the same item bought on both sides is two purchases', () => {
+    const [out] = mergeRosterEdits([base], [added('chalk')], [added('chalk')]);
+    expect(rows(out, 'chalk')).toHaveLength(2);
+  });
+
+  /*
+   * THE CHOICE (2026-10-20, rosterMerge.ts "ONE KEY IS ONE RECORD"): a key new on BOTH sides is a
+   * DERIVED record both tabs made from the same state (the formula book, an automatic companion made
+   * real) — merged into ONE, never kept twice. A player's add can no longer produce one.
+   */
+  it('a key new on both sides with the same content is ONE record (a derived record is never duplicated)', () => {
+    const book = { instanceId: 'inv-3', itemId: 'formula-book', quantity: 1 };
+    expect(mergeValue([], [{ ...book }], [{ ...book }])).toEqual([book]);
+  });
+
+  it('a key new on both sides, edited differently on each, is still ONE record: what only one side set comes from it; a value both set differently is ours', () => {
+    const local = [{ instanceId: 'inv-3', itemId: 'formula-book', quantity: 1, formulas: ['x'], note: 'mine' }];
+    const incoming = [{ instanceId: 'inv-3', itemId: 'formula-book', quantity: 1, invested: true, note: 'theirs' }];
+    expect(mergeValue([], local, incoming)).toEqual([{ instanceId: 'inv-3', itemId: 'formula-book', quantity: 1, formulas: ['x'], invested: true, note: 'mine' }]);
+  });
+});
+
+describe('ONE KEY IS ONE RECORD — the merge never splits a row by its contents (rosterMerge.ts)', () => {
+  /*
+   * A row whose itemId changed under one key is ONE record, merged field by field: a copy-on-write edit
+   * (a `custom-…` copy repointed onto the row: InventoryTab / VitalsRail) or an alias rewrite on load is
+   * an edit of the same item the other tab equipped. Rounds 1–2 of the id fix (2026-10-20) added a guard
+   * here that split such a row in two (`splitItems`), to cover a builder Save handing a new item the build
+   * index of the row it replaced; every checker round found a case it broke (two copies of one item, a
+   * lost item, a stack split in two), so it was removed and the id REUSE fixed where ids are minted
+   * (play.ts mergeRebuiltInventory; test/record-ids.test.ts). These legs pass on 6393b29 too: they pin
+   * that no such guard comes back — round 2's guard turned the first into a phantom plain longsword
+   * (`inA: rows: expected [ … ] to have a length of 2 but got 3`).
+   */
+  const both = (b: unknown[], l: unknown[], i: unknown[]) => [mergeValue(b, l, i), mergeValue(b, i, l)];
+
+  it('copy-on-write in one tab, the row equipped in the other: ONE row — the custom copy, equipped', () => {
+    const base = [{ instanceId: 'inv-0', itemId: 'longsword', quantity: 1 }, { instanceId: 'inv-1', itemId: 'rope', quantity: 1 }];
+    const copied = [{ ...base[0], itemId: 'custom-longsword-k2j4h' }, base[1]];
+    const equipped = [{ ...base[0], equipped: true }, base[1]];
+    for (const [n, out] of (both(base, copied, equipped) as unknown[][]).entries()) {
+      const tab = n ? 'inB' : 'inA';
+      expect(out, `${tab}: rows`).toHaveLength(2);
+      expect(out[0], tab).toEqual({ instanceId: 'inv-0', itemId: 'custom-longsword-k2j4h', quantity: 1, equipped: true });
+    }
+  });
+
+  it('an alias rewrite (a removed `aon-…` id → its canonical twin) in one tab, the row invested in the other: ONE row', () => {
+    const base = [{ instanceId: 'inv-4', itemId: 'aon-surprise-doll', quantity: 1 }];
+    for (const out of both(base, [{ ...base[0], itemId: 'doll-surprise' }], [{ ...base[0], invested: true }])) {
+      expect(out).toEqual([{ instanceId: 'inv-4', itemId: 'doll-surprise', quantity: 1, invested: true }]);
+    }
+  });
+
+  it('the same built-in item edited into a copy in EACH tab: still one row (a conflict: each tab keeps its own copy until the next fold)', () => {
+    const base = [{ instanceId: 'inv-0', itemId: 'longsword', quantity: 1 }];
+    const a = [{ ...base[0], itemId: 'custom-longsword-aaaaa' }];
+    const b = [{ ...base[0], itemId: 'custom-longsword-bbbbb', equipped: true }];
+    expect(mergeValue(base, a, b)).toEqual([{ instanceId: 'inv-0', itemId: 'custom-longsword-aaaaa', quantity: 1, equipped: true }]);
+    expect(mergeValue(base, b, a)).toEqual([{ instanceId: 'inv-0', itemId: 'custom-longsword-bbbbb', quantity: 1, equipped: true }]);
+  });
+
+  it('no key is invented: every merged row keeps a key one side had (a split moved rows to `inv-<item>-N`)', () => {
+    const base = [{ instanceId: 'inv-1', itemId: 'rope', quantity: 1 }];
+    const other = [{ instanceId: 'inv-1', itemId: 'shortbow', quantity: 1 }];
+    const edited = [{ instanceId: 'inv-1', itemId: 'rope', quantity: 3 }];
+    for (const out of both(base, other, edited) as Record<string, unknown>[][]) {
+      expect(out.map((r) => r.instanceId)).toEqual(['inv-1']);
+    }
   });
 });
 
