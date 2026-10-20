@@ -55,6 +55,7 @@ import { loadCampaigns } from '../data/storage';
 import { useBackHandler } from './useEscapeClose';
 import { HeroesHeavenLogo } from './Logo';
 import { playerFacingContent } from '../rules/cursedItems';
+import { useContent } from './ContentContext';
 
 const TABS = SHEET_TABS;
 // Mobile gets an extra "Actions" page (actions + activities split off Main); desktop keeps them on Main.
@@ -130,6 +131,7 @@ export function CharacterSheet({
   globalCustomization,
   onLeaveCampaign,
   partyEnabled,
+  partyContent,
   characters,
   readOnly,
   readOnlyNote,
@@ -176,6 +178,12 @@ export function CharacterSheet({
   onLeaveCampaign?: (campaignId: string) => void;
   /** Signed in → the Party button may show (still only when the character is attached to a campaign). */
   partyEnabled?: boolean;
+  /** The PLAIN content the Party page derives teammates' cards and sheets against (App: `readyContent`,
+   *  as the Campaigns page does). Never this sheet's own `content`: that one carries THIS character's
+   *  Overrides content edits (rules/blocks/content.ts contentFor), which only ever add — a teammate who
+   *  shares the edited feat would draw this player's edit on top of their own (item 7 fixer, 2026-10-21).
+   *  Absent → the ambient ContentContext (App's own un-edited view), then `content` as a last resort. */
+  partyContent?: ContentDatabase;
   /** Render as a look-but-don't-touch view of someone else's character (party page): no menu, no
    *  mutations, and a Back button instead. */
   readOnly?: boolean;
@@ -222,6 +230,10 @@ export function CharacterSheet({
     () => (gmEdit ? rawContent : playerFacingContent(rawContent, character.inventory)),
     [gmEdit, rawContent, character.inventory],
   );
+  // The Party page shows OTHER characters: their cards and read-only sheets lay their own edits over a
+  // plain database, never over this one (this character's edits and cursed-item disguises stay here).
+  const ambientContent = useContent();
+  const teammateContent = partyContent ?? ambientContent ?? rawContent;
   // The positive-modifier "+" is a display option. Set the module flag DURING render (before children
   // render) so every stat reads the right value on this paint — only the primary sheet does this.
   if (primarySheet) setPlusOnMods(custom.plusOnMods !== false);
@@ -540,7 +552,7 @@ export function CharacterSheet({
   if (partyOpen) {
     return (
       <PartyPage
-        content={content}
+        content={teammateContent}
         campaigns={attachedCampaigns}
         characters={characters}
         // Tapping your own card here leaves the party view as well as switching character — without

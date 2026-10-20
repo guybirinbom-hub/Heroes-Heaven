@@ -1738,6 +1738,9 @@ export default function App() {
         globalCustomization={globalCustom}
         onLeaveCampaign={leaveCampaign}
         partyEnabled={campaignsOnline}
+        // Teammates on the Party page derive against the plain content, as the Campaigns page does —
+        // never `sheetContent`, which carries THIS character's content edits (item 7 fixer, 2026-10-21).
+        partyContent={readyContent}
         onRest={(o) =>
           updatePlay((p) =>
             rest(p, {

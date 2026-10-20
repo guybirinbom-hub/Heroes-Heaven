@@ -22,9 +22,15 @@ import type { Character, ContentDatabase } from '../src/rules/types';
  * boundary from the character's own overrides. This pins, for ONE synthetic character:
  *   (1) every surface equals the sheet: max HP, current HP, Reflex (an edit of a printed feat) and
  *       Fortitude (an edit of the player's own HOMEBREW feat, which on a GM's device exists only as a
- *       record the sheet CARRIES — the order: carried records first, then the edits);
+ *       record the sheet CARRIES — the order: carried records first, then the edits); and the reverse:
+ *       a TEAMMATE on the Party page inside this player's sheet never gets this player's edits (fixer
+ *       2026-10-21: PartyPage was handed the sheet's edited content and drew 35 / 35 for a 29 / 29 mate);
  *   (2) the derive boundary itself: each entry point, handed RAW content, applies the character's edits
- *       (incl. a phantom-damage seed in initialPlay when an edit LOWERS max HP);
+ *       (incl. a phantom-damage seed in initialPlay when an edit LOWERS max HP). Each entry point is
+ *       measured on a number only IT routes: AC for computeSummary, Encumbered (a feat's Bulk limit) for
+ *       applyPlayState — max HP alone could not tell, since deriveMaxHp applies the edits itself
+ *       (fixer 2026-10-20: removing either call left all legs green before; a temp-copy plant of each
+ *       removal now fails 2 and 1 tests);
  *   (3) loading is not an edit — no new authoredKey, nothing pushed, the sheet object untouched;
  *   (4) the cache (C9): the same database object for the same base and the same contentEdits object.
  * Before the change, (1)'s party card, tracker row, vitals, GM HP write, party viewer and roster card
@@ -111,6 +117,8 @@ const { useMemberViewer } = await import('../src/sheet/PartyMembers');
 const { RosterScreen } = await import('../src/sheet/RosterScreen');
 const { useLocalCampaignMembers } = await import('../src/integration/useLocalCampaignMembers');
 const { playerFacingContent } = await import('../src/rules/cursedItems');
+const { CharacterSheet } = await import('../src/sheet/CharacterSheet');
+const { ContentContext } = await import('../src/sheet/ContentContext');
 
 /** The GM's (and a teammate's) database: the shipped content, none of the player's homebrew. */
 const db = content();
@@ -297,7 +305,13 @@ describe('fixture', () => {
     const on = sheetNumbers(playerSheet(true));
     const off = sheetNumbers(playerSheet(false));
     expect(on.max - off.max, 'Toughness edit').toBe(6);
+    expect(on.ac - off.ac, 'Toughness AC edit (the fixture is unarmored)').toBe(1);
     expect(on.reflex - off.reflex, 'Fleet edit').toBe(2);
+    // Fleet's Bulk-limit edit: 10,000 gp is Encumbered at the printed limit, not with the edit.
+    const heavyOff = heavyPurse(playerSheet(false));
+    expect(encumbered(applyPlayState(heavyOff.character, heavyOff.play, ownContent(ownerDb, heavyOff))), 'no edit: Encumbered').toBe(true);
+    const heavyOn = heavyPurse(playerSheet(true));
+    expect(encumbered(applyPlayState(heavyOn.character, heavyOn.play, contentFor(ownContent(ownerDb, heavyOn), heavyOn.character.overrides))), 'with the edit').toBe(false);
     expect(on.fortitude - off.fortitude, 'the carried homebrew feat edit').toBe(2);
     expect(db.feats[FEAT.id], 'the GM database lacks the player feat').toBeUndefined();
     expect(Object.keys(playerSheet().carried?.feats ?? {}), 'the feat rides along').toEqual([FEAT.id]);
@@ -317,12 +331,17 @@ describe('item 7 / C1 pin: every surface shows the sheet’s numbers', () => {
     const sheet = sheetNumbers(sc);
     expect(memberCardSummary(member(sc), sc, db).hpMax, 'party card on the GM device').toBe(sheet.max);
     expect(memberCardSummary(member(sc), sc, db).hpCur, 'party card current HP').toBe(sheet.cur);
+    // AC is read by deriveAc alone (not self-covering like deriveMaxHp): it pins computeSummary's own
+    // contentFor call — without it every card draws the raw AC while the sheet draws the edited one.
+    expect(memberCardSummary(member(sc), sc, db).ac, 'party card AC').toBe(sheet.ac);
     // PartyMembers' pending-edit card: applyPlayState + memberSummary against the sheet's foreign view.
     const view = foreignContent(db, sc);
     expect(memberSummary(applyPlayState(sc.character, sc.play, view), view).hpMax, 'pending card').toBe(sheet.max);
+    expect(memberSummary(applyPlayState(sc.character, sc.play, view), view).ac, 'pending card AC').toBe(sheet.ac);
     // App's publish effect on the player's own device.
     const own = ownContent(ownerDb, sc);
     expect(computeSummary(applyPlayState(sc.character, sc.play, own), own).hpMax, 'published summary').toBe(sheet.max);
+    expect(computeSummary(applyPlayState(sc.character, sc.play, own), own).ac, 'published summary AC').toBe(sheet.ac);
   });
 
   it('the tracker row (sheetPcStats — CampaignTracker): max HP, current HP, Reflex and Fortitude', () => {
@@ -331,6 +350,7 @@ describe('item 7 / C1 pin: every surface shows the sheet’s numbers', () => {
     const row = sheetPcStats(sc, db);
     expect(row.maxHP).toBe(sheet.max);
     expect(row.hpCurrent).toBe(sheet.cur);
+    expect(row.ac, 'AC (deriveAc only)').toBe(sheet.ac);
     expect(row.refMod, 'a printed feat edited').toBe(sheet.reflex);
     expect(row.fortMod, 'the carried homebrew feat edited (carried first, then the edits)').toBe(sheet.fortitude);
   });
@@ -393,6 +413,54 @@ describe('item 7 / C1 pin: every surface shows the sheet’s numbers', () => {
     expect(out.content.proficiencies.SAVE_FORTITUDE.total).toBe(sheet.fortitude);
     expect(JSON.stringify(out.character), 'the WG file carries no overrides').not.toContain('contentEdits');
   });
+
+  // Fixer 2026-10-21 (finding: PartyPage got the sheet's EDITED content). The Party page inside a
+  // player's own sheet draws OTHER characters; contentFor only ever adds, so handed this sheet's
+  // content a teammate who shares the edited feat drew this player's edit on top of their own.
+  // The teammate here takes Toughness with NO edit; the player edits Toughness to +6 HP.
+  it.each([
+    ['partyContent (App passes readyContent)', true],
+    ['no partyContent: the ambient ContentContext (App: the un-edited own view)', false],
+  ])('the Party page inside a player’s own sheet draws a teammate with the teammate’s numbers — %s', async (_label, withProp) => {
+    const mine = playerSheet(true);
+    const me = { ...mine, character: { ...mine.character, campaignIds: [CAMPAIGN] } } as SavedChar;
+    const plain = playerSheet(false);
+    const mate = { ...plain, id: 'pc-teammate', character: { ...plain.character, name: 'Odile Varrow' } } as SavedChar;
+    const mateSheet = sheetNumbers(mate);
+    expect(sheetNumbers(me).max - mateSheet.max, 'fixture: the player’s edit is +6 HP on the shared feat').toBe(6);
+    const view = ownContent(ownerDb, mate);
+    server.chars.set(`${CAMPAIGN}|${mate.id}`, {
+      campaign_id: CAMPAIGN,
+      owner_id: 'player-mate',
+      char_id: mate.id,
+      name: mate.character.name,
+      summary: computeSummary(applyPlayState(mate.character, mate.play, view), view),
+      sheet: mate,
+      updated_at: AT,
+    });
+    // As src/App.tsx draws the player's own sheet: the context is the own view, `content` the edited one.
+    const ownDb = ownContent(ownerDb, me);
+    const host = render(
+      <ContentContext.Provider value={ownDb}>
+        <CharacterSheet
+          character={applyPlayState(me.character, me.play, ownDb)}
+          content={contentFor(ownDb, me.character.overrides)}
+          build={me.build}
+          charKey={me.id}
+          partyEnabled
+          {...(withProp ? { partyContent: ownerDb } : {})}
+        />
+      </ContentContext.Provider>,
+    );
+    const partyBtn = host.querySelector<HTMLButtonElement>('.party-tab, button[aria-label="Party"]');
+    expect(partyBtn, 'the Party button shows').not.toBeNull();
+    act(() => partyBtn!.click());
+    await settle();
+    await settle();
+    const card = [...host.querySelectorAll('.party-card')].find((c) => (c.textContent ?? '').includes('Odile Varrow'));
+    expect(card, 'the teammate’s card is drawn').toBeDefined();
+    expect(card!.textContent ?? '', 'the teammate’s own max HP, not the player’s edit on top').toContain(`${mateSheet.cur} / ${mateSheet.max}`);
+  }, 120_000);
 });
 
 describe('the order: carried records first, then the edits (never collected into carried)', () => {
@@ -420,8 +488,14 @@ describe('the derive boundary: each entry point applies the character’s own ed
     expect(live.hitPoints.current).toBe(sheet.cur);
     expect(deriveMaxHp(live, own)).toBe(sheet.max);
     expect(computeSummary(live, own).hpMax).toBe(sheet.max);
+    expect(computeSummary(live, own).ac, 'computeSummary applies the edits itself (AC: deriveAc only)').toBe(sheet.ac);
     expect(computePcStats(live, own).maxHP).toBe(sheet.max);
     expect(computePcStats(live, own).refMod).toBe(sheet.reflex);
+    // applyPlayState's own call, measured on a read that is NOT HP (deriveMaxHp covers itself): the
+    // Encumbered check reads the feats' Bulk limits. Handed the plain view, the edited +20 must count.
+    const heavy = heavyPurse(sc);
+    expect(encumbered(applyPlayState(heavy.character, heavy.play, ownContent(ownerDb, heavy))), 'applyPlayState applies the edits itself (Encumbered)').toBe(false);
+    expect(encumbered(applyPlayState(heavy.character, heavy.play, foreignContent(db, heavy))), 'and on a GM device (livePlay)').toBe(false);
   });
 
   it('initialPlay seeds no phantom damage when an edit LOWERS max HP (the first play edit writes it)', () => {
@@ -473,4 +547,17 @@ describe('C9: contentFor is cached by base database, then by the contentEdits ob
     const copy = { ...a } as ContentDatabase;
     expect(contentFor(copy, ov), 'a copy of a prepared database (playerFacingContent, a source filter) is kept as is').toBe(copy);
     const pf = playerFacingContent(a, sc.character.inventory);
-    expe
+    expect(contentFor(pf, ov)).toBe(pf);
+    expect(contentFor(db, undefined)).toBe(db);
+    expect(contentFor(db, { contentEdits: { feats: {}, classFeatures: {} } })).toBe(db);
+    const clone = JSON.parse(JSON.stringify(ov)) as BuildOverrides;
+    const b = contentFor(db, clone);
+    expect(b, 'a different contentEdits object is a different entry').not.toBe(a);
+    expect(b.feats.toughness).toEqual(a.feats.toughness);
+    expect(db.feats.toughness.maxHpBonus, 'the shared database is never mutated').toEqual({ perLevel: 1 });
+    // The App's character (applyPlayState) and its sheet database meet on one object: the boundary's
+    // own call returns what the host made.
+    const own = ownContent(ownerDb, sc);
+    expect(contentFor(own, sc.character.overrides)).toBe(contentFor(own, (applyPlayState(sc.character, sc.play, own) as Character).overrides));
+  });
+});
