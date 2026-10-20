@@ -33,14 +33,16 @@ const ROLES: [string, string, string][] = [
   ['Party Level +4', '160', 'Extreme-threat solo boss'],
 ]
 
+// Narrow side padding so the four-column budget table fits a 400 px phone (the tables are full width,
+// so a wide window looks the same).
 const th: React.CSSProperties = {
-  textAlign: 'left', padding: '7px 10px',
+  textAlign: 'left', padding: '7px 5px',
   fontFamily: 'var(--font-ui)', fontSize: 10.5, fontWeight: 700,
   letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent)',
   borderBottom: 'var(--app-bw) solid var(--border-strong)', whiteSpace: 'nowrap',
 }
 const td: React.CSSProperties = {
-  padding: '6px 10px', fontFamily: 'var(--font-ui)', fontSize: 12.5,
+  padding: '6px 5px', fontFamily: 'var(--font-ui)', fontSize: 12.5,
   color: 'var(--text)', borderBottom: 'var(--app-bw) solid var(--border)', verticalAlign: 'top',
 }
 const tdNum: React.CSSProperties = { ...td, fontFamily: 'var(--font-mono)', color: 'var(--linked)', whiteSpace: 'nowrap' }
@@ -87,14 +89,17 @@ export function EncounterTablesModal({ current, party, budget, onClose }: Props)
         {/* Encounter Budget */}
         <div>
           <div className="pf-label" style={{ marginBottom: 6 }}>XP Budget by Threat</div>
+          {/* Four columns are wider than a phone: the headers wrap, and anything still too wide scrolls
+              inside this box instead of pushing the whole modal sideways (2026-10-20, seen at 400 px). */}
+          <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
                 <th style={th}>Threat</th>
-                <th style={{ ...th, textAlign: 'right' }}>XP Budget</th>
-                <th style={{ ...th, textAlign: 'right' }}>Character Adjustment</th>
+                <th style={{ ...th, textAlign: 'right', whiteSpace: 'normal' }}>XP Budget</th>
+                <th style={{ ...th, textAlign: 'right', whiteSpace: 'normal' }}>Character Adjustment</th>
                 {/* The size the badge's budget used (InitiativeTracker keeps it at least 1). */}
-                {mine && party && <th style={{ ...th, textAlign: 'right' }}>This party ({Math.max(1, party.size + party.extra)})</th>}
+                {mine && party && <th style={{ ...th, textAlign: 'right', whiteSpace: 'normal' }}>This party ({Math.max(1, party.size + party.extra)})</th>}
               </tr>
             </thead>
             <tbody>
@@ -111,6 +116,7 @@ export function EncounterTablesModal({ current, party, budget, onClose }: Props)
               })}
             </tbody>
           </table>
+          </div>
           <div style={{ marginTop: 7, fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>
             “Character Adjustment” is how much to raise or lower the XP budget for each party member (a PC or a party NPC with a stat block) above or below a party of 4.
           </div>
