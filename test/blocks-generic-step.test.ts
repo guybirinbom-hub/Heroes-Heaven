@@ -3,11 +3,11 @@ import { blockKind } from '../src/rules/blocks/registry';
 import type { StoredBlock } from '../src/rules/blocks/stored';
 import type { TargetKind } from '../src/rules/blocks/targets';
 import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../src/rules/build';
-import { deriveAc, deriveClassDc, deriveMaxHp, derivePerception, deriveSave, deriveSkill, deriveSpeeds, deriveSpellcasting, skillTerms } from '../src/rules/derive';
+import { deriveAc, deriveClassDc, deriveMaxHp, derivePerception, deriveSave, deriveSkill, deriveSpeeds, deriveSpellcasting, deriveStrikes, profBonus, skillTerms } from '../src/rules/derive';
 import { explainStat, type StatRef } from '../src/rules/explain';
 import { deriveInitiative } from '../src/rules/initiative';
 import { computePcStats } from '../src/integration/computePcStats';
-import { SKILLS, type AbilityId, type Character, type ProficiencyKey, type SaveId } from '../src/rules/types';
+import { PROFICIENCY_RANKS, SKILLS, type AbilityId, type ArmorCategory, type Character, type ProficiencyKey, type ProficiencyRank, type SaveId, type WeaponCategory } from '../src/rules/types';
 import { content } from './_content';
 
 /**
@@ -330,3 +330,147 @@ describe("'attribute.add' changes the SCORE at build time", () => {
     expect(ab([score('str', 2, { on: false })]).abilities.str).toBe(c0.abilities.str);
   });
 });
+
+/* ───────────── THE RANK KINDS (Building blocks item 8: the rank seams in buildCharacter) ─────────────
+ *
+ * Every rank kind, on every target kind it accepts (read from the REGISTRY), moves the rank by exactly
+ * one step on a fixture, the sheet number moves by exactly that step's proficiency bonus (+2 between two
+ * trained-or-better ranks; untrained ↔ trained is level + 2), and the breakdown still sums to it. A rank
+ * block is an `overrides.proficiencies` entry with its meta's `mode` (stored.ts), applied at BUILD time,
+ * so each step is a fresh build. Weapon targets read a Strike of that category (the Fist for unarmed);
+ * armor targets read AC while wearing armor of that category (none for unarmored). */
+
+const RANK_WEAPONS = [
+  { instanceId: 'rw1', itemId: 'dagger', quantity: 1, equipped: true },
+  { instanceId: 'rw2', itemId: 'longsword', quantity: 1, equipped: true },
+  { instanceId: 'rw3', itemId: 'rhoka-sword', quantity: 1, equipped: true },
+];
+/** A Strike of each weapon category: its weapon's item id (null = the Fist). */
+const WEAPON_OF: Record<WeaponCategory, string | null> = { unarmed: null, simple: 'dagger', martial: 'longsword', advanced: 'rhoka-sword' };
+/** Armor of each category, worn for that category's AC (null = no armor). */
+const ARMOR_OF: Record<ArmorCategory, string | null> = { unarmored: null, light: 'leather-armor', medium: 'hide-armor', heavy: 'full-plate' };
+const isArmorItem = (i: { itemId: string }) => db.items[i.itemId]?.itemType === 'armor';
+
+/** The fixture for one rank target: the character's own gear plus one weapon of each category; for an
+ *  armor target, the armor replaced by one of that category. */
+function rankFixture(b: BuildState, target: string): BuildState {
+  const inv = (b.inventory ?? []) as BuildState['inventory'];
+  if (!target.startsWith('armor:')) return { ...b, inventory: [...inv, ...RANK_WEAPONS] } as BuildState;
+  const worn = ARMOR_OF[target.slice('armor:'.length) as ArmorCategory];
+  return { ...b, inventory: [...inv.filter((i) => !isArmorItem(i)), ...RANK_WEAPONS, ...(worn ? [{ instanceId: 'ra', itemId: worn, quantity: 1, worn: true }] : [])] } as BuildState;
+}
+
+/** Every rank target of one kind on this character. */
+function rankKeysOf(c: Character, kind: TargetKind): string[] {
+  switch (kind) {
+    case 'skill':
+    case 'save':
+      return keysOf(c, kind);
+    case 'perception':
+    case 'class-dc':
+      return [kind];
+    case 'weapon':
+      return (Object.keys(WEAPON_OF) as WeaponCategory[]).map((w) => `weapon:${w}`);
+    case 'armor':
+      return (Object.keys(ARMOR_OF) as ArmorCategory[]).map((a) => `armor:${a}`);
+    default:
+      throw new Error(`blocks-generic-step: no rank reader for target kind '${kind}' — add one here`);
+  }
+}
+
+const splitTarget = (target: string) => {
+  const i = target.indexOf(':');
+  return { kind: i < 0 ? target : target.slice(0, i), detail: i < 0 ? '' : target.slice(i + 1) };
+};
+/** The `overrides.proficiencies` key that holds a rank target (stored.ts's split, read backwards). */
+function storedRankKey(target: string): string {
+  const { kind, detail } = splitTarget(target);
+  if (kind === 'class-dc') return 'classDc';
+  if (kind === 'perception') return 'perception';
+  return detail;
+}
+function rankOf(c: Character, target: string): ProficiencyRank {
+  const { kind, detail } = splitTarget(target);
+  const p = c.proficiencies;
+  switch (kind) {
+    case 'skill':
+      return p.skills[detail as ProficiencyKey] ?? 'untrained';
+    case 'save':
+      return p.saves[detail as SaveId];
+    case 'perception':
+      return p.perception;
+    case 'class-dc':
+      return p.classDc;
+    case 'weapon':
+      return p.attacks[detail as WeaponCategory];
+    case 'armor':
+      return p.defenses[detail as ArmorCategory];
+  }
+  throw new Error(`no rank for ${target}`);
+}
+/** The sheet number a rank target feeds, and its breakdown's sum. */
+function rankNumber(c: Character, target: string): { value: number; sum: number } {
+  const { kind, detail } = splitTarget(target);
+  if (kind === 'weapon') {
+    const item = WEAPON_OF[detail as WeaponCategory];
+    const strike = deriveStrikes(c, db).find((s) => (item ? s.name === db.items[item].name : s.instanceId === 'fist'));
+    if (!strike) throw new Error(`no Strike for ${target}`);
+    return { value: strike.attack[0], sum: explainStat(c, db, { kind: 'strikeAttack', instanceId: strike.instanceId }).parts.reduce((s, p) => s + p.value, 0) };
+  }
+  const key = kind === 'armor' ? 'ac' : target;
+  return { value: numberOf(c, key), sum: sumOf(c, key) };
+}
+
+const step = (r: ProficiencyRank, by: 1 | -1): ProficiencyRank | null => PROFICIENCY_RANKS[PROFICIENCY_RANKS.indexOf(r) + by] ?? null;
+/** One rank kind's steps on one target: the rank it is given, from the rank before (r0). */
+const RANK_STEP: Record<string, { give: (r0: ProficiencyRank) => ProficiencyRank | null; expect: (r0: ProficiencyRank, given: ProficiencyRank) => ProficiencyRank }[]> = {
+  'rank.atLeast': [
+    // One step up: the floor lifts the rank by one.
+    { give: (r0) => step(r0, 1), expect: (_r0, g) => g },
+    // At the rank it already has: nothing moves.
+    { give: (r0) => r0, expect: (r0) => r0 },
+    // One step below: a floor never lowers.
+    { give: (r0) => step(r0, -1), expect: (r0) => r0 },
+  ],
+  'rank.exactly': [
+    { give: (r0) => step(r0, 1), expect: (_r0, g) => g },
+    { give: (r0) => step(r0, -1), expect: (_r0, g) => g },
+  ],
+};
+
+for (const { name, b } of CHARS) {
+  const level = b.level;
+  for (const kindId of Object.keys(RANK_STEP)) {
+    const def = blockKind(kindId)!;
+    if (!('aspect' in def.accepts) || def.accepts.aspect !== 'rank') throw new Error(kindId);
+    const mode = kindId === 'rank.atLeast' ? 'atLeast' : 'exactly';
+    describe(`'${kindId}' on every rank target it accepts — one step moves the rank one step and the number by that step — ${name}`, () => {
+      for (const tk of (def.accepts as { kinds: TargetKind[] }).kinds) {
+        for (const target of rankKeysOf(buildCharacter(b, db), tk)) {
+          it(`${target}`, () => {
+            const base = rankFixture(b, target);
+            const c0 = buildCharacter(base, db);
+            const r0 = rankOf(c0, target);
+            const n0 = rankNumber(c0, target);
+            expect(n0.sum, `breakdown of ${target} before`).toBe(n0.value);
+            const key = storedRankKey(target);
+            for (const s of RANK_STEP[kindId]) {
+              const given = s.give(r0);
+              if (!given) continue;
+              const c = buildCharacter({ ...base, overrides: { proficiencies: { [key]: given }, meta: { [`proficiencies:${key}`]: { mode, of: given } } } } as BuildState, db);
+              const want = s.expect(r0, given);
+              expect(rankOf(c, target), `${kindId} ${given} on ${target} (was ${r0})`).toBe(want);
+              const n = rankNumber(c, target);
+              expect(n.value - n0.value, `${target}: ${r0} → ${want}`).toBe(profBonus(want, level) - profBonus(r0, level));
+              if (want !== r0 && r0 !== 'untrained' && want !== 'untrained') expect(Math.abs(n.value - n0.value)).toBe(2);
+              expect(n.sum, `breakdown of ${target} after ${kindId} ${given}`).toBe(n.value);
+              // Nothing else moved: every other track keeps its rank.
+              const others = (x: Character) => JSON.stringify({ ...x.proficiencies, skills: { ...x.proficiencies.skills, [key]: null }, saves: { ...x.proficiencies.saves, [key]: null }, attacks: { ...x.proficiencies.attacks, [key]: null }, defenses: { ...x.proficiencies.defenses, [key]: null }, perception: key === 'perception' ? null : x.proficiencies.perception, classDc: key === 'classDc' ? null : x.proficiencies.classDc });
+              expect(others(c)).toBe(others(c0));
+            }
+          });
+        }
+      }
+    });
+  }
+}

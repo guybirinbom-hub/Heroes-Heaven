@@ -1,10 +1,12 @@
 /*
- * THE ONE READER of the tweak NUMBER blocks a character carries (`overrides.blocks`), for the term lists
- * in derive.ts and the attribute seam in build.ts.
+ * THE ONE READER of the tweak blocks that reach a character through the block seams: the NUMBER blocks
+ * (`overrides.blocks`), for the term lists in derive.ts and the attribute seam in build.ts, and the RANK
+ * blocks (`overrides.proficiencies` entries whose meta says "at least" / "exactly"), for the rank seams
+ * in build.ts (Building blocks item 8).
  *
- * Design: docs/overrides-redesign.md, spec items 2 and 4, Building blocks items 4–6. A block reaches a
- * number only when ALL of these hold:
- *   - its kind is registered with `applies: 'blocks'` and is a number or score kind;
+ * Design: docs/overrides-redesign.md, spec items 2 and 4, Building blocks items 4–6 and 8. A block
+ * reaches the character only when ALL of these hold (`blockLive` + `tweaksSwitchOn`, one copy for both):
+ *   - its kind is registered with `applies: 'blocks'` and accepts targets of one aspect;
  *   - it is on (not paused) and not `broken` (decision 13: a broken block is listed, never applied);
  *   - its start level (`gate.startLevel`) is at or below the character's level (spec item 9);
  *   - its target is one this phase builds (`targetBuilt`);
@@ -19,7 +21,7 @@
  */
 import type { AbilityId, BuildOverrides, CharacterOptions } from '../types';
 import { blockKind, type BlockInstance } from './registry';
-import { parseStoredBlocks } from './stored';
+import { parseStoredBlocks, readLegacyBlocks } from './stored';
 import { targetBuilt } from './targets';
 import type { Term } from './terms';
 
@@ -52,17 +54,56 @@ function parsedBlocks(list: unknown): BlockInstance[] {
   return got;
 }
 
+/** One block, the master switch aside: an applying kind, on, not broken, at or past its start level, on
+ *  a target this phase builds. The ONE copy of these rules — number and rank blocks both read it. */
+function blockLive(b: BlockInstance, h: TweakHost): boolean {
+  const def = blockKind(b.kind);
+  if (!def || def.applies !== 'blocks' || !('aspect' in def.accepts)) return false;
+  if (!b.on || b.broken || !b.target) return false;
+  if ((b.gate?.startLevel ?? 1) > (h.level ?? 1)) return false;
+  return targetBuilt(b.target, def.accepts.aspect);
+}
+
 /** Every active number or score block the character carries (see the header for "active"). */
 export function activeNumberBlocks(h: TweakHost): BlockInstance[] {
   const ov = h.overrides;
   if (!ov || ov.blocks === undefined || !tweaksSwitchOn(h)) return [];
-  return parsedBlocks(ov.blocks).filter((b) => {
-    const def = blockKind(b.kind);
-    if (!def || def.applies !== 'blocks' || !('aspect' in def.accepts)) return false;
-    if (!b.on || b.broken || typeof b.value !== 'number' || !b.target) return false;
-    if ((b.gate?.startLevel ?? 1) > (h.level ?? 1)) return false;
-    return targetBuilt(b.target, def.accepts.aspect);
-  });
+  return parsedBlocks(ov.blocks).filter((b) => typeof b.value === 'number' && blockLive(b, h));
+}
+
+/**
+ * The rank tweaks of `overrides.proficiencies`, sorted by the stored reader (stored.ts
+ * `readLegacyBlocks`: meta `mode` with a matching `of`).
+ *   - `sorted`: the `overrides.proficiencies` KEYS that are 'rank.atLeast' or 'rank.exactly' — live or
+ *     not. build.ts's old `=` loop skips exactly these; every other entry is 'rank.legacySet' and keeps
+ *     today's `=` (checker C2), whatever this reader says about it.
+ *   - `atLeast` / `exactly`: of those, the live ones (on, not broken, at or past the start level, target
+ *     built, master switch on), each with its `rank` and its target (`skill:<key>` with a Lore keyed by
+ *     `loreKey`, `save:<save>`, `perception`, `class-dc`, `weapon:<category>`, `armor:<category>`).
+ */
+export interface RankTweaks {
+  sorted: ReadonlySet<string>;
+  atLeast: BlockInstance[];
+  exactly: BlockInstance[];
+}
+const NO_RANK_TWEAKS: RankTweaks = { sorted: new Set(), atLeast: [], exactly: [] };
+const PROFICIENCIES_KEY = 'proficiencies:';
+
+export function rankTweaks(h: TweakHost): RankTweaks {
+  const ov = h.overrides;
+  // No meta, no mode: every entry is 'rank.legacySet' (an old character, today's `=`).
+  if (!ov?.meta || !ov.proficiencies || typeof ov.proficiencies !== 'object') return NO_RANK_TWEAKS;
+  const sorted = new Set<string>();
+  const atLeast: BlockInstance[] = [];
+  const exactly: BlockInstance[] = [];
+  const on = tweaksSwitchOn(h);
+  for (const b of readLegacyBlocks(ov)) {
+    if ((b.kind !== 'rank.atLeast' && b.kind !== 'rank.exactly') || !b.key.startsWith(PROFICIENCIES_KEY)) continue;
+    sorted.add(b.key.slice(PROFICIENCIES_KEY.length));
+    if (!on || !b.rank || !blockLive(b, h)) continue;
+    (b.kind === 'rank.atLeast' ? atLeast : exactly).push(b);
+  }
+  return sorted.size ? { sorted, atLeast, exactly } : NO_RANK_TWEAKS;
 }
 
 /** One block as a term of its number's list (layer 'tweak', slot from the registry). */

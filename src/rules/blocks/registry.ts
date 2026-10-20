@@ -218,6 +218,8 @@ const REGISTRY_TEST = 'test/blocks-registry.test.ts';
 /** The applying kinds' own tests (part A, Building blocks items 4–6). */
 const SET_POOLING_TEST = 'test/blocks-set-pooling.test.ts';
 const GENERIC_STEP_TEST = 'test/blocks-generic-step.test.ts';
+/** The rank seams' own test (Building blocks item 8); the generic step test covers each rank kind too. */
+const RANK_SEAMS_TEST = 'test/blocks-rank-seams.test.ts';
 
 export const BLOCK_KINDS: BlockKindDef[] = [
   {
@@ -350,14 +352,17 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     accepts: { aspect: 'rank', kinds: RANK_TRACKS },
     sources: ['book', 'tweak', 'homebrew'],
     // Item 10: a background's printed training is read as book blocks (blocks/book.ts
-    // backgroundTrainings) by the build, the Builder card and the skill timeline. The tweak side is
-    // still the legacy `overrides.proficiencies` (applies: 'legacy').
+    // backgroundTrainings) by the build, the Builder card and the skill timeline. The tweak side is an
+    // `overrides.proficiencies` entry whose meta says mode 'atLeast' (stored.ts sorts it).
     bookFields: ['trainedSkill', 'trainedLore'],
     line: (b) => bookOr(b, `at least ${b.rank ?? '?'}`),
     editor: { place: 'main', menus: ['Rank (skill, save…)', 'Add a Lore'], parts: ['target', 'rank', 'level', 'reason'], built: false },
     missing: 'show-broken',
-    applies: 'legacy',
-    test: REGISTRY_TEST,
+    // Item 8, the rank seams in buildCharacter, read through blocks/active.ts `rankTweaks`: a skill or
+    // Lore floor seeded before the skill-increase loop (start level inside the loop); a save,
+    // Perception, class DC, weapon or armor floor with maxRank at the old override loop.
+    applies: 'blocks',
+    test: RANK_SEAMS_TEST,
   },
   {
     id: 'rank.exactly',
@@ -372,8 +377,10 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     line: (b) => `Tweak: exactly ${b.rank ?? '?'}${why(b)}`,
     editor: { place: 'main', menus: ['Rank (skill, save…)'], parts: ['target', 'rank', 'level', 'reason'], built: false },
     missing: 'show-broken',
-    applies: 'legacy',
-    test: REGISTRY_TEST,
+    // Item 8: ONE clamp just before buildCharacter's Character literal, after every maxRank raise
+    // (blocks/active.ts `rankTweaks`). Its limit (checker C16) is written beside the clamp.
+    applies: 'blocks',
+    test: RANK_SEAMS_TEST,
   },
   {
     // An old `overrides.proficiencies` entry with no "at least" / "exactly" recorded. Today's override

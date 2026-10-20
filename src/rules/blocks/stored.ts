@@ -15,6 +15,7 @@
  *
  * Reading is never an edit (checker C4): nothing here writes, and part A never writes `overrides.v`.
  */
+import { loreKey } from '../loreKey';
 import type { BuildOverrides, TweakMeta } from '../types';
 import { PROFICIENCY_RANKS } from '../types';
 import { blockKind, type BlockInstance } from './registry';
@@ -164,13 +165,23 @@ const RANK_SET = new Set<string>(PROFICIENCY_RANKS);
 
 /** A proficiencies key → the target key, the same split as build.ts's override loop: `perception` and
  *  `classDc` are their own stats, a save, weapon or armor track is that rank track, anything else is a
- *  skill or `lore:<slug>`. */
-function proficiencyTarget(key: string): string {
+ *  skill or a Lore. A Lore keys through `loreKey` (spec item 11), so a stored `lore:Sailing Lore` is the
+ *  target `skill:lore:sailing` — the same row as a background's Sailing Lore; null when the subject is
+ *  nothing but the word "Lore".
+ *  ONLY for a rank block ('rank.atLeast' / 'rank.exactly', `rankBlock`): an old 'rank.legacySet' entry is
+ *  still written by build.ts's untouched `=` loop under its RAW key (`lore:Sailing Lore`, even `lore:Lore`),
+ *  so its target stays the raw `skill:<key>` it really changes and it is never called broken for it. Part
+ *  B's read-time migration (legacySet → atLeast / exactly) is what moves such a row onto the loreKey row. */
+function proficiencyTarget(key: string, rankBlock: boolean): string | null {
   if (key === 'perception') return 'perception';
   if (key === 'classDc') return 'class-dc';
   if (['fortitude', 'reflex', 'will'].includes(key)) return `save:${key}`;
   if (['unarmed', 'simple', 'martial', 'advanced'].includes(key)) return `weapon:${key}`;
   if (['unarmored', 'light', 'medium', 'heavy'].includes(key)) return `armor:${key}`;
+  if (rankBlock && key.startsWith('lore:')) {
+    const lore = loreKey(key);
+    return lore ? `skill:${lore}` : null;
+  }
   return `skill:${key}`;
 }
 
@@ -216,7 +227,9 @@ export function readLegacyBlocks(ov: BuildOverrides | undefined): BlockInstance[
     const m = meta[`proficiencies:${k}`];
     const mode = m && (m.of == null || m.of === r) ? m.mode : undefined;
     const kind = mode === 'atLeast' ? 'rank.atLeast' : mode === 'exactly' ? 'rank.exactly' : 'rank.legacySet';
-    push(kind, `proficiencies:${k}`, String(r), { target: proficiencyTarget(k), ...(RANK_SET.has(r) ? { rank: r } : { broken: `the rank "${String(r)}" is not a proficiency rank` }) });
+    const target = proficiencyTarget(k, kind !== 'rank.legacySet');
+    const broken = !RANK_SET.has(r) ? `the rank "${String(r)}" is not a proficiency rank` : !target ? `"${k}" names no Lore subject` : undefined;
+    push(kind, `proficiencies:${k}`, String(r), { ...(target ? { target } : {}), ...(RANK_SET.has(r) ? { rank: r } : {}), ...(broken ? { broken } : {}) });
   }
   // build.ts reads `maxHp == null` as "no set", so a stored null is no tweak at all.
   if (ov.maxHp != null) {

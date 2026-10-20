@@ -74,7 +74,7 @@ import { activeCasterArchetype, archetypeBook, archetypeBookMaxRank, archetypeCa
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
 import { apparitionSlots, bookCantripCapacity, bookNoun, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
-import { scoreAddBlocks } from './blocks/active';
+import { rankTweaks, scoreAddBlocks } from './blocks/active';
 import { backgroundTrainings, bookBlocksOf, growingValue, standingNumberBlocks } from './blocks/book';
 import { loreKey } from './loreKey';
 
@@ -1692,6 +1692,24 @@ const WEAPON_TRACKS: readonly string[] = ['unarmed', 'simple', 'martial', 'advan
 const ARMOR_TRACKS: readonly string[] = ['unarmored', 'light', 'medium', 'heavy'];
 // Weapon-GROUP advancement tracks (alchemist bombs, gunslinger firearms) → proficiencies.weaponGroups.
 const WEAPON_GROUP_TRACKS: readonly string[] = ['bomb', 'firearm', 'crossbow'];
+
+/**
+ * A Tweaks rank block's target (blocks/targets.ts: `perception`, `class-dc`, `save:<save>`,
+ * `weapon:<category>`, `armor:<category>`, `skill:<skill or lore:slug>`) → that track's rank in the
+ * proficiency block, replaced by `update(current)`. The same tracks today's override loop routes; a
+ * category rank, as there, does not reach weapon-GROUP ranks or one weapon's own rank.
+ */
+function updateTrackRank(p: Proficiencies, target: string, update: (cur: ProficiencyRank) => ProficiencyRank): void {
+  const i = target.indexOf(':');
+  const kind = i < 0 ? target : target.slice(0, i);
+  const detail = i < 0 ? '' : target.slice(i + 1);
+  if (kind === 'perception') p.perception = update(p.perception);
+  else if (kind === 'class-dc') p.classDc = update(p.classDc);
+  else if (kind === 'save' && SAVE_TRACKS.includes(detail)) p.saves[detail as SaveId] = update(p.saves[detail as SaveId]);
+  else if (kind === 'weapon' && WEAPON_TRACKS.includes(detail)) p.attacks[detail as WeaponCategory] = update(p.attacks[detail as WeaponCategory]);
+  else if (kind === 'armor' && ARMOR_TRACKS.includes(detail)) p.defenses[detail as ArmorCategory] = update(p.defenses[detail as ArmorCategory]);
+  else if (kind === 'skill' && detail) p.skills[detail as ProficiencyKey] = update(p.skills[detail as ProficiencyKey] ?? 'untrained');
+}
 
 /** Apply one advancement entry to the proficiency block / spellcasting entries (never lowers). */
 function applyAdvancement(
@@ -5251,6 +5269,38 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   }
   for (const key of languageLores) (skills[key] = 'trained'), lock(key, LANGUAGE_LORE_SOURCE);
 
+  /*
+   * TWEAKS — THE RANK SEAMS (docs/overrides-redesign.md, spec item 5, Building blocks item 8).
+   *
+   * An `overrides.proficiencies` entry whose `overrides.meta['proficiencies:<key>'].mode` (with a
+   * matching `of`) says "at least" or "exactly" is a rank block, read through the ONE reader
+   * (blocks/active.ts `rankTweaks`: on, not broken, at or past its start level, Tweaks switch on).
+   * Every other entry is 'rank.legacySet' and keeps today's `=` loop below, untouched (checker C2: part A
+   * moves no number except case D). Three seams, each in the place its kind belongs:
+   *   1. HERE — "at least" on a skill or Lore is a FLOOR seeded before the skill-increase loop, the way
+   *      `languageLores` seeds its Lores just above, so the increases step up FROM it: "at least
+   *      trained" plus the 3rd-level increase is expert (spec 2 case A). Its start level is honoured
+   *      INSIDE the loop: a floor "from level 5" lifts the rank only when the loop reaches 5, so a
+   *      3rd-level increase still steps from the rank before it. Its key is the stored reader's target,
+   *      a Lore keyed by `loreKey`, so it lands on the same row as a background's Lore of that subject.
+   *      No `lock()`: the class-skill picks it would guard ran above, and today's loop locked nothing.
+   *   2. At today's override loop — "at least" on a save, Perception, class DC, weapon or armor track,
+   *      with `maxRank`, after the class raises.
+   *   3. Just before the Character literal — "exactly", ONE clamp after every raise.
+   */
+  const rankTw = rankTweaks({ overrides: build.overrides, options: build.options, level });
+  /** The skill and Lore floors by the level the loop applies them at (a start level, or 1). */
+  const skillFloorsAt = new Map<number, { key: ProficiencyKey; rank: ProficiencyRank }[]>();
+  for (const b of rankTw.atLeast) {
+    if (!b.target?.startsWith('skill:') || !b.rank) continue;
+    const at = Math.max(1, b.gate?.startLevel ?? 1);
+    skillFloorsAt.set(at, [...(skillFloorsAt.get(at) ?? []), { key: b.target.slice('skill:'.length) as ProficiencyKey, rank: b.rank }]);
+  }
+  const applySkillFloors = (at: number) => {
+    for (const f of skillFloorsAt.get(at) ?? []) skills[f.key] = maxRank(skills[f.key] ?? 'untrained', f.rank);
+  };
+  applySkillFloors(1);
+
   // Skill increases, applied in ascending level order so multiple increases to
   // the same skill stack correctly and each is capped by its own level.
   const siLevels = cls?.skillIncreaseLevels ?? SKILL_INCREASE_LEVELS;
@@ -5274,6 +5324,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const skillsBeforeIncreases = { ...skills };
   const skillIncreases: SkillIncrease[] = [];
   for (let lvl = 1; lvl <= level; lvl++) {
+    // Rank seam 1, a start level above 1: the floor lands before this level's own increases.
+    if (lvl > 1) applySkillFloors(lvl);
     for (const [stored, restrict] of [
       [siLevels.includes(lvl) ? build.skillIncreases[lvl] : undefined, null],
       [bonusSiLevels.includes(lvl) ? build.bonusSkillIncreases?.[lvl] : undefined, bonusSiRestrict],
@@ -6816,12 +6868,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Keys route by track: perception/classDc (scalar), a save, a weapon/armor category, else a skill
   // id or `lore:<subject>` (assigning a brand-new key just adds that proficiency).
   for (const [key, rank] of Object.entries(build.overrides?.proficiencies ?? {})) {
+    // An entry sorted as "at least" / "exactly" never takes this `=` — paused, broken or not — it is a
+    // rank block (the seams above and below). Every other entry ('rank.legacySet') is set as before.
+    if (rankTw.sorted.has(key)) continue;
     if (key === 'perception') proficiencies.perception = rank;
     else if (key === 'classDc') proficiencies.classDc = rank;
     else if (SAVE_TRACKS.includes(key)) proficiencies.saves[key as SaveId] = rank;
     else if (WEAPON_TRACKS.includes(key)) proficiencies.attacks[key as WeaponCategory] = rank;
     else if (ARMOR_TRACKS.includes(key)) proficiencies.defenses[key as ArmorCategory] = rank;
     else proficiencies.skills[key as ProficiencyKey] = rank;
+  }
+  /* Rank seam 2 — "at least" on a save, Perception, class DC, weapon or armor track (spec item 5): a
+   * FLOOR, here where today's loop sets ranks, after the class raises above, so a class rank already
+   * past it stays (a fighter's master Fortitude is not lowered by "at least expert"). A raise below
+   * still lifts it further. A skill's or Lore's floor was seeded before the skill increases (seam 1). */
+  for (const b of rankTw.atLeast) {
+    if (!b.target || !b.rank || b.target.startsWith('skill:')) continue;
+    const floor = b.rank;
+    updateTrackRank(proficiencies, b.target, (cur) => maxRank(cur, floor));
   }
 
   // The background's granted skill feat, then every feat picked in a level slot
@@ -7354,13 +7418,29 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * moment the record was taken, and the final ranks contain answers the character gave later —
      * a 3rd-level increase spent on the skill a 1st-level feat's own answer trains is the case.
      * Omitted (the Stonemason's Eye caller) it reads the built ranks exactly as before. */
+    /* …and a Tweaks "at least" floor whose start level is above 1 (rank seam 1) is replayed in the
+     * loop's own order — before the increases of its level — so "trained at 5th?" sees a floor from 5
+     * and not one from 7. A floor from level 1 is already in `skillsBeforeIncreases`. With no such
+     * floor this is the plain replay of the increases, as before. */
+    const laterFloorsOf = (skill: ProficiencyKey, asOf: number) =>
+      [...skillFloorsAt]
+        .filter(([at]) => at > 1 && at <= asOf)
+        .sort((a, b) => a[0] - b[0])
+        .flatMap(([at, fs]) => fs.filter((f) => f.key === skill).map((f) => ({ at, rank: f.rank })));
+    const replayedRank = (skill: ProficiencyKey, asOf: number): ProficiencyRank => {
+      const floors = skillFloorsAt.size ? laterFloorsOf(skill, asOf) : [];
+      let r: ProficiencyRank = skillsBeforeIncreases[skill] ?? 'untrained';
+      let i = 0;
+      for (const si of skillIncreases) {
+        if (si.skill !== skill || si.level > asOf) continue;
+        while (i < floors.length && floors[i].at <= si.level) r = maxRank(r, floors[i++].rank);
+        r = stepRank(r, skillIncreaseCap(si.level));
+      }
+      while (i < floors.length) r = maxRank(r, floors[i++].rank);
+      return r;
+    };
     const skillRankHere = (skill: ProficiencyKey, exceptId: string | undefined, asOf?: number): ProficiencyRank => {
-      let best =
-        asOf == null
-          ? proficiencies.skills[skill] ?? 'untrained'
-          : skillIncreases
-              .filter((si) => si.skill === skill && si.level <= asOf)
-              .reduce((r, si) => stepRank(r, skillIncreaseCap(si.level)), skillsBeforeIncreases[skill] ?? 'untrained');
+      let best = asOf == null ? proficiencies.skills[skill] ?? 'untrained' : replayedRank(skill, asOf);
       for (const f of feats) {
         if (f.featId === exceptId || (asOf != null && f.level > asOf)) continue;
         const g = grantsFor(f.featId);
@@ -10726,6 +10806,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       }
     }
   }
+  /* Tweaks rank seam for a CASTING ENTRY's own rank (feature 49): NOT BUILT, on purpose. Its target
+   * (`spell@casting-entry:<id>`, rank aspect) is phase 5 (blocks/targets.ts, `built: false`), and
+   * `overrides.proficiencies` cannot hold it (a key there that is no track becomes a fake skill), so no
+   * stored entry can reach it in phase 1. When phase 5 builds it, its "at least" floor goes HERE — after
+   * `entryRetune`, where the entries are final — and its "exactly" joins the clamp before the Character. */
 
   // Resolve the subclass + extra-choice picks (bloodline, ikons, apparitions, …) for
   // display on the sheet, so the choices are visible character abilities.
@@ -11095,6 +11180,30 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const ownedClassChoices = suppressedPickIds.size
     ? classChoices.filter((r) => !r.id || !suppressedPickIds.has(r.id))
     : classChoices;
+
+  /*
+   * Rank seam 3 — "exactly" (spec item 5, Building blocks item 8): ONE clamp, here, after EVERY raise
+   * above — class advancement, the override loop's floors, added feats, FEAT_GRANTS and the other feat,
+   * feature and archetype grants, the class-feature skill progressions (Warfare Expertise) — so a rank
+   * the player set stays set, a lowered one included (spec 2 case B). Before this seam a later
+   * FEAT_GRANTS raise could undo a rank the player lowered.
+   *
+   * ⚠ ITS LIMIT (checker C16): the clamp runs LAST, so every in-build reader that ran before it saw the
+   * RAISED rank and its decision stands — `skillRankHere` ("already trained?" for the rank-gated feat
+   * grants), the redundant-training fallbacks (`skillFallbacks`, "already trained, pick another"), the
+   * conditional grants keyed on a rank. E.g. "exactly untrained" in a skill a feat also trains still lets
+   * that feat's "if you're already trained" clause fire. The stored rank is the held one, but two
+   * derive-time readers still beat it on the sheet: a gunslinger's firearm / crossbow ranks
+   * (`proficiencies.firearmProf`, which derive.ts deriveStrike takes when better than the category rank)
+   * and a daily-preparation skill pick (derive.ts `dailySkillRank`: Ancestral Longevity and the like
+   * raise the shown skill rank above the stored one). The reverse build cannot tell a class-skill pick
+   * from a rank this clamp or a floor made (see deriveBuildFromCharacter's 'granted' rebuild).
+   */
+  for (const b of rankTw.exactly) {
+    if (!b.target || !b.rank) continue;
+    const held = b.rank;
+    updateTrackRank(proficiencies, b.target, () => held);
+  }
 
   /* Set by the language list below when the Lores above would leave the languages the player picked
    * without a slot. The languages win — a Lore only ever takes an Int slot no picked language needs —

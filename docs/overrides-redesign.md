@@ -656,6 +656,31 @@ by a second agent and a checker; counts marked "about" were not).
 8. **Rank order.** "At least" is a floor seeded before the skill-increase loop; "exactly" is a final
    clamp AFTER every `maxRank` raise. Today FEAT_GRANTS raises run after the rank override and can undo a
    rank the player lowered.
+   **As built (2026-10-20, `buildCharacter` rank seams 1–3, read through `blocks/active.ts`
+   `rankTweaks`; test `blocks-rank-seams`, plus the rank kinds in `blocks-generic-step`):**
+   - Only an `overrides.proficiencies` entry whose meta says `mode: 'atLeast'` or `'exactly'` (with a
+     matching `of`) is a rank block; every other entry (`rank.legacySet`) keeps today's `=` loop.
+   - Skill and Lore floors are seeded right after `languageLores`, before the skill increases; a start
+     level lands the floor inside the loop, before that level's increases (the "already trained when
+     taken" replay, `skillRankHere(…, asOf)`, replays it the same way). A Lore keys through `loreKey`.
+   - Save, Perception, class DC, weapon and armor floors use `maxRank` right after today's override
+     loop (after the class raises). A class archetype's armor or weapon ceiling later can still lower
+     them, as it lowers today's `=`.
+   - The "exactly" clamp runs last, just before the Character literal, so in-build readers that ran
+     before it (`skillRankHere`, the redundant-training fallbacks, rank-gated grants) see the raised
+     rank and their decisions stand (checker C16). The stored rank is the held one; two derive-time
+     readers still beat it on the sheet: a gunslinger's firearm / crossbow ranks (`firearmProf`, taken
+     by `deriveStrike` when better) and a daily-preparation skill pick (`dailySkillRank`: Ancestral
+     Longevity, Expert Longevity, Ageless Spirit and the like).
+   - A category rank does not reach weapon-group ranks or one weapon's own rank (as today's `=`). A
+     casting entry's own rank is phase 5 (its target is unbuilt); its seam is marked after `entryRetune`.
+   - An old `rank.legacySet` Lore entry keeps its RAW target (`skill:lore:Sailing Lore`, the row the `=`
+     loop writes), never "broken"; only a rank block keys its Lore through `loreKey`.
+   - The reverse build (`deriveBuildFromCharacter`, used only when no stored build exists) reads the
+     class-skill picks from the final ranks, and those cannot tell a pick from a floor or a hold: a skill
+     a live rank tweak covers comes back as "granted", not as a pick (no pick is ever invented; a real
+     pick under the tweak is lost, as with today's `=`). Pinned in `blocks-rank-seams`; part B keeps the
+     stored build on every edit path.
 9. **Given works like picked — for FEATS in phase 1 (fix case D, spec 2).** A feat given by a tweak must
    work exactly like the same feat picked in a slot. Known break (chat-todo, 2026-10-16): Flexible
    Spellcaster Dedication given through Overrides is ignored, because `classArchetypeSpellMods` loops
