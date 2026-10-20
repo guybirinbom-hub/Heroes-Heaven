@@ -2,6 +2,7 @@ import { applyOverrides, buildCharacter } from '../rules/build';
 import type { Character, ContentDatabase } from '../rules/types';
 import type { SavedChar } from './storage';
 import { CARRIED_CHARACTER_FIELDS } from './authored';
+import { loadOwnTombstones, ownContent, type OwnTombstones } from './carried';
 
 /**
  * Fields the engine derives fresh on every build/rebuild but does NOT own: they live only on the
@@ -39,12 +40,19 @@ export function carryStoredOverrides(fresh: Character, stored: Character | undef
  * 0 for every build now (new characters start with no gold), so there is nothing left for a refresh to
  * correct — and any real wallet a character was given outside the build (an import) lives here until
  * Play mode's own `play.currency` takes over, so overwriting it on every launch would just erase it.
+ *
+ * Each character is re-derived against ITS OWN view of the database (./carried.ts `ownContent`): the
+ * custom records it carries fill whatever this device's content lacks (owner ruling 2026-10-20 — a
+ * GM-made item or feat a push brought). The stored `character` is re-derived here and then PUBLISHED,
+ * so a carried feat left out of this rebuild would drop off the sheet every teammate reads.
  */
-export function rebuildRoster(roster: SavedChar[], content: ContentDatabase): SavedChar[] {
+export function rebuildRoster(roster: SavedChar[], content: ContentDatabase, tombstones?: OwnTombstones): SavedChar[] {
+  // Read once per rebuild, and only when some character carries anything.
+  const tomb = tombstones ?? (roster.some((c) => c.carried) ? loadOwnTombstones() : undefined);
   return roster.map((c) => {
     if (!c.build) return c;
     try {
-      const fresh = buildCharacter(c.build, applyOverrides(content, c.build.overrides));
+      const fresh = buildCharacter(c.build, applyOverrides(ownContent(content, c, tomb), c.build.overrides));
       return { ...c, character: carryStoredOverrides(fresh, c.character) };
     } catch (e) {
       console.warn(`[HeavesRebuild] kept the stored snapshot for "${c.character?.name ?? c.id}" — rebuild threw:`, e);

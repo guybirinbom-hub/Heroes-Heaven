@@ -11,9 +11,13 @@ import { downloadText, fileSlug } from './download';
 import { pushGmEdit, fetchPublishedSheet } from '../data/party';
 import { confirmDialog, chooseDialog } from './confirm';
 import { acknowledgeGmEditRefused, gmEditRefused, gmHeldEdit, gmPendingEdit, gmPendingVersion, gmUpdateBase, reconcileGmWork, subscribeGmPending } from './gmSync';
-import { canonicalJson } from '../data/authored';
+import { canonicalJson, sheetKey } from '../data/authored';
+import { foreignCarriedIds, foreignContent, freshModeId, repointMode } from '../data/carried';
+import { carryModePin } from '../data/prefs';
 import { memberConditions, type PartySummary } from './partySummary';
 import { carryStoredOverrides } from '../data/rebuild';
+import { ContentContext } from './ContentContext';
+import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModesRemoveFromCharacterContext } from './CopyOnWriteItems';
 
 /** The host's persisting homebrew writers, threaded App → CampaignsPage → (CampaignTracker |
  *  useMemberViewer) → GmEditSheet. See the props of the same names below. */
@@ -137,16 +141,25 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     if (!live) return;
     // Canonical JSON: the published sheet is jsonb, whose key order is its own — compared as written,
     // a sheet that came back unchanged read as "changed on the player's device" while dirty.
+    // `sheetKey`: and less the custom records it carries (../data/carried.ts, owner ruling 2026-10-20) —
+    // which copy of a record rode along is the sender's view, not a change to the character, so the
+    // player republishing with their own copy is never "changed on the player's device".
     const verdict = reconcileGmWork({
-      live: canonicalJson(live),
-      work: canonicalJson(work),
+      live: sheetKey(live),
+      work: sheetKey(work),
       dirty,
       // Our own last push, which now comes BACK through the pending overlay — never "the player
       // changed this while you were editing".
-      pushed: canonicalJson(baselineRef.current),
+      pushed: sheetKey(baselineRef.current),
     });
     if (verdict === 'in-step') {
       setPlayerAhead(null); // usually our own push echoing back
+      // The same character with newer copies of its records (the player edited one, or our push came
+      // back carrying ours): with nothing unsaved, take them, so this sheet draws what the player sees.
+      if (!dirty && canonicalJson(live.carried ?? null) !== canonicalJson(work.carried ?? null)) {
+        setWork(live);
+        baselineRef.current = live;
+      }
       return;
     }
     if (verdict === 'hold') {
@@ -181,38 +194,92 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
    * reported that we could not reproduce, still carrying the cause they gave it (so it stays locked
    * and nobody at the table can "fix" it by hand).
    */
+  /*
+   * The database every derivation here runs against: this GM's content with the custom records the
+   * player's sheet CARRIES winning over his own copies (../data/carried.ts foreignContent, owner ruling
+   * 2026-10-20: "the others should see the same item as the player"). Without it a player's homebrew
+   * item drew "Unknown item" here, a homebrew feat dropped off and a homebrew cantrip read "Empty
+   * cantrip". The same object as `content` when the sheet carries nothing.
+   */
+  const workCarried = work.carried;
+  const viewContent = useMemo(() => foreignContent(content, { carried: workCarried }), [content, workCarried]);
+
   const character = useMemo(() => {
     let live: ReturnType<typeof applyPlayState>;
     try {
-      live = applyPlayState(work.character, work.play, content);
+      live = applyPlayState(work.character, work.play, viewContent);
     } catch {
       live = work.character;
     }
     const conditions = memberConditions(live.conditions ?? [], summary?.conditions);
     return conditions === (live.conditions ?? []) ? live : { ...live, conditions };
-  }, [work.character, work.play, content, summary]);
+  }, [work.character, work.play, viewContent, summary]);
 
   const sheetContent = useMemo(
-    () => applyOverrides(content, work.character.overrides),
-    [content, work.character.overrides],
+    () => applyOverrides(viewContent, work.character.overrides),
+    [viewContent, work.character.overrides],
   );
 
   const updatePlay = (fn: (p: PlayState) => PlayState) => {
-    setWork((w) => ({ ...w, play: fn(reconcileFormulaBook({ ...initialPlay(w.character, content), ...(w.play ?? {}) }, w.character, content)) }));
+    setWork((w) => {
+      const view = foreignContent(content, w);
+      return { ...w, play: fn(reconcileFormulaBook({ ...initialPlay(w.character, view), ...(w.play ?? {}) }, w.character, view)) };
+    });
     setDirty(true);
   };
 
   // Local copy first (resolves at once in this sheet), then the host's persisting writer, so what the
   // GM authors or deletes here outlives the session (test/bug-gm-edit-homebrew-persists.test.tsx).
   const addCustomItem = (item: Item) => {
+    /*
+     * A record this character CARRIES (../data/carried.ts) is never edited in place here: the item
+     * editor COPIES it under a new id and repoints the instance (`copyOnWriteItems` below,
+     * ./CopyOnWriteItems.tsx), so what arrives here is a new record of his, sent like any item he makes.
+     * Writing an edit into the carried copy instead could reach nobody (2026-10-20, checker findings
+     * saving-C1 / semantics-C1: the push was 'settled' unapplied and his screen reverted after "Sent").
+     * Should a carried id still arrive (no control sends one now): one that is ONLY theirs (not in his own
+     * content) is never saved into HIS homebrew — owner ruling 2026-10-20, "i dont want it in the
+     * homebrew" — and the sheet is not marked changed for it.
+     */
+    if (work.carried?.items?.[item.id] && !content.items[item.id]) return;
     setContent((c) => ({ ...c, items: { ...c.items, [item.id]: item } }));
     onCreateItem?.(item);
   };
+  /** The item records this sheet draws from what it carries: copy-on-write in its editor, no delete in
+   *  its Add list. Less a fill-only record he holds himself (his own campaign-shared item, drawn from his
+   *  record — ../data/carried.ts foreignCarriedIds): that one he edits in place, and the share sends it. */
+  const copyOnWriteItems = useMemo(() => foreignCarriedIds(content, workCarried, 'items'), [content, workCarried]);
+  /** …and the same for the modes it carries (./CopyOnWriteItems.tsx CopyOnWriteModesContext). */
+  const copyOnWriteModes = useMemo(() => foreignCarriedIds(content, workCarried, 'modes'), [content, workCarried]);
   const saveModeDef = (mode: ModeDef) => {
+    /*
+     * A mode this sheet CARRIES is never edited in place (2026-10-20, checker findings saving-R2-chk-2 /
+     * coverage-R2-gm-mode-edit-dead): saved under its own id it went into HIS saved modes while the sheet
+     * kept drawing the carried copy (it wins in a foreign view) and the push sent the old one — the edit
+     * never showed and never reached the player, and a mode the PLAYER wrote landed in his synced modes.
+     * So, like a carried item (addCustomItem / ./CopyOnWriteItems.tsx): a COPY under a fresh id, his own
+     * mode now, and the sheet's active modes (its own and its companions') repointed to it — a real change
+     * to the sheet, which the push carries (owner ruling 2026-10-20: "the others should see the same item
+     * as the player"). The carried id never reaches his storage.
+     */
+    if (copyOnWriteModes.has(mode.id)) {
+      const old = mode.id;
+      const copy: ModeDef = { ...mode, id: freshModeId() };
+      setContent((c) => ({ ...c, modes: { ...c.modes, [copy.id]: copy } }));
+      onSaveMode?.(copy);
+      carryModePin(old, copy.id); // a pinned mode's copy stays pinned (2026-10-20, r3-R3-pin-lost-on-copy)
+      // The one repoint helper, shared with the player's own sheet (src/App.tsx, round 3, 2026-10-20).
+      setWork((w) => (w.play ? { ...w, play: repointMode(w.play, old, copy.id) } : w));
+      setDirty(true);
+      return;
+    }
     setContent((c) => ({ ...c, modes: { ...c.modes, [mode.id]: mode } }));
     onSaveMode?.(mode);
   };
   const removeModeDef = (id: string) => {
+    // A carried mode offers no Delete here (ModesPanel reads CopyOnWriteModesContext); should its id still
+    // arrive, nothing is deleted: his tombstone would not take it off the sheet, and it is not his to delete.
+    if (copyOnWriteModes.has(id)) return;
     setContent((c) => ({ ...c, modes: Object.fromEntries(Object.entries(c.modes).filter(([k]) => k !== id)) }));
     onDeleteMode?.(id);
   };
@@ -220,7 +287,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   const openBuilder = () => {
     let b: BuildState;
     try {
-      b = work.build ?? deriveBuildFromCharacter(work.character, content);
+      b = work.build ?? deriveBuildFromCharacter(work.character, viewContent);
     } catch {
       b = emptyBuild();
     }
@@ -228,7 +295,8 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   };
 
   const onCreate = (build: BuildState) => {
-    const built = buildCharacter(build, applyOverrides(content, build.overrides));
+    // Against the sheet's view: a carried feat the player picked stays a feat the rebuild knows.
+    const built = buildCharacter(build, applyOverrides(viewContent, build.overrides));
     setWork((w) => ({
       ...w,
       character: carryStoredOverrides(built, w.character),
@@ -306,7 +374,9 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
       base = proof.base;
       on = proof.on;
     }
-    const res = await pushGmEdit(campaignId, work.id, playerOwnerId, work, base, on);
+    // `content`: the push carries the custom records the sheet uses — his own (an item he made here) and
+    // the player's (`work.carried`) — so the player's device resolves them (owner ruling 2026-10-20).
+    const res = await pushGmEdit(campaignId, work.id, playerOwnerId, work, base, on, content);
     setBusy(false);
     if (!res.ok) {
       await confirmDialog({ title: 'Couldn’t update', message: res.error, confirmLabel: 'OK' });
@@ -394,18 +464,23 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   const doExport = async () => {
     try {
       // Awaited: on the Android app the save or share finishes later, and its failure belongs here.
-      await downloadText({ filename: `${fileSlug(work.character.name)}.codex.json`, text: exportNative(work) });
+      await downloadText({ filename: `${fileSlug(work.character.name)}.codex.json`, text: exportNative(work, viewContent) });
     } catch (e) {
       void confirmDialog({ title: 'Export failed', message: (e as Error).message, confirmLabel: 'OK' });
     }
   };
 
   if (editing) {
-    return <Builder content={content} initial={editing} onCancel={() => setEditing(null)} onCreate={onCreate} />;
+    return (
+      <ContentContext.Provider value={viewContent}>
+        <Builder content={viewContent} initial={editing} onCancel={() => setEditing(null)} onCreate={onCreate} />
+      </ContentContext.Provider>
+    );
   }
 
   return (
-    <>
+    // The sheet's popups and links resolve through the context: the same view, carried records included.
+    <ContentContext.Provider value={viewContent}>
       {/* Over the tracker both title bars are hidden, so the desktop app's minimise / maximise / close
           live here: a direct child of .ct-sheet-full, pinned to its top-right corner above the GM strip
           and the strips below (campaign-tracker.css). Inside the sheet's identity row they sat under
@@ -452,20 +527,31 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
           </button>
         </div>
       )}
-      <CharacterSheet
-        character={character}
-        content={sheetContent}
-        build={work.build}
-        charKey={work.id}
-        characters={[]}
-        onPlay={updatePlay}
-        onCreateItem={addCustomItem}
-        onSaveMode={saveModeDef}
-        onDeleteMode={removeModeDef}
-        onEdit={openBuilder}
-        gmEdit={{ onUpdate: () => void doUpdate(), onExport: () => void doExport(), busy, inTracker }}
-        onBack={() => void doExit()}
-      />
-    </>
+      {/* The player's carried item records are copy-on-write in this sheet's item editor (see addCustomItem),
+          and its carried modes in the Modes panel (see saveModeDef). ModesRemoveFromCharacterContext is set
+          back to false here (2026-10-20, final check round 3): the player's own sheet sets it true around
+          everything it draws, so a GM sheet ever opened from inside it would otherwise offer "Remove from
+          this character", which removeModeDef ignores for a carried mode — a button that does nothing. */}
+      <CopyOnWriteItemsContext.Provider value={copyOnWriteItems}>
+      <CopyOnWriteModesContext.Provider value={copyOnWriteModes}>
+      <ModesRemoveFromCharacterContext.Provider value={false}>
+        <CharacterSheet
+          character={character}
+          content={sheetContent}
+          build={work.build}
+          charKey={work.id}
+          characters={[]}
+          onPlay={updatePlay}
+          onCreateItem={addCustomItem}
+          onSaveMode={saveModeDef}
+          onDeleteMode={removeModeDef}
+          onEdit={openBuilder}
+          gmEdit={{ onUpdate: () => void doUpdate(), onExport: () => void doExport(), busy, inTracker }}
+          onBack={() => void doExit()}
+        />
+      </ModesRemoveFromCharacterContext.Provider>
+      </CopyOnWriteModesContext.Provider>
+      </CopyOnWriteItemsContext.Provider>
+    </ContentContext.Provider>
   );
 });

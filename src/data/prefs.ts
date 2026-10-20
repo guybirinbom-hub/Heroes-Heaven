@@ -98,6 +98,19 @@ export function togglePinnedMode(id: string): void {
   setPref('pinnedModes', cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id]);
 }
 
+/**
+ * A pinned mode that is edited copy-on-write (a mode only a character's `carried` holds — the player's own
+ * sheet, src/App.tsx saveOwnModeDef, and the GM's edit sheet, src/sheet/GmEditSheet.tsx saveModeDef) gets a
+ * fresh id; the pin, keyed by id, goes with it so the copy stays at the top of the Modes panel (2026-10-20,
+ * finding r3-R3-pin-lost-on-copy). The original id stays pinned: pins are device-global and another character
+ * on this device may still carry that same mode. Nothing happens when `from` was not pinned.
+ */
+export function carryModePin(from: string, to: string): void {
+  const cur = prefs.pinnedModes ?? [];
+  if (!cur.includes(from) || cur.includes(to)) return;
+  setPref('pinnedModes', [...cur, to]);
+}
+
 export function subscribePrefs(fn: (p: Prefs) => void): () => void {
   listeners.add(fn);
   return () => {

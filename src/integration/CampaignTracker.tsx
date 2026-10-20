@@ -21,7 +21,7 @@ import { CampaignMonsterPartsProvider } from '../../tracker/src/data/monsterPart
 import { CampaignPcStatsProvider, type HostPcBadge } from '../../tracker/src/data/pcStatsContext';
 import type { PcStats } from '../../tracker/src/utils/pcDetail';
 import { useCampaignDefaults } from './useCampaignDefaults';
-import { computePcStats } from './computePcStats';
+import { sheetPcStats } from './computePcStats';
 import { PcStatsCardExtra, PcSavesCells, hasRightColumn, cardCore } from './PcStatsCardExtra';
 import { MemberTurnButton } from './MemberTurnButton';
 import { useCombatStore, isSamePc } from '../../tracker/src/store/combatStore';
@@ -59,9 +59,10 @@ import { PartyMembers, PartyCard, useGmPendingVersion, useMyId, knownToBeOther, 
 import { gmEditRefused, gmPendingEdit, memberPublishedRow, pendingEditStillStands } from '../sheet/gmSync';
 import { type PartySummary } from '../sheet/partySummary';
 import { currentUserId, fetchParty, type PartyMember } from '../data/party';
+import { partyContent } from '../data/carried';
 import { useAuth } from '../data/useAuth';
 import { startTrackerSync, isTrackerSyncReady } from '../data/trackerSync';
-import { memberCardSummary, livePlay, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
+import { memberCardSummary, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
 import type { ContentDatabase, DescRef } from '../rules/types';
 import { useLocalCampaignMembers } from './useLocalCampaignMembers';
 import { TEST_CAMPAIGNS_WITHOUT_LOGIN } from './enabled';
@@ -491,7 +492,9 @@ export function CampaignTracker({
       if (!sheet) continue;
       // The PLAYED character, not the build: the numbers the GM reads have to be the ones on the
       // player's sheet right now — damage taken, conditions in effect.
-      const stats = computePcStats(livePlay(sheet, content), content);
+      // Both against the sheet's own view: its carried custom records (a homebrew shield's AC) count
+      // here exactly as on the player's sheet (../data/carried.ts, owner ruling 2026-10-20).
+      const stats = sheetPcStats(sheet, content);
       byName.set(mem.name.trim().toLowerCase(), stats);
       byId.set(mem.charId, stats);
     }
@@ -787,17 +790,25 @@ export function CampaignTracker({
   );
   // The index itself — names, older names, a detail line, no duplicate scrapes: hostSearchRecords.ts.
   const searchRecords = useMemo<HostSearchRecord[]>(() => hostSearchRecords(content), [content]);
+  /*
+   * What the windows and the GM screen's panes draw a page FROM: the GM's database with the records the
+   * party's sheets carry filling the ids it lacks — never over his own record or a printed one
+   * (../data/carried.ts partyContent). 2026-10-20, checker finding N2: a pin on the GM screen is its
+   * `bucket:id` alone, and a record only a player's sheet carries drew "This page is not in this version"
+   * there, with no star. The search still lists the GM's own database only.
+   */
+  const hostContent = useMemo(() => partyContent(content, sheetById.values()), [content, sheetById]);
   const hostSearch = useMemo(() => {
-    const open = (bucket: string, id: string, at?: OpenAt) => openHostWindow(content, bucket, id, at);
+    const open = (bucket: string, id: string, at?: OpenAt) => openHostWindow(hostContent, bucket, id, at);
     return {
       records: searchRecords,
       open,
       // The page in a window or a GM-screen pane: its links open another window where they were clicked.
-      render: (bucket: string, id: string) => <HostPage content={content} bucket={bucket} id={id} onOpen={open} />,
+      render: (bucket: string, id: string) => <HostPage content={hostContent} bucket={bucket} id={id} onOpen={open} />,
       // …and the popup's star, in that window's (or pane's) header.
-      controls: (bucket: string, id: string) => <HostPageControls content={content} bucket={bucket} id={id} />,
+      controls: (bucket: string, id: string) => <HostPageControls content={hostContent} bucket={bucket} id={id} />,
     };
-  }, [searchRecords, content]);
+  }, [searchRecords, hostContent]);
   // The star in every description popup here (findHostTab above).
   const gmRoot = useGmLayoutStore((s) => s.root);
   const gmPin = useMemo<PinDescApi>(() => ({

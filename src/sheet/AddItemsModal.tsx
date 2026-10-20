@@ -8,6 +8,7 @@ import { confirmDialog } from './confirm';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
 import { ITEM_SPEC } from './filterSpecs';
 import { TrustMarker } from './TrustMarker';
+import { useCopyOnWriteItems } from './CopyOnWriteItems';
 
 /** bug 2026-09-12 #7: homebrew-delete — an item THIS USER authored (or copy-on-wrote from a printed
  *  one), which is the only kind the delete control below may touch. Same two-part test the item
@@ -67,6 +68,7 @@ export function AddItemsModal({
   // desk shop-respects-sources (owner, 2026-09-29: "i want the shop to respect sources"): the shop offers
   // only the character's enabled books, like every Builder picker. Absent = Core only, as everywhere.
   const enabledBooks = useMemo(() => enabledBookSet(enabledSources), [enabledSources]);
+  const copyOnWrite = useCopyOnWriteItems();
   // Services rendered as look-only catalog rows: shape them as minimal "equipment" entries so they
   // pass the item filters, and keep the original (string price + the look-only flag) by id.
   const services = useMemo(() => Object.values(content.services ?? {}), [content]);
@@ -236,7 +238,11 @@ export function AddItemsModal({
                     Give
                   </button>
                   {/* bug 2026-09-12 #7: homebrew-delete — only on the rows this user authored. */}
-                  {onSaveItem && userAuthored(it) && (
+                  {/* Never on a record this view may only copy (./CopyOnWriteItems.tsx — the player's
+                      carried record on the GM's sheet, 2026-10-20): deleting it here could reach nobody.
+                      Nor on the player's own sheet for a GM-made item only the roster entry carries: its
+                      "retire" SAVES the record, which would put the GM's item in their homebrew (N1). */}
+                  {onSaveItem && userAuthored(it) && !copyOnWrite?.has(it.id) && (
                     <button className="del" title="Delete this item you created" aria-label={`Delete ${it.name}`} onClick={() => void retire(it)}>
                       <i className="ti ti-trash" aria-hidden="true" />
                     </button>

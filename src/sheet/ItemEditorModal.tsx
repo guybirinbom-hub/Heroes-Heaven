@@ -35,6 +35,7 @@ import { RichEditor } from './RichEditor';
 import { useIsMobile } from './useIsMobile';
 import { useEscapeClose } from './useEscapeClose';
 import { confirmDialog } from './confirm';
+import { useCopyOnWriteItems } from './CopyOnWriteItems';
 
 /* ---- option catalogs ---- */
 const ITEM_TYPES: { value: Item['itemType']; label: string }[] = [
@@ -471,6 +472,7 @@ export function ItemEditorModal({
   onClose: () => void;
 }) {
   useEscapeClose(onClose);
+  const copyOnWrite = useCopyOnWriteItems();
   const [d, setD] = useState<Draft>(() => (item ? fromItem(item) : defaults()));
   const [open, setOpen] = useState<Set<string>>(
     () => new Set(['additional', ...(item?.itemType ? [item.itemType] : []), ...(inv ? ['runes'] : [])]),
@@ -609,13 +611,19 @@ export function ItemEditorModal({
     };
     // Homebrew items (and copies) edit in place; editing a BUILT-IN item is copy-on-write —
     // mint a fresh id so only this character's instance (repointed by the caller) changes.
-    const editingHomebrew = mode === 'edit' && !!item && (item.source?.license === 'homebrew' || item.id.startsWith('custom-'));
+    const authoredRecord = mode === 'edit' && !!item && (item.source?.license === 'homebrew' || item.id.startsWith('custom-'));
+    // …and so is a record this view may only COPY (./CopyOnWriteItems.tsx: on the GM's edit sheet, a
+    // record the player's sheet carries — an in-place edit of it could reach nobody, 2026-10-20; on the
+    // player's own sheet, a GM-made item only the roster entry carries — an in-place edit would write the
+    // GM's record into their homebrew, finding N1).
+    const editingHomebrew = authoredRecord && !!item && !copyOnWrite?.has(item.id);
     /* The OFFICIAL record this copy came from — see `ItemBase.basedOn`. Without it a copy's own
      * `custom-…` id looks up nothing in the code tables keyed by item id, which is why a copied
      * Spellguard Shield starred no saves. Two gestures make a copy and both are recorded: the "Start
      * from an existing item…" picker above, and the copy-on-write that minting a new id out of an
-     * edit to a BUILT-IN already performs. */
-    const basedOn = baseId ?? (mode === 'edit' && item && !editingHomebrew ? item.id : undefined);
+     * edit to a BUILT-IN already performs. A copy of an AUTHORED record names no official one (its
+     * own `basedOn`, pre-filled into `baseId`, carries over). */
+    const basedOn = baseId ?? (mode === 'edit' && item && !authoredRecord ? item.id : undefined);
     const base = {
       id: editingHomebrew && item ? item.id : `custom-${slugify(name)}-${rand()}`,
       name,

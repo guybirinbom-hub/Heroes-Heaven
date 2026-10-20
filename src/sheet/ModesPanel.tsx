@@ -13,6 +13,7 @@ import {
 import { usePrefs, togglePinnedMode } from '../data/prefs';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { ModeDetailModal } from './ModeDetailModal';
+import { useCopyOnWriteModes, useModesRemoveFromCharacter } from './CopyOnWriteItems';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -75,6 +76,8 @@ export function ModesPanel({
   onDelete: (id: string) => void;
 }) {
   const prefs = usePrefs();
+  const copyOnWrite = useCopyOnWriteModes();
+  const removeFromCharacter = useModesRemoveFromCharacter();
   const [editing, setEditing] = useState<ModeDef | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [q, setQ] = useState('');
@@ -96,6 +99,9 @@ export function ModesPanel({
     : [{ id: null, name: 'All characters' }];
 
   if (editing) {
+    // A mode this view may only COPY (./CopyOnWriteItems.tsx): one the sheet carries rather than one of
+    // this device's own saved modes.
+    const copyOnly = !!copyOnWrite?.has(editing.id);
     return (
       <ModeEditor
         draft={editing}
@@ -109,11 +115,21 @@ export function ModesPanel({
           setEditing(null);
         }}
         onDelete={
-          library.some((m) => m.id === editing.id)
+          // Never on a copy-only mode on the GM's edit sheet: a mode the player's sheet carries — deleting it
+          // could reach nobody (2026-10-20, saving-R2-chk-2). On the player's OWN sheet a copy-only mode (one a
+          // GM push brought) is taken off this character instead (round 3, 2026-10-20, final finding N-a):
+          // never deleted from anyone's saved modes.
+          library.some((m) => m.id === editing.id) && (!copyOnly || removeFromCharacter)
             ? () => {
                 onDelete(editing.id);
                 setEditing(null);
               }
+            : undefined
+        }
+        deleteLabel={copyOnly ? 'Remove from this character' : undefined}
+        deleteTitle={
+          copyOnly
+            ? 'This mode came with the character and is not one of your saved modes. Removing it takes it off this character only.'
             : undefined
         }
       />
@@ -373,6 +389,8 @@ export function ModeEditor({
   onSave,
   onCancel,
   onDelete,
+  deleteLabel = 'Delete',
+  deleteTitle,
 }: {
   draft: ModeDef;
   catalog: ModeDef[];
@@ -385,6 +403,10 @@ export function ModeEditor({
   onCancel: () => void;
   /** Provided only when editing an existing custom mode — renders a Delete button. */
   onDelete?: () => void;
+  /** The Delete button's words and tooltip, when it does something narrower than delete the mode — "Remove
+   *  from this character" for a mode the sheet carries (ModesPanel, round 3, 2026-10-20). */
+  deleteLabel?: string;
+  deleteTitle?: string;
 }) {
   const targetOptions = useMemo(() => modeTargetOptions(lores), [lores]);
   const setMod = (i: number, patch: Partial<ModeModifier>) =>
@@ -485,8 +507,8 @@ export function ModeEditor({
 
       <div className="me-actions">
         {onDelete && (
-          <button className="btn-danger me-delete" onClick={onDelete}>
-            <i className="ti ti-trash" aria-hidden="true" /> Delete
+          <button className="btn-danger me-delete" title={deleteTitle} onClick={onDelete}>
+            <i className="ti ti-trash" aria-hidden="true" /> {deleteLabel}
           </button>
         )}
         <button className="btn-ghost" onClick={onCancel}>

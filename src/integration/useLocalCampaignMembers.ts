@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { loadRoster } from '../data/storage';
+import { ownContent } from '../data/carried';
 import { computeSummary } from '../sheet/partySummary';
 import type { PartyMember } from '../data/party';
 import type { ContentDatabase } from '../rules/types';
@@ -31,7 +32,9 @@ export function useLocalCampaignMembers(campaignId: string, content: ContentData
         ownerId: e.id,
         charId: e.id,
         name: e.character.name,
-        summary: computeSummary(e.character, content),
+        // This device's OWN characters, so their own view (../data/carried.ts ownContent): what one
+        // carries fills only what this device lacks, and a record deleted here stays deleted.
+        summary: computeSummary(e.character, ownContent(content, e)),
       }));
   }, [campaignId, content]);
 }

@@ -17,6 +17,8 @@ import {
 import { memberCardSummary, useMemberSheets } from './memberSheets';
 import { memberConditions, memberSummary, type PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
+import { ContentContext } from './ContentContext';
+import { foreignContent } from '../data/carried';
 import { GmEditSheet, type GmEditHandle, type GmHomebrewWriters } from './GmEditSheet';
 import { confirmDialog, type DialogStyle } from './confirm';
 import { RankPill } from './widgets';
@@ -294,10 +296,13 @@ export function useMemberViewer(
         </div>
       );
     } else {
-      // Read-only: derive the live character from the published SavedChar (play overlaid on the build).
+      // Read-only: derive the live character from the published SavedChar (play overlaid on the build) —
+      // against the sheet's own view, its carried custom records winning over this viewer's copies
+      // (../data/carried.ts, owner ruling 2026-10-20), so a teammate sees the item the player sees.
+      const view = foreignContent(content, viewing.sheet);
       let live;
       try {
-        live = applyPlayState(viewing.sheet.character, viewing.sheet.play, content);
+        live = applyPlayState(viewing.sheet.character, viewing.sheet.play, view);
       } catch {
         live = viewing.sheet.character;
       }
@@ -307,15 +312,18 @@ export function useMemberViewer(
       if (merged !== (live.conditions ?? [])) live = { ...live, conditions: merged };
       sheetEl = (
         <div className="party-viewer">
-          <CharacterSheet
-            character={live}
-            content={content}
-            charKey="party-member"
-            characters={[]}
-            readOnly
-            readOnlyNote={ownElsewhere ? `${live.name} — your character, published from another device` : undefined}
-            onBack={() => setViewing(null)}
-          />
+          {/* Popups and links resolve through the context: the same view. */}
+          <ContentContext.Provider value={view}>
+            <CharacterSheet
+              character={live}
+              content={view}
+              charKey="party-member"
+              characters={[]}
+              readOnly
+              readOnlyNote={ownElsewhere ? `${live.name} — your character, published from another device` : undefined}
+              onBack={() => setViewing(null)}
+            />
+          </ContentContext.Provider>
         </div>
       );
     }
@@ -538,12 +546,14 @@ export function PartyMembers({
         if (derived) return { member: { ...m, name: derived.name || m.name, summary: derived }, pending, refused };
         if (!pending || !edit || !content) return { member: m, pending, refused };
         try {
-          const live = applyPlayState(edit.sheet.character, edit.sheet.play, content);
+          // The edit's own view: the custom records it carries (../data/carried.ts) count here too.
+          const view = foreignContent(content, edit.sheet);
+          const live = applyPlayState(edit.sheet.character, edit.sheet.play, view);
           // `memberSummary`, so a pending edit does not cost the card everything only the PLAYER's
           // app could work out. A bare `computeSummary` here made pressing Update wipe a carried
           // "Encumbered" off the card for the whole pending window — the owner's original symptom,
           // re-created by the fix for the other half of it.
-          return { member: { ...m, name: live.name || m.name, summary: memberSummary(live, content, m.summary) }, pending, refused };
+          return { member: { ...m, name: live.name || m.name, summary: memberSummary(live, view, m.summary) }, pending, refused };
         } catch {
           return { member: m, pending, refused }; // a sheet that won't compute is never worth a broken card
         }

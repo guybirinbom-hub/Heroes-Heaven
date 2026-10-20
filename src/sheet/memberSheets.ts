@@ -19,12 +19,16 @@ import { fetchMemberSheet, subscribeMemberSheet, type PartyMember } from '../dat
 import { gmPendingEdit, gmPendingVersion, subscribeGmPending } from './gmSync';
 import { memberSummary, type PartySummary } from './partySummary';
 import type { SavedChar } from '../data/storage';
+import { foreignContent } from '../data/carried';
 import type { Character, ContentDatabase } from '../rules/types';
 
-/** What the sheet SHOWS: the build with play overlaid (damage taken, conditions in effect). */
+/** What the sheet SHOWS: the build with play overlaid (damage taken, conditions in effect) — against
+ *  the sheet's own view of the database, its carried custom records winning over this viewer's copies
+ *  (../data/carried.ts, owner ruling 2026-10-20: "the others should see the same item as the player").
+ *  A caller that already holds that view may pass it: a view of a view is the same object. */
 export function livePlay(sheet: SavedChar, content: ContentDatabase): Character {
   try {
-    return applyPlayState(sheet.character, sheet.play, content);
+    return applyPlayState(sheet.character, sheet.play, foreignContent(content, sheet));
   } catch {
     return sheet.character;
   }
@@ -49,7 +53,8 @@ export function livePlay(sheet: SavedChar, content: ContentDatabase): Character 
  * pushed, so a player's device has no overlay to fold in.
  */
 export function memberCardSummary(mem: PartyMember, sheet: SavedChar, content: ContentDatabase): PartySummary {
-  return memberSummary(livePlay(sheet, content), content, mem.summary);
+  const view = foreignContent(content, sheet);
+  return memberSummary(livePlay(sheet, view), view, mem.summary);
 }
 
 /**

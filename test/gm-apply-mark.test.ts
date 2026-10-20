@@ -24,7 +24,12 @@ describe('the GM-apply mark (App.tsx GM_APPLIED / GM_JUDGED)', () => {
   it('App defines both marks as plain unregistered symbols and writes them as ordinary enumerable properties', () => {
     expect(APP, 'GM_APPLIED is a plain Symbol').toMatch(/const GM_APPLIED = Symbol\('hh\.gmApplied'\);/);
     expect(APP, 'GM_JUDGED is a plain Symbol').toMatch(/const GM_JUDGED = Symbol\('hh\.gmJudged'\);/);
-    expect(APP, 'the written entry carries GM_APPLIED by a literal key').toMatch(/\{ \.\.\.k\.e\.sheet, id: c\.id, archived: c\.archived \?\? false, \[GM_APPLIED\]: mark \}/);
+    // 2026-10-20 (carried records, owner ruling "the others should see the same item as the player"): the
+    // written entry is now built from `keepCarried(k.e.sheet, …)` — the GM's sheet with `carried` cut to what
+    // this device cannot resolve itself — and spread over several lines. keepCarried hands back the sheet, a
+    // spread copy or a rest-copy of a JSON row (no symbol keys), so the mark is still only this literal key.
+    // mutation-proof: drop `[GM_APPLIED]: mark,` from the App.tsx object (or build it with defineProperty) and this goes red.
+    expect(APP, 'the written entry carries GM_APPLIED by a literal key').toMatch(/\{\s*\.\.\.keepCarried\(k\.e\.sheet, [^)]*\),\s*id: c\.id,\s*archived: c\.archived \?\? false,\s*\[GM_APPLIED\]: mark,?\s*\}/);
     expect(APP, 'the judged entry is marked by plain assignment').toMatch(/\(k\.judged as GmMarked\)\[GM_JUDGED\] = mark;/);
     expect(APP, 'never through defineProperty (non-enumerable — a spread would drop it)').not.toMatch(/defineProperty\([^)]*GM_(APPLIED|JUDGED)/);
     expect(APP, 'never a registered symbol').not.toMatch(/Symbol\.for\('hh\.gm/);

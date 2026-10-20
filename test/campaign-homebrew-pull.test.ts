@@ -372,6 +372,36 @@ describe('campaign homebrew pull — what the GM takes away becomes the player�
     expect(loadCampaignHbCache()['camp-1'].content.items ?? {}).toEqual({});
   });
 
+  it('a record a character only CARRIES is no use of it: never turned into the player’s own homebrew', async () => {
+    /*
+     * Owner ruling 2026-10-20: "i dont want it in the homebrew". A character's custom records ride along on
+     * the roster entry (`SavedChar.carried`, src/data/carried.ts) — a GM push brings them, a sheet resolves
+     * them from there. The conversion's "does a character use it" scan read the whole roster, so every id
+     * riding along counted as used, and an entry the GM deleted from a source he still shares became the
+     * player's own homebrew. A real use is named in the build or play too, and is found there (i1).
+     * mutation-proof: scan `JSON.stringify(loadRoster())` (not less `carried`) in campaignHomebrew's
+     * usedByRoster and this goes red: expected { id: 'i2', … } to be undefined.
+     */
+    sb.state.rows = [srcRow('camp-1', 'S1', 'GM Book'), entryRow('camp-1', 'items', 'i1', 'S1'), entryRow('camp-1', 'items', 'i2', 'S1')];
+    await refreshCampaignHomebrew();
+    saveRoster([
+      {
+        id: 'c1',
+        character: normalizeCharacter({ id: 'c1', name: 'Hero', inventory: [{ instanceId: 'inv-1', itemId: 'i1', quantity: 1 }] } as never),
+        play: normalizePlay({}),
+        // i2 rides along (a copy a GM push brought), and nothing on the character names it.
+        carried: { items: { i2: { id: 'i2', name: 'i2', traits: [], source: { license: 'homebrew' } } } } as never,
+      },
+    ]);
+    sb.state.rows = [srcRow('camp-1', 'S1', 'GM Book')]; // the GM deleted both items, kept the source
+    await refreshCampaignHomebrew();
+
+    const own = loadHomebrewContent();
+    expect(own.items.i1).toMatchObject({ homebrewSourceId: 'hbsrc-kept-S1' });
+    expect(own.items.i2).toBeUndefined();
+    expect(loadHomebrewSources()['hbsrc-kept-S1'].kept?.ids).toEqual(['items:i1']);
+  });
+
   it('a kept copy the player deleted: what a character uses comes back; otherwise the later of the delete and the GM’s write wins', async () => {
     // The device clock is held and stepped a minute at a time: a tombstone and a revive stamped in the
     // same millisecond would read as "revived", which no real delete a person makes ever is.

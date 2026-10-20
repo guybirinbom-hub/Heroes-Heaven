@@ -13,6 +13,9 @@ import {
   abilityModifiers,
 } from '../rules/derive';
 import type { PcStats, ProfRank } from '../../tracker/src/utils/pcDetail';
+import type { SavedChar } from '../data/storage';
+import { foreignContent } from '../data/carried';
+import { livePlay } from '../sheet/memberSheets';
 
 /*
  * Turn a Heroes Heaven character into the initiative tracker's PcStats shape.
@@ -37,6 +40,18 @@ const RANK: Record<ProficiencyRank, ProfRank> = {
 };
 
 const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+
+/**
+ * The tracker's PcStats for a player's SHEET (a published SavedChar): the played character (damage taken,
+ * conditions in effect), derived AND read against the sheet's own view of the database — its carried
+ * custom records winning over this viewer's copies (../data/carried.ts, owner ruling 2026-10-20: "the others
+ * should see the same item as the player"). One place for it, so the GM's AC, HP and ancestry for a PC
+ * cannot drift from the player's sheet (2026-10-20, checker finding coverage-F2).
+ */
+export function sheetPcStats(sheet: SavedChar, content: ContentDatabase): PcStats {
+  const view = foreignContent(content, sheet);
+  return computePcStats(livePlay(sheet, view), view);
+}
 
 export function computePcStats(c: Character, content: ContentDatabase): PcStats {
   const safe = <T>(fn: () => T, fallback: T): T => {

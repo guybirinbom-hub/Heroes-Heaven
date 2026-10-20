@@ -44,6 +44,7 @@ import type {
 } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
+import { carriedToKeep, collectCarried, loadOwnTombstones, normalizeCarried } from './carried';
 import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, loreKey, signaturesAt, type BuildState } from '../rules/build';
 import { maxTakes } from '../rules/featGrants';
 import { CORE_BOOKS, sourceCatalog, storedSources } from '../rules/sources';
@@ -203,8 +204,16 @@ function mapWgRunes(wg: any, itemType: string, runesIdx: Map<string, string>): R
 // EXPORT
 // ===========================================================================
 
-/** Lossless Codex-native export (round-trips perfectly back through importCharacter). */
-export function exportNative(saved: SavedChar): string {
+/**
+ * Lossless Codex-native export (round-trips perfectly back through importCharacter).
+ *
+ * With the custom records the character uses (`carried`, owner ruling 2026-10-20), so a file moved to
+ * another device or account still resolves its homebrew there. `viewContent` is the content the sheet is
+ * drawn against on this device (data/carried.ts ownContent / foreignContent): what it holds is collected
+ * fresh. Without it, whatever the sheet already carries goes as it is.
+ */
+export function exportNative(saved: SavedChar, viewContent?: ContentDatabase): string {
+  const carried = viewContent ? collectCarried(saved, viewContent) : saved.carried;
   return JSON.stringify(
     {
       app: CODEX_APP,
@@ -213,6 +222,7 @@ export function exportNative(saved: SavedChar): string {
       character: saved.character,
       build: saved.build ?? null,
       play: saved.play ?? null,
+      ...(carried ? { carried } : {}),
     },
     null,
     2,
@@ -375,7 +385,7 @@ export function importCharacter(text: string, content: ContentDatabase): ImportR
   } catch {
     throw new Error('That file isn’t valid JSON.');
   }
-  if (obj && obj.app === CODEX_APP) return importNative(obj);
+  if (obj && obj.app === CODEX_APP) return importNative(obj, content);
   if (obj && obj.version === WG_VERSION && obj.character) return importFromWg(obj, content);
   if (obj && typeof obj.version === 'number' && obj.version !== WG_VERSION) {
     throw new Error(`This looks like a Wanderer’s Guide file of version ${obj.version}. Only version ${WG_VERSION} is supported.`);
@@ -383,17 +393,23 @@ export function importCharacter(text: string, content: ContentDatabase): ImportR
   throw new Error('Unrecognized file. Expected a Heroes Heaven character export (.codex) or a Wanderer’s Guide version-4 JSON.');
 }
 
-function importNative(obj: any): ImportResult {
+function importNative(obj: any, content: ContentDatabase): ImportResult {
   const character = obj.character as Character | undefined;
   if (!character || typeof character !== 'object' || typeof character.name !== 'string') {
     throw new Error('This character file is missing its character data.');
   }
+  // The custom records the file carries (owner ruling 2026-10-20) stay with the character — resolved
+  // from the roster entry (data/carried.ts), never written into this device's homebrew. Only the ones
+  // this device cannot resolve itself (`carriedToKeep`): a copy of this account's own record would
+  // outlive its Homebrew-page Delete once the tombstone expires (ruling 2026-09-12 #7).
+  const carried = carriedToKeep(normalizeCarried(obj.carried), content, loadOwnTombstones());
   const saved: SavedChar = {
     id: newRosterId(),
     character: normalizeCharacter(character),
     build: obj.build ?? undefined,
     play: obj.play ? normalizePlay(obj.play) : undefined,
     archived: false,
+    ...(carried ? { carried } : {}),
   };
   return {
     saved,

@@ -4,6 +4,7 @@ import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { deriveMaxHp } from '../rules/derive';
 import { exportWg, exportNative, importCharacter, type ImportReport } from '../data/transfer';
+import { ownContent } from '../data/carried';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
@@ -91,9 +92,12 @@ export function RosterScreen({
   const q = query.trim().toLowerCase();
 
   /** The two non-name fields this box also searches, as one string (see the ranking note below). */
+  // Against the character's own view, as its card reads it (below): a carried custom ancestry is searched
+  // by the name the card shows (2026-10-20, checker finding coverage-F4).
   const originOf = (c: SavedChar) => {
-    const anc = content && c.character.ancestryId ? content.ancestries[c.character.ancestryId]?.name : '';
-    const cls = content && c.character.classId ? content.classes[c.character.classId]?.name : '';
+    const db = content ? ownContent(content, c) : null;
+    const anc = db && c.character.ancestryId ? db.ancestries[c.character.ancestryId]?.name : '';
+    const cls = db && c.character.classId ? db.classes[c.character.classId]?.name : '';
     return `${anc ?? ''} | ${cls ?? ''}`;
   };
   /* bug 2026-09-13: search-rank. This box matches beyond the name — ancestry and class too — so a
@@ -154,7 +158,10 @@ export function RosterScreen({
   const doExport = async (c: SavedChar, target: 'wg' | 'native') => {
     if (target === 'wg' && !content) return; // WG export resolves against the content database
     try {
-      const text = target === 'wg' && content ? exportWg(c, content) : exportNative(c);
+      // Against the character's own view, so the file carries the custom records it uses (owner ruling
+      // 2026-10-20: a character moved to another device keeps them) and the WG snapshot names them.
+      const view = content ? ownContent(content, c) : undefined;
+      const text = target === 'wg' && view ? exportWg(c, view) : exportNative(c, view);
       // Awaited: on the Android app the save or share finishes later, and its failure belongs here.
       await downloadText({ filename: `${fileSlug(c.character.name)}${target === 'wg' ? '.wg' : '.codex'}.json`, text });
     } catch (e) {
@@ -276,10 +283,12 @@ export function RosterScreen({
           {shown.map((c) => {
             // Before the content database arrives, render from the saved character alone —
             // the derived stats (current/max HP) need content, so that row shows a placeholder.
-            const ch = content ? applyPlayState(c.character, c.play, content) : c.character;
-            const anc = content && ch.ancestryId ? content.ancestries[ch.ancestryId]?.name : undefined;
-            const cls = content && ch.classId ? content.classes[ch.classId]?.name : undefined;
-            const hpMax = content ? deriveMaxHp(ch, content) : null;
+            // The card reads the character's own view: a carried custom ancestry is named, not blank.
+            const db = content ? ownContent(content, c) : null;
+            const ch = db ? applyPlayState(c.character, c.play, db) : c.character;
+            const anc = db && ch.ancestryId ? db.ancestries[ch.ancestryId]?.name : undefined;
+            const cls = db && ch.classId ? db.classes[ch.classId]?.name : undefined;
+            const hpMax = db ? deriveMaxHp(ch, db) : null;
             const initials = ch.name.slice(0, 2).toUpperCase();
             return (
               <div className={'rcard' + (c.id === activeId ? ' active' : '')} key={c.id}>

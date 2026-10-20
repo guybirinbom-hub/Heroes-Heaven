@@ -57,6 +57,21 @@ export function authoredKey(sc: SheetLike): string {
   return canonicalJson(authoredSheet(sc));
 }
 
+/**
+ * The WHOLE sheet as canonical JSON, less the custom records it carries (`SavedChar.carried`,
+ * src/data/carried.ts). Owner ruling 2026-10-20: a character's own homebrew travels with it, so every
+ * viewer sees the record the owner sees — but which copy of a record rides along is the sender's view,
+ * not a change to the character. A whole-sheet comparison that asks "did the character change?" (the GM
+ * sheet's in-step test, a pending edit coming back published) reads this, never the raw sheet: a player
+ * republishing the same character with their own copy of a record must not read as "the player changed
+ * it while you were editing". `authoredKey` above never saw `carried` (it is a top-level field).
+ */
+export function sheetKey(sc: unknown): string {
+  if (!sc || typeof sc !== 'object' || Array.isArray(sc)) return canonicalJson(sc);
+  const { carried: _carried, ...rest } = sc as Record<string, unknown>;
+  return canonicalJson(rest);
+}
+
 /** cyrb53 (seed 0), 14 hex digits — deterministic in the browser, jiti and node alike. */
 export function hash53(s: string): string {
   let h1 = 0xdeadbeef;

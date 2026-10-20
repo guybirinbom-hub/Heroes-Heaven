@@ -4,6 +4,7 @@ import { gmBaseOf, gmPendingEdit, gmPushBuiltOn } from '../sheet/gmSync';
 import { deriveMaxHp } from '../rules/derive';
 import { fetchPublishedSheet, pushGmEdit, type PartyMember } from '../data/party';
 import { livePlay } from '../sheet/memberSheets';
+import { foreignContent, withCarriedAttached } from '../data/carried';
 import type { SavedChar } from '../data/storage';
 import type { Character, ContentDatabase } from '../rules/types';
 import { isSamePc, moveBeforeActive, releaseSteps, takeVitalsGesture, useCombatStore } from '../../tracker/src/store/combatStore';
@@ -187,8 +188,11 @@ function maxHpOf(live: Character, content: ContentDatabase): number {
 }
 
 export function vitalsFromSheet(sheet: SavedChar, content: ContentDatabase): PcVitals {
-  const live = livePlay(sheet, content);
-  const max = maxHpOf(live, content);
+  // The player's own view of their records (../data/carried.ts): a carried custom item's Bulk, a carried
+  // feat's hit points, count here exactly as on their sheet.
+  const view = foreignContent(content, sheet);
+  const live = livePlay(sheet, view);
+  const max = maxHpOf(live, view);
   /*
    * The AUTHORED conditions, not the overlay's. applyPlayState ADDS derived ones — encumbered from
    * bulk, a mode's granted conditions — that `play.conditions` deliberately never stores ("the
@@ -222,9 +226,23 @@ export function vitalsKey(v: PcVitals): string {
   return `${v.currentHP}|${v.conditions.map((c) => `${c.id}:${c.value ?? ''}`).sort().join(',')}`;
 }
 
+/**
+ * What the seam PUSHES for a gesture: `sheetWithVitals`, carrying the custom records the sheet uses
+ * (owner ruling 2026-10-20: "the others should see the same item as the player"), collected from the
+ * player's view of them — attached HERE, before pushGmEdit, so pushGmEdit's own attach finds nothing to
+ * change and sends this very object, the pending overlay hands this very object back, and rule E (a push
+ * of his coming back is told by OBJECT, `ours`) recognises it. Attached only inside pushGmEdit, a
+ * published sheet whose carried copies differ from the GM's view (an older player app that carried
+ * nothing) came back as a different object: his own push read as the player's sheet arriving.
+ */
+export function pushSheetWithVitals(sheet: SavedChar, v: PcVitals, content: ContentDatabase): SavedChar {
+  const withVitals = sheetWithVitals(sheet, v, content);
+  return withCarriedAttached(withVitals, foreignContent(content, withVitals));
+}
+
 /** The player's sheet with the GM's HP + conditions written into play state — and nothing else. */
 export function sheetWithVitals(sheet: SavedChar, v: PcVitals, content: ContentDatabase): SavedChar {
-  const play = { ...initialPlay(sheet.character, content), ...(sheet.play ?? {}) };
+  const play = { ...initialPlay(sheet.character, foreignContent(content, sheet)), ...(sheet.play ?? {}) };
   const max = vitalsFromSheet(sheet, content).maxHP;
   // Conditions HH has no entry for are the player's (homebrew, a future book) — keep them as they are.
   const mine = (play.conditions ?? []).filter((c) => !content.conditions?.[c.id]);
@@ -401,12 +419,14 @@ export function usePcSheetTruth(args: {
           // own push, the read is HIS, never theirs (SeenPc.theirs).
           if (built.on === null) st.theirs = now.currentHP;
           const arrived = st.arrived;
-          const sent = sheetWithVitals(fresh, w.v, content);
+          // With the custom records the sheet uses — `pushSheetWithVitals`, which makes `sent` the very
+          // object pushGmEdit sends and the pending overlay hands back: rule E knows it by identity.
+          const sent = pushSheetWithVitals(fresh, w.v, content);
           // The base is THIS read (`gmBaseOf`: its stamp and the hash of the sheet it holds), and
           // `built.on` says which push of his it was built on — the player's app applies it only while
           // their published sheet is still that one. A read with no stamp proves nothing: nothing is
           // sent (pushGmEdit refuses) and the gesture is owed.
-          const res = await pushGmEdit(campaignId, mem.charId, mem.ownerId, sent, gmBaseOf(row), built.on);
+          const res = await pushGmEdit(campaignId, mem.charId, mem.ownerId, sent, gmBaseOf(row), built.on, content);
           if (res.ok) {
             ours.add(sent);
             // What the server holds now — the sheet may not hold the row whole (a heal past its max).

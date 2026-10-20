@@ -6,7 +6,7 @@
  * than as a condition buried in an effect.
  */
 import type { SavedChar } from '../data/storage';
-import { authoredKey, canonicalJson, hash53 } from '../data/authored';
+import { authoredKey, hash53, sheetKey } from '../data/authored';
 
 /** What the GM's editor should do with a newly published version of the player's sheet. */
 export type GmReconcile =
@@ -204,8 +204,9 @@ export function gmEditVerdict(a: {
   // returning the sheet to his base content under a newer publish — and this push still carries the
   // hit. So such a push needs the very PUBLISH it was built on as well (the same rule the GM's write
   // path builds on his held edit by, `pendingEditStandsOnFreshRead`). The cost is his and visible: a
-  // republish that changed nothing (a launch, their other device's launch, a homebrew re-derive) refuses
-  // it — "not applied", he gestures again. That includes TWO between-session Updates (the second built
+  // republish that changed nothing (a launch, their other device's launch, a homebrew re-derive, a newer
+  // copy of a custom record the sheet carries — the GM editing a campaign homebrew record it uses,
+  // data/carried.ts, 2026-10-20) refuses it — "not applied", he gestures again. That includes TWO between-session Updates (the second built
   // on the first) once the player's launch republish lands before this device reads its own row: a
   // device with no record of the first cannot tell "a launch changed nothing" from "their other device
   // applied the first and they took it back", and only the second is player-safe to assume
@@ -371,7 +372,9 @@ export function pendingEditStillStands(edit: PendingGmEdit, published: Published
   // (`pendingEditStandsOnFreshRead`, through `gmPushBuiltOn` / `gmUpdateBase`) never builds on an edit
   // with no base.
   if (published.updatedAt && published.updatedAt > (edit.baseUpdatedAt ?? edit.pushedAt)) return false;
-  if (published.sheet && canonicalJson(published.sheet) === canonicalJson(edit.sheet)) return false;
+  // `sheetKey`: less the custom records each carries (../data/carried.ts, 2026-10-20) — their app
+  // republishes the applied edit with ITS copy of each record, and that is still the edit, landed.
+  if (published.sheet && sheetKey(published.sheet) === sheetKey(edit.sheet)) return false;
   return true;
 }
 

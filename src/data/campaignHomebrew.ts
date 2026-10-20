@@ -328,7 +328,11 @@ function convertGone(
   const usedByRoster = (id: string): boolean => {
     if (rosterJson === null) {
       flushPersist(); // a pick still inside the 400 ms persist debounce is a real pick
-      rosterJson = JSON.stringify(loadRoster());
+      // Less the records each character CARRIES (data/carried.ts, owner ruling 2026-10-20): a copy riding
+      // along is not a use — scanned as one, every id a GM push brought would count as "used", and an
+      // entry the GM deleted from a source he still shares would be turned into this player's own
+      // homebrew. A record the character really uses is named in its build or play too, and found there.
+      rosterJson = JSON.stringify(loadRoster().map(({ carried: _carried, ...rest }) => rest));
     }
     // ponytail: a substring scan of the whole saved roster for `"<id>"` — any field of any character
     // counts as "uses it". An unrelated string equal to the id keeps an entry it didn't need to; walk

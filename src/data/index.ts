@@ -677,8 +677,11 @@ let cachedCore: Partial<ContentDatabase> = {};
 let pending: Promise<ContentDatabase> | null = null;
 
 /** Is `id` a PRINTED record of this homebrew bucket (seed or the raw core, before any gate)? Campaign
- *  homebrew reusing one is dropped: someone else's content may add records, never replace the book's. */
-export function isPrintedId(type: HomebrewType, id: string): boolean {
+ *  homebrew reusing one is dropped: someone else's content may add records, never replace the book's.
+ *  `modes` (2026-10-20, a sheet's carried modes — data/carried.ts): the app's own catalog modes and the
+ *  core file's item modes are the printed ones; only a mode a player wrote may ride along on a sheet. */
+export function isPrintedId(type: HomebrewType | 'modes', id: string): boolean {
+  if (type === 'modes') return !!(CATALOG_MODE_MAP[id] || cachedCore.modes?.[id]);
   return !!(seedContent[type]?.[id] || cachedCore[type]?.[id]);
 }
 

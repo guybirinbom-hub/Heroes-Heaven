@@ -19,6 +19,8 @@ import { useAuth } from './data/useAuth';
 import { startCloudSync, hasSyncedOnce, noteDerivedRefresh, pullForGmApply } from './data/cloudSync';
 import { startCampaignHomebrew, refreshCampaignHomebrew, homebrewFingerprint } from './data/campaignHomebrew';
 import { rebuildRoster, carryStoredOverrides } from './data/rebuild';
+import { carriedForCampaign, collectCarried, freshModeId, keepCarried, loadOwnTombstones, loadOwnWinningIds, loadSharedOrigins, ownContent, publishKey, repointMode, withoutCarried } from './data/carried';
+import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModesRemoveFromCharacterContext } from './sheet/CopyOnWriteItems';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
@@ -27,7 +29,7 @@ import { publishCharacter, unpublishCharacter, fetchGmEdits, fetchPublishedSheet
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { authoredKey, hash53 } from './data/authored';
 import { isTauri } from './platform';
-import { getPrefs, subscribePrefs } from './data/prefs';
+import { carryModePin, getPrefs, subscribePrefs } from './data/prefs';
 import { useIsMobile, useShowUndoButtons } from './sheet/useIsMobile';
 import { gmEditVerdict, boundGmBase, editsToApply, sameInstant, type GmChainRecord } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
@@ -38,7 +40,7 @@ import { gmApplyYields as gmApplyYieldsBy, revertOwnStep, settleMergedBuild } fr
 import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
 import { useUndoableState } from './useUndoableState';
-import { applyPlayState, initialPlay, ownedRestIds, playForRebuild, reconcileFormulaBook, rest, type PlayState } from './rules/play';
+import { applyPlayState, initialPlay, ownedRestIds, playForRebuild, reconcileFormulaBook, rest, toggleMode, type PlayState } from './rules/play';
 import { abilityMod } from './rules/derive';
 import { companionConMod } from './rules/companions';
 import { ContentContext } from './sheet/ContentContext';
@@ -591,22 +593,45 @@ export default function App() {
     const timer = setTimeout(() => {
       publishFailedRef.current = false;
       const desired = new Set<string>();
+      // Read at most once per run, and only when a character carries something (carriedForCampaign below).
+      let origins: Map<string, string> | null = null;
+      let ownWins: Set<string> | null = null;
       for (const sc of roster) {
         const ids = sc.character.campaignIds ?? [];
         if (!ids.length) continue;
         try {
-          const live = applyPlayState(sc.character, sc.play, readyContent);
-          const summary = computeSummary(live, readyContent);
+          // This character's own view of the database: what it carries fills what this device lacks.
+          const view = ownContent(readyContent, sc);
+          const live = applyPlayState(sc.character, sc.play, view);
+          const summary = computeSummary(live, view);
           // Publish the full SavedChar (character + build + play) so a GM can fully edit it; the party's
           // read-only view derives the live character from it.
-          const published = { id: sc.id, character: sc.character, build: sc.build, play: sc.play };
-          const json = JSON.stringify(published);
+          //
+          // …and the custom records it uses (owner ruling 2026-10-20: "the others should see the same
+          // item as the player"), collected from that view — deterministic, so an unchanged character
+          // still matches the JSON last sent below and is not sent again. ONLY into what is sent: never
+          // written back into the roster, whose JSON is cloud sync's edit detector (cloudMerge
+          // charFingerprint) — a write here would stamp an untouched character "edited now" (2026-09-02).
+          const carried = collectCarried(sc, view);
           // Only what CHANGED goes up. This effect runs on every roster change, so before this every
           // attached character was re-uploaded (portrait and all) on every edit to ANY character —
           // one Customize click on one sheet meant N uploads. Per (campaign, character): a campaign
           // attached since the last publish still gets its first upload, and a send that FAILED is
           // forgotten below, so it goes again.
           for (const cid of ids) {
+            // PER CAMPAIGN (2026-10-20, checker findings saving-C2 / saving-R2-chk-1 / -chk-3): what the
+            // player's view took from THIS campaign's shared homebrew goes FILL-only (data/carried.ts
+            // carriedForCampaign) — its members and its GM hold it themselves — and its text stays out of
+            // the "already sent" test (`publishKey`). Compared as a winning copy, a GM's edit of his shared
+            // record republished every PC sheet using it, and the moved `updated_at` turned his chained
+            // tracker push into "not applied"; left out altogether, the record went "Unknown item" on
+            // every other view the moment he deleted it. A record shared in another campaign, and the
+            // player's own, still go as winning copies.
+            const sent = carried
+              ? carriedForCampaign(carried, cid, (origins ??= loadSharedOrigins()), (ownWins ??= loadOwnWinningIds()))
+              : carried;
+            const published = { id: sc.id, character: sc.character, build: sc.build, play: sc.play, ...(sent ? { carried: sent } : {}) };
+            const json = publishKey(published);
             const key = cid + '|' + sc.id;
             desired.add(key);
             if (sentJsonRef.current.get(key) === json) continue;
@@ -830,6 +855,7 @@ export default function App() {
        * rebased re-run re-records the same key, and marks the entry it was judged over (GM_JUDGED) —
        * both `k.judged` and the queued entry it actually composed on, which may be another object
        * holding the same authored sheet. */
+      const gmTombstones = loadOwnTombstones(); // read once for the write below (keepCarried)
       setRoster((r) => {
         let changed = false;
         const next = r.map((c) => {
@@ -840,7 +866,19 @@ export default function App() {
             const mark = `${k.key}|${k.e.updatedAt}`;
             (k.judged as GmMarked)[GM_JUDGED] = mark;
             (cur as GmMarked)[GM_JUDGED] = mark;
-            const applied: GmMarked = { ...k.e.sheet, id: c.id, archived: c.archived ?? false, [GM_APPLIED]: mark };
+            // The GM's sheet WHOLE, its `carried` records included (owner ruling 2026-10-20): an item or
+            // feat he made reaches this device inside the roster entry and resolves from there
+            // (data/carried.ts ownContent) — never copied into this player's homebrew. Less the copies of
+            // records this device resolves itself (`keepCarried`: this player's own homebrew, a record
+            // they deleted): a roster copy of their own record would outlive their Homebrew-page Delete
+            // once its tombstone expires (2026-10-20, ruling 2026-09-12 #7). `carried` is not authored
+            // (authoredKey), so the apply's recorded result is the same either way.
+            const applied: GmMarked = {
+              ...keepCarried(k.e.sheet, contentRef.current, gmTombstones),
+              id: c.id,
+              archived: c.archived ?? false,
+              [GM_APPLIED]: mark,
+            };
             const over = cur;
             cur = applied;
             gmUnlandedRef.current.set(mark, { entry: applied, over });
@@ -1220,29 +1258,66 @@ export default function App() {
 
   const active = roster.find((c) => c.id === activeId) ?? roster[0];
   zoomTargetRef.current = active ? { id: active.id, zoom: active.character.customization?.zoom } : null;
+  /*
+   * The database THIS character is derived and drawn against: the custom records it carries fill what
+   * this device lacks (owner ruling 2026-10-20 — a GM-made item a push brought resolves on the player's
+   * own sheet). The same object as `content` when it carries nothing, so nothing downstream re-renders.
+   */
+  const activeCarried = active?.carried;
+  const activeContent = useMemo(() => (content ? ownContent(content, { carried: activeCarried }) : content), [content, activeCarried]);
+  /*
+   * The item records this sheet holds ONLY through the roster entry's `carried` — the device's own content
+   * lacks them (a GM-made item a push brought). Copy-on-write in this sheet's item editor and no "delete the
+   * item you created" in its Add-items list (./sheet/CopyOnWriteItems.tsx). 2026-10-20, checker finding N1:
+   * an in-place edit, or that delete's "retire", wrote the GM's record into this player's homebrew — owner
+   * ruling 2026-10-20, "i dont want it in the homebrew". An edit now makes the player's OWN copy under a new
+   * id (theirs because they edited it) and repoints the row; the GM's record is never written here.
+   */
+  const carriedOnlyItems = useMemo(() => {
+    const ids = content ? Object.keys(activeCarried?.items ?? {}).filter((id) => !content.items[id]) : [];
+    return ids.length ? new Set(ids) : null;
+  }, [content, activeCarried]);
+  /*
+   * …and the MODES it holds only through `carried` — this device's own saved modes lack them: typically one
+   * the GM made on this sheet and pushed (round 3, 2026-10-20, final findings N-a / N-c). Copy-on-write in
+   * this sheet's Modes panel, whose Delete for one is "Remove from this character" (`saveOwnModeDef` /
+   * `removeOwnModeDef` below, ./sheet/CopyOnWriteItems.tsx). Owner ruling 2026-10-20: "i dont want it in the
+   * homebrew" — the GM's mode is never written into this player's saved modes, nor tombstoned on their account.
+   */
+  const carriedOnlyModes = useMemo(() => {
+    const ids = content ? Object.keys(activeCarried?.modes ?? {}).filter((id) => !content.modes[id]) : [];
+    return ids.length ? new Set(ids) : null;
+  }, [content, activeCarried]);
   // Derive the in-play character ONCE per (character, play, content) change. Inlining this in JSX
   // produced a fresh Character every App render, defeating all downstream memoization on the tabs.
   const character = useMemo(() => {
-    if (!content || !active) return null;
+    if (!activeContent || !active) return null;
     // Defense-in-depth: a malformed play overlay (despite normalizePlay) must not white-screen the
     // app from this pre-ErrorBoundary useMemo — fall back to the un-overlaid built character.
     try {
-      return applyPlayState(active.character, active.play, content);
+      return applyPlayState(active.character, active.play, activeContent);
     } catch (err) {
       console.error('applyPlayState failed; showing the un-overlaid character', err);
       try {
-        return applyPlayState(active.character, undefined, content);
+        return applyPlayState(active.character, undefined, activeContent);
       } catch {
         return active.character;
       }
     }
-  }, [content, active?.character, active?.play]);
+  }, [activeContent, active?.character, active?.play]);
 
   // Content the SHEET sees, with this character's Overrides content-edits (feat/feature text) overlaid.
   // applyOverrides returns the same ref when there are no edits, so memoization downstream is preserved.
   const sheetContent = useMemo(
-    () => (content ? applyOverrides(content, active?.character.overrides) : content),
-    [content, active?.character.overrides],
+    () => (activeContent ? applyOverrides(activeContent, active?.character.overrides) : activeContent),
+    [activeContent, active?.character.overrides],
+  );
+  // …and the builder's, when it is editing a character that carries records (a GM-made feat must stay
+  // a pick the builder knows, and the Save below must derive with it).
+  const editingCarried = editing ? roster.find((c) => c.id === editing.id)?.carried : undefined;
+  const builderContent = useMemo(
+    () => (content && editingCarried ? ownContent(content, { carried: editingCarried }) : content),
+    [content, editingCarried],
   );
 
   // With an EMPTY roster (fresh install, or the user deleted their last character) there's no active
@@ -1300,8 +1375,12 @@ export default function App() {
           // reconcileFormulaBook runs here rather than at rebuild time so a character who never
           // reopens the builder still receives the book and the picks their records grant; it is
           // idempotent and marks each grant spent, so repeating it writes nothing twice.
+          // Against the entry's own view (data/carried.ts): a carried record's grants count too.
           c.id === id
-            ? { ...c, play: fn(reconcileFormulaBook({ ...initialPlay(c.character, content), ...(c.play ?? {}) }, c.character, content)) }
+            ? (() => {
+                const view = ownContent(content, c);
+                return { ...c, play: fn(reconcileFormulaBook({ ...initialPlay(c.character, view), ...(c.play ?? {}) }, c.character, view)) };
+              })()
             : c,
         ),
       coalesceTag ? { coalesce: true, tag: `play:${id}:${coalesceTag}` } : undefined,
@@ -1325,6 +1404,45 @@ export default function App() {
   const removeModeDef = (id: string) => {
     setContent((c) => (c ? { ...c, modes: Object.fromEntries(Object.entries(c.modes).filter(([k]) => k !== id)) } : c));
     deleteMode(id);
+  };
+  /*
+   * The player's OWN sheet's mode writers (round 3, 2026-10-20, final findings N-a / N-c). A mode only the
+   * roster entry carries (`carriedOnlyModes` above: typically the GM's, brought by his push) is not this
+   * player's to edit or delete in their saved modes — owner ruling 2026-10-20, "i dont want it in the homebrew":
+   *  - an EDIT saves the player's own COPY under a fresh id (theirs because they made it) and points this
+   *    character's active modes, its own and its companions', at it (`repointMode`, the one helper the GM's
+   *    edit sheet uses too); the GM's mode, replaced on this character, leaves the entry's `carried`;
+   *  - a DELETE takes it off THIS character: out of its active modes, its companions' and its `carried`.
+   *    Nothing is deleted anywhere else and no `mode:<id>` tombstone is written. Before, Delete wrote one on
+   *    this account while the id stayed active on the character: the player's own sheet dropped the mode,
+   *    but the GM, whose device holds it, still saw it on — two different ACs for one character.
+   * Both are real player edits of this character (one undo step, published like any other change). Every
+   * other mode goes through `saveModeDef` / `removeModeDef` as it always did.
+   */
+  const saveOwnModeDef = (mode: ModeDef) => {
+    if (!active || !carriedOnlyModes?.has(mode.id)) return saveModeDef(mode);
+    const copy: ModeDef = { ...mode, id: freshModeId() };
+    saveModeDef(copy);
+    carryModePin(mode.id, copy.id); // a pinned mode's copy stays pinned (2026-10-20, r3-R3-pin-lost-on-copy)
+    const id = active.id;
+    setRoster((r) =>
+      r.map((c) => (c.id === id ? withoutCarried(c.play ? { ...c, play: repointMode(c.play, mode.id, copy.id) } : c, 'modes', mode.id) : c)),
+    );
+  };
+  const removeOwnModeDef = (modeId: string) => {
+    if (!active || !carriedOnlyModes?.has(modeId)) return removeModeDef(modeId);
+    const id = active.id;
+    const defs = activeContent?.modes;
+    setRoster((r) =>
+      r.map((c) => {
+        if (c.id !== id) return c;
+        // Switched off the way the panel's own toggle does it (a form's temporary Hit Points go with it),
+        // then out of every companion's list as well.
+        const off = c.play && (c.play.activeModes ?? []).includes(modeId) ? toggleMode(c.play, modeId, defs) : c.play;
+        const play = off ? repointMode(off, modeId, null) : off;
+        return withoutCarried(play === c.play ? c : { ...c, play }, 'modes', modeId);
+      }),
+    );
   };
 
   // The Homebrew manager persists to localStorage itself; re-merge it over core so changes show live.
@@ -1487,9 +1605,11 @@ export default function App() {
       </div>
     );
   } else if (which === 'builder') {
+    const buildDb = builderContent ?? readyContent;
     screen = (
+      <ContentContext.Provider value={buildDb}>
       <Builder
-        content={readyContent}
+        content={buildDb}
         initial={editing?.build}
         onLeaveCampaign={leaveCampaign}
         onCancel={() => {
@@ -1497,7 +1617,7 @@ export default function App() {
           setMode('sheet');
         }}
         onCreate={(build) => {
-          const built = buildCharacter(build, applyOverrides(readyContent, build.overrides));
+          const built = buildCharacter(build, applyOverrides(buildDb, build.overrides));
           commitStructural(); // create/rebuild a character — persist immediately
           if (editing) {
             const id = editing.id;
@@ -1531,6 +1651,7 @@ export default function App() {
           setMode('sheet');
         }}
       />
+      </ContentContext.Provider>
     );
   } else if (which === 'homebrew') {
     screen = (
@@ -1577,7 +1698,16 @@ export default function App() {
       />
     );
   } else {
+    // This character's own view (its carried records included) — what its popups and links resolve
+    // against too, through the context.
+    const ownDb = activeContent ?? readyContent;
     screen = (
+      <ContentContext.Provider value={ownDb}>
+      {/* A GM-given item only the roster entry carries is copy-on-write here (`carriedOnlyItems` above), and so
+          is such a mode, whose Delete takes it off this character (`carriedOnlyModes`, round 3). */}
+      <CopyOnWriteItemsContext.Provider value={carriedOnlyItems}>
+      <CopyOnWriteModesContext.Provider value={carriedOnlyModes}>
+      <ModesRemoveFromCharacterContext.Provider value={true}>
       <CharacterSheet
         // This else is reached only when pickScreen returned 'sheet', which requires content AND a
         // character — so `character` is non-null here; TS just can't infer it through `which`.
@@ -1594,8 +1724,8 @@ export default function App() {
         onBackToTracker={ownFromTracker === active.id ? () => setMode('campaigns') : undefined}
         onPlay={updatePlay}
         onCreateItem={addCustomItem}
-        onSaveMode={saveModeDef}
-        onDeleteMode={removeModeDef}
+        onSaveMode={saveOwnModeDef}
+        onDeleteMode={removeOwnModeDef}
         onOpenHomebrew={() => setMode('homebrew')}
         onOpenCampaigns={onOpenCampaigns}
         onOpenSettings={openSettings}
@@ -1609,23 +1739,24 @@ export default function App() {
               level: active.character.level,
               conMod: abilityMod(active.character.abilities.con),
               initialResources: active.character.classResources,
-              // Lets rest tell an ITEM mode (clears overnight) from one the player toggled themselves.
-              modeDefs: content?.modes,
+              // Lets rest tell an ITEM mode (clears overnight) from one the player toggled themselves —
+              // from this character's own view, so a carried mode (data/carried.ts, 2026-10-20) is known too.
+              modeDefs: ownDb.modes,
               // Fast Recovery / Bolstered Recovery — without this a night's sleep ignores them.
               restRecovery: active.character.restRecovery,
               // "Sleeping in armor results in poor rest that leaves you fatigued" — only when the player
               // ticked it in the window (owner's ruling 2026-10-14). rest reads the worn row's category
               // + traits to tell armour from clothes, and the owned records that rest in armour.
-              items: readyContent.items,
+              items: ownDb.items,
               sleptInArmor: o?.sleptInArmor,
-              ownedIds: character ? ownedRestIds(character, readyContent) : undefined,
+              ownedIds: character ? ownedRestIds(character, ownDb) : undefined,
               // Svetocher reads Drained "as though the condition value were 1 lower", so a step-down
               // hands back that much less max HP.
               drainedReduction: active.character.drainedReduction,
               // A companion recovers on ITS OWN Constitution, which only its stat block knows.
               companionHeal: Object.fromEntries(
                 (p.companions ?? active.character.companions ?? []).flatMap((c) => {
-                  const con = companionConMod(c, active.character, readyContent);
+                  const con = companionConMod(c, active.character, ownDb);
                   return con == null ? [] : [[c.id, Math.max(1, con) * active.character.level]];
                 }),
               ),
@@ -1639,7 +1770,7 @@ export default function App() {
           // on an unusual imported/legacy character, so fall back to a blank build instead of crashing.
           let editBuild: BuildState;
           try {
-            editBuild = active.build ?? deriveBuildFromCharacter(active.character, readyContent);
+            editBuild = active.build ?? deriveBuildFromCharacter(active.character, ownDb);
           } catch (err) {
             console.error('Could not reconstruct build from character; starting from a blank build:', err);
             editBuild = emptyBuild();
@@ -1648,6 +1779,10 @@ export default function App() {
           setMode('builder');
         }}
       />
+      </ModesRemoveFromCharacterContext.Provider>
+      </CopyOnWriteModesContext.Provider>
+      </CopyOnWriteItemsContext.Provider>
+      </ContentContext.Provider>
     );
   }
 

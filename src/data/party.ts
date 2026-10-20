@@ -20,6 +20,8 @@ import {
 } from '../sheet/gmSync';
 import type { SavedChar } from './storage';
 import type { CampaignResult } from './campaigns';
+import type { ContentDatabase } from '../rules/types';
+import { foreignContent, withCarriedAttached } from './carried';
 
 /** A pending GM edit for one of the current user's characters (judged on sync — src/App.tsx). */
 export interface GmEdit {
@@ -371,12 +373,25 @@ export async function pushGmEdit(
    *  null when it was built on the published sheet. Omitted (direct callers only) → inferred from the
    *  held edit, erring towards "built on it", the player-safe direction. */
   builtOn?: string | null,
+  /**
+   * The GM's content database. Owner ruling 2026-10-20 ("the others should see the same item as the
+   * player"): the push CARRIES the custom records the sheet uses (`SavedChar.carried`), collected from
+   * the GM's view of it — his own homebrew (an item he made in their sheet) plus the records the
+   * player's published sheet already carried, theirs winning (./carried.ts foreignContent). So the item
+   * reaches the player's device inside the sheet, and the gm_character_edits row and the pending
+   * overlay (rememberGmEdit) hold the SAME object. Omitted (direct callers only) → the sheet goes as given.
+   * The FILL-only marks of the published sheet it was built on stay (round 3, 2026-10-20, final finding
+   * N-b — ./carried.ts withCarriedAttached): his own campaign-shared record, which the overlay would
+   * otherwise draw over his later edit of it on every view of his while the push waits.
+   */
+  content?: ContentDatabase,
 ): Promise<CampaignResult<null>> {
   if (!supabase) return { ok: false, error: 'Sign in to edit a player.' };
   const editor = await currentUserId();
   if (!editor) return { ok: false, error: 'Sign in to edit a player.' };
   if (!base?.stamp || !base?.hash)
     return { ok: false, error: 'Couldn’t read the player’s current sheet, so nothing was sent. Try again.' };
+  const sent = content ? withCarriedAttached(sheet, foreignContent(content, sheet)) : sheet;
   // Bound to the EDITOR first: the overlay is private to the account that pushed it, and the store
   // is keyed by that account so no other sign-in on this browser profile can see it (gmSync.ts). It
   // comes before the upsert now because the `on` inference below reads that account's store.
@@ -394,7 +409,7 @@ export async function pushGmEdit(
     char_id: charId,
     owner_id: playerOwnerId,
     editor_id: editor,
-    sheet,
+    sheet: sent,
     updated_at: pushedAt,
     gm_base: { v: 1, at: pushedAt, stamp: base.stamp, hash: base.hash, on },
   });
@@ -411,7 +426,7 @@ export async function pushGmEdit(
   // meantime, with the "not picked up yet" chip. A REFUSED push records nothing, so the GM is never
   // shown a change that isn't on the server. It carries WHOSE character it is, so the one read every
   // surface goes through can keep the overlay off the editor's own card (gmSync.gmPendingEdit).
-  rememberGmEdit(campaignId, charId, sheet, pushedAt, base.stamp, playerOwnerId, base.hash, on);
+  rememberGmEdit(campaignId, charId, sent, pushedAt, base.stamp, playerOwnerId, base.hash, on);
   return { ok: true, value: null };
 }
 

@@ -37,7 +37,25 @@ export interface SavedChar {
   play?: PlayState;
   /** Archived characters are hidden from the default roster view. */
   archived?: boolean;
+  /**
+   * The custom records this character uses (homebrew of every HomebrewType, and the player's own modes),
+   * by type and id — owner ruling 2026-10-20: "the others should see the same item as the player".
+   * Attached when a sheet is SENT (a publish, a GM push, an export) and read by every view of it
+   * (src/data/carried.ts `withCarried`), so a GM or a teammate never sees "Unknown item", a dropped feat,
+   * "Empty cantrip" or an AC without the custom mode that is on. TOP-LEVEL on purpose, never inside
+   * `character`: a no-build sheet's authored hash covers the whole `character` (./authored.ts), and which
+   * copy of a record rides along is not something the player authored. Never moved into anyone's
+   * homebrew or saved modes.
+   */
+  carried?: CarriedRecords;
 }
+
+/** What a sheet carries (`SavedChar.carried`): homebrew records by type, then id — and, since round 2
+ *  (2026-10-20), the modes a player wrote that the sheet has switched on (src/data/carried.ts).
+ *  `fill`: the `type:id` keys of carried records that only FILL a gap in a viewer's database, never win
+ *  over the viewer's own record of that id — the ones the campaign a publish goes to shares itself
+ *  (src/data/carried.ts carriedForCampaign). Absent on everything but a published sheet. */
+export type CarriedRecords = Partial<HomebrewContent> & { modes?: Record<string, ModeDef>; fill?: string[] };
 
 /** First roster entry whose character name matches `name` (case-insensitive, trimmed), or undefined.
  *  Includes archived characters — a name clash with an archived char is still a real clash. */
