@@ -3,6 +3,8 @@
 Status: DESIGN FINISHED 2026-10-14 (Guy accepted the feature list; an independent final check ran and
 its findings are in Part 2's "Phase 1 build spec"). Nothing is built yet. Each build phase runs in its
 own chat; the phase 1 prompt is in Part 3. The new name is **Tweaks** (Guy, 2026-10-14).
+2026-10-20: phase 1 was redone. Tweaks is now built on shared building blocks that the books will also
+use when every PF2e record is re-implemented later (decisions 22–25; Part 2 "Building blocks").
 
 - **Part 1** is for Guy: what exists, what is broken, the feature ideas, the names, the questions.
 - **Part 2** is for the chat that builds it: the code facts behind every line of Part 1.
@@ -60,8 +62,10 @@ My defaults for the questions not asked yet (they stand unless Guy says otherwis
 17. No "ignore all rules" switch: each rule break is its own tweak, chosen one by one.
 18. Build chats: one chat per build phase. The first prompt is for phase 1; this file holds the rest.
 19. Old characters open as before: their changes stay on and are listed as "Moved from Overrides".
-    Numbers move only in three cases, all fixes: a skill increase that the old Overrides swallowed now
-    counts; a rank you lowered now stays lowered; a set max HP now keeps a Mode's HP bonus. Things the
+    Numbers move only in four cases, all fixes: a skill increase that the old Overrides swallowed now
+    counts; a rank you lowered now stays lowered; a set max HP now keeps a Mode's HP bonus; a feat you
+    gave yourself now works like the same feat picked in a slot (added 2026-10-20, for example Flexible
+    Spellcaster Dedication). Things the
     app adds on import from now on (rituals, leftover feats) are never paused by the switch. Leftovers
     from older imports can't be told apart from your own changes, so they show as normal tweaks, and the
     switch-off confirm names them.
@@ -73,6 +77,29 @@ Guy, 2026-10-15:
     card with 9 stacked sub-cards, behind an Options switch). The build chat shows 2–3 different small
     samples first, including where Tweaks sits in the Builder, and Guy picks before anything else is
     built.
+
+Guy, 2026-10-20 (after Tweaks, every PF2e record will be re-implemented in a new way):
+
+22. **Tweaks and the books share one set of building blocks.** Every change, from a book or from the
+    player, is made of the same building blocks: "+1 to Athletics", "Stealth at least expert", "an extra
+    feat choice at level 4", "give spellcasting", "remove this". A tweak is a block the player wrote.
+    Feats, features, items and the rest will use the same blocks in the big re-implementation; homebrew
+    will use them too. Phase 1 plans the whole set of blocks and builds the ones phase 1 needs. It also
+    moves a few kinds of book bonus onto the blocks, with every sheet number unchanged, to prove the
+    blocks fit the books. The cost: phase 1 gets bigger (two chats instead of one). The gain: each block
+    is built once, so the big re-implementation and later Tweaks phases get cheaper.
+23. **Adding a block later must be easy.** Each block is defined in one place: what it stores, when it
+    counts (before or after other bonuses), its line in the breakdown, its editor in Tweaks, and its
+    test. Editors are put together from shared parts (pick a target, a number, a rank, a record, a
+    text), so a new block usually needs no new screen code.
+24. **In the end every block is in Tweaks** (Guy: "most will probably be hidden behind an advanced
+    menu"). Book-only parts ("once per day", "while raging", choices with rules) also come to Tweaks over
+    time, under Advanced. The app's automatic check lists every block that is not in Tweaks yet. A block
+    that is neither in Tweaks nor on that list makes the check fail.
+25. **The big re-implementation will not repeat the old batch process.** Guy did not like "the huge
+    batching process we did of implementing every pf2e thing". That job's process is designed in its
+    own chat, which first asks Guy what exactly he disliked about the batches. The blocks must not
+    depend on the batch tools.
 
 ## What Overrides can do today
 
@@ -111,8 +138,8 @@ Builder → Setup → Options → switch on "Overrides". A card then appears wit
 ## Things the app already has outside Overrides
 
 - **Modes**: bonus sets you switch on and off in play (for example a stance). They can already add +/- to
-  about 14 stats. But they are saved on the device only, and they do not travel with the character to
-  the GM.
+  about 14 stats. But they are saved on your account, not on the character, so they do not travel with
+  the character to the GM.
 - **Item editor** (Inventory): edit an item, including always-on bonuses and conditional notes. Editing a
   book item makes a copy for all your characters.
 - **Homebrew page**: make new items, feats, spells, ancestries, heritages, backgrounds, actions and
@@ -367,10 +394,15 @@ All answered or defaulted: see "Decisions so far". Question 17: Guy accepted the
 
 Each phase is one release-sized job, and each can be its own chat.
 
-1. **Base**: the new name Tweaks; new fields inside the stored overrides, so each tweak has a reason,
-   an on/off switch and a start level; move today's overrides over with nothing lost; the Tweaks panel that lists every
-   tweak; the breakdown line on the sheet; +/- and "set" on the main stats. Fix problems 1, 5, 6, 7, 8,
-   9 and 10 above (problems 3 and 4 are fixed in phase 3, problem 2 in phase 4).
+1. **Building blocks and base** (redone 2026-10-20, decisions 22–25): the full list of building blocks,
+   planned from the 51 features here plus every kind of book mechanic; the blocks phase 1 needs, built;
+   five kinds of book bonus moved onto them with every sheet number unchanged. Two chats: part A (the
+   blocks) and part B (the base). The base: the new name Tweaks; new fields inside the stored
+   overrides, so each tweak has a reason, an on/off switch and a start level; move today's overrides
+   over with nothing lost; the Tweaks panel that lists every tweak; the breakdown line on the sheet;
+   +/- and "set" on the main stats. Fix problems 1, 5, 6, 7, 8, 9 and 10 above, plus fix case D (a
+   given FEAT works like a picked one); problems 3 and 4 (given class features, removal) are fixed in
+   phase 3, problem 2 in phase 4.
    (Features 1, 2, 4 (start level only; "grow with level" goes with feature 3), 30–33, 40, 44, 46.)
 2. **Choices**: features 10–15.
 3. **Give and remove, defenses, senses, strikes, companions**: features 7–9, 16–19, 45, 48, 50, 51.
@@ -379,7 +411,9 @@ Each phase is one release-sized job, and each can be its own chat.
 6. **More classes and class basics**: features 20, 24.
 
 Features 3, 5, 6, 34–36 and 42 go into whichever phase touches their area. Part 2's "Phase 1 build
-spec" holds the exact phase 1 rules (from the final check).
+spec" holds the exact phase 1 rules (from the final check), and Part 2's "Building blocks" holds the
+rules for the blocks. Phases 2–6 each add their blocks to the shared list: Tweaks uses them at once,
+and the books use them in the big re-implementation.
 
 ---
 
@@ -414,13 +448,15 @@ says something different, the spec wins.
    contentEdits), so an older app still shows them. Reason, on/off, start level, at least / exactly,
    the set baseline and the import stamp live in a side map such as `overrides.meta`, keyed
    `<key>:<id>`. Only new kinds (stat +/-, set, at least N) get new fields.
-2. **Old characters open as before, except three intended fixes.** Every sheet number stays the same,
-   except these three cases, which phase 1 changes on purpose:
+2. **Old characters open as before, except four intended fixes.** Every sheet number stays the same,
+   except these four cases, which phase 1 changes on purpose (D added 2026-10-20):
    - A: a rank set to "trained" plus a later skill increase on that skill now gives the increase
      (migrated to "at least", spec 5);
    - B: a rank set LOWER than the computed rank now stays lowered after later class raises (migrated to
      "exactly", spec 5);
-   - C: a set max HP now keeps a mode's max HP bonus (spec 6).
+   - C: a set max HP now keeps a mode's max HP bonus (spec 6);
+   - D: a feat in `overrides.addedFeats` now reaches every reader that today walks feat slots only, so
+     it works like the same feat picked (Building blocks item 9; Flexible Spellcaster Dedication).
    The switch: a character with any stored overrides and no phase-1 marker reads as Tweaks switch ON
    (today's switch only hid the card; the changes were always active). This "ON by read" lasts only
    until the new version saves that character once: that save writes `options.overridesEnabled`
@@ -461,7 +497,9 @@ says something different, the spec wins.
      otherwise it becomes "at least".
 6. **Set and +/- order for a number.** Book total → "set" replaces it, or "at least N" raises it to N →
    tweak +/- adds → conditions, modes and Drained apply on top → a battle form replaces the whole number,
-   as today's `deriveAc` does; tweak +/- do not apply during a battle form.
+   as today's `deriveAc` does; tweak +/- do not apply during a battle form. With no set or "at least"
+   on a number, book, condition and mode terms stay ONE pool, as today (2026-10-20; Building blocks
+   item 4 has the test).
    Today's code folds conditions and modes into a skill before substitution, so a "set" placed after
    substitution would wipe them (AC set to 20 must still drop when off-guard). Today's max HP set keeps
    Drained but drops a mode's max HP bonus; the same order fixes that.
@@ -470,7 +508,7 @@ says something different, the spec wins.
    included). A set stores the book number at the time it was made, so decision 9 can warn at level-up
    when the book number changed; a migrated set gets its baseline at the first real save.
 8. **The main stats for phase 1.** Attribute scores (a +/- changes the score, never a mode shift, so the
-   ~9 readers that bypass `abilityModOf` stay right), max HP, AC, the 3 saves, Perception, every skill
+   ~11 readers that bypass `abilityModOf` stay right), max HP, AC, the 3 saves, Perception, every skill
    and Lore, class DC, Initiative, spell attack and spell DC per casting entry, land Speed. Strikes wait
    for phase 3.
 9. **Start level is checked against the level being viewed** in the Builder. Today `baseSkills`
@@ -484,16 +522,17 @@ says something different, the spec wins.
 11. **Lore (feature 44)** uses the one keyer `loreKey` (`build.ts`), so a "Sailing Lore" tweak and a
     background's Sailing Lore are one row, and the skill-increase picker offers it.
 12. **Deleting a tweak in the panel is not "removing a thing"** (decision 7): it asks nothing.
-13. **Consider the Modes machinery for +/-.** `modes.ts` already has untyped and typed +/-, note-only
-    entries (`appliesWhen`), breakdown lines (`modeAdjust`), a target list with Lores
-    (`modeTargetOptions`), and resistances, senses, speeds and strikes. Storing +/- tweaks in the
-    `ModeModifier` shape and feeding them in at ONE point that the sheet, the party card and the
-    tracker all pass through may beat adding a new term at 8+ derive sites. Decide after reading
-    `modes.ts`. Tweaks must stay out of the "a mode moved this number" highlight (decision 4: no marks),
-    and Modes stay a separate system for the player (decision 16).
+13. **Modes machinery: facts only (decided 2026-10-20 by Building blocks items 4 and 6).** `modes.ts`
+    already has untyped and typed +/-, note-only entries (`appliesWhen`), breakdown lines
+    (`modeAdjust`), a target list with Lores (`modeTargetOptions`), and resistances, senses, speeds and
+    strikes. The `ModeModifier` / `TypedMod` SHAPE may be reused for number blocks stored inside
+    `overrides`; storing tweaks AS Modes is ruled out (item 6). The measured sites are 11 pool sites
+    plus 7 un-pooled mode sites (Building blocks code facts). Tweaks must stay out of the "a mode moved
+    this number" highlight (decision 4: no marks), and Modes stay a separate system for the player
+    (decision 16).
 14. **Tests phase 1 must add:**
     - migration: the `SAMPLE` in `test/overrides-write.test.tsx` plus import-leftover rows, switch
-      unset → every sheet number equal before and after, except cases A, B and C of spec 2, which are
+      unset → every sheet number equal before and after, except cases A, B, C and D of spec 2, which are
       pinned by their own tests;
     - the "ON by read" switch: ON before the first new-version save, obeyed after it;
     - problem 10 and problem 5 cases ("at least trained" + increase → expert; "exactly" holds after a
@@ -505,6 +544,177 @@ says something different, the spec wins.
       numbers;
     - loading an old character is not an edit;
     - no user-visible "override" string.
+
+## Building blocks (2026-10-20; decisions 22–25)
+
+The rules below are binding for phase 1, like the build spec above. Where they meet a spec item, both
+hold; where they conflict, this section wins (it is newer). The code facts behind them are in "Building
+blocks: code facts" right after this list (a read-only map of 2026-10-20; most claims were re-checked
+by a second agent and a checker; counts marked "about" were not).
+
+1. **The full list first.** Before building, write the catalog of every block kind. Inputs: the 51
+   features in Part 1; `docs/mechanic-lanes.md` sections A–K (about 94 lane keys) AND its "DECIDED
+   SCOPE", "NOT lanes" and "Lanes this app does NOT have" sections; `docs/gold-set-answers.md`. (The repo
+   CLAUDE.md: skipping the rulings once produced 85 false "missing systems".) Each row: family (number,
+   rank, grant, choice, spellcasting, remove, text, marker or note — feature 5, Ruling F markers,
+   situational stars — …), the phase that builds it, where it shows in Tweaks (main or Advanced), and a
+   status: built, still to add, or "shape fixed by ruling X" (the ruling decides HOW it shows; it still
+   reaches Tweaks in the end). Book-only parts (frequency, "while X", choice rules) are rows too
+   (decision 24). The catalog is a data file next to the registry, so the guards of item 11 can read it.
+2. **One registry.** Every block kind is defined in one place (for example `src/rules/blocks/`). One
+   entry holds: id and family; the stored shape with a version; its seam (build-time or derive-time,
+   item 7) and order slot (set, at least, add, replace); the target kinds it accepts (item 3); its
+   breakdown wording; its Tweaks editor, put together from shared editor parts (pick a target, a number,
+   a rank, a record, a text) plus "main" or "Advanced"; what happens when its record or target is
+   missing (decision 13: shown with Remove and Point to another, never dropped); and its test. Optional
+   book-only parts reuse today's shapes: `LimitedUses`, `whileActive.state`, the `EffectChoice` gates.
+   **Every block instance**, shape or number, carries its source kind (book, tweak, later homebrew), its
+   source id, and a fixed key that stays the same after a data update, so feature 51 (switch off one
+   bonus) and decision 7 ("this and what it gave") can point at it later. A book block keys as record
+   id + field + target; a tweak keys by its stored `<key>:<id>` (spec item 1).
+   Write the recipe "how to add a block" at the top of the registry, for three cases: a new block on a
+   target that already has a term list (one entry plus its test); a new target (a target entry, plus
+   the derive or build code that reads its term list); a new build-time hook (a seam in
+   `buildCharacter`). New editor parts only when no shared part fits.
+3. **One target registry.** Today a new target means editing three places (`ModeTargetKind`,
+   `modeMatches`, `modeTargetOptions` / `MODE_TARGETS`). Blocks take their targets from one list; Lores
+   key through `loreKey` (spec item 11). A target carries an OWNER: the character, one casting entry,
+   one companion, one item. Design all four now; phase 1 builds the character and casting-entry owners
+   (spec item 8 has spell attack and DC per casting entry). Modes may read the same list, but Modes
+   stay a separate system for the player (decision 16).
+4. **Number blocks start from `TypedMod`** (`modes.ts`), extended with the source parts of item 2 and a
+   slot. A typed term pools with book, mode and condition terms by the PF2e rules; an untyped tweak
+   always adds (decision 15). **"Set" and pooling (one rule):** a set replaces the permanent total —
+   rank, attribute and every book term, item bonuses included. Conditions and Modes then apply on top
+   and pool only among themselves. "At least N" works like a set when it lifts the permanent total to
+   N; when that total is already N or more, it does nothing and everything stays one pool. With no set,
+   book, condition and mode terms stay one pool, as today (spec 6). Two tests, both with Peerless Form (+2 status to Fortitude) and Heroism (+1 status, a
+   mode): with a "set Fortitude to +12" tweak → 13 (the breakdown shows the book lines, then "Tweak:
+   set to 12" carrying the difference as spec 7 says, then "Heroism +1"); with no set → the same +2 as
+   today.
+5. **One term list per number, read by derive AND the breakdown.** Today `explain.ts` rebuilds the
+   breakdown parts by hand and drifts from `derive.ts` (the save breakdown has no record save bonus; the
+   max-HP breakdown has no mode term and no worn-item HP). The blocks give each number one list of terms
+   that both the number and its breakdown read. This is a VISIBLE fix: breakdowns gain the lines they
+   miss today, while the numbers stay the same. A typed term beaten by a bigger one of its type shows
+   as +0 with "does not stack" (or today's wording, if the breakdown already has one), so the parts
+   still sum and the player sees why. Guard: for each stat in spec item 8, on every test character
+   (item 10), the breakdown parts sum to the number; the no-set case of item 4 is one of its tests.
+6. **Tweak terms live on the character, never as Modes.** Modes are per-account data, and unknown mode
+   ids are dropped (`play.ts`, `content.modes` lookup), so a tweak stored as a mode would not reach a
+   GM's device. Terms stored inside `overrides` (spec item 1) travel with the character to the sheet,
+   the party card, the tracker, the native `.codex.json` export and campaign publish. The Wanderer's
+   Guide export drops `overrides` (Data safety below): phase 1 part B makes that export warn and list
+   the tweaks it cannot carry.
+7. **Two seams.** Shape blocks (grant, rank, language, spell entry, choice) apply inside
+   `buildCharacter`. Number blocks apply through the term lists of item 5. Today each caller runs
+   `applyOverrides` itself (App.tsx twice, Builder.tsx, GmEditSheet.tsx twice, rebuild.ts): make it one
+   path no caller can forget. Visible effect, a fix: `contentEdits` then reach the party card and the
+   tracker too (today they use raw content); pin it with a test. The 7 `modeNumberBonus` sites in
+   `derive.ts` (attribute modifier, max HP, 3 damage sites, the Strike attack, Speed) add modes without
+   pooling; each needs its own handling. Known bypasses to cover or justify in writing:
+   `useLocalCampaignMembers` (summary without `applyPlayState`), Builder previews built from a raw
+   `buildCharacter`, `baseSkills`.
+8. **Rank order.** "At least" is a floor seeded before the skill-increase loop; "exactly" is a final
+   clamp AFTER every `maxRank` raise. Today FEAT_GRANTS raises run after the rank override and can undo a
+   rank the player lowered.
+9. **Given works like picked — for FEATS in phase 1 (fix case D, spec 2).** A feat given by a tweak must
+   work exactly like the same feat picked in a slot. Known break (chat-todo, 2026-10-16): Flexible
+   Spellcaster Dedication given through Overrides is ignored, because `classArchetypeSpellMods` loops
+   over `build.featPicks` only. Search every reader that walks feat slots only. Given CLASS FEATURES
+   (the three class-feature `resolvePick` calls; problem 3) stay in phase 3, as the build order says;
+   the shape block for them is planned in the catalog now.
+10. **Prove the blocks on real book data, without touching the data pipeline.** Move the field READERS,
+    not single records, so no field has two code paths: `saveBonuses`, `landSpeedBonus` /
+    `speedBonusType`, `maxHpBonus`, `passiveEffects.skills`, and a background's `trainedSkill` /
+    `trainedLore`. Top-level counts in `public/core.json` (2026-10-20): `trainedSkill` 444 and
+    `trainedLore` 419 backgrounds; `passiveEffects.skills` 242 records (plus 3 runes with
+    `passiveEffects`); `maxHpBonus` 20 feats and 1 item; `landSpeedBonus` 20 records (11 feats, 5 class
+    features, 4 heritages); `speedBonusType` 8; `saveBonuses` 2 (1 feat, 1 heritage). The same fields
+    also sit deeper: `whileActive.landSpeedBonus` / `speedBonusType` on 3 records, and `passive.skills`
+    inside `effectChoices` grants on 9 records. The moved readers cover those copies too, or the copies
+    are left out with a written reason. The blocks are derived at load time from these existing
+    fields: no change to `scripts/data/effect-backfill.json`, no `npm run data`. Named fixtures
+    (permanent tests): `feats/peerless-form`, `heritages/ponygait-centaur`, `feats/fleet`,
+    `feats/scouts-speed`, `items/cloak-of-the-bat`, `feats/golem-grafter-dedication`,
+    `feats/unbreakable-er-goblin`, `backgrounds/missionary`. Check: a before/after comparison over EVERY
+    record that carries the moved fields, one made-up character per record (each item equipped, worn
+    and invested), plus the test characters (the characters `scripts/verify-characters.mjs` builds and
+    the fixtures under `test/`), through `deriveSkill`, `deriveSave`, `deriveSpeeds`, `deriveMaxHp`,
+    `deriveAc`, the tracker's `computePcStats` and `computeSummary`: every number equal, and breakdown
+    parts sum to totals (`test/bug-tracker-pc-row-agrees.test.tsx` is the model). So that the
+    comparison proves something, also assert that each made-up character's number DIFFERS from the same
+    character without the record; a record whose effect cannot be made to show is listed, not counted.
+11. **Guards in `npm run verify`**, each made to fail once on a planted bad case (a temp copy): every
+    registry entry has an editor with a place (main or Advanced) or is on the "still to add" list, which
+    the check prints; every catalog row has a status; every target a block uses is in the target
+    registry; every entry has a test; the breakdown-sum test of item 5; and a generic test: for every
+    block kind × target it accepts, a +1 (or one rank step) on a fixture moves the derived number by
+    exactly that amount, and the breakdown still sums.
+12. **No dependence on the batch tools** (decision 25). Blocks never need `wg-batch`,
+    `apply-parity-fixes.mjs` or the trust ledger to work. Phase 1 leaves book fields where they are, so
+    the verify checks that list fields (`trust-ledger-check`, `overlay-shape-check`,
+    `lost-condition-check`, `render-check` and the family checks) do not change. When the big job moves
+    fields, those checks must read the registry. (Not verified: the map says only `trust-ledger-check`
+    fails loudly on an unknown field and the others miss it silently.)
+13. **A block kind an older app does not know is kept, never dropped.** Phases 2–6 add kinds, and party
+    members may run an older app (spec item 1). Case: a phone on the phase 1 app opens a character with a
+    phase 3 tweak; the player switches off a phase 1 tweak; the panel must not write the list back
+    without the unknown one. Rule: unknown kinds and newer versions are kept byte for byte, listed as
+    "made in a newer version" (not editable), named in the switch-off confirm, and never dropped on
+    save. Test: edit a known tweak next to an unknown one; the unknown one survives the save and the
+    push. An OLDER block version is migrated at read time only (spec item 3 holds for every later
+    version bump too).
+14. **Homebrew is the third author of blocks.** Homebrew records and the item editor's always-on
+    bonuses (`ItemPassiveEffects` copies) will hold the same blocks. Phase 1 reserves the source kind
+    "homebrew"; feature 29 (Save as homebrew, phase 4) connects them.
+
+### Building blocks: code facts (read-only map, 2026-10-20)
+
+Line numbers drift; find each place by its symbol name. Counts marked "about" were not re-counted.
+
+- **Today's routes.** `docs/mechanic-lanes.md` A–K holds about 94 lane keys in 88 rows (A–F 58, G–K
+  36; the "68" in CLAUDE.md is an older count). About 14 stored shape families serve A–F; G–K is close
+  to one shape per lane. Code-only tables sit outside the overlay: `FEAT_GRANTS` (394 ids),
+  `FEAT_PICK_GRANTS`, `FEAT_CANTRIP_GRANTS`, `CHOICE_FEAT_GRANTS`, `FEAT_SITUATIONAL`, `RECORD_MARKERS`,
+  `CLASS_ADVANCEMENT`, the companion tables.
+- **One field name, several meanings:** `skills` is a rank in `EffectGrant` and a number in
+  `ItemPassiveEffects`; `hp` is ancestry HP or shield HP (`speeds` and `acBonus` reported likewise, not
+  traced).
+- **Cost of a new kind of rule today:** a small one (a field on an existing grant type) touches 5–8
+  files; a real new lane touched 11–37 files per commit (4–8 source files, 1–5 generators or checks,
+  3–10 tests, 2–4 data files). `types.ts` 7,022 lines, `derive.ts` 6,350, `build.ts` 12,862.
+- **Number readers:** 11 cross-source `poolTypedMods(` sites in `derive.ts`; 7 `modeNumberBonus` sites
+  that add modes un-pooled (item 7); `initiative.ts` pools twice; `companions.ts` has 16 sites that add
+  terms side by side.
+- **Scattered writers:** skill ranks written in about 15 places inside the FEAT_GRANTS loop; focus
+  spells about 37 sites; spell-slot bonuses 21; innate spells about 9 walks.
+- **Candidate shapes:** `ModeModifier` / `TypedMod` (typed number, PF2e stacking, matcher, Lore
+  targets, breakdown via `modeAdjust`; lacks a source id — `modeModifiersFor` tags each with the mode's
+  display NAME — an order slot, ranks, a per-casting-entry target). `recordSaveBonuses` (a book typed
+  save bonus tagged with its source and pooled; saves only). `EffectGrant` via `resolvePick` →
+  `applyAlwaysOn` → `mergeEffect` (shared by feats, heritages, class features, backgrounds, deities;
+  items use only its `passive` part; focus, `removesWeaknesses` and `grantsFeats` skip the sink).
+  `BuildOverrides` (`addedFeats` and `addedFeatures` already store a level). `SituationalBonus` (the
+  best target vocabulary; its number is free text and the file is generated).
+- **Today's build-time order:** callers run `applyOverrides` → attribute override → class and
+  background ranks, skill increases → class spellcasting → rank override → added feats → removed feats
+  → FEAT_GRANTS and other `maxRank` raises → "added spells" → `hitPoints.maxOverride` → languages.
+  **Derive time:** rank + attribute + pooled item, condition, mode and record terms → armor check
+  penalty → skill substitution → a battle form replaces AC. `deriveMaxHp` returns early on a set max HP,
+  before the mode HP term (spec case C).
+- **About 11 readers take the attribute score directly** instead of `abilityModOf` (`transfer.ts`,
+  `build.ts`, `explain.ts` ×5, `AlchemyPanel.tsx`, `CharacterSheet.tsx`, `MainTab.tsx`,
+  `VitalsRail.tsx`): an attribute tweak must change the score itself (spec item 8).
+- **`contentEdits`** (feature 25–27 territory, phase 4) reach only the sheet, the Builder and the GM
+  edit sheet; the party card, tracker, viewer, roster and export use raw content.
+- **Backfill limit:** an `effect-backfill.json` path steps into arrays only by `id=`, so one choice
+  option cannot be patched alone; a choice edit rewrites the whole field.
+- **Shapes that disagree:** `whileActive.state` has 5 values; `mapReduction.whileState` and
+  `grantedStrikesState` have 4. A shared "while X" part needs one list.
+- **Not checked by the map:** no tests or app runs; about half the verify steps were read in full; the
+  tracker's `computePcStats` internals, cloud sync of play state, and campaign sync of modes were not
+  read.
 
 ## Today's model
 
@@ -541,20 +751,22 @@ says something different, the spec wins.
 
 ## Stat pipeline (for features 1–9)
 
-- Typed modifiers are pooled at `derive.ts:254, 450, 643, 678, 877/885, 2088, 4786, 5125` and
-  `initiative.ts:59`. A new always-on build-time term must be added at each site, with a matching
-  `explain.ts` part (`CalcPart.note`, `explain.ts:110-147`).
+- SUPERSEDED by Building blocks items 5 and 7 and its code facts (11 pool sites + 7 un-pooled mode
+  sites, measured 2026-10-20). Older note: typed modifiers are pooled at `derive.ts:254, 450, 643, 678,
+  877/885, 2088, 4786, 5125` and `initiative.ts:59`; a new term needs a matching `explain.ts` part
+  (`CalcPart.note`).
 - `resolveFormula` clamps to ≥ 0 (`derive.ts:2445`): never route penalties through it.
 - SUPERSEDED by the Phase 1 build spec, item 6 (the set order). Setting Perception also moves Initiative
   (`initiative.ts:59-70`).
-- About nine readers bypass `abilityModOf` (e.g. `MainTab.tsx:1323`, `VitalsRail.tsx:348`,
-  `explain.ts:1061`). Write attribute +/- as a score change, or route every reader through
-  `abilityModOf`.
+- About 11 readers bypass `abilityModOf` (list in Building blocks code facts; e.g. `MainTab.tsx`
+  `abilityMod(character.abilities[ab])`, `VitalsRail.tsx`, `explain.ts`). Write attribute +/- as a
+  score change, or route every reader through `abilityModOf`.
 - Breakdown and total already drift (AC runes, HP mode, ability mode shifts). Add one guard test that the
   breakdown parts sum to the total.
 - Modes: `ModeDef` `types.ts:4885` (engine fields `:4909-4990`: resistances, senses, speeds, strikes,
   slot bonus, battleForm), targets `modes.ts:18-33`, untyped sum `:197`, editor `ModesPanel.tsx:367-476`,
-  stored on the device (`storage.ts:443-480`), not in the character export.
+  stored per account (localStorage plus the player's own cloud backup, `storage.ts`, `cloudSync.ts`),
+  not on the character and not in the character export.
 - Situational: a per-character note needs an owned-id branch in `characterSituationalIds`
   (`explain.ts:284-361`); synthetic keys are ignored (`:373-375`). `src/rules/situationalBonuses.ts` is
   GENERATED: never write per-character notes there.
@@ -691,57 +903,115 @@ says something different, the spec wins.
 
 # Part 3 — build prompts
 
-## Phase 1 (Base)
+## Phase 1 (Building blocks and base; redone 2026-10-20)
+
+Phase 1 runs in two chats. Part A (the building blocks) uses the prompt below. Part A holds the one
+check-in for both parts, and at its end it writes the part B prompt here, from "Phase 1 part B scope".
 
 Paste this into a new chat started in `C:\trying ai 2\pf2e codex`:
 
 ```text
-Build phase 1 of Tweaks in Heroes Heaven. Tweaks is the redesign and new name of the per-character
-"Overrides" card in the Builder. The design is finished and Guy accepted it on 2026-10-14.
+Build phase 1, PART A, of Tweaks in Heroes Heaven. Tweaks is the redesign and new name of the
+per-character "Overrides" card in the Builder. The design is finished; Guy accepted it on 2026-10-14
+and redid phase 1 on 2026-10-20: Tweaks is built on SHARED BUILDING BLOCKS that every feat, feature,
+item and other record will also use when all PF2e content is re-implemented later (decisions 22-25).
+Part A builds the blocks; part B (the next chat) builds the Tweaks screen and base on them.
 
 Read first, in this order:
-1. docs/overrides-redesign.md — Part 1 (Guy's decisions are final), then Part 2's "Phase 1 build spec"
-   (the exact phase 1 rules; it wins over any older line in Part 2). Line numbers in Part 2 drift: find
+1. docs/overrides-redesign.md — Part 1 (Guy's decisions 1-25 are final), then Part 2's "Phase 1 build
+   spec" and "Building blocks" (items 1-14) with its code facts. These are the exact phase 1 rules and
+   win over any older line in Part 2. Then Part 3's "Phase 1 part B scope". Line numbers drift: find
    code by symbol name.
 2. docs/gold-set-answers.md, as the repo's CLAUDE.md requires before touching anything the sheet shows.
 3. The memory note project_hh_tweaks_design_2026_10_14.md.
 
-Phase 1 scope (features 1, 2, 4, 30-33, 40, 44, 46; problems 1, 5, 6, 7, 8, 9, 10):
+Part A scope (Building blocks items):
+- The catalog of every block kind, as a data file next to the registry (item 1).
+- The block registry with source parts and fixed keys, the target registry with owners, and the
+  "how to add a block" recipe for its three cases (items 2-3). Unknown and newer block kinds are kept,
+  never dropped (item 13). The source kind "homebrew" is reserved (item 14).
+- Number blocks from TypedMod, with the one "set and pooling" rule and its test (item 4). One term list
+  per number that both derive.ts and the breakdown (explain.ts) read (item 5). Tweak terms live on the
+  character, never as Modes (item 6). The two seams and one applyOverrides path (item 7). The rank
+  order (item 8).
+- A feat given by a tweak works like the same feat picked: fix case D, including Flexible Spellcaster
+  Dedication (item 9). Given class features stay in phase 3.
+- The proof: move the field readers of item 10 onto blocks, with the before/after comparison over
+  every record that carries those fields.
+- The guards of item 11, each made to fail once on a planted bad case.
+
+What players see change after part A: no number changes, except fix case D. Breakdowns gain the lines
+they miss today (item 5), and contentEdits now reach the party card and tracker (item 7). Pin each with
+a test.
+
+Part A is done when: the catalog file and the registry exist; each guard of item 11 failed once on a
+planted bad case and now passes; the item 10 comparison shows every number equal (except case D); the
+tests of items 4, 5, 7, 9, 10, 11 and 13 pass through scripts/vt.mjs; npm run verify is green; part A is
+committed; and the part B prompt is written into Part 3 of the design file.
+
+How to work:
+- ONE check-in, before any edit to tracked files, with two parts:
+  (a) the look for part B, made NEW (decision 21): do not reuse the old layout (one Setup card with 9
+      stacked sub-cards behind an Options switch). Show 2-3 clearly different small samples in the real
+      Builder, at desktop and phone width, each showing where Tweaks sits (for example its own Builder
+      step, a side panel, or a card), where the Advanced menu is, and where the on/off switch is. The
+      samples are temporary, uncommitted code, only in files no other chat has uncommitted edits in;
+      remove them after Guy picks. Players use Tweaks only once in a while.
+  (b) the building-block plan in 3-5 short plain bullets: which existing shape the blocks grow from,
+      where the term lists sit, and what the catalog says phase 1 builds. Reach it with a small workflow
+      or 3-6 agents (read the code, two or three independent designs, then a checker), not by guessing.
+  Guy picks a look, answers the taste questions and says go. Write his pick and answers into the design
+  file for part B. No second check-in.
+- Stop point: once the catalog and the registry are committed, if this chat has passed about 300k
+  tokens, write a handover into the memory note and tell Guy. The next chat continues part A from that
+  handover; part B starts only after part A is done.
+- Other chats edit the same files. Run `git status` first. If a file you need (build.ts, derive.ts,
+  explain.ts, play.ts, types.ts, shared.tsx, Builder.tsx) has uncommitted edits, find the chat that owns
+  them in the session list and never overwrite them; work on other parts first, and if it blocks you,
+  tell Guy in one line which chat holds the file. Do not ask Guy whether another chat finished: check
+  git and the session list. (The deity chat has finished: 9c3e1fa and c061957.)
+- This touches saving and Guy's characters: follow the effort ladder at level 3 or higher, and end every
+  build loop on a checker.
+- Add the tests as you build each part. Run tests only through `scripts/vt.mjs`, and `npm run verify`
+  before every commit.
+- Test like a user in the browser preview (dev-skip login, test characters only): build a test character
+  with today's Overrides first; after part A it must open with every change kept and the same sheet
+  numbers, except case D.
+- Bugs you find outside this scope go to chat-todo.md, not into this job.
+- Commit locally by file name. Do not push.
+- At the end: update the doc's status line, the memory note, and Part 3 (the part B prompt), then tell
+  Guy that part B is next, in a new chat.
+```
+
+### Phase 1 part B scope (for the part B prompt that part A writes)
+
+The Tweaks base on the blocks (features 1, 2, 4, 30-33, 40, 44, 46; problems 1, 5, 6, 7, 8, 9, 10):
+- The look Guy picked at the part A check-in (decision 21).
 - The player sees "Tweaks" everywhere the old card said "Overrides". The stored names stay
   (spec item 1).
 - Each tweak has a reason, an on/off switch and a start level (phase 1 builds the start level only, not
-  "grow with level"). The Tweaks switch in Options pauses every tweak, after a confirm that lists what
-  turns off.
-- Old characters open as before, with nothing lost; every number stays the same except the three
-  intended fixes A, B and C (spec item 2). Migration happens at read time only, and loading is never an
-  edit (spec items 2 and 3). The 10 existing stored keys keep their values (spec item 1).
-- The Tweaks panel in the Builder (new look, decision 21) lists every tweak: what, where, reason,
-  on/off, go to it, delete.
+  "grow with level"). The Tweaks on/off switch, where the chosen look puts it, pauses every tweak, after
+  a confirm that lists what turns off.
+- Old characters open as before, with nothing lost; every number stays the same except the four
+  intended fixes A, B, C and D (spec item 2). Migration happens at read time only, and loading is never
+  an edit (spec items 2 and 3). The 10 existing stored keys keep their values (spec item 1).
+- The Tweaks panel lists every tweak: what, where, reason, on/off, go to it, delete.
 - +/- and "set" (with an "at least N" option) on the main stats listed in spec item 8, in the order of
-  spec item 6, each shown in the stat's breakdown as "Tweak: ..." (spec item 7). No marks next to
-  numbers.
+  spec item 6 and Building blocks item 4, each shown in the stat's breakdown as "Tweak: ..." (spec item
+  7). No marks next to numbers.
 - Ranks: "at least" by default, "exactly" as a choice (spec item 5). Add a Lore with any subject. Give
   feats of any level.
 - A tweak that points to something missing is shown with Remove and Point to another, never dropped.
-- NOT in phase 1: everything else in the feature list (phases 2-6).
-
-How to work:
-- Start with the look, and make it NEW (decision 21). Guy wants Tweaks to look different from the old
-  Overrides card: do not reuse its layout (one Setup card with 9 stacked sub-cards behind an Options
-  switch). Show 2-3 clearly different small samples in the real Builder, at desktop and phone width,
-  including where Tweaks sits (for example its own Builder step, a side panel, or a card). Remember that
-  players use Tweaks only once in a while. Guy picks one and answers the taste questions before you
-  build anything else.
-- Before you edit build.ts, shared.tsx or Builder.tsx: ask Guy in one line whether the "Deity for every
-  class" chat has finished and committed (it edited those files on 2026-10-14). Run `git status`, and
-  never overwrite uncommitted edits in those files. Two writers on the same files lose work.
-- This touches saving and Guy's characters: follow the effort ladder at level 3 or higher, and end every
-  build loop on a checker.
-- Add the tests in spec item 14 as you build each part. Run tests only through `scripts/vt.mjs`.
-- Test like a user in the browser preview (dev-skip login, test characters only): build a test character
-  with today's Overrides first, then check it opens with every change kept and the same sheet numbers,
-  except cases A, B and C of spec item 2.
-- Commit locally by file name. Do not push.
-- At the end, update the doc's status line and "Decisions so far", update the memory note, and tell
-  Guy that phase 2 (Choices) is next.
-```
+- The Tweaks screen is built from the block registry: each phase 1 block sits in the main area or
+  under Advanced, as the catalog says. The Advanced menu exists from the start, because in the end every
+  block is in Tweaks and most of them go under Advanced (decision 24).
+- Exporting to the Wanderer's Guide format warns and lists the tweaks it cannot carry (Building blocks
+  item 6).
+- The tests of spec item 14.
+- Test like a user: a test character built with today's Overrides opens with every change kept and the
+  same sheet numbers, except cases A, B, C and D.
+- NOT in phase 1: everything else in the feature list (phases 2-6), and no book fields beyond those of
+  Building blocks item 10 (the rest is the big re-implementation, a later job with its own process,
+  decision 25).
+- At the end: update the doc's status line and "Decisions so far", update the memory note, and tell Guy
+  that phase 2 (Choices) is next.
