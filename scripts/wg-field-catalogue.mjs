@@ -54,7 +54,10 @@ const srcFiles = [];
 for (const dir of ['src/rules', 'src/sheet', 'src/builder', 'src/data', 'src/integration']) {
   const d = join(ROOT, dir);
   if (!existsSync(d)) continue;
-  for (const f of readdirSync(d)) {
+  // Subfolders too: 978677c moved the book-field readers (saveBonuses, speedBonusType,
+  // speedBonusAllSpeeds) into src/rules/blocks/book.ts, and a top-level-only walk then reported them inert.
+  for (const entry of readdirSync(d, { recursive: true })) {
+    const f = String(entry).replace(/\\/g, '/');
     if (!/\.(ts|tsx)$/.test(f)) continue;
     srcFiles.push({ path: `${dir}/${f}`, text: readFileSync(join(d, f), 'utf8') });
   }
