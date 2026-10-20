@@ -15,10 +15,13 @@
  * bonuses still apply when initiative is rolled with Perception (the default and the common case),
  * and a character who rolls it with a skill gets that skill's own line instead.
  */
-import { deriveArmorCheckPenalty, derivePerception, deriveSkill, formatMod, type StatLine } from './derive';
+import { deriveArmorCheckPenalty, derivePerception, deriveSkill, formatMod, perceptionTerms, skillResolved, type StatLine } from './derive';
 import { modeModifiersFor, poolTypedMods, type TypedMod } from './modes';
-import { characterSituationalIds, explainStat, type SituationalNote, type StatRef } from './explain';
+import { characterSituationalIds, explainStat, nameOfRecord, type SituationalNote, type StatRef } from './explain';
 import { featSituationalFor } from './situationalBonuses';
+import { traitLabel } from './glossary';
+import { resolveTerms, type Term, type TermPart } from './blocks/terms';
+import { numberTweakTerms } from './blocks/active';
 import type { Character, ContentDatabase, ModeModifier, ProficiencyKey } from './types';
 
 /** What initiative is rolled with. `null`/absent = Perception, which is the default in the rules. */
@@ -56,18 +59,49 @@ export function deriveInitiative(c: Character, db?: ContentDatabase, override?: 
    * inside the line this builds on, so a Perception mode still moves initiative the way it always
    * did; this only adds the initiative-only lane.
    */
-  const extra = poolTypedMods(initiativeTerms(c, db, stat).map((t) => t.mod));
-  if (!stat) {
-    const p = derivePerception(c, db);
-    return { ...p, modifier: p.modifier + extra, stat: 'perception', label: 'Perception' };
-  }
-  const s = deriveSkill(c, stat, db);
+  const own = initiativeOwnTerms(c, db, stat);
+  const inner: StatLine = !stat ? derivePerception(c, db) : deriveSkill(c, stat, db);
+  /* With no set and no "at least" on Initiative, its own pool simply goes on top of the statistic it
+   * reads (the inner number's lines are all already settled, untyped) — exactly the total
+   * `initiativeTermList` resolves to, without building the inner breakdown. */
+  const extra = own.some((t) => t.slot === 'set' || t.slot === 'atLeast') ? resolveTerms(initiativeTermList(c, db, stat, own)).total - inner.modifier : poolTypedMods(own);
+  if (!stat) return { ...inner, modifier: inner.modifier + extra, stat: 'perception', label: 'Perception' };
   return {
-    ...s,
-    modifier: s.modifier + extra,
+    ...inner,
+    modifier: inner.modifier + extra,
     stat,
     label: stat.startsWith('lore:') ? `${cap(stat.slice(5))} Lore` : cap(stat),
   };
+}
+
+/** Initiative's OWN terms: the always-on modes and registry entries (`initiativeTerms`), then the
+ *  player's initiative tweak blocks. One pool, on top of the statistic initiative reads. */
+function initiativeOwnTerms(c: Character, db: ContentDatabase | undefined, stat: InitiativeStat, terms = initiativeTerms(c, db, stat)): Term[] {
+  return [...terms.map((t) => t.term), ...numberTweakTerms(c, 'initiative')];
+}
+
+/**
+ * Initiative's whole term list: the statistic it reads, as SETTLED lines (each its taken value,
+ * untyped — so a set on Perception moves Initiative, spec item 8), then initiative's own terms. A set
+ * on Initiative replaces the permanent half of both (the statistic's base and book lines, the
+ * always-on registry entries); what is on in play — the statistic's conditions and modes, initiative's
+ * own modes — stays on top, as for every other number (blocks/terms.ts).
+ */
+function initiativeTermList(c: Character, db: ContentDatabase | undefined, stat: InitiativeStat, own = initiativeOwnTerms(c, db, stat)): Term[] {
+  const innerParts: TermPart[] = !stat ? resolveTerms(perceptionTerms(c, db)).parts : skillResolved(c, stat, db).parts;
+  const settled: Term[] = innerParts.map((p) => ({
+    type: 'untyped',
+    value: p.value,
+    label: p.label,
+    ...(p.note ? { note: p.note } : {}),
+    layer: p.term.layer === 'transient' ? 'transient' : 'base',
+  }));
+  return [...settled, ...own];
+}
+
+/** Initiative's number AND its breakdown parts, from one list (explain.ts's initiative case). */
+export function initiativeResolved(c: Character, db: ContentDatabase | undefined): { line: InitiativeLine; parts: TermPart[] } {
+  return { line: deriveInitiative(c, db), parts: resolveTerms(initiativeTermList(c, db, c.initiativeSkill)).parts };
 }
 
 /**
@@ -225,7 +259,11 @@ interface InitiativeTerm {
   when?: string;
   /** A mode modifier: the object itself, so the display loop matches by identity, not by position. */
   src?: ModeModifier;
+  /** The same modifier as a line of initiative's term list (blocks/terms.ts), named for the breakdown. */
+  term: Term;
 }
+
+const typedNote = (m: TypedMod) => `${m.type} ${m.value >= 0 ? 'bonus' : 'penalty'}`;
 
 /**
  * Every always-on term: the unconditional initiative modes, then the always-on registry entries.
@@ -246,11 +284,12 @@ interface InitiativeTerm {
  */
 function initiativeTerms(c: Character, db: ContentDatabase | undefined, stat: InitiativeStat): InitiativeTerm[] {
   const out: InitiativeTerm[] = [];
-  for (const { mod } of modeModifiersFor(c.activeModes, { kind: 'initiative' })) {
+  for (const { mode, mod } of modeModifiersFor(c.activeModes, { kind: 'initiative' })) {
     // A conditional modifier is the player's to apply — the same test `modeTypedMods` makes, made
     // here because this list has replaced it as what the number is built from.
     if (mod.appliesWhen) continue;
-    out.push({ mod: { type: mod.type, value: mod.value }, printed: mod.value, src: mod });
+    const m: TypedMod = { type: mod.type, value: mod.value };
+    out.push({ mod: m, printed: mod.value, src: mod, term: { ...m, label: mode, note: typedNote(m), layer: 'transient' } });
   }
   const ids = characterSituationalIds(c, db);
   // The initiative-only entries, PLUS the ones filed against the statistic initiative reads whose
@@ -269,26 +308,24 @@ function initiativeTerms(c: Character, db: ContentDatabase | undefined, stat: In
       if (seen.has(key)) continue;
       seen.add(key);
       const printed = Number(m[1]);
-      out.push({
-        sourceId: e.id,
-        when: e.when,
-        printed,
-        mod: {
-          type: (m[2]?.toLowerCase() as TypedMod['type']) ?? 'untyped',
-          // Ponderous is *"a -1 penalty to initiative. If you don't meet the armor's required
-          // Strength modifier, the penalty becomes the armor's check penalty when that is worse."*
-          // The app already computes that penalty — and returns 0 when the wearer meets the
-          // threshold — so the worse of the two is exact rather than prose the player has to apply.
-          value: e.id === PONDEROUS && db ? Math.min(-1, deriveArmorCheckPenalty(c, db).value) : printed,
-        },
-      });
+      const mod: TypedMod = {
+        type: (m[2]?.toLowerCase() as TypedMod['type']) ?? 'untyped',
+        // Ponderous is *"a -1 penalty to initiative. If you don't meet the armor's required
+        // Strength modifier, the penalty becomes the armor's check penalty when that is worse."*
+        // The app already computes that penalty — and returns 0 when the wearer meets the
+        // threshold — so the worse of the two is exact rather than prose the player has to apply.
+        value: e.id === PONDEROUS && db ? Math.min(-1, deriveArmorCheckPenalty(c, db).value) : printed,
+      };
+      const label = e.id.startsWith('trait:') ? traitLabel(e.id.slice('trait:'.length)) : db ? nameOfRecord(db, e.id) : e.id;
+      out.push({ sourceId: e.id, when: e.when, printed, mod, term: { ...mod, label, note: typedNote(mod), layer: 'book' } });
     }
   }
   return out;
 }
 
 /**
- * What each term ACTUALLY added to the pooled total, aligned with `terms`.
+ * What each term ACTUALLY added to the initiative total, aligned with `terms` — read off the resolved
+ * term list, the same one the number is the total of.
  *
  * bug 2026-09-16 (refutation): "(in the number)" is a claim about the value on the row, and same-type
  * bonuses do not stack. Incredible Initiative and Saved by Clockwork are both "+2 circumstance", and
@@ -297,25 +334,13 @@ function initiativeTerms(c: Character, db: ContentDatabase | undefined, stat: In
  * number)" twice beside a number that had moved 2: the popup explaining +4 of a +2. Two unconditional
  * same-type modes are the same story, and that one is a fixture in this lane's own tests.
  *
- * Measured rather than re-decided: the terms go into `poolTypedMods` strongest first, and each one's
- * share is how much the running total MOVED when it went in. Strongest first is what makes the
- * credited one the one PF2e keeps; the rule itself is never restated here, which is the point — there
- * is exactly one implementation of "best bonus, worst penalty, untyped sums" in the app and this asks
- * it rather than agreeing with it. `takenByTerm(terms)` sums to `poolTypedMods(terms.map(t => t.mod))`
- * by construction.
+ * Measured rather than re-decided: `resolveTerms` credits each term what the pool actually took from
+ * it (`takenByTerm`, moved to blocks/terms.ts and made generic 2026-10-20). A set on Initiative is
+ * read the same way — a registry entry the set replaced took 0.
  */
-function takenByTerm(terms: InitiativeTerm[]): number[] {
-  const taken = new Array<number>(terms.length).fill(0);
-  const order = terms.map((_, i) => i).sort((a, b) => Math.abs(terms[b].mod.value) - Math.abs(terms[a].mod.value));
-  const pool: TypedMod[] = [];
-  let running = 0;
-  for (const i of order) {
-    pool.push(terms[i].mod);
-    const next = poolTypedMods(pool);
-    taken[i] = next - running;
-    running = next;
-  }
-  return taken;
+function takenFor(c: Character, db: ContentDatabase, terms: InitiativeTerm[]): { taken: number[]; parts: TermPart[] } {
+  const parts = resolveTerms(initiativeTermList(c, db, c.initiativeSkill, initiativeOwnTerms(c, db, c.initiativeSkill, terms))).parts;
+  return { taken: terms.map((t) => parts.find((p) => p.term === t.term)?.value ?? 0), parts };
 }
 
 /**
@@ -342,7 +367,7 @@ export function initiativeInfluenceDetail(c: Character, db: ContentDatabase): In
   const all = explainStat(c, db, { kind: 'initiative' }).situational ?? [];
   // The terms the number was built from, and what each was worth once they had been pooled together.
   const terms = initiativeTerms(c, db, c.initiativeSkill);
-  const taken = takenByTerm(terms);
+  const { taken, parts } = takenFor(c, db, terms);
   /*
    * A counted line has to print the figure the number ACTUALLY took, whenever that is not the figure
    * the line itself prints. There are two ways they part, and both shipped wrong:
@@ -384,6 +409,12 @@ export function initiativeInfluenceDetail(c: Character, db: ContentDatabase): In
     // that list but was superseded by a same-type sibling says so, instead of claiming the +2 twice.
     const i = terms.findIndex((t) => t.src === mod);
     out.push({ note: { text: i < 0 ? text : reconciled(i, text) }, inNumber: i >= 0 });
+  }
+  // The player's own initiative tweak blocks are in the number too, and named nowhere else on the rail —
+  // without a line here, a character whose only initiative change is a tweak would get no Initiative row.
+  for (const p of parts) {
+    if (p.term.layer !== 'tweak') continue;
+    out.push({ note: { text: `${p.label}${p.note ? ` — ${p.note}` : ''}` }, inNumber: true });
   }
   // Rolling it with something else IS the influence — it is the whole reason a character Avoiding
   // Notice has an initiative worth reading separately from their Perception. The number shown IS

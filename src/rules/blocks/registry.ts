@@ -215,6 +215,9 @@ const SETTABLE_NUMBERS: TargetKind[] = ['ac', 'save', 'perception', 'skill', 'cl
  *  is NOT one of them: stored there it would become a fake skill; it is phase 5 (feature 49). */
 const RANK_TRACKS: TargetKind[] = ['skill', 'save', 'perception', 'class-dc', 'weapon', 'armor'];
 const REGISTRY_TEST = 'test/blocks-registry.test.ts';
+/** The applying kinds' own tests (part A, Building blocks items 4–6). */
+const SET_POOLING_TEST = 'test/blocks-set-pooling.test.ts';
+const GENERIC_STEP_TEST = 'test/blocks-generic-step.test.ts';
 
 export const BLOCK_KINDS: BlockKindDef[] = [
   {
@@ -241,8 +244,10 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     line: (b) => bookOr(b, `${valueText(b.value)}${b.bonusType ? ` ${b.bonusType}` : ''}`),
     editor: { place: 'main', menus: ['Bonus or penalty'], parts: ['target', 'number', 'level', 'reason'], advancedParts: ['bonusType'], built: false },
     missing: 'show-broken',
-    applies: 'not-yet',
-    test: REGISTRY_TEST,
+    // Tweak blocks reach the term lists in derive.ts through blocks/active.ts (spec items 6–8). The book
+    // fields above still reach the numbers through their own readers until item 10 moves them.
+    applies: 'blocks',
+    test: GENERIC_STEP_TEST,
   },
   {
     // A +/- on an attribute changes the SCORE (spec item 8), at build time — its own kind so the
@@ -259,8 +264,9 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     line: (b) => bookOr(b, valueText(b.value)),
     editor: { place: 'main', menus: ['Bonus or penalty'], parts: ['target', 'number', 'level', 'reason'], built: false },
     missing: 'show-broken',
-    applies: 'not-yet',
-    test: REGISTRY_TEST,
+    // Applied to the score inside buildCharacter (build.ts, after the legacy attribute set).
+    applies: 'blocks',
+    test: GENERIC_STEP_TEST,
   },
   {
     id: 'number.set',
@@ -275,8 +281,9 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     line: (b) => bookOr(b, `set to ${typeof b.value === 'number' ? b.value : valueText(b.value)}`),
     editor: { place: 'main', menus: ['Set a number'], parts: ['target', 'number', 'level', 'reason'], built: false },
     missing: 'show-broken',
-    applies: 'not-yet',
-    test: REGISTRY_TEST,
+    // blocks/terms.ts resolveTerms — THE ONE "SET AND POOLING" RULE.
+    applies: 'blocks',
+    test: SET_POOLING_TEST,
   },
   {
     id: 'number.atLeast',
@@ -291,8 +298,9 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     line: (b) => bookOr(b, `at least ${typeof b.value === 'number' ? b.value : valueText(b.value)}`),
     editor: { place: 'main', menus: ['Set a number'], parts: ['target', 'number', 'level', 'reason'], built: false },
     missing: 'show-broken',
-    applies: 'not-yet',
-    test: REGISTRY_TEST,
+    // blocks/terms.ts resolveTerms — acts as a set only when the permanent part is below N.
+    applies: 'blocks',
+    test: SET_POOLING_TEST,
   },
   {
     id: 'number.setMaxHp',

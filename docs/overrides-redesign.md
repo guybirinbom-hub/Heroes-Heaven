@@ -605,6 +605,31 @@ by a second agent and a checker; counts marked "about" were not).
    mode): with a "set Fortitude to +12" tweak → 13 (the breakdown shows the book lines, then "Tweak:
    set to 12" carrying the difference as spec 7 says, then "Heroism +1"); with no set → the same +2 as
    today.
+   **As built (2026-10-20, `src/rules/blocks/terms.ts`, tests `blocks-set-pooling` / `-breakdown-sums`
+   / `-generic-step`):**
+   - Several sets on one number: the last one counts; each earlier one shows +0 "replaced by a later set".
+   - A set and an "at least" together: the set applies first, then "at least" lifts the result if it is
+     still below N.
+   - A set may give a negative result; only the stat's own floor (Speed and max HP: minimum 0) clamps it.
+   - Typed tweak adds pool with conditions and modes after a set; untyped tweak adds always add.
+   - Armor check penalty is a book line (the armor's own penalty, like an item penalty): a set on a skill
+     replaces it with the rest of the book total. With no set it adds in full, as before. A set lands
+     before skill substitution.
+   - A fixed spell DC ("printed by its source") is one line; tweaks do not reach it. A battle form's AC
+     and a battle form that states its Speeds replace the whole number; tweaks do not reach them.
+   - Max HP: today's manual max HP still returns early (checker C2); tweaks meet it in part B.
+   - Land Speed is a list of ordered stages. Typed tweak adds pool with the record Speed bonuses (a
+     "+10 status" tweak beside Vivacious Speed's status bonus: the larger counts); untyped tweak adds sum
+     in the last stage. Record Speed bonuses and mode Speed modifiers stay two pools, as today.
+   - A Speed set follows the rule above like every other number: it replaces the lasting record Speed
+     bonuses, and the play bonuses pool on top in full. Land = S + (F0 − P0) + untyped tweak adds,
+     floored at 0, where F0 and P0 are the Speed with and without play states, both computed without the
+     lasting record Speed bonuses (a swashbuckler set to 30 with panache: 40). Temporary Speed stays
+     last; the other Speeds are not touched by a land Speed set.
+   - Initiative pools its own terms on top of the statistic it rolls; a set on Initiative replaces the
+     statistic's permanent lines and Initiative's own book lines.
+   - `attribute.add` counts in SCORE points (+1 = one score point), applied in `buildCharacter` right
+     after the legacy attribute set.
 5. **One term list per number, read by derive AND the breakdown.** Today `explain.ts` rebuilds the
    breakdown parts by hand and drifts from `derive.ts` (the save breakdown has no record save bonus; the
    max-HP breakdown has no mode term and no worn-item HP). The blocks give each number one list of terms

@@ -59,11 +59,20 @@ import { PROFICIENCY_RANKS } from './types';
  * a field — it turns them off through this list instead (docs/trust-gate.md section 3). Every id used
  * that way is inventoried in scripts/data/trust-lanes.json. */
 import { engineLaneOff } from './trustLanes';
-import { conditionPenalty, conditionTypedMods, conditionsWithDrainedReduction, drainedHpLoss } from './conditions';
+import {
+  conditionPenalty,
+  conditionTypedMods,
+  conditionsWithDrainedReduction,
+  drainedHpLoss,
+  effectiveDrainedValue,
+  type ConditionSlot,
+} from './conditions';
 import { DOMAIN_SPELLS } from './domains';
 import { applyCounterMods } from './counterMods';
 import { armorSpecEffect, armorSpecValue } from './armorSpec';
-import { modeNumberBonus, modeTypedMods, poolTypedMods, type TypedMod } from './modes';
+import { modeModifiersFor, modeNumberBonus, modeTypedMods, poolTypedMods, type ModeTarget, type TypedMod } from './modes';
+import { resolveTerms, takenByTerm, termsTotal, type Term, type TermPart } from './blocks/terms';
+import { numberTweakTerms } from './blocks/active';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
 import {
   mpRefinedLevel,
@@ -199,6 +208,91 @@ export function abilityModifiers(c: Character): Record<AbilityId, number> {
   };
 }
 
+/* ---- TERM LISTS ------------------------------------------------------------------------------------
+ * Each sheet number below builds ONE `Term[]` (blocks/terms.ts) beside its derive function: the derive
+ * function's value is that list's total, and explainStat's breakdown is that list's parts, so the two
+ * can no longer drift (docs/overrides-redesign.md, Building blocks items 4 and 5; spec items 6–8). A
+ * list reads in order: base (rank, attribute, the 10 of a DC) → book (items, records) → the player's
+ * tweak blocks → what is switched on in play (an attribute's mode shift, conditions, the stance, modes).
+ * A zero book or play term is left out; a base term always shows, as the breakdowns always did.
+ */
+
+/** Rank names as every breakdown prints them (explain.ts's RANK_LABEL is this object). */
+export const RANK_NAME: Record<ProficiencyRank, string> = {
+  untrained: 'Untrained',
+  trained: 'Trained',
+  expert: 'Expert',
+  master: 'Master',
+  legendary: 'Legendary',
+};
+const ABILITY_NAME: Record<AbilityId, string> = {
+  str: 'Strength',
+  dex: 'Dexterity',
+  con: 'Constitution',
+  int: 'Intelligence',
+  wis: 'Wisdom',
+  cha: 'Charisma',
+};
+
+/** The proficiency line, as every breakdown prints it (explain.ts's profPart is this). */
+export function profLine(rank: ProficiencyRank, level: number, withoutLevel = false): { label: string; note: string; value: number } {
+  if (rank === 'untrained')
+    return withoutLevel
+      ? { label: 'Untrained', note: 'rank penalty, level not added', value: -2 }
+      : { label: 'Untrained', note: 'no proficiency (level not added)', value: 0 };
+  return withoutLevel
+    ? { label: `Proficiency — ${RANK_NAME[rank]}`, note: `+${RANK_VALUE[rank]} (level not added)`, value: profBonus(rank, level, true) }
+    : { label: `Proficiency — ${RANK_NAME[rank]}`, note: `level ${level} + ${RANK_VALUE[rank]}`, value: profBonus(rank, level) };
+}
+
+const baseTerm = (label: string, value: number, note?: string): Term => ({ type: 'untyped', value, label, ...(note ? { note } : {}), layer: 'base' });
+const typedNote = (type: TypedMod['type'], value: number) => `${type} ${value >= 0 ? 'bonus' : 'penalty'}`;
+const bookTerm = (label: string, type: TypedMod['type'], value: number, note: string = typedNote(type, value)): Term => ({ type, value, label, note, layer: 'book' });
+const itemTerm = (label: string, value: number, note = 'item bonus'): Term => bookTerm(label, 'item', value, note);
+const playTerm = (label: string, type: TypedMod['type'], value: number, note?: string): Term => ({ type, value, label, ...(note ? { note } : {}), layer: 'transient' });
+
+function profTerm(c: Character, rank: ProficiencyRank): Term {
+  const p = profLine(rank, c.level, pwl(c));
+  return baseTerm(p.label, p.value, p.note);
+}
+
+/** The attribute's SCORE modifier — the half of `abilityModOf` that is not a mode. */
+function abilityTerm(c: Character, ab: AbilityId): Term {
+  return baseTerm(`${ABILITY_NAME[ab]} modifier`, abilityMod(c.abilities[ab]), `${ABILITY_NAME[ab]} ${c.abilities[ab]}`);
+}
+
+/**
+ * The other half of `abilityModOf`: an active mode's shift of the attribute modifier, as its own play
+ * line (it was folded into the number and printed nowhere, so a mode on Strength made Athletics stop
+ * summing). `times` scales it for a per-level reader (max HP); `value` overrides it where a cap clipped
+ * it (AC's Dexterity).
+ */
+function abilityShiftTerms(c: Character, ab: AbilityId, times = 1, value?: number): Term[] {
+  const per = modeNumberBonus(c.activeModes, { kind: 'ability', detail: ab });
+  const shift = value ?? per * times;
+  if (!shift) return [];
+  const names = [...new Set(modeModifiersFor(c.activeModes, { kind: 'ability', detail: ab }).filter((x) => !x.mod.appliesWhen).map((x) => x.mode))];
+  const note = `${ABILITY_NAME[ab]} modifier ${formatMod(per)}${times !== 1 ? ` × ${times} levels` : ''}`;
+  return [playTerm(names.join(', ') || 'Mode', 'untyped', shift, note)];
+}
+
+/** Condition penalties — the same typed mods `conditionTypedMods` gives the pool, one line per type. */
+function conditionTerms(conditions: Character['conditions'], ab: AbilityId, slot: ConditionSlot): Term[] {
+  const mods = conditionTypedMods(conditions, ab, slot);
+  return mods.map((m) => playTerm('Condition penalty', m.type, m.value, mods.length > 1 ? `${m.type} penalty` : undefined));
+}
+
+/** The UNCONDITIONAL mode modifiers on a target, named — the same mods `modeTypedMods` gives the pool,
+ *  in the same order. A conditional one is the player's to apply and stays on the star list. */
+function modeTerms(modes: ModeDef[] | undefined, target: ModeTarget): Term[] {
+  const out: Term[] = [];
+  for (const { mode, mod } of modeModifiersFor(modes, target)) {
+    if (mod.appliesWhen) continue;
+    out.push(playTerm(mode, mod.type, mod.value, typedNote(mod.type, mod.value)));
+  }
+  return out;
+}
+
 const RESILIENT_BONUS: Record<string, number> = { resilient: 1, greater: 2, major: 3, mythic: 4 };
 
 /** Item bonus to saves from a worn armor's resilient rune, or a Monster-Parts refined armor's
@@ -240,31 +334,42 @@ export function recordSaveBonuses(c: Character, db: ContentDatabase | undefined,
   return out;
 }
 
-export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): StatLine {
-  const rank = c.proficiencies.saves[save];
+/** A saving throw's term list (see TERM LISTS above): the number is its total, the breakdown its parts. */
+export function saveTerms(c: Character, save: SaveId, db?: ContentDatabase): Term[] {
   const ability = SAVE_ABILITY[save];
+  const out: Term[] = [profTerm(c, c.proficiencies.saves[save]), abilityTerm(c, ability)];
   // Item bonus to saves: ABP save potency replaces the resilient rune; a passive save item
   // (mythic resilient, save-bonus wearables) competes as an item bonus — take the best.
-  const itemBonus = Math.max(abpOn(c) ? abpSave(c.level) : db ? resilientSaveBonus(c, db) : 0, passiveItemBonus(c, db, 'saves'));
+  const rune = abpOn(c) ? abpSave(c.level) : db ? resilientSaveBonus(c, db) : 0;
+  const itemBonus = Math.max(rune, passiveItemBonus(c, db, 'saves'));
+  if (itemBonus) {
+    const passive = passiveItemBonusDetail(c, db, 'saves');
+    out.push(
+      passive && passive.value === itemBonus ? itemTerm(passive.name, itemBonus)
+      : abpOn(c) ? itemTerm('ABP save potency', itemBonus, 'item bonus (replaces resilient)')
+      : itemTerm('Resilient rune', itemBonus),
+    );
+  }
+  // A record's own unconditional save bonus, pooled by type with everything else.
+  for (const r of recordSaveBonuses(c, db, save)) out.push(bookTerm(r.name || 'Record', r.type, r.value));
+  out.push(...numberTweakTerms(c, `save:${save}`));
+  out.push(...abilityShiftTerms(c, ability));
+  /* Fortitude reads the REDUCED Drained value where a feat lowers it — *"calculate the penalty to your
+   * Fortitude saves … as though the condition value were 1 lower"* (Svetocher). Reflex and Will are
+   * unaffected by Drained anyway, so passing the adjusted list for all three would be safe too. */
+  out.push(...conditionTerms(save === 'fortitude' ? conditionsWithDrainedReduction(c) : c.conditions, ability, 'save'));
   // The active stance/form may grant a save bonus (Cobra Stance: +1 Fortitude), typed so it pools.
-  const stanceSave = db ? activeStanceDef(c, db)?.saves?.[save] : undefined;
-  const modifier =
-    abilityModOf(c, ability) +
-    profBonus(rank, c.level, pwl(c)) +
-    // All typed modifiers (item / condition penalties / modes / stance) pool by type across sources.
-    poolTypedMods([
-      { type: 'item', value: itemBonus },
-      ...(stanceSave ? [{ type: stanceSave.type as TypedMod['type'], value: stanceSave.value }] : []),
-      /* Fortitude reads the REDUCED Drained value where a feat lowers it — *"calculate the penalty to
-       * your Fortitude saves … as though the condition value were 1 lower"* (Svetocher). Reflex and
-       * Will are unaffected by Drained anyway, so passing the adjusted list for all three is safe and
-       * says the rule in one place. */
-      ...conditionTypedMods(save === 'fortitude' ? conditionsWithDrainedReduction(c) : c.conditions, ability, 'save'),
-      ...modeTypedMods(c.activeModes, { kind: 'save', detail: save }),
-      // A record's own unconditional save bonus, pooled by type with everything above it.
-      ...recordSaveBonuses(c, db, save),
-    ]);
-  return { rank, modifier };
+  const stance = db ? activeStanceDef(c, db) : undefined;
+  const stanceSave = stance?.saves?.[save];
+  if (stanceSave?.value) out.push(playTerm(stance!.name ?? 'Stance', stanceSave.type as TypedMod['type'], stanceSave.value, typedNote(stanceSave.type as TypedMod['type'], stanceSave.value)));
+  out.push(...modeTerms(c.activeModes, { kind: 'save', detail: save }));
+  return out;
+}
+
+export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): StatLine {
+  // All typed modifiers (item / records / condition penalties / modes / stance / typed tweaks) pool by
+  // type across sources — `termsTotal` is the one pool.
+  return { rank: c.proficiencies.saves[save], modifier: termsTotal(saveTerms(c, save, db)) };
 }
 
 /**
@@ -441,20 +546,27 @@ export function dynamicItemSkillBonus(c: Character, db: ContentDatabase | undefi
   return best;
 }
 
-export function derivePerception(c: Character, db?: ContentDatabase): StatLine {
-  const rank = c.proficiencies.perception;
+/** Perception's term list (see TERM LISTS): the number is its total, the breakdown its parts. */
+export function perceptionTerms(c: Character, db?: ContentDatabase): Term[] {
+  const out: Term[] = [profTerm(c, c.proficiencies.perception), abilityTerm(c, 'wis')];
   // Item bonus: the best of ABP perception, a Monster-Parts refined Perception item, and a passive
   // Perception item (Clarity Goggles) — all item bonuses, which don't stack.
-  const itemBonus = Math.max(abpOn(c) ? abpPerception(c.level) : 0, mpSenseSkillItemBonus(c, 'perception'), passiveItemBonus(c, db, 'perception'));
-  const modifier =
-    abilityModOf(c, 'wis') +
-    profBonus(rank, c.level, pwl(c)) +
-    poolTypedMods([
-      { type: 'item', value: itemBonus },
-      ...conditionTypedMods(c.conditions, 'wis', 'perception'),
-      ...modeTypedMods(c.activeModes, { kind: 'perception' }),
-    ]);
-  return { rank, modifier };
+  const abp = abpOn(c) ? abpPerception(c.level) : 0;
+  const mp = mpSenseSkillItemBonus(c, 'perception');
+  const itemBonus = Math.max(abp, mp, passiveItemBonus(c, db, 'perception'));
+  if (itemBonus) {
+    const passive = passiveItemBonusDetail(c, db, 'perception');
+    out.push(itemTerm(passive && passive.value === itemBonus ? passive.name : mp > abp ? 'Monster Parts (refined)' : 'ABP Perception potency', itemBonus));
+  }
+  out.push(...numberTweakTerms(c, 'perception'));
+  out.push(...abilityShiftTerms(c, 'wis'));
+  out.push(...conditionTerms(c.conditions, 'wis', 'perception'));
+  out.push(...modeTerms(c.activeModes, { kind: 'perception' }));
+  return out;
+}
+
+export function derivePerception(c: Character, db?: ContentDatabase): StatLine {
+  return { rank: c.proficiencies.perception, modifier: termsTotal(perceptionTerms(c, db)) };
 }
 
 /**
@@ -486,8 +598,13 @@ export function untrainedWeaponBonus(c: Character, db?: ContentDatabase): number
 }
 
 export function untrainedSkillBonus(c: Character, db?: ContentDatabase): number | null {
+  return untrainedSkillSource(c, db)?.value ?? null;
+}
+
+/** `untrainedSkillBonus` with the feat that gives it, so the skill breakdown can name it. */
+function untrainedSkillSource(c: Character, db?: ContentDatabase): { value: number; name: string } | null {
   if (!db || pwl(c)) return null;
-  let best: number | null = null;
+  let best: { value: number; name: string } | null = null;
   for (const fc of c.feats ?? []) {
     const u = db.feats[fc.featId]?.untrainedProficiency;
     if (!u) continue;
@@ -500,7 +617,7 @@ export function untrainedSkillBonus(c: Character, db?: ContentDatabase): number 
     let minus = u.levelMinus;
     for (const s of u.steps ?? []) if (c.level >= s.atLevel) minus = Math.min(minus, s.levelMinus);
     const v = c.level - minus;
-    if (best == null || v > best) best = v;
+    if (best == null || v > best.value) best = { value: v, name: db.feats[fc.featId]?.name ?? fc.featId };
   }
   return best;
 }
@@ -609,55 +726,97 @@ export function skillAbilitySwapFor(
   return undefined;
 }
 
-/** `noSubstitute` stops the substitution lookup recursing when it derives the stand-in skill. */
-export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatabase, noSubstitute = false): StatLine {
-  // A rank granted by THIS MORNING's answer (Haunting Memories' borrowed skill). Build-time skill
-  // grants are already folded into `proficiencies`; a daily one is play state resolved after the
-  // build, so it has to be maxed in here or the answer moves nothing on the sheet.
-  const rank = dailySkillRank(c, db, key) ?? c.proficiencies.skills[key] ?? 'untrained';
-  /*
-   * A record may swap which ATTRIBUTE a skill runs off: Officer's Medical Training prints *"you are
-   * trained in Medicine and can use your Intelligence modifier in place of your Wisdom modifier for
-   * Medicine checks"*. `skillAbility()` is a fixed map, so this had nowhere to live and shipped as a
-   * display note beside a number still computed from Wisdom — the sheet said Int and rolled Wis.
-   *
-   * Takes the BEST of the printed attribute and the swap, never blindly the swap: the printed clause
-   * is an option ("can use"), and a character with higher Wisdom than Intelligence keeps Wisdom.
-   */
+/** A skill's OWN rank. A rank granted by THIS MORNING's answer (Haunting Memories' borrowed skill)
+ *  counts: build-time skill grants are already folded into `proficiencies`; a daily one is play state
+ *  resolved after the build, so it has to be maxed in here or the answer moves nothing on the sheet. */
+function skillRankOf(c: Character, key: ProficiencyKey, db?: ContentDatabase): ProficiencyRank {
+  return dailySkillRank(c, db, key) ?? c.proficiencies.skills[key] ?? 'untrained';
+}
+
+/**
+ * The attribute a skill's number actually runs off.
+ *
+ * A record may swap it: Officer's Medical Training prints *"you are trained in Medicine and can use your
+ * Intelligence modifier in place of your Wisdom modifier for Medicine checks"*. `skillAbility()` is a
+ * fixed map, so this had nowhere to live and shipped as a display note beside a number still computed
+ * from Wisdom — the sheet said Int and rolled Wis. Takes the BEST of the printed attribute and the swap
+ * ("you CAN use" is an option; a tie keeps the printed one), unless the swap is mandatory ("you USE
+ * Charisma" replaces outright). Compared through `abilityModOf`, so a mode on either attribute counts.
+ */
+export function skillRolledAbility(c: Character, key: ProficiencyKey, db?: ContentDatabase): AbilityId {
   const ability = skillAbility(key);
-  // Item bonus: the best of an ABP skill item, a Monster-Parts refined skill item, a passive skill item
-  // (Cloak of Social Graces), and a dynamic bloodline/deity skill item (Sanguine Pendant). Don't stack.
-  const itemBonus = Math.max(abpSkillBonus(c, key), mpSenseSkillItemBonus(c, 'skill', key), passiveItemBonus(c, db, 'skill', key), dynamicItemSkillBonus(c, db, key));
+  const swap = skillAbilitySwapFor(c, db, key);
+  const use = swap?.use;
+  if (!use || use === ability) return ability;
+  if (swap.mandatory) return use;
+  return abilityModOf(c, use) > abilityModOf(c, ability) ? use : ability;
+}
+
+/**
+ * A skill's OWN term list (see TERM LISTS) — before any substitution, which `deriveSkill` applies to
+ * the total afterwards. A set on the skill therefore sits BEFORE the substitution (spec item 8): the
+ * stand-in is compared against the set number, and wins only when it is better.
+ */
+export function skillTerms(c: Character, key: ProficiencyKey, db?: ContentDatabase): Term[] {
+  const rank = skillRankOf(c, key, db);
+  const printed = skillAbility(key);
+  const used = skillRolledAbility(c, key, db);
   // An untrained skill normally contributes 0 proficiency; Untrained Improvisation and Eclectic Skill
   // replace that with your level (minus what they print). Never LOWERS it.
-  const untrained = rank === 'untrained' ? untrainedSkillBonus(c, db) : null;
-  const prof = untrained != null ? Math.max(profBonus(rank, c.level, pwl(c)), untrained) : profBonus(rank, c.level, pwl(c));
-  const swap = skillAbilitySwapFor(c, db, key);
-  const swapAbility = swap?.use;
-  const abilityMod =
-    !swapAbility || swapAbility === ability ? abilityModOf(c, ability)
-      // "you USE Charisma" replaces outright; "you CAN use" is an option, so take the better.
-    : swap.mandatory ? abilityModOf(c, swapAbility)
-    : Math.max(abilityModOf(c, ability), abilityModOf(c, swapAbility));
-  let modifier =
-    abilityMod +
-    prof +
-    poolTypedMods([
-      { type: 'item', value: itemBonus },
-      // An item PENALTY is its own term, never folded into the bonus max — RAW an item bonus and an
-      // item penalty both apply, and poolTypedMods keeps the two pools apart (shining hackle: −1
-      // Stealth beside whatever item bonus the character's other gear provides).
-      { type: 'item', value: passiveItemPenalty(c, db, key) },
-      ...conditionTypedMods(c.conditions, ability, 'skill'),
-      ...modeTypedMods(c.activeModes, { kind: 'skill', detail: key }),
-    ]);
-  // The worn armor's check penalty hits Strength- and Dexterity-based skills — but which skills
-  // exactly is a per-skill question once armor traits are read: `flexible` exempts Acrobatics and
-  // Athletics, `noisy` forces it onto Stealth even when the Strength requirement is met.
-  if (db && (ability === 'str' || ability === 'dex')) {
-    modifier += deriveArmorCheckPenalty(c, db, key).value;
+  const untrained = rank === 'untrained' ? untrainedSkillSource(c, db) : null;
+  const out: Term[] = [
+    untrained && untrained.value > profBonus(rank, c.level, pwl(c)) ? baseTerm('Untrained', untrained.value, `from ${untrained.name}`) : profTerm(c, rank),
+    abilityTerm(c, used),
+  ];
+  // Item bonus: the best of an ABP skill item, a Monster-Parts refined skill item, a passive skill item
+  // (Cloak of Social Graces), and a dynamic bloodline/deity skill item (Sanguine Pendant). Don't stack.
+  const abp = abpSkillBonus(c, key);
+  const mp = mpSenseSkillItemBonus(c, 'skill', key);
+  const dynamic = dynamicItemSkillBonus(c, db, key);
+  const itemBonus = Math.max(abp, mp, passiveItemBonus(c, db, 'skill', key), dynamic);
+  if (itemBonus) {
+    const passive = passiveItemBonusDetail(c, db, 'skill', key);
+    out.push(
+      itemTerm(
+        passive && passive.value === itemBonus ? passive.name
+        : dynamic === itemBonus ? 'Item bonus'
+        : mp > (abpOn(c) ? abp : 0) ? 'Monster Parts (refined)'
+        : 'ABP skill potency',
+        itemBonus,
+      ),
+    );
   }
-  const own: StatLine = { rank, modifier };
+  // An item PENALTY is its own term, never folded into the bonus max — RAW an item bonus and an item
+  // penalty both apply, and the pool keeps the two apart (shining hackle: −1 Stealth beside whatever
+  // item bonus the character's other gear provides).
+  const pen = passiveItemPenalty(c, db, key);
+  if (pen) {
+    const src = (c.inventory ?? []).find(
+      (inv) => itemInUse(inv) && ((db?.items[inv.itemId]?.passiveEffects?.skills?.[key] ?? 0) < 0 || (c.resolvedItemPassives?.[inv.itemId]?.skills?.[key] ?? 0) < 0),
+    );
+    out.push(itemTerm(src ? db?.items[src.itemId]?.name ?? src.itemId : 'Item penalty', pen, 'item penalty'));
+  }
+  /* The worn armor's check penalty hits Strength- and Dexterity-based skills — the PRINTED attribute,
+   * as the number always read it — but which skills exactly is a per-skill question once armor traits
+   * are read: `flexible` exempts Acrobatics and Athletics, `noisy` forces it onto Stealth even when the
+   * Strength requirement is met. Untyped, so with no set it adds in full exactly as before. It is a
+   * BOOK term (the armor's own printed penalty), like the shining hackle's item penalty above: a set
+   * on the skill replaces it with the rest of the book total; only conditions, modes, the stance and
+   * the play states go on top of a set (Building blocks item 4). */
+  if (db && (printed === 'str' || printed === 'dex')) {
+    const acp = deriveArmorCheckPenalty(c, db, key);
+    if (acp.value) out.push({ type: 'untyped', value: acp.value, label: 'Armor check penalty', ...(acp.source ? { note: acp.source } : {}), layer: 'book' });
+  }
+  out.push(...numberTweakTerms(c, `skill:${key}`));
+  out.push(...abilityShiftTerms(c, used));
+  out.push(...conditionTerms(c.conditions, printed, 'skill'));
+  out.push(...modeTerms(c.activeModes, { kind: 'skill', detail: key }));
+  return out;
+}
+
+/** `noSubstitute` stops the substitution lookup recursing when it derives the stand-in skill. */
+export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatabase, noSubstitute = false): StatLine {
+  const own: StatLine = { rank: skillRankOf(c, key, db), modifier: termsTotal(skillTerms(c, key, db)) };
   // "You can use your proficiency rank in Crafting for anything that requires a proficiency rank in
   // Medicine." An UNCONDITIONAL stand-in that is better than the skill's own number IS the number
   // the player rolls, so it is what the sheet shows — carrying `substitutedFrom` so the row and its
@@ -669,16 +828,54 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
   return own;
 }
 
-export function deriveClassDc(c: Character): StatLine & { dc: number } {
-  const rank = c.proficiencies.classDc;
+const skillName = (key: ProficiencyKey) =>
+  key.startsWith('lore:') ? key.charAt(5).toUpperCase() + key.slice(6) + ' Lore' : key.charAt(0).toUpperCase() + key.slice(1);
+
+/**
+ * A skill's number AND its breakdown parts, from the same list. A substitution that beats the skill's
+ * own number is the last part — "Crafting instead", carrying the difference — so the parts still sum to
+ * the number the player rolls while every line of the skill's own number stays visible.
+ */
+export function skillResolved(
+  c: Character,
+  key: ProficiencyKey,
+  db?: ContentDatabase,
+): StatLine & { ownRank: ProficiencyRank; ability: AbilityId; parts: TermPart[] } {
+  const r = resolveTerms(skillTerms(c, key, db));
+  const ownRank = skillRankOf(c, key, db);
+  const ability = skillRolledAbility(c, key, db);
+  const sub = skillSubstituteFor(c, key, db, { rank: ownRank, modifier: r.total });
+  if (!sub) return { rank: ownRank, modifier: r.total, ownRank, ability, parts: r.parts };
+  const t = baseTerm(`${skillName(sub.use)} instead`, sub.modifier - r.total, `from ${sub.source}`);
+  return {
+    rank: sub.rank,
+    modifier: sub.modifier,
+    substitutedFrom: { skill: sub.use, source: sub.source },
+    ownRank,
+    ability,
+    parts: [...r.parts, { label: t.label, note: t.note, value: t.value, term: t }],
+  };
+}
+
+/** The class DC's term list (see TERM LISTS). The 10 is a base term, so a set names the whole DC. */
+export function classDcTerms(c: Character): Term[] {
   // Way of the Spellshot: "You use Intelligence for your class DC" — the class DC's attribute can
   // differ from the key attribute (batch 28); absent, it is the key attribute as always.
   const key = c.classDcKeyAbility ?? c.keyAbility ?? 'str';
-  const modifier =
-    abilityModOf(c, key) +
-    profBonus(rank, c.level, pwl(c)) +
-    poolTypedMods([...conditionTypedMods(c.conditions, key, 'class-dc'), ...modeTypedMods(c.activeModes, { kind: 'class-dc' })]);
-  return { rank, modifier, dc: 10 + modifier };
+  return [
+    baseTerm('Base', 10),
+    profTerm(c, c.proficiencies.classDc),
+    abilityTerm(c, key),
+    ...numberTweakTerms(c, 'class-dc'),
+    ...abilityShiftTerms(c, key),
+    ...conditionTerms(c.conditions, key, 'class-dc'),
+    ...modeTerms(c.activeModes, { kind: 'class-dc' }),
+  ];
+}
+
+export function deriveClassDc(c: Character): StatLine & { dc: number } {
+  const dc = termsTotal(classDcTerms(c));
+  return { rank: c.proficiencies.classDc, modifier: dc - 10, dc };
 }
 
 /** One derived row of the `specialStatistic` lane — see SpecialStatGrant for what earns a row. */
@@ -872,27 +1069,38 @@ export interface SpellStats {
   dc: number;
 }
 
-export function deriveSpellcasting(c: Character, entry: SpellcastingEntry): SpellStats {
-  const base = abilityModOf(c, entry.keyAbility) + profBonus(entry.proficiency, c.level, pwl(c));
-  const attack =
-    base +
-    poolTypedMods([...conditionTypedMods(c.conditions, entry.keyAbility, 'spell-attack'), ...modeTypedMods(c.activeModes, { kind: 'spell-attack' })]);
+/**
+ * A casting entry's spell attack or spell DC term list (see TERM LISTS). Tweaks aim at ONE entry
+ * (`spell-dc@casting-entry:<id>`), so a wizard's arcane DC and their dedication's divine DC take
+ * separate blocks.
+ */
+export function spellTerms(c: Character, entry: SpellcastingEntry, which: 'attack' | 'dc'): Term[] {
   /* A DC THE SOURCE PRINTS is a stated number, not a statistic — Sigil of the First Clan
    * (equipment-2679): *"You cast 1st-level command with a DC of 24."* Nothing modifies it, so the
-   * conditions/modes pool is skipped too: those adjust the caster's own DC, and this DC is not theirs. */
-  const dc =
-    entry.fixedDc ??
-    10 +
-      base +
-      poolTypedMods([...conditionTypedMods(c.conditions, entry.keyAbility, 'spell-dc'), ...modeTypedMods(c.activeModes, { kind: 'spell-dc' })]);
-  return { rank: entry.proficiency, attack, dc };
+   * conditions/modes pool is skipped too: those adjust the caster's own DC, and this DC is not theirs.
+   * A tweak does not reach it either, for the same reason. */
+  if (which === 'dc' && entry.fixedDc != null) return [baseTerm('Fixed DC', entry.fixedDc, 'printed by its source — nothing modifies it')];
+  const slot = which === 'dc' ? 'spell-dc' : 'spell-attack';
+  return [
+    ...(which === 'dc' ? [baseTerm('Base', 10)] : []),
+    profTerm(c, entry.proficiency),
+    abilityTerm(c, entry.keyAbility),
+    ...numberTweakTerms(c, `${slot}@casting-entry:${entry.id}`),
+    ...abilityShiftTerms(c, entry.keyAbility),
+    ...conditionTerms(c.conditions, entry.keyAbility, slot),
+    ...modeTerms(c.activeModes, { kind: slot }),
+  ];
 }
 
-/** Total max-HP bonus from the character's selected feats (Toughness = +level, etc.) AND from worn
- *  or invested ITEMS — a Belt of Good Health is "+4 maximum and current Hit Points" and had no lane,
- *  because this walked feats alone. */
-export function featHpBonus(c: Character, db: ContentDatabase): number {
-  let total = 0;
+export function deriveSpellcasting(c: Character, entry: SpellcastingEntry): SpellStats {
+  return { rank: entry.proficiency, attack: termsTotal(spellTerms(c, entry, 'attack')), dc: termsTotal(spellTerms(c, entry, 'dc')) };
+}
+
+/** Every max-HP bonus from the character's selected feats (Toughness = +level, etc.) AND from worn or
+ *  invested ITEMS, one row per record — a Belt of Good Health is "+4 maximum and current Hit Points" and
+ *  had no lane, because this walked feats alone. */
+function hpBonusRecords(c: Character, db: ContentDatabase): { name: string; value: number }[] {
+  const out: { name: string; value: number }[] = [];
   const takenFeats = c.feats.map((f) => db.feats[f.featId]).filter((f): f is NonNullable<typeof f> => !!f);
   const wornItems = (c.inventory ?? [])
     .filter((inv) => inv.worn || inv.invested || inv.equipped)
@@ -901,17 +1109,27 @@ export function featHpBonus(c: Character, db: ContentDatabase): number {
   for (const f of [...takenFeats, ...(wornItems as unknown as typeof takenFeats)]) {
     const b = f.maxHpBonus;
     if (!b) continue;
-    total += (b.perLevel ?? 0) * c.level + (b.flat ?? 0);
+    let value = (b.perLevel ?? 0) * c.level + (b.flat ?? 0);
     // Resiliency feats: +N HP for each archetype feat of that class you have (dedication counts).
     if (b.perArchetypeFeat && b.archetype) {
-      total += b.perArchetypeFeat * takenFeats.filter((x) => x.archetype === b.archetype).length;
+      value += b.perArchetypeFeat * takenFeats.filter((x) => x.archetype === b.archetype).length;
     }
+    out.push({ name: f.name ?? 'Feat', value });
   }
-  return total;
+  return out;
 }
 
-export function deriveMaxHp(c: Character, db: ContentDatabase): number {
-  if (c.hitPoints.maxOverride != null) return Math.max(0, c.hitPoints.maxOverride - drainedHpLoss(c));
+/** Total max-HP bonus from feats and worn/invested items (the rows of `hpBonusRecords`, summed). */
+export function featHpBonus(c: Character, db: ContentDatabase): number {
+  return hpBonusRecords(c, db).reduce((n, r) => n + r.value, 0);
+}
+
+/**
+ * Maximum HP's term list (see TERM LISTS). Not for a MANUAL maximum (`hitPoints.maxOverride`, the
+ * legacy Overrides "max HP"): that replaces the whole calculation and `deriveMaxHp` returns it before
+ * any list is built (checker C2) — tweak blocks on a manual maximum wait for part B.
+ */
+export function maxHpTerms(c: Character, db: ContentDatabase): Term[] {
   const ancestry = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
   const cls = c.classId ? db.classes[c.classId] : undefined;
   // Dual Class: Hit Points use the higher per-level value of the two classes.
@@ -921,10 +1139,27 @@ export function deriveMaxHp(c: Character, db: ContentDatabase): number {
   // c.ancestryHp. The size-keyed table via c.size is the fallback for characters built before that
   // field existed; the scalar `hp` covers every other ancestry.
   const base = c.ancestryHp ?? (ancestry && (ancestry.hpBySize?.[(c.size as Size | undefined) ?? ancestry.size] ?? ancestry.hp)) ?? 0;
-  const perLevel = Math.max(cls?.hpPerLevel ?? 0, cls2?.hpPerLevel ?? 0) + abilityModOf(c, 'con');
-  // A mode targeting maximum HP is a flat shift of the total, not a per-level one.
-  const modeHp = modeNumberBonus(c.activeModes, { kind: 'max-hp' });
-  return Math.max(0, base + perLevel * c.level + featHpBonus(c, db) + modeHp - drainedHpLoss(c));
+  const hpPer = Math.max(cls?.hpPerLevel ?? 0, cls2?.hpPerLevel ?? 0);
+  const con = abilityMod(c.abilities.con);
+  const out: Term[] = [
+    baseTerm('Ancestry HP', base, ancestry?.name),
+    baseTerm(`(${hpPer} class + ${con} Con) × ${c.level} levels`, (hpPer + con) * c.level),
+    // Every record with a max-HP clause is listed, as the breakdown always listed them, even at +0.
+    ...hpBonusRecords(c, db).map((r): Term => ({ type: 'untyped', value: r.value, label: r.name, layer: 'book' })),
+    ...numberTweakTerms(c, 'max-hp'),
+    // A mode on Constitution moves every level's HP.
+    ...abilityShiftTerms(c, 'con', c.level),
+    // A mode targeting maximum HP is a flat shift of the total, not a per-level one.
+    ...modeTerms(c.activeModes, { kind: 'max-hp' }),
+  ];
+  const drained = drainedHpLoss(c);
+  if (drained) out.push(playTerm('Drained', 'untyped', -drained, `drained ${effectiveDrainedValue(c)} × level ${c.level}`));
+  return out;
+}
+
+export function deriveMaxHp(c: Character, db: ContentDatabase): number {
+  if (c.hitPoints.maxOverride != null) return Math.max(0, c.hitPoints.maxOverride - drainedHpLoss(c));
+  return Math.max(0, termsTotal(maxHpTerms(c, db)));
 }
 
 export interface WornArmor {
@@ -1948,13 +2183,34 @@ export function mapNotesFor(c: Character, db: ContentDatabase, traits: string[])
   return notes;
 }
 
+/** AC's term list (see TERM LISTS): the number is its total, the breakdown its parts. A battle form's
+ *  stated AC is the ONE term, and no tweak reaches it (spec item 8). */
+export function acTerms(c: Character, db: ContentDatabase): Term[] {
+  return acBuild(c, db).terms;
+}
+
 export function deriveAc(c: Character, db: ContentDatabase): AcResult {
+  const b = acBuild(c, db);
+  return { value: termsTotal(b.terms), rank: b.rank, dexCap: b.dexCap, ...(b.fromBattleForm ? { fromBattleForm: true } : {}) };
+}
+
+function acBuild(c: Character, db: ContentDatabase): { terms: Term[]; rank: ProficiencyRank; dexCap: number | null; fromBattleForm?: boolean } {
   const worn = findWornArmor(c, db);
 
   let category: ArmorCategory = 'unarmored';
   let dexCap: number | null = null;
   let armorBase = 0; // the armor's inherent AC — untyped, always applies
   let acItem = 0; // item-type bonus (potency rune / Monster-Parts refine) — item bonuses don't stack
+  /* Which source the one item bonus came from, for its breakdown line: offered in the order the max()
+   * below reads them, the first to reach the winning value names it (the armour's own potency, then a
+   * passive item, then ABP — the order the breakdown always named them in). */
+  let acItemFrom = '';
+  const offer = (value: number, label: string) => {
+    if (value > 0 && value > acItem) {
+      acItem = value;
+      acItemFrom = label;
+    }
+  };
 
   if (worn) {
     // profCategory, not armor.category — Heavy Construction reads the medium track for a heavy suit.
@@ -2004,11 +2260,21 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
      * FLOOR semantics as the weapon lane: a player who etches higher keeps it.
      */
     const builtIn = (db.items[worn.inv.itemId] as { builtInRunes?: ArmorRunes } | undefined)?.builtInRunes;
-    acItem = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, builtIn?.potency ?? 0, refAc, bfAc, actsAsPotency);
+    if (!abpOn(c)) {
+      offer((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, 'Armor potency rune');
+      offer(builtIn?.potency ?? 0, 'Armor potency rune');
+      offer(refAc, 'Monster Parts (refined)');
+      offer(bfAc, 'Battleforger');
+      offer(actsAsPotency, 'Armor potency (property rune)');
+    }
   }
   // A passive AC item (Bracers of Armor), Monster Parts, and ABP defense potency are all ITEM bonuses to
   // AC — they don't stack with each other or the armor potency rune, so take the highest.
-  acItem = Math.max(acItem, passiveItemBonus(c, db, 'ac'), abpOn(c) ? abpDefense(c.level) : 0);
+  {
+    const passive = passiveItemBonus(c, db, 'ac');
+    if (passive > acItem) offer(passive, passiveItemBonusDetail(c, db, 'ac')?.name ?? 'Item bonus');
+    offer(abpOn(c) ? abpDefense(c.level) : 0, 'ABP defense potency');
+  }
 
   /*
    * NATURAL ARMOUR — *"When you're unarmored, your scales give you a +1 item bonus to AC with a
@@ -2029,8 +2295,10 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
    */
   if (isUnarmored(c, db)) {
     let natAc = 0;
+    let natFrom = '';
     /** Natural armour whose text says it ADDS to potency runes rather than competing with them. */
     let natCumulative = 0;
+    let natCumFrom = '';
     let natCap: number | null = null;
     for (const src of [
       ...c.feats.map((fc) => db.feats[fc.featId]),
@@ -2051,17 +2319,24 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
          * was invisible while `scaly-hide` was the only record carrying the flag; the moment
          * `scales-of-steel` and `scales-of-the-dragon` gained it (they print the same sentence
          * verbatim) a character with two would have added them. */
+        if (bonus > natCumulative) natCumFrom = src?.name ?? 'Natural armor';
         natCumulative = Math.max(natCumulative, bonus);
         if (n.dexCap != null) natCap = natCap == null ? n.dexCap : Math.min(natCap, n.dexCap);
         continue;
       }
       if (bonus > natAc) {
         natAc = bonus;
+        natFrom = src?.name ?? 'Natural armor';
         natCap = n.dexCap ?? null;
       }
     }
-    if (natAc) acItem = Math.max(acItem, natAc);
-    acItem += natCumulative;
+    if (natAc) offer(natAc, natFrom);
+    if (natCumulative) {
+      // Cumulative: it ADDS to the one item bonus, so it travels inside that term rather than as a
+      // second item term the pool would discard.
+      acItemFrom = acItem ? `${acItemFrom} + ${natCumFrom}` : natCumFrom;
+      acItem += natCumulative;
+    }
     if ((natAc || natCumulative) && natCap != null) dexCap = dexCap == null ? natCap : Math.min(dexCap, natCap);
   }
 
@@ -2085,23 +2360,47 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   const stanceDexCap = stance?.dexCap;
   const effDexCap = stanceDexCap != null ? (dexCap != null ? Math.min(dexCap, stanceDexCap) : stanceDexCap) : dexCap;
   const dexContribution = effDexCap != null ? Math.min(dex, effDexCap) : dex;
-  // Everything typed pools by type across sources, so Mountain Stance's +4 ITEM bonus doesn't stack with
-  // armor potency, and a shield's circumstance bonus doesn't stack with a circumstance penalty of its own.
-  const pooled = poolTypedMods([
-    { type: 'item', value: acItem },
-    ...(stance?.acBonus ? [{ type: stance.acBonus.type as TypedMod['type'], value: stance.acBonus.value }] : []),
-    ...conditionTypedMods(c.conditions, 'dex', 'ac'),
-    ...modeTypedMods(shieldSwappedModes(c, db), { kind: 'ac' }),
-  ]);
   // A BATTLE FORM states an AC outright, so nothing above it counts: not Dex, not armour, not
-  // proficiency. Returning here rather than adding is the whole point of the lane — pest form says
+  // proficiency — and not a tweak either (spec item 8). One term, rather than adding — pest form says
   // "AC 15", and folding that in as a bonus would have given a champion 45.
   const form = activeBattleForm(c);
   // Resolved, not read raw: every printed form states "AC = N + your level", so the authored value is
   // a formula string far more often than it is a number. `resolveFormula` returns the number
   // unchanged, so a hand-written flat AC still behaves exactly as it did.
-  if (form?.ac != null) return { value: resolveFormula(form.ac, { level: c.level, abilities: c.abilities }), rank, dexCap: effDexCap, fromBattleForm: true };
-  return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + armorBase + pooled, rank, dexCap: effDexCap };
+  if (form?.ac != null) {
+    const mode = (c.activeModes ?? []).find((m) => m.battleForm);
+    const value = resolveFormula(form.ac, { level: c.level, abilities: c.abilities });
+    return { terms: [baseTerm(mode ? `${mode.name} (battle form)` : 'Battle form', value)], rank, dexCap: effDexCap, fromBattleForm: true };
+  }
+  // The SCORE's Dexterity under the cap is the base line; what a mode adds to it (still under the cap)
+  // is its own play line, so the two always sum to `dexContribution`.
+  const rawDex = abilityMod(c.abilities.dex);
+  const rawContribution = effDexCap != null ? Math.min(rawDex, effDexCap) : rawDex;
+  const capped = effDexCap != null && rawDex > effDexCap;
+  const capBy = !capped ? '' : worn && (stanceDexCap == null || worn.armor.dexCap === effDexCap) ? `by ${worn.armor.name}` : stance ? `by ${stance.name ?? 'stance'}` : '';
+  const terms: Term[] = [
+    baseTerm('Base', 10),
+    baseTerm('Dexterity modifier', rawContribution, capped ? `capped at +${effDexCap}${capBy ? ' ' + capBy : ''}` : `Dexterity ${c.abilities.dex}`),
+    profTerm(c, rank),
+  ];
+  if (worn) {
+    // The armour's own AC is untyped and always applies; only its potency competes for the item slot.
+    const adj = worn.adjustedBy?.[0];
+    terms.push({ type: 'untyped', value: armorBase, label: worn.armor.name, note: adj ? `armor item bonus · restated by ${adj.name}` : 'armor item bonus', layer: 'book' });
+  }
+  // Everything typed pools by type across sources, so Mountain Stance's +4 ITEM bonus doesn't stack with
+  // armor potency, and a shield's circumstance bonus doesn't stack with a circumstance penalty of its own.
+  if (acItem) terms.push(itemTerm(acItemFrom || 'Item bonus', acItem));
+  terms.push(...numberTweakTerms(c, 'ac'));
+  terms.push(...abilityShiftTerms(c, 'dex', 1, dexContribution - rawContribution));
+  terms.push(...conditionTerms(c.conditions, 'dex', 'ac'));
+  if (stance?.acBonus?.value) {
+    const t = stance.acBonus.type as TypedMod['type'];
+    terms.push(playTerm(stance.name ?? 'Stance', t, stance.acBonus.value, `${stance.acBonus.type} bonus`));
+  }
+  // Raise a Shield reads the HELD shield's real bonus (buckler +1, fortress +3) — the swapped modes.
+  terms.push(...modeTerms(shieldSwappedModes(c, db), { kind: 'ac' }));
+  return { terms, rank, dexCap: effDexCap };
 }
 
 /**
@@ -5064,6 +5363,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     dmgAbMod +
     (thiefDexDamage ? conditionPenalty(c.conditions, 'dex', 'damage') : usesStrDamage ? conditionPenalty(c.conditions, 'str', 'damage') : 0) +
     specDamage +
+    // Un-pooled on purpose: Strikes get their term list in Tweaks phase 3 (spec item 8, checker C13).
     modeNumberBonus(c.activeModes, { kind: 'damage' });
   // Property-rune extra damage (Flaming → 1d6 fire, etc.). Only Greater Flaming adds persistent damage
   // on a critical hit (2d10 fire) — carried as `critPersistent` and shown as a separate crit rider.
@@ -5222,6 +5522,7 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
     conMod +
     profBonus(c.proficiencies.classDc, c.level, pwl(c)) +
     conditionPenalty(c.conditions, 'con', 'attack') +
+    // Un-pooled on purpose: Strikes get their term list in Tweaks phase 3 (spec item 8, checker C13).
     modeNumberBonus(c.activeModes, { kind: 'attack' });
   // MAP belongs to the character, not to the attack — a ranger/kineticist's Flurry lowers it on an
   // Elemental Blast against their hunted prey too. Hardcoding −5/−10 here made this the one strike
@@ -5239,6 +5540,7 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
   const dice = 1 + classDice + featDice;
   // Unconditional damage-mode bonuses (e.g. Courageous Anthem) apply to blasts too; fold them into
   // dmgBonus so the strike-damage breakdown (which sums these via modeAdjust) reconciles with the total.
+  // Un-pooled on purpose: Strikes get their term list in Tweaks phase 3 (spec item 8, checker C13).
   const dmgMode = modeNumberBonus(c.activeModes, { kind: 'damage' });
   // Kineticist Weapon Specialization (level 13+) adds flat damage to Elemental Blasts, keyed to the
   // blast's (class DC) proficiency rank — exactly like a weapon's specialization.
@@ -5419,6 +5721,7 @@ function deriveUnarmedStrike(
     dmgAbMod +
     (isRanged ? 0 : conditionPenalty(c.conditions, thiefDexDamage ? 'dex' : 'str', 'damage')) +
     specDamage +
+    // Un-pooled on purpose: Strikes get their term list in Tweaks phase 3 (spec item 8, checker C13).
     modeNumberBonus(c.activeModes, { kind: 'damage' });
   // batch P02: unfurling-brocade#two-handed-die — a printed count ('3d6') is a floor, see `counted`.
   const dice = Math.max(printedDice, 1 + strikingExtra);
@@ -5771,12 +6074,147 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
   ];
 }
 
+/** One land-Speed step of `speedPipeline`, as its breakdown line: what the step changed the land Speed
+ *  by. The steps' values sum to the land Speed by construction (each is measured as a difference). */
+interface SpeedStage {
+  label: string;
+  note?: string;
+  value: number;
+  /** Switched on in play: a battle form, a state (rage, panache), the stance, a mode, a condition. */
+  transient: boolean;
+  /** A tweak block's add (spec item 8). */
+  tweak?: boolean;
+  /** Which line this is across two runs, when its label or note can differ between them (a typed
+   *  Speed bonus a play state beats). Absent = label + note. */
+  key?: string;
+}
+
+interface SpeedRun {
+  /** false = the PERMANENT Speed alone: no battle form, state, stance, mode or condition (the P a set
+   *  replaces — blocks/terms.ts "THE ONE SET AND POOLING RULE"). */
+  transients: boolean;
+  /** Tweak ADD terms on land Speed. Typed ones join the record Speed-bonus pool (`stackSpeedBonuses`),
+   *  where a status tweak meets Vivacious Speed's status bonus; untyped ones sum in the last step. */
+  tweakAdds?: Term[];
+  /** false = leave out the LASTING record Speed bonuses (feat / class feature / heritage
+   *  `landSpeedBonus`). A Speed set replaces them, so the play-state bonuses must pool without them. */
+  lastingBonuses?: boolean;
+}
+
+/** A land-Speed breakdown line (the shape explain.ts prints). */
+export interface SpeedPart {
+  label: string;
+  note?: string;
+  value: number;
+}
+
+/**
+ * Every Speed, with land Speed's tweak blocks applied, and land Speed's breakdown from the same run.
+ *
+ * Land Speed is not one pool: it is ordered STAGES (base → floor → bonuses → grants → stance and mode
+ * grants → adjustments → penalties → hindering → mode Speed modifiers), and a floor, a max() or a
+ * "minimum 5 feet" between them means the stages do not commute. So the tweaks act on the stages
+ * (spec item 8, as built — docs/overrides-redesign.md, Building blocks item 4):
+ *   - typed tweak adds pool with the record Speed bonuses (a "+10 status" tweak and Vivacious Speed's
+ *     status bonus: the larger counts); untyped ones sum in the last stage. Record Speed bonuses and
+ *     mode Speed modifiers were two pools before tweaks existed, and still are;
+ *   - a set S (or a lifting "at least N", acting as a set to N) replaces the lasting Speed, as every
+ *     other number's set does (Building blocks item 4): land = S + (F0 − P0) + the untyped tweak adds,
+ *     floored at 0 — where F0 and P0 are the pipeline with and without its play stages, BOTH run
+ *     without the lasting record Speed bonuses (`SpeedRun.lastingBonuses`), so a play bonus such as
+ *     panache's counts in full instead of only by what it beats a standing one by;
+ *   - a battle form that states its Speeds wins outright: no Speed tweak applies while it lasts;
+ *   - the temporary in-play Speed (`speedOverride`, play state) stays the sheet's LAST line, after all
+ *     of this — it is not part of the derived Speed (the rail and the breakdown apply it).
+ * The parts sum to the land Speed this returns, by construction.
+ */
+export function landSpeedResolved(c: Character, db: ContentDatabase): { speeds: Speeds; parts: SpeedPart[] } {
+  const toParts = (stages: SpeedStage[]): SpeedPart[] => stages.map((s) => ({ label: s.label, ...(s.note ? { note: s.note } : {}), value: s.value }));
+  const formWins = !!activeBattleForm(c)?.speeds;
+  const tweaks = formWins ? [] : numberTweakTerms(c, 'speed:land');
+  const sets = tweaks.filter((t) => t.slot === 'set');
+  const atLeasts = tweaks.filter((t) => t.slot === 'atLeast');
+  const adds = tweaks.filter((t) => t.slot !== 'set' && t.slot !== 'atLeast');
+  if (!sets.length && !atLeasts.length) {
+    const run = speedPipeline(c, db, { transients: true, tweakAdds: adds });
+    return { speeds: run.speeds, parts: toParts(run.stages) };
+  }
+  // The permanent Speed P, and what a set / each "at least" makes of it — in list order, as resolveTerms.
+  const perm = speedPipeline(c, db, { transients: false });
+  const P = perm.speeds.land ?? 0;
+  const winning = sets[sets.length - 1];
+  let current = winning ? winning.value : P;
+  const lifts = new Map<Term, number>();
+  for (const t of atLeasts) {
+    const l = Math.max(0, t.value - current);
+    lifts.set(t, l);
+    current += l;
+  }
+  const setLines = (): SpeedPart[] => [
+    ...sets.map((t) => (t === winning ? { label: t.label, value: t.value - P } : { label: t.label, note: 'replaced by a later set', value: 0 })),
+    ...atLeasts.map((t) => (lifts.get(t) ? { label: t.label, value: lifts.get(t)! } : { label: t.label, note: `already ${t.value} or more`, value: 0 })),
+  ];
+  if (!winning && ![...lifts.values()].some((l) => l > 0)) {
+    // An "at least" that does not lift is +0, and everything else is the ordinary run.
+    const run = speedPipeline(c, db, { transients: true, tweakAdds: adds });
+    return { speeds: run.speeds, parts: [...toParts(run.stages), ...setLines()] };
+  }
+  const typed = adds.filter((t) => t.type !== 'untyped');
+  const untyped = adds.filter((t) => t.type === 'untyped');
+  // P0 and F0: without and with the play stages, both WITHOUT the lasting record Speed bonuses the set
+  // replaced — so the play bonuses (and the typed tweak adds) pool among themselves on top of S.
+  const perm0 = speedPipeline(c, db, { transients: false, lastingBonuses: false });
+  const full0 = speedPipeline(c, db, { transients: true, lastingBonuses: false, tweakAdds: typed });
+  const P0 = perm0.speeds.land ?? 0;
+  const F0 = full0.speeds.land ?? 0;
+  const untypedSum = untyped.reduce((n, t) => n + t.value, 0);
+  const raw = current + (F0 - P0) + untypedSum;
+  const land = Math.max(0, raw);
+  // The breakdown: the permanent lines (what P was), the set, then what is on in play — F0's play and
+  // typed-tweak stages — and then each lasting line of F0 that play moved against P0 (a floor or a
+  // "Minimum 0" that clips differently once play states are on). Lines are matched across the two
+  // runs by key, so these deltas are exactly F0 − P0 minus the play lines: the parts sum by
+  // construction, with no catch-all line that could hide a stage left unrecorded.
+  const onTop = full0.stages.filter((s) => s.transient || s.tweak);
+  const keyed = (stages: SpeedStage[]) => {
+    const seen = new Map<string, number>();
+    return stages.map((s) => {
+      const k0 = s.key ?? `${s.label}|${s.note ?? ''}`;
+      const n = (seen.get(k0) ?? 0) + 1;
+      seen.set(k0, n);
+      return { k: `${k0}#${n}`, s };
+    });
+  };
+  const permByKey = new Map(keyed(perm0.stages).map(({ k, s }) => [k, s]));
+  const changed: SpeedPart[] = [];
+  const matched = new Set<string>();
+  const changedNote = (s: SpeedStage) => `${s.note ? `${s.note} — ` : ''}changed by what is on in play`;
+  for (const { k, s } of keyed(full0.stages.filter((x) => !x.transient && !x.tweak))) {
+    matched.add(k);
+    const before = permByKey.get(k)?.value ?? 0;
+    if (s.value !== before) changed.push({ label: s.label, note: changedNote(s), value: s.value - before });
+  }
+  for (const [k, s] of permByKey) if (!matched.has(k) && s.value) changed.push({ label: s.label, note: changedNote(s), value: -s.value });
+  const parts: SpeedPart[] = [...toParts(perm.stages), ...setLines(), ...toParts(onTop), ...changed];
+  for (const t of untyped) parts.push({ label: t.label, value: t.value });
+  if (land !== raw) parts.push({ label: 'Minimum 0', value: land - raw });
+  // The OTHER Speeds come from the ordinary run: a set on land Speed leaves fly, swim, climb and burrow
+  // exactly as they are (their "your Speeds" bonuses included).
+  const other = speedPipeline(c, db, { transients: true });
+  return { speeds: { ...other.speeds, land }, parts };
+}
+
 export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
+  return landSpeedResolved(c, db).speeds;
+}
+
+function speedPipeline(c: Character, db: ContentDatabase, opt: SpeedRun): { speeds: Speeds; stages: SpeedStage[] } {
   const ancestry = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
+  const tr = opt.transients;
   // A BATTLE FORM states its Speed block outright and it REPLACES yours, so it seeds the object here
   // instead of joining the grant loops below. Those do `land +=` and `max()` for the rest, which would
   // have made a pest-form dwarf walk at 45 and kept a fly Speed the bat form never had.
-  const form = activeBattleForm(c);
+  const form = tr ? activeBattleForm(c) : undefined;
   const formSpeeds = form?.speeds;
   /* A heritage that STATES a Speed replaces the ancestry chassis value of that type — the Mistbreath
    * Azarketi's printed swim 15 stands where the azarketi chassis says 30, because the heritage is the
@@ -5801,9 +6239,36 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       )
     : { ...baseSpeeds };
 
+  /* The land-Speed breakdown, recorded as the run goes: every statement below that moves `speeds.land`
+   * is followed by a step saying what it moved it by, measured (after − before) rather than restated,
+   * so the steps sum to the land Speed whatever the statement did (a max, a floor, a formula). */
+  const stages: SpeedStage[] = [];
+  const landNow = () => speeds.land ?? 0;
+  const step = (before: number, label: string, note: string | undefined, transient: boolean, tweak = false) => {
+    const value = landNow() - before;
+    if (value) stages.push({ label, ...(note ? { note } : {}), value, transient, ...(tweak ? { tweak } : {}) });
+  };
+  if (landNow()) {
+    const form0 = formSpeeds ? (c.activeModes ?? []).find((m) => m.battleForm) : undefined;
+    const fromHeritage = !formSpeeds && heritageBase.land != null ? heritageRecords(c, db).find((h) => h.speeds?.land === heritageBase.land) : undefined;
+    stages.push(
+      form0 ? { label: `${form0.name} (battle form)`, value: landNow(), transient: true }
+      : fromHeritage ? { label: 'Heritage Speed', note: fromHeritage.name, value: landNow(), transient: false }
+      : { label: 'Ancestry Speed', ...(ancestry?.name ? { note: ancestry.name } : {}), value: landNow(), transient: false },
+    );
+  }
+
   // Non-land speeds granted (unconditionally) by the heritage, selected feats, or a worn/invested
   // item's passive effects (the generic magic-item lane).
   const grantSources: DefenseGrants[] = [];
+  /** Who each grant source is, for its breakdown line — records name themselves; the synthetic
+   *  `{ speeds }` carriers built below are named here. Keyed by object identity. */
+  const sourceOf = new Map<object, { label: string; transient: boolean }>();
+  const nameOfGrant = (g: object): { label: string; transient: boolean } => sourceOf.get(g) ?? { label: (g as { name?: string }).name ?? 'Speed increase', transient: false };
+  const synthetic = (g: DefenseGrants, label: string, transient: boolean) => {
+    sourceOf.set(g, { label, transient });
+    return g;
+  };
   grantSources.push(...heritageRecords(c, db));
   for (const f of c.feats) {
     const feat = db.feats[f.featId];
@@ -5821,12 +6286,21 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
     const cf = db.classFeatures[fid];
     if (cf) grantSources.push(cf);
   }
-  if (c.chosenEffects?.speeds) grantSources.push({ speeds: c.chosenEffects.speeds });
+  if (c.chosenEffects?.speeds) grantSources.push(synthetic({ speeds: c.chosenEffects.speeds }, 'Your choice', false));
+  // A state is switched on in play: the permanent run (`transients: false`) leaves every state out.
+  const stateGrants = tr ? activeStateGrants(c, db) : [];
+  // The breakdown names a state-gated line with its state too, so Speed Boosters' standing +5 and its
+  // overdrive +5 are two readable lines, not the same name twice.
+  const stateLabel = (wa: { name: string; state: string }) => `${wa.name} (${wa.state})`;
   // "While raging you gain a climb/swim Speed…" (Raging Athlete) — active only while the state is on.
-  for (const wa of activeStateGrants(c, db)) if (wa.speeds) grantSources.push({ speeds: wa.speeds });
+  for (const wa of stateGrants) if (wa.speeds) grantSources.push(synthetic({ speeds: wa.speeds }, stateLabel(wa), true));
   // A state that COSTS Speed (Wooden Rage: −10 ft while raging), alongside the ones that grant it.
   let statePenalty = 0;
-  for (const wa of activeStateGrants(c, db)) statePenalty += wa.speedPenalty ?? 0;
+  const statePenaltyFrom: string[] = [];
+  for (const wa of stateGrants) {
+    statePenalty += wa.speedPenalty ?? 0;
+    if (wa.speedPenalty) statePenaltyFrom.push(stateLabel(wa));
+  }
   // Flat additive land-Speed from feats/class features/heritage (Hyper Boosters: +10 ft). After the base.
   /* A LEVEL-SCALING bonus is written as a formula (Vivacious Speed's always-on half steps at 11th and
    * 19th), in the same vocabulary every other speed value uses. Resolved through ONE helper so the
@@ -5840,45 +6314,61 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
    * status half and Swashbuckler's Speed walked 5 feet past the printed number, and no Speed but land
    * ever moved. Same-type bonuses now take the HIGHEST; untyped ones (and the leshy's −5 penalty)
    * still stack, which is RAW. Owner ruling 2026-09-10 #127: follow print on both halves. */
-  const speedBonuses: { value: number; type?: string; allSpeeds?: boolean }[] = [];
-  const pushSpeedBonus = (src: Pick<DefenseGrants, 'landSpeedBonus' | 'speedBonusType' | 'speedBonusAllSpeeds'> | undefined) => {
+  const speedBonuses: { value: number; type?: TypedMod['type']; allSpeeds?: boolean; name: string; transient: boolean; tweak?: boolean }[] = [];
+  const pushSpeedBonus = (
+    src: (Pick<DefenseGrants, 'landSpeedBonus' | 'speedBonusType' | 'speedBonusAllSpeeds'> & { name?: string }) | undefined,
+    transient = false,
+  ) => {
     const value = landBonusOf(src?.landSpeedBonus);
     if (!value) return;
-    speedBonuses.push({ value, type: src!.speedBonusType, allSpeeds: src!.speedBonusAllSpeeds });
+    speedBonuses.push({ value, type: src!.speedBonusType, allSpeeds: src!.speedBonusAllSpeeds, name: src!.name ?? 'Speed increase', transient });
   };
-  for (const f of c.feats) pushSpeedBonus(db.feats[f.featId]);
-  for (const fid of ownedFeatureIds(c, db)) pushSpeedBonus(db.classFeatures[fid]);
-  for (const h of heritageRecords(c, db)) pushSpeedBonus(h);
+  // The LASTING record bonuses — left out of the two runs a Speed set compares (SpeedRun.lastingBonuses).
+  if (opt.lastingBonuses !== false) {
+    for (const f of c.feats) pushSpeedBonus(db.feats[f.featId]);
+    for (const fid of ownedFeatureIds(c, db)) pushSpeedBonus(db.classFeatures[fid]);
+    for (const h of heritageRecords(c, db)) pushSpeedBonus(h);
+  }
   /* desk 154: panache-speed — the same three fields behind the STATE gate. *"While you have panache,
    * you gain a +5-foot status bonus to your Speeds"* (class-feature-1007), raised by Vivacious Speed
    * (class-feature-1017) and printed again on Swashbuckler's Speed (feat-6238). They join the same
    * pool, so `stackSpeedBonuses` makes the with-panache value REPLACE the standing without-panache
    * half — one status bonus, the highest — rather than adding a second one to it. */
-  for (const wa of activeStateGrants(c, db)) pushSpeedBonus(wa);
-  const stackSpeedBonuses = (rows: typeof speedBonuses) => {
-    let total = 0;
-    const best: Record<string, number> = {};
-    for (const b of rows) {
-      if (b.type) best[b.type] = Math.max(best[b.type] ?? 0, b.value);
-      else total += b.value; // untyped modifiers stack, and a penalty is never suppressed by a bonus
-    }
-    return Object.values(best).reduce((n, v) => n + v, total);
-  };
+  for (const wa of stateGrants) pushSpeedBonus({ ...wa, name: stateLabel(wa) }, true);
+  /* A TYPED tweak add on land Speed is a bonus of that type like any other, so it joins THIS pool: a
+   * "+10 status" tweak beside Vivacious Speed's status bonus is one status bonus, the larger (Building
+   * blocks item 4). Untyped tweak adds sum in the last stage instead. */
+  for (const t of opt.tweakAdds ?? [])
+    if (t.type !== 'untyped' && t.value) speedBonuses.push({ value: t.value, type: t.type, name: t.label, transient: false, tweak: true });
+  /* The PF2e stacking rule through the app's one implementation (best bonus and worst penalty of each
+   * type, untyped sums); for the records' own positive typed bonuses that is exactly the old
+   * "highest of each type", and a typed tweak PENALTY now counts too. */
+  const asMods = (rows: typeof speedBonuses): TypedMod[] => rows.map((b) => ({ type: b.type ?? 'untyped', value: b.value }));
+  const stackSpeedBonuses = (rows: typeof speedBonuses) => poolTypedMods(asMods(rows));
   const featLandBonus = stackSpeedBonuses(speedBonuses);
   // …and the same total restricted to the carriers whose clause says "your SpeedS", for every OTHER
   // movement type. Applied below, where the grants have resolved and a Speed of 0 stays absent.
   const allSpeedsBonus = stackSpeedBonuses(speedBonuses.filter((b) => b.allSpeeds));
   let passiveSpeedPenalty = 0;
+  const passivePenaltyFrom: string[] = [];
   let passiveLandBonus = 0;
+  const passiveLandFrom: { name: string; value: number }[] = [];
   for (const inv of c.inventory) {
     if (!itemInUse(inv)) continue;
+    const itemName = db.items[inv.itemId]?.name ?? inv.itemId;
     for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
       if (!pe) continue;
-      if (pe.speeds) grantSources.push({ speeds: pe.speeds });
+      if (pe.speeds) grantSources.push(synthetic({ speeds: pe.speeds }, itemName, false));
       // A worn item's flat speed penalty (Monster Suit −10 ft) applies to every movement type.
-      if (pe.speedPenalty) passiveSpeedPenalty += Math.abs(pe.speedPenalty);
+      if (pe.speedPenalty) {
+        passiveSpeedPenalty += Math.abs(pe.speedPenalty);
+        passivePenaltyFrom.push(itemName);
+      }
       // A flat land-Speed bonus (boots-of-speed pattern) adds to land Speed.
-      if (pe.speedBonus) passiveLandBonus += pe.speedBonus;
+      if (pe.speedBonus) {
+        passiveLandBonus += pe.speedBonus;
+        passiveLandFrom.push({ name: itemName, value: pe.speedBonus });
+      }
     }
   }
   // Land-Speed FLOORS ("your land Speed increases to 15 feet") raise the base before anything adds to
@@ -5893,11 +6383,43 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
    * make the awakened animal's chassis 5 into 25; and it cannot sit at RECORD level, because the
    * record's other branch (aquatic) prints no land Speed and must keep the chassis 5. */
   landFloor = Math.max(landFloor, c.chosenEffects?.landSpeedMin ?? 0);
-  if (landFloor) speeds.land = Math.max(speeds.land ?? 0, landFloor);
-  if (passiveLandBonus || featLandBonus) speeds.land = (speeds.land ?? 0) + passiveLandBonus + featLandBonus;
+  if (landFloor) {
+    const before = landNow();
+    speeds.land = Math.max(speeds.land ?? 0, landFloor);
+    if (landNow() !== before) {
+      const floorFrom =
+        [...heritageRecords(c, db), ...c.feats.map((f) => db.feats[f.featId]), ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id])].find(
+          (r) => (r?.landSpeedMin ?? 0) === landFloor,
+        )?.name ?? ((c.chosenEffects?.landSpeedMin ?? 0) === landFloor ? 'Your choice' : undefined);
+      step(before, 'Raised to', floorFrom, false);
+    }
+  }
+  if (passiveLandBonus || featLandBonus || speedBonuses.length) {
+    speeds.land = (speeds.land ?? 0) + passiveLandBonus + featLandBonus;
+    // One line per carrier, each with what it ADDED — measured by `takenByTerm` on the same list
+    // `stackSpeedBonuses` pooled (the first of the strongest of a type counts; untyped ones all add), so
+    // these lines sum to exactly the amount the statement above moved the land Speed by. A beaten bonus
+    // stays visible at 0 naming what beat it, rather than dropping a line the player took a feat for.
+    for (const p of passiveLandFrom) stages.push({ label: 'Speed increase', note: p.name, value: p.value, transient: false });
+    const taken = takenByTerm(asMods(speedBonuses));
+    // The record bonuses come first and in the same order in every run (state ones and tweaks are
+    // appended), so the index names the same line in two runs.
+    speedBonuses.forEach((b, i) => {
+      const key = `speed-bonus:${i}:${b.name}`;
+      const label = b.tweak ? b.name : 'Speed increase';
+      const who = b.tweak ? undefined : b.name;
+      const flags = { transient: b.transient, key, ...(b.tweak ? { tweak: true } : {}) };
+      if (taken[i]) stages.push({ label, ...(who ? { note: who } : {}), value: taken[i], ...flags });
+      else {
+        const w = speedBonuses.findIndex((o, j) => j !== i && o.type === b.type && Math.sign(o.value) === Math.sign(b.value) && taken[j] !== 0);
+        const beat = w >= 0 ? speedBonuses[w].name : 'a larger one';
+        stages.push({ label, note: `${who ? `${who} — ` : ''}${b.type} ${b.value < 0 ? 'penalty' : 'bonus'}, does not stack with ${beat}`, value: 0, ...flags });
+      }
+    });
+  }
   // A proficiency-gated speed (Quick Climb/Swim: climb/swim = land Speed only if legendary Athletics).
   // Fold each qualifying block's speeds in with the unconditional ones.
-  const gatedSpeeds: SpeedGrants[] = [];
+  const gatedSpeeds: { speeds: SpeedGrants; from: string }[] = [];
   for (const src of grantSources) {
     for (const g of src.speedsIf ?? []) {
       // Skill-proficiency gate (Quick Climb/Swim) — pass if no skill named.
@@ -5917,10 +6439,11 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       /* "Holding" is not a field the sheet tracks per-hand, so the designation itself is the evidence:
        * a thaumaturge who designated an implement is carrying it. Wielding is not asserted beyond that. */
       const holdingOk = !g.holdingDesignated || (c.inventory ?? []).some((i) => i.designations?.includes(g.holdingDesignated!));
-      if (skillOk && heritageOk && featOk && unarmoredOk && wearingOk && holdingOk) gatedSpeeds.push(g.speeds);
+      if (skillOk && heritageOk && featOk && unarmoredOk && wearingOk && holdingOk) gatedSpeeds.push({ speeds: g.speeds, from: nameOfGrant(src).label });
     }
   }
-  for (const src of [...grantSources, ...gatedSpeeds.map((speeds) => ({ speeds }))]) {
+  for (const src of [...grantSources, ...gatedSpeeds.map((g) => synthetic({ speeds: g.speeds }, g.from, false))]) {
+    const who = nameOfGrant(src);
     for (const [k, raw] of Object.entries(src.speeds ?? {})) {
       const key = k as keyof Speeds;
       if (raw == null) continue;
@@ -5931,32 +6454,46 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       if (!v) continue;
       // A land-Speed grant (Fleet, Nimble Elf, …) INCREASES your existing land Speed (additive, untyped),
       // whereas fly/swim/climb/burrow grants confer a SET speed of that type (take the best).
-      if (key === 'land') speeds.land = (speeds.land ?? 0) + v;
-      else speeds[key] = Math.max(speeds[key] ?? 0, v);
+      if (key === 'land') {
+        const before = landNow();
+        speeds.land = (speeds.land ?? 0) + v;
+        step(before, 'Speed increase', who.label, who.transient);
+      } else speeds[key] = Math.max(speeds[key] ?? 0, v);
     }
   }
   // Every record that does ARITHMETIC on a Speed rather than granting one. Collected before the
   // penalties are applied because one of them cancels a penalty and another reduces it, and both
   // need to be known while the penalties are still separable.
   const adjusts: NonNullable<DefenseGrants['speedAdjust']>[] = [];
+  const adjustFrom: { label: string; transient: boolean }[] = [];
   // Class features are IN grantSources now (see the speedsIf note above), so their speedAdjust arrives
   // with everyone else's — the separate loop that used to stand here would double every one of them.
-  for (const src of grantSources) if (src.speedAdjust) adjusts.push(src.speedAdjust);
+  for (const src of grantSources)
+    if (src.speedAdjust) {
+      adjusts.push(src.speedAdjust);
+      adjustFrom.push(nameOfGrant(src));
+    }
   const ADJUST_KEYS: (keyof Speeds)[] = ['land', 'fly', 'swim', 'climb', 'burrow'];
   const adjustTargets = (key: NonNullable<DefenseGrants['speedAdjust']>['key']) =>
     key === 'all' ? ADJUST_KEYS : key === 'non-land' ? ADJUST_KEYS.filter((k) => k !== 'land') : [key as keyof Speeds];
 
   // The active stance / FORM may grant speeds (an ursine form's climb, a form's "fly = your land Speed").
   // Applied AFTER the base grants so a "@actor.speed.land" formula sees the finished land Speed.
-  const stanceSpeeds = activeStanceDef(c, db)?.speeds;
+  // The stance is switched on in play: the permanent run leaves it out.
+  const stanceDef = tr ? activeStanceDef(c, db) : undefined;
+  const stanceSpeeds = stanceDef?.speeds;
   for (const [k, raw] of Object.entries(stanceSpeeds ?? {})) {
     const key = k as keyof Speeds;
     if (raw == null) continue;
     const v = typeof raw === 'number' ? raw : resolveFormula(raw as unknown as string, { level: c.level, abilities: c.abilities, speeds });
     if (!v) continue;
-    if (key === 'land') speeds.land = (speeds.land ?? 0) + v;
-    else speeds[key] = Math.max(speeds[key] ?? 0, v);
+    if (key === 'land') {
+      const before = landNow();
+      speeds.land = (speeds.land ?? 0) + v;
+      step(before, stanceDef?.name ?? 'Stance', 'stance Speed', true);
+    } else speeds[key] = Math.max(speeds[key] ?? 0, v);
   }
+  const modes = tr ? (c.activeModes ?? []) : [];
 
   // An ACTIVE MODE's Speed — a potion granting "a fly Speed of 40 feet for 1 minute", a rune granting
   // "a fly Speed of 25 feet or your land Speed, whichever is slower". Placed HERE, beside the stance
@@ -5964,26 +6501,31 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   // and would resolve to 0 if evaluated before the land Speed was known.
   // Without this lane a Speed toggle could only ever be prose — Triple Time still ships as
   // `modifiers: []` plus a note for exactly that reason.
-  for (const m of c.activeModes ?? []) {
+  for (const m of modes) {
     for (const [k, raw] of Object.entries(m.speeds ?? {})) {
       const key = k as keyof Speeds;
       if (raw == null) continue;
       const v = typeof raw === 'number' ? raw : resolveFormula(raw as unknown as string, { level: c.level, abilities: c.abilities, speeds });
       if (!v) continue;
-      if (key === 'land') speeds.land = (speeds.land ?? 0) + v;
-      else speeds[key] = Math.max(speeds[key] ?? 0, v);
+      if (key === 'land') {
+        const before = landNow();
+        speeds.land = (speeds.land ?? 0) + v;
+        step(before, m.name, 'mode Speed', true);
+      } else speeds[key] = Math.max(speeds[key] ?? 0, v);
     }
   }
 
   // "+5 feet to any fly Speed you already have" — applied after every grant (base, stance, mode) and
   // before the penalties. A Speed of 0 or absent stays absent, which is exactly why this could not be
   // a `speeds` grant: those resolve as max(existing, granted) and would have swallowed the 5.
-  for (const a of adjusts) {
-    if (!a.add) continue;
+  adjusts.forEach((a, ai) => {
+    if (!a.add) return;
     for (const k of adjustTargets(a.key)) {
+      const before = landNow();
       if ((speeds[k] ?? 0) > 0) speeds[k] = (speeds[k] as number) + a.add;
+      if (k === 'land') step(before, 'Speed increase', adjustFrom[ai].label, adjustFrom[ai].transient);
     }
-  }
+  });
   /* batch 037: swashbucklers-speed#typed-all-speeds — the PLURAL half of *"a +5-foot status bonus to
    * your SpeedS"* (feat-6238). Land already took it above with the rest of `featLandBonus`; every
    * other movement type takes it here, after the grants and on the same terms as `speedAdjust`: a
@@ -5995,7 +6537,7 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   // ---- penalties. Every one of these hits EVERY movement type, not just land.
   // Unburdened Iron's clause — and the other half of the battle-form sentence deriveArmorCheckPenalty
   // reads: *"Ignore your armor's check penalty AND SPEED REDUCTION."* (see ignoresArmorPenalties).
-  const ignoreArmor = adjusts.some((a) => a.ignoreArmorPenalty) || ignoresArmorPenalties(c);
+  const ignoreArmor = adjusts.some((a) => a.ignoreArmorPenalty) || (tr && ignoresArmorPenalties(c));
   const worn = findWornArmor(c, db);
   // Full penalty if you don't meet the armor's Strength threshold; meeting it reduces the penalty by
   // 5 feet (to a minimum of 0).
@@ -6006,12 +6548,13 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   // The penalties that are NOT from armour, kept apart because the second Unburdened Iron clause
   // reduces exactly one of them: "If your Speed is taking multiple penalties, pick only one penalty
   // to reduce." Reducing the LARGEST is the reading that always delivers the full deduction.
-  const others = [
-    passiveSpeedPenalty, // a worn item's flat penalty (Monster Suit −10 ft)
-    activeStanceDef(c, db)?.speedPenalty ?? 0, // Mountain Stance −5 ft
-    statePenalty, // Wooden Rage −10 ft while raging
-    c.conditions.some((x) => x.id === 'encumbered') ? 10 : 0,
-  ].filter((n) => n > 0);
+  const otherRows = [
+    { value: passiveSpeedPenalty, label: 'Item Speed penalty', note: passivePenaltyFrom.join(', ') || undefined, transient: false }, // a worn item's flat penalty (Monster Suit −10 ft)
+    { value: stanceDef?.speedPenalty ?? 0, label: stanceDef?.name ?? 'Stance', note: 'stance Speed penalty', transient: true }, // Mountain Stance −5 ft
+    { value: statePenalty, label: 'Speed penalty', note: statePenaltyFrom.join(', ') || undefined, transient: true }, // Wooden Rage −10 ft while raging
+    { value: tr && c.conditions.some((x) => x.id === 'encumbered') ? 10 : 0, label: 'Encumbered', note: undefined, transient: true },
+  ].filter((r) => r.value > 0);
+  const others = otherRows.map((r) => r.value);
   const reduceBy = Math.max(0, ...adjusts.map((a) => a.reduceOtherPenalty ?? 0));
   if (reduceBy && others.length) {
     const biggest = others.indexOf(Math.max(...others));
@@ -6020,8 +6563,19 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
 
   const total = armorPenalty + others.reduce((n, p) => n + p, 0);
   if (total > 0) {
+    const before = landNow();
+    const hadLand = speeds.land != null;
     for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
       if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - total);
+    }
+    if (hadLand) {
+      // One line per penalty, then the 0 floor when the penalties went past it.
+      if (armorPenalty) stages.push({ label: 'Armor Speed penalty', note: 'heavy armor or unmet Strength', value: -armorPenalty, transient: false });
+      otherRows.forEach((r, i) => {
+        const reduced = others[i] !== r.value ? ` (reduced from ${r.value} ft)` : '';
+        stages.push({ label: r.label, ...(r.note || reduced ? { note: `${r.note ?? ''}${reduced}`.trim() } : {}), value: others[i] ? -others[i] : 0, transient: r.transient });
+      });
+      if (before - total < 0) stages.push({ label: 'Minimum 0', value: total - before, transient: false });
     }
   }
   // HINDERING armor: "You take a -5 penalty to all your Speeds (to a minimum of a 5-foot Speed).
@@ -6031,11 +6585,13 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   // Which is why it is applied HERE and not folded into `armorPenalty`: it must survive both the
   // Strength reduction above and Unburdened Iron's `ignoreArmor`, and its floor is 5 feet, not 0.
   if ((worn?.armor.traits ?? []).includes('hindering')) {
+    const before = landNow();
     for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
       const v = speeds[k];
       // A Speed already at or below the 5-foot floor is left alone — the floor is a floor, not a set.
       if (v != null && v > 5) speeds[k] = Math.max(5, v - 5);
     }
+    step(before, 'Hindering armor', worn!.armor.name, false);
   }
   /*
    * A mode targeting Speed (the mode editor's plain "+10 to Speed", as opposed to the `speeds` grant
@@ -6052,10 +6608,34 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
    */
   for (const kind of ['land', 'fly', 'climb', 'swim', 'burrow'] as const) {
     if (speeds[kind] == null && kind !== 'land') continue;   // a Speed the character does not have
-    const n = modeNumberBonus(c.activeModes, { kind: 'speed', detail: kind });
-    if (n) speeds[kind] = Math.max(0, (speeds[kind] ?? 0) + n);
+    if (kind !== 'land') {
+      const n = modeNumberBonus(modes, { kind: 'speed', detail: kind });
+      if (n) speeds[kind] = Math.max(0, (speeds[kind] ?? 0) + n);
+      continue;
+    }
+    /* Land: the mode modifiers AND the UNTYPED land-Speed tweak adds, as one last stage (typed tweak adds
+     * joined the record Speed-bonus pool above). Typed mode modifiers pool together (the same pool
+     * `modeNumberBonus` is — measured per line by `takenByTerm`); untyped ones sum. With no tweak this
+     * is exactly `modeNumberBonus(modes, land)`. */
+    const mods: (Term & { tweak?: boolean })[] = [
+      ...modeTerms(modes, { kind: 'speed', detail: 'land' }),
+      ...(opt.tweakAdds ?? []).filter((t) => t.type === 'untyped').map((t) => ({ ...t, tweak: true })),
+    ];
+    const n = poolTypedMods(mods);
+    if (n) {
+      const before = landNow();
+      const raw = before + n;
+      speeds.land = Math.max(0, raw);
+      const taken = takenByTerm(mods);
+      mods.forEach((m, i) => {
+        const beaten = m.type !== 'untyped' && m.value !== 0 && taken[i] === 0;
+        const note = beaten ? `${m.note ? m.note + ' — ' : ''}does not stack` : m.note;
+        stages.push({ label: m.label, ...(note ? { note } : {}), value: taken[i], transient: !m.tweak, ...(m.tweak ? { tweak: true } : {}) });
+      });
+      if (raw < 0) stages.push({ label: 'Minimum 0', value: -raw, transient: false });
+    }
   }
-  return speeds;
+  return { speeds, stages };
 }
 
 export interface BulkResult {

@@ -74,6 +74,7 @@ import { activeCasterArchetype, archetypeBook, archetypeBookMaxRank, archetypeCa
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
 import { apparitionSlots, bookCantripCapacity, bookNoun, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
+import { scoreAddBlocks } from './blocks/active';
 
 /**
  * The kineticist's element rules for one feat slot: the test the Builder's picker asks (`slotTakes`,
@@ -4728,6 +4729,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         if (pi >= 0) partialBoosts.splice(pi, 1);
       }
     }
+  }
+  /* A Tweaks `attribute.add` block (docs/overrides-redesign.md, Building blocks item 6 — the build seam)
+   * moves the SCORE, after the legacy set above, so a set score and a +2 tweak make set + 2. On the
+   * score itself rather than as a modifier shift, so it flows exactly where an overridden score does,
+   * including the readers that bypass `abilityModOf`. The same reader as the derive-time term lists
+   * (`blocks/active.ts`): on, not broken, at or past its start level, Tweaks switch on. A partial boost
+   * stays partial: the block adds to whatever the boosts made. */
+  for (const ab of Object.keys(abilities) as AbilityId[]) {
+    for (const b of scoreAddBlocks({ overrides: build.overrides, options: build.options, level: build.level }, ab)) abilities[ab] += b.value as number;
   }
   const cls = build.classId ? content.classes[build.classId] : undefined;
   // Dual Class variant: a second class contributes its HP/proficiencies/skills/features/feats.
@@ -11598,6 +11608,12 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     else (b.backgroundSkillIncreases ??= {})[si.level] = si.skill;
   }
 
+  /* The score the BOOSTS made. A Tweaks `attribute.add` block is copied back with `overrides` above and
+   * buildCharacter adds it again on the rebuild, so the boost solver below must aim at the score
+   * without it — aimed at `c.abilities` itself, every reverse build grew the score by the block once
+   * more (Dex 12 + a +2 block: 14 → 16 → 18). Same reader as the build seam (blocks/active.ts). */
+  const boostedScore = (a: AbilityId): number =>
+    c.abilities[a] - scoreAddBlocks({ overrides: c.overrides, options: c.options, level: c.level }, a).reduce((n, blk) => n + (blk.value as number), 0);
   const ancestry = c.ancestryId ? content.ancestries[c.ancestryId] : undefined;
   const cls = c.classId ? content.classes[c.classId] : undefined;
   // Dual Class: a subsystem owned by class `id` may live on the second class.
@@ -11666,7 +11682,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       if (
         alt &&
         (alt.abilityFlaws ?? []).some(
-          (a) => c.abilities[a] === 8 && !(ancestry?.abilityFlaws ?? []).includes(a) && c.options?.voluntaryFlawAbility !== a,
+          (a) => boostedScore(a) === 8 && !(ancestry?.abilityFlaws ?? []).includes(a) && c.options?.voluntaryFlawAbility !== a,
         )
       )
         b.featChoices[`heritage:${hid}`] = alt.whenChoice;
@@ -11765,7 +11781,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       const apexOf = (v: number) => (X === apexAbility ? (v >= 18 ? v + 2 : 18) : v);
       let s = 10 - 2 * (flawCount[X] ?? 0);
       let total = 0;
-      while (apexOf(s) < c.abilities[X] && total < 40) {
+      while (apexOf(s) < boostedScore(X) && total < 40) {
         s += s >= 18 ? 1 : 2;
         total++;
       }
