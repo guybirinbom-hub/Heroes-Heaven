@@ -31,7 +31,7 @@ import { getPrefs, subscribePrefs } from './data/prefs';
 import { useIsMobile, useShowUndoButtons } from './sheet/useIsMobile';
 import { gmEditVerdict, boundGmBase, editsToApply, sameInstant, type GmChainRecord } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
-import { setupPersist, schedulePersist, persistNow, flushPersist, foldIntoPersist, HOLD_WRITE } from './data/persist';
+import { setupPersist, schedulePersist, persistNow, flushPersist, foldIntoPersist, hasPendingPersist, HOLD_WRITE } from './data/persist';
 import { loadRosterKnown, takeForeignRoster, rosterOwnerSwitched, type ForeignRoster } from './data/rosterTabs';
 import { mergeRosterEdits } from './data/rosterMerge';
 import { gmApplyYields as gmApplyYieldsBy, revertOwnStep, settleMergedBuild } from './data/rosterFold';
@@ -220,6 +220,13 @@ export default function App() {
   // write was held back because another tab switched accounts (persist HOLD_WRITE) — storage is fine, so
   // the banner says that instead of blaming storage.
   const [saveFailed, setSaveFailed] = useState<false | 'storage' | 'held'>(false);
+  /* The 'held' banner STAYS once an edit of this tab was dropped for an account switch (2026-10-20, the
+   * final check of package H): the writes that follow land fine — they carry the NEW account's roster —
+   * but the dropped edit was never saved, so no landed write takes the notice down (see the persist
+   * result below). Only the player's Dismiss does, or a reload. (Fix round 1: "until an edit of this
+   * tab's own lands", told by `canUndo`, was also met by a re-derive — a sync that brings the new
+   * account's homebrew re-derives the roster as an undo step — so the notice went with no player action.) */
+  const showHeld = () => setSaveFailed('held');
   // Proactive "storage almost full" heads-up (before the hard quota failure that sets saveFailed).
   const [storageWarn, setStorageWarn] = useState(false);
   /* How much banner is currently showing, published as --app-banner-h. The pinned screens are sized to
@@ -426,7 +433,10 @@ export default function App() {
     setupPersist(
       saveRoster,
       (ok, reason) => {
-        setSaveFailed(ok ? false : reason === 'held' ? 'held' : 'storage');
+        if (!ok && reason === 'held') showHeld();
+        else if (!ok) setSaveFailed('storage');
+        // A landed write never takes a 'held' notice down: the dropped edit is still unsaved (showHeld above).
+        else setSaveFailed((s) => (s === 'held' ? s : false));
         // Warn well before the browser's hard cap (~5MB web / more on the installed app).
         const limit = (isTauri ? 9 : 4.5) * 1024 * 1024;
         if (ok && !storageDismissed.current) setStorageWarn(localStorageBytes() > limit);
@@ -1143,7 +1153,14 @@ export default function App() {
   const foldForeign = (f: Exclude<ForeignRoster, { kind: 'echo' }>) => {
     if (f.kind === 'replace') {
       noteDerivedRefresh(f.incoming);
-      foldIntoPersist(() => f.incoming, rosterRef.current);
+      // A write this tab had queued (the player's tap inside its 400 ms debounce) is swapped for the new
+      // account's roster — rightly: it belongs to the old account. But it was never saved, so the player
+      // is told, in the account-switch words (2026-10-20, the final check of package H: it went silently).
+      const queued = hasPendingPersist();
+      foldIntoPersist((r: SavedChar[]) => {
+        if (queued && JSON.stringify(r) !== f.prior) showHeld();
+        return f.incoming;
+      }, rosterRef.current);
       setRoster(f.incoming, { record: false, resetHistory: true });
       return;
     }
@@ -1167,6 +1184,9 @@ export default function App() {
     const f = takeForeignRoster();
     if (f?.kind === 'replace') {
       noteDerivedRefresh(f.incoming);
+      // The queued write is dropped for the new account's roster: told if it held anything unsaved (as
+      // foldForeign above). The landed result that follows keeps that notice up (showHeld).
+      if (JSON.stringify(queued) !== f.prior) showHeld();
       setRoster(f.incoming, { record: false, resetHistory: true });
       return f.incoming; // what the key already holds: not written again (saveRoster)
     }
@@ -1667,7 +1687,7 @@ export default function App() {
           <div className="save-warning" role="alert">
             <i className="ti ti-alert-triangle" aria-hidden="true" />
             {saveFailed === 'held' ? (
-              <span>Another tab of this app signed in to a different account. Changes made in this tab right now are not saved — reload this tab.</span>
+              <span>Another tab of this app signed in to a different account, so a change made here at that moment was not saved — reload this tab.</span>
             ) : (
               <span>Changes can’t be saved — browser storage is full or unavailable. Export your characters so you don’t lose work.</span>
             )}

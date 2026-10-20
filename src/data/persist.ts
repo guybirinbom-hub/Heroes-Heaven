@@ -76,7 +76,8 @@ function writePending(): void {
   const roster = reconcile(queued);
   // Nothing of it may be written (another account's key: rosterTabs.ts) — and the player is told it was
   // not saved (App's save-failed banner, in its account-switch wording: storage is not at fault), never
-  // left to lose it in silence; the next landed write clears it.
+  // left to lose it in silence. The notice stays until the player dismisses it — a later landed write
+  // does not take it down (App's showHeld).
   if (roster === HOLD_WRITE) {
     onResult(false, 'held');
     return;

@@ -42,8 +42,10 @@ export type ForeignRoster =
   /** Another tab's roster, and the roster it and this tab's state both grew from. */
   | { kind: 'write'; base: SavedChar[]; incoming: SavedChar[] }
   /** Another ACCOUNT's roster (another tab signed in as someone else): this tab's roster is replaced by
-   *  it, whole — nothing of the old account's is merged into it. */
-  | { kind: 'replace'; incoming: SavedChar[] }
+   *  it, whole — nothing of the old account's is merged into it. `prior`: the roster value this tab knew
+   *  on disk before (the old account's), so the caller can tell whether a write it had queued held
+   *  anything that never reached the disk — dropped now, and the player must be told (App). */
+  | { kind: 'replace'; incoming: SavedChar[]; prior: string | null }
   /** An OLD app version (no lineage) wrote back a roster this tab wrote earlier — the echo of what it
    *  adopted from us, arriving after we moved on. Not another tab's work: this tab's newer roster has
    *  to go back on disk over it. */
@@ -82,9 +84,10 @@ export function takeForeignRoster(): ForeignRoster | null {
   if (rosterOwnerSwitched()) {
     // Emptied by the switch and not filled yet: nothing to take (and nothing of ours may go there).
     if (raw === null) return null;
+    const prior = knownRoster().raw;
     const incoming = parseRoster(raw);
     noteRosterKnown(raw, incoming, undefined, loadSyncOwner());
-    return { kind: 'replace', incoming };
+    return { kind: 'replace', incoming, prior };
   }
   const k = knownRoster();
   if (raw === null || raw === k.raw) return null;

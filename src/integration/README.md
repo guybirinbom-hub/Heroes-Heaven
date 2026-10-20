@@ -548,8 +548,14 @@ touching either direction: it is where the never-overwrite rules live.
   until the switching tab first writes — its emptied roster, a debounce later, or the new account's
   pulled one) is dropped, never written to either account — the price of never writing it into the new
   one; the "can't save" banner shows while that lasts, in its own words — "Another tab of this app
-  signed in to a different account. Changes made in this tab right now are not saved — reload this
-  tab." (persist reports a held write as `'held'`; a real storage failure keeps the storage text). That
+  signed in to a different account, so a change made here at that moment was not saved — reload this
+  tab." (worded to stay true while it stays up through later saves that do land; persist reports a held write as `'held'`; a real storage failure keeps the storage text). The
+  same banner shows when the switch completes INSIDE that tab's 400 ms save delay, so nothing was ever
+  held: its queued edit is swapped for the new account's roster (App's `foldForeign` and `reconcileWrite`,
+  `replace` — legs 10–11). Once shown, the banner stays when the new account's roster lands (that edit
+  was still never saved), and through every later save — the player's own edits, a re-derive when the
+  new account's homebrew syncs in: it goes only when the player dismisses it, or on a reload (leg 8;
+  legs 10–11 sync homebrew in). That
   tab IS told about the switch (an earlier line here said its sync is never restarted — wrong):
   supabase-js (`@supabase/auth-js` GoTrueClient) posts every auth event on a BroadcastChannel named
   after its storage key, and every other tab of the app passes the SIGNED_OUT and SIGNED_IN it hears
@@ -571,7 +577,18 @@ touching either direction: it is where the never-overwrite rules live.
   step that ADDED a character another tab has since changed keeps that character. (f) A tab still
   running an OLDER app version (opened before an update, never reloaded) has none of the above: if it
   saves after an account switch it can put the old account's characters into the new account. Close or
-  reload every other tab of the app before switching accounts.
+  reload every other tab of the app before switching accounts. (g) A tab whose remembered owner is still
+  empty (opened before any sign-in and idle since) treats a later account switch as a first sign-in; if
+  it held an unsaved edit, the merge can keep an old-account character in the new account. In practice it
+  learns the first owner within a moment (its sync restarts on the auth broadcast and adopts); the gap
+  needs a frozen or discarded background tab. Not fixed, because the obvious fix (treat "nobody → owner"
+  as a switch when the key changed) would also fire on a same-account first sign-in where another tab
+  wrote meanwhile, and take that write whole — dropping this tab's unsaved edit, which the never-overwrite
+  rule forbids. (h) If the OTHER tab wins the race to wipe, the tab where the player signed in can show
+  the "another tab signed in" text itself; reloading fixes it. Narrow: the switching tab usually wins.
+  In that same race the OTHER tab (the one that wiped) drops an edit still inside its 400 ms save delay
+  without a notice: its own `startSync` cancels the queued write when it empties the roster
+  (`cloudSync.ts`, the owner-changed wipe) — the same as before package H.
 - **A hung cloud pull holds every apply**: the player's GM-edit pass gives up on any one network answer
   after 20 s and ends, but a pull that never answers leaves cloud sync's `syncing` flag set until it
   settles, so every APPLY waits for the rest of that session — nothing is lost, the GM sees "waiting".

@@ -120,6 +120,9 @@ if (!jsdomWindow) throw new Error('fixture: the jsdom environment exposes no `js
 Object.defineProperty(window, 'event', { configurable: true, get: () => jsdomWindow?.event, set: () => undefined });
 
 const ACTIVE_KEY = 'wanderers-codex:active:v1';
+/** Homebrew sources (src/data/storage.ts): a change here changes the homebrew fingerprint App re-derives on. */
+const HB_SOURCES_KEY = 'wanderers-codex:homebrew-sources:v1';
+type Persist = typeof import('../src/data/persist');
 const TIMEOUT = 240_000;
 const CAMP = 'camp';
 
@@ -634,8 +637,120 @@ describe(`two tabs of one browser profile never lose the player’s change (rend
     for (const [tab, t] of [['tab A', a], ['tab B', b]] as const) {
       expect(t.shows('New Account Hero'), `${tab} shows the new account`).toBe(true);
       expect(t.shows('Player Version'), `${tab} still shows the old account’s character`).toBe(false);
-      expect(banner(t), `${tab}: no “can’t save” banner once the new account’s roster is taken`).toBeNull();
     }
+    expect(banner(b), 'tab B: no “can’t save” banner — it held nothing').toBeNull();
+    // 2026-10-20 (the final check of package H): A's tap was never saved, so the new account's roster
+    // landing does not take the notice down. MUTATION (run 2026-10-20): a landed write clears it again
+    // (`else setSaveFailed(false)` in App's persist result) → `tab A: the notice stays …: expected null
+    // not to be null`.
+    expect(banner(a), 'tab A: the notice stays — its tap was never saved').not.toBeNull();
+    expect(banner(a)?.textContent ?? '', 'still in the account-switch words').toContain('different account');
+    // Fix round 1 (2026-10-20): nor does a later save of this tab's own — a re-derive is one too, and it
+    // took the notice down with no player action. MUTATION (run 2026-10-20): restore the round-0 rule (the
+    // notice goes once `canUndo` turns true after it showed) → `tab A: the notice stays through its own
+    // later save: expected null not to be null`.
+    a.plusOnce();
+    await wait(1200);
+    expect(storedPotions('n8'), 'fixture: the new account’s edit landed').toBe(4);
+    expect(banner(a), 'tab A: the notice stays through its own later save').not.toBeNull();
+    // Only the player's Dismiss takes it down.
+    act(() => banner(a)!.querySelector('button[aria-label="Dismiss"]')!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+    expect(banner(a), 'tab A: Dismiss takes the notice down').toBeNull();
+  }, TIMEOUT);
+
+  /*
+   * (10)–(11): THE SWITCH COMPLETES INSIDE TAB A'S SAVE DELAY (2026-10-20, the final check of package H).
+   * The other tab wipes the key, saves the new owner and writes the new account's roster before A's
+   * 400 ms debounce ends, so A never writes into an empty key and is never HELD: its queued tap is
+   * swapped for the new roster — rightly, it belongs to the old account — but on c492d68 no notice
+   * showed. (10): A hears of the write at once (App's foldForeign, `replace`); (11): A is busy and its
+   * debounce meets the write first (App's reconcileWrite, `replace`).
+   */
+  const switchAccounts = (newId: string) => {
+    localStorage.removeItem(ROSTER_KEY);
+    localStorage.removeItem(ACTIVE_KEY);
+    localStorage.setItem('pf2e-codex.syncOwner', 'acct-new');
+    const fresh = JSON.stringify([saved(newId, 'New Account Hero')]);
+    localStorage.setItem(LINEAGE_KEY, JSON.stringify({ sig: rosterSig(fresh), on: null }));
+    localStorage.setItem(ROSTER_KEY, fresh);
+  };
+  const tapDroppedForSwitch = async (oldId: string, newId: string, busy: boolean) => {
+    localStorage.setItem('pf2e-codex.syncOwner', 'acct-old');
+    const { a, b } = await twoTabs(oldId);
+    const writes: string[] = [];
+    const record = (e: StorageEvent) => {
+      if (e.key === ROSTER_KEY && e.newValue !== null) writes.push(e.newValue);
+    };
+    window.addEventListener('storage', record);
+    a.plusOnce(); // queued behind A's debounce: the old account's last edit
+    expect(a.qty(), 'fixture: the tap is on tab A’s screen').toBe('4');
+    net.hold = busy; // (11): A hears of the switch only after its debounce fired
+    switchAccounts(newId);
+    await wait(800);
+    releaseEvents();
+    await wait(1500);
+    window.removeEventListener('storage', record);
+    const banner = (t: Tab) => t.host.querySelector('.save-warning:not(.storage-warning)');
+    const ids = (JSON.parse(localStorage.getItem(ROSTER_KEY)!) as SavedChar[]).map((c) => c.id);
+    expect(ids, 'on disk: the new account’s roster only').toEqual([newId]);
+    expect(writes.filter((w) => w.includes(`"${oldId}"`)), 'no write carried the old account’s character').toEqual([]);
+    expect(storedPotions(newId), 'on disk: nothing of the tap reached the new account').toBe(3);
+    for (const [tab, t] of [['tab A', a], ['tab B', b]] as const) {
+      expect(t.shows('New Account Hero'), `${tab} shows the new account`).toBe(true);
+      expect(t.shows('Player Version'), `${tab} still shows the old account’s character`).toBe(false);
+      expect(t.qty(), `${tab}: the new account’s potions`).toBe('3');
+    }
+    expect(banner(a), 'tab A: the dropped tap is announced').not.toBeNull();
+    const text = banner(a)?.textContent ?? '';
+    expect(text, 'the banner names the account switch').toContain('different account');
+    expect(text, 'the banner does not blame storage').not.toContain('storage');
+    expect(banner(b), 'tab B: no “can’t save” banner — it held nothing').toBeNull();
+    /* Fix round 1 (2026-10-20, a checker's finding): the new account's homebrew arrives by sync, and the
+     * re-derive it causes (App's `hh-synced` listener → refreshDerived, an undo step) is saved — the tap
+     * is still unsaved, so the notice stays. MUTATION (run 2026-10-20): restore the round-0 rule (the
+     * notice goes once `canUndo` turns true after it showed) → `tab A: the notice stays through a
+     * re-derive: expected null not to be null`. */
+    const lastWrite = (a.persist as Persist).recentPersists().at(-1);
+    localStorage.setItem(HB_SOURCES_KEY, JSON.stringify({ 'hb-new': { id: 'hb-new', name: 'New Account Homebrew' } }));
+    await act(async () => {
+      window.dispatchEvent(new Event('hh-synced'));
+    });
+    await wait(1200);
+    expect((a.persist as Persist).recentPersists().at(-1), 'fixture: tab A saved the re-derived roster').not.toBe(lastWrite);
+    expect(banner(a), 'tab A: the notice stays through a re-derive').not.toBeNull();
+  };
+
+  it('(10) the other tab completes an account switch inside tab A’s save delay — A drops its tap for the new account’s roster, and SAYS so', async () => {
+    /* MUTATION (run 2026-10-20): drop the `showHeld()` line in App's foldForeign `replace` branch →
+     * `tab A: the dropped tap is announced: expected null not to be null`. */
+    await tapDroppedForSwitch('t10', 'n10', false);
+  }, TIMEOUT);
+
+  it('(11) the same account switch, with tab A too busy to hear of it before its own save fires — the save is dropped, and said so', async () => {
+    /* MUTATION (run 2026-10-20): drop the `showHeld()` line in App's reconcileWrite `replace` branch →
+     * `tab A: the dropped tap is announced: expected null not to be null`. */
+    await tapDroppedForSwitch('t11', 'n11', true);
+  }, TIMEOUT);
+
+  it('(12) the switch lands while tab A’s queued write is only another tab’s write folded in — nothing of the player’s was dropped, so NO notice', async () => {
+    /* Fix round 1 (2026-10-20, a checker's note): App shows the notice only when the queued write differs
+     * from what the key held before the switch. MUTATION (run 2026-10-20): drop the `JSON.stringify(r) !==
+     * f.prior` test in App's foldForeign `replace` branch → `tab A: no notice — it dropped nothing of
+     * the player’s: expected <div …> to be null`. */
+    localStorage.setItem('pf2e-codex.syncOwner', 'acct-old');
+    const { a, b } = await twoTabs('t12');
+    b.plusOnce(); // tab B's edit, same account
+    for (let i = 0; i < 100 && storedPotions('t12') !== 4; i++) await wait(20);
+    expect(storedPotions('t12'), 'fixture: tab B’s write landed').toBe(4);
+    for (let i = 0; i < 50 && !(a.persist as Persist).hasPendingPersist(); i++) await wait(5);
+    expect((a.persist as Persist).hasPendingPersist(), 'fixture: tab A folded it in, its 400 ms save delay running').toBe(true);
+    switchAccounts('n12');
+    await wait(1500);
+    const banner = (t: Tab) => t.host.querySelector('.save-warning:not(.storage-warning)');
+    expect((JSON.parse(localStorage.getItem(ROSTER_KEY)!) as SavedChar[]).map((c) => c.id), 'on disk: the new account’s roster only').toEqual(['n12']);
+    expect(a.shows('New Account Hero'), 'tab A shows the new account').toBe(true);
+    expect(banner(a), 'tab A: no notice — it dropped nothing of the player’s').toBeNull();
+    expect(banner(b), 'tab B: no notice').toBeNull();
   }, TIMEOUT);
 
   it('(9) S4: Ctrl+Z in tab B after tab A’s dagger was folded in takes back B’s own potion — never A’s dagger', async () => {
