@@ -13,6 +13,7 @@ import { searchMatches } from '../data/searchRank';
 import type { BuildState } from './build';
 import { backgroundGrantedFeats, kineticSlotAllows, levelGrants, loreKey, resolveBackground } from './build';
 import { maxTakes } from './featGrants';
+import { heldFeatIds, heldFeatSlots } from './heldFeats';
 import { mythicSlotAllows } from './mythic';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey } from './types';
 import { SKILLS } from './types';
@@ -49,13 +50,15 @@ export interface FeatSlotRef {
 /** The featPicks key for a slot — "level:category:idx" (mirrors the builder's slotKey). */
 export const featSlotKey = (p: FeatSlotRef) => `${p.level}:${p.category}:${p.idx}`;
 
-/** One level's feat-slot list, exactly as the Builder's level page draws it (same arguments). */
-const slotListAt = (b: BuildState, content: ContentDatabase, level: number, taken = Object.values(b.featPicks ?? {}).filter(Boolean)) =>
+/** One level's feat-slot list, exactly as the Builder's level page draws it (same arguments). The feats
+ *  taken — a slot Ultimate Flexibility adds — include the ones given through Tweaks (case D, decision D4:
+ *  every `levelGrants` caller that passes taken feats reads `heldFeatIds`). */
+const slotListAt = (b: BuildState, content: ContentDatabase, level: number, taken = heldFeatIds(b)) =>
   levelGrants(level, b.classId, content, b.subclassId, b.variantRules, b.classId2, b.subclassId2, b.mythicEnabled, taken).featSlots;
 
 /** Every level's feat-slot list. */
 function featSlotLists(b: BuildState, content: ContentDatabase): FeatCategory[][] {
-  const taken = Object.values(b.featPicks ?? {}).filter(Boolean);
+  const taken = heldFeatIds(b);
   return Array.from({ length: 20 }, (_, i) => slotListAt(b, content, i + 1, taken));
 }
 
@@ -326,7 +329,8 @@ const ADOPTED_ANCESTRY = 'adopted-ancestry';
  * id matches at least one feat trait, so no id-to-trait table is needed and none can go stale.
  *
  * Level-gated on the slot the feat sits in, so adopting an ancestry at 15th does not retroactively
- * widen the 1st-level ancestry slot.
+ * widen the 1st-level ancestry slot. A feat GIVEN through Tweaks counts the same way (case D): its answer
+ * under `override:adopted-ancestry`, from its start level.
  */
 export function adoptedAncestryIds(build: BuildState, content: ContentDatabase, level: number): string[] {
   const out: string[] = [];
@@ -335,9 +339,9 @@ export function adoptedAncestryIds(build: BuildState, content: ContentDatabase, 
     // here would be a no-op that reads as though the feat did something.
     if (v && content.ancestries[v] && v !== build.ancestryId && !out.includes(v)) out.push(v);
   };
-  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+  for (const { slotKey, featId, level: at } of heldFeatSlots(build, level)) {
     if (featId !== ADOPTED_ANCESTRY) continue;
-    if (Number(slotKey.split(':')[0]) > level) continue;
+    if (at > level) continue;
     push(build.featChoices?.[slotKey]);
   }
   push(build.grantedFeatChoices?.[ADOPTED_ANCESTRY]);
@@ -365,11 +369,16 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
   // Count takes in OTHER slots; a feat is hidden here once those already reach its cap. A repeatable
   // feat therefore stays offered until the whole build holds maxTakes() copies of it.
   const taken = new Map<string, number>();
-  for (const [k, v] of Object.entries(build.featPicks)) if (v && k !== currentKey) taken.set(v, (taken.get(v) ?? 0) + 1);
+  // …and a feat GIVEN through Tweaks is held too (case D): it counts against its cap like a pick in
+  // another slot. Never this slot's own key — a given feat's `override:<id>` key is no slot.
+  for (const { slotKey: k, featId: v } of heldFeatSlots(build)) if (k !== currentKey) taken.set(v, (taken.get(v) ?? 0) + 1);
   for (const granted of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) {
     taken.set(granted, (taken.get(granted) ?? 0) + 1);
   }
   const impulseNth = p.category === 'impulse' ? ordinalOf(slotListAt(build, content, p.level), 'impulse', p.idx) : -1;
+  // Read once per slot, not once per feat the picker asks about.
+  let adopted: string[] | undefined;
+  const adoptedHere = () => (adopted ??= adoptedAncestryIds(build, content, p.level));
   return (f) => {
     if (f.level > p.level) return false;
     /*
@@ -503,7 +512,7 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
         (her?.versatile && (f.traits.includes(her.id) || (her.traits ?? []).some((t) => f.traits.includes(t)))) ||
         // ADOPTED ANCESTRY — "You can select ancestry feats from the ancestry you chose, in addition
         // to your character's own ancestry." The pick was recorded and widened nothing, at any level.
-        adoptedAncestryIds(build, content, p.level).some((a) => f.traits.includes(a)) ||
+        adoptedHere().some((a) => f.traits.includes(a)) ||
         // …and a heritage that opens ANOTHER ancestry's list: "you can select elf, half-elf, and
         // human feats whenever you gain an ancestry feat" (half-elf, half-orc).
         (her?.extraAncestryFeatTraits ?? []).some((t) => f.traits.includes(t)) ||

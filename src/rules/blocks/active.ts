@@ -13,32 +13,26 @@
  *   - the Tweaks master switch is on. "ON by read" (spec item 2): a character whose `overrides.v` is
  *     absent has never been saved by a Tweaks-aware app, so its changes were always live — it reads as
  *     ON. From `overrides.v >= 2` (written by part B's first real Builder save, together with the
- *     switch) the stored `options.overridesEnabled` is obeyed. Part A never writes `v` (checker C4); the
- *     field is read through a narrow cast because part B declares it when it starts writing it.
+ *     switch) the stored `options.overridesEnabled` is obeyed. Part A never writes `v` (checker C4).
+ *     The switch itself is `tweaksSwitchOn` in stored.ts — one copy, shared with the given feats
+ *     (`activeGivenFeats`, decision D7) — re-exported here for the readers that import it from this file.
  *
  * Tweak terms are never Modes and never light the "a mode moved this number" highlight (decision 4): they
  * enter the term lists as layer 'tweak', and the highlight reads `activeModes` only.
  */
 import type { AbilityId, BuildOverrides, CharacterOptions } from '../types';
 import { blockKind, type BlockInstance } from './registry';
-import { parseStoredBlocks, readLegacyBlocks } from './stored';
+import { parseStoredBlocks, readLegacyBlocks, tweaksSwitchOn } from './stored';
 import { targetBuilt } from './targets';
 import type { Term } from './terms';
+
+export { tweaksSwitchOn };
 
 /** What the reader needs from a Character (or a BuildState, at the build seam). */
 export interface TweakHost {
   overrides?: BuildOverrides;
   options?: CharacterOptions;
   level: number;
-}
-
-/** The Tweaks master switch, as spec item 2 reads it. */
-export function tweaksSwitchOn(h: Pick<TweakHost, 'overrides' | 'options'>): boolean {
-  const ov = h.overrides;
-  if (!ov) return false;
-  const v = (ov as { v?: unknown }).v;
-  if (typeof v === 'number' && v >= 2) return h.options?.overridesEnabled === true;
-  return true;
 }
 
 /** Parsed once per stored list. Keyed by the `overrides.blocks` value itself (every edit writes a new

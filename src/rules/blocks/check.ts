@@ -19,7 +19,9 @@
  *   - an entry's test file is missing or has no it()/describe() title naming the entry's id;
  *   - a file under src/rules/blocks/ imports from scripts/, work/ or the batch tools (item 12);
  *   - (checkBookFieldReaders, item 10) a file under src/ READS a moved book field (the registry's
- *     `bookFields`) anywhere but blocks/book.ts, with no BOOK_FIELD_ALLOW entry — or an entry is stale.
+ *     `bookFields`) anywhere but blocks/book.ts, with no BOOK_FIELD_ALLOW entry — or an entry is stale;
+ *   - (checkFeatReaders, item 9 / case D) a place names the raw feat stores (`featPicks`, `addedFeats`)
+ *     that blocks/feat-readers.json does not list with a reason, or more or fewer times than it lists.
  * It prints (never fails on) the "not in Tweaks yet" list and the kinds that nothing applies yet.
  */
 import type { BlockKindDef } from './registry';
@@ -523,5 +525,93 @@ export function checkBookFieldReaders(input: BookReadersInput): BlocksCheckResul
     if (!used.has(a)) errors.push(`BOOK_FIELD_ALLOW ${a.file} (${a.field}, "${a.snippet}"): matches no read any more — remove the entry`);
   }
   info.push(`book fields (${input.bookFields.length}) are read only in ${BOOK_FIELDS_HOME}, ${allowed} allowlisted read(s) elsewhere, ${input.files.length} files scanned`);
+  return { errors, info };
+}
+
+/* ───────────── item 9 / case D: the feats a build holds are read through heldFeats.ts ───────────── */
+
+/**
+ * One place that names a raw feat store, as scripts/lib/feat-readers.mjs reports it: the store
+ * (`field`), `<file>#<enclosing symbol chain>` (`key`), how many times it is named there, and the lines.
+ */
+export interface FeatReaderHit {
+  field: string;
+  key: string;
+  count: number;
+  lines?: number[];
+}
+
+/** src/rules/blocks/feat-readers.json: per store, per key, the count allowed there and the TRUE reason it
+ *  is not a held-feats walker (slot geometry, slot UI, storage, or D2). A top-level `$comment` is prose. */
+export interface FeatReaderAllowEntry {
+  count: number;
+  why: string;
+}
+
+/**
+ * Case D's guard (docs/overrides-redesign.md spec item 2, Building blocks item 9; plan
+ * work/tweaks-part-a-notes/tweaks-part-a-caseD-plan.md section 5). A feat given through Tweaks works like
+ * the same feat picked only while every reader of the feats a build holds asks src/rules/heldFeats.ts; a
+ * NEW walker of the raw slot map would quietly read picked feats alone again. Fails on:
+ *   - a place the allowlist does not list (route it through heldFeatSlots / heldFeatIds / featIdAtSlot, or
+ *     list it with a true reason);
+ *   - a count above the listed one (a new read hidden in an allowlisted place), or below it (the list is
+ *     stale — lower it, so it can never cover a new read later);
+ *   - an entry with an empty reason, a count that is not a whole number from 1, or a place that no longer
+ *     names the store at all (stale);
+ *   - an allowlist that is not `{ <store>: { <key>: { count, why } } }`.
+ * Pure: the script feeds it the scan of the real files, the test plants bad cases in memory.
+ */
+export function checkFeatReaders(hits: FeatReaderHit[], allow: unknown): BlocksCheckResult {
+  const errors: string[] = [];
+  const info: string[] = [];
+  const where = 'src/rules/blocks/feat-readers.json';
+  if (!isObj(allow)) {
+    errors.push(`${where}: missing or not an object — it lists, per raw feat store, the places allowed to name it`);
+    return { errors, info };
+  }
+  const sections = new Map<string, Record<string, unknown>>();
+  for (const [field, section] of Object.entries(allow)) {
+    if (field === '$comment') continue;
+    if (!isObj(section)) errors.push(`${where}: "${field}" must be an object of { "<file>#<symbol>": { "count", "why" } }`);
+    else sections.set(field, section);
+  }
+  const seen = new Set<string>();
+  const totals = new Map<string, { reads: number; places: number }>();
+  for (const h of hits) {
+    const t = totals.get(h.field) ?? { reads: 0, places: 0 };
+    t.reads += h.count;
+    t.places++;
+    totals.set(h.field, t);
+    const at = h.lines?.length ? ` (line${h.lines.length > 1 ? 's' : ''} ${h.lines.join(', ')})` : '';
+    const entry = sections.get(h.field)?.[h.key];
+    seen.add(`${h.field}\u0000${h.key}`);
+    if (entry === undefined) {
+      errors.push(
+        `${h.key}${at}: names "${h.field}" ${h.count}× — a reader of the feats a build holds must ask src/rules/heldFeats.ts (heldFeatSlots / heldFeatIds / featIdAtSlot) so a feat given through Tweaks works like a picked one (case D); if this is slot geometry, slot UI or storage, list it in ${where} under "${h.field}" with its true reason`,
+      );
+      continue;
+    }
+    if (!isObj(entry)) continue; // reported below
+    if (typeof entry.count === 'number' && Number.isInteger(entry.count) && entry.count >= 1) {
+      if (h.count > entry.count) errors.push(`${h.key}${at}: names "${h.field}" ${h.count}×, but ${where} allows ${entry.count} — a new read here must go through src/rules/heldFeats.ts (or be listed with its reason)`);
+      else if (h.count < entry.count) errors.push(`${where} "${h.field}" ${h.key}: lists ${entry.count}, the scan finds ${h.count} — lower the count, so the entry cannot cover a new read later`);
+    }
+  }
+  for (const [field, section] of sections) {
+    for (const [key, entry] of Object.entries(section)) {
+      const name = `${where} "${field}" ${key}`;
+      if (!isObj(entry)) {
+        errors.push(`${name}: must be { "count": <n>, "why": "<reason>" }`);
+        continue;
+      }
+      if (typeof entry.why !== 'string' || !entry.why.trim()) errors.push(`${name}: no reason ("why")`);
+      if (typeof entry.count !== 'number' || !Number.isInteger(entry.count) || entry.count < 1) errors.push(`${name}: "count" must be a whole number from 1`);
+      if (!seen.has(`${field}\u0000${key}`)) errors.push(`${name}: names "${field}" nowhere any more (stale) — remove the entry`);
+    }
+  }
+  for (const [field, t] of [...totals].sort((a, b) => a[0].localeCompare(b[0]))) {
+    info.push(`feat readers: "${field}" named ${t.reads}× in ${t.places} place(s) outside src/rules/heldFeats.ts (each checked against ${where})`);
+  }
   return { errors, info };
 }

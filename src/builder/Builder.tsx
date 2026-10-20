@@ -12,6 +12,7 @@ import {
   applyEditionFilter,
   collectChosenIds,
   dedicationBlock,
+  takenForDedicationRule,
   checkPrerequisites,
   forbiddenFeatReason,
   emptyBuild,
@@ -38,6 +39,8 @@ import { DOMAIN_SPELLS } from '../rules/domains';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet, mythicCallingRecords, sourceIdToken, sourceRowLabelsFor, storedSources } from '../rules/sources';
 import { eligibleFeatsForSlot, findHiddenFeatMatches, fitsSlot, moveTargetFor, swapSlotKeys } from '../rules/featSlots';
+// Case D (docs/overrides-redesign.md spec item 2): a feat given through Tweaks is held like a picked one.
+import { heldFeatIds, heldFeatSlots } from '../rules/heldFeats';
 import { classFeatureDescription } from '../rules/featureText';
 import {
   resolveBackground,
@@ -518,9 +521,10 @@ export function Builder({
   // A subclass can override the slot progression (cleric Battle Creed = the reduced two-rank table).
   const castProgression = subOption?.slotProgression ?? casting?.progression;
   // Caster-archetype fallback: when the class isn't a slot caster, a caster Dedication
-  // gives a prepared archetype pool (reusing build.cantrips / build.spells).
+  // gives a prepared archetype pool (reusing build.cantrips / build.spells). A dedication given through
+  // Tweaks counts too (case D): buildCharacter builds its pool, so the Spells page must draw it.
   const archCaster = !casting
-    ? activeCasterArchetype(Object.values(build.featPicks).filter((v): v is string => !!v))
+    ? activeCasterArchetype(heldFeatIds(build))
     : null;
   const showSpells = !!casting || !!archCaster;
   // A flexible spellcaster's class entry is a COLLECTION — a repertoire over the capped class
@@ -607,14 +611,14 @@ export function Builder({
    * left the picker at one. Sharing the function is the point: a second copy is what drifted.
    *
    * Level-scoped, unlike the old body: a feat taken at 8 must not widen the pick cap the level-4
-   * page draws. `override:` slots belong to the level being edited (build.ts:3886 reads them the
-   * same way). */
+   * page draws. A feat given through Tweaks counts from its start level, gated at the page's level L
+   * (case D, spec item 9 — `heldFeatSlots(build, L)` drops a given feat that starts later). */
   const archExtraKnownAt = (base: Record<number, number>, L: number = build.level): Record<number, number> => {
     if (!archCaster) return base;
     const extra: Record<number, number> = { ...(archCaster.config.extraKnown ?? {}) };
-    const ids = Object.entries(build.featPicks)
-      .filter(([slotKey]) => (slotKey.startsWith('override:') ? L : Number(slotKey.split(':')[0])) <= L)
-      .map(([, id]) => id);
+    const ids = heldFeatSlots(build, L)
+      .filter((e) => e.level <= L)
+      .map((e) => e.featId);
     const out: Record<number, number> = { ...base };
     foldArchSpellSlotBonuses(out, extra, ids, archetypeEntryIds(archCaster), content);
     for (const [rankStr, n] of Object.entries(extra)) {
@@ -658,7 +662,8 @@ export function Builder({
   //
   // ⚠ buildCharacter's own function now (`archetypeCantripCounts`): the copy here added Cantrip Expansion's
   // untargeted bonus while the build's slice did not, so the third and fourth picks were drawn nowhere.
-  const archCounts = !casting && archCaster ? archetypeCantripCounts(archCaster, build, content, Object.values(build.featPicks)) : undefined;
+  // The held feats, given ones included (case D) — buildCharacter passes its built feat list, which holds them.
+  const archCounts = !casting && archCaster ? archetypeCantripCounts(archCaster, build, content, heldFeatIds(build)) : undefined;
   const cantripCap = casting
     ? Math.max(0, cantripsKnown(build.classId) + cantripBonus + archMods.cantripDelta)
     : archCounts?.prepared ?? 0;
@@ -1390,7 +1395,8 @@ export function Builder({
         for (const s of content.deities[build.deityId]?.spells ?? []) if (content.spells[s]) out.add(s);
       if (add.traditions) opened.push({ traditions: add.traditions, ...(add.traits?.length ? { traits: add.traits } : {}) });
     };
-    for (const featId of Object.values(build.featPicks ?? {})) {
+    // Every held feat, a feat given through Tweaks included (case D) — its widening reaches the sheet too.
+    for (const featId of heldFeatIds(build)) {
       for (const add of widenings(featId ? content.feats[featId]?.spellListAdditions : undefined)) {
         // Only the plain list-widening lane belongs in this picker — 'repertoire' and 'font' grants
         // are applied by buildCharacter and are not the player's to choose here.
@@ -1424,8 +1430,9 @@ export function Builder({
   };
   const listAdditions = useMemo(
     () => collectListAdditions(`${build.classId}-casting`, build.classId, build.subclassId),
+    // overrides + options: heldFeatIds reads the given feats and the Tweaks switch (case D).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [build.featPicks, build.deityId, build.classId, build.subclassId, build.level, content],
+    [build.featPicks, build.overrides, build.options, build.deityId, build.classId, build.subclassId, build.level, content],
   );
   /**
    * A class archetype that REPLACES the list ("Replace your spell list with the elemental spell
@@ -1539,7 +1546,7 @@ export function Builder({
   const listAdditions2 = useMemo(
     () => (secondEntryId ? collectListAdditions(secondEntryId, build.classId2 ?? null, build.subclassId2) : new Set<string>()),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [secondEntryId, build.featPicks, build.deityId, build.classId2, build.subclassId2, build.level, content],
+    [secondEntryId, build.featPicks, build.overrides, build.options, build.deityId, build.classId2, build.subclassId2, build.level, content],
   );
   const eligibleSpells2 = (rank: number) =>
     poolSpellsFor(rank, tradition2, listAdditions2, !!listReplacement && !!secondEntryId && listReplacement.entryId === secondEntryId, false);
@@ -1597,8 +1604,8 @@ export function Builder({
     if (!archCaster) return 1;
     const starts = archCaster.config.castsFromBasic && archCaster.config.basicId ? archCaster.config.basicId : archCaster.dedicationId;
     let best = Infinity;
-    for (const [slotKey, id] of Object.entries(build.featPicks)) {
-      const L = Number(slotKey.split(':')[0]);
+    // A dedication given through Tweaks starts at its own start level (case D: a given taking's `level`).
+    for (const { featId: id, level: L } of heldFeatSlots(build)) {
       if (id === starts && Number.isFinite(L) && L >= 1) best = Math.min(best, L);
     }
     return Number.isFinite(best) ? Math.min(best, build.level) : 1;
@@ -2493,7 +2500,8 @@ export function Builder({
               const pending = pendingCount(lvl);
               // `build` last: the level list is archetype-aware only when the resolver can see the
               // dedication that carries the class archetype (War Mage: no Arcane Bond row, a War Magic one).
-              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[], build);
+              // Taken feats: the held ones, given included — the same list every levelGrants caller passes (case D, D4).
+              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, heldFeatIds(build), build);
               // Package M round 2 (Dual Class): the class each automatic row belongs to, as levelGrants
               // carries it (shared.tsx levelRowClasses) — its text and its card are read for it.
               const rowClasses = levelRowClasses(g.features);
@@ -3805,10 +3813,10 @@ export function Builder({
         const pickerKey = slotKey(picker.level, picker.category, picker.idx);
         /* Carry the SLOT with each feat, not just its id. A feat listed by an archetype counts toward
          * that archetype's gate only when it was taken in an archetype slot — see `countsForArchetype`.
-         * Dropping the key here is what let a cleric's own Domain Initiate count as a Soul Warden feat. */
-        const takenForRule = Object.entries(build.featPicks)
-          .filter(([k, v]) => v && k !== pickerKey)
-          .map(([k, v]) => ({ id: v as string, category: k.split(':')[1] }));
+         * Dropping the key here is what let a cleric's own Domain Initiate count as a Soul Warden feat.
+         * build.ts's own list (case D): the other slot picks, plus the feats given through Tweaks held at
+         * this slot's level (spec item 9) — never a pick-a-feat answer (the Spell Trickster rule). */
+        const takenForRule = takenForDedicationRule(build, pickerKey, picker.level);
         const dedBlockedWhy = (f: Feat) => dedicationBlock(takenForRule, f, content);
         const archHidden = isClassSlot && !showArch;
         const feats = eligibleFor(picker)

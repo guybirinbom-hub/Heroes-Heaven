@@ -1,0 +1,223 @@
+{
+  "$comment": "Case D (docs/overrides-redesign.md spec item 2, Building blocks item 9): the places still allowed to name the raw feat stores. Every reader of the feats a build HOLDS asks src/rules/heldFeats.ts (heldFeatSlots / heldFeatIds / featIdAtSlot), so a feat given through Tweaks works like the same feat picked. Keys: <file>#<enclosing symbol chain>, count = reads there (scripts/lib/feat-readers.mjs). Checked by checkFeatReaders (src/rules/blocks/check.ts) in scripts/blocks-check.mjs: an unlisted key, a count above or below the listed one, an empty why or a stale entry fails. A new walker routes through heldFeats.ts; only slot geometry, slot UI, storage and D2 (a given feat's own question has no Builder control yet) belong here.",
+  "featPicks": {
+    "src/builder/Builder.tsx#Builder": {
+      "count": 2,
+      "why": "Slot card UI. (1) The 'choose a different spell each time' set walks the OTHER slot takings of the feat for their per-slot effect answers: a given feat's own spell question has no Builder control yet (D2, part B's Give a feat editor renders it). (2) 'Move to slot' re-checks on the live build that the slot still holds the feat before swapping slot keys: a given feat holds no slot to move."
+    },
+    "src/builder/Builder.tsx#Builder>isCurrent": {
+      "count": 1,
+      "why": "The feat picker marks the feat sitting in THIS slot now: the slot's own pick."
+    },
+    "src/builder/Builder.tsx#Builder>listAdditions": {
+      "count": 1,
+      "why": "useMemo dependency only: the memo body reads heldFeatIds(build), so it re-runs when a slot pick changes; build.overrides and build.options are listed beside it for the given feats."
+    },
+    "src/builder/Builder.tsx#Builder>listAdditions2": {
+      "count": 1,
+      "why": "useMemo dependency only (the second class's pool): the memo body reads heldFeatIds(build); build.overrides and build.options are listed beside it."
+    },
+    "src/builder/Builder.tsx#Builder>noOpWhy": {
+      "count": 1,
+      "why": "The picker never greys the feat already in THIS slot (featPrereqChar includes that take): the slot's own pick."
+    },
+    "src/builder/Builder.tsx#Builder>noSlot": {
+      "count": 1,
+      "why": "Slot geometry: picks at this level under a key no drawn slot produces (stranded by an old version or a slot change) are listed to move or remove. A given feat has no slot key to strand."
+    },
+    "src/builder/Builder.tsx#Builder>picked": {
+      "count": 1,
+      "why": "The slot card draws its own pick (featPicks of a drawn slot key)."
+    },
+    "src/builder/Builder.tsx#Builder>slotPickedIds": {
+      "count": 1,
+      "why": "The grants of a SLOT-picked feat mount their questions under that slot's card, so they are left out of the generic granted-asks lane. A given feat has no card, so its grants stay in that lane and still get a picker there."
+    },
+    "src/builder/Builder.tsx#hasChoicesAtLevel>feat": {
+      "count": 1,
+      "why": "Slot choices only: did the player pick a feat on this level's page (lowering the level past it asks first). A given feat is not a choice made on a level page."
+    },
+    "src/builder/shared.tsx#OriginPickers>classChangeLoses": {
+      "count": 1,
+      "why": "The class-change confirm names what the change clears: changeClass empties the slot picks (featPicks: {}), never overrides.addedFeats."
+    },
+    "src/builder/shared.tsx#OriginPickers>requestAncestryChange>feats": {
+      "count": 1,
+      "why": "The ancestry-change confirm counts the ancestry SLOT picks that changeAncestry drops; given feats are not dropped."
+    },
+    "src/builder/shared.tsx#OverridesCard>unallow>slot": {
+      "count": 1,
+      "why": "Un-allowing a 'Take anyway' feat empties the SLOT that holds it (setFeat(slot, null)): the allow ledger is about slot picks."
+    },
+    "src/builder/shared.tsx#subclassSwapDrops": {
+      "count": 6,
+      "why": "Slot writer: Battle Creed puts Battle Harbinger Dedication in the level-2 class SLOT, and a later subclass change takes it out. It reads and rewrites that one slot."
+    },
+    "src/builder/shared.tsx#subclassSwapDrops>featPicks": {
+      "count": 1,
+      "why": "Slot writer (the same Battle Creed slot): the map it starts from before rewriting the level-2 slot."
+    },
+    "src/builder/shared.tsx#useBuilderActions>changeAncestry": {
+      "count": 1,
+      "why": "Slot writer: an ancestry change writes back the slot picks without the ancestry slots."
+    },
+    "src/builder/shared.tsx#useBuilderActions>changeAncestry>featPicks": {
+      "count": 1,
+      "why": "Slot writer: drops the ancestry slot picks from the stored map."
+    },
+    "src/builder/shared.tsx#useBuilderActions>changeSubclass": {
+      "count": 3,
+      "why": "Slot writer: stores subclassSwapDrops' new featPicks map (the Battle Creed slot)."
+    },
+    "src/builder/shared.tsx#useBuilderActions>setFeat": {
+      "count": 1,
+      "why": "THE slot writer: sets or clears one slot's pick."
+    },
+    "src/builder/shared.tsx#useBuilderActions>setFeat>featPicks": {
+      "count": 1,
+      "why": "THE slot writer: copies the stored map to change one slot."
+    },
+    "src/builder/shared.tsx#withoutPicks>gone": {
+      "count": 1,
+      "why": "A confirm's yes clears the answers of the SLOT picks it named, only while each slot still holds the feat it named."
+    },
+    "src/rules/build.ts#answersInOtherTakes": {
+      "count": 1,
+      "why": "Compares a slot taking's answers with the feat's OTHER slot takings. A given feat is deduped against slot takes (one taking per feat), so it has no other take to look across."
+    },
+    "src/rules/build.ts#buildCharacter": {
+      "count": 1,
+      "why": "The slot push: slot takings enter character.feats first, in featPicks order (slot authority). The given feats are pushed after them from heldFeatSlots(build, level, { via: ['override'] })."
+    },
+    "src/rules/build.ts#buildCharacter>grantedAnswerKeys>order": {
+      "count": 1,
+      "why": "The order of the stored slot keys, to cap a pick-granted feat's takings in the pick walk's own order; an override: key sorts last, as heldFeatSlots lists given feats last."
+    },
+    "src/rules/build.ts#collectChosenIds": {
+      "count": 1,
+      "why": "Storage: lists every id the stored build names (the raw maps) for the content check. Not a held-feats question."
+    },
+    "src/rules/build.ts#deriveBuildFromCharacter": {
+      "count": 1,
+      "why": "Storage: the reverse build WRITES featPicks from a built character."
+    },
+    "src/rules/build.ts#heldPickGranters": {
+      "count": 3,
+      "why": "Slot authority of the pick-a-feat walk: an answer keyed by a slot reads that slot's feat, and a bare-id answer lists the slots that fall back to it. The given-feat side of the same walk reads heldFeatSlots (overrideHolds)."
+    },
+    "src/rules/build.ts#heldPickGranters>slotKept>holding": {
+      "count": 1,
+      "why": "Slot authority: which SLOT takings of a feat the pick walk keeps (featPicks order, maxTakes cap). A given feat is the override: branch."
+    },
+    "src/rules/build.ts#heldPickGranters>slotKept>id": {
+      "count": 1,
+      "why": "Slot authority: the feat a slot key holds, for the slot branch of the pick walk."
+    },
+    "src/rules/build.ts#levelChoices": {
+      "count": 2,
+      "why": "(1) Empty-slot count: a drawn slot with no pick owes a feat (slot geometry; a given feat fills no slot). (2) The follow-up questions loop: D2, a given feat's own question has no Builder control yet (part B's Give a feat editor renders it), so it stays slot-only."
+    },
+    "src/rules/build.ts#levelChoices>heldNow": {
+      "count": 1,
+      "why": "The owed-cantrip loop: a non-winning caster dedication asks for its cantrips on its SLOT card (D2). The pool winner beside it reads heldFeatSlots."
+    },
+    "src/rules/build.ts#removeChosenIds>next": {
+      "count": 2,
+      "why": "Storage: rewrites the stored featPicks map without the removed ids."
+    },
+    "src/rules/build.ts#sanctificationsOffDeity": {
+      "count": 1,
+      "why": "D2: a given feat's sanctification question has no Builder control yet; the slot loop keeps its parseInt reading of the slot key's level."
+    },
+    "src/rules/featSlots.ts#SLOT_KEYED": {
+      "count": 1,
+      "why": "The names of the stored maps keyed by slot, which a slot move rekeys. Reads no character."
+    },
+    "src/rules/featSlots.ts#fitsSlot": {
+      "count": 1,
+      "why": "Slot geometry: would the slot's picker take the feat moved from one slot to another. A given feat has no slot."
+    },
+    "src/rules/featSlots.ts#fitsSlot>featPicks": {
+      "count": 1,
+      "why": "Slot geometry: the stored map with the feat moved to the target slot."
+    },
+    "src/rules/featSlots.ts#fitsSlot>id": {
+      "count": 1,
+      "why": "Slot geometry: the feat in the slot being moved."
+    },
+    "src/rules/featSlots.ts#moveTargetFor": {
+      "count": 1,
+      "why": "Slot geometry: the first EMPTY slot of the kind that takes a stranded pick."
+    },
+    "src/rules/featSlots.ts#picksLosingSlot>drawn": {
+      "count": 1,
+      "why": "Slot geometry: which slot picks a drawn slot held before a rules change."
+    },
+    "src/rules/featSlots.ts#picksLosingSlot>kept": {
+      "count": 1,
+      "why": "Slot geometry: the slot picks still kept after a rules change."
+    },
+    "src/rules/featSlots.ts#rekeyFeatSlots": {
+      "count": 1,
+      "why": "Slot geometry: a pick whose slot key no longer holds a feat is stale (slot rekey)."
+    },
+    "src/rules/featSlots.ts#rekeyFeatSlots>refused": {
+      "count": 1,
+      "why": "Slot geometry: a slot pick the target slot's own picker would refuse."
+    }
+  },
+  "addedFeats": {
+    "src/builder/shared.tsx#OverridesCard": {
+      "count": 3,
+      "why": "Storage UI: the Overrides editor's 'Grant a feat' card counts and lists the stored given-feat entries as chips."
+    },
+    "src/builder/shared.tsx#OverridesCard>grant": {
+      "count": 2,
+      "why": "Storage UI: the Overrides editor appends a given feat to the stored list (skipping one already there)."
+    },
+    "src/builder/shared.tsx#OverridesCard>grantOptions": {
+      "count": 1,
+      "why": "Storage UI: the grant picker leaves out the feats the stored list already holds."
+    },
+    "src/builder/shared.tsx#OverridesCard>ungrantFeat": {
+      "count": 1,
+      "why": "Storage UI: the Overrides editor removes a given feat from the stored list."
+    },
+    "src/rules/blocks/check.ts#LEGACY_KEYS": {
+      "count": 1,
+      "why": "The names of today's 10 Overrides keys, checked against the registry's storage.key. Reads no character."
+    },
+    "src/rules/blocks/registry.ts#BLOCK_KINDS": {
+      "count": 1,
+      "why": "grant.feat's storage.key names the stored key it wraps; stored.ts is what reads it."
+    },
+    "src/rules/blocks/stored.ts#activeGivenFeats": {
+      "count": 5,
+      "why": "THE stored reader of given feats: the active ones, cached per overrides object (re-read when addedFeats or meta changes)."
+    },
+    "src/rules/blocks/stored.ts#readGivenFeats": {
+      "count": 1,
+      "why": "THE stored reader: feeds the stored list to readLegacyBlocks for activeGivenFeats."
+    },
+    "src/rules/blocks/stored.ts#readLegacyBlocks": {
+      "count": 1,
+      "why": "THE stored reader: today's addedFeats entries read as grant.feat blocks."
+    },
+    "src/rules/build.ts#collectChosenIds": {
+      "count": 1,
+      "why": "Storage: lists every id the stored build names, given feats included, for the content check."
+    },
+    "src/rules/build.ts#deriveBuildFromCharacter>addedFeatIds": {
+      "count": 1,
+      "why": "Storage: the reverse build skips feats the character's stored overrides already give, so a given feat never fills a slot on reopen."
+    },
+    "src/rules/build.ts#deriveBuildFromCharacter>existing": {
+      "count": 1,
+      "why": "Storage: the reverse build's overflow WRITES feats with no slot into the stored list."
+    },
+    "src/rules/build.ts#removeChosenIds": {
+      "count": 1,
+      "why": "Storage: rewrites the stored list without the removed ids."
+    }
+  }
+}

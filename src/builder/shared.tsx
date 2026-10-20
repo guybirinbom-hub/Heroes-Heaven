@@ -109,6 +109,8 @@ import { DraftNumberInput } from './DraftNumberInput';
 import type { DescNode } from '../sheet/descref';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 import { picksLosingSlot, rekeyFeatSlots, SLOT_KEYED } from '../rules/featSlots';
+// Case D (docs/overrides-redesign.md spec item 2): a feat given through Tweaks is held like a picked one.
+import { featIdAtSlot, heldFeatIds } from '../rules/heldFeats';
 import { bookGrantChips } from '../rules/spellOptions';
 
 /** "1st", "2nd", "3rd", "4th" … — a spell rank in player text. */
@@ -469,9 +471,9 @@ export function deitySwapDrops(
     // A multi-pick choice fans its answers out to `<slot>#<n>` (choiceKeys), so the SLOT has to
     // be recovered before featPicks can name the feat. Read raw, the four Splinter Faith
     // answers matched no featPick at all and changing deity validated nothing on the one feat
-    // with the widest pool.
+    // with the widest pool. An `override:<id>` slot names a feat given through Tweaks (case D).
     const slotKey = key.replace(/#\d+$/, '');
-    const featId = b.featPicks[slotKey];
+    const featId = featIdAtSlot(b, slotKey);
     const def = featId ? content.feats[featId]?.choice : undefined;
     // A domain choice may draw from a WIDER pool than the deity's own list (Splinter Faith
     // adds the alternate domains), so validate against the pool that choice actually offers.
@@ -4637,10 +4639,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           your own folio"*. Gating on the CLASS alone left a dedicated character with the feature, the
           banner and no way to put a single tactic in the folio. The capacity and the tier come from the
           same two helpers the engine uses, so the picker cannot offer a tactic the sheet then drops. */}
-      {(ownsClass('commander') || Object.values(build.featPicks ?? {}).includes('commander-dedication')) &&
+      {/* The held feats, a dedication given through Tweaks included (case D) — buildCharacter's folio reads
+          its built feat list, which holds them. */}
+      {(ownsClass('commander') || heldFeatIds(build).includes('commander-dedication')) &&
         (() => {
           const viaDedication = !ownsClass('commander');
-          const featIds = Object.values(build.featPicks ?? {}).filter(Boolean) as string[];
+          const featIds = heldFeatIds(build);
           const options = commanderTacticOptions(build.level, content, commanderTierFor(build.level, featIds, viaDedication));
           const max = commanderFolioCapacity(build.level, featIds, viaDedication, content);
           const selected = build.commanderTactics ?? [];
@@ -4675,7 +4679,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       {/* …and for the ARCHETYPE runesmith, whose dedication grants its own smaller repertoire ("a
           runic repertoire with two 1st-level runes of your choice"). Gating this picker on the CLASS
           alone left a dedicated character holding a repertoire with no way to put anything in it. */}
-      {(ownsClass('runesmith') || Object.values(build.featPicks ?? {}).includes('runesmith-dedication')) &&
+      {/* LOCKSTEP with build.ts levelChoices `dedicated` (both read heldFeatIds — a given dedication too, case D). */}
+      {(ownsClass('runesmith') || heldFeatIds(build).includes('runesmith-dedication')) &&
         (() => {
           const viaDedication = !ownsClass('runesmith');
           const options = runesmithRuneOptions(build.level, content);
@@ -4713,7 +4718,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           no control at all and the feat delivered nothing. Their innovation is Inventor Dedication's
           own answer, whose values are the same subclass ids `innovationType` already maps. */}
       {(() => {
-          const viaDedication = !ownsClass('inventor') && Object.values(build.featPicks ?? {}).includes('inventor-dedication');
+          // The held feats, given ones included (case D) — buildCharacter reads its built feat list.
+          const held = heldFeatIds(build);
+          const viaDedication = !ownsClass('inventor') && held.includes('inventor-dedication');
           const type = innovationType(
             ownsClass('inventor') ? subclassOf('inventor') : viaDedication ? choiceFlagAnswer('innovation', build, content) : null,
           );
@@ -4753,7 +4760,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               {tiers.map((t) => {
                 // The archetype buys ONE modification and only through Basic Modification, which is a
                 // BASIC (initial-tier) one — so the two later tiers stay closed however high the level.
-                if (viaDedication && (t.key !== 'initial' || !Object.values(build.featPicks ?? {}).includes('basic-modification'))) return null;
+                if (viaDedication && (t.key !== 'initial' || !held.includes('basic-modification'))) return null;
                 if (build.level < INVENTOR_TIER_LEVEL[t.key]) return null;
                 /* batch 036: hyper-boosters#prerequisite — the other tiers' picks feed the printed
                  * *"You must have the speed boosters modification to select this modification"* gate,
@@ -5007,7 +5014,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       {/* Living Rune: "Your body can hold a single property rune." A rune with no item to sit on —
           nothing etches it and every reader of etched runes walks the inventory — so it needs its own
           choice here. The offered list applies the feat's own two exclusions. */}
-      {Object.values(build.featPicks).includes('living-rune') &&
+      {/* LOCKSTEP with buildCharacter's bodyRune (both read heldFeatIds — a given Living Rune too, case D). */}
+      {heldFeatIds(build).includes('living-rune') &&
         (() => {
           const opts = Object.values(content.runes ?? {})
             .filter((r) => r.slot === 'armor' && r.kind === 'property' && !bodyRuneExcluded(r, content))
@@ -5053,7 +5061,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         })()}
       {/* Summoner Dedication (any class): pick the eidolon type — it grants the eidolon AND sets the
           archetype spell tradition. */}
-      {Object.values(build.featPicks).includes('summoner-dedication') &&
+      {heldFeatIds(build).includes('summoner-dedication') &&
         (() => {
           const opts = content.classes.summoner?.subclass?.options ?? [];
           if (!opts.length) return null;
@@ -5073,7 +5081,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           tradition / key / cantrips here; its leveled spells are prepared on the Spells tab. */}
       {cls?.spellcasting &&
         (() => {
-          const arch = activeCasterArchetype(Object.values(build.featPicks).filter((v): v is string => !!v));
+          // The held feats, a dedication given through Tweaks included (case D) — in step with the
+          // Builder's level pages (Builder.tsx archCaster) and build.ts levelChoices' pool winner.
+          const takenIds = heldFeatIds(build);
+          const arch = activeCasterArchetype(takenIds);
           if (!arch) return null;
           const as = build.archetypeSpells ?? { cantrips: [], spells: {}, tradition: null, keyAbility: null };
           // buildCharacter's own answer (a Hedge Mage's skill, a Bloodrager's bloodline included) — the
@@ -5088,7 +5099,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
            * cap the picker enforces and the cap the sheet keeps cannot disagree. The list union
            * matters because the six unique psi cantrips ship `traditions: []` and the tradition
            * filter alone would never offer them. */
-          const takenIds = Object.values(build.featPicks).filter((v): v is string => !!v);
           const archEntryIds = archetypeEntryIds(arch);
           /* What a RECORD wrote into the dedication's book (a lesson's familiar spell, Expanded Necromancy's
            * dirge spells, Peer Past the Hedge's detect magic) — the level pages' locked chips, here too, off

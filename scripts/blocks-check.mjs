@@ -1,6 +1,8 @@
 /*
- * BLOCKS guard — the building-block catalog, the block registry and the target registry agree, and
- * (item 10) the moved book fields are read only in src/rules/blocks/book.ts.
+ * BLOCKS guard — the building-block catalog, the block registry and the target registry agree,
+ * (item 10) the moved book fields are read only in src/rules/blocks/book.ts, and (item 9, case D) the raw
+ * feat stores are named only where src/rules/blocks/feat-readers.json gives a reason
+ * (scripts/lib/feat-readers.mjs scans; every other reader asks src/rules/heldFeats.ts).
  *
  * docs/overrides-redesign.md, "Building blocks" items 1, 2, 3, 11 and 12, and decision 24 ("a block that
  * is neither in Tweaks nor on that list makes the check fail"). The rules themselves live in
@@ -24,7 +26,9 @@ const read = (p) => (existsSync(join(ROOT, p)) ? readFileSync(join(ROOT, p), 'ut
 
 const registry = await import(src('src/rules/blocks/registry.ts'));
 const targets = await import(src('src/rules/blocks/targets.ts'));
-const { checkBlocks, checkBookFieldReaders, BOOK_FIELD_ALLOW } = await import(src('src/rules/blocks/check.ts'));
+const { checkBlocks, checkBookFieldReaders, checkFeatReaders, BOOK_FIELD_ALLOW } = await import(src('src/rules/blocks/check.ts'));
+// The scanner is tooling (it lives beside this script); the tree it scans and the allowlist are ROOT's.
+const { readAllow, scanFeatReaders, srcFiles: featSrcFiles, FEAT_READERS_ALLOW } = await import('./lib/feat-readers.mjs');
 
 const blockDir = 'src/rules/blocks';
 // Every code file under the folder, subfolders included (item 12's import scan must see them all).
@@ -65,6 +69,20 @@ const bookFields = [...new Set(registry.BLOCK_KINDS.flatMap((k) => k.bookFields 
 const readers = checkBookFieldReaders({ files: srcFiles, bookFields, allow: BOOK_FIELD_ALLOW });
 errors.push(...readers.errors);
 info.push(...readers.info);
+
+/* Item 9 / case D: every reader of the feats a build holds asks src/rules/heldFeats.ts; the places that
+ * still name the raw stores (`featPicks`, `addedFeats`) are only the ones the allowlist gives a reason for. */
+let featAllow;
+try {
+  featAllow = readAllow(ROOT);
+} catch (e) {
+  errors.push(`${FEAT_READERS_ALLOW} is not valid JSON — ${e.message}`);
+}
+if (featAllow !== undefined) {
+  const feats = checkFeatReaders(scanFeatReaders(featSrcFiles(ROOT)), featAllow);
+  errors.push(...feats.errors);
+  info.push(...feats.info);
+}
 
 for (const line of info) console.log(`blocks-check: ${line}`);
 if (errors.length) {

@@ -16,7 +16,7 @@
  * Reading is never an edit (checker C4): nothing here writes, and part A never writes `overrides.v`.
  */
 import { loreKey } from '../loreKey';
-import type { BuildOverrides, TweakMeta } from '../types';
+import type { BuildOverrides, CharacterOptions, FeatCategory, TweakMeta } from '../types';
 import { PROFICIENCY_RANKS } from '../types';
 import { blockKind, type BlockInstance } from './registry';
 import { targetDefFor } from './targets';
@@ -260,4 +260,68 @@ export function readLegacyBlocks(ov: BuildOverrides | undefined): BlockInstance[
 export function readTweaks(ov: BuildOverrides | undefined): { instances: BlockInstance[]; foreign: ForeignBlock[] } {
   const { known, foreign } = parseStoredBlocks(ov?.blocks);
   return { instances: [...readLegacyBlocks(ov), ...known], foreign };
+}
+
+/* ─────────────────────────────── the master switch, and the feats given ─────────────────────────────── */
+
+/**
+ * The Tweaks master switch, as spec item 2 reads it — the ONE copy (decision D7): the number and rank
+ * blocks (active.ts) and the given feats (`activeGivenFeats`) all ask here.
+ *
+ * "ON by read": a character whose `overrides.v` is absent (or not a number ≥ 2) has never been saved by a
+ * Tweaks-aware app, so its changes were always live — it reads as ON. From `overrides.v >= 2` (written by
+ * part B's first real Builder save, together with the switch) the stored `options.overridesEnabled` is
+ * obeyed. No overrides at all: nothing to switch on.
+ */
+export function tweaksSwitchOn(h: { overrides?: BuildOverrides; options?: CharacterOptions }): boolean {
+  const ov = h.overrides;
+  if (!ov) return false;
+  const v: unknown = ov.v;
+  if (typeof v === 'number' && v >= 2) return h.options?.overridesEnabled === true;
+  return true;
+}
+
+/** One feat a character is GIVEN through Tweaks (`overrides.addedFeats`), as the build reads it. */
+export interface GivenFeat {
+  featId: string;
+  /** The level it is held from: the stored level (1 when it is not a number), raised to its start level
+   *  (`meta.from`) when that is later — decision D6. */
+  level: number;
+  category?: FeatCategory;
+  /** Its instance key, `addedFeats:<featId>@<level>[~n]` — where its reason / on-off / start level live. */
+  key: string;
+}
+
+/** Read once per `overrides` object, and again only when its `addedFeats` or `meta` is a new value (every
+ *  edit writes a new list / map), so the walkers that ask per feat slot never pay for a re-read. */
+const GIVEN = new WeakMap<object, { addedFeats: unknown; meta: unknown; list: readonly GivenFeat[] }>();
+
+function readGivenFeats(ov: BuildOverrides): GivenFeat[] {
+  const out: GivenFeat[] = [];
+  // The one reader of the stored key (`readLegacyBlocks`), fed only the two fields a given feat reads.
+  for (const b of readLegacyBlocks({ addedFeats: ov.addedFeats, meta: ov.meta })) {
+    if (b.kind !== 'grant.feat' || !b.on || b.broken || typeof b.record !== 'string' || !b.record) continue;
+    const stored = Number(b.params?.level);
+    const level = Math.max(Number.isFinite(stored) ? stored : 1, b.gate?.startLevel ?? 1);
+    const category = b.params?.category as FeatCategory | undefined;
+    out.push({ featId: b.record, level, ...(category ? { category } : {}), key: b.key });
+  }
+  return out;
+}
+
+/**
+ * The feats given through Tweaks that are ACTIVE: on (not paused), not broken (a feat named), in
+ * `addedFeats` order — and none at all while the master switch is off. Level, content and removal are
+ * the caller's questions (src/rules/heldFeats.ts asks them for every walker). Read-only: never edit the
+ * list returned, it is shared.
+ */
+export function activeGivenFeats(ov: BuildOverrides | undefined, options?: CharacterOptions): readonly GivenFeat[] {
+  if (!ov || !Array.isArray(ov.addedFeats) || !ov.addedFeats.length) return [];
+  if (!tweaksSwitchOn({ overrides: ov, options })) return [];
+  let hit = GIVEN.get(ov);
+  if (!hit || hit.addedFeats !== ov.addedFeats || hit.meta !== ov.meta) {
+    hit = { addedFeats: ov.addedFeats, meta: ov.meta, list: readGivenFeats(ov) };
+    GIVEN.set(ov, hit);
+  }
+  return hit.list;
 }

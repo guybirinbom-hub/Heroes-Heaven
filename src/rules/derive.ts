@@ -73,6 +73,7 @@ import { armorSpecEffect, armorSpecValue } from './armorSpec';
 import { modeModifiersFor, modeNumberBonus, modeTypedMods, poolTypedMods, type ModeTarget, type TypedMod } from './modes';
 import { resolveTerms, takenByTerm, termsTotal, type Term, type TermPart } from './blocks/terms';
 import { numberTweakTerms } from './blocks/active';
+import { heldFeatSlots, type HeldInput } from './heldFeats';
 import { blockNumber, bookBlocksOf, clauseNumberBlocks, growingValue, itemChoiceBlocks, paramsOf, standingNumberBlocks, type BookCollection } from './blocks/book';
 import type { BlockInstance, BlockValue } from './blocks/registry';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
@@ -1706,6 +1707,13 @@ export function deityDomainsOf(
   return { domains: deity?.domains ?? [], alternateDomains: deity?.alternateDomains ?? [] };
 }
 
+/** What `splinterDomainsOf` reads off a build: the held feats (src/rules/heldFeats.ts — slot picks and the
+ *  feats given through Tweaks), their answers and the deity. */
+export type DomainBuildInput = HeldInput & {
+  featChoices?: Record<string, string | null | undefined>;
+  deityId?: string | null;
+};
+
 /**
  * The domain replacement a BUILD's own answers imply.
  *
@@ -1713,15 +1721,9 @@ export function deityDomainsOf(
  * every keystroke and cannot each re-run buildCharacter. Returns null when nothing the character has
  * replaces its deity's domains.
  */
-export function splinterDomainsOf(
-  build: {
-    featPicks?: Record<string, string | null>;
-    featChoices?: Record<string, string | null | undefined>;
-    deityId?: string | null;
-  },
-  db: ContentDatabase,
-): { domains: string[]; alternateDomains: string[]; from: string } | null {
-  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+export function splinterDomainsOf(build: DomainBuildInput, db: ContentDatabase): { domains: string[]; alternateDomains: string[]; from: string } | null {
+  // Slot picks first, then the feats given through Tweaks (case D) — answered under `override:<id>`.
+  for (const { slotKey, featId } of heldFeatSlots(build)) {
     const feat = featId ? db.feats[featId] : undefined;
     if (!feat?.modifiesGrant?.some((m) => m.from === 'deity' && m.deityDomainsFromChoice)) continue;
     // Answers live under the feat's SLOT key, fanned out per pick — the same shape `choiceKeys` in
@@ -1757,11 +1759,7 @@ export function splinterDomainsOf(
  * offering the four domains already chosen and nothing else.
  */
 export function domainPoolForChoice(
-  build: {
-    featPicks?: Record<string, string | null>;
-    featChoices?: Record<string, string | null | undefined>;
-    deityId?: string | null;
-  },
+  build: DomainBuildInput,
   db: ContentDatabase,
   featId: string | null | undefined,
   pool: FeatChoiceDef['domainPool'],

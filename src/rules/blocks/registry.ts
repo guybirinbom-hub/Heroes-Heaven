@@ -415,8 +415,11 @@ export const BLOCK_KINDS: BlockKindDef[] = [
     line: (b) => `Tweak: given${why(b)}`,
     editor: { place: 'main', menus: ['Give a feat'], parts: ['record', 'level', 'reason'], built: false },
     missing: 'show-broken',
-    applies: 'legacy',
-    test: REGISTRY_TEST,
+    // Case D (Building blocks item 9): read through blocks/stored.ts `activeGivenFeats` (on, not broken,
+    // start level max(level, meta.from), master switch) and src/rules/heldFeats.ts, which every rules
+    // walker that read `featPicks` alone now asks — a given feat works like the same feat picked.
+    applies: 'blocks',
+    test: 'test/given-feat-like-picked.test.ts',
   },
   {
     id: 'grant.language',

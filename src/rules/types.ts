@@ -6434,6 +6434,11 @@ export interface BuildOverrides {
    *  (`proficiencies:stealth`, `addedFeats:fleet@3`, `~2` only for a true repeat), so those keys keep
    *  their old shape for older apps. */
   meta?: Record<string, TweakMeta>;
+  /** The Tweaks marker (spec item 2): absent = never saved by a Tweaks-aware app, so the master switch
+   *  reads as ON; `>= 2` = the stored `options.overridesEnabled` is obeyed. READ ONLY in part A — only
+   *  part B's first real Builder save writes it, together with the switch (checker C4). The one reader
+   *  is `tweaksSwitchOn` (blocks/stored.ts). */
+  readonly v?: number;
 }
 
 /** What Tweaks adds to an entry of an old Overrides key (see `BuildOverrides.meta`). */

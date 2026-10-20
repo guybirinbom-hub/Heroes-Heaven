@@ -11,6 +11,7 @@
  * offered every element's impulses no matter which element they chose.
  */
 import type { BuildState } from './build';
+import { heldFeatSlots } from './heldFeats';
 
 /** The six element traits a kineticist gate can carry. An impulse naming none of them is elementless
  *  (Command Elemental, Counter Element) and works with whichever elements you have. */
@@ -71,13 +72,14 @@ export function kineticistElements(build: BuildState, level: number): string[] {
     .filter(([lvl, el]) => !!el && Number(lvl) <= level)
     .map(([, el]) => el);
   // Read off featPicks/featChoices rather than off a built character: both callers are BUILDER option
-  // filters, which run while a picker is open and must not pay for a full build.
+  // filters, which run while a picker is open and must not pay for a full build. A dedication GIVEN through
+  // Tweaks names its element the same way, under `override:<id>` (case D, src/rules/heldFeats.ts).
   const archetype: string[] = [];
-  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+  for (const { slotKey, featId, level: at } of heldFeatSlots(build, level)) {
     if (!featId || !ARCHETYPE_ELEMENT_FEATS.includes(featId)) continue;
     // A feat slotted ABOVE the character's current level is not yet theirs — the same filter `forks`
     // applies, and without it planning level 10 would widen a level-6 picker.
-    if (Number(slotKey.split(':')[0]) > level) continue;
+    if (at > level) continue;
     const answer = build.featChoices?.[slotKey];
     if (answer) archetype.push(answer);
   }

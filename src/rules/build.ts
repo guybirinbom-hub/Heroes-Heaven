@@ -75,6 +75,7 @@ import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
 import { apparitionSlots, bookCantripCapacity, bookNoun, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
 import { rankTweaks, scoreAddBlocks } from './blocks/active';
+import { featIdAtSlot, heldFeatIds, heldFeatSlots } from './heldFeats';
 import { backgroundTrainings, bookBlocksOf, growingValue, standingNumberBlocks } from './blocks/book';
 import { loreKey } from './loreKey';
 
@@ -513,7 +514,8 @@ export function emptyCustomBackground(): CustomBackground {
  * own choice surfaces, and duplicating the rule is how the two drift.
  */
 export function secondHeritageIdOf(build: BuildState, content: ContentDatabase): string | undefined {
-  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+  // Slot picks first, then the feats given through Tweaks (case D, src/rules/heldFeats.ts).
+  for (const { slotKey, featId } of heldFeatSlots(build)) {
     if (!content.feats[featId]?.secondHeritage) continue;
     const picked = build.featChoices?.[slotKey];
     if (picked && content.heritages[picked] && picked !== build.heritageId) return picked;
@@ -664,7 +666,8 @@ export function passionBackground(
   own: Background | undefined,
   featId = 'free-heart',
 ): Background | undefined {
-  const slot = Object.entries(build.featPicks ?? {}).find(([, v]) => v === featId)?.[0];
+  // The first taking that holds it: a slot, else the feat given through Tweaks (`override:<id>`).
+  const slot = heldFeatSlots(build).find((e) => e.featId === featId)?.slotKey;
   const id = slot ? build.featChoices?.[slot] : undefined;
   const bg = id ? content.backgrounds?.[id] : undefined;
   return bg && bg.id !== own?.id ? bg : undefined;
@@ -851,6 +854,21 @@ export function countsForArchetype(f: Feat, inArchetypeSlot?: boolean): boolean 
   return inArchetypeSlot === true || belongsToArchetype(f);
 }
 
+/**
+ * The feats `dedicationBlock` counts for the feat picker of slot `exceptKey`: every OTHER slot pick, with
+ * its slot category (`countsForArchetype` needs it), and every feat given through Tweaks (case D) — a
+ * given dedication starts its archetype and a given archetype feat counts toward its gate. A given feat has
+ * no slot, so it is handed over as a bare id: its own traits decide, as for any feat taken without slot
+ * context. Never a pick-a-feat answer (Spell Trickster: *"These feats don't count toward this total"*,
+ * featPickGrants.ts). `level` is the Builder's viewed level for the given feats (spec item 9); slot picks
+ * are never level-filtered here, as the picker never did.
+ */
+export function takenForDedicationRule(build: BuildState, exceptKey: string, level?: number): TakenFeat[] {
+  return heldFeatSlots(build, level)
+    .filter((e) => e.slotKey !== exceptKey)
+    .map((e): TakenFeat => (e.via === 'slot' ? { id: e.featId, category: e.slotKey.split(':')[1] } : e.featId));
+}
+
 export function dedicationBlock(
   taken: TakenFeat[],
   candidate: Feat,
@@ -1019,7 +1037,7 @@ export function extraPickCount(g: { pickByLevel: Record<string, number>; id?: st
    * rather than at the picker because the picker and the two resolvers all go through this one cap —
    * teaching only the picker would have offered a fourth ikon that the sheet then dropped.
    */
-  if (g.id === 'ikon' && build) n = applyCounterMods('ikon-picks', n, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
+  if (g.id === 'ikon' && build) n = applyCounterMods('ikon-picks', n, heldFeatIds(build));
   return n;
 }
 
@@ -1091,7 +1109,8 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
    */
   {
     const runesmith = holdsClass(build, 'runesmith');
-    const dedicated = Object.values(build.featPicks ?? {}).includes('runesmith-dedication');
+    // Picked or given through Tweaks (case D) — the same test as shared.tsx's runesmith gate on the picker.
+    const dedicated = heldFeatIds(build).includes('runesmith-dedication');
     if (runesmith || dedicated) {
       const max = runesmith ? runeRepertoireMax(build.level, content) : runeRepertoireMaxViaDedication(build.level, content);
       const known = (build.runesmithRunes ?? []).filter(Boolean).length;
@@ -1099,7 +1118,9 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
     }
   }
 
-  const picks = Object.values(build.featPicks ?? {}).filter(Boolean) as string[];
+  // The feats taken, for the slot a FEAT adds (Ultimate Flexibility) — given ones too (case D, D4: all
+  // five `levelGrants` callers that pass taken feats read `heldFeatIds`).
+  const picks = heldFeatIds(build);
   for (let lvl = 1; lvl <= build.level; lvl++) {
     const g = levelGrants(
       lvl, build.classId, content, build.subclassId, build.variantRules,
@@ -1199,7 +1220,9 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
   /* A held caster dedication that did NOT win the one archetype pool asks for its own cantrips, cast at
    * will (owner ruling #162, Spellshot beside Beast Gunner) — on its card, so its page owes the answer. */
   const heldNow = Object.entries(build.featPicks ?? {}).filter(([k, v]) => !!v && !(Number(k.split(':')[0]) > build.level));
-  const poolWinner = activeCasterArchetype(heldNow.map(([, v]) => v))?.dedicationId;
+  // The pool winner counts a dedication given through Tweaks too (case D); the cantrip question below is
+  // asked on a SLOT's card only — a given dedication's card is part B's editor (D2).
+  const poolWinner = activeCasterArchetype(heldFeatSlots(build, build.level).filter((e) => !(e.level > build.level)).map((e) => e.featId))?.dedicationId;
   for (const [key, featId] of heldNow) {
     const keys = LEGACY_ARCHETYPE_CANTRIP_KEYS[featId];
     if (!keys || !poolWinner || featId === poolWinner) continue;
@@ -1215,9 +1238,8 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
  *  which is all `sameTraditionsAs` needs, and a no-tradition cantrip is barred whoever holds it. */
 function openAnswerBarred(from: FeatChoiceDef['from'], build: BuildState, content: ContentDatabase, answer: string | undefined): boolean {
   if (!answer || from?.type !== 'spell') return false;
-  const feats = Object.entries(build.featPicks ?? {})
-    .filter(([, id]) => !!id)
-    .map(([slot, id]) => ({ featId: id, choice: build.featChoices?.[slot] ? { value: build.featChoices[slot] } : undefined }));
+  // Slot picks and the feats given through Tweaks (case D), each with the answer under its own key.
+  const feats = heldFeatSlots(build).map(({ slotKey, featId }) => ({ featId, choice: build.featChoices?.[slotKey] ? { value: build.featChoices[slotKey] } : undefined }));
   const options = openChoiceOptions(from, content, { hideLegacy: build.hideLegacy, character: { feats } as unknown as Character, keep: [answer] });
   return !!options.find((o) => o.id === answer)?.notAllowed;
 }
@@ -1238,7 +1260,7 @@ function subclassAnchorCandidate(build: BuildState, content: ContentDatabase, lv
   const g = levelGrants(
     lvl, build.classId, content, build.subclassId, build.variantRules,
     build.classId2, build.subclassId2, build.mythicEnabled,
-    Object.values(build.featPicks ?? {}).filter(Boolean) as string[],
+    heldFeatIds(build),
     build,
   );
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
@@ -1441,9 +1463,10 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
     /* …and a class archetype's REQUIRED dedication. Bloodrager: *"You must select Bloodrager Dedication
      * as your 2nd-level class feat"*; Light Mortar: the same for Munitions Master Dedication. Reported
      * as outstanding setup once the level is reached without it — the sentence tells the player what to
-     * take, so it is never granted for them. */
+     * take, so it is never granted for them. A dedication given through Tweaks satisfies it too (case D,
+     * decision D3). */
     const req = sub?.requiresFeat;
-    if (req && build.level >= req.level && !Object.values(build.featPicks ?? {}).includes(req.featId)) {
+    if (req && build.level >= req.level && !heldFeatIds(build).includes(req.featId)) {
       out.push(`${content.feats[req.featId]?.name ?? req.featId} (${sub.name} requires it as your level-${req.level} class feat)`);
     }
   }
@@ -2136,9 +2159,10 @@ export function foldArchSpellSlotBonuses(
 }
 
 /** The answer a slot-picked dedication's own `choice` holds (Bloodrager Dedication's bloodline), read off
- *  the build the way buildCharacter's feat list carries it — undefined for a granted dedication. */
+ *  the build the way buildCharacter's feat list carries it — a dedication given through Tweaks answers under
+ *  `override:<id>` (case D); undefined for a granted dedication. */
 function dedicationChoiceOf(build: BuildState, dedicationId: string): string | undefined {
-  for (const [slotKey, id] of Object.entries(build.featPicks ?? {})) {
+  for (const { slotKey, featId: id } of heldFeatSlots(build)) {
     if (id !== dedicationId) continue;
     const v = build.featChoices?.[slotKey];
     if (typeof v === 'string' && v) return v;
@@ -2290,10 +2314,10 @@ export function heldPickGranters(
     const holding = Object.entries(build.featPicks ?? {}).filter(([x, v]) => v === id && slotLevelOk(x)).map(([x]) => x);
     return holding.indexOf(s) < maxTakes(content.feats[id]);
   };
-  /** An Overrides-added copy of `id` the walk takes (no slot at or below this level already holds it). */
-  const overrideHolds = (id: string) =>
-    (build.overrides?.addedFeats ?? []).some((a) => a.featId === id && (a.level ?? 1) <= level) &&
-    !Object.entries(build.featPicks ?? {}).some(([s, v]) => v === id && slotLevelOk(s));
+  /** An Overrides-added copy of `id` the walk takes: an ACTIVE given feat at this level that no slot at or
+   *  below it already holds — the one reader of given feats (src/rules/heldFeats.ts, case D). */
+  let given: ReturnType<typeof heldFeatSlots> | undefined;
+  const overrideHolds = (id: string) => (given ??= heldFeatSlots(build, level, { via: ['override'] })).some((e) => e.featId === id);
   const out: { granter: string; slot: string }[] = [];
   for (const key of keys) {
     const m = /^(.*?)(?:#(\d+))?$/.exec(key)!;
@@ -2406,7 +2430,10 @@ export function pickTakingVariants(build: BuildState, featId: string, takings: r
 export function archetypePickedCantripBonus(build: BuildState, content: ContentDatabase, arch: ActiveCasterArchetype): number {
   const classOf = (dedId: string) => dedId.replace(/-dedication$/, '');
   const archClasses = new Set([arch.dedicationId, ...(DEDICATION_COUNTS_AS[arch.dedicationId]?.countsAs ?? [])].map(classOf));
-  const inSlots = new Set(Object.values(build.featPicks ?? {}));
+  // ⚠ IN LOCKSTEP with `cantripBonusFor`'s sources: a feat it counts (a slot pick, or a feat given through
+  // Tweaks — case D) is not counted again here, or a given Cantrip Expansion also picked through Basic
+  // Arcana would pay twice.
+  const inSlots = new Set(heldFeatIds(build));
   let n = 0;
   for (const featId of new Set(Object.values(build.pickFeatChoices ?? {}))) {
     const b = featId ? content.feats[featId]?.spellSlotBonus : undefined;
@@ -2619,9 +2646,9 @@ export function choiceFlagAnswer(flag: string, build: Partial<BuildState>, conte
   const answerFor = (rec: { choice?: FeatChoiceDef } | undefined, key: string): string | undefined =>
     rec?.choice?.flag === flag ? build.featChoices?.[key] || undefined : undefined;
   let answer: string | undefined;
-  for (const [key, featId] of Object.entries(build.featPicks ?? {})) {
-    if (!featId) continue;
-    /* A feat's answer is keyed by its own level slot, and a multi-pick fans out to `<slot>:<n>`. */
+  for (const { slotKey: key, featId } of heldFeatSlots(build)) {
+    /* A feat's answer is keyed by its own level slot (`override:<id>` for a feat given through Tweaks —
+     * case D), and a multi-pick fans out to `<slot>:<n>`. */
     for (const k of [key, `${key}:0`]) answer ??= answerFor(content.feats[featId], k);
   }
   if (!answer && build.heritageId) answer = answerFor(content.heritages[build.heritageId], `heritage:${build.heritageId}`);
@@ -2721,7 +2748,8 @@ export function buildChoiceOptions(
    * domains directly, and Domain Initiate's "a different domain each time" greyed nothing. Q27
    * applies unchanged: greyed with the reason, never removed, and never this slot's own answer. */
   if (def.kind === 'domains') {
-    const featId = slotKey ? build.featPicks?.[slotKey] : undefined;
+    // `override:<id>` names a feat given through Tweaks (case D).
+    const featId = slotKey ? featIdAtSlot(build, slotKey) : undefined;
     let opts: NarrowedOption[] = domainPoolForChoice(build, content, featId, def.domainPool).map((d) => ({ value: d, label: cap(d) }));
     /*
      * "…and UP TO ONE domain that isn't on either list and isn't anathematic to your deity. Any
@@ -3084,8 +3112,8 @@ export function buildUsesDeity(build: BuildState, content: ContentDatabase): boo
     return (add == null ? [] : Array.isArray(add) ? add : [add]).some((a) => a?.from === 'deity');
   };
   const ids = [
-    ...Object.values(build.featPicks ?? {}),
-    ...Object.values(build.pickFeatChoices ?? {}),
+    // Slot picks, pick-a-feat answers, and the feats given through Tweaks (case D).
+    ...heldFeatIds(build, undefined, { via: ['slot', 'pickFeat', 'override'] }),
     // The feat id of a key: a later taking's `<feat>#<variant>` (`grantedChoiceKey`) names its feat too.
     ...Object.keys(build.grantedFeatChoices ?? {}).map((k) => k.split('#')[0].split(':')[0]),
   ];
@@ -3104,12 +3132,14 @@ export const DEITY_SANCTIFIES_FEATS: ReadonlySet<string> = new Set(['mortal-hera
 export const DEITY_SANCTIFIES_SUBCLASSES: ReadonlySet<string> = new Set(['vindicator']);
 
 /** The feats picked at or below the character's level. The Builder keeps a pick above it when the level
- *  is lowered, and buildCharacter drops that feat — so a reader of picks must drop it too. */
+ *  is lowered, and buildCharacter drops that feat — so a reader of picks must drop it too. A feat given
+ *  through Tweaks counts at its own start level (case D; `override:<id>` parses to 0 here, and the
+ *  helper has already held it to the character's level). */
 function heldPicks(build: BuildState): Set<string> {
   return new Set(
-    Object.entries(build.featPicks ?? {})
-      .filter(([slot, id]) => !!id && (Number.parseInt(slot, 10) || 0) <= build.level)
-      .map(([, id]) => id as string),
+    heldFeatSlots(build)
+      .filter((e) => (Number.parseInt(e.slotKey, 10) || 0) <= build.level)
+      .map((e) => e.featId),
   );
 }
 
@@ -3252,7 +3282,10 @@ export function classArchetypeSpellMods(
   let slotCap: number | undefined;
   let cantripDelta = 0;
   let spellCollection = false;
-  for (const id of Object.values(build.featPicks ?? {})) {
+  /* Slot picks AND the feats given through Tweaks (case D, spec item 2): Flexible Spellcaster Dedication
+   * given through Overrides was ignored here — the cleric kept preparing five cantrips from the whole list
+   * while the sheet listed the dedication (chat-todo 2026-10-16). */
+  for (const id of heldFeatIds(build)) {
     const ca = id ? content.feats[id as string]?.classArchetype : undefined;
     if (!ca) continue;
     const classes = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
@@ -3458,12 +3491,10 @@ export function resolveClassArchetype(
     seen.add(id);
     carriers.push({ id, name: name ?? id, ca, classId: hit });
   };
-  for (const id of [
-    ...Object.entries(build.featPicks ?? {})
-      .filter(([slotKey]) => Number(slotKey.split(':')[0]) <= build.level)
-      .map(([, featId]) => featId),
-    ...(build.overrides?.addedFeats ?? []).filter((a) => a.level <= build.level).map((a) => a.featId),
-  ]) {
+  // Slot picks at or below the level, then the ACTIVE feats given through Tweaks (src/rules/heldFeats.ts:
+  // paused, removed or switched-off ones carry no archetype — case D).
+  for (const { featId: id, level: at } of heldFeatSlots(build)) {
+    if (!(at <= build.level)) continue;
     consider(id, content.feats[id]?.classArchetype, content.feats[id]?.name);
   }
   // An archetype may also be carried by a chosen subclass/extra-choice option, so scan those too.
@@ -3503,13 +3534,16 @@ export function cantripBonusFor(
    * moment you take it and pays out later reads as a bug on the builder page.
    */
   const unpaidSwaps = new Set<string>();
-  for (const [slotKey, id] of Object.entries(build.featPicks ?? {})) {
+  // Slot picks and the feats given through Tweaks (case D), each answered under its own key.
+  // ⚠ IN LOCKSTEP with `archetypePickedCantripBonus`, which skips every feat counted here.
+  const held = heldFeatSlots(build);
+  for (const { slotKey, featId: id } of held) {
     const def = id ? content.feats[id as string]?.choice : undefined;
     if (!def?.from?.grantToClassEntry) continue;
     if (!choiceKeys(slotKey, def).some((k) => build.featChoices?.[k])) unpaidSwaps.add(id as string);
   }
   const sources = [
-    ...Object.values(build.featPicks ?? {}).filter(Boolean).map((id) => content.feats[id as string]),
+    ...held.map((e) => content.feats[e.featId]),
     // FIRST class only on purpose: this sizes the shared class cantrip pool, and no class-table feature carries a cantrip bonus (a second class's would need routing to its own entry first).
     ...[...classFeatureIdsOwned({ classId: build.classId, subclassId: build.subclassId, level: build.level }, content)].map(
       (id) => content.classFeatures[id],
@@ -5464,7 +5498,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      */
     const second = build.effectChoices?.['syncretism:favored-weapon'];
     const secondOwned =
-      second && Object.values(build.featPicks ?? {}).includes('syncretism') && !engineLaneOff('syncretism') && clericDoctrine === 'warpriest' ? [second] : [];
+      second && heldFeatIds(build, level).includes('syncretism') && !engineLaneOff('syncretism') && clericDoctrine === 'warpriest' ? [second] : [];
     // MERGE (don't replace): a character can have both a deity favored weapon and an ancestry
     // weapon-familiarity feat, and each must keep its own override.
     const overrides: Record<string, ProficiencyRank> = { ...(proficiencies.weaponOverrides ?? {}) };
@@ -5705,14 +5739,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * repeatable picks moved onto that lane, a feat force-granted through Overrides had no way to be
    * ANSWERED at all: Animal Senses could be added and its sense never chosen. `override:<featId>` gives
    * it a key of its own, which is all the rest of the per-slot machinery needs. One per feat id, which
-   * matches Overrides itself — it dedupes on the id and cannot add the same feat twice.
+   * matches Overrides itself — it dedupes on the id and cannot add the same feat twice. The ACTIVE given
+   * feats only (src/rules/heldFeats.ts: on, not removed, Tweaks switch on, at this level — case D).
    */
-  const choiceSlots: [string, string][] = [
-    ...Object.entries(build.featPicks),
-    ...(build.overrides?.addedFeats ?? [])
-      .filter((a) => a.featId && (a.level ?? 1) <= level)
-      .map((a) => [`override:${a.featId}`, a.featId] as [string, string]),
-  ];
+  const choiceSlots: [string, string][] = heldFeatSlots(build, level).map((e) => [e.slotKey, e.featId]);
 
   for (const [slotKey, featId] of choiceSlots) {
     const lvl = slotKey.startsWith('override:') ? level : Number(slotKey.split(':')[0]);
@@ -5767,7 +5797,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const id of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) pushFocusBonus(id);
   pushFocusBonus(build.heritageFeatId);
   pushFocusBonus(build.umtFeatId);
-  for (const f of build.overrides?.addedFeats ?? []) if ((f.level ?? 1) <= level) pushFocusBonus(f.featId);
+  for (const e of heldFeatSlots(build, level, { via: ['override'] })) pushFocusBonus(e.featId);
   for (const id of Object.values(build.pickFeatChoices ?? {})) pushFocusBonus(id);
   for (const id of Object.values(build.dedicationSkillFeats ?? {})) pushFocusBonus(id);
   // Feats granted by a HERITAGE, a CLASS FEATURE or a chosen SUBCLASS / extra-choice option. These
@@ -5874,8 +5904,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * from paying two Focus Points for one spell.
      */
     const seenPerTake = new Set();
-    for (const [slotKey, featId] of Object.entries(build.featPicks)) {
-      const lvl = Number(slotKey.split(':')[0]);
+    // Each slot taking, then each feat given through Tweaks (case D) — answered under `override:<id>`.
+    const perTake = heldFeatSlots(build, level);
+    for (const { slotKey, featId, level: lvl } of perTake) {
       if (!featId || !Number.isFinite(lvl) || lvl > level) continue;
       const rec = content.feats[featId];
       if (!rec?.choice?.options?.length || removedFeatIds.has(featId)) continue;
@@ -5898,8 +5929,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * they chose. Without it, *"**Special** You can select this feat more than once, choosing a
      * different spell each time"* granted the first spell again on every take.
      */
-    for (const [slotKey, featId] of Object.entries(build.featPicks)) {
-      const lvl = Number(slotKey.split(':')[0]);
+    for (const { slotKey, featId, level: lvl } of perTake) {
       if (!featId || !Number.isFinite(lvl) || lvl > level) continue;
       const rec = content.feats[featId];
       if (!rec || maxTakes(rec) <= 1 || removedFeatIds.has(featId)) continue;
@@ -5935,11 +5965,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * holding neither keeps the old route, so nothing that reached a class before moves.
    */
   const heldClassIds = new Set([cls?.id, cls2?.id].filter((x): x is string => !!x));
-  const heldFeatIdsEarly = new Set([
-    ...Object.values(build.featPicks ?? {}),
-    ...Object.values(build.pickFeatChoices ?? {}),
-    ...(build.overrides?.addedFeats ?? []).map((a) => a.featId),
-  ]);
+  // Slot picks, pick-a-feat answers and the ACTIVE feats given through Tweaks (case D).
+  const heldFeatIdsEarly = new Set(heldFeatIds(build, level, { via: ['slot', 'pickFeat', 'override'] }));
   const featAimsAtArchetype = (featId: string | undefined): string | undefined => {
     for (const t of (featId ? content.feats[featId]?.traits : undefined) ?? []) {
       if (!content.classes[t] || heldClassIds.has(t)) continue;
@@ -6194,7 +6221,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // Read from the PICKS: the built `feats` array does not exist yet at this point in the build,
         // the same reason `cantripBonusOf` above reads them directly. The BARD's repertoire, under Dual
         // Class (`featAimsAtClass`) — a Bard/Sorcerer's sorcerer spells are not made signature by it.
-        Object.values(build.featPicks ?? {}).includes('ultimate-polymath') && !engineLaneOff('ultimate-polymath') && featAimsAtClass('ultimate-polymath', cls.id);
+        // Picked or given through Tweaks (case D).
+        heldFeatIds(build, level).includes('ultimate-polymath') && !engineLaneOff('ultimate-polymath') && featAimsAtClass('ultimate-polymath', cls.id);
       if (unlimitedSig) entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
       /* …or any prepared class whose own record declares a BOOK. The class-id test was the only
        * spellbook lane in the engine, so the magus — *"The spellbook contains your choice of eight
@@ -6583,8 +6611,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * records share the shape (shadow-magic, the three perfect-ki tiers, godling-dedication,
      * special-sentinel-technique, holy-bloom).
      */
-    const featFocusGrant = Object.values(build.featPicks ?? {})
-      .filter(Boolean)
+    // Slot picks first, then the feats given through Tweaks (case D): the first carrier still wins.
+    const featFocusGrant = heldFeatIds(build, level)
       .map((fid) => content.feats[fid])
       .filter(
         (f) =>
@@ -7069,26 +7097,37 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   /* The grant can hand over MORE THAN ONE: Magical Knowledge prints "You gain a skill feat associated
    * with each of the skills you chose" over a two-skill choice, so the count comes from
    * bonusSkillFeatCount and each pick has its own key (index 0 = the bare feat id, unchanged). */
-  for (const fc of [...feats]) {
-    const bonusCount = bonusSkillFeatCount(grantsFor(fc.featId));
-    for (let i = 0; i < bonusCount; i++) {
-      const chosen = build.dedicationSkillFeats?.[bonusSkillFeatKey(fc.featId, i)];
-      if (chosen && content.feats[chosen] && !takenFeats.has(chosen)) {
-        feats.push({ featId: chosen, level: fc.level, category: 'skill' });
-        takenFeats.add(chosen);
+  const pushBonusSkillFeats = (rows: readonly FeatChoice[]) => {
+    for (const fc of rows) {
+      const bonusCount = bonusSkillFeatCount(grantsFor(fc.featId));
+      for (let i = 0; i < bonusCount; i++) {
+        const chosen = build.dedicationSkillFeats?.[bonusSkillFeatKey(fc.featId, i)];
+        if (chosen && content.feats[chosen] && !takenFeats.has(chosen)) {
+          feats.push({ featId: chosen, level: fc.level, category: 'skill' });
+          takenFeats.add(chosen);
+        }
       }
     }
-  }
+  };
+  pushBonusSkillFeats([...feats]);
   // Overrides — bonus feats force-granted with no slot (deduped against what's already taken), then
   // suppress any feats the user explicitly removed. buildCharacter doesn't re-validate, so this is safe.
-  for (const a of build.overrides?.addedFeats ?? []) {
-    if (!a.featId || takenFeats.has(a.featId) || a.level > level || !content.feats[a.featId]) continue;
-    takenFeats.add(a.featId);
+  // The ACTIVE given feats only (src/rules/heldFeats.ts: on, not removed, Tweaks switch on, at this level),
+  // held from their start level (decision D6).
+  const givenRows: FeatChoice[] = [];
+  for (const e of heldFeatSlots(build, level, { via: ['override'] })) {
+    if (takenFeats.has(e.featId) || !content.feats[e.featId]) continue;
+    takenFeats.add(e.featId);
     /* The synthetic slot key travels with it, so an override-added feat can answer a per-taking
      * `choice` like any other taking — see `choiceSlots` above for why it needs one at all. */
-    const slotKey = `override:${a.featId}`;
-    feats.push({ featId: a.featId, level: a.level, category: a.category, choice: featChoiceById[slotKey], slotKey });
+    const row: FeatChoice = { featId: e.featId, level: e.level, category: e.category as FeatCategory, choice: featChoiceById[e.slotKey], slotKey: e.slotKey };
+    feats.push(row);
+    givenRows.push(row);
   }
+  /* …and a GIVEN dedication's bonus skill feat, exactly as a picked one's above (case D): a Rogue Dedication
+   * given through Tweaks never handed over its skill feat, because the pass above ran before the given feats
+   * were pushed. Over the given rows only, after them, so every row already on the list keeps its place. */
+  pushBonusSkillFeats(givenRows);
   // Pick-a-feat grants: a feat like General Training / Basic Maneuver / Natural Ambition lets the
   // player CHOOSE a bonus feat from a filtered pool. Add the chosen feat (validated against the pool)
   // so it's granted with its own effects — then the expansion below carries any further grants.
@@ -8783,7 +8822,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * eidolon gained from Magical Understudy, Magical Adept, and Magical Master") has something to read.
    */
   const eidolonInnateSpells: string[] = [];
-  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+  // Slot picks and the feats given through Tweaks (case D), each answered under its own key.
+  for (const { slotKey, featId } of heldFeatSlots(build, level)) {
     if (featId !== 'magical-adept' && featId !== 'magical-master') continue;
     if (engineLaneOff(featId)) continue;
     for (const k of choiceKeys(slotKey, content.feats[featId]?.choice)) {
@@ -11303,7 +11343,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // the feat has no way to put a weapon rune on you.
     ...(() => {
       const id = build.bodyRune;
-      if (!id || !Object.values(build.featPicks ?? {}).includes('living-rune') || engineLaneOff('living-rune')) return {};
+      // Picked or given through Tweaks (case D) — the same test as shared.tsx's living-rune picker.
+      if (!id || !heldFeatIds(build, level).includes('living-rune') || engineLaneOff('living-rune')) return {};
       const def = content.runes?.[id];
       return def && def.slot === 'armor' && def.kind === 'property' ? { bodyRune: id } : {};
     })(),
