@@ -209,6 +209,12 @@ export default defineConfig(({ command }) => ({
         // The Tabler icon font (~2.8 MB) must be precached so icons render offline — raise the cap
         // above its size. (The rules data is handled separately via runtimeCaching below.)
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        // …and the page must FIND it there. Tabler's CSS asks for `tabler-icons.woff2?v3.44.0`: a query
+        // key `v3.44.0` the precache does not strip by default, so the lookup missed, the request went to
+        // the network, and offline every icon was a blank box (seen 2026-10-20 in the offline rules test).
+        // The file name already carries its content hash, so dropping that tag is safe.
+        // test/sw-precache-font.test.ts holds this against the CSS the app imports.
+        ignoreURLParametersMatching: [/^utm_/, /^fbclid$/, /^v\d/],
         navigateFallback: 'index.html',
         // The rules data is cached at runtime on first (online) load rather than precached, so the
         // service-worker install stays small; offline works after the first visit.

@@ -25,7 +25,7 @@ import {
 import { applyTrustGate, clearTrustGate, trustGateOn } from './trustGate';
 import { isTauri } from '../platform';
 import { DATA_VERSIONS } from '../version';
-import { fetchDataFile, pruneDataCache, type DataFile } from './dataFreshness';
+import { dataStatus, fetchDataFile, pruneDataCache, type DataFile } from './dataFreshness';
 
 /**
  * Where a rules-data file is fetched from.
@@ -683,10 +683,13 @@ export function isPrintedId(type: HomebrewType, id: string): boolean {
 }
 
 /** Waits on the one shared core.json load: true once isPrintedId knows the whole book, false when the
- *  load failed and only the seed is known (an UNKNOWN, not "nothing is printed"). */
+ *  load failed and only the seed is known (an UNKNOWN, not "nothing is printed").
+ *  Also false on an OLDER saved copy (2026-10-20): a record new in this release is unknown to it, and a
+ *  campaign row reusing that id would be converted into the player's own homebrew — which merges over
+ *  the book and hides the printed record on that device for good, even after the new file loads. */
 export async function printedIdsReady(): Promise<boolean> {
   await loadContent();
-  return Object.keys(cachedCore).length > 0;
+  return Object.keys(cachedCore).length > 0 && dataStatus('core.json') !== 'older';
 }
 
 /** Re-merge seed + core + the current homebrew (re-read from storage) without re-fetching core.json.
