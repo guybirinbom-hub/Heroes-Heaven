@@ -66,3 +66,53 @@ export function leaveCampaignFor(
     memberships: drop ? memberships.filter((m) => m.id !== campaignId) : (memberships as CampaignMembership[]),
   };
 }
+
+/*
+ * UNDO AND REDO NEVER CHANGE WHICH CAMPAIGNS A CHARACTER IS IN (owner, 2026-10-21, answering "Leave in the
+ * builder, then Ctrl+Z and Save: the campaign comes back"): leaving goes through the question and coming
+ * back through the code, and an undo did either without a word. It put a campaign back whose membership
+ * the leave had dropped (the card showed it as "Campaign" and the sheet published to it again), and an
+ * undo of a Save that joined took the character out of the party silently. Both undo timelines (App's
+ * roster, the Builder's build) hand every undo and redo through these (useUndoableState `keep`).
+ */
+const sameIds = (a: readonly string[] | undefined, b: readonly string[] | undefined) =>
+  (a ?? []).length === (b ?? []).length && (a ?? []).every((id, i) => id === (b ?? [])[i]);
+
+/** The Builder's build an undo or redo makes, with the present's campaigns. */
+export function keepBuildCampaigns<T extends { campaignIds?: string[] }>(next: T, present: T): T {
+  return sameIds(next.campaignIds, present.campaignIds) ? next : { ...next, campaignIds: present.campaignIds };
+}
+
+/** The roster an undo or redo makes, each character with the campaigns it has now — character and build.
+ *  A character the undo brings back (a delete undone) is restored as it was, less any campaign the
+ *  account is no longer in (`memberships`: a Leave on another character since may have dropped it — the
+ *  "Campaign" placeholder again, and a publish to it; a checker's finding, 2026-10-21). `memberships`
+ *  null: not known yet (before this device's first cloud pull) — its campaigns are kept. Returns the same
+ *  array when nothing changes. */
+export function keepRosterCampaigns(next: SavedChar[], present: SavedChar[], memberships: readonly CampaignMembership[] | null = null): SavedChar[] {
+  const now = new Map(present.map((c) => [c.id, c]));
+  const held = memberships && new Set(memberships.map((m) => m.id));
+  let changed = false;
+  const out = next.map((c) => {
+    const p = now.get(c.id);
+    if (!p) {
+      if (!held) return c;
+      const inHeld = (ids: string[] | undefined) => (ids ?? []).filter((id) => held.has(id));
+      const keepsAll = (ids: string[] | undefined) => sameIds(ids, inHeld(ids));
+      if (keepsAll(c.character.campaignIds) && keepsAll(c.build?.campaignIds)) return c;
+      changed = true;
+      return {
+        ...c,
+        character: { ...c.character, campaignIds: inHeld(c.character.campaignIds) },
+        build: c.build ? { ...c.build, campaignIds: inHeld(c.build.campaignIds) } : c.build,
+      };
+    }
+    const ids = (p.build ?? p.character).campaignIds; // a build-less present entry: its character's
+    const build = c.build && !sameIds(c.build.campaignIds, ids) ? { ...c.build, campaignIds: ids } : c.build;
+    const character = sameIds(c.character.campaignIds, p.character.campaignIds) ? c.character : { ...c.character, campaignIds: p.character.campaignIds };
+    if (build === c.build && character === c.character) return c;
+    changed = true;
+    return { ...c, character, build };
+  });
+  return changed ? out : next;
+}

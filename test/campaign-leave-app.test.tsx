@@ -174,15 +174,45 @@ async function openApp(roster: SavedChar[]) {
 }
 
 /** From the sheet: Party → Leave campaign → the question's red button. */
-async function leaveFromParty(host: HTMLElement) {
+async function leaveFromParty(host: HTMLElement, who = 'TEST Leaver') {
   click(host.querySelector('.party-tab'), 'the Party tab');
   await wait(50);
   click([...host.querySelectorAll('button')].find((b) => (b.textContent ?? '').includes('Leave campaign')), 'Leave campaign');
   await wait(50);
-  expect(document.querySelector('.confirm-modal')?.textContent, 'Leave asks first, naming the character').toContain('TEST Leaver leaves this campaign');
+  expect(document.querySelector('.confirm-modal')?.textContent, 'Leave asks first, naming the character').toContain(`${who} leaves this campaign`);
   click(document.querySelector('.confirm-modal .btn-danger'), 'the question’s Leave campaign');
   await wait(600); // the persist and the publish run
 }
+
+const buttonNamed = (text: string) => [...document.querySelectorAll('button')].find((b) => (b.textContent ?? '').trim() === text);
+/** Type into an input as React sees it. */
+function typeInto(el: Element | null, value: string, what: string) {
+  if (!(el instanceof HTMLInputElement)) throw new Error(`fixture: no input (${what})`);
+  Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!.call(el, value);
+  act(() => void el.dispatchEvent(new Event('input', { bubbles: true })));
+}
+/** The sheet's Edit character → the builder's Setup page. */
+async function openBuilderSetup(host: HTMLElement) {
+  click(host.querySelector('button[aria-label="Edit character"]'), 'Edit character');
+  await wait(300);
+  click(buttonNamed('Setup'), 'the builder’s Setup tab');
+  await wait(100);
+}
+/** The builder's Save changes — through "Save with choices left?" (these test characters are half-built) —
+ *  and proof it saved: the builder closed. */
+async function saveBuilder(host: HTMLElement) {
+  click(buttonNamed('Save changes'), 'Save changes');
+  await wait(100);
+  if (document.querySelector('.confirm-modal')) click(buttonNamed('Save anyway'), 'the question’s Save anyway');
+  await wait(800); // the persist
+  expect(host.querySelector('input[aria-label="Character name"]'), 'fixture: Save closed the builder').toBeNull();
+}
+/** Ctrl+Z (or Ctrl+Shift+Z), then long enough for the 400 ms persist. */
+const ctrlZ = (shift = false) =>
+  act(async () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, shiftKey: shift, bubbles: true }));
+    await new Promise((r) => setTimeout(r, 1500));
+  });
 
 describe('one character leaves a campaign, in the real app', () => {
   it('takes out only that character; a failed party delete is sent again; Ctrl+Z does not bring it back', async () => {
@@ -222,6 +252,77 @@ describe('one character leaves a campaign, in the real app', () => {
       expect(storedIds('c1'), `Ctrl+Z #${i + 1} does not bring the campaign back`).toEqual([[], []]);
       expect(host.querySelector('.party-tab'), 'and the sheet has no Party tab again').toBeNull();
     }
+  }, APP_TIMEOUT);
+
+  it('in the builder: Leave, then Ctrl+Z, then Save — the campaign does not come back', async () => {
+    // The owner's "yes", 2026-10-21: the builder's undo restored a snapshot from before the leave, campaign
+    // included, and Save put the character back — under "Campaign", its membership already gone.
+    const host = await openApp([saved('c1', 'TEST Leaver', [CAMP]), saved('c2', 'TEST Other', [OTHER])]);
+    await openBuilderSetup(host);
+    typeInto(host.querySelector('input[aria-label="Character name"]'), 'TEST Renamed', 'the name'); // a step from before the leave
+    await wait(400);
+    click(host.querySelector('button[aria-label="Leave “TEST The Salt Road”"]'), 'the card’s Leave');
+    await wait(50);
+    click(document.querySelector('.confirm-modal .btn-danger'), 'the question’s Leave campaign');
+    await wait(600);
+    expect(storedIds('c1'), 'App applied the leave at once').toEqual([[], []]);
+    expect(storedMemberships()).toEqual([OTHER]);
+
+    // MUTATION: drop `keep: keepBuildCampaigns` in Builder.tsx and this fails — the undo of the rename
+    // brings the campaign back to the card, and Save back to the character.
+    await ctrlZ();
+    expect((host.querySelector('input[aria-label="Character name"]') as HTMLInputElement).value, 'the undo undid the rename').toBe('TEST Leaver');
+    expect(host.querySelector('.cmp-in-name'), 'and the campaign stays off the card').toBeNull();
+    await saveBuilder(host);
+    expect(storedIds('c1'), 'saved without the campaign').toEqual([[], []]);
+    expect(storedRoster().find((c) => c.id === 'c1')?.character.name, 'fixture: the Save landed (the undone rename)').toBe('TEST Leaver');
+  }, APP_TIMEOUT);
+
+  it('on the sheet: Ctrl+Z of a Save that joined keeps the character in; after a leave, Ctrl+Z and Ctrl+Shift+Z keep it out', async () => {
+    const host = await openApp([saved('c1', 'TEST Joiner', []), saved('c2', 'TEST Other', [OTHER])]);
+    await openBuilderSetup(host);
+    // The account is already in the campaign, so it joins without the server (the server is not reachable here).
+    typeInto(host.querySelector('input[aria-label="Campaign code"]'), 'SALT23', 'the campaign code');
+    click(buttonNamed('Join'), 'Join');
+    await until(() => !!host.querySelector('.cmp-in-name'));
+    expect(host.querySelector('.cmp-in-name')?.textContent).toBe('TEST The Salt Road');
+    // A rename in the same Save, so the undo below provably reaches the Save (the name goes back).
+    typeInto(host.querySelector('input[aria-label="Character name"]'), 'TEST Joiner Renamed', 'the name');
+    await wait(400);
+    await saveBuilder(host);
+    expect(storedIds('c1'), 'fixture: the Save joined').toEqual([[CAMP], [CAMP]]);
+    const storedName = () => storedRoster().find((c) => c.id === 'c1')?.character.name;
+    expect(storedName(), 'fixture: and renamed').toBe('TEST Joiner Renamed');
+
+    // MUTATION: drop the `keep:` line from App.tsx's roster useUndoableState and this fails — undoing the
+    // Save that joined took the character out of the party without a word, and so did the redo after the
+    // leave below. Ctrl+Z until the Save itself is undone (the app may have a step of its own after it),
+    // checking the campaign at every press; then Ctrl+Shift+Z until it is back.
+    for (let i = 0; i < 3 && storedName() !== 'TEST Joiner'; i++) {
+      await ctrlZ();
+      expect(storedIds('c1'), `Ctrl+Z #${i + 1}: still in`).toEqual([[CAMP], [CAMP]]);
+    }
+    expect(storedName(), 'fixture: the Save that joined was undone').toBe('TEST Joiner');
+    for (let i = 0; i < 3 && storedName() !== 'TEST Joiner Renamed'; i++) {
+      await ctrlZ(true);
+      expect(storedIds('c1'), `Ctrl+Shift+Z #${i + 1}: still in`).toEqual([[CAMP], [CAMP]]);
+    }
+    expect(storedName(), 'fixture: and redone').toBe('TEST Joiner Renamed');
+
+    await leaveFromParty(host, 'TEST Joiner Renamed');
+    expect(storedIds('c1')).toEqual([[], []]);
+    // The same walk after the leave: back past the Save that joined, then the redo of it.
+    for (let i = 0; i < 3 && storedName() !== 'TEST Joiner'; i++) {
+      await ctrlZ();
+      expect(storedIds('c1'), `after the leave, Ctrl+Z #${i + 1}: still out`).toEqual([[], []]);
+    }
+    expect(storedName(), 'fixture: back past the Save that joined').toBe('TEST Joiner');
+    for (let i = 0; i < 3 && storedName() !== 'TEST Joiner Renamed'; i++) {
+      await ctrlZ(true);
+      expect(storedIds('c1'), `after the leave, Ctrl+Shift+Z #${i + 1} (the redo of the Save that joined): still out`).toEqual([[], []]);
+    }
+    expect(storedName(), 'fixture: and the Save redone').toBe('TEST Joiner Renamed');
+    expect(host.querySelector('.party-tab')).toBeNull();
   }, APP_TIMEOUT);
 
   it('before this device has pulled the cloud, the membership stays (a character elsewhere may still be in it)', async () => {

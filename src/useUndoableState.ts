@@ -47,6 +47,9 @@ export interface UndoableOptions<T> {
   /** Carry a step from `from` to `to` onto `present`, which changed since the step without a step of its
    *  own. Default: `to` (the snapshot). */
   revert?: (present: T, from: T, to: T) => T;
+  /** What an undo or redo never changes: given what it would make and the present, the value it makes.
+   *  App and the Builder keep the present's campaigns (data/campaignLeave.ts keepRosterCampaigns). */
+  keep?: (next: T, present: T) => T;
 }
 
 export function useUndoableState<T>(initial: T | (() => T), options: UndoableOptions<T> = {}): Undoable<T> {
@@ -58,8 +61,14 @@ export function useUndoableState<T>(initial: T | (() => T), options: UndoableOpt
   const lastPush = useRef<{ time: number; tag?: string }>({ time: 0 });
   const revertRef = useRef(options.revert);
   revertRef.current = options.revert;
-  /** `present` carried along the step `from` → `to`: the snapshot when nothing came in since. */
-  const carry = (present: T, from: T, to: T): T => (present === from || !revertRef.current ? to : revertRef.current(present, from, to));
+  const keepRef = useRef(options.keep);
+  keepRef.current = options.keep;
+  /** `present` carried along the step `from` → `to`: the snapshot when nothing came in since — then what
+   *  an undo never changes put back from the present. */
+  const carry = (present: T, from: T, to: T): T => {
+    const next = present === from || !revertRef.current ? to : revertRef.current(present, from, to);
+    return keepRef.current ? keepRef.current(next, present) : next;
+  };
 
   const set = useCallback<Undoable<T>['set']>((updater, opts) => {
     if (opts?.record === false) {

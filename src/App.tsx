@@ -19,7 +19,7 @@ import { PageNavContext } from './sheet/PageMenu';
 import { useAuth } from './data/useAuth';
 import { startCloudSync, hasSyncedOnce, noteDerivedRefresh, pullForGmApply } from './data/cloudSync';
 import { startCampaignHomebrew, refreshCampaignHomebrew, homebrewFingerprint } from './data/campaignHomebrew';
-import { leaveCampaignFor } from './data/campaignLeave';
+import { keepRosterCampaigns, leaveCampaignFor } from './data/campaignLeave';
 import { rebuildRoster, carryStoredOverrides } from './data/rebuild';
 import { carriedForCampaign, collectCarried, duplicateWithOwnModes, freshModeId, keepCarried, loadOwnTombstones, loadOwnWinningIds, loadSharedOrigins, modeUsage, ownContent, publishKey, repointMode, withoutCarried } from './data/carried';
 import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModeUsageContext, ModesRemoveFromCharacterContext, ModesSaveAsCopyContext } from './sheet/CopyOnWriteItems';
@@ -149,8 +149,11 @@ export default function App() {
   // Another tab's write and a cloud adopt are NOT steps (`record: false` below); an undo carries this
   // tab's own last step back onto the roster as it is now, three ways (S4, 2026-10-20: revertRosterStep).
   // An entry that revert MADE has its character re-derived from its build (rosterFold.revertOwnStep).
+  // Undo and redo never change which campaigns a character is in (data/campaignLeave.ts).
   const { state: roster, set: setRoster, undo, redo, canUndo, canRedo } = useUndoableState<SavedChar[]>(initialRoster, {
     revert: (present, from, to) => revertOwnStep(contentRef.current)(present, from, to),
+    // The memberships only once known (signed out, or after this device's first pull), as leaveCampaign.
+    keep: (next, present) => keepRosterCampaigns(next, present, auth.status !== 'signed-in' || hasSyncedOnce() ? loadCampaigns() : null),
   });
   // Settings → Interface can hide the undo/redo arrows (and 'auto' hides them on phones). The keyboard
   // shortcuts below are NOT gated on this — the setting is about header clutter, not about undo.

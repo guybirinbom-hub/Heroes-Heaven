@@ -2379,7 +2379,18 @@ function MonsterPartsModeSelect({ build, actions }: Pick<EditorProps, 'build' | 
  *  publishes to teammates), each with its own Leave, and where it joins one — the code from the GM, or
  *  the GM's own code for a character of theirs. Joining offers to start the character from the
  *  campaign's default rules. Hidden for local / not-signed-in users whose character is in none. */
-export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }: EditorProps & { onLeaveCampaign?: (campaignId: string) => void }) {
+export function CampaignAttachCard({
+  build,
+  actions,
+  content,
+  onLeaveCampaign,
+  setCampaignIds,
+}: EditorProps & {
+  onLeaveCampaign?: (campaignId: string) => void;
+  /** The Builder's door for this character's campaign list: not an undo step (an undo never changes
+   *  campaigns — data/campaignLeave.ts). Absent: through `actions.patch`. */
+  setCampaignIds?: (update: (ids: string[]) => string[]) => void;
+}) {
   const auth = useAuth();
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   const [code, setCode] = useState('');
@@ -2395,11 +2406,12 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
    * coming back is joining again with the code (data/campaignLeave.ts). */
   const inCampaigns = campaignsOfCharacter(build.campaignIds, memberships);
 
+  const setIds = setCampaignIds ?? ((f: (ids: string[]) => string[]) => actions.patch((b) => ({ campaignIds: f(b.campaignIds ?? []) })));
   const leave = async (m: CampaignMembership) => {
     if (!(await confirmDialog(leaveCampaignQuestion(m, live.current.name)))) return;
     onLeaveCampaign?.(m.id); // App: detach this character; a player's membership goes once no character is left in it
     setMemberships(loadCampaigns()); // what App left of the list (names of the campaigns still shown)
-    actions.patch((b) => ({ campaignIds: (b.campaignIds ?? []).filter((id) => id !== m.id) })); // and the draft build
+    setIds((ids) => ids.filter((id) => id !== m.id)); // and the draft build
   };
 
   // Local / not signed in, or a GM rebuilding a player's character (no leave handler: joining would put
@@ -2443,7 +2455,7 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
       return;
     }
     if (!res.ok) {
-      actions.patch((b) => ({ campaignIds: [...new Set([...(b.campaignIds ?? []), id])] }));
+      setIds((ids) => [...new Set([...ids, id])]);
       setCode('');
       return;
     }
@@ -2458,7 +2470,7 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
       // Pull the GM's shared homebrew now, not on the next focus: 'Use defaults' below can turn it on.
       void refreshCampaignHomebrew();
     } else setMemberships(list);
-    actions.patch((b) => ({ campaignIds: [...new Set([...(b.campaignIds ?? []), c.id])] }));
+    setIds((ids) => [...new Set([...ids, c.id])]);
     setCode('');
     const d = c.defaults;
     // Only prompt when the GM actually configured something. An empty variantRules object is truthy but

@@ -9,7 +9,9 @@ import { emptyBuild, type BuildState } from '../src/rules/build';
 import type { CampaignMembership } from '../src/data/campaigns';
 import type { SavedChar } from '../src/data/storage';
 import { saveCampaigns } from '../src/data/storage';
-import { campaignsOfCharacter, leaveCampaignFor, leaveCampaignQuestion } from '../src/data/campaignLeave';
+import { campaignsOfCharacter, keepBuildCampaigns, keepRosterCampaigns, leaveCampaignFor, leaveCampaignQuestion } from '../src/data/campaignLeave';
+import { useUndoableState, type Undoable } from '../src/useUndoableState';
+import { renderDom } from './_render';
 
 /**
  * CAMPAIGNS BELONG TO A CHARACTER — the owner, 2026-10-21:
@@ -171,6 +173,52 @@ describe('what Leave changes', () => {
     const out = leaveCampaignFor(roster, memberships, 'c1', 'camp-g');
     expect(out.roster).toBe(roster);
     expect(out.memberships).toBe(memberships);
+  });
+});
+
+describe('undo and redo never change which campaigns a character is in', () => {
+  // Owner, 2026-10-21 ("yes" to fixing: Leave in the builder, then Ctrl+Z and Save brought the campaign
+  // back as "Campaign"). The App-level legs are in test/campaign-leave-app.test.tsx.
+  it('a build an undo makes keeps the present’s campaigns, and is the same object when they match', () => {
+    const before = { ...emptyBuild(), name: 'TEST Old', campaignIds: ['camp-a'] };
+    const present = { ...emptyBuild(), name: 'TEST New', campaignIds: [] };
+    expect(keepBuildCampaigns(before, present)).toEqual({ ...before, campaignIds: [] });
+    const same = { ...before, campaignIds: [] as string[] };
+    expect(keepBuildCampaigns(same, present)).toBe(same);
+  });
+  it('a roster an undo makes: each character keeps the campaigns it has now, character and build', () => {
+    const was = [char('c1', ['camp-a']), char('c2', ['camp-b'])];
+    const now = [char('c1', []), was[1]];
+    const out = keepRosterCampaigns(was, now);
+    expect(idsOf(out[0])).toEqual([[], []]);
+    expect(out[1], 'a character whose campaigns match is left alone').toBe(was[1]);
+    expect(keepRosterCampaigns(now, now), 'nothing to change: the same array').toBe(now);
+  });
+  it('a character the undo brings back (a delete undone) keeps its own campaigns — less one the account left since', () => {
+    const back = [char('c1', ['camp-a', 'camp-b'])];
+    expect(keepRosterCampaigns(back, []), 'memberships not known yet: kept as it was').toBe(back);
+    expect(keepRosterCampaigns(back, [], [A, B]), 'still in both: kept as it was').toBe(back);
+    // MUTATION: return the restored character unchanged when `memberships` is given and this fails —
+    // delete A, Leave on B (the last holder now: the membership goes), Ctrl+Z: A came back in a campaign
+    // the account is no longer in, as "Campaign", publishing to it (checker's finding, 2026-10-21).
+    expect(idsOf(keepRosterCampaigns(back, [], [B])[0])).toEqual([['camp-b'], ['camp-b']]);
+  });
+  it('useUndoableState hands every undo and redo through `keep` — an earlier step’s snapshot no longer brings a campaign back', () => {
+    // MUTATION: drop the `keepRef.current(...)` call in useUndoableState's carry and this fails.
+    let api!: Undoable<BuildState>;
+    function H() {
+      api = useUndoableState<BuildState>(() => ({ ...emptyBuild(), name: 'TEST A', campaignIds: ['camp-a'] }), { keep: keepBuildCampaigns });
+      return null;
+    }
+    const h = renderDom(<H />);
+    act(() => api.set((b) => ({ ...b, name: 'TEST B' }))); // a step taken while in the campaign
+    act(() => api.set((b) => ({ ...b, campaignIds: [] }), { record: false })); // the leave: not a step
+    act(() => api.undo());
+    expect(api.state.name, 'the undo undid the rename').toBe('TEST A');
+    expect(api.state.campaignIds, 'and left the campaign left').toEqual([]);
+    act(() => api.redo());
+    expect([api.state.name, api.state.campaignIds]).toEqual(['TEST B', []]);
+    h.stop();
   });
 });
 
@@ -458,5 +506,11 @@ describe('App wiring', () => {
     expect(app).toContain('onLeaveCampaign={(campaignId) => leaveCampaign(campaignId, active.id)}');
     expect(app).toContain('const leaveCampaign = (campaignId: string, charId: string | undefined) => {');
     expect(app).toContain('const next = leaveCampaignFor(rosterRef.current, before, charId, campaignId);');
+  });
+  it('the roster’s undo keeps campaigns, and hands over the memberships once they are known', () => {
+    // test/campaign-leave-app.test.tsx runs the undo legs in the real App; this pins the memberships it
+    // hands over, which the delete-undone case needs (no App test deletes a character).
+    const app = readFileSync(resolve(__dirname, '..', 'src/App.tsx'), 'utf8');
+    expect(app).toContain("keep: (next, present) => keepRosterCampaigns(next, present, auth.status !== 'signed-in' || hasSyncedOnce() ? loadCampaigns() : null),");
   });
 });

@@ -93,6 +93,7 @@ import { WindowControls } from '../sheet/WindowControls';
 import { useUndoableState } from '../useUndoableState';
 import { claimUndo } from '../undoClaim';
 import { pinOf, samePin } from '../rules/play';
+import { keepBuildCampaigns } from '../data/campaignLeave';
 
 /**
  * A narrowed option as `PopupSelect` wants it.
@@ -311,7 +312,7 @@ export function Builder({
     redo: redoBuild,
     canUndo: canUndoBuild,
     canRedo: canRedoBuild,
-  } = useUndoableState<BuildState>(() => initial ?? emptyBuild());
+  } = useUndoableState<BuildState>(() => initial ?? emptyBuild(), { keep: keepBuildCampaigns }); // undo never changes campaigns (data/campaignLeave.ts)
   // Effective content = the shared DB with this build's Overrides content-edits overlaid (text/field
   // edits to feats/features). Returns the same ref when there are no edits, so pickers/memos are stable.
   // `ovContent` is the FULL (override-applied) DB used for the live character + grants; `content` is
@@ -2339,7 +2340,14 @@ export function Builder({
                 {/* SOURCES FIRST (owner, 2026-09-22) — the order lives in RuleCards, which the
                     campaign defaults editor renders too. */}
                 <RuleCards build={build} actions={actions} content={content} sourcesContent={ovContent} catalog={sourceCat}>
-                  <CampaignAttachCard build={build} actions={actions} content={content} onLeaveCampaign={onLeaveCampaign} />
+                  <CampaignAttachCard
+                    build={build}
+                    actions={actions}
+                    content={content}
+                    onLeaveCampaign={onLeaveCampaign}
+                    // Not an undo step: an undo would only find nothing to change (keepBuildCampaigns).
+                    setCampaignIds={(f) => setBuild((b) => ({ ...b, campaignIds: f(b.campaignIds ?? []) }), { record: false })}
+                  />
                   <OptionsCard build={build} actions={actions} content={content} />
                 </RuleCards>
                 {build.options?.overridesEnabled && (
