@@ -1139,3 +1139,26 @@ pass" list — not fixed and not asked. It waits for the one large pass over eve
 question already on the desk is still answered the documented way when he answers it, as #176 was. Two things
 are not held back by it: a fix he explicitly approves, and an over-grant his own rules already settle (Ruling B
 and authorised exception #126: a value is a real number only when it is always on, otherwise a star).
+
+## 2026-10-21 · The order skill ranks are worked out in
+
+Asked in chat after a read-only map of the bug (`work/skill-rank-timing-2026-10-21.md`): the engine spends skill
+increases before feat and heritage skill trainings, so Kholo Lore + a 3rd-level Stealth increase stays trained.
+Each line quotes his answer exactly. NOT BUILT yet — see the fourth ruling.
+
+- **Which order — Wanderer's Guide or print.** Asked: Wanderer's Guide applies heritage and every ancestry feat
+  first and Free Archetype feats last; print goes level by level; they differ in three cases. — *"wouldt it be
+  best to do lv by lv?"*, confirmed in chat. **Level by level, as print**, even where Wanderer's Guide differs
+  (an authorised exception to exact parity): at each level, that level's class features, heritage (1st), feats
+  and their choice trainings, then that level's skill increases.
+- **"If you would automatically become trained … (from your background or class, for example)"** (Kholo Lore,
+  feat-5592, and every ancestry Lore feat with the same sentence). — *"ignore the backround or class for thigs
+  that say from your background or class, for example, if you are traind in that skill you get a neew skill to be
+  traind in … the meaning is taht if you are traind this isnt wasted and you get traind in anotehr skill"*. The
+  background/class list is only an example: **already trained in the skill when the feat is taken, from any
+  source (a skill increase or another feat included) → a skill of the player's choice instead.**
+- **Saved characters whose numbers change after the fix.** — *"show builder notice and tell the user what will
+  change in therio characters if nithing chanes thn silent"*. A Builder notice that names what changes on that
+  character; no notice when nothing changes. The build is never rewritten on load.
+- **This fix vs Tweaks part B** (both decide where the old Overrides "=" rank sits). — *"if you work on the same
+  thing wait for the tweeks to finish"*. The fix starts only after Tweaks part B is finished.
