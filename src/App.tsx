@@ -19,6 +19,7 @@ import { PageNavContext } from './sheet/PageMenu';
 import { useAuth } from './data/useAuth';
 import { startCloudSync, hasSyncedOnce, noteDerivedRefresh, pullForGmApply } from './data/cloudSync';
 import { startCampaignHomebrew, refreshCampaignHomebrew, homebrewFingerprint } from './data/campaignHomebrew';
+import { leaveCampaignFor } from './data/campaignLeave';
 import { rebuildRoster, carryStoredOverrides } from './data/rebuild';
 import { carriedForCampaign, collectCarried, duplicateWithOwnModes, freshModeId, keepCarried, loadOwnTombstones, loadOwnWinningIds, loadSharedOrigins, modeUsage, ownContent, publishKey, repointMode, withoutCarried } from './data/carried';
 import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModeUsageContext, ModesRemoveFromCharacterContext, ModesSaveAsCopyContext } from './sheet/CopyOnWriteItems';
@@ -658,6 +659,12 @@ export default function App() {
         sentJsonRef.current.delete(key);
         void unpublishCharacter(cid, charId).then((res) => {
           if (res === 'ok') onPublishedKey(key);
+          else if (res === 'failed') {
+            // Still on the server: keep it in the set, so the online / focus retry deletes it again. A
+            // failed delete used to be forgotten here, and a character that LEFT stayed in the party for good.
+            publishedRef.current.add(key);
+            publishFailedRef.current = true;
+          }
         });
       }
       publishedRef.current = desired;
@@ -1507,25 +1514,30 @@ export default function App() {
   // push (~3 s later) read as "homebrew arrived by sync" and re-derived every character for nothing.
   const onHomebrewChanged = () => void remerge();
 
-  // Player: fully leave a campaign — drop the membership (synced + tombstoned via saveCampaigns) AND
-  // detach it from every character, so nothing keeps publishing to it. Stripping the id from each
-  // character makes the publish effect unpublish those campaign_characters rows. (A GM ends a campaign
-  // by deleting it in the Campaigns page instead.)
-  const leaveCampaign = (campaignId: string) => {
-    saveCampaigns(loadCampaigns().filter((m) => m.id !== campaignId));
-    // The membership is gone, so that campaign's homebrew becomes this player's own on the next
-    // successful pull — kept, never deleted.
-    void refreshCampaignHomebrew();
+  // ONE character leaves a campaign (owner, 2026-10-21: campaigns are per character). Only `charId` is
+  // detached — stripping the id makes the publish effect unpublish its campaign_characters row — and a
+  // player's membership (synced + tombstoned via saveCampaigns) goes only once no other character of
+  // theirs is still in it (data/campaignLeave.ts). `charId` undefined: a character the Builder hasn't
+  // created yet, whose draft the card patches itself.
+  const leaveCampaign = (campaignId: string, charId: string | undefined) => {
+    const before = loadCampaigns();
+    // The roster as it is NOW (rosterRef): this runs after the Leave question, and a cloud adopt can land
+    // while it is open.
+    const next = leaveCampaignFor(rosterRef.current, before, charId, campaignId);
+    // Before this device's first cloud pull, a character on another device that is still in the campaign
+    // is UNKNOWN here, not absent — keep the membership then (keeping one is harmless; a tombstone is not).
+    if (next.memberships !== before && (auth.status !== 'signed-in' || hasSyncedOnce())) {
+      saveCampaigns(next.memberships);
+      // The membership is gone, so that campaign's homebrew becomes this player's own on the next
+      // successful pull — kept, never deleted.
+      void refreshCampaignHomebrew();
+    }
+    if (charId === undefined) return;
     commitStructural();
-    setRoster((r) =>
-      r.map((c) => {
-        const cids = c.character.campaignIds ?? [];
-        if (!cids.includes(campaignId)) return c;
-        const character = { ...c.character, campaignIds: cids.filter((id) => id !== campaignId) };
-        const build = c.build ? { ...c.build, campaignIds: (c.build.campaignIds ?? []).filter((id) => id !== campaignId) } : c.build;
-        return { ...c, character, build };
-      }),
-    );
+    // Not an undo step: coming back is joining again with the code, and Ctrl+Z would bring the link back
+    // without the membership it may have dropped. (The roster's undo is a three-way revert, so an undo of
+    // an EARLIER step does not bring it back either.)
+    setRoster((r) => leaveCampaignFor(r, [], charId, campaignId).roster, { record: false });
   };
 
   const deleteChar = (id: string) => {
@@ -1684,7 +1696,7 @@ export default function App() {
       <Builder
         content={buildDb}
         initial={editing?.build}
-        onLeaveCampaign={leaveCampaign}
+        onLeaveCampaign={(campaignId) => leaveCampaign(campaignId, editing?.id)}
         onCancel={() => {
           setEditing(null);
           setMode('sheet');
@@ -1749,7 +1761,7 @@ export default function App() {
         onOpenRoster={() => setMode('roster')}
         onOpenHomebrew={() => setMode('homebrew')}
         onOpenSettings={openSettings}
-        characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
+        characters={roster.map((c) => ({ id: c.id, name: c.character.name, campaignIds: c.character.campaignIds }))}
         onOpenOwn={(id, fromTracker) => { setActiveId(id); setMode('sheet'); setOwnFromTracker(fromTracker ? id : null); }}
         modes={readyContent.modes}
         onSaveMode={saveModeDef}
@@ -1808,7 +1820,7 @@ export default function App() {
         onOpenSettings={openSettings}
         onCustomize={updateCharacter}
         globalCustomization={globalCustom}
-        onLeaveCampaign={leaveCampaign}
+        onLeaveCampaign={(campaignId) => leaveCampaign(campaignId, active.id)}
         partyEnabled={campaignsOnline}
         // Teammates on the Party page derive against the plain content, as the Campaigns page does —
         // never `sheetContent`, which carries THIS character's content edits (item 7 fixer, 2026-10-21).

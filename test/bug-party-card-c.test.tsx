@@ -522,11 +522,13 @@ describe('party card — two rows', () => {
     const css = readFileSync('src/sheet.css', 'utf8');
     // The phone rules for the band, not the base ones: everything after a `max-width: 720px` opener
     // (slice(1) drops the stylesheet before the first one) and before that block's own closing brace.
+    // Cut each block at its brace BEFORE looking for the band: an earlier phone block followed by the base
+    // `.party-turn-r` rule was picked once (the Leave button's 36px block, 2026-10-21).
     const phone = css
       .split('@media (max-width: 720px) {')
       .slice(1)
-      .find((b) => b.includes('.party-turn-r'))
-      ?.split(/\r?\n\}/)[0] ?? '';
+      .map((b) => b.split(/\r?\n\}/)[0])
+      .find((b) => b.includes('.party-turn-r')) ?? '';
     expect(phone).toBeTruthy();
     // The band wraps, and the group that wraps takes the whole width…
     expect(rule(phone, '.party-row-turn')).toMatch(/flex-wrap:\s*wrap/);

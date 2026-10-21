@@ -290,14 +290,32 @@ body {
 .cmp-join-row {
   margin-top: 8px;
 }
-/* Player "Leave campaign" — subtle danger-tinted links under the attach toggles (builder Setup) and a
-   row under the party list (Party page). */
-.cmp-leave-list {
+/* The campaigns ONE character is in (builder Setup → Campaigns): its name, the "i", and its own Leave.
+   Not a toggle — leaving asks first, and coming back is joining again with the code. */
+.cmp-in-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
+  gap: 8px 14px;
+  flex-basis: 100%; /* its own line under the sentence, also with one campaign (the card row wraps) */
 }
+.cmp-in {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+}
+.cmp-in-name {
+  min-width: 0;
+  overflow-wrap: anywhere; /* a long one-word name wraps instead of running off a phone screen */
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: var(--app-bw) solid var(--app-accent);
+  background: var(--app-accent);
+  color: var(--app-accent-text);
+}
+/* "Leave campaign" — a subtle danger-tinted button beside each campaign (builder Setup) and a row
+   under the party list (Party page). */
 .cmp-leave-btn {
   display: inline-flex;
   align-items: center;
@@ -316,6 +334,12 @@ body {
 @media (hover: hover) {
   .cmp-leave-btn:hover {
     opacity: 1;
+  }
+}
+/* Phones: 36px, the owner's bar for a secondary control (2026-10-14 phone audit) — it was 23px. */
+@media (max-width: 720px) {
+  .cmp-leave-btn {
+    min-height: 36px;
   }
 }
 .party-leave-row {

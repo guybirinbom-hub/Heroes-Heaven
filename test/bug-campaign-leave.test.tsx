@@ -26,7 +26,8 @@ import { rememberCampaign, setOnCampaignsPage } from '../src/integration/lastCam
  *  (b) Settings offered the GM-only 'Initiative tracker' section on a phone (and pulled the tracker
  *      chunk down to render it), against the ruling that there is no GM side on the phone;
  *  (c) pasting your OWN share code into the phone's Join row replaced your 'gm' membership with a
- *      'player' one, dropping `useDefaults` with it.
+ *      'player' one, dropping `useDefaults` with it. (2026-10-21: that row is gone — joining is per
+ *      character, in its Setup → Campaigns — and the test now pins its absence.)
  */
 
 const srv = vi.hoisted(() => ({
@@ -161,13 +162,6 @@ function render(el: React.ReactElement): HTMLElement {
 }
 
 const click = (el: Element) => act(() => el.dispatchEvent(new MouseEvent('click', { bubbles: true })));
-
-/** Type into a controlled input the way React sees it. */
-function type(el: HTMLInputElement, value: string): void {
-  const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!;
-  setter.call(el, value);
-  act(() => void el.dispatchEvent(new Event('input', { bubbles: true })));
-}
 
 const dialog = () => document.querySelector('.confirm-modal');
 const dialogButton = (cls: string): HTMLElement => {
@@ -320,10 +314,11 @@ describe('leaving a campaign', () => {
     expect(el.querySelector('.settings-nav')?.textContent).toContain('Initiative tracker');
   }, 120_000);
 
-  it('never downgrades a GM membership when their own code is pasted into Join', async () => {
-    // tracker 2026-09-15: join guard
-    // Without the fix (JoinRow's upsert replacing the row):
-    //   AssertionError: expected 'player' to be 'gm'
+  it('the phone page has no Join row of its own, so it cannot downgrade a GM membership', async () => {
+    // tracker 2026-09-15: join guard. Defect (c) lived in the phone's Join row, which replaced the GM's
+    // row with a 'player' one. Since 2026-10-21 campaigns are per character (owner) and joining is the
+    // character's Setup → Campaigns only: that row is gone, and the Setup card's join keeps an existing
+    // membership as it is (test/campaign-per-character.test.tsx, "keeps their GM membership").
     stubMedia(true);
     localStorage.setItem('pf2e-codex.campaigns', JSON.stringify([CAMPAIGN]));
     const { CampaignsPage } = await import('../src/sheet/CampaignsPage');
@@ -341,15 +336,11 @@ describe('leaving a campaign', () => {
     );
     await flush();
 
-    const input = el.querySelector('input[aria-label="Campaign share code"]') as HTMLInputElement;
-    type(input, 'TESTCODE');
-    click([...el.querySelectorAll('button')].find((b) => (b.textContent ?? '').trim() === 'Join')!);
-    await flush(2);
-
+    expect(el.querySelector('input[aria-label="Campaign share code"]')).toBeNull();
+    expect(el.textContent).toContain('Setup → Campaigns');
     const stored = JSON.parse(localStorage.getItem('pf2e-codex.campaigns') ?? '[]') as CampaignMembership[];
     expect(stored).toHaveLength(1);
     expect(stored[0].role).toBe('gm');
     expect(stored[0].useDefaults).toBe(true);
-    expect(el.textContent).toContain('Already joined');
   }, 120_000);
 });

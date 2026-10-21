@@ -7,7 +7,8 @@ import { usePrefs } from '../data/prefs';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { loadHomebrewSources, loadCampaigns, saveCampaigns, listCampaignHbSources } from '../data/storage';
 import { useAuth } from '../data/useAuth';
-import { fetchCampaignByCode, type CampaignMembership } from '../data/campaigns';
+import { fetchCampaignByCode, normalizeCode, type CampaignMembership } from '../data/campaigns';
+import { campaignsOfCharacter, leaveCampaignQuestion } from '../data/campaignLeave';
 import { refreshCampaignHomebrew } from '../data/campaignHomebrew';
 import { confirmDialog } from '../sheet/confirm';
 import {
@@ -2374,10 +2375,10 @@ function MonsterPartsModeSelect({ build, actions }: Pick<EditorProps, 'build' | 
   );
 }
 
-/** Campaigns, in a character's Setup. This is where PLAYERS join a campaign — enter the code your GM
- *  shared — and where any character is attached to campaigns it's in (so it shows in that party and
- *  publishes to teammates). Joining offers to start the character from the campaign's default rules.
- *  Hidden for local / not-signed-in users (no campaigns for them). */
+/** Campaigns, in a character's Setup: the campaigns THIS character is in (it shows in that party and
+ *  publishes to teammates), each with its own Leave, and where it joins one — the code from the GM, or
+ *  the GM's own code for a character of theirs. Joining offers to start the character from the
+ *  campaign's default rules. Hidden for local / not-signed-in users whose character is in none. */
 export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }: EditorProps & { onLeaveCampaign?: (campaignId: string) => void }) {
   const auth = useAuth();
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
@@ -2389,29 +2390,25 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
   const live = useRef(build);
   live.current = build;
 
+  /* Campaigns are per character (owner, 2026-10-21): this card lists only the ones THIS character is
+   * in, never every campaign the account is in, and there is no in/out toggle — leaving asks first, and
+   * coming back is joining again with the code (data/campaignLeave.ts). */
+  const inCampaigns = campaignsOfCharacter(build.campaignIds, memberships);
+
   const leave = async (m: CampaignMembership) => {
-    const ok = await confirmDialog({
-      title: `Leave “${m.name}”?`,
-      message: 'You’ll leave this campaign and all of your characters will be removed from its party. You can rejoin later with the code.',
-      confirmLabel: 'Leave campaign',
-      danger: true,
-    });
-    if (!ok) return;
-    onLeaveCampaign?.(m.id); // App: drop the membership (synced) + detach it from every character
-    setMemberships((ms) => ms.filter((x) => x.id !== m.id)); // reflect in this card immediately
+    if (!(await confirmDialog(leaveCampaignQuestion(m, live.current.name)))) return;
+    onLeaveCampaign?.(m.id); // App: detach this character; a player's membership goes once no character is left in it
+    setMemberships(loadCampaigns()); // what App left of the list (names of the campaigns still shown)
     actions.patch((b) => ({ campaignIds: (b.campaignIds ?? []).filter((id) => id !== m.id) })); // and the draft build
   };
 
-  // Local / not signed in and not already in any campaign → nothing to show.
-  if (auth.status !== 'signed-in' && memberships.length === 0) return null;
-
-  const attached = new Set(build.campaignIds ?? []);
-  const toggle = (id: string) => {
-    const next = new Set(attached);
-    if (next.has(id)) next.delete(id);
-    else next.add(id);
-    actions.patch({ campaignIds: [...next] });
-  };
+  // Local / not signed in, or a GM rebuilding a player's character (no leave handler: joining would put
+  // the GM's account and the player's character in a campaign), and it is in none → nothing to show.
+  if ((auth.status !== 'signed-in' || !onLeaveCampaign) && inCampaigns.length === 0) return null;
+  /* Leave needs a host that applies it (a GM rebuilding a player's character passes none: the card must
+   * not take a player out of a campaign — one run by another GM shows here as just "Campaign") and an
+   * account: the party row is deleted by App's publish effect, which runs signed in only. */
+  const canLeave = !!onLeaveCampaign && auth.status === 'signed-in';
 
   const join = async () => {
     if (busy) return;
@@ -2419,21 +2416,48 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
     setError('');
     const res = await fetchCampaignByCode(code);
     setBusy(false);
-    if (!res.ok) {
+    const have = loadCampaigns(); // as stored now: a leave or a sync may have changed it since this card opened
+    // A campaign the account is already in joins without the server — a GM putting their own character in
+    // their own campaign offline, as the old on/off chip did. Only the default-rules question needs the fetch.
+    // Not when the server answered that the campaign is gone: the copy here is stale.
+    const known = have.find((m) => !!m.code && normalizeCode(m.code) === normalizeCode(code));
+    if (!res.ok && (!known || res.notFound)) {
       setError(res.error);
       return;
     }
+    const id = res.ok ? res.value.id : known!.id;
+    // The GM's own code: their campaign, never 'player' — also on a device whose list has not synced yet.
+    const mine = res.ok && !!res.value.ownerId && res.value.ownerId === auth.session?.user.id;
+    let list = have;
+    if (mine && have.some((m) => m.id === id && m.role !== 'gm')) {
+      // Stored as 'player' (the join before 2026-10-21 did that, and the local copy wins the merge, so it
+      // spread): the code proves it is theirs — put the GM role back, also when this character is in it.
+      list = have.map((m) => (m.id === id ? { ...m, role: 'gm' as const } : m));
+      saveCampaigns(list);
+      setMemberships(list);
+    }
+    if ((live.current.campaignIds ?? []).includes(id)) {
+      // Nothing to join — and not the default-rules question again, which would reset its rules and books.
+      setError(`This character is already in “${res.ok ? res.value.name : known!.name}”.`);
+      setCode('');
+      return;
+    }
+    if (!res.ok) {
+      actions.patch((b) => ({ campaignIds: [...new Set([...(b.campaignIds ?? []), id])] }));
+      setCode('');
+      return;
+    }
     const c = res.value;
-    if (!memberships.some((m) => m.id === c.id)) {
+    if (!list.some((m) => m.id === c.id)) {
       const next: CampaignMembership[] = [
-        ...memberships,
-        { id: c.id, code: c.code, role: 'player', name: c.name, description: c.description },
+        ...list,
+        { id: c.id, code: c.code, role: mine ? 'gm' : 'player', name: c.name, description: c.description },
       ];
       setMemberships(next);
       saveCampaigns(next);
       // Pull the GM's shared homebrew now, not on the next focus: 'Use defaults' below can turn it on.
       void refreshCampaignHomebrew();
-    }
+    } else setMemberships(list);
     actions.patch((b) => ({ campaignIds: [...new Set([...(b.campaignIds ?? []), c.id])] }));
     setCode('');
     const d = c.defaults;
@@ -2472,37 +2496,32 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
 
   return (
     <SetupCard icon="ti-users" label="Campaigns">
-      {memberships.length > 0 && (
+      {inCampaigns.length > 0 && (
         <>
-          <div className="spr-sub" style={{ marginBottom: 6 }}>Attach this character to a campaign so it appears in that party.</div>
-          <div className="spr-chips">
-            {memberships.map((m) => (
-              <ToggleWithInfo
-                key={m.id}
-                label={m.name}
-                description={m.role === 'gm' ? 'You run this campaign — your character joins its party.' : 'You play in this campaign — your character joins its party.'}
-                on={attached.has(m.id)}
-                onToggle={() => toggle(m.id)}
-              />
+          <div className="spr-sub" style={{ marginBottom: 6 }}>This character is in {inCampaigns.length === 1 ? 'this campaign' : 'these campaigns'} and appears in {inCampaigns.length === 1 ? 'its' : 'their'} party.</div>
+          <div className="cmp-in-list">
+            {inCampaigns.map((m) => (
+              <span key={m.id} className="cmp-in">
+                <span className="cmp-in-name">{m.name}</span>
+                <RuleInfo
+                  title={m.name}
+                  description={m.role === 'gm' ? 'You run this campaign — this character is in its party.' : 'You play in this campaign — this character is in its party.'}
+                />
+                {canLeave && (
+                  <button type="button" className="cmp-leave-btn" aria-label={`Leave “${m.name}”`} onClick={() => void leave(m)}>
+                    <i className="ti ti-logout" aria-hidden="true" /> Leave
+                  </button>
+                )}
+              </span>
             ))}
           </div>
-          {/* Players can leave a campaign entirely (drops the membership + detaches all their characters).
-              A GM ends theirs by deleting it in the Campaigns page, so no leave button for GM rows. */}
-          {onLeaveCampaign && memberships.some((m) => m.role === 'player') && (
-            <div className="cmp-leave-list">
-              {memberships
-                .filter((m) => m.role === 'player')
-                .map((m) => (
-                  <button key={m.id} type="button" className="cmp-leave-btn" onClick={() => void leave(m)}>
-                    <i className="ti ti-logout" aria-hidden="true" /> Leave “{m.name}”
-                  </button>
-                ))}
-            </div>
-          )}
+          {!!onLeaveCampaign && !canLeave && <div className="spr-sub" style={{ marginTop: 6 }}>Sign in to leave or join a campaign.</div>}
         </>
       )}
-      <div className="cmp-join-row">
-        <span className="spr-sub">Join a campaign — enter the code from your GM:</span>
+      {/* Signed out, a code lookup reads nothing (campaigns are readable signed in only) and would say
+          "No campaign with that code" for a good code — the note above asks to sign in instead. */}
+      {canLeave && <div className="cmp-join-row">
+        <span className="spr-sub">Join a campaign — enter its code (from your GM, or your own if you run it):</span>
         <div className="cmp-join-input">
           <input
             className="hb-input"
@@ -2523,7 +2542,7 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
           </button>
         </div>
         {error && <p className="login-error" role="alert" style={{ marginTop: 6 }}>{error}</p>}
-      </div>
+      </div>}
     </SetupCard>
   );
 }

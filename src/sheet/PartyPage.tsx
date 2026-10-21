@@ -5,6 +5,7 @@ import { PartyMembers, useMemberViewer } from './PartyMembers';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import { confirmDialog } from './confirm';
+import { leaveCampaignQuestion } from '../data/campaignLeave';
 
 interface PartyPageProps {
   content: ContentDatabase;
@@ -15,26 +16,23 @@ interface PartyPageProps {
   characters?: { id: string; name: string }[];
   /** Open one of your own characters for real (a roster id), instead of reading its published copy. */
   onOpenOwn?: (charId: string) => void;
-  /** Player leaves a campaign entirely (drops the membership + detaches all their characters). */
+  /** THIS character leaves a campaign, after the question (data/campaignLeave.ts — only this character
+   *  is detached; a player's membership goes once none of their characters is left in it). */
   onLeave?: (campaignId: string) => void;
+  /** The character this page was opened from, named in the Leave question. */
+  characterName?: string;
 }
 
 /** Party view opened from a character's Party button — teammates' characters in summary for the
  *  selected campaign; tap one to read (only) their full sheet. A GM viewing here can still kick. */
-export function PartyPage({ content, campaigns, characters, onOpenOwn, onClose, onLeave }: PartyPageProps) {
+export function PartyPage({ content, campaigns, characters, onOpenOwn, onClose, onLeave, characterName }: PartyPageProps) {
   const [selectedId, setSelectedId] = useState(campaigns[0]?.id ?? '');
   const selectedCampaign = campaigns.find((c) => c.id === selectedId);
   const { sheetEl, open } = useMemberViewer(content, { roster: characters, onOpenOwn });
 
   const leave = async () => {
     if (!onLeave || !selectedCampaign) return;
-    const ok = await confirmDialog({
-      title: `Leave “${selectedCampaign.name}”?`,
-      message: 'You’ll leave this campaign and all of your characters will be removed from its party. You can rejoin later with the code (from a character’s Setup → Campaigns).',
-      confirmLabel: 'Leave campaign',
-      danger: true,
-    });
-    if (ok) onLeave(selectedCampaign.id);
+    if (await confirmDialog(leaveCampaignQuestion(selectedCampaign, characterName))) onLeave(selectedCampaign.id);
   };
 
   if (sheetEl) return sheetEl;
@@ -70,8 +68,9 @@ export function PartyPage({ content, campaigns, characters, onOpenOwn, onClose, 
           </div>
         )}
         <PartyMembers campaignId={selectedId} isGm={selectedCampaign?.role === 'gm'} content={content} onView={(m) => void open(selectedId, m.charId, m.ownerId)} />
-        {/* Players can leave a campaign entirely; a GM ends theirs by deleting it in the Campaigns page. */}
-        {onLeave && selectedCampaign && selectedCampaign.role === 'player' && (
+        {/* This character leaves the campaign — a GM's character too (the campaign stays; a GM ends it by
+            deleting it on the Campaigns page). */}
+        {onLeave && selectedCampaign && (
           <div className="party-leave-row">
             <button className="chip danger" onClick={() => void leave()}>
               <i className="ti ti-logout" aria-hidden="true" /> Leave campaign

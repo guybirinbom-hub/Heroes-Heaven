@@ -25,7 +25,7 @@ import { saveCampaignHbCache, saveHomebrewEntry, saveHomebrewSource, saveSyncOwn
  *  - the defaults editor ticks a shared source by its CURRENT name (a rename never unshares it), asks
  *    before sharing (players keep a shared source for good) and before unsharing, never unshares on
  *    an UNKNOWN shared list, and never unshares an id this device can't see;
- *  - both join doors pull the campaign's homebrew once.
+ *  - the join door (a character's Setup → Campaigns) pulls the campaign's homebrew once.
  */
 
 const srv = vi.hoisted(() => ({
@@ -530,7 +530,9 @@ describe('joining a campaign pulls its homebrew', () => {
     function Harness() {
       const [build, setBuild] = useState<BuildState>(() => emptyBuild());
       const actions = useBuilderActions(setBuild, db);
-      return <CampaignAttachCard build={build} actions={actions} content={db} />;
+      // App always passes a leave handler; without one (a GM's rebuild of a player's character) the card
+      // has no join row (test/campaign-per-character.test.tsx).
+      return <CampaignAttachCard build={build} actions={actions} content={db} onLeaveCampaign={() => undefined} />;
     }
     const el = render(<Harness />);
     await flush(1);
@@ -540,36 +542,6 @@ describe('joining a campaign pulls its homebrew', () => {
     expect(srv.refreshCampaignHomebrew).toHaveBeenCalledTimes(1);
   });
 
-  it('the phone JoinRow refreshes once after a successful join', async () => {
-    // Without the call in JoinRow:  AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
-    window.matchMedia = ((q: string) => ({
-      matches: /max-width:\s*(720|768)px/.test(q),
-      media: q,
-      onchange: null,
-      addListener: () => undefined,
-      removeListener: () => undefined,
-      addEventListener: () => undefined,
-      removeEventListener: () => undefined,
-      dispatchEvent: () => false,
-    })) as typeof window.matchMedia;
-    const { CampaignsPage } = await import('../src/sheet/CampaignsPage');
-    const el = render(
-      <CampaignsPage
-        content={db}
-        onClose={() => undefined}
-        onOpenRoster={() => undefined}
-        onOpenHomebrew={() => undefined}
-        characters={[]}
-        modes={{}}
-        onSaveMode={() => undefined}
-        onDeleteMode={() => undefined}
-      />,
-    );
-    await flush();
-    type(el.querySelector('input[aria-label="Campaign share code"]') as HTMLInputElement, 'SALT23');
-    click(buttonNamed(el, 'Join'));
-    await flush();
-    expect(el.textContent).toContain('Joined “The Salt Road”');
-    expect(srv.refreshCampaignHomebrew).toHaveBeenCalledTimes(1);
-  }, 120_000);
+  // The phone's own Join row (a second join door) was removed on 2026-10-21: campaigns are per character
+  // (owner), so the Setup card above is the only join, phones included (test/campaign-per-character.test.tsx).
 });

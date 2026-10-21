@@ -292,7 +292,8 @@ export function Builder({
   initial?: BuildState;
   onCancel: () => void;
   onCreate: (build: BuildState) => void;
-  /** Player leaves a campaign entirely (roster-wide) — threaded to the Campaigns setup card. */
+  /** THIS character leaves a campaign (data/campaignLeave.ts) — threaded to the Campaigns setup card.
+   *  Absent (a GM rebuilding a player's character): the card offers no Leave. */
   onLeaveCampaign?: (campaignId: string) => void;
 }) {
   /*

@@ -31,7 +31,7 @@ import {
 import type { PartyMember } from '../data/party';
 import { useAuth } from '../data/useAuth';
 import { loadCampaigns, saveCampaigns, loadHomebrewSources } from '../data/storage';
-import { fetchSharedSourceIds, refreshCampaignHomebrew, shareSources, unshareSources } from '../data/campaignHomebrew';
+import { fetchSharedSourceIds, shareSources, unshareSources } from '../data/campaignHomebrew';
 import { PartyMembers, useMemberViewer } from './PartyMembers';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
@@ -109,7 +109,9 @@ interface CampaignsPageProps {
   onOpenRoster: () => void;
   onOpenHomebrew: () => void;
   onOpenSettings?: () => void;
-  characters: { id: string; name: string }[];
+  /** This device's characters. `campaignIds`: which campaigns each one is in — the phone list shows a
+   *  player's campaign only while one of them is (campaigns are per character, owner 2026-10-21). */
+  characters: { id: string; name: string; campaignIds?: string[] }[];
   /** Open one of this device's own characters (a roster id) — what a GM's own card in the party does
    *  instead of opening the GM editor on their own published copy. `fromTracker`: the card was in the
    *  campaign's initiative tracker, so that sheet offers "← Tracker" back here (removable seam). */
@@ -452,26 +454,23 @@ export function CampaignsPage({ content, onClose, onOpenSettings, characters, on
           <>
         {view.kind === 'list' && (
           <>
-            {/* On a phone the list is every campaign you're IN, GM or player — the page is a player's
-                page there, and a GM with only their own campaigns still sees exactly what they ran. */}
+            {/* On a phone the list is every campaign you're IN — the page is a player's page there: the
+                ones you run, and a player's campaign while one of your characters is in it. Campaigns are
+                per character (owner, 2026-10-21: "if you are not in then you dont need to see that
+                campaign anymore"), so a membership no character holds is hidden here — never deleted
+                (a character on another device may not have synced yet). */}
             <GmList
-              campaigns={isPhone ? memberships : gmCampaigns}
+              campaigns={isPhone ? memberships.filter((m) => m.role === 'gm' || characters.some((c) => (c.campaignIds ?? []).includes(m.id))) : gmCampaigns}
               phone={isPhone}
               onCreate={isPhone ? undefined : () => setView({ kind: 'create' })}
               onOpen={(m) => setView({ kind: 'detail', m })}
             />
+            {/* Joining is per character too: the code goes in that character's Setup → Campaigns, which
+                phones reach as well. A join here added a membership with no character in it. */}
             {isPhone && (
-              <JoinRow
-                // Joining must never DOWNGRADE a membership you already have: `upsertMembership`
-                // REPLACES the row, so a GM pasting their own share code here turned their local
-                // role into 'player' (and dropped `useDefaults`). The desktop join in
-                // builder/shared.tsx has always kept the existing row; this does the same and says so.
-                onJoined={(next) => {
-                  if (memberships.some((x) => x.id === next.id)) return false;
-                  upsertMembership(next);
-                  return true;
-                }}
-              />
+              <p className="setup-note">
+                To join a campaign, enter your GM&rsquo;s code in a character&rsquo;s <strong>Setup → Campaigns</strong>.
+              </p>
             )}
           </>
         )}
@@ -574,12 +573,13 @@ function GmList({ campaigns, phone, onCreate, onOpen }: {
         ) : (
           <>
             Campaigns you <strong>run</strong>. Create one, set its default rules, and share the code — players join by
-            entering it in a character&rsquo;s <strong>Setup → Campaigns</strong>. Open a campaign to manage it and see the party.
+            entering it in a character&rsquo;s <strong>Setup → Campaigns</strong> (so do you, for a character of your own).
+            Open a campaign to manage it and see the party.
           </>
         )}
       </p>
       {campaigns.length === 0 ? (
-        <div className="cmp-empty">{phone ? 'You haven’t joined a campaign yet.' : 'You don’t run any campaigns yet.'}</div>
+        <div className="cmp-empty">{phone ? 'None of your characters is in a campaign yet.' : 'You don’t run any campaigns yet.'}</div>
       ) : (
         campaigns.map((m) => (
           <div
@@ -608,70 +608,6 @@ function GmList({ campaigns, phone, onCreate, onOpen }: {
         <div className="cmp-add-row">
           <button className="btn-primary" onClick={onCreate}><i className="ti ti-plus" aria-hidden="true" /> Create a campaign</button>
         </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * Join a campaign with the GM's code, from this page.
- *
- * Joining otherwise lives in a character's Setup → Campaigns, and still does — but on a phone this
- * page is the player's campaigns page, and "players on phones must still be able to join a campaign"
- * has to be true without going hunting. It records the MEMBERSHIP only; attaching a character to the
- * party is still the Setup card's job, which is where the campaign's default rules are offered.
- */
-function JoinRow({ onJoined }: { onJoined: (m: CampaignMembership) => boolean }) {
-  const [code, setCode] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
-  const [joined, setJoined] = useState('');
-  /** The code was for a campaign this device is already in — nothing was changed. */
-  const [already, setAlready] = useState(false);
-
-  const join = async () => {
-    if (busy || !code.trim()) return;
-    setBusy(true);
-    setError('');
-    setJoined('');
-    const res = await fetchCampaignByCode(code.trim());
-    setBusy(false);
-    if (!res.ok) {
-      setError(res.error);
-      return;
-    }
-    const c = res.value;
-    const added = onJoined({ id: c.id, code: c.code, role: 'player', name: c.name, description: c.description });
-    setAlready(!added);
-    if (added) void refreshCampaignHomebrew(); // the GM's shared homebrew, now rather than on the next focus
-    setCode('');
-    setJoined(c.name);
-  };
-
-  return (
-    <div className="cmp-join-row">
-      <label className="cmp-field">
-        <span className="cmp-label">Join with a code</span>
-        <input
-          className="hb-input"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="Your GM’s share code"
-          aria-label="Campaign share code"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') void join();
-          }}
-        />
-      </label>
-      <button className="btn-primary" disabled={busy || !code.trim()} onClick={() => void join()}>
-        {busy ? 'Joining…' : 'Join'}
-      </button>
-      {error && <p className="login-error" role="alert">{error}</p>}
-      {joined && (
-        <p className="setup-note" role="status">
-          {already ? 'Already joined' : 'Joined'} “{joined}”. Attach a character in its{' '}
-          <strong>Setup → Campaigns</strong> to appear in the party.
-        </p>
       )}
     </div>
   );
@@ -901,7 +837,7 @@ export function CampaignForm({ content, editing, onDelete, onCancel, onCreated, 
           <div className="cmp-share-row">
             <CodeChip code={editing.code} />
             <span className="cmp-share-hint">
-              Players enter this in a character&rsquo;s <strong>Setup → Campaigns</strong> to join.
+              Players enter this in a character&rsquo;s <strong>Setup → Campaigns</strong> to join (you too, for a character of your own).
             </span>
           </div>
         </div>
@@ -964,7 +900,7 @@ function CreatedView({ c, shareError, onDone }: { c: Campaign; shareError?: stri
       {shareError && <p className="login-error" role="alert">{shareError}</p>}
       <p className="cmp-created-sub">Share this code with your players so they can join:</p>
       <CodeChip code={c.code} />
-      <p className="cmp-created-hint">Players enter it in a character&rsquo;s <strong>Setup → Campaigns</strong>.</p>
+      <p className="cmp-created-hint">Players enter it in a character&rsquo;s <strong>Setup → Campaigns</strong> — and so do you, to bring a character of your own.</p>
       <button className="btn-primary" onClick={onDone}>Manage campaign</button>
     </div>
   );

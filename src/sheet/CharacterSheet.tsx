@@ -52,6 +52,7 @@ import { useIsMobile, useShowUndoButtons } from './useIsMobile';
 import { useAvatar, usePortrait } from './usePortrait';
 import { PartyPage } from './PartyPage';
 import { loadCampaigns } from '../data/storage';
+import { campaignsOfCharacter } from '../data/campaignLeave';
 import { useBackHandler } from './useEscapeClose';
 import { HeroesHeavenLogo } from './Logo';
 import { playerFacingContent } from '../rules/cursedItems';
@@ -277,12 +278,10 @@ export function CharacterSheet({
   const visibleMobileTabs = MOBILE_TABS.filter(tabVisible);
   // Campaigns this character is attached to (for the Party button + view). Falls back to a placeholder
   // name if the membership isn't cached on this device.
-  const attachedCampaigns = useMemo(() => {
-    const ids = character.campaignIds ?? [];
-    if (!ids.length) return [];
-    const byId = new Map(loadCampaigns().map((m) => [m.id, m]));
-    return ids.map((id) => byId.get(id) ?? { id, code: '', role: 'player' as const, name: 'Campaign' });
-  }, [character.campaignIds]);
+  const attachedCampaigns = useMemo(
+    () => (character.campaignIds?.length ? campaignsOfCharacter(character.campaignIds, loadCampaigns()) : []),
+    [character.campaignIds],
+  );
   const showParty = !readOnly && !gmEdit && !!partyEnabled && (character.campaignIds?.length ?? 0) > 0;
   useBackHandler(partyOpen, () => setPartyOpen(false));
   const [restOpen, setRestOpen] = useState(false);
@@ -553,6 +552,7 @@ export function CharacterSheet({
       <PartyPage
         content={teammateContent}
         campaigns={attachedCampaigns}
+        characterName={character.name}
         characters={characters}
         // Tapping your own card here leaves the party view as well as switching character — without
         // the close it would hand App a new active id and leave the party page sitting on top of it.

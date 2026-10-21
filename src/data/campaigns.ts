@@ -45,7 +45,9 @@ export interface CampaignMembership {
   local?: boolean;
 }
 
-export type CampaignResult<T> = { ok: true; value: T } | { ok: false; error: string };
+/** `notFound`: the server answered and has no such campaign (deleted, or a wrong code) — not a network
+ *  failure, so a copy of it on this device is no reason to go on. */
+export type CampaignResult<T> = { ok: true; value: T } | { ok: false; error: string; notFound?: true };
 
 // Unambiguous code alphabet — no 0/O, 1/I/L, so a shared code is easy to read + type.
 const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -133,7 +135,7 @@ export async function fetchCampaignByCode(code: string): Promise<CampaignResult<
   if (!norm) return { ok: false, error: 'Enter a campaign code.' };
   const { data, error } = await supabase.from('campaigns').select('*').eq('code', norm).maybeSingle();
   if (error) return { ok: false, error: friendlyError(error) };
-  if (!data) return { ok: false, error: 'No campaign with that code — double-check it with your GM.' };
+  if (!data) return { ok: false, error: 'No campaign with that code — double-check it with your GM.', notFound: true };
   return { ok: true, value: rowToCampaign(data as CampaignRow) };
 }
 

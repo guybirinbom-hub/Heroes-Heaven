@@ -614,7 +614,7 @@ export function PartyMembers({
         // instead of implying nobody has shared a character.
         <div className="party-empty">Sign in to see this campaign’s party — the member list is stored on the server.</div>
       ) : shown && shown.length === 0 ? (
-        <div className="party-empty">No one has shared a character with this campaign yet. Characters appear here once a member attaches one (Builder → Setup → Campaigns) and their app syncs.</div>
+        <div className="party-empty">No one has shared a character with this campaign yet. Characters appear here once a member enters this campaign’s code in a character’s Setup → Campaigns and their app syncs.</div>
       ) : (
         <div className="party-grid">
           {(shown ?? []).map(({ member: m, pending, refused }) => (
