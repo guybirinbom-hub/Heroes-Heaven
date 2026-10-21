@@ -8,8 +8,19 @@ import { seedContent } from '../src/rules/seed';
 import { emptyBuild, type BuildState } from '../src/rules/build';
 import type { CampaignMembership } from '../src/data/campaigns';
 import type { SavedChar } from '../src/data/storage';
-import { saveCampaigns } from '../src/data/storage';
-import { campaignsOfCharacter, keepBuildCampaigns, keepRosterCampaigns, leaveCampaignFor, leaveCampaignQuestion } from '../src/data/campaignLeave';
+import { loadUnheldCampaigns, saveCampaigns, saveUnheldCampaigns, wipeSyncedLocalData } from '../src/data/storage';
+import { duplicateWithOwnModes } from '../src/data/carried';
+import {
+  campaignsOfCharacter,
+  dropUnheldPlayerCampaigns,
+  keepBuildCampaigns,
+  keepRosterCampaigns,
+  leaveCampaignFor,
+  leaveCampaignQuestion,
+  UNHELD_GRACE_MS,
+  withCampaignsOf,
+  withoutCampaign,
+} from '../src/data/campaignLeave';
 import { useUndoableState, type Undoable } from '../src/useUndoableState';
 import { renderDom } from './_render';
 
@@ -222,6 +233,121 @@ describe('undo and redo never change which campaigns a character is in', () => {
   });
 });
 
+describe('campaigns no character is in, and an import over a character (owner, 2026-10-21)', () => {
+  const NOW = 1_800_000_000_000;
+  const none = new Set<string>();
+  it('a player campaign none of the characters is in goes a day after it was first seen; a GM one, a held one and the Local table stay', () => {
+    const LOCAL: CampaignMembership = { id: 'local', code: '', role: 'player', name: 'Local table', local: true };
+    const roster = [[char('c1', ['camp-a'])]];
+    // MUTATION: drop the grace (go at once) and the first leg fails — a join in the Builder, held only in
+    // the draft until Save, was undone on every device that launched meanwhile (a checker's finding).
+    const first = dropUnheldPlayerCampaigns([A, B, G, LOCAL], roster, none, {}, {}, NOW);
+    expect(first.memberships.map((m) => m.id), 'first seen: it stays').toEqual(['camp-a', 'camp-b', 'camp-g', 'local']);
+    expect(first.seen, 'and is stamped').toEqual({ 'camp-b': NOW });
+    const later = dropUnheldPlayerCampaigns([A, B, G, LOCAL], roster, none, first.seen, {}, NOW + UNHELD_GRACE_MS - 1);
+    expect(later.memberships.map((m) => m.id), 'not a day yet: it stays').toEqual(['camp-a', 'camp-b', 'camp-g', 'local']);
+    expect(later.seen, 'its first stamp kept').toEqual({ 'camp-b': NOW });
+    const day = dropUnheldPlayerCampaigns([A, B, G, LOCAL], roster, none, first.seen, {}, NOW + UNHELD_GRACE_MS);
+    expect(day.memberships.map((m) => m.id), 'a day later: it goes').toEqual(['camp-a', 'camp-g', 'local']);
+    expect(day.seen).toEqual({});
+  });
+  it('a join on any device restarts the wait, however old this device’s own stamp is', () => {
+    // A checker's finding, 2026-10-21: a rejoin by code of an old hidden campaign is held only by the
+    // Builder's draft until Save; this device had stamped it days before. MUTATION: drop the `revived` term
+    // from `first` in dropUnheldPlayerCampaigns and this fails — the rejoin was removed on every device.
+    const old = { 'camp-b': NOW - 5 * UNHELD_GRACE_MS };
+    const joined = { 'camp:camp-b': NOW - 60_000 };
+    const r = dropUnheldPlayerCampaigns([A, B], [[char('c1', ['camp-a'])]], none, old, joined, NOW);
+    expect(r.memberships.map((m) => m.id), 'joined a minute ago: it stays').toEqual(['camp-a', 'camp-b']);
+    expect(r.seen, 'and waits a day from the join').toEqual({ 'camp-b': NOW - 60_000 });
+    const stale = dropUnheldPlayerCampaigns([A, B], [[char('c1', ['camp-a'])]], none, old, { 'camp:camp-b': NOW - 2 * UNHELD_GRACE_MS }, NOW);
+    expect(stale.memberships.map((m) => m.id), 'an old join is no reason to wait').toEqual(['camp-a']);
+  });
+  it('a stamp in the future (another clock) never removes early', () => {
+    const r = dropUnheldPlayerCampaigns([B], [[]], none, { 'camp-b': NOW + 3 * UNHELD_GRACE_MS }, {}, NOW);
+    expect(r.memberships.map((m) => m.id)).toEqual(['camp-b']);
+    expect(r.seen).toEqual({ 'camp-b': NOW + 3 * UNHELD_GRACE_MS });
+  });
+  it('one held again, or gone, loses its stamp — a later time it is unheld counts from then', () => {
+    const memberships = [A, B];
+    const r = dropUnheldPlayerCampaigns(memberships, [[char('c1', ['camp-a', 'camp-b'])]], none, { 'camp-b': NOW, 'camp-x': NOW }, {}, NOW + 2 * UNHELD_GRACE_MS);
+    expect(r.memberships, 'nothing goes: the same array').toBe(memberships);
+    expect(r.seen).toEqual({});
+  });
+  it('a character in ANY roster copy holds it — archived, or linked only through its build, too', () => {
+    const buildOnly = { ...char('c2', []), build: { ...emptyBuild(), campaignIds: ['camp-b'] } } as SavedChar;
+    const archived = char('c3', ['camp-a'], { archived: true });
+    const memberships = [A, B];
+    const r = dropUnheldPlayerCampaigns(memberships, [[archived], [buildOnly]], none, { 'camp-a': 0, 'camp-b': 0 }, {}, NOW);
+    expect(r.memberships, 'nothing goes: the same array').toBe(memberships);
+  });
+  it('a campaign this account owns never goes, and one stored as a player’s is a GM’s again', () => {
+    // MUTATION: drop the `owned` branch and this fails — the old join stored a GM's own campaign as
+    // 'player' when he typed his own code; with no character of his in it, it was removed everywhere.
+    const r = dropUnheldPlayerCampaigns([A, B], [[]], new Set(['camp-b']), { 'camp-b': 0 }, {}, NOW);
+    expect(r.memberships.map((m) => [m.id, m.role])).toEqual([['camp-a', 'player'], ['camp-b', 'gm']]);
+    expect(r.seen, 'only the unheld player one waits').toEqual({ 'camp-a': NOW });
+  });
+  it('a save stamps only the memberships it adds or changes — never the ones it keeps as they were', () => {
+    // MUTATION: stamp every membership in the list again in storage.ts saveCampaigns and this fails — each
+    // save brought back a campaign another device had left, and a stamp was no "joined at" any more.
+    saveCampaigns([A, B]);
+    localStorage.setItem('pf2e-codex.revived', JSON.stringify({ 'camp:camp-a': 1, 'camp:camp-b': 1 }));
+    saveCampaigns([A, { ...B, name: 'TEST Renamed' }, G]);
+    const revived = JSON.parse(localStorage.getItem('pf2e-codex.revived') ?? '{}') as Record<string, number>;
+    expect(revived['camp:camp-a'], 'kept as it was: not stamped').toBe(1);
+    expect(revived['camp:camp-b'], 'changed: stamped').toBeGreaterThan(1);
+    expect(revived['camp:camp-g'], 'added: stamped').toBeGreaterThan(1);
+  });
+  it('an import’s "Update existing" keeps the campaigns the character is in now', () => {
+    const now = char('c1', ['camp-a']);
+    const file = char('c1', ['camp-b']);
+    expect(idsOf(withCampaignsOf(file, now))).toEqual([['camp-a'], ['camp-a']]);
+    const same = char('c1', ['camp-a']);
+    expect(withCampaignsOf(same, now), 'already the same: untouched').toBe(same);
+    // MUTATION: drop the withCampaignsOf(...) around the Update entry in App.tsx and this fails — an older
+    // file took the character out of its party (or put it in one), and no undo puts campaigns back.
+    const app = readFileSync(resolve(__dirname, '..', 'src/App.tsx'), 'utf8');
+    expect(app).toContain('withCampaignsOf({ ...saved, id: collide.id, archived: c.archived ?? false }, c)');
+  });
+  it('a copy keeps the campaigns of the character it copies', () => {
+    // Owner, 2026-10-21: "NO" to a copied or imported character starting in no campaign. MUTATION: empty
+    // campaignIds in storage.ts duplicateChar (the Duplicate button's copy) and this fails.
+    const original = char('c1', ['camp-a']);
+    const { copy } = duplicateWithOwnModes(original, {});
+    expect(copy.id, 'fixture: a new character').not.toBe('c1');
+    expect(idsOf(copy)).toEqual([['camp-a'], ['camp-a']]);
+  });
+  it('the unheld notes belong to the account: an account switch wipes them', () => {
+    // A checker's finding, 2026-10-21. MUTATION: drop UNHELD_CAMPAIGNS_KEY from storage.ts
+    // wipeSyncedLocalData and this fails — account A's old note removed account B's membership in the same
+    // campaign at B's first launch, with no day to wait.
+    saveUnheldCampaigns({ 'camp-b': NOW });
+    expect(loadUnheldCampaigns(), 'fixture: noted').toEqual({ 'camp-b': NOW });
+    wipeSyncedLocalData();
+    expect(loadUnheldCampaigns()).toEqual({});
+  });
+});
+
+describe('a campaign its GM deleted', () => {
+  it('leaves every character and build still in it; the others, and the roster, untouched when none is', () => {
+    // A checker's finding, 2026-10-21: after a delete his characters showed a nameless "Campaign" with a
+    // Leave button and kept publishing to a campaign that no longer exists. MUTATION: return `roster` from
+    // withoutCampaign in data/campaignLeave.ts and this fails.
+    const buildOnly = { ...char('c2', []), build: { ...emptyBuild(), campaignIds: ['camp-g', 'camp-a'] } } as SavedChar;
+    const other = char('c3', ['camp-a']);
+    const roster = [char('c1', ['camp-g', 'camp-b']), buildOnly, other];
+    const out = withoutCampaign(roster, 'camp-g');
+    expect(out.map(idsOf)).toEqual([
+      [['camp-b'], ['camp-b']],
+      [[], ['camp-a']],
+      [['camp-a'], ['camp-a']],
+    ]);
+    expect(out[2], 'a character not in it is the same object').toBe(other);
+    expect(withoutCampaign(roster, 'camp-none'), 'no character in it: the same array').toBe(roster);
+  });
+});
+
 describe('what Leave asks', () => {
   it('names the character, says only it leaves, and how — and where — to come back', () => {
     const q = leaveCampaignQuestion(A, 'TEST Kyra');
@@ -348,6 +474,55 @@ describe('the Setup → Campaigns card', () => {
     expect(seen.build?.campaignIds).toEqual(['camp-g']);
     expect(el.textContent).toContain(G.name);
     expect(JSON.parse(localStorage.getItem('pf2e-codex.campaigns') ?? '[]')).toEqual([A, B, G]);
+  });
+
+  it('a character in a campaign the account is not in (it shows as "Campaign"): the code puts the membership back', async () => {
+    // A checker's finding, 2026-10-21: a NEW character from a file keeps the file's campaigns, or a removal on
+    // another device raced a join here. MUTATION: drop the repair before "already in" in join() and this
+    // fails — the code only said "already in", and the campaign stayed a nameless "Campaign" for good.
+    srv.campaign = { id: 'camp-x', code: 'XXX234', ownerId: 'gm-1', name: 'TEST Lost Table', description: '', defaults: { mythicEnabled: true } };
+    const { el, seen } = await mountCard(['camp-x']);
+    expect(el.textContent, 'fixture: no membership, so no name').not.toContain('TEST Lost Table');
+    joinWith(el, 'XXX234');
+    await flush();
+    const stored = JSON.parse(localStorage.getItem('pf2e-codex.campaigns') ?? '[]') as CampaignMembership[];
+    expect(stored.find((m) => m.id === 'camp-x')).toMatchObject({ role: 'player', name: 'TEST Lost Table' });
+    expect(el.textContent).toContain('TEST Lost Table');
+    expect(el.textContent, 'no error: it was repaired').not.toContain('already in');
+    expect((el.querySelector('input[aria-label="Campaign code"]') as HTMLInputElement).value, 'the code box is cleared').toBe('');
+    expect(dialog(), 'no default-rules question: the character was already in it').toBeNull();
+    expect(seen.build?.campaignIds).toEqual(['camp-x']);
+    expect(srv.refreshCampaignHomebrew).toHaveBeenCalled();
+  });
+
+  it('the repair keeps a GM’s own campaign a GM’s', async () => {
+    // MUTATION: store `role: 'player'` in join()'s repair and this fails.
+    srv.userId = 'TEST-user-gm';
+    srv.campaign = { id: 'camp-y', code: 'YYY234', ownerId: 'TEST-user-gm', name: 'TEST My Lost Table', description: '', defaults: {} };
+    const { el } = await mountCard(['camp-y']);
+    joinWith(el, 'YYY234');
+    await flush();
+    const stored = JSON.parse(localStorage.getItem('pf2e-codex.campaigns') ?? '[]') as CampaignMembership[];
+    expect(stored.find((m) => m.id === 'camp-y')?.role).toBe('gm');
+  });
+
+  it('joining a campaign the account is already in stamps the join, online and offline', async () => {
+    // A checker's finding, 2026-10-21: such a join saves no membership, so nothing told the other devices,
+    // and their launch cleanup removed it before the Builder's Save. MUTATION: drop either
+    // recordReviveKeys(...) in join() and this fails.
+    const stampOf = (id: string) => (JSON.parse(localStorage.getItem('pf2e-codex.revived') ?? '{}') as Record<string, number>)[`camp:${id}`];
+    srv.campaign = { id: 'camp-a', code: 'AAA234', ownerId: 'gm-1', name: A.name, description: '', defaults: {} };
+    const online = await mountCard([]);
+    localStorage.setItem('pf2e-codex.revived', JSON.stringify({ 'camp:camp-a': 1, 'camp:camp-b': 1 }));
+    joinWith(online.el, 'AAA234');
+    await flush();
+    expect(online.seen.build?.campaignIds).toEqual(['camp-a']);
+    expect(stampOf('camp-a'), 'online: stamped now').toBeGreaterThan(1);
+    srv.campaign = null; // the server cannot be reached
+    joinWith(online.el, 'BBB234');
+    await flush();
+    expect(online.seen.build?.campaignIds).toEqual(['camp-a', 'camp-b']);
+    expect(stampOf('camp-b'), 'offline: stamped now').toBeGreaterThan(1);
   });
 
   it('a campaign the server says is gone does not join from the copy on this device', async () => {
@@ -512,5 +687,11 @@ describe('App wiring', () => {
     // hands over, which the delete-undone case needs (no App test deletes a character).
     const app = readFileSync(resolve(__dirname, '..', 'src/App.tsx'), 'utf8');
     expect(app).toContain("keep: (next, present) => keepRosterCampaigns(next, present, auth.status !== 'signed-in' || hasSyncedOnce() ? loadCampaigns() : null),");
+  });
+  it('App hears of a deleted campaign', () => {
+    // test/campaigns-page-stored-list.test.tsx shows the page tells App; test/campaign-leave-app.test.tsx runs
+    // what App does with it. MUTATION: drop `onCampaignDeleted={campaignDeleted}` in App.tsx and this fails.
+    const app = readFileSync(resolve(__dirname, '..', 'src/App.tsx'), 'utf8');
+    expect(app).toContain('onCampaignDeleted={campaignDeleted}');
   });
 });

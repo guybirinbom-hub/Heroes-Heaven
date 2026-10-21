@@ -35,6 +35,32 @@ function mergeStamps(a: Record<string, number> | undefined, b: Record<string, nu
   return out;
 }
 
+/** The roster less every campaign its GM deleted (a `campdel:<id>` mark, CampaignsPage), out of each
+ *  character and build, keeping each character's own timestamp. The device that deleted it takes it off
+ *  his characters at once, but another of his devices may still hold the link — a character edited there
+ *  offline, or a Builder open on it — and its newer copy put a nameless "Campaign" back on every device,
+ *  publishing to a campaign that no longer exists (a checker's finding, 2026-10-21). Done here, from the
+ *  mark every device gets, the strip is never an edit: a real edit made elsewhere still wins. */
+function withoutDeletedCampaigns(roster: SavedChar[], deleted: Record<string, number>): SavedChar[] {
+  const gone = new Set(Object.keys(deleted).filter((k) => k.startsWith('campdel:')).map((k) => k.slice('campdel:'.length)));
+  if (!gone.size) return roster;
+  const holds = (ids: string[] | undefined) => !!ids?.some((id) => gone.has(id));
+  const keep = (ids: string[] | undefined) => ids?.filter((id) => !gone.has(id));
+  let changed = false;
+  const out = roster.map((c) => {
+    const inChar = holds(c.character?.campaignIds);
+    const inBuild = holds(c.build?.campaignIds);
+    if (!inChar && !inBuild) return c;
+    changed = true;
+    return {
+      ...c,
+      character: inChar ? { ...c.character, campaignIds: keep(c.character.campaignIds) } : c.character,
+      build: inBuild && c.build ? { ...c.build, campaignIds: keep(c.build.campaignIds) } : c.build,
+    };
+  });
+  return changed ? out : roster;
+}
+
 /** Drop keyed records (homebrew/sources/modes/campaigns) killed by a tombstone. Keyed records have no
  *  timestamp of their own, so we compare the tombstone against the record's REVIVE stamp: a re-create
  *  (revived after the delete) survives even when another device still carries the stale tombstone. */
@@ -119,13 +145,9 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
   // instead of being resurrected from the other's copy — and a re-create beats a stale tombstone.
   const deleted = mergeStamps(cloud.deleted, local.deleted, now);
   const revived = mergeStamps(cloud.revived, local.revived, now);
-  const { roster, charUpdated } = mergeRoster(
-    local.roster ?? [],
-    local.charUpdated ?? {},
-    cloud.roster ?? [],
-    cloud.charUpdated ?? {},
-    deleted,
-  );
+  const merged = mergeRoster(local.roster ?? [], local.charUpdated ?? {}, cloud.roster ?? [], cloud.charUpdated ?? {}, deleted);
+  const roster = withoutDeletedCampaigns(merged.roster, deleted);
+  const charUpdated = merged.charUpdated;
   // Settings (prefs/appearance) aren't union-able — take whichever side changed them more recently.
   const localTs = local.settingsUpdated ?? 0;
   const cloudTs = cloud.settingsUpdated ?? 0;
@@ -140,6 +162,15 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
   for (const type of HOMEBREW_TYPES) {
     (homebrew[type] as Record<string, unknown>) = dropTombstoned(homebrew[type] as Record<string, unknown>, deleted, revived, `hb:${type}:`);
   }
+  // A PLAYER membership a character of the merged roster is still in outlives its tombstone. A removal
+  // (App's launch cleanup of a campaign no character was in, or the Leave of a last character) is judged
+  // on one device's roster; a character another device put in that campaign and had not pushed yet was
+  // unknown there, and the tombstone took the membership from under it — the card showed "Campaign" and
+  // the GM's shared homebrew stopped (a checker's finding, 2026-10-21). A GM's never. A campaign its GM
+  // deleted (`campdel:<id>`, CampaignsPage) stays deleted before every rule: also where an older install
+  // stored the GM's own campaign as 'player', and also against a revive stamp a later join wrote offline or
+  // an older app version wrote on every save.
+  const heldCampaigns = new Set(roster.flatMap((c) => [...(c.character?.campaignIds ?? []), ...(c.build?.campaignIds ?? [])]));
   return {
     roster,
     charUpdated,
@@ -149,7 +180,11 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
     homebrewSources: dropTombstoned(unionRecords(cloud.homebrewSources, local.homebrewSources), deleted, revived, 'hbsrc:'),
     modes: dropTombstoned(unionRecords(cloud.modes, local.modes), deleted, revived, 'mode:'),
     campaigns: mergeCampaigns(cloud.campaigns, local.campaigns).filter(
-      (m) => deleted[`camp:${m.id}`] === undefined || deleted[`camp:${m.id}`] < (revived[`camp:${m.id}`] ?? 0),
+      (m) =>
+        deleted[`campdel:${m.id}`] === undefined &&
+        (deleted[`camp:${m.id}`] === undefined ||
+          deleted[`camp:${m.id}`] < (revived[`camp:${m.id}`] ?? 0) ||
+          (m.role === 'player' && heldCampaigns.has(m.id))),
     ),
     settings: cloudTs > localTs ? cloud.settings : local.settings, // ties → local
     settingsUpdated: Math.max(localTs, cloudTs),

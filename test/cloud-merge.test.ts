@@ -166,6 +166,113 @@ describe('deletion tombstones', () => {
     expect(m.deleted).toMatchObject({ 'hb:items:gone': t, 'camp:c-gone': t });
   });
 
+  it('a player membership a merged character is still in outlives its tombstone; a GM one and an unheld one do not', () => {
+    // A checker's finding, 2026-10-21: another device removed a campaign no character there was in (App's
+    // launch cleanup) while this device, offline, put a character in it. MUTATION: drop the
+    // `heldCampaigns.has(m.id)` term from mergeBundles' campaigns filter and this fails — the character
+    // kept the campaign but the account lost the membership (the card showed "Campaign").
+    const now = 1_000_000_000_000;
+    const joinedHere = now - 5000;
+    const removedThere = now - 1000; // newer than the join
+    // c1 also holds the GM's deleted table: a GM's membership never outlives its tombstone (MUTATION: drop
+    // `m.role === 'player' &&` from the filter and this fails).
+    const local = bundle({
+      roster: [ch('c1', { campaignIds: ['x-held', 'x-gm'] }), { ...ch('c2'), build: { campaignIds: ['x-build'] } } as unknown as SavedChar],
+      charUpdated: { c1: joinedHere, c2: joinedHere },
+      campaigns: [
+        { id: 'x-held', code: 'H', role: 'player', name: 'Held' },
+        { id: 'x-build', code: 'B', role: 'player', name: 'Held by a build' },
+        { id: 'x-gone', code: 'U', role: 'player', name: 'Unheld' },
+        { id: 'x-gm', code: 'G', role: 'gm', name: 'My deleted table' },
+      ] as CloudBundle['campaigns'],
+      revived: { 'camp:x-held': joinedHere },
+    });
+    const cloud = bundle({
+      campaigns: [],
+      deleted: { 'camp:x-held': removedThere, 'camp:x-build': removedThere, 'camp:x-gone': removedThere, 'camp:x-gm': removedThere },
+    });
+    const m = mergeBundles(local, cloud, now);
+    expect(m.campaigns!.map((c) => c.id)).toEqual(['x-held', 'x-build']);
+    // The other way round (this device removed it, the character arrives from the cloud) keeps it too.
+    const back = mergeBundles(bundle({ deleted: cloud.deleted }), local, now);
+    expect(back.campaigns!.map((c) => c.id)).toEqual(['x-held', 'x-build']);
+  });
+
+  it('a real Leave stays a Leave: an OLDER copy of the character still in the campaign does not hold it', () => {
+    // The held set is the MERGED roster's, after the newest copy of each character won. MUTATION: build it
+    // from local.roster and cloud.roster both and this fails — every last-character Leave came back from the
+    // account's other device.
+    const now = 1_000_000_000_000;
+    const leftHere = bundle({
+      roster: [ch('c1', { campaignIds: [] })],
+      charUpdated: { c1: now - 1000 },
+      campaigns: [],
+      deleted: { 'camp:x': now - 1000 },
+    });
+    const olderThere = bundle({
+      roster: [ch('c1', { campaignIds: ['x'] })],
+      charUpdated: { c1: now - 9000 },
+      campaigns: [{ id: 'x', code: 'X', role: 'player', name: 'Left' }] as CloudBundle['campaigns'],
+      revived: { 'camp:x': now - 9000 },
+    });
+    expect(mergeBundles(leftHere, olderThere, now).campaigns).toEqual([]);
+    expect(mergeBundles(olderThere, leftHere, now).campaigns).toEqual([]);
+  });
+
+  it('a campaign its GM deleted stays deleted, even as a "player" copy a character still holds', () => {
+    // A checker's finding, 2026-10-21: an older install stored the GM's own campaign as 'player'; he deleted
+    // it (CampaignsPage records `campdel:<id>`) while his characters still held it. MUTATION: drop the
+    // `campdel:` term from mergeBundles' campaigns filter and this fails — the deleted campaign came back.
+    const now = 1_000_000_000_000;
+    const deletedHere = bundle({ roster: [ch('c1', { campaignIds: ['x'] })], charUpdated: { c1: now - 9000 }, campaigns: [], deleted: { 'camp:x': now - 1000, 'campdel:x': now - 1000 } });
+    const staleCopy = bundle({ campaigns: [{ id: 'x', code: 'X', role: 'player', name: 'My deleted table' }] as CloudBundle['campaigns'] });
+    expect(mergeBundles(deletedHere, staleCopy, now).campaigns).toEqual([]);
+    expect(mergeBundles(staleCopy, deletedHere, now).campaigns).toEqual([]);
+  });
+
+  it('a campaign its GM deleted stays deleted against a NEWER revive stamp, whatever the role', () => {
+    // A checker's finding, 2026-10-21: a join typed offline, or an older app version that stamped every
+    // membership on every save, writes `camp:<id>` revive stamps after the delete. MUTATION: test
+    // `campdel:` only inside the held-player rule and this fails — the deleted campaign came back as 'gm'.
+    const now = 1_000_000_000_000;
+    const deletedHere = bundle({ campaigns: [], deleted: { 'camp:x': now - 5000, 'campdel:x': now - 5000 } });
+    const olderDevice = bundle({
+      campaigns: [{ id: 'x', code: 'X', role: 'gm', name: 'My deleted table' }] as CloudBundle['campaigns'],
+      revived: { 'camp:x': now - 1000 },
+    });
+    expect(mergeBundles(deletedHere, olderDevice, now).campaigns).toEqual([]);
+    expect(mergeBundles(olderDevice, deletedHere, now).campaigns).toEqual([]);
+  });
+
+  it('a campaign its GM deleted leaves every character in the merge — keeping the newer edit and its time', () => {
+    // A checker's finding, 2026-10-21: the deleting device took the campaign off its own copies, but another
+    // of the GM's devices edited a character offline (or saved a Builder open on it); its newer copy won and
+    // put a nameless "Campaign" back everywhere. Stamping the strip as an edit instead lost that edit.
+    // MUTATION: return `merged.roster` unstripped in mergeBundles and this fails.
+    const now = 1_000_000_000_000;
+    const withBuild = (id: string, ids: string[], extra: Record<string, unknown>) =>
+      ({ ...ch(id, { campaignIds: ids, ...extra }), build: { campaignIds: ids } }) as unknown as SavedChar;
+    const offlineEdit = bundle({
+      roster: [withBuild('c1', ['x', 'keep'], { hp: 'edited offline' }), ch('c2', { campaignIds: ['keep'] })],
+      charUpdated: { c1: now - 1000, c2: now - 9000 },
+    });
+    const deletedThere = bundle({
+      roster: [withBuild('c1', ['keep'], { hp: 'old' }), ch('c2', { campaignIds: ['keep'] })],
+      charUpdated: { c1: now - 5000, c2: now - 9000 },
+      deleted: { 'camp:x': now - 5000, 'campdel:x': now - 5000 },
+    });
+    for (const m of [mergeBundles(offlineEdit, deletedThere, now), mergeBundles(deletedThere, offlineEdit, now)]) {
+      const c1 = m.roster.find((c) => c.id === 'c1')!;
+      expect(hp(c1), 'the newer edit wins whole').toBe('edited offline');
+      expect([c1.character.campaignIds, c1.build?.campaignIds], 'less the deleted campaign').toEqual([['keep'], ['keep']]);
+      expect(m.charUpdated.c1, 'and the strip is no edit: its time is the edit’s').toBe(now - 1000);
+      expect(m.roster.find((c) => c.id === 'c2')!.character.campaignIds).toEqual(['keep']);
+    }
+    const untouched = bundle({ roster: [ch('c2', { campaignIds: ['keep'] })], charUpdated: { c2: now - 9000 } });
+    const r = mergeBundles(untouched, deletedThere, now);
+    expect(r.roster.find((c) => c.id === 'c2'), 'a character not in it is not copied (local wins the tie)').toBe(untouched.roster[0]);
+  });
+
   it('mergeBundles unions tombstones across sides (newest wins) and carries them forward', () => {
     const now = 1_000_000_000_000;
     const local = bundle({ deleted: { k: now - 200, only_local: now - 500 } });

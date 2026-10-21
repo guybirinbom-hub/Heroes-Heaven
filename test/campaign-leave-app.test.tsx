@@ -8,6 +8,10 @@ import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build'
 import { initialPlay } from '../src/rules/play';
 import { ROSTER_KEY, type SavedChar } from '../src/data/storage';
 import type { CampaignMembership } from '../src/data/campaigns';
+import { exportNative } from '../src/data/transfer';
+import { setPref } from '../src/data/prefs';
+import { setOnPersisted } from '../src/data/persist';
+import { noteRosterChange } from '../src/data/cloudSync';
 
 /**
  * ONE CHARACTER LEAVES A CAMPAIGN — against the real <App/>, the party layer mocked (the harness of
@@ -30,6 +34,11 @@ const net = vi.hoisted(() => ({
   unpublishes: [] as { campaignId: string; charId: string }[],
   /** What each unpublish answers, in order; then 'ok'. */
   unpublishAnswers: [] as ('ok' | 'failed')[],
+  /** What the server answers for "which campaigns does this account own". */
+  owned: { ok: true, value: [] } as { ok: true; value: string[] } | { ok: false; error: string },
+  homebrewRefreshes: 0,
+  /** The props App gave the (stubbed) Campaigns page, once it is on screen. */
+  campaignsPage: null as null | { onCampaignDeleted?: (id: string) => void },
 }));
 
 vi.mock('../src/data/useAuth', () => ({
@@ -57,10 +66,25 @@ vi.mock('../src/data/cloudSync', async (importOriginal) => ({
   pullForGmApply: () => null,
   hasSyncedOnce: () => net.synced,
 }));
+vi.mock('../src/data/campaigns', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../src/data/campaigns')>()),
+  fetchOwnedCampaignIds: async () => net.owned,
+}));
 vi.mock('../src/data/campaignHomebrew', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../src/data/campaignHomebrew')>()),
   startCampaignHomebrew: () => () => undefined,
-  refreshCampaignHomebrew: async () => undefined,
+  refreshCampaignHomebrew: async () => {
+    net.homebrewRefreshes++;
+  },
+}));
+// Only what App does after a delete is used from the Campaigns page (test/campaigns-page-stored-list.test.tsx
+// runs the page itself); the stub hands its props over.
+vi.mock('../src/sheet/CampaignsPage', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../src/sheet/CampaignsPage')>()),
+  CampaignsPage: (props: { onCampaignDeleted?: (id: string) => void }) => {
+    net.campaignsPage = props;
+    return <div className="test-campaigns-page">TEST campaigns page</div>;
+  },
 }));
 // The Party page's member list talks to the server; only its Leave row is used here.
 vi.mock('../src/sheet/PartyMembers', () => ({
@@ -110,6 +134,9 @@ afterEach(() => {
   net.publishes = [];
   net.unpublishes = [];
   net.unpublishAnswers = [];
+  net.owned = { ok: true, value: [] };
+  net.homebrewRefreshes = 0;
+  net.campaignsPage = null;
   vi.unstubAllGlobals();
 });
 
@@ -133,15 +160,19 @@ const storedIds = (id: string) => {
 };
 const storedMemberships = () => (JSON.parse(localStorage.getItem(CAMPAIGNS_KEY) ?? '[]') as CampaignMembership[]).map((m) => m.id);
 
-async function openApp(roster: SavedChar[]) {
+/** `onRoster`: the app opens on Characters (Settings → "Opens on"), where the Import button is;
+ *  'campaigns': it reopens on the Campaigns page, as when it was closed there. */
+async function openApp(roster: SavedChar[], memberships: CampaignMembership[] = MEMBERSHIPS, onRoster: boolean | 'campaigns' = false) {
   vi.stubGlobal('fetch', async (url: string) => {
     const name = String(url).split('/').pop() ?? '';
     if (name !== 'core.json' && name !== 'core-descriptions.json') return { ok: false, status: 404, json: async () => ({}) };
     return { ok: true, status: 200, json: async () => JSON.parse(readFileSync(`public/${name}`, 'utf8')) as unknown };
   });
   localStorage.setItem(ROSTER_KEY, JSON.stringify(roster));
-  localStorage.setItem(ACTIVE_KEY, roster[0].id);
-  localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(MEMBERSHIPS));
+  if (roster[0]) localStorage.setItem(ACTIVE_KEY, roster[0].id);
+  setPref('startupScreen', onRoster === true ? 'characters' : 'last');
+  if (onRoster === 'campaigns') localStorage.setItem('pf2e-codex.on-campaigns-page', '1');
+  localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(memberships));
   if (!Element.prototype.scrollIntoView) Element.prototype.scrollIntoView = () => undefined;
   if (!('ResizeObserver' in globalThis)) {
     (globalThis as { ResizeObserver?: unknown }).ResizeObserver = class {
@@ -168,7 +199,13 @@ async function openApp(roster: SavedChar[]) {
   await act(async () => {
     root.render(<App />);
   });
-  for (let i = 0; i < 200 && !host.querySelector('.party-tab'); i++) await wait(50);
+  const ready =
+    onRoster === 'campaigns'
+      ? () => !!net.campaignsPage
+      : onRoster
+        ? () => !!host.querySelector('.roster-hero-actions .add-item-btn.ghost:not([disabled])')
+        : () => !!host.querySelector('.party-tab');
+  for (let i = 0; i < 200 && !ready(); i++) await wait(50);
   await wait(600); // the launch publish (PUBLISH_DEBOUNCE_MS = 400)
   return host;
 }
@@ -279,7 +316,8 @@ describe('one character leaves a campaign, in the real app', () => {
   }, APP_TIMEOUT);
 
   it('on the sheet: Ctrl+Z of a Save that joined keeps the character in; after a leave, Ctrl+Z and Ctrl+Shift+Z keep it out', async () => {
-    const host = await openApp([saved('c1', 'TEST Joiner', []), saved('c2', 'TEST Other', [OTHER])]);
+    // c2 in both campaigns: the account stays in them through c1's leave, so c1's joins here need no server.
+    const host = await openApp([saved('c1', 'TEST Joiner', []), saved('c2', 'TEST Other', [OTHER, CAMP])]);
     await openBuilderSetup(host);
     // The account is already in the campaign, so it joins without the server (the server is not reachable here).
     typeInto(host.querySelector('input[aria-label="Campaign code"]'), 'SALT23', 'the campaign code');
@@ -325,11 +363,192 @@ describe('one character leaves a campaign, in the real app', () => {
     expect(host.querySelector('.party-tab')).toBeNull();
   }, APP_TIMEOUT);
 
+  const DAY = 24 * 60 * 60 * 1000;
+  const UNHELD_KEY = 'pf2e-codex.unheldCampaigns';
+  const storedUnheld = () => JSON.parse(localStorage.getItem(UNHELD_KEY) ?? '{}') as Record<string, number>;
+
+  it('at launch, a player campaign none of the characters is in is removed a day after it was first seen — a GM one never', async () => {
+    // Owner, 2026-10-21 ("yes, remove them"): the phone's old Join row joined the account with no character.
+    // MUTATION: drop the cleanup effect's `saveCampaigns(r.memberships)` in App.tsx and this fails — the
+    // hidden membership stays, with no Leave to reach it.
+    const GM: CampaignMembership = { id: 'camp-mine', code: 'MINE23', role: 'gm', name: 'TEST My Table' };
+    localStorage.setItem(UNHELD_KEY, JSON.stringify({ [OTHER]: Date.now() - DAY - 60_000 }));
+    await openApp([saved('c1', 'TEST Keeper', [CAMP])], [...MEMBERSHIPS, GM]);
+    await until(() => storedMemberships().length < 3);
+    expect(storedMemberships(), 'OTHER had no character for a day; the GM campaign stays').toEqual([CAMP, 'camp-mine']);
+    expect(storedUnheld(), 'nothing left waiting').toEqual({});
+  }, APP_TIMEOUT);
+
+  it('the first launch that sees one held by no character only notes the time (a join in the Builder is held only by its draft)', async () => {
+    // A checker's finding, 2026-10-21: the Builder's join saves the membership at once but the character
+    // only on Save, so another device launching meanwhile removed it — and the join with it, everywhere.
+    // MUTATION: make UNHELD_GRACE_MS 0 in data/campaignLeave.ts and this fails.
+    const before = Date.now();
+    await openApp([saved('c1', 'TEST Keeper', [CAMP])]);
+    await until(() => OTHER in storedUnheld());
+    expect(storedMemberships()).toEqual([CAMP, OTHER]);
+    expect(storedUnheld()[OTHER], 'stamped now').toBeGreaterThanOrEqual(before);
+  }, APP_TIMEOUT);
+
+  it('a join on any device in the last day keeps it, however old this device’s own note is', async () => {
+    // A checker's finding, 2026-10-21: a rejoin by code of an old hidden campaign is held only by the
+    // Builder's draft until Save, while this device noted it days before. MUTATION: pass `{}` for
+    // loadRevived() in App.tsx's cleanup and this fails — the rejoin was removed on every device.
+    const noted = Date.now() - 5 * DAY;
+    const joined = Date.now() - 60_000;
+    localStorage.setItem(UNHELD_KEY, JSON.stringify({ [OTHER]: noted }));
+    localStorage.setItem('pf2e-codex.revived', JSON.stringify({ [`camp:${OTHER}`]: joined }));
+    await openApp([saved('c1', 'TEST Keeper', [CAMP])]);
+    await until(() => storedUnheld()[OTHER] !== noted);
+    expect(storedMemberships()).toEqual([CAMP, OTHER]);
+    expect(storedUnheld()[OTHER], 'it now waits a day from the join').toBe(joined);
+  }, APP_TIMEOUT);
+
+  it('an import with "Update existing" keeps the campaigns the character is in now', async () => {
+    // Owner, 2026-10-21 ("Keep current campaigns"): the file never takes a character out of its party or
+    // puts it in another. MUTATION: drop withCampaignsOf(...) around the Update entry in App.tsx and this
+    // fails — the character's campaigns became the file's.
+    const host = await openApp([saved('c1', 'TEST Importee', [CAMP])], MEMBERSHIPS, true);
+    // The file's copy is a level higher (so the update is visible), in the other campaign, and in one this
+    // account is not in at all.
+    const FOREIGN = 'camp-foreign';
+    const base = saved('file-1', 'TEST Importee', [OTHER, FOREIGN]);
+    const build = { ...base.build!, level: 2 } as BuildState;
+    const character = buildCharacter(build, db);
+    const fromFile = { ...base, build, character, play: initialPlay(character, db) } as SavedChar;
+    const input = host.querySelector<HTMLInputElement>('input[type="file"]');
+    if (!input) throw new Error(`fixture: no file input on Characters — on screen: ${(host.textContent ?? '').slice(0, 300)}`);
+    Object.defineProperty(input, 'files', { configurable: true, value: [new File([exportNative(fromFile)], 'importee.json', { type: 'application/json' })] });
+    act(() => void input.dispatchEvent(new Event('change', { bubbles: true })));
+    await until(() => !!buttonNamed('Update existing'));
+    click(buttonNamed('Update existing'), 'the question’s Update existing');
+    const levelOf = () => storedRoster().find((c) => c.id === 'c1')?.build?.level;
+    await until(() => levelOf() === 2);
+    await wait(800); // the persist
+    expect(storedRoster().map((c) => c.id), 'fixture: updated in place, not added').toEqual(['c1']);
+    expect(levelOf(), 'fixture: the file’s character replaced it').toBe(2);
+    expect(storedIds('c1'), 'still in the campaign it was in — not in the file’s').toEqual([[CAMP], [CAMP]]);
+
+    // The same file again with "Keep both": a NEW character keeps the file's campaigns, as a copy does (owner,
+    // 2026-10-21: "NO" to copies and imports starting in no campaign). MUTATION: empty campaignIds on the
+    // Keep both entry in App.tsx's import and this fails.
+    Object.defineProperty(input, 'files', { configurable: true, value: [new File([exportNative(fromFile)], 'importee.json', { type: 'application/json' })] });
+    act(() => void input.dispatchEvent(new Event('change', { bubbles: true })));
+    await until(() => !!buttonNamed('Keep both'));
+    click(buttonNamed('Keep both'), 'the question’s Keep both');
+    await until(() => storedRoster().length === 2);
+    await wait(800); // the persist
+    const copy = storedRoster().find((c) => c.id !== 'c1');
+    expect([copy?.character.campaignIds, copy?.build?.campaignIds], 'the new character: the file’s campaigns').toEqual([
+      [OTHER, FOREIGN],
+      [OTHER, FOREIGN],
+    ]);
+    expect(storedIds('c1'), 'the first one untouched').toEqual([[CAMP], [CAMP]]);
+  }, APP_TIMEOUT);
+
+  it('a campaign the server says this account owns stays and is a GM’s again, though stored as a player’s', async () => {
+    // A checker's finding, 2026-10-21: the old join stored a GM's own campaign as 'player' when he typed his
+    // own code (most likely on the phone's old Join row) — the very rows this removes.
+    // MUTATION: pass an empty set for `owned` in App.tsx's cleanup and this fails.
+    net.owned = { ok: true, value: [OTHER] };
+    localStorage.setItem(UNHELD_KEY, JSON.stringify({ [OTHER]: Date.now() - 2 * DAY }));
+    await openApp([saved('c1', 'TEST Keeper', [CAMP])]);
+    const roleOf = (id: string) => (JSON.parse(localStorage.getItem(CAMPAIGNS_KEY) ?? '[]') as CampaignMembership[]).find((m) => m.id === id)?.role;
+    await until(() => roleOf(OTHER) !== 'player');
+    expect(storedMemberships()).toEqual([CAMP, OTHER]);
+    expect(roleOf(OTHER)).toBe('gm');
+  }, APP_TIMEOUT);
+
+  it('while the server can’t say which campaigns this account owns, nothing is removed', async () => {
+    // MUTATION: drop `!owned.ok ||` in App.tsx's cleanup and this fails.
+    net.owned = { ok: false, error: 'offline' };
+    localStorage.setItem(UNHELD_KEY, JSON.stringify({ [OTHER]: Date.now() - 2 * DAY }));
+    await openApp([saved('c1', 'TEST Keeper', [CAMP])]);
+    await wait(2000);
+    expect(storedMemberships()).toEqual([CAMP, OTHER]);
+  }, APP_TIMEOUT);
+
+  it('before the first cloud pull, nothing is removed at launch (a character elsewhere may be in it) — once it lands, it is', async () => {
+    net.synced = false;
+    localStorage.setItem(UNHELD_KEY, JSON.stringify({ [OTHER]: Date.now() - 2 * DAY }));
+    await openApp([saved('c1', 'TEST Keeper', [CAMP])]);
+    await wait(2000);
+    expect(storedMemberships()).toEqual([CAMP, OTHER]);
+    // On a real launch the first pull always lands after the app opened. MUTATION: give up at once instead
+    // of trying again (`if (!ready()) return;` before the retry in App.tsx's cleanup) and this fails.
+    const refreshes = net.homebrewRefreshes;
+    net.synced = true;
+    await until(() => !storedMemberships().includes(OTHER));
+    expect(storedMemberships(), 'the pull landed: it goes').toEqual([CAMP]);
+    expect(net.homebrewRefreshes, 'and its shared homebrew is settled at once (kept as the player’s own)').toBeGreaterThan(refreshes);
+  }, APP_TIMEOUT);
+
+  it('a character the cloud pull wrote to disk, not yet in the app’s memory, still holds its campaign', async () => {
+    // The pull writes the merged roster to disk and only then says it has synced; React takes the new
+    // roster a moment later. A checker's finding, 2026-10-21: no test told the two copies apart.
+    // MUTATION: drop `loadRoster()` from the cleanup's rosters in App.tsx and this fails — OTHER is removed
+    // under a character that had just arrived.
+    net.synced = false;
+    localStorage.setItem(UNHELD_KEY, JSON.stringify({ [OTHER]: Date.now() - 2 * DAY }));
+    const keeper = saved('c1', 'TEST Keeper', [CAMP]);
+    await openApp([keeper]);
+    // Same tab: no storage event, so the app's memory keeps only TEST Keeper.
+    localStorage.setItem(ROSTER_KEY, JSON.stringify([keeper, saved('c2', 'TEST Arrived', [OTHER])]));
+    const refreshes = net.homebrewRefreshes;
+    net.synced = true;
+    await until(() => !(OTHER in storedUnheld()), 4000);
+    expect(storedUnheld(), 'fixture: the cleanup ran, and found OTHER held').toEqual({});
+    expect(storedMemberships()).toEqual([CAMP, OTHER]);
+    expect(net.homebrewRefreshes, 'nothing removed, nothing to settle').toBe(refreshes);
+  }, APP_TIMEOUT);
+
+  it('with no character on this device at all, nothing is removed (an empty list is not "in nothing")', async () => {
+    // rosterTabs: another tab's account switch or a crash recovery can empty the roster key for a moment.
+    // MUTATION: drop `rosterRef.current.length > 0` from the cleanup's ready() in App.tsx and this fails.
+    localStorage.setItem(UNHELD_KEY, JSON.stringify({ [CAMP]: Date.now() - 2 * DAY, [OTHER]: Date.now() - 2 * DAY }));
+    await openApp([], MEMBERSHIPS, true); // an empty roster has no sheet to wait for
+    await wait(2000);
+    expect(storedMemberships()).toEqual([CAMP, OTHER]);
+  }, APP_TIMEOUT);
+
   it('before this device has pulled the cloud, the membership stays (a character elsewhere may still be in it)', async () => {
     net.synced = false;
     const host = await openApp([saved('c1', 'TEST Leaver', [CAMP])]);
     await leaveFromParty(host);
     expect(storedIds('c1')).toEqual([[], []]);
     expect(storedMemberships()).toEqual([CAMP, OTHER]);
+  }, APP_TIMEOUT);
+
+  it('a campaign its GM deleted leaves every character in it — as no edit — and Ctrl+Z does not bring it back', async () => {
+    // A checker's finding, 2026-10-21: his characters kept a nameless "Campaign" with a Leave button and
+    // kept publishing to it. And a second one: stamped "updated now", the strip made this device's older
+    // copy beat an edit his other device made offline. MUTATION: drop noteDerivedRefresh(next, r) from
+    // App.tsx's campaignDeleted and the time check fails; drop the strip and the campaign check fails.
+    const MINE: CampaignMembership = { id: 'camp-mine', code: 'MINE23', role: 'gm', name: 'TEST My Table' };
+    await openApp([saved('c1', 'TEST Gm Char', [MINE.id, CAMP]), saved('c2', 'TEST Other', [CAMP])], [...MEMBERSHIPS, MINE], 'campaigns');
+    if (!net.campaignsPage?.onCampaignDeleted) throw new Error('fixture: App gave the Campaigns page no onCampaignDeleted');
+    await wait(1000); // the launch settles: rebuild, publish, cleanup
+    // Cloud sync's edit stamper, as a signed-in session attaches it after its first pull (the sync itself is
+    // stubbed here). Each persisted change it sees as an edit gets the time "now".
+    const TIMES_KEY = 'wanderers-codex:char-updated:v1';
+    const OLD = Date.now() - DAY;
+    localStorage.setItem(TIMES_KEY, JSON.stringify({ c1: OLD, c2: OLD }));
+    setOnPersisted(noteRosterChange);
+    try {
+      const deleted = net.campaignsPage.onCampaignDeleted;
+      act(() => deleted(MINE.id));
+      await until(() => !storedIds('c1')[0].includes(MINE.id));
+      await wait(800); // the persist
+      expect(storedIds('c1'), 'out of the deleted campaign, still in the other').toEqual([[CAMP], [CAMP]]);
+      expect(storedIds('c2')).toEqual([[CAMP], [CAMP]]);
+      const times = JSON.parse(localStorage.getItem(TIMES_KEY) ?? '{}') as Record<string, number>;
+      expect(times.c1, 'no edit stamp: a newer edit on another device still wins').toBe(OLD);
+      // What keeps it out is the undo's keepRosterCampaigns. The strip's `{ record: false }` (no undo step of
+      // its own) is not observable here: without it one Ctrl+Z press would do nothing — no data at stake.
+      await ctrlZ();
+      expect(storedIds('c1'), 'Ctrl+Z does not bring it back (the undo keeps the campaigns of now)').toEqual([[CAMP], [CAMP]]);
+    } finally {
+      setOnPersisted(() => undefined);
+    }
   }, APP_TIMEOUT);
 });

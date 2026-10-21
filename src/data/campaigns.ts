@@ -139,6 +139,18 @@ export async function fetchCampaignByCode(code: string): Promise<CampaignResult<
   return { ok: true, value: rowToCampaign(data as CampaignRow) };
 }
 
+/** The ids of every campaign this account owns, from the server — also one this device's list holds as
+ *  'player' (the old join stored a GM's own campaign that way when he typed his own code). A failure is
+ *  UNKNOWN, never "owns none". */
+export async function fetchOwnedCampaignIds(): Promise<CampaignResult<string[]>> {
+  if (!supabase) return { ok: false, error: 'Sign in to use campaigns.' };
+  const uid = await currentUserId();
+  if (!uid) return { ok: false, error: 'Sign in to use campaigns.' };
+  const { data, error } = await supabase.from('campaigns').select('id').eq('owner_id', uid);
+  if (error || !Array.isArray(data)) return { ok: false, error: friendlyError(error) };
+  return { ok: true, value: (data as { id: string }[]).map((r) => r.id) };
+}
+
 /** GM: edit name / description / defaults. */
 export async function updateCampaign(
   id: string,
@@ -157,7 +169,25 @@ export async function updateCampaign(
 /** GM: delete a campaign (owner-only via RLS). Players just remove their local membership. */
 export async function deleteCampaign(id: string): Promise<CampaignResult<null>> {
   if (!supabase) return { ok: false, error: 'Sign in to use campaigns.' };
-  const { error } = await supabase.from('campaigns').delete().eq('id', id);
+  // Signed in for real first (getUser asks the server): with a login that ran out and could not be
+  // renewed, the client sends no user, the delete and the lookup below both find nothing, and a campaign
+  // still running read as "already gone" — marked deleted on every device of the GM (a checker's finding,
+  // 2026-10-21). Its own error is what is shown: offline, "sign in" told a signed-in GM the wrong thing.
+  const who = await supabase.auth.getUser();
+  if (!who.data.user) return { ok: false, error: who.error ? friendlyError(who.error) : 'Sign in to use campaigns.' };
+  // `.select` returns the rows actually deleted: the server's row rules let only the campaign's owner
+  // delete it and drop anyone else's delete silently, with no error. Without it a player's Delete read as
+  // done and their copy was marked deleted for good, though the campaign lives on (a checker's finding,
+  // 2026-10-21).
+  const { data, error } = await supabase.from('campaigns').delete().eq('id', id).select('id');
   if (error) return { ok: false, error: friendlyError(error) };
+  if (!data?.length) {
+    // Nothing deleted: someone else's campaign, or one already gone (deleted on another device, or the
+    // answer to an earlier try was lost) — that one must still leave this device's list. Every signed-in
+    // user can read every campaign (supabase-campaigns.sql), so a row still there means not the owner.
+    const still = await supabase.from('campaigns').select('id').eq('id', id).maybeSingle();
+    if (still.error) return { ok: false, error: friendlyError(still.error) };
+    if (still.data) return { ok: false, error: 'You can only delete a campaign you run.' };
+  }
   return { ok: true, value: null };
 }

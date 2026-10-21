@@ -5,7 +5,7 @@ import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { BOOK_SPLIT_MARK, enabledBookSet, entrySourceOn, sourceCatalog, sourceIdToken, storedSources, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
 import { rankBySearch, searchMatches } from '../data/searchRank';
-import { loadHomebrewSources, loadCampaigns, saveCampaigns, listCampaignHbSources } from '../data/storage';
+import { loadHomebrewSources, loadCampaigns, saveCampaigns, listCampaignHbSources, recordReviveKeys } from '../data/storage';
 import { useAuth } from '../data/useAuth';
 import { fetchCampaignByCode, normalizeCode, type CampaignMembership } from '../data/campaigns';
 import { campaignsOfCharacter, leaveCampaignQuestion } from '../data/campaignLeave';
@@ -2449,12 +2449,29 @@ export function CampaignAttachCard({
       setMemberships(list);
     }
     if ((live.current.campaignIds ?? []).includes(id)) {
+      // In it, but the account is not (it showed as "Campaign"): a NEW character from a file keeps the file's
+      // campaigns, or a removal on another device raced a join here. The code puts the membership back —
+      // its name, its party and its GM's shared homebrew (a checker's finding, 2026-10-21).
+      if (res.ok && !list.some((m) => m.id === id)) {
+        const c = res.value;
+        const next: CampaignMembership[] = [...list, { id, code: c.code, role: mine ? 'gm' : 'player', name: c.name, description: c.description }];
+        saveCampaigns(next);
+        setMemberships(next);
+        void refreshCampaignHomebrew();
+        setCode('');
+        return;
+      }
       // Nothing to join — and not the default-rules question again, which would reset its rules and books.
       setError(`This character is already in “${res.ok ? res.value.name : known!.name}”.`);
       setCode('');
       return;
     }
+    // Joining a campaign the account is already in saves no membership, so stamp the join itself: it travels
+    // to every device, and App's launch cleanup there waits a day from it before removing a campaign no
+    // saved character holds yet (this one is held only by the draft until Save — a checker's finding,
+    // 2026-10-21). It also beats a Leave another device made meanwhile.
     if (!res.ok) {
+      recordReviveKeys([`camp:${id}`]);
       setIds((ids) => [...new Set([...ids, id])]);
       setCode('');
       return;
@@ -2469,7 +2486,10 @@ export function CampaignAttachCard({
       saveCampaigns(next);
       // Pull the GM's shared homebrew now, not on the next focus: 'Use defaults' below can turn it on.
       void refreshCampaignHomebrew();
-    } else setMemberships(list);
+    } else {
+      setMemberships(list);
+      recordReviveKeys([`camp:${c.id}`]);
+    }
     setIds((ids) => [...new Set([...ids, c.id])]);
     setCode('');
     const d = c.defaults;

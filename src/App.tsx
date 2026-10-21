@@ -19,7 +19,8 @@ import { PageNavContext } from './sheet/PageMenu';
 import { useAuth } from './data/useAuth';
 import { startCloudSync, hasSyncedOnce, noteDerivedRefresh, pullForGmApply } from './data/cloudSync';
 import { startCampaignHomebrew, refreshCampaignHomebrew, homebrewFingerprint } from './data/campaignHomebrew';
-import { keepRosterCampaigns, leaveCampaignFor } from './data/campaignLeave';
+import { dropUnheldPlayerCampaigns, keepRosterCampaigns, leaveCampaignFor, withCampaignsOf, withoutCampaign } from './data/campaignLeave';
+import { fetchOwnedCampaignIds } from './data/campaigns';
 import { rebuildRoster, carryStoredOverrides } from './data/rebuild';
 import { carriedForCampaign, collectCarried, duplicateWithOwnModes, freshModeId, keepCarried, loadOwnTombstones, loadOwnWinningIds, loadSharedOrigins, modeUsage, ownContent, publishKey, repointMode, withoutCarried } from './data/carried';
 import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModeUsageContext, ModesRemoveFromCharacterContext, ModesSaveAsCopyContext } from './sheet/CopyOnWriteItems';
@@ -29,7 +30,7 @@ import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, fetchPublishedSheet, deleteGmEdit, markGmEditRefused, currentUserId, subscribeGmEdits, type GmEdit } from './data/party';
-import { loadRoster, saveRoster, newRosterId, loadModes, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, loadModes, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadUnheldCampaigns, saveUnheldCampaigns, loadRevived, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { authoredKey, hash53 } from './data/authored';
 import { isTauri } from './platform';
 import { carryModePin, getPrefs, subscribePrefs } from './data/prefs';
@@ -709,6 +710,44 @@ export default function App() {
       void gcSharpPortraits(new Set(roster.flatMap((c) => collectPortraitRefs(c))));
     };
     void attempt(0);
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+    };
+  }, [auth.status]);
+  // A PLAYER campaign none of this account's characters is in goes (owner, 2026-10-21, "yes, remove
+  // them"): the phone's old Join row joined the ACCOUNT with no character, and with campaigns per
+  // character such a membership is hidden, with no Leave to reach it (data/campaignLeave.ts
+  // dropUnheldPlayerCampaigns). Once per sign-in, and only against an authoritative roster, like the
+  // portrait GC above: after this device's first cloud pull (before it, a character on another device may
+  // hold the campaign — UNKNOWN is not EMPTY), never an empty one, and the roster on disk counted beside
+  // the one in memory. Only a day after this device first saw it held by no character, and a day after
+  // the newest join on any device (a join in the Builder holds it only in the draft until Save), and never
+  // one the server says this account owns — so nothing at all while that answer is unknown. Its shared homebrew then becomes the player's own, as on
+  // any Leave.
+  useEffect(() => {
+    if (auth.status !== 'signed-in') return;
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const ready = () => hasSyncedOnce() && rosterRef.current.length > 0;
+    const attempt = (tries: number) => {
+      if (cancelled) return;
+      if (!ready() && tries < 20) {
+        timer = setTimeout(() => attempt(tries + 1), 1500);
+        return;
+      }
+      if (!ready()) return; // gave up waiting → remove nothing
+      void fetchOwnedCampaignIds().then((owned) => {
+        if (cancelled || !owned.ok || !ready()) return;
+        const before = loadCampaigns(); // read after the await: the newest list is what is saved
+        const r = dropUnheldPlayerCampaigns(before, [rosterRef.current, loadRoster()], new Set(owned.value), loadUnheldCampaigns(), loadRevived(), Date.now());
+        saveUnheldCampaigns(r.seen);
+        if (r.memberships === before) return;
+        saveCampaigns(r.memberships);
+        void refreshCampaignHomebrew();
+      });
+    };
+    attempt(0);
     return () => {
       cancelled = true;
       if (timer) clearTimeout(timer);
@@ -1543,6 +1582,24 @@ export default function App() {
     setRoster((r) => leaveCampaignFor(r, [], charId, campaignId).roster, { record: false });
   };
 
+  // A campaign its GM deleted (Campaigns page): out of every character still in it. Not an undo step,
+  // like a Leave — the campaign is gone, Ctrl+Z could only bring back a link to nothing. And a DERIVED
+  // refresh, never an edit: stamped "updated now", this device's older copy of a character beat an edit
+  // made on another device meanwhile (the 2026-09-02 class, a checker's finding 2026-10-21). The other
+  // devices drop the link in the cloud merge, from the delete mark (data/cloudMerge.ts).
+  const campaignDeleted = (campaignId: string) => {
+    if (withoutCampaign(rosterRef.current, campaignId) === rosterRef.current) return;
+    commitStructural();
+    setRoster(
+      (r) => {
+        const next = withoutCampaign(r, campaignId);
+        noteDerivedRefresh(next, r);
+        return next;
+      },
+      { record: false },
+    );
+  };
+
   const deleteChar = (id: string) => {
     // Deleting the last character is allowed — the roster can go to zero (empty state).
     const remaining = roster.filter((c) => c.id !== id);
@@ -1634,8 +1691,12 @@ export default function App() {
           let finalId: string;
           commitStructural(); // importing a character is structural — persist immediately
           if (action === 'update' && collide) {
-            // Replace the existing entry in place (keep its roster id so the card/undo/active-id stay valid).
-            setRoster((r) => r.map((c) => (c.id === collide.id ? { ...saved, id: collide.id, archived: c.archived ?? false } : c)));
+            // Replace the existing entry in place (keep its roster id so the card/undo/active-id stay valid) —
+            // in the campaigns it is in now: updating never takes it out of a party or puts it in one (owner,
+            // 2026-10-21; an undo can't put campaigns back any more, data/campaignLeave.ts). A NEW character
+            // from a file (no name match, or Keep both) keeps the file's campaigns, as a copy does (owner,
+            // 2026-10-21: "NO" to copies and imports starting in no campaign).
+            setRoster((r) => r.map((c) => (c.id === collide.id ? withCampaignsOf({ ...saved, id: collide.id, archived: c.archived ?? false }, c) : c)));
             setActiveId(collide.id);
             finalId = collide.id;
           } else {
@@ -1771,6 +1832,7 @@ export default function App() {
         onDeleteMode={removeModeDef}
         // The GM's edit sheets write homebrew through these same persisting handlers (GmEditSheet).
         onCreateItem={addCustomItem}
+        onCampaignDeleted={campaignDeleted}
       />
     );
   } else if (which === 'settings') {

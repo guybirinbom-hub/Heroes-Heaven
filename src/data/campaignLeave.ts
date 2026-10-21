@@ -67,6 +67,75 @@ export function leaveCampaignFor(
   };
 }
 
+/** The roster with `campaignId` out of every character and build — for a campaign its GM deleted: the
+ *  campaign no longer exists, so a character of his still in it showed a nameless "Campaign" with a Leave
+ *  button and kept trying to publish there (a checker's finding, 2026-10-21). The same array when no
+ *  character held it. */
+export function withoutCampaign(roster: readonly SavedChar[], campaignId: string): SavedChar[] {
+  let changed = false;
+  const next = roster.map((c) => {
+    const r = leaveCampaignFor([c], [], c.id, campaignId).roster[0];
+    if (r !== c) changed = true;
+    return r;
+  });
+  return changed ? next : (roster as SavedChar[]);
+}
+
+/** How long a PLAYER membership no character holds stays before it goes. A join in the Builder puts the
+ *  campaign only in the draft until Save, so for minutes the account's other devices see it held by no
+ *  character; removing it then undid the join everywhere (a checker's finding, 2026-10-21). */
+export const UNHELD_GRACE_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * The memberships less every PLAYER campaign none of the account's characters is in (owner, 2026-10-21:
+ * "yes, remove them"). The phone's old Join row joined the ACCOUNT with no character, and now that
+ * campaigns are per character such a membership is hidden, with no Leave to reach it, while its shared
+ * homebrew kept arriving.
+ *  - `rosters`: every copy of the roster the caller has (on disk and in memory); a character in any of
+ *    them holds the campaign — archived, or linked only through its build, too.
+ *  - `owned`: the campaigns this account owns (from the server). A GM's campaign never goes, and one
+ *    stored as 'player' (the old join did that when a GM typed his own code) is a GM's again.
+ *  - `seen` → `now`: when this device first saw each one held by no character. One goes only once it has
+ *    been that way for UNHELD_GRACE_MS; the returned `seen` holds the ones still waiting.
+ *  - `revived`: the synced join stamps (storage.ts loadRevived, `camp:<id>`). A join on ANY device restarts
+ *    the wait — a rejoin by code of an old hidden campaign is held only by the Builder's draft until Save,
+ *    while this device's own stamp may already be days old (a checker's finding, 2026-10-21).
+ * Returns the same memberships array when nothing changes.
+ */
+export function dropUnheldPlayerCampaigns(
+  memberships: CampaignMembership[],
+  rosters: readonly (readonly SavedChar[])[],
+  owned: ReadonlySet<string>,
+  seen: Readonly<Record<string, number>>,
+  revived: Readonly<Record<string, number>>,
+  now: number,
+): { memberships: CampaignMembership[]; seen: Record<string, number> } {
+  const held = new Set<string>();
+  for (const roster of rosters) for (const c of roster) for (const id of [...(c.character?.campaignIds ?? []), ...(c.build?.campaignIds ?? [])]) held.add(id);
+  const nextSeen: Record<string, number> = {};
+  let changed = false;
+  const out: CampaignMembership[] = [];
+  for (const m of memberships) {
+    if (owned.has(m.id) && !m.local) {
+      if (m.role !== 'gm') changed = true;
+      out.push(m.role === 'gm' ? m : { ...m, role: 'gm' });
+      continue;
+    }
+    if (m.role !== 'player' || m.local || held.has(m.id)) {
+      out.push(m);
+      continue;
+    }
+    const first = Math.max(seen[m.id] ?? now, revived[`camp:${m.id}`] ?? 0);
+    if (now - first >= UNHELD_GRACE_MS) {
+      changed = true;
+      continue;
+    }
+    nextSeen[m.id] = first;
+    out.push(m);
+  }
+  return { memberships: changed ? out : memberships, seen: nextSeen };
+}
+
 /*
  * UNDO AND REDO NEVER CHANGE WHICH CAMPAIGNS A CHARACTER IS IN (owner, 2026-10-21, answering "Leave in the
  * builder, then Ctrl+Z and Save: the campaign comes back"): leaving goes through the question and coming
@@ -107,12 +176,21 @@ export function keepRosterCampaigns(next: SavedChar[], present: SavedChar[], mem
         build: c.build ? { ...c.build, campaignIds: inHeld(c.build.campaignIds) } : c.build,
       };
     }
-    const ids = (p.build ?? p.character).campaignIds; // a build-less present entry: its character's
-    const build = c.build && !sameIds(c.build.campaignIds, ids) ? { ...c.build, campaignIds: ids } : c.build;
-    const character = sameIds(c.character.campaignIds, p.character.campaignIds) ? c.character : { ...c.character, campaignIds: p.character.campaignIds };
-    if (build === c.build && character === c.character) return c;
-    changed = true;
-    return { ...c, character, build };
+    const kept = withCampaignsOf(c, p);
+    if (kept !== c) changed = true;
+    return kept;
   });
   return changed ? out : next;
+}
+
+/** `next` in the campaigns `present` is in — character and build; `next` itself when they already match.
+ *  Also the import's "Update existing" (owner, 2026-10-21): the file replaces the character but never
+ *  takes it out of a party or puts it in one. */
+export function withCampaignsOf(next: SavedChar, present: SavedChar): SavedChar {
+  const ids = (present.build ?? present.character).campaignIds; // a build-less present entry: its character's
+  const build = next.build && !sameIds(next.build.campaignIds, ids) ? { ...next.build, campaignIds: ids } : next.build;
+  const character = sameIds(next.character.campaignIds, present.character.campaignIds)
+    ? next.character
+    : { ...next.character, campaignIds: present.character.campaignIds };
+  return build === next.build && character === next.character ? next : { ...next, character, build };
 }

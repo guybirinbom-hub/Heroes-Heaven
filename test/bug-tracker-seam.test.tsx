@@ -1371,7 +1371,10 @@ describe('the campaign ↔ tracker seam', () => {
     await flush();
 
     expect(el.textContent).toContain('GM tools are available on the desktop and web app');
-    expect(el.textContent).toContain('Join with a code');
+    // Joining stays possible on a phone — in a character's Setup → Campaigns since campaigns are per
+    // character (owner, 2026-10-21); this page points there instead of its old character-less join row.
+    expect(el.textContent).toContain('To join a campaign, enter your GM’s code in a character’s Setup → Campaigns.');
+    expect(el.textContent).not.toContain('Join with a code');
     expect(el.querySelector('.campaign-tracker')).toBeNull();
     expect(el.textContent).not.toContain('Create a campaign');
 

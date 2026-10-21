@@ -30,7 +30,7 @@ import {
 } from '../data/campaigns';
 import type { PartyMember } from '../data/party';
 import { useAuth } from '../data/useAuth';
-import { loadCampaigns, saveCampaigns, loadHomebrewSources } from '../data/storage';
+import { loadCampaigns, saveCampaigns, loadHomebrewSources, recordTombstoneKeys } from '../data/storage';
 import { fetchSharedSourceIds, shareSources, unshareSources } from '../data/campaignHomebrew';
 import { PartyMembers, useMemberViewer } from './PartyMembers';
 import { PageMenu } from './PageMenu';
@@ -123,12 +123,14 @@ interface CampaignsPageProps {
    *  edit sheets write homebrew through, so an item or mode made or deleted there is saved and synced
    *  like one made on his own sheet (GmEditSheet). Absent → those sheets keep it for the session only. */
   onCreateItem?: (item: Item) => void;
+  /** After a campaign is deleted: App takes it off every character of this account still in it. */
+  onCampaignDeleted?: (campaignId: string) => void;
 }
 
 /** Campaigns page — GM-only management. Lists the campaigns you RUN; open one to edit its settings and
  *  see the players in it (and view their sheets / kick). Players don't manage campaigns here — they
  *  JOIN by entering a code in a character's Setup, and reach the party from that character. */
-export function CampaignsPage({ content, onClose, onOpenSettings, characters, onOpenOwn, modes, onSaveMode, onDeleteMode, onCreateItem }: CampaignsPageProps) {
+export function CampaignsPage({ content, onClose, onOpenSettings, characters, onOpenOwn, modes, onSaveMode, onDeleteMode, onCreateItem, onCampaignDeleted }: CampaignsPageProps) {
   // What the GM's edit sheets (the tracker's and the page-replacing one) write homebrew through.
   const gmHomebrew = useMemo<GmHomebrewWriters>(
     () => ({ onCreateItem, onSaveMode, onDeleteMode }),
@@ -322,11 +324,15 @@ export function CampaignsPage({ content, onClose, onOpenSettings, characters, on
 
   const gmCampaigns = memberships.filter((m) => m.role === 'gm');
 
-  const persist = (next: CampaignMembership[]) => {
+  // A change applies to the list AS STORED, never to this page's copy from when it opened: a cloud pull or
+  // App's launch cleanup may have changed it since, and saving the old copy put back a membership removed
+  // meanwhile and tombstoned one that had arrived — on every device (a checker's finding, 2026-10-21).
+  const persist = (change: (stored: CampaignMembership[]) => CampaignMembership[]) => {
+    const next = change(loadCampaigns());
     setMemberships(next);
     saveCampaigns(next);
   };
-  const upsertMembership = (m: CampaignMembership) => persist([...memberships.filter((x) => x.id !== m.id), m]);
+  const upsertMembership = (m: CampaignMembership) => persist((stored) => [...stored.filter((x) => x.id !== m.id), m]);
 
   const deleteFrom = async (m: CampaignMembership, after: () => void) => {
     const ok = await confirmDialog({
@@ -344,7 +350,12 @@ export function CampaignsPage({ content, onClose, onOpenSettings, characters, on
     // Removable integration: don't leave this device's copy of the rules behind for a campaign that
     // no longer exists — a new campaign could otherwise inherit them via a recycled id.
     deleteLocalDefaults(m.id);
-    persist(memberships.filter((x) => x.id !== m.id));
+    // The campaign itself is gone, so no character of this account holding it keeps the membership in the
+    // cloud merge (data/cloudMerge.ts) — not even a 'player' copy an older install stored for the GM's own
+    // campaign (a checker's finding, 2026-10-21).
+    recordTombstoneKeys([`campdel:${m.id}`]);
+    persist((stored) => stored.filter((x) => x.id !== m.id));
+    onCampaignDeleted?.(m.id);
     after();
   };
 
@@ -457,8 +468,9 @@ export function CampaignsPage({ content, onClose, onOpenSettings, characters, on
             {/* On a phone the list is every campaign you're IN — the page is a player's page there: the
                 ones you run, and a player's campaign while one of your characters is in it. Campaigns are
                 per character (owner, 2026-10-21: "if you are not in then you dont need to see that
-                campaign anymore"), so a membership no character holds is hidden here — never deleted
-                (a character on another device may not have synced yet). */}
+                campaign anymore"), so a membership no character holds is hidden here. It is not deleted
+                here: App's launch cleanup removes it, a day after no character holds it (a character on
+                another device may not have synced yet — data/campaignLeave.ts dropUnheldPlayerCampaigns). */}
             <GmList
               campaigns={isPhone ? memberships.filter((m) => m.role === 'gm' || characters.some((c) => (c.campaignIds ?? []).includes(m.id))) : gmCampaigns}
               phone={isPhone}

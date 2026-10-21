@@ -546,19 +546,45 @@ export function loadCampaigns(): CampaignMembership[] {
 /** Replace the whole membership list (add/remove/update happen in the page, then save the result). */
 export function saveCampaigns(list: CampaignMembership[]): void {
   // Diff against the previous list so a REMOVED membership gets a tombstone (else the union merge would
-  // resurrect it from another device), and a re-added one clears its tombstone.
+  // resurrect it from another device), and an added or changed one is stamped revived (it beats an older
+  // tombstone). Only those: re-stamping every kept membership on each save brought back one another
+  // device had left meanwhile, and made the stamp useless as "joined at" (App's launch cleanup waits a
+  // day from it — a checker's finding, 2026-10-21).
+  const before = new Map(loadCampaigns().map((m) => [m.id, JSON.stringify(m)]));
   const nextIds = new Set(list.map((m) => m.id));
-  const removed = loadCampaigns()
-    .filter((m) => !nextIds.has(m.id))
-    .map((m) => `camp:${m.id}`);
+  const removed = [...before.keys()].filter((id) => !nextIds.has(id)).map((id) => `camp:${id}`);
+  const touched = list.filter((m) => before.get(m.id) !== JSON.stringify(m)).map((m) => `camp:${m.id}`);
   try {
     localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(list));
   } catch {
     // non-fatal
   }
   if (removed.length) recordTombstoneKeys(removed);
-  recordReviveKeys(list.map((m) => `camp:${m.id}`));
+  recordReviveKeys(touched);
   markLocalDataChanged(); // campaign memberships are synced — nudge cloud upload
+}
+
+const UNHELD_CAMPAIGNS_KEY = 'pf2e-codex.unheldCampaigns';
+
+/** When this device first saw each PLAYER campaign membership no character holds (campaign id → ms).
+ *  Device-local, not synced, but account-scoped (wipeSyncedLocalData): App's launch cleanup removes one
+ *  only a day after it was first seen (campaignLeave.ts dropUnheldPlayerCampaigns). */
+export function loadUnheldCampaigns(): Record<string, number> {
+  try {
+    const raw = localStorage.getItem(UNHELD_CAMPAIGNS_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? (parsed as Record<string, number>) : {};
+  } catch {
+    return {};
+  }
+}
+export function saveUnheldCampaigns(seen: Record<string, number>): void {
+  try {
+    if (Object.keys(seen).length) localStorage.setItem(UNHELD_CAMPAIGNS_KEY, JSON.stringify(seen));
+    else localStorage.removeItem(UNHELD_CAMPAIGNS_KEY);
+  } catch {
+    // non-fatal
+  }
 }
 
 /** Permanently erase ALL of this app's locally-stored data: every saved character, homebrew item,
@@ -824,6 +850,7 @@ export function wipeSyncedLocalData(): void {
     // Device-local, not synced — but ACCOUNT-scoped: another account's campaign copy and unsent edits.
     CAMPAIGN_HB_CACHE_KEY,
     CAMPAIGN_HB_DIRTY_KEY,
+    UNHELD_CAMPAIGNS_KEY,
   ]) {
     try {
       localStorage.removeItem(k);
