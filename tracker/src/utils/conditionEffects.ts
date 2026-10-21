@@ -338,6 +338,11 @@ export interface ConditionMeta {
   autoDecrement?: boolean
   tickAtStart?: boolean
   decrementBy?: number
+  /** What the add-condition picker pre-fills when this condition is picked — the GM can change both
+   *  before Apply (conditionPickDefaults). `untilRemoved`: the "until removed" box starts ticked, so
+   *  nothing expires it on its own. `ownTurn`: if the GM does give it rounds, they count down at the end
+   *  of the BEARER's own turn (no source), not on the turn of whoever was acting when it was added. */
+  pickDefaults?: { untilRemoved?: boolean; ownTurn?: boolean }
   bg: string; fg: string; border: string; summary: string
 }
 
@@ -362,7 +367,10 @@ export const CONDITION_META: Record<string, ConditionMeta> = {
   invisible:   { name:'Invisible',   hasValue:false,                 bg:'#1c1917', fg:'#d1d5db', border:'#6b7280', summary:"Undetected by all; foes must Seek and target you with a DC 11 flat check." },
   'off-guard': { name:'Off-Guard',   hasValue:false,                 bg:'#1e3a5f', fg:'#93c5fd', border:'#2563eb', summary:"−2 circumstance penalty to AC." },
   paralyzed:   { name:'Paralyzed',   hasValue:false,                 bg:'#374151', fg:'#e5e7eb', border:'#9ca3af', summary:"Off-guard (−2 circ. AC); can't act except to Recall Knowledge and use purely mental actions." },
-  'persistent damage': { name:'Persistent Damage', hasValue:false,   bg:'#7c2d12', fg:'#fed7aa', border:'#f97316', summary:"At the end of your turn you take this damage, then attempt a DC 15 flat check to end it (lower with appropriate help). Set the amount, type, and how many rounds to track it." },
+  // Owner's ruling 2026-10-21: persistent damage is added "until removed" (it ends on the flat check,
+  // not on a clock) and resolves at the end of the turn of the creature that HAS it — when the GM moves
+  // initiative on from that creature — never on the turn of whoever put it there.
+  'persistent damage': { name:'Persistent Damage', hasValue:false,   pickDefaults:{ untilRemoved:true, ownTurn:true }, bg:'#7c2d12', fg:'#fed7aa', border:'#f97316', summary:"At the end of your turn you take this damage, then attempt a DC 15 flat check to end it (lower with appropriate help). Set the amount and type; it stays until removed unless you give it a number of rounds." },
   petrified:   { name:'Petrified',   hasValue:false,                 bg:'#6b7280', fg:'#f3f4f6', border:'#9ca3af', summary:"Turned to stone — can't act or sense; Hardness 8." },
   prone:       { name:'Prone',       hasValue:false,                 bg:'#44403c', fg:'#d6d3d1', border:'#78716c', summary:"Off-guard (−2 circ. AC); −2 circumstance penalty to your attack rolls. Crawl or Stand to move." },
   quickened:   { name:'Quickened',   hasValue:false,                 bg:'#064e3b', fg:'#6ee7b7', border:'#10b981', summary:"Gain 1 extra action at the start of your turn (use limited by the effect's source)." },
@@ -401,4 +409,23 @@ export function conditionKey(name: string): string {
 /** The tracker's meta for a condition name, an alias folded in — for drawing a badge. */
 export function conditionMetaOf(name: string): ConditionMeta | undefined {
   return CONDITION_META[conditionKey(name)]
+}
+
+/**
+ * The add-condition picker's starting timing for a condition, the one place it is decided.
+ *
+ * `source` is whose turn a duration in rounds counts down on: the creature acting now (Player Core
+ * p. 426, "the creature that created the effect"), or '' — no source, the end of the bearer's own
+ * turn — when nobody else is acting or the condition's `pickDefaults.ownTurn` says so. `isPermanent`
+ * is the "until removed" box. A condition with no `pickDefaults` (and any name the table does not
+ * know, a custom one included) starts as it always has: rounds, ticking on the acting creature.
+ *
+ * Only what is ADDED reads this — a condition already on a row keeps what it stored.
+ */
+export function conditionPickDefaults(
+  name: string, targetId: string, actingId: string | undefined,
+): { isPermanent: boolean; source: string } {
+  const d = conditionMetaOf(name)?.pickDefaults
+  const source = !actingId || actingId === targetId || d?.ownTurn ? '' : actingId
+  return { isPermanent: !!d?.untilRemoved, source }
 }

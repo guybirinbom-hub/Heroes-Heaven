@@ -317,6 +317,10 @@ export interface AppSettings {
   pcConditionTicks: boolean
   /** Show the book/page source citation at the bottom of reference popups. */
   showSource: boolean
+  /** Show the Archives of Nethys button on popups whose record has an Archives page (an item, a ritual,
+   *  a bestiary creature or hazard — components/AonLink.tsx). Inside Heroes Heaven the host's own
+   *  setting decides instead (HostSearch.showAonLink), so the app has one switch. */
+  showAonLink: boolean
   /** Shape used for remaining spell slots / uses / focus points on stat blocks. */
   spellIndicator: SpellIndicator
   /** Spell-rank flow on stat blocks: 'grid' packs as many per line as fit. */
@@ -354,6 +358,7 @@ const DEFAULTS: AppSettings = {
   hideInitPcHp: false,
   pcConditionTicks: true,
   showSource: true,
+  showAonLink: true,
   spellIndicator: 'diamond',
   spellLayout: 'grid',
   dockablePopups: true,
@@ -475,6 +480,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       hideInitPcHp: next.hideInitPcHp,
       pcConditionTicks: next.pcConditionTicks,
       showSource: next.showSource,
+      showAonLink: next.showAonLink,
       spellIndicator: next.spellIndicator,
       spellLayout: next.spellLayout,
       dockablePopups: next.dockablePopups,

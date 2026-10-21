@@ -5158,8 +5158,10 @@ export interface ModeDef {
    * left alone, so switching the mode on can never DOWNGRADE a worse one the GM applied.
    */
   conditions?: { id: string; value?: number }[];
-  /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
-   *  universal (every character on this device). Catalog/predefined modes never set this. */
+  /** The roster character a USER-created mode belongs to: only that character sees it (Guy 2026-10-21,
+   *  "modes need to be per character"). Absent ⇒ no known owner — a mode saved before that, listed where
+   *  it is used or everywhere when nowhere (src/rules/modes.ts `modeListedFor`). Catalog/predefined modes
+   *  never set this. */
   charId?: string;
 
   /* ---- item-driven modes (consumables) ------------------------------------------------------ */

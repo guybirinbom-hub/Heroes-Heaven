@@ -20,6 +20,8 @@ import { useCombatStore } from '../store/combatStore'
 import { rollDamageExpr } from '../utils/dice'
 import { GmWidgetBody } from './GmWidgets'
 import { BestiaryStatBlock } from './BestiaryStatBlock'
+import { AonLinkButton, aonHref, useShowAonLink } from './AonLink'
+import { useAonPageUrl } from '../data/aonPages'
 
 // ── Recursive rich-text renderer ──────────────────────────────────────────
 // Drop-in replacement for `TextWithGlyphs` that ALSO renders `{@trait X}` /
@@ -638,6 +640,28 @@ function useMetaBadge(type: WinType, ref: string, castRank?: number): string | n
   return null
 }
 
+// ── The page's Archives of Nethys address, for the header's button ─────────
+// An item (equipment-index.json `url`) and a ritual (rituals.json `url`) carry theirs. A spell,
+// condition, trait, action, skill or rule takes the one page of exactly its name from Heroes Heaven's
+// page trees (data/aonPages.ts) — and only while the tracker has the record, so a "not found" popup
+// never links anywhere. A bestiary creature's button sits in its stat block's bar (BestiaryStatBlock),
+// which is where the loaded creature is; a host page draws its own (Heroes Heaven's card head).
+function useAonUrl(type: WinType, ref: string): string | undefined {
+  const { equipment, rituals, spells, conditions, traits, actions, skills, rules } = useGameData()
+  const show = useShowAonLink()
+  const held = type === 'spell' ? spells.has(ref)
+    : type === 'condition' ? conditions.has(ref)
+    : type === 'trait' ? traits.has(ref)
+    : type === 'action' ? actions.has(ref)
+    : type === 'skill' ? skills.has(ref)
+    : type === 'rule' ? rules.has(ref)
+    : false
+  const page = useAonPageUrl(type, ref, show && held)
+  if (type === 'equipment') return (equipment.get(ref) as EquipmentInfo | undefined)?.url
+  if (type === 'ritual') return (rituals.get(ref) as RitualInfo | undefined)?.url
+  return page
+}
+
 // ── A host page's header controls ───────────────────────────────────────────
 // Heroes Heaven's own controls for the page in this window / pane (HostSearch.controls): its favourite
 // star — every description popup keeps its star, and inside the campaign it pins the page to the GM
@@ -774,6 +798,8 @@ export function PopupPreview({ type, ref_, title, castRank, fill, dockHandle, on
   hideHeader?: boolean
 }) {
   const meta = useMetaBadge(type, ref_, castRank)
+  const aon = useAonUrl(type, ref_)
+  const showAon = useShowAonLink()
   // Match the floating-window dimensions exactly so the hover preview reads
   // as the same panel — only the X (and drag/resize affordances) differ.
   return (
@@ -794,9 +820,15 @@ export function PopupPreview({ type, ref_, title, castRank, fill, dockHandle, on
     }}>
       {!hideHeader && (
         <PopupHeader title={title} meta={meta} dockHandle={dockHandle} onMouseDown={onHeaderDrag} onClose={onClose}
-          controls={type === 'host' ? <HostControls refId={ref_} /> : undefined} />
+          controls={type === 'host' ? <HostControls refId={ref_} /> : aon ? <AonLinkButton url={aon} /> : undefined} />
       )}
       {hideHeader && type === 'host' && <HostControls refId={ref_} bar />}
+      {/* The same for a record sharing a pane: its Archives button gets a strip of its own. */}
+      {hideHeader && type !== 'host' && showAon && aonHref(aon) && (
+        <div data-aon-bar="" style={{ display: 'flex', justifyContent: 'flex-end', padding: '5px 10px 0', flexShrink: 0 }}>
+          <AonLinkButton url={aon} />
+        </div>
+      )}
       <div style={{
         // A docked pane (`fill`) is the same page a window shows, so it bleeds the same way.
         padding: bleeds(type, !!fill) ? 0 : '14px 18px',
@@ -838,6 +870,7 @@ function WinItem({ win }: { win: FloatingWin }) {
   }, [win.id, fit])
   const active = win.tabs[win.active] ?? win.tabs[0]
   const meta = useMetaBadge(active.type, active.ref, active.castRank)
+  const aon = useAonUrl(active.type, active.ref)
   // A creature tab whose ref is a LIVE combatant id hosts the full interactive
   // stat block (HP, conditions, dice) — identical to a docked pane, so tearing a
   // stat-block tab off into a floating window keeps all its combat state. A
@@ -970,7 +1003,7 @@ function WinItem({ win }: { win: FloatingWin }) {
         onMouseDown={onTitleDown}
         onClose={() => close(win.id)}
         dockHandle={dockHandle}
-        controls={active.type === 'host' ? <HostControls refId={active.ref} /> : undefined}
+        controls={active.type === 'host' ? <HostControls refId={active.ref} /> : aon ? <AonLinkButton url={aon} /> : undefined}
         tabStrip={win.tabs.map((t, i) => {
           const on = i === win.active
           return (

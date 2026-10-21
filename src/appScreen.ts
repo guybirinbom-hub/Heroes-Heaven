@@ -3,6 +3,8 @@
 // creating the FIRST character on an empty roster (a fresh phone install) hung on "Loading game
 // content…" forever, because the loading gate required a `character` the builder never has yet.
 
+import type { MenuPage, PageNav } from './sheet/PageMenu';
+
 export type Screen = 'roster' | 'loading' | 'builder' | 'homebrew' | 'campaigns' | 'sheet' | 'settings';
 
 export interface ScreenInputs {
@@ -31,4 +33,27 @@ export function pickScreen({ effectiveMode, hasContent, hasCharacter }: ScreenIn
   if (effectiveMode === 'homebrew') return 'homebrew';
   if (effectiveMode === 'campaigns') return 'campaigns';
   return 'sheet';
+}
+
+/** How to open each page of the hamburger menu; `undefined` = not reachable right now (no character yet
+ *  for the sheet, a signed-out phone for Campaigns). */
+export interface PageOpeners {
+  sheet?: () => void;
+  roster: () => void;
+  campaigns?: () => void;
+  homebrew: () => void;
+  settings: () => void;
+}
+
+/**
+ * The menu's page list for the screen on show: which page is marked as the current one, and a handler for
+ * every page that can be opened. Pure, so a test can walk every screen. Screens the menu does not list
+ * (loading, builder) mark nothing.
+ */
+export function buildPageNav(screen: Screen, open: PageOpeners): PageNav {
+  const current: MenuPage | null =
+    screen === 'sheet' || screen === 'roster' || screen === 'campaigns' || screen === 'homebrew' || screen === 'settings'
+      ? screen
+      : null;
+  return { current, go: { sheet: open.sheet, roster: open.roster, campaigns: open.campaigns, homebrew: open.homebrew, settings: open.settings } };
 }

@@ -30,7 +30,9 @@ import { copyNumbers } from '../rules/recordIds';
 import type { CompanionPick } from './AddItemsModal';
 import { itemCounters, highestSlotRank } from '../rules/itemUses';
 import { formatItemPrice, grp } from '../rules/wealth';
-import { INVESTED_LIMIT, ItemDetail, RuneCopyPicker, countInvested, equipControl, runeLines } from './ItemDetail';
+import { INVESTED_LIMIT, ItemDetail, RuneChips, RuneCopyPicker, countInvested, equipControl, runeLines } from './ItemDetail';
+import type { DescNode } from './descref';
+import { DescriptionModal } from './DescriptionModal';
 import { chooseDialog, confirmDialog } from './confirm';
 import { ActionGlyph, isActionCost } from './widgets';
 import { AddItemsModal } from './AddItemsModal';
@@ -186,10 +188,13 @@ function ItemCard({
   justAdded = false,
   runeCopy,
   can,
+  onOpenRune,
 }: {
   inv: InventoryItem;
   item: Item;
   content: ContentDatabase;
+  /** A rune chip was pressed: open that rune's own description (the tab draws it, outside the row). */
+  onOpenRune?: (node: DescNode) => void;
   /** Doubling Rings: pick another wielded weapon whose runes copy onto this one. Present only for a
    *  wielded weapon while the rings are invested and ≥2 weapons are wielded; undefined hides it. */
   runeCopy?: { value?: string; options: { value: string; label: string }[]; onChange: (v: string) => void };
@@ -274,13 +279,11 @@ function ItemCard({
   const bulk = formatBulk(unitBulk(item, !!inv.worn && !inv.containerInstanceId));
   // Essentials drops the level/material line, so the runes etched on this row — the part of it that a
   // player changes — move to the second line as chips.
+  // Each chip whose rune ships opens that rune's description (onOpenRune — drawn by the tab, outside this
+  // row, so a press inside the popup never reaches the row's open / drag / hold handlers).
   const runeChips =
-    mode === 'essentials'
-      ? runeLines(inv).map((r) => (
-          <span className="ff-trait rune" key={r}>
-            {r}
-          </span>
-        ))
+    mode === 'essentials' && runeLines(inv).length > 0
+      ? [<RuneChips key="runes" inv={inv} item={item} content={content} onOpen={(n) => onOpenRune?.(n)} />]
       : [];
   // One set of props for every mode: the drag, hold-to-move and attach handlers are written once, so a
   // smaller card cannot quietly lose one of them.
@@ -794,6 +797,8 @@ export function InventoryTab({
 }) {
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
   const [detail, setDetail] = useState<{ inv: InventoryItem; item: Item } | null>(null);
+  // A rune chip pressed on a row: that rune's own description.
+  const [runeDesc, setRuneDesc] = useState<DescNode | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
   const rationsDayTracking = !!character.options?.rationsDayTracking;
@@ -1426,9 +1431,12 @@ export function InventoryTab({
       lastY: e.clientY,
       active: false,
       pointerId: e.pointerId,
-      // Longer hold so a quick swipe scrolls instead of grabbing. A press on a reorder arrow never arms
-      // it (the arrow is a button, not a handle) but is still tracked, so a swipe from there scrolls.
-      holdTimer: (e.target as Element | null)?.closest?.('.inv-reorder') ? null : window.setTimeout(armHold, 450),
+      // Longer hold so a quick swipe scrolls instead of grabbing. A press on a reorder arrow, or on an
+      // Essentials rune chip that opens its rune (ItemDetail RuneChips), never arms it (each is a button,
+      // not a handle: holding a chip must not pick the item up) but is still tracked, so a swipe from there
+      // scrolls — the rows are touch-action:none, so stopping the press at the chip would freeze the list
+      // under a finger that starts on one. The chip's tap and keyboard press open the rune as before.
+      holdTimer: (e.target as Element | null)?.closest?.('.inv-reorder, .rune-link') ? null : window.setTimeout(armHold, 450),
       scrolling: false,
       scrollEl: scrollParentOf(e.currentTarget as HTMLElement),
     };
@@ -1629,6 +1637,7 @@ export function InventoryTab({
                   content={content}
                   can={scope && { wear: scope.canWear, wield: scope.canWield, invest: scope.canInvest }}
                   runeCopy={runeCopy}
+                  onOpenRune={setRuneDesc}
                   nameSuffix={dupSuffix.get(inv.instanceId) ?? ''}
                   onOpen={() => open(inv)}
                   onPlay={onPlay}
@@ -1894,6 +1903,7 @@ export function InventoryTab({
           onEdit={onCreateItem ? (it, iv) => setEditTarget({ item: it, inv: iv }) : undefined}
         />
       )}
+      {runeDesc && <DescriptionModal root={runeDesc} onClose={() => setRuneDesc(null)} />}
       {addOpen && onPlay && (
         <AddItemsModal
           content={content}

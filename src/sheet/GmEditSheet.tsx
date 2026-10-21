@@ -3,7 +3,8 @@ import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
 import { contentFor } from '../rules/blocks/content';
-import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, type PlayState } from '../rules/play';
+import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, toggleMode, type PlayState } from '../rules/play';
+import { modeAlsoElsewhere, modeOwnedElsewhere } from '../rules/modes';
 import { Builder } from '../builder/Builder';
 import { CharacterSheet } from './CharacterSheet';
 import { WindowControls } from './WindowControls';
@@ -18,7 +19,7 @@ import { carryModePin } from '../data/prefs';
 import { memberConditions, type PartySummary } from './partySummary';
 import { carryStoredOverrides } from '../data/rebuild';
 import { ContentContext } from './ContentContext';
-import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModesRemoveFromCharacterContext } from './CopyOnWriteItems';
+import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModesRemoveFromCharacterContext, useModeUsage } from './CopyOnWriteItems';
 
 /** The host's persisting homebrew writers, threaded App → CampaignsPage → (CampaignTracker |
  *  useMemberViewer) → GmEditSheet. See the props of the same names below. */
@@ -256,6 +257,17 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   const copyOnWriteItems = useMemo(() => foreignCarriedIds(content, workCarried, 'items'), [content, workCarried]);
   /** …and the same for the modes it carries (./CopyOnWriteItems.tsx CopyOnWriteModesContext). */
   const copyOnWriteModes = useMemo(() => foreignCarriedIds(content, workCarried, 'modes'), [content, workCarried]);
+  /*
+   * Which of HIS roster characters use which modes (src/App.tsx ModeUsageContext). This player is never on
+   * his roster, so any character it names for a mode is one of his own. A mode one of them owns, or one of
+   * them uses (an old unowned mode he also switched on for this player), is never edited or deleted from
+   * here (checker, round 4): in place, his own character's numbers changed, and Delete stripped it from him.
+   */
+  const usage = useModeUsage();
+  const hisToo = (id: string): boolean => {
+    const def = content.modes[id];
+    return modeOwnedElsewhere(def, work.id) || (!!def && modeAlsoElsewhere(def, work.id, usage));
+  };
   const saveModeDef = (mode: ModeDef) => {
     /*
      * A mode this sheet CARRIES is never edited in place (2026-10-20, checker findings saving-R2-chk-2 /
@@ -266,10 +278,15 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
      * mode now, and the sheet's active modes (its own and its companions') repointed to it — a real change
      * to the sheet, which the push carries (owner ruling 2026-10-20: "the others should see the same item
      * as the player"). The carried id never reaches his storage.
+     * The same for a mode ANOTHER character owns (src/rules/modes.ts modeOwnedElsewhere — one of his own
+     * characters' modes, switched on for this player): edited in place, his own character's mode would change
+     * with it (round 2, 2026-10-21). The player gets their own copy; his character keeps its mode as it was.
      */
-    if (copyOnWriteModes.has(mode.id)) {
+    if (copyOnWriteModes.has(mode.id) || hisToo(mode.id)) {
       const old = mode.id;
-      const copy: ModeDef = { ...mode, id: freshModeId() };
+      // Made on this character, so it is this character's (src/rules/modes.ts, Guy 2026-10-21): never one of
+      // his own characters' modes, and the player's sheet lists it once the push lands.
+      const copy: ModeDef = { ...mode, id: freshModeId(), charId: work.id };
       setContent((c) => ({ ...c, modes: { ...c.modes, [copy.id]: copy } }));
       onSaveMode?.(copy);
       carryModePin(old, copy.id); // a pinned mode's copy stays pinned (2026-10-20, r3-R3-pin-lost-on-copy)
@@ -285,6 +302,25 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     // A carried mode offers no Delete here (ModesPanel reads CopyOnWriteModesContext); should its id still
     // arrive, nothing is deleted: his tombstone would not take it off the sheet, and it is not his to delete.
     if (copyOnWriteModes.has(id)) return;
+    /*
+     * A mode ANOTHER character owns — one of his own characters' modes switched on for this player — is never
+     * deleted from here: that would take it from his own character too (round 2, 2026-10-21). The panel's
+     * button reads "Remove from this character" for it, and that is what happens: switched off for this player
+     * the way its toggle does it (a form's temporary Hit Points go with it), then out of every companion's
+     * list (`repointMode`, as the player's own sheet does, src/App.tsx removeOwnModeDef). A change to the sheet,
+     * which his Update sends; his saved modes are untouched.
+     */
+    if (hisToo(id)) {
+      const defs = content.modes;
+      setWork((w) => {
+        if (!w.play) return w;
+        const off = (w.play.activeModes ?? []).includes(id) ? toggleMode(w.play, id, defs) : w.play;
+        const play = repointMode(off, id, null);
+        return play === w.play ? w : { ...w, play };
+      });
+      setDirty(true);
+      return;
+    }
     setContent((c) => ({ ...c, modes: Object.fromEntries(Object.entries(c.modes).filter(([k]) => k !== id)) }));
     onDeleteMode?.(id);
   };

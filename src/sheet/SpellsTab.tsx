@@ -81,6 +81,7 @@ import { isNotOwnPage } from './astVisibility';
  * scripts/heighten-tree-parity.mjs reads the same function) and its tree twin. */
 import { injectDamageArrow, injectTreeArrow, treeEntryApplies } from './heighteningTree';
 import { AstRenderer } from './AstRenderer';
+import { AonLink } from './AonLink';
 import { RemasteredLine } from './RemasteredLine';
 
 function cap(s: string): string {
@@ -279,6 +280,9 @@ export function SpellDetail({
         <div className="picker-head">
           {spell.name}
           <span style={{ marginLeft: 'auto', display: 'inline-flex', gap: 8, alignItems: 'center' }}>
+            {/* The spell's page on the Archives (AonLink: none for homebrew or a spell with no page;
+                Settings can hide it) — the tree this popup reads its rows from. */}
+            <AonLink url={tree?.url} />
             {/* card step 7a: `slug` = the spell's own id, so the pinned popup opens THIS spell's page
                 (section 2 rule 2), never the page its name slugs to. Polish round (section 6: "A pin made
                 from the sheet reopens as mine"): this popup is the Spells tab's — the character's own —

@@ -57,8 +57,6 @@ export function RosterScreen({
   onDuplicate,
   onArchive,
   onDelete,
-  onOpenHomebrew,
-  onOpenCampaigns,
   onOpenSettings,
   onSaveMode,
   onDeleteMode,
@@ -72,8 +70,8 @@ export function RosterScreen({
   onDuplicate: (id: string) => void;
   onArchive: (id: string, archived: boolean) => void;
   onDelete: (id: string) => void;
+  /** Not read here: the menu's page list comes from App through PageNavContext (see PageMenu). */
   onOpenHomebrew?: () => void;
-  /** Provided ONLY when signed in — absent hides the Campaigns menu item. */
   onOpenCampaigns?: () => void;
   onOpenSettings?: () => void;
   onSaveMode?: (mode: ModeDef) => void;
@@ -214,10 +212,6 @@ export function RosterScreen({
           <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
         <PageMenu
-          items={[
-            ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
-            ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
-          ]}
           onOpenSettings={onOpenSettings}
           modes={content?.modes}
           characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}

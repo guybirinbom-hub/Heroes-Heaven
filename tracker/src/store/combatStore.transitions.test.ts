@@ -13,7 +13,7 @@ import { useCombatStore, invalidateEncounterCache, downsAsPC, downedMarker, isDe
 import { InitiativeTracker } from '../components/InitiativeTracker'
 import { useLayoutStore, useGmLayoutStore } from './layoutStore'
 import { useSettingsStore } from './settingsStore'
-import { computeConditionMods } from '../utils/conditionEffects'
+import { computeConditionMods, conditionPickDefaults } from '../utils/conditionEffects'
 import type { AppliedCondition, Creature } from '../types/pf2e'
 
 type AnyCombatant = ReturnType<typeof useCombatStore.getState>['combatants'][number]
@@ -797,16 +797,19 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     expect(usesOn('Wizard')['ab:blast']).toBeUndefined()
   })
 
-  it('a defeated NPC still has a turn: its persistent damage and its Frightened keep running down', () => {
+  it('a defeated NPC still has a turn: its Frightened keeps running down, but its corpse never burns', () => {
     // The sibling half of the same pass. skipsTurn() means a downed monster is never the active
-    // creature, so its end-of-turn work used to stop dead the moment it dropped — its burning and
-    // its Frightened frozen at whatever they were, which a GM only sees on the round they heal it
-    // back up. Its initiative COUNT already came up here (creditCount, right beside it): the two
-    // clocks disagreed about the same creature.
+    // creature, so its end-of-turn work used to stop dead the moment it dropped — its Frightened
+    // frozen at whatever it was, which a GM only sees on the round they heal it back up. Its
+    // initiative COUNT already came up here (creditCount, right beside it): the two clocks disagreed
+    // about the same creature.
+    // Persistent damage is the exception (2026-10-21): it now defaults to "until removed", so a burning
+    // monster that was killed popped a reminder card (or rolled dice) on its corpse every round until
+    // the GM opened it and took the condition off. A defeated monster takes none; the condition stays.
     // MUTATION (nextTurn's skip loop: `{ creditCount(skipped, counts); endTurnPass(s, skipped) }`
-    //   back to the bare `creditCount(skipped, counts)`):
-    //   FAILS at line 818 — "expected +0 to be 2" (two rounds of burning never rolled at all; the
-    //   Frightened assertion under it is frozen at 4 the same way).
+    //   back to the bare `creditCount(skipped, counts)`): FAILS — Frightened frozen at 4.
+    // MUTATION (firePersistentDamage: drop the `isDeadNpc(cur) || (cur.isDefeated && !downsAsPC(cur))`
+    //   return, tried 2026-10-21): FAILS — "expected 2 to be 0" (the corpse burned once a round).
     fight()
     useCombatStore.getState().addCondition(idOf('Orc'), {
       name: 'persistent damage', pdAmount: '1d6', pdType: 'fire', isPermanent: true,
@@ -816,8 +819,9 @@ describe('the END-of-turn pass runs once per creature per round', () => {
 
     for (let i = 0; i < 4; i++) useCombatStore.getState().nextTurn()   // two full laps
     expect([useCombatStore.getState().round, activeName()]).toEqual([3, 'Wizard'])
-    expect(pdCards()).toBe(2)                         // once per round, never twice
+    expect(pdCards(), 'a defeated monster takes no persistent damage').toBe(0)
     expect(condVal('Orc', 'frightened')).toBe(2)
+    expect(condOn('Orc').some(c => c.name === 'persistent damage'), 'the condition itself stays on the row').toBe(true)
   })
 
   it('a defeated NPC above the first actor ends its round-1 turn as the fight starts', () => {
@@ -1632,11 +1636,13 @@ describe('a creature set to go down like a player', () => {
   })
 
   it('a DEAD one on the skipped-seat path is left where it is — no splice under the skip loop', () => {
-    // nextTurn's skip loop runs a skipped seat's end of turn — its persistent damage — while walking the
-    // array. A dead hireling at 0 HP hit by its own burning reaches applyPCDefeat from there. Guarded
-    // twice since 2026-10-11: firePersistentDamage never moves (`applyPCDefeat(s, cur.id, false)` —
-    // pinned by the beaten-while-standing bleed leg below) and a corpse is left alone (applyPCDefeat's
-    // dead-NPC return — pinned by the corpse leg below).
+    // nextTurn's skip loop runs a skipped seat's end of turn while walking the array. A defeated monster
+    // or a dead NPC takes no persistent damage there (firePersistentDamage returns early) and the
+    // condition stays on its row, so a corpse's burning never reaches applyPCDefeat. Only a creature that
+    // goes down like a player still burns while down, and it is never moved (`applyPCDefeat(s, cur.id,
+    // false)` — pinned by the beaten-while-standing bleed leg above). The corpse is also left in its
+    // seat by the skip itself (clearedByClearDefeated / applyPCDefeat's dead-NPC return — pinned by
+    // the corpse legs below).
     // MUTATION (clearedByClearDefeated: drop `if (isDeadNpc(c)) return true`, tried 2026-10-11): FAILS —
     //   "expected 'Hired Blade' to be 'Goblin'" (the corpse took a turn).
     add('Wizard', { initiative: 30, maxHP: 20 }); add('Hired Blade', { initiative: 20, maxHP: 20 })
@@ -1648,7 +1654,7 @@ describe('a creature set to go down like a player', () => {
     useCombatStore.getState().startCombat()
     expect(activeName()).toBe('Wizard')
 
-    useCombatStore.getState().nextTurn()                   // Wizard → (dead hireling burns, skipped) → Goblin
+    useCombatStore.getState().nextTurn()                   // Wizard → (dead hireling skipped, no burn) → Goblin
     expect(names()).toEqual(['Wizard', 'Hired Blade', 'Goblin'])
     expect(activeName()).toBe('Goblin')
     expect(row('Hired Blade').initiative).toBe(20)
@@ -1993,5 +1999,170 @@ describe('a PC row carries its charId', () => {
     add('Hero the Bold', { isPC: true, charId: 'hh-char-7' })
     expect(names()).toEqual(['Hero', 'Goblin'])
     invalidateEncounterCache()
+  })
+})
+
+// ───────────────────────────────────────────────────────────────────────────
+// Persistent damage, added the way the condition picker now adds it (owner's ruling 2026-10-21):
+// "at the end of the turn of the creature that has the condition, not the one who placed it (by end of
+// the turn I mean when I move to the next one in the initiative order), and make the default until
+// removed instead of one round." The picker's starting timing is conditionPickDefaults — the same
+// function ConditionPanel calls — so these legs build the condition exactly as the GM's Apply does.
+// ───────────────────────────────────────────────────────────────────────────
+describe('persistent damage put on B during A’s turn, with the picker’s defaults', () => {
+  beforeEach(() => {
+    resetCombat(); localStorage.clear()
+    useCombatStore.setState({ diceResults: [] } as never)
+  })
+  afterEach(() => {
+    useSettingsStore.setState({ persistentDamageAutoRoll: false, persistentDamageWarn: true })
+    useCombatStore.getState().setScope(null); localStorage.clear()
+  })
+
+  const pdCards = (who: string) => useCombatStore.getState().diceResults
+    .filter(d => d.label === `⚠ Persistent damage — ${who}`).length
+  const pdOn = (who: string) => condOn(who).find(c => c.name === 'persistent damage')
+  const hpOf = (who: string) => useCombatStore.getState().combatants.find(c => c.name === who)!.currentHP
+
+  /** A acts first (20), B second (10); the fight starts on A's turn and A sets B on fire. */
+  function aBurnsB(pdAmount = '1d6') {
+    add('Archer', { initiative: 20, maxHP: 200 }); add('Brute', { initiative: 10, maxHP: 200 })
+    useCombatStore.getState().startCombat()
+    expect(activeName()).toBe('Archer')
+    const d = conditionPickDefaults('persistent damage', idOf('Brute'), idOf('Archer'))
+    useCombatStore.getState().addCondition(idOf('Brute'), {
+      name: 'persistent damage', pdAmount, pdType: 'fire',
+      // ConditionPanel's handleApply, field for field (the Rounds box starts at 1).
+      duration: d.isPermanent ? undefined : 1, source: d.source || undefined, isPermanent: d.isPermanent,
+    })
+  }
+
+  it('starts "until removed", on no one else’s clock', () => {
+    // MUTATION (conditionEffects: drop `pickDefaults:{ untilRemoved:true, ownTurn:true }` from
+    //   'persistent damage'): FAILS — "expected { isPermanent: false, source: 'cmb-…' } to deeply equal
+    //   { isPermanent: true, source: '' }" (one round, ticking on the Archer's turn: the old default).
+    add('Archer'); add('Brute')
+    expect(conditionPickDefaults('persistent damage', idOf('Brute'), idOf('Archer'))).toEqual({ isPermanent: true, source: '' })
+    // Everything else keeps the old start: rounds, on the acting creature's clock.
+    expect(conditionPickDefaults('slowed', idOf('Brute'), idOf('Archer'))).toEqual({ isPermanent: false, source: idOf('Archer') })
+    expect(conditionPickDefaults('slowed', idOf('Brute'), undefined)).toEqual({ isPermanent: false, source: '' })
+    expect(conditionPickDefaults('slowed', idOf('Brute'), idOf('Brute'))).toEqual({ isPermanent: false, source: '' })
+    // The sheet's own spelling of it reads the same row.
+    expect(conditionPickDefaults('persistent-damage', idOf('Brute'), idOf('Archer'))).toEqual({ isPermanent: true, source: '' })
+  })
+
+  it('nothing happens when A’s turn ends; it resolves when B’s turn ends — and is still on B rounds later', () => {
+    // MUTATION (as above — the old one-round default on the Archer's clock): FAILS at "still on the
+    //   Brute in round 2" — the Archer's round-2 turn start ran its 1-round clock out after one burn.
+    aBurnsB()
+    useCombatStore.getState().nextTurn()                    // the Archer's turn ends
+    expect(activeName()).toBe('Brute')
+    expect(pdCards('Brute'), 'no reminder when the placer’s turn ends').toBe(0)
+    expect(pdCards('Archer')).toBe(0)
+
+    useCombatStore.getState().nextTurn()                    // the Brute's turn ends — its own
+    expect(pdCards('Brute'), 'the reminder at the end of the bearer’s turn').toBe(1)
+
+    for (let round = 2; round <= 4; round++) {
+      useCombatStore.getState().nextTurn()                  // Archer's turn ends: still nothing
+      expect(useCombatStore.getState().round).toBe(round)
+      expect(pdCards('Brute')).toBe(round - 1)
+      expect(pdOn('Brute'), `still on the Brute in round ${round}`).toBeDefined()
+      useCombatStore.getState().nextTurn()                  // Brute's turn ends: one more
+      expect(pdCards('Brute')).toBe(round)
+    }
+    expect(pdOn('Brute')).toMatchObject({ isPermanent: true, duration: undefined, source: undefined })
+    expect(pdCards('Archer')).toBe(0)
+  })
+
+  it('auto-roll hits the bearer at the end of ITS turn, never the placer, every round', () => {
+    useSettingsStore.setState({ persistentDamageAutoRoll: true })
+    aBurnsB('1d4+10')
+    useCombatStore.getState().nextTurn()                    // the Archer's turn ends
+    expect(hpOf('Brute')).toBe(200)
+    useCombatStore.getState().nextTurn()                    // the Brute's
+    const afterOne = hpOf('Brute')
+    expect(afterOne).toBeLessThanOrEqual(189)
+    expect(afterOne).toBeGreaterThanOrEqual(186)
+    useCombatStore.getState().nextTurn(); useCombatStore.getState().nextTurn()   // round 2
+    expect(hpOf('Brute')).toBeLessThan(afterOne)
+    expect(hpOf('Archer')).toBe(200)
+    expect(pdOn('Brute')).toBeDefined()
+  })
+
+  it('a GM who gives it rounds anyway gets them counted on the bearer’s turn; a chosen source is kept', () => {
+    add('Archer', { initiative: 20 }); add('Brute', { initiative: 10 })
+    useCombatStore.getState().startCombat()
+    // The picker with "until removed" unticked and the Source left as it starts ('' = the Brute's own turn).
+    useCombatStore.getState().addCondition(idOf('Brute'), { name: 'persistent damage', pdAmount: '1d6', duration: 2, isPermanent: false })
+    useCombatStore.getState().nextTurn()                    // Archer's end: the Brute's clock does not move
+    expect(pdOn('Brute')!.duration).toBe(2)
+    useCombatStore.getState().nextTurn()                    // Brute's end: burns, then 2 → 1
+    expect(pdCards('Brute')).toBe(1)
+    expect(pdOn('Brute')!.duration).toBe(1)
+    useCombatStore.getState().nextTurn(); useCombatStore.getState().nextTurn()
+    expect(pdCards('Brute')).toBe(2)
+    expect(pdOn('Brute'), 'two rounds, two burns, gone').toBeUndefined()
+
+    // The GM picks the Archer as the source on purpose: that choice still works (Player Core p. 426).
+    useCombatStore.getState().addCondition(idOf('Brute'), { name: 'persistent damage', pdAmount: '1d6', duration: 1, source: idOf('Archer'), isPermanent: false })
+    expect(activeName()).toBe('Archer')
+    useCombatStore.getState().nextTurn(); useCombatStore.getState().nextTurn()   // into round 4, Archer starts
+    expect(pdOn('Brute'), 'ran out at the start of the Archer’s turn').toBeUndefined()
+  })
+
+  it('one already saved in an encounter keeps the timing it stored (a load is not an edit)', () => {
+    useCombatStore.getState().setScope('camp-pd')
+    localStorage.setItem('pf2e-current-combat:camp-pd', JSON.stringify({
+      combatants: [
+        { id: 'cmb-1', name: 'Archer', conditions: [], currentHP: 10, maxHP: 10, tempHP: 0, initiative: 20 },
+        { id: 'cmb-2', name: 'Brute', currentHP: 10, maxHP: 10, tempHP: 0, initiative: 10, conditions: [
+          { id: 'cond-1', name: 'persistent damage', pdAmount: '1d6', duration: 1, source: 'cmb-1', isPermanent: false },
+        ] },
+      ],
+      round: 1, activeIndex: 0, inCombat: true, selectedId: null, cidCounter: 2, condCounter: 1,
+    }))
+    useCombatStore.getState().reloadFromStorage()
+    expect(pdOn('Brute')).toMatchObject({ duration: 1, source: 'cmb-1', isPermanent: false })
+  })
+
+  it('a monster killed while burning gives no reminder over the next rounds; a downed PC still burns', () => {
+    // "until removed" means the burning outlives the fight for a corpse unless the end-of-turn pass
+    // skips it: the Archer sets the Brute on fire, the Fighter kills it, and every round after that the
+    // GM got a fresh reminder card for a dead creature.
+    // MUTATION (firePersistentDamage: drop the `isDeadNpc(cur) || (cur.isDefeated && !downsAsPC(cur))`
+    //   return, tried 2026-10-21): FAILS — "no reminder for a dead monster: expected 3 to be 0".
+    aBurnsB()
+    add('Hero', { initiative: 5, isPC: true, maxHP: 20 })
+    const d = conditionPickDefaults('persistent damage', idOf('Hero'), idOf('Archer'))
+    useCombatStore.getState().addCondition(idOf('Hero'), {
+      name: 'persistent damage', pdAmount: '1d4', pdType: 'bleed', isPermanent: d.isPermanent,
+      duration: d.isPermanent ? undefined : 1, source: d.source || undefined,
+    })
+    useCombatStore.getState().setDefeated(idOf('Brute'), true)    // the Fighter kills it
+    useCombatStore.getState().applyDamage(idOf('Hero'), 20)       // the Hero goes down, Dying
+    for (let i = 0; i < 6; i++) useCombatStore.getState().nextTurn()   // three full rounds
+    expect(pdCards('Brute'), 'no reminder for a dead monster').toBe(0)
+    expect(pdOn('Brute'), 'the condition stays on its row — nothing is removed').toBeDefined()
+    expect(pdCards('Hero'), 'a dying PC still takes it at the end of each of its turns').toBe(3)
+  })
+
+  it('fire and bleed burn side by side; a second fire replaces the first', () => {
+    // MUTATION (addCondition: `sameConditionSlot(x, cond)` back to the name-only match, tried
+    //   2026-10-21): FAILS — "both types kept: expected [ 'bleed' ] to deeply equal [ 'fire', 'bleed' ]".
+    aBurnsB()                                                      // 1d6 fire
+    useCombatStore.getState().addCondition(idOf('Brute'), { name: 'persistent damage', pdAmount: '1d4', pdType: 'Bleed ', isPermanent: true })
+    const types = () => condOn('Brute').filter(c => c.name === 'persistent damage').map(c => c.pdType?.trim().toLowerCase())
+    expect(types(), 'both types kept').toEqual(['fire', 'bleed'])
+    useCombatStore.getState().addCondition(idOf('Brute'), { name: 'persistent damage', pdAmount: '2d6', pdType: 'FIRE', isPermanent: true })
+    expect(types(), 'the same type replaces, in place').toEqual(['fire', 'bleed'])
+    expect(condOn('Brute').find(c => c.pdType === 'FIRE')!.pdAmount).toBe('2d6')
+    // Any other condition still replaces by name alone.
+    useCombatStore.getState().addCondition(idOf('Brute'), { name: 'slowed', value: 1, isPermanent: true })
+    useCombatStore.getState().addCondition(idOf('Brute'), { name: 'Slowed', value: 2, isPermanent: true })
+    expect(condOn('Brute').filter(c => c.name.toLowerCase() === 'slowed').map(c => c.value)).toEqual([2])
+    // Each one burns at the end of the Brute's turn.
+    useCombatStore.getState().nextTurn(); useCombatStore.getState().nextTurn()
+    expect(pdCards('Brute')).toBe(2)
   })
 })

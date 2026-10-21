@@ -105,6 +105,7 @@ export function DefaultsEditor({ content, build, setBuild }: { content: ContentD
 interface CampaignsPageProps {
   content: ContentDatabase;
   onClose: () => void;
+  /** Not read here: the menu's page list comes from App through PageNavContext (see PageMenu). */
   onOpenRoster: () => void;
   onOpenHomebrew: () => void;
   onOpenSettings?: () => void;
@@ -125,7 +126,7 @@ interface CampaignsPageProps {
 /** Campaigns page — GM-only management. Lists the campaigns you RUN; open one to edit its settings and
  *  see the players in it (and view their sheets / kick). Players don't manage campaigns here — they
  *  JOIN by entering a code in a character's Setup, and reach the party from that character. */
-export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, onOpenSettings, characters, onOpenOwn, modes, onSaveMode, onDeleteMode, onCreateItem }: CampaignsPageProps) {
+export function CampaignsPage({ content, onClose, onOpenSettings, characters, onOpenOwn, modes, onSaveMode, onDeleteMode, onCreateItem }: CampaignsPageProps) {
   // What the GM's edit sheets (the tracker's and the page-replacing one) write homebrew through.
   const gmHomebrew = useMemo<GmHomebrewWriters>(
     () => ({ onCreateItem, onSaveMode, onDeleteMode }),
@@ -397,10 +398,6 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
           </button>
         )}
         <PageMenu
-          items={[
-            { label: 'Characters', icon: 'ti-users', onClick: onOpenRoster },
-            { label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew },
-          ]}
           onOpenSettings={onOpenSettings}
           modes={modes}
           characters={characters}

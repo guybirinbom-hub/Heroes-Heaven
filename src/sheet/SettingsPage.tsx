@@ -176,9 +176,19 @@ function AppearanceSection() {
         specials) to the character builder's Sources list. Hidden by default to keep that list short.
       </p>
 
+      <div className="menu-label">Popups</div>
+      <div className="menu-row">
+        <button className={'chip' + (prefs.showAonLink !== false ? ' active' : '')} onClick={() => setPref('showAonLink', prefs.showAonLink === false)}>
+          Show Archives of Nethys link on popups — {prefs.showAonLink !== false ? 'on' : 'off'}
+        </button>
+      </div>
+      <p className="settings-desc">
+        A description popup shows a <i className="ti ti-external-link" aria-hidden="true" /> button that opens the same
+        page on Archives of Nethys, whenever that page exists there (homebrew and your own custom records have none).
+        Turn this off to hide the button on every popup.
+      </p>
       {!isMobile && (
         <>
-          <div className="menu-label">Popups</div>
           <div className="menu-row">
             <button className={'chip' + (prefs.popupSizeSync ? ' active' : '')} onClick={() => setPref('popupSizeSync', !prefs.popupSizeSync)}>
               Apply popup size to all — {prefs.popupSizeSync ? 'on' : 'off'}
@@ -579,16 +589,18 @@ function UninstallSection() {
   );
 }
 
-/** Manage every custom mode in one place — universal ones and the per-character ones created from
- *  inside a character's Modes panel — with create / edit / delete and a scope (which characters). */
+/** Manage every custom mode in one place — grouped by the character each belongs to, plus the older ones not
+ *  tied to a character — with create / edit / delete and an owner (which character). */
 function ModesSection({
   modes = {},
   characters = [],
+  activeCharId,
   onSaveMode,
   onDeleteMode,
 }: {
   modes?: Record<string, ModeDef>;
   characters?: { id: string; name: string }[];
+  activeCharId?: string;
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
 }) {
@@ -596,7 +608,13 @@ function ModesSection({
   // `fromItemId` excluded: an item mode is not a custom mode the player wrote, it belongs to a
   // consumable. Listing it here would offer Edit and Delete on something regenerated from core data.
   const custom = playerModeLibrary(Object.values(modes));
-  const scopeOptions = [{ id: null as string | null, name: 'All characters' }, ...characters.map((c) => ({ id: c.id, name: c.name }))];
+  // Never "All characters": each mode belongs to one character (Guy 2026-10-21, "a mode i made on one shouldnt
+  // apear on another"); a mode with no owner becomes the first character's that switches it on or off or edits it.
+  const scopeOptions = [{ id: null as string | null, name: 'Not tied to a character' }, ...characters.map((c) => ({ id: c.id, name: c.name }))];
+  // …so a "New mode" made here starts as one character's — the one the app has open, else the first on this
+  // device — never "Not tied to a character", which would show it on every character by default (review,
+  // 2026-10-21). That stays a choice in the owner list, picked on purpose.
+  const newOwner = characters.some((c) => c.id === activeCharId) ? activeCharId : characters[0]?.id;
 
   if (editing) {
     return (
@@ -648,13 +666,21 @@ function ModesSection({
         <div>
           <h3 className="settings-h">Modes</h3>
           <p className="settings-desc" style={{ margin: 0 }}>
-            Create and edit your custom modes. A mode can be available to <strong>all characters</strong> or scoped to a
-            single one. Built-in class/ancestry modes aren't listed here.
+            Each mode belongs to one character, and only that character sees it. A mode not tied to a character shows on
+            every character until one of them switches it on or off, or edits it; then it belongs to that character.
+            Built-in class/ancestry modes aren&apos;t listed here.
           </p>
         </div>
         <button
           className="add-item-btn"
-          onClick={() => setEditing({ id: `mode-${Date.now().toString(36)}`, name: '', modifiers: [{ value: 1, type: 'status', target: 'all-checks' }] })}
+          onClick={() =>
+            setEditing({
+              id: `mode-${Date.now().toString(36)}`,
+              name: '',
+              modifiers: [{ value: 1, type: 'status', target: 'all-checks' }],
+              ...(newOwner ? { charId: newOwner } : {}),
+            })
+          }
         >
           <i className="ti ti-plus" aria-hidden="true" /> New mode
         </button>
@@ -664,7 +690,7 @@ function ModesSection({
         <div className="acts-empty">No custom modes yet. Create one with “New mode”.</div>
       ) : (
         <>
-          <div className="set-modes-group-title">All characters</div>
+          <div className="set-modes-group-title">Not tied to a character</div>
           {universal.length ? <div className="set-modes-list">{universal.map(row)}</div> : <div className="acts-empty">None.</div>}
           {perChar.map((g) => (
             <div key={g.c.id}>
@@ -674,7 +700,7 @@ function ModesSection({
           ))}
           {orphan.length > 0 && (
             <>
-              <div className="set-modes-group-title">Orphaned (character deleted)</div>
+              <div className="set-modes-group-title">Other characters (not on this device)</div>
               <div className="set-modes-list">{orphan.map(row)}</div>
             </>
           )}
@@ -687,20 +713,21 @@ function ModesSection({
 /** Multi-section Settings page. Appearance is the first section; more can be added to SECTIONS. */
 export function SettingsPage({
   onClose,
-  onOpenRoster,
-  onOpenHomebrew,
-  onOpenCampaigns,
   modes,
   characters,
+  activeCharId,
   onSaveMode,
   onDeleteMode,
 }: {
   onClose: () => void;
+  /** The three onOpen* props are not read here: the menu's page list comes from App through PageNavContext. */
   onOpenRoster?: () => void;
   onOpenHomebrew?: () => void;
   onOpenCampaigns?: () => void;
   modes?: Record<string, ModeDef>;
   characters?: { id: string; name: string }[];
+  /** The character the app has open (or last had open): a "New mode" made here starts as that character's. */
+  activeCharId?: string;
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
 }) {
@@ -721,7 +748,9 @@ export function SettingsPage({
     <>
       {id === 'appearance' && <AppearanceSection />}
       {id === 'rules' && <RulesSection />}
-      {id === 'modes' && <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />}
+      {id === 'modes' && (
+        <ModesSection modes={modes} characters={characters} activeCharId={activeCharId} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />
+      )}
       {id === 'tracker' && TRACKER_IN_CAMPAIGN && (
         <Suspense fallback={null}>
           <TrackerSettingsSection />
@@ -742,13 +771,7 @@ export function SettingsPage({
         <div className="chrome-brand" data-tauri-drag-region>
           <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
-        <PageMenu
-          items={[
-            ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
-            ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
-            ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
-          ]}
-        />
+        <PageMenu />
         <WindowControls />
       </header>
       <div className="subpage-bar">
@@ -762,15 +785,7 @@ export function SettingsPage({
         </h2>
         {/* Mobile: the .chrome hamburger is hidden, so the nav menu lives here — the on-screen way out
             of Settings (to Characters / Homebrew / Campaigns) besides the Android Back button. */}
-        {isMobile && (
-          <PageMenu
-            items={[
-              ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
-              ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
-              ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
-            ]}
-          />
-        )}
+        {isMobile && <PageMenu />}
       </div>
       <div className="subpage-body settings-subpage-body">
         {isMobile ? (

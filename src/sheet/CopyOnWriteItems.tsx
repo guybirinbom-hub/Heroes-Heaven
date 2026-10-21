@@ -1,4 +1,6 @@
 import { createContext, useContext } from 'react';
+import type { ModeUsage } from '../rules/modes';
+import type { ModeDef } from '../rules/types';
 
 /**
  * Item ids THIS view must never edit in place: an edit of one makes a COPY under a fresh id, and the
@@ -68,4 +70,29 @@ export const ModesRemoveFromCharacterContext = createContext(false);
 
 export function useModesRemoveFromCharacter(): boolean {
   return useContext(ModesRemoveFromCharacterContext);
+}
+
+/**
+ * Which of this device's roster characters use which modes (src/data/carried.ts `modeUsage`), for the Modes
+ * panel's per-character list (src/rules/modes.ts `modeListedFor`, Guy 2026-10-21: "modes need to be per
+ * character"). Provided by App over every screen, from its live roster. Null (the default — a sheet drawn
+ * outside the app) keeps the older answer: a mode no character owns is listed everywhere.
+ */
+export const ModeUsageContext = createContext<ModeUsage | null>(null);
+
+export function useModeUsage(): ModeUsage | null {
+  return useContext(ModeUsageContext);
+}
+
+/**
+ * Save an edited mode as THIS character's own copy (fresh id, owned here, this character's play pointed at it)
+ * instead of in place — the Modes editor's Save for a mode another roster character also uses
+ * (src/rules/modes.ts `modeAlsoElsewhere`; review 2026-10-21: an edit on one character changed another's
+ * numbers). Provided on the player's own sheet only (src/App.tsx copyModeHere); null elsewhere, where the
+ * editor saves through its `onSave` as before. Never used by the toggle's claim.
+ */
+export const ModesSaveAsCopyContext = createContext<((mode: ModeDef) => void) | null>(null);
+
+export function useModesSaveAsCopy(): ((mode: ModeDef) => void) | null {
+  return useContext(ModesSaveAsCopyContext);
 }

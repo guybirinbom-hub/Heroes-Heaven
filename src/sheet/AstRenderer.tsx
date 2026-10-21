@@ -11,7 +11,7 @@
 import { Fragment, type ReactNode } from 'react';
 import type { AstNode } from './astStore';
 import { useContent } from './ContentContext';
-import { openExternal } from '../platform';
+import { AonLink, aonUrlOf, useShowAonLink } from './AonLink';
 /* Card step 1: the text hygiene (clean, textOf) and the meta predicates (META, isMetaP, isSourceP,
  * STAT_LABELS, isMetaishBlock) live in astVisibility.ts, a plain .ts file the card's guard imports
  * through jiti, so the guard and this renderer read one copy. */
@@ -46,9 +46,9 @@ const keyAt = (el: Element): OpenAt => {
   return { x: r.left, y: r.bottom };
 };
 
-/** The Archives of Nethys; a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root by
- *  scripts/stamp-ast-urls.mjs. */
-const AON = 'https://2e.aonprd.com';
+/* The Archives of Nethys link: a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root
+ * by scripts/stamp-ast-urls.mjs; the button and its setting live in AonLink.tsx, shared with every
+ * popup that draws its own head (ItemDetail, the spell popup). */
 
 /* ---------- action cost -> the digit the Pathfinder action font renders (1/2/3, 4 free, 5 reaction) ---------- */
 const DIGIT: Record<string, string> = {
@@ -652,6 +652,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, windowHead, ca
 }): ReactNode {
   // A link's target must actually ship, or it renders inert rather than as a button that does nothing.
   const content = useContent();
+  const showAon = useShowAonLink();
   const hasRef = content
     ? (bucket: string, slug: string) => !!(content as unknown as Record<string, Record<string, unknown> | undefined>)[bucket]?.[slug]
     : undefined;
@@ -667,15 +668,9 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, windowHead, ca
   if (title) (function find(x: AstNode) { if (cost) return; if (x.t === 'actions' && String(x.string || '').trim()) cost = x; (x.c || []).forEach(find); })(title);
   // trait chips
   const traitLabels = traitLabelsOf(top.find((n) => n.t === 'traits'));
-  // The page on the Archives, where the record came from.
-  const aonUrl = /^\/\w+\.aspx/.test(String(node.url ?? '')) ? AON + node.url : '';
-  const aonLink = aonUrl ? (
-    <a className="ast-aon" href={aonUrl} target="_blank" rel="noreferrer"
-       title="Open this page on Archives of Nethys" aria-label="Open on Archives of Nethys"
-       onClick={(e) => { e.stopPropagation(); void openExternal(e, aonUrl); }}>
-      <i className="ti ti-external-link" aria-hidden="true" />
-    </a>
-  ) : null;
+  // The page on the Archives, where the record came from — unless the player switched the button off.
+  const aonUrl = showAon ? aonUrlOf(node.url) : '';
+  const aonLink = aonUrl ? <AonLink url={node.url} /> : null;
 
   if (windowHead) {
     return (

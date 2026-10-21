@@ -192,13 +192,16 @@ describe('U3: what the GM deletes in his edit sheet stays deleted after the sess
       expect(tab, 'fixture: the Modes tab').toBeTruthy();
       click(tab!);
       await tick();
-      expect(document.querySelector('button.mode-edit'), 'fixture: the Modes panel lists saved modes').not.toBeNull();
+      // The panel itself, not "some editable mode": after the delete the GM has none left. (Before 2026-10-21 the
+      // plain core database always offered one — a printed BACKGROUND-gated mode that src/rules/modes.ts isGated
+      // wrongly counted as a saved one; test/modes-per-character.test.ts.)
+      expect(document.querySelector('.modes-panel'), 'fixture: the Modes panel').not.toBeNull();
     };
 
     const first = renderDom(gmSheet(launchedContent(), { onDeleteMode }));
     await openModes(first.host, first.click);
     expect(document.body.textContent, 'fixture: the GM’s mode is listed').toContain(MODE.name);
-    // The row's own Edit (the fixture database carries other saved modes too).
+    // The row's own Edit.
     const edit = [...document.querySelectorAll<HTMLButtonElement>('button.mode-edit[aria-label="Edit"]')].filter((b) =>
       (b.parentElement?.textContent ?? '').includes(MODE.name),
     );

@@ -31,9 +31,10 @@
  * Pure over its arguments, except `ownContent`, `freshModeId` and the `load…` conveniences, which read
  * this device's storage (or the clock).
  */
-import type { ContentDatabase } from '../rules/types';
+import type { ContentDatabase, ModeDef } from '../rules/types';
 import {
   HOMEBREW_TYPES,
+  duplicateChar,
   loadCampaignHbCache,
   loadHomebrewContent,
   loadHomebrewSources,
@@ -42,6 +43,7 @@ import {
   type CampaignHbCampaign,
   type CarriedRecords,
   type HomebrewType,
+  type SavedChar,
 } from './storage';
 import { isPrintedId } from './index';
 import { playerModeLibrary } from '../rules/modes';
@@ -605,6 +607,38 @@ export interface ModeRefs {
   tempHpFrom?: string;
 }
 
+/**
+ * Which roster characters use which modes (src/rules/modes.ts `ModeUsage`): a mode id → the ids of the
+ * characters that have it switched on — in `play.activeModes` or a companion's `companionModes` — or carry
+ * it (`carried.modes`). Read fresh from the roster each time and never stored: it is how a mode saved
+ * before modes belonged to one character finds where it shows (`modeListedFor`), without a migration
+ * writing anything on load. Pure; a malformed entry or list is skipped, never guessed at.
+ */
+export function modeUsage(
+  roster: Iterable<{ id?: unknown; play?: ModeRefs | null; carried?: unknown } | null | undefined>,
+): Map<string, Set<string>> {
+  const out = new Map<string, Set<string>>();
+  const add = (modeId: unknown, charId: string) => {
+    if (typeof modeId !== 'string' || !modeId) return;
+    let set = out.get(modeId);
+    if (!set) out.set(modeId, (set = new Set()));
+    set.add(charId);
+  };
+  const each = (ids: unknown, charId: string) => {
+    if (Array.isArray(ids)) for (const id of ids) add(id, charId);
+  };
+  for (const sc of roster) {
+    if (!sc || typeof sc.id !== 'string') continue;
+    const play = isRec(sc.play) ? (sc.play as ModeRefs) : undefined;
+    each(play?.activeModes, sc.id);
+    const companions: unknown = play?.companionModes;
+    if (isRec(companions)) for (const ids of Object.values(companions)) each(ids, sc.id);
+    const carriedModes = isRec(sc.carried) ? sc.carried.modes : undefined;
+    if (isRec(carriedModes)) for (const id of Object.keys(carriedModes)) add(id, sc.id);
+  }
+  return out;
+}
+
 /** A fresh id for a mode the viewer COPIES from one the sheet carries (the Modes panel mints `mode-…` too). */
 export function freshModeId(): string {
   return `mode-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
@@ -657,4 +691,40 @@ export function withoutCarried<T extends { carried?: Carried }>(sheet: T, type: 
   if (Object.keys(out).some((k) => k !== FILL)) return { ...sheet, carried: out as Carried };
   const { carried: _drop, ...rest } = sheet;
   return rest as T;
+}
+
+/**
+ * The roster's Duplicate (src/App.tsx onDuplicate): storage.ts `duplicateChar`'s copy, plus the copy's OWN
+ * copy of every saved mode the original owns (`charId` = the original's id) — a fresh id each, `charId` = the
+ * copy's id — with the copy's play state (`activeModes`, every companion's `companionModes`, `tempHpFrom`)
+ * pointed at them. Guy 2026-10-21: "modes need to be per character". Before, the copy kept the original's
+ * modes switched on: listed on both, so an edit or a delete on either reached the other.
+ *
+ * `modes` is this device's merged modes (content.modes). Neither it nor `original` is changed; the caller
+ * saves the returned modes — the duplicate is a player action, never a load — and `ids` (original mode id →
+ * its copy's) lets it carry a pin across. Left as they were on the copy: a
+ * mode the original uses but does not own (an old unowned one, another character's), and a mode it holds only
+ * through `carried` (a GM's, never written into the player's saved modes — ruling 2026-10-20; it stays
+ * copy-on-write there). The copy stops carrying an original it now has its own copy of (`withoutCarried`);
+ * what a sheet carries is collected again on its next send.
+ */
+export function duplicateWithOwnModes(
+  original: SavedChar,
+  modes: Readonly<Record<string, ModeDef | undefined>>,
+): { copy: SavedChar; modes: ModeDef[]; ids: Record<string, string> } {
+  let copy = duplicateChar(original);
+  const made: ModeDef[] = [];
+  const ids: Record<string, string> = {}; // original mode id → its copy's
+  const taken = new Set(Object.keys(modes));
+  for (const m of Object.values(modes)) {
+    if (!m || typeof m !== 'object' || m.charId !== original.id || m.fromItemId) continue;
+    let id = freshModeId();
+    while (taken.has(id)) id = freshModeId();
+    taken.add(id);
+    ids[m.id] = id;
+    made.push({ ...structuredClone(m), id, charId: copy.id });
+    if (copy.play) copy = { ...copy, play: repointMode(copy.play, m.id, id) };
+    copy = withoutCarried(copy, 'modes', m.id);
+  }
+  return { copy, modes: made, ids };
 }

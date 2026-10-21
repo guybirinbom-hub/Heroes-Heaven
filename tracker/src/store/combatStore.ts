@@ -1063,9 +1063,26 @@ function pushDice(s: CombatStore, r: DiceResult) {
   s.diceResults.unshift(r)
   if (s.diceResults.length > 8) s.diceResults.length = 8
 }
+/** Whether adding `next` replaces `had` (addCondition): a creature holds one of each condition, so
+ *  the same name replaces — except persistent damage, where each damage TYPE is its own condition
+ *  (Player Core: fire and bleed burn side by side; a second fire replaces the first). Now that it
+ *  stays "until removed" by default, a bleed added to a burning creature used to wipe the fire out. */
+function sameConditionSlot(had: { name: string; pdType?: string }, next: { name: string; pdType?: string }): boolean {
+  const n = had.name.toLowerCase()
+  if (n !== next.name.toLowerCase()) return false
+  if (n !== 'persistent damage') return true
+  return (had.pdType ?? '').trim().toLowerCase() === (next.pdType ?? '').trim().toLowerCase()
+}
+
 /** Resolve every persistent-damage condition on the creature whose turn is
- *  ending: auto-roll & apply it (if enabled) or pop a reminder, per settings. */
+ *  ending: auto-roll & apply it (if enabled) or pop a reminder, per settings.
+ *  A creature that is out of the fight and does not go down like a player — a dead NPC, or a
+ *  defeated monster — takes none: persistent damage stays "until removed" by default, so a burning
+ *  goblin that was killed would otherwise roll (or pop a reminder card) on its corpse every round.
+ *  A downed PC, or a creature set to go down like one (even one marked beaten while standing), still
+ *  burns: its damage moves Dying. The condition itself stays on the row — nothing is removed. */
 function firePersistentDamage(s: CombatStore, cur: Combatant) {
+  if (isDeadNpc(cur) || (cur.isDefeated && !downsAsPC(cur))) return
   const pd = cur.conditions.filter(c => c.name.toLowerCase() === 'persistent damage' && c.pdAmount)
   if (!pd.length) return
   const st = useSettingsStore.getState()
@@ -1102,9 +1119,10 @@ function firePersistentDamage(s: CombatStore, cur: Combatant) {
  * Runs for the creature the pointer is leaving (nextTurn) AND for every defeated NPC the advance
  * steps over. A downed monster's initiative count still comes up — the tracker already credits it so
  * the effects IT created keep running down (creditCount) — so its OWN end-of-turn work runs too:
- * persistent damage, the Frightened step, its source-less durations. They used to freeze the moment
- * it dropped and stayed frozen for the rest of the fight, which a GM only sees on the round they
- * heal it back onto its feet still carrying round-one's burning.
+ * the Frightened step and its source-less durations. They used to freeze the moment it dropped and
+ * stayed frozen for the rest of the fight. Persistent damage is the exception (firePersistentDamage):
+ * a defeated monster or a dead NPC takes none and the condition just stays on its row; only a
+ * creature that goes down like a player (a PC, or one set to) still burns while down.
  */
 function endTurnPass(s: CombatStore, c: Combatant) {
   // ONE pass per creature per round. A creature that Delayed on its own turn has already had it:
@@ -1786,7 +1804,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       if (!c) return
       record(s)
       markGesture(c)
-      const ei = c.conditions.findIndex(x => x.name.toLowerCase()===cond.name.toLowerCase())
+      const ei = c.conditions.findIndex(x => sameConditionSlot(x, cond))
       const nc = { ...cond, id: ncid() }
       if (ei >= 0) c.conditions[ei] = nc
       else c.conditions.push(nc)

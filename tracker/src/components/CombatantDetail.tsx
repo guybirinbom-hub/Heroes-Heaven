@@ -17,6 +17,7 @@ import { useCampaignMonsterParts } from '../data/monsterPartsContext'
 import { PcStatsDisplay } from './PcStatsDisplay'
 import { MonsterPartsPopup } from './MonsterPartsPopup'
 import { escapeLeavesBox } from '../utils/spendEscape'
+import { AonLinkButton, aonHref, useShowAonLink } from './AonLink'
 
 // ── Hamburger options menu ─────────────────────────────────────────────────
 function HamburgerMenu({ combatant, onEditClick, onCombatMenu }: {
@@ -271,6 +272,12 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
     setMenuAt({ x: e.clientX, y: e.clientY })
   }
   const downMark = downedMarker(combatant)
+  // The creature's Archives of Nethys page (parseCreature's `aonUrl`, kept by slimCombatantForPersist),
+  // so a creature in the initiative order keeps the button its bestiary page had. Its header's buttons
+  // are absolute, so the title reserves one more button's width while it shows.
+  const showAon = useShowAonLink()
+  const aonUrl = combatant.creature?.aonUrl
+  const aonShown = showAon && !!aonHref(aonUrl)
 
   const copyName = () => {
     navigator.clipboard?.writeText(combatant.name).then(
@@ -324,9 +331,9 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
         <div style={{
           // Reserve space on the right for the floating buttons so the level /
           // source line never slides under them. Widen for the ⠿ handle.
-          paddingRight: onClose
+          paddingRight: (onClose
             ? (dockHandle ? 98 : 66)
-            : (combatant.creature ? 36 : 0),
+            : (combatant.creature ? 36 : 0)) + (aonShown ? 28 : 0),
           display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
           gap: 14, flexWrap: 'wrap',
         }}>
@@ -433,6 +440,7 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
         {(combatant.creature || onClose || dockHandle) && (
           <div onMouseDown={e => e.stopPropagation()}
             style={{ position: 'absolute', top: 8, right: 14, display: 'flex', alignItems: 'center', gap: 4 }}>
+            <AonLinkButton url={aonUrl} />
             {dockHandle}
             {onClose && (
               <button

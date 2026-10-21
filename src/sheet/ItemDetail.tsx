@@ -28,6 +28,10 @@ import { SPELL_SPEC_BUILDER } from './filterSpecs';
 import { isFormulaBook } from '../rules/formulaBook';
 import { enabledBookSet, entrySourceOn } from '../rules/sources';
 import { FormulaBookPanel } from './FormulaBookPanel';
+import { runeEntries } from '../rules/runeRecords';
+import type { DescNode } from './descref';
+import { DescriptionModal } from './DescriptionModal';
+import { AonLink } from './AonLink';
 
 const ordinalRank = (n: number): string => (n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
 
@@ -108,20 +112,43 @@ function typeStats(item: Item, content: ContentDatabase): { k: string; v: string
 
 const REINFORCING_NAMES = ['', 'Minor', 'Lesser', 'Moderate', 'Greater', 'Major', 'Supreme'];
 
-/** The etched runes as chips ("+1 potency", "Greater striking", …). Exported because the Essentials
- *  inventory card shows the same list on its second line — one reading of a row's runes, not two. */
+/** The etched runes as chip labels ("+1 potency", "Greater striking", …) — runeEntries' labels, the one
+ *  reading of a row's runes (src/rules/runeRecords.ts). */
 export function runeLines(inv: InventoryItem): string[] {
-  const r = inv.runes as
-    | { potency?: number; striking?: string; resilient?: string; reinforcing?: number; property?: string[] }
-    | undefined;
-  if (!r) return [];
-  const out: string[] = [];
-  if (r.potency) out.push(`+${r.potency} potency`);
-  if (r.striking) out.push(`${cap(r.striking)} striking`);
-  if (r.resilient) out.push(`${cap(r.resilient)} resilient`);
-  if (r.reinforcing) out.push(`${REINFORCING_NAMES[r.reinforcing]} reinforcing`);
-  for (const p of r.property ?? []) out.push(cap(p.replace(/-/g, ' ')));
-  return out;
+  return runeEntries(inv).map((e) => e.label);
+}
+
+/** The description node a rune's chip opens: the rune's own item record, by id (its page, PinStar and
+ *  Archives link come with the card, as for any item record). */
+export function runeNode(id: string, content: ContentDatabase): DescNode | null {
+  const rec = content.items[id];
+  return rec ? { title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: 'items', slug: id } : null;
+}
+
+/**
+ * The etched runes as chips. Exported because the Essentials inventory card shows the same list on its
+ * second line. A rune whose record ships is a button that opens that rune's description (`onOpen`); the
+ * click stops here, so a chip on an inventory row never also opens the row's item popup. A rune with no
+ * record stays a plain label.
+ */
+export function RuneChips({ inv, item, content, onOpen }: { inv: InventoryItem; item: Item; content: ContentDatabase; onOpen: (node: DescNode) => void }) {
+  return (
+    <>
+      {runeEntries(inv, item.itemType, content).map((r, i) => {
+        const node = r.id ? runeNode(r.id, content) : null;
+        return node ? (
+          <button type="button" className="ff-trait rune rune-link" key={`${r.label}:${i}`} title={`Show ${node.title}`}
+            onClick={(e) => { e.stopPropagation(); onOpen(node); }}>
+            {r.label}
+          </button>
+        ) : (
+          <span className="ff-trait rune" key={`${r.label}:${i}`}>
+            {r.label}
+          </span>
+        );
+      })}
+    </>
+  );
 }
 
 /** PF2e caps a character at 10 invested magic items — Incredible Investiture raises it to 12. Read
@@ -330,7 +357,9 @@ export function ItemDetail({
   const pagePrintsOwnGroup = !!cardPage && !!weaponGroup && printedWeaponGroups(cardPage).includes(weaponGroup);
   const pageDrawsCrit = pageDrawsOwnGroup || (pageDrawsAGroup && !pagePrintsOwnGroup);
   const showCrit = !!critText && !pageLoading && !pageDrawsCrit;
-  const runes = runeLines(inv);
+  const hasRunes = runeLines(inv).length > 0;
+  // The rune chip the player opened: that rune's own description, over this popup (Back = close it).
+  const [runeDesc, setRuneDesc] = useState<DescNode | null>(null);
   // The mode this item carries, if any. A consumable switches its own on when used; anything else
   // needs the Activate control below, or the mode is unreachable.
   const itemMode = Object.values(content.modes ?? {}).find((m) => m.fromItemId === item.id);
@@ -467,6 +496,10 @@ export function ItemDetail({
         <div className="picker-head">
           <span className="sd-head-name">{item.name}</span>
           <span className="sd-head-actions">
+            {/* The shown record's page on the Archives (AonLink: none for homebrew or a record with no
+                page; Settings can hide it). The page is the one the card below draws — a hidden cursed
+                item's is its disguise twin's, so the link never gives the curse away. */}
+            <AonLink url={ownPage?.url} />
             {/* The pin carries the card's note line too (play.ts pinOf keeps kind note), so the Pinned list
                 reopens the card with its box — what FeatDetail's star does for a feat. */}
             <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items', slug: pageId, mode: 'mine', ...(noteOurs ? { ours: noteOurs } : {}) }} />
@@ -508,15 +541,12 @@ export function ItemDetail({
                 ))}
             </div>
           )}
-          {runes.length > 0 && (
+          {hasRunes && (
             <div className="sd-traits">
-              {runes.map((r) => (
-                <span className="ff-trait rune" key={r}>
-                  {r}
-                </span>
-              ))}
+              <RuneChips inv={inv} item={item} content={content} onOpen={setRuneDesc} />
             </div>
           )}
+          {runeDesc && <DescriptionModal root={runeDesc} onClose={() => setRuneDesc(null)} />}
           {item.isMonsterPart && (
             <div className="sd-traits">
               <span className="ff-trait category">

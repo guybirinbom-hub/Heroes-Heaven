@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
 import type { Combatant, AppliedCondition } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
-import { CONDITION_META, ALL_CONDITIONS } from '../utils/conditionEffects'
+import { CONDITION_META, ALL_CONDITIONS, conditionPickDefaults } from '../utils/conditionEffects'
 import type { ConditionMeta } from '../utils/conditionEffects'
 import { useCustomConditionsStore, emptyCustomCondition, type CustomCondition } from '../store/customConditionsStore'
 import { AdvancedConditionEditor } from './AdvancedConditionEditor'
@@ -158,12 +158,14 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
   // Who the duration's clock belongs to. Player Core p. 426: a duration in rounds "decreases by 1
   // at the start of each turn of the creature that created the effect", so the acting creature is
   // offered as the default. Empty = no source = the other printed family, "until the end of the
-  // target's next turn", which ticks at the end of THIS combatant's own turn.
+  // target's next turn", which ticks at the end of THIS combatant's own turn. Picking a condition
+  // resets this and the "until removed" box to THAT condition's defaults (conditionPickDefaults —
+  // persistent damage starts "until removed", on its bearer's own turn).
   const combatants = useCombatStore(s => s.combatants)
   const activeIndex = useCombatStore(s => s.activeIndex)
   const inCombat = useCombatStore(s => s.inCombat)
   const acting = inCombat ? combatants[activeIndex] : undefined
-  const [source, setSource] = useState<string>(() => (acting && acting.id !== combatant.id ? acting.id : ''))
+  const [source, setSource] = useState<string>(() => conditionPickDefaults('', combatant.id, acting?.id).source)
   const src = source || undefined
   const customLibrary = useCustomConditionsStore(s => s.conditions)
   const upsertCustom = useCustomConditionsStore(s => s.upsert)
@@ -249,6 +251,11 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
     setSelected(name); setValue(1)
     if (name === CUSTOM_KEY) { setCustomName(''); setCustomDescription('') }
     if (name === ADVANCED_KEY) { setAdvOpen(true); return }
+    // The picked condition's own starting timing: whose turn its rounds count on, and whether it
+    // starts "until removed". A saved template's own isPermanent below wins over the latter.
+    const d = conditionPickDefaults(name, combatant.id, acting?.id)
+    setSource(d.source)
+    setIsPermanent(d.isPermanent)
     // When picking a saved template, prime value/duration from its defaults.
     if (name.startsWith(SAVED_PREFIX)) {
       const tpl = customLibrary.find(c => SAVED_PREFIX + c.id === name)

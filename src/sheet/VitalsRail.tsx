@@ -1630,7 +1630,9 @@ export function VitalsRail({
           onStepValue={(id, delta) => onPlay((p) => stepConditionValue(p, id, delta), `cond:${id}`)}
           onClose={() => setCondOpen(false)}
           modesEnabled
-          library={playerModeLibrary(Object.values(content.modes), charKey)}
+          // The whole library: the panel itself lists only the modes that belong to this character
+          // (ModesPanel, src/rules/modes.ts modeListedFor — it also knows the roster and what is on here).
+          library={playerModeLibrary(Object.values(content.modes))}
           // Authored, GATED modes are content, not the player's own: they belong in the predefined
           // section, which `modeRelevant` filters, rather than in "Your modes", which it does not.
           // `catalog` stays the hand-written templates — the mode editor offers it as a starting

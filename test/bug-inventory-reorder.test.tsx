@@ -494,6 +494,39 @@ describe('reorder arrows (phone)', () => {
     expect(t.order()).toEqual(['i1', 'i3', 'i2']);
     t.stop();
   });
+
+  it('a press HELD on an Essentials rune chip never picks the item up — the card still does, and the chip still opens its rune', async () => {
+    // Review 2026-10-21: the chip (ItemDetail RuneChips) is a button that opens the rune; held, it armed the
+    // row's hold-to-move like any other spot on the card. Like an arrow it is tracked but never arms the hold.
+    const RUNED: InventoryItem = { instanceId: 'i4', itemId: 'longsword', quantity: 1, equipped: true, runes: { potency: 1 } };
+    const holdOn = async (el: Element) => {
+      pointer('pointerdown', el, 100);
+      await act(async () => {
+        await new Promise((r) => setTimeout(r, 520)); // past the 450 ms hold that arms a card
+      });
+      const ghost = !!document.querySelector('.inv-drag-ghost');
+      pointer('pointerup', window, 100);
+      return ghost;
+    };
+    // jsdom lays nothing out: the release of an armed hold asks what is under the finger — nothing.
+    const hadPoint = 'elementFromPoint' in document;
+    if (!hadPoint) Object.defineProperty(document, 'elementFromPoint', { configurable: true, value: () => null });
+    const t = mount([RUNED, AXE], { mobile: true, custom: { itemCardDetail: 'essentials' } });
+    try {
+      const chip = card(t.host, 'Longsword').querySelector<HTMLButtonElement>('button.rune-link');
+      expect(chip?.textContent, 'fixture: the row’s rune chip').toBe('+1 potency');
+      // mutation-proof: drop `, .rune-link` from InventoryTab's startHold and this goes red: the item is picked up.
+      expect(await holdOn(chip!), 'held on the chip: nothing picked up').toBe(false);
+      expect(await holdOn(card(t.host, 'Longsword').querySelector('.inv-name')!), 'positive control: held on the name, it is').toBe(true);
+      const chipNow = card(t.host, 'Longsword').querySelector<HTMLButtonElement>('button.rune-link');
+      act(() => chipNow!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+      expect(document.body.textContent, 'the tap opens the rune').toContain('Weapon Potency (+1)');
+      expect(t.order()).toEqual(['i4', 'i2']);
+    } finally {
+      t.stop();
+      if (!hadPoint) delete (document as { elementFromPoint?: unknown }).elementFromPoint;
+    }
+  });
 });
 
 describe('copy numbers follow the item, not its place in the list', () => {

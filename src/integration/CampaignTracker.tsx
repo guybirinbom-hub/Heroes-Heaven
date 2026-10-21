@@ -5,6 +5,8 @@ import { GmEditSheet, type GmEditHandle, type GmHomebrewWriters } from '../sheet
 import { RecordCard } from '../sheet/RecordCard';
 import type { OpenAt } from '../sheet/cardModel';
 import { PinStar } from '../sheet/PinStar';
+import { useShowAonLink } from '../sheet/AonLink';
+import { openExternal } from '../platform';
 import { astSlug } from '../sheet/useAst';
 import { bucketOf } from '../sheet/astStore';
 import { PinContext, type PinDescApi } from '../sheet/PinContext';
@@ -798,6 +800,9 @@ export function CampaignTracker({
    * there, with no star. The search still lists the GM's own database only.
    */
   const hostContent = useMemo(() => partyContent(content, sheetById.values()), [content, sheetById]);
+  // The app's "Show Archives of Nethys link on popups" (Settings → Appearance → Popups) decides for the
+  // tracker's own popups here too (its item / ritual / creature windows, tracker/src/components/AonLink.tsx).
+  const showAonLink = useShowAonLink();
   const hostSearch = useMemo(() => {
     const open = (bucket: string, id: string, at?: OpenAt) => openHostWindow(hostContent, bucket, id, at);
     return {
@@ -807,8 +812,10 @@ export function CampaignTracker({
       render: (bucket: string, id: string) => <HostPage content={hostContent} bucket={bucket} id={id} onOpen={open} />,
       // …and the popup's star, in that window's (or pane's) header.
       controls: (bucket: string, id: string) => <HostPageControls content={hostContent} bucket={bucket} id={id} />,
+      showAonLink,
+      openExternal: (e: { preventDefault: () => void }, url: string) => { void openExternal(e, url); },
     };
-  }, [searchRecords, hostContent]);
+  }, [searchRecords, hostContent, showAonLink]);
   // The star in every description popup here (findHostTab above).
   const gmRoot = useGmLayoutStore((s) => s.root);
   const gmPin = useMemo<PinDescApi>(() => ({

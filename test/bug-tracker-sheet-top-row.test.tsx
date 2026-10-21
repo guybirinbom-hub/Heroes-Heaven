@@ -478,6 +478,15 @@ describe('(b) the flag never outlives the view', () => {
 });
 
 describe('(f) the sheet over the tracker writes homebrew through the page’s writers', () => {
+  /*
+   * A mode the GM saved earlier (no gate, no owner): one of his own, editable in the panel. Before 2026-10-21 these
+   * tests found "a saved mode to edit" in the plain core database — but the only ones there were the three printed
+   * BACKGROUND-gated modes, which src/rules/modes.ts isGated wrongly counted as the player's own (fixed 2026-10-21;
+   * test/modes-per-character.test.ts). The fixture now carries a real saved mode.
+   */
+  const GM_SAVED: ModeDef = { id: 'mode-gm-saved-tide-ward', name: 'Tide Ward', modifiers: [{ value: 1, type: 'status', target: 'ac' }] };
+  const withSavedMode = (): ContentDatabase => ({ ...content(), modes: { ...content().modes, [GM_SAVED.id]: GM_SAVED } }) as ContentDatabase;
+
   it('a mode the GM deletes there reaches CampaignsPage’s onDeleteMode (App’s persisting one)', async () => {
     /*
      * U3 (2026-10-20) wiring: test/bug-gm-edit-homebrew-persists.test.tsx proves GmEditSheet calls the
@@ -487,7 +496,7 @@ describe('(f) the sheet over the tracker writes homebrew through the page’s wr
      */
     const deleted: string[] = [];
     srv.party = [publish(PC_A(), 'owner-a')];
-    await openCampaign({ onDeleteMode: (id) => deleted.push(id) });
+    await openCampaign({ onDeleteMode: (id) => deleted.push(id) }, withSavedMode());
     await openSheet();
 
     click(q('.ct-sheet-full .add-btn')!);
@@ -534,7 +543,7 @@ describe('(f) the sheet over the tracker writes homebrew through the page’s wr
   it('a mode the GM saves there reaches CampaignsPage’s onSaveMode (App’s persisting one)', async () => {
     const saved: ModeDef[] = [];
     srv.party = [publish(PC_A(), 'owner-a')];
-    await openCampaign({ onSaveMode: (m) => saved.push(m) });
+    await openCampaign({ onSaveMode: (m) => saved.push(m) }, withSavedMode());
     await openSheet();
     await saveModeFromSheet('.ct-sheet-full');
     expect(saved).toHaveLength(1);
@@ -545,7 +554,7 @@ describe('(f) the sheet over the tracker writes homebrew through the page’s wr
     const saved: ModeDef[] = [];
     srv.party = [publish(PC_A(), 'owner-a')];
     srv.trackerMiss.add('char-a');
-    await openCampaign({ onSaveMode: (m) => saved.push(m) });
+    await openCampaign({ onSaveMode: (m) => saved.push(m) }, withSavedMode());
     openSheetFor('Ayla Brightwood');
     await flush(6);
     expect(q('.ct-sheet-full'), 'fixture: not the tracker’s sheet').toBeNull();
@@ -564,7 +573,8 @@ describe('(f) the sheet over the tracker writes homebrew through the page’s wr
     const deleted: string[] = [];
     srv.party = [publish(PC_A(), 'owner-a')];
     srv.trackerMiss.add('char-a');
-    await openCampaign({ onDeleteMode: (id) => deleted.push(id) });
+    const db = withSavedMode();
+    await openCampaign({ onDeleteMode: (id) => deleted.push(id) }, db);
     openSheetFor('Ayla Brightwood');
     await flush(6);
     expect(q('.ct-sheet-full'), 'fixture: not the tracker’s sheet').toBeNull();
@@ -583,7 +593,7 @@ describe('(f) the sheet over the tracker writes homebrew through the page’s wr
     // The mode the editor opened on: its name, and the database ids that carry that name.
     const name = document.querySelector<HTMLInputElement>('.mode-editor .me-field input')?.value ?? '';
     expect(name, 'fixture: the editor shows the mode’s name').not.toBe('');
-    const idsNamed = Object.values(content().modes).filter((m) => m.name === name).map((m) => m.id);
+    const idsNamed = Object.values(db.modes).filter((m) => m.name === name).map((m) => m.id);
     click(document.querySelector('button.me-delete')!);
     await flush(2);
     expect(deleted, 'the page’s writer hears the delete').toHaveLength(1);

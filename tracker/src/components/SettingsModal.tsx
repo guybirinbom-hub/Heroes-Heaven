@@ -526,6 +526,7 @@ export function DisplaySection({ campaignDriven = false }: { campaignDriven?: bo
   const persistentDamageAutoRoll = useSettingsStore(s => s.persistentDamageAutoRoll)
   const persistentDamageWarn = useSettingsStore(s => s.persistentDamageWarn)
   const showSource = useSettingsStore(s => s.showSource)
+  const showAonLink = useSettingsStore(s => s.showAonLink)
   const dockablePopups = useSettingsStore(s => s.dockablePopups)
   const showBlockDragButton = useSettingsStore(s => s.showBlockDragButton)
   const showInitCollapseButton = useSettingsStore(s => s.showInitCollapseButton)
@@ -586,6 +587,16 @@ export function DisplaySection({ campaignDriven = false }: { campaignDriven?: bo
         checked={showSource}
         onChange={v => setSetting('showSource', v)}
       />
+      {/* Inside Heroes Heaven the app's own switch (Settings → Appearance → Popups) decides, for its
+          popups and the tracker's alike — one switch, never two that disagree. */}
+      {!campaignDriven && (
+        <ToggleRow
+          label="Show Archives of Nethys link on popups"
+          hint="On every popup whose page exists on Archives of Nethys, show a button that opens that page there."
+          checked={showAonLink}
+          onChange={v => setSetting('showAonLink', v)}
+        />
+      )}
       {/* Monster Parts follows the campaign's Battlezoo variant rule where there IS a campaign, so
           the switch would just be a way to disagree with it. Standalone there's nothing to ask. */}
       {!campaignDriven && (

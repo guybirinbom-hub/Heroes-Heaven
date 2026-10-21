@@ -4,6 +4,7 @@ import { useCombatStore } from '../store/combatStore'
 import type { Combatant, Creature } from '../types/pf2e'
 import { StatBlock } from './StatBlock'
 import { ErrorBoundary } from './ErrorBoundary'
+import { AonLinkButton } from './AonLink'
 
 /*
  * A BESTIARY CREATURE IN A WINDOW — the full stat block, and a way into the fight.
@@ -90,6 +91,10 @@ export function BestiaryStatBlock({ name }: { name: string }) {
             {added === 1 ? `${label} is in the initiative order.` : `${added} × ${label} added to the initiative order.`}
           </span>
         )}
+        {/* The creature's page on the Archives (its record's own address; none for homebrew). */}
+        <span style={{ marginLeft: 'auto', display: 'inline-flex' }}>
+          <AonLinkButton url={c.aonUrl} />
+        </span>
       </div>
       <ErrorBoundary label="this stat block" resetKeys={[name]}>
         <StatBlock combatant={shown} notOnBoard />

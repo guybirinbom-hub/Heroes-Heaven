@@ -565,7 +565,9 @@ export function modeTargetLabel(mod: ModeModifier): string {
  * keeps that out of every such list — including the search and "show all" paths, which deliberately
  * bypass `modeRelevant`.
  *
- * `charKey` narrows to modes scoped to that character plus the universal ones; omit it for all.
+ * `charKey` narrows to that character's modes by `modeListedFor` with no usage known: its own and the
+ * ones no character owns. Omit it for all. The Modes panel narrows with the roster's usage itself
+ * (src/sheet/ModesPanel.tsx), so it is handed the whole library.
  *
  * ⚠ A GATED mode is CONTENT, never one of the player's own. The mode editor cannot write a
  * `classes` / `ancestries` / `feats` gate — only the authoring scripts do — so a gate is the reliable
@@ -574,6 +576,9 @@ export function modeTargetLabel(mod: ModeModifier): string {
  * Delete: a 1st-level fighter was shown the champion's aura, the lantern's aura and every archetype
  * trance in the game, all editable and none of them theirs. `contentGatedModes` hands those to the
  * panel's gated section instead, where `modeRelevant` decides who sees them.
+ * A `backgrounds` gate counts too (2026-10-21): it joined the gate kinds in batch 19 but not this test, so
+ * the three background-gated core modes (Awful Scab's Sealed Outfit, Harrow-Chosen's Partial Match and
+ * Unmatched) sat under "Your modes" on EVERY character, editable and deletable.
  */
 export function playerModeLibrary(modes: Iterable<ModeDef>, charKey?: string): ModeDef[] {
   return [...modes].filter(
@@ -581,12 +586,82 @@ export function playerModeLibrary(modes: Iterable<ModeDef>, charKey?: string): M
       !CATALOG_MODE_MAP[m.id] &&
       !m.fromItemId &&
       !isGated(m) &&
-      (charKey === undefined || !m.charId || m.charId === charKey),
+      modeListedFor(m, charKey),
   );
 }
 
+/* -------------------------------------------------------------------------------------------------
+ * A user mode BELONGS TO ONE CHARACTER (Guy, 2026-10-21: "modes need to be per character so a mode i
+ * made on one shouldnt apear on another").
+ *
+ * Its `charId` names the roster character it was made on (src/sheet/ModesPanel.tsx stamps it on a new
+ * mode). Nothing is migrated and nothing is written on load: a mode saved before this has no `charId`
+ * and no known owner, so where it shows is read off the roster each time (`ModeUsage`, built by
+ * src/data/carried.ts `modeUsage`) —
+ *  - on every character that has it switched on (itself or a companion) or carries it;
+ *  - on every character when none of them does, exactly as before, so no old mode vanishes;
+ *  - and it becomes a character's own the first time that character's sheet edits it or switches it on
+ *    or off (ModesPanel), a real player edit, saved like any other. Off too: an old mode two characters
+ *    had on stays with the one that switched it off, and the other lists it while it is on there.
+ * A mode a character has switched on is always listed there, whoever owns it, so it can be switched off.
+ * An older app version reads `charId` as it always did ("only that character"), and an unowned mode as
+ * "every character": it may show an old mode more widely than this one, never hide one.
+ * ---------------------------------------------------------------------------------------------- */
+
+/** Mode id → the roster ids of the characters that have that mode switched on (themselves or one of
+ *  their companions) or carry it (src/data/carried.ts `modeUsage`). */
+export type ModeUsage = ReadonlyMap<string, ReadonlySet<string>>;
+
+/**
+ * Is user mode `m` listed in character `charKey`'s Modes panel? `usage` absent (no roster known — a sheet
+ * drawn outside the app's roster) keeps the older answer for an unowned mode: everywhere. `activeHere`
+ * is the panel's own switched-on ids, for a sheet the roster does not hold (the GM's edit sheet).
+ */
+export function modeListedFor(
+  m: ModeDef,
+  charKey: string | undefined,
+  usage?: ModeUsage | null,
+  activeHere?: ReadonlySet<string>,
+): boolean {
+  if (charKey === undefined || m.charId === charKey) return true;
+  const users = usage?.get(m.id);
+  if (activeHere?.has(m.id) || users?.has(charKey)) return true; // in use here: never hidden where it is on
+  if (m.charId) return false; // another character's
+  return !users?.size; // no owner: on every character until one uses it, then only where it is used
+}
+
+/**
+ * Would deleting `m` from character `charKey`'s panel take it from ANOTHER character too — it is another
+ * character's own, or another character uses it (switched on, or carried), whoever owns it? Then the sheet's
+ * Delete only takes it off this character (src/App.tsx removeOwnModeDef, "Remove from this character"), and
+ * an edit there saves this character's own copy (src/sheet/ModesPanel.tsx, src/App.tsx copyModeHere). Only a
+ * mode no other character uses — this character's own, or an unowned one — is deleted, or edited in place.
+ * This character's OWN mode counts too (review, 2026-10-21): an old unowned mode on for A and B becomes A's when
+ * A switches it off, and a character duplicated before copies got their own modes still has the original's on.
+ * Before, A's plain Delete took it from B as well, and A's edit changed B's numbers.
+ */
+export function modeAlsoElsewhere(m: ModeDef, charKey: string | undefined, usage?: ModeUsage | null): boolean {
+  if (charKey === undefined) return false;
+  if (m.charId && m.charId !== charKey) return true;
+  const users = usage?.get(m.id);
+  return !!users && [...users].some((id) => id !== charKey);
+}
+
+/**
+ * Does user mode `m` belong to ANOTHER character than `charKey` — its `charId` names one, not this one? Such
+ * a mode is listed here only while this character uses it (switched on after a duplicate made before copies
+ * got their own modes, a GM's own character's mode switched on for a player). It is never changed or deleted
+ * from here: an edit, or switching it off on the player's own sheet, makes THIS character its own copy
+ * (src/App.tsx saveOwnModeDef, src/sheet/GmEditSheet.tsx saveModeDef), and Delete only takes it off this
+ * character. The other character's mode is untouched (round 2, 2026-10-21).
+ */
+export function modeOwnedElsewhere(m: Pick<ModeDef, 'charId'> | null | undefined, charKey: string | null | undefined): boolean {
+  return !!m?.charId && !!charKey && m.charId !== charKey;
+}
+
 /** Does this mode carry a content gate? See `playerModeLibrary` for why that is the dividing line. */
-const isGated = (m: ModeDef): boolean => !!(m.classes?.length || m.ancestries?.length || m.feats?.length);
+const isGated = (m: ModeDef): boolean =>
+  !!(m.classes?.length || m.ancestries?.length || m.feats?.length || m.backgrounds?.length);
 
 /**
  * The authored, gated modes out of `content.modes` — the other half of `playerModeLibrary`.

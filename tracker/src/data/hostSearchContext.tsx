@@ -37,6 +37,12 @@ export interface HostSearch {
    *  more draws no header, so there they sit in a strip above the page. Keep them icon-sized: the header
    *  is one row shared with the tabs and the close button. */
   controls?: (bucket: string, id: string) => ReactNode
+  /** The host's own "Show Archives of Nethys link on popups" setting. When given it decides for the
+   *  tracker's popups too (components/AonLink.tsx), so the host has one switch; absent = the tracker's. */
+  showAonLink?: boolean
+  /** How the host opens an outside page (Heroes Heaven's desktop app hands it to the system browser).
+   *  Absent = the link's own target="_blank". */
+  openExternal?: (e: { preventDefault: () => void }, url: string) => void
 }
 
 const HostSearchContext = createContext<HostSearch | null>(null)

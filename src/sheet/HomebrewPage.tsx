@@ -456,8 +456,6 @@ export function HomebrewPage({
   content,
   onChanged,
   onClose,
-  onOpenRoster,
-  onOpenCampaigns,
   onOpenSettings,
   onSaveMode,
   onDeleteMode,
@@ -467,8 +465,8 @@ export function HomebrewPage({
   /** Called after any homebrew mutation so the host can refresh the live content DB. */
   onChanged: () => void;
   onClose: () => void;
+  /** Not read here: the menu's page list comes from App through PageNavContext (see PageMenu). */
   onOpenRoster?: () => void;
-  /** Provided ONLY when signed in — absent hides the Campaigns menu item. */
   onOpenCampaigns?: () => void;
   onOpenSettings?: () => void;
   onSaveMode?: (mode: ModeDef) => void;
@@ -798,10 +796,6 @@ export function HomebrewPage({
             : 'Homebrew'}
         </div>
         <PageMenu
-          items={[
-            ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
-            ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
-          ]}
           onOpenSettings={onOpenSettings}
           modes={content.modes}
           characters={characters}

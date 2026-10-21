@@ -74,7 +74,9 @@ export function uniqueName(base: string, roster: SavedChar[]): string {
   }
 }
 
-/** A deep copy of a saved character with a fresh roster id, a "(Copy)" name, and unarchived. */
+/** A deep copy of a saved character with a fresh roster id, a "(Copy)" name, and unarchived. Its modes:
+ *  the roster's Duplicate goes through src/data/carried.ts `duplicateWithOwnModes`, which gives the copy its
+ *  own copies of the modes the original owns (Guy 2026-10-21, "modes need to be per character"). */
 export function duplicateChar(c: SavedChar): SavedChar {
   const copy: SavedChar = structuredClone(c);
   copy.id = newRosterId();

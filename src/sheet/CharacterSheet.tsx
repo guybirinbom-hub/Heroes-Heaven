@@ -115,7 +115,6 @@ export function CharacterSheet({
   content: rawContent,
   onPlay,
   onRest,
-  onOpenRoster,
   onEdit,
   undo,
   redo,
@@ -124,8 +123,6 @@ export function CharacterSheet({
   onCreateItem,
   onSaveMode,
   onDeleteMode,
-  onOpenHomebrew,
-  onOpenCampaigns,
   onOpenSettings,
   onCustomize,
   globalCustomization,
@@ -156,6 +153,8 @@ export function CharacterSheet({
   /** `sleptInArmor`: the player ticked "I slept in my armor" (shown only when the worn armour would
    *  fatigue). The caller hands it to rest(). */
   onRest?: (opts?: { sleptInArmor?: boolean }) => void;
+  /** The three onOpen* page props below are not read here: the menu's page list comes from App through
+   *  PageNavContext (see PageMenu). */
   onOpenRoster?: () => void;
   onEdit?: () => void;
   /** Roster undo/redo, surfaced as header buttons. Absent ⇒ the buttons are not rendered (the sheet
@@ -594,14 +593,9 @@ export function CharacterSheet({
           <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
         {!readOnly && !gmEdit && (
-          <PageMenu
-            items={[
-              ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
-              ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
-              ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
-            ]}
-            onOpenSettings={onOpenSettings}
-          />
+          // The page list (and the marked current page) comes from App through PageNavContext, so it is
+          // the same on every page. (A bare mount without that context shows only Settings.)
+          <PageMenu onOpenSettings={onOpenSettings} />
         )}
         <WindowControls />
       </header>
@@ -825,12 +819,9 @@ export function CharacterSheet({
             )}
             {isMobile && (
               <PageMenu
-                items={[
-                  ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
-                  ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
-                  ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
-                  ...(onCustomize ? [{ label: 'Customize', icon: 'ti-adjustments', onClick: () => customizeOpener.current() }] : []),
-                ]}
+                // Customize is something to DO, not a page: it follows the page list (which App supplies,
+                // identical on every page) so it never moves the pages' places.
+                actions={onCustomize ? [{ label: 'Customize', icon: 'ti-adjustments', onClick: () => customizeOpener.current() }] : undefined}
                 onOpenSettings={onOpenSettings}
               />
             )}

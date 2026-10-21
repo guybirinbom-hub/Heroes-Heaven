@@ -14,19 +14,21 @@ import { UpdateNotice } from './sheet/UpdateNotice';
 import { WindowControls } from './sheet/WindowControls';
 import { HeroesHeavenLogo } from './sheet/Logo';
 import { loadContent, rebuildContent, onDescriptionsLoaded } from './data';
-import { pickScreen } from './appScreen';
+import { buildPageNav, pickScreen } from './appScreen';
+import { PageNavContext } from './sheet/PageMenu';
 import { useAuth } from './data/useAuth';
 import { startCloudSync, hasSyncedOnce, noteDerivedRefresh, pullForGmApply } from './data/cloudSync';
 import { startCampaignHomebrew, refreshCampaignHomebrew, homebrewFingerprint } from './data/campaignHomebrew';
 import { rebuildRoster, carryStoredOverrides } from './data/rebuild';
-import { carriedForCampaign, collectCarried, freshModeId, keepCarried, loadOwnTombstones, loadOwnWinningIds, loadSharedOrigins, ownContent, publishKey, repointMode, withoutCarried } from './data/carried';
-import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModesRemoveFromCharacterContext } from './sheet/CopyOnWriteItems';
+import { carriedForCampaign, collectCarried, duplicateWithOwnModes, freshModeId, keepCarried, loadOwnTombstones, loadOwnWinningIds, loadSharedOrigins, modeUsage, ownContent, publishKey, repointMode, withoutCarried } from './data/carried';
+import { CopyOnWriteItemsContext, CopyOnWriteModesContext, ModeUsageContext, ModesRemoveFromCharacterContext, ModesSaveAsCopyContext } from './sheet/CopyOnWriteItems';
+import { modeAlsoElsewhere, modeOwnedElsewhere } from './rules/modes';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, fetchPublishedSheet, deleteGmEdit, markGmEditRefused, currentUserId, subscribeGmEdits, type GmEdit } from './data/party';
-import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, loadModes, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { authoredKey, hash53 } from './data/authored';
 import { isTauri } from './platform';
 import { carryModePin, getPrefs, subscribePrefs } from './data/prefs';
@@ -1289,6 +1291,14 @@ export default function App() {
     const ids = content ? Object.keys(activeCarried?.modes ?? {}).filter((id) => !content.modes[id]) : [];
     return ids.length ? new Set(ids) : null;
   }, [content, activeCarried]);
+  /*
+   * Which roster characters use which modes (switched on, or carried) — read off the live roster, never
+   * stored. A user mode belongs to one character (Guy 2026-10-21, "a mode i made on one shouldnt apear on
+   * another"); a mode saved before that has no owner and shows where it is used, or everywhere when nowhere
+   * (src/rules/modes.ts modeListedFor). Every Modes panel reads it through ModeUsageContext (provided below),
+   * and `removeOwnModeDef` through it decides whether Delete may delete.
+   */
+  const modeUsageMap = useMemo(() => modeUsage(roster), [roster]);
   // Derive the in-play character ONCE per (character, play, content) change. Inlining this in JSX
   // produced a fresh Character every App render, defeating all downstream memoization on the tabs.
   const character = useMemo(() => {
@@ -1422,10 +1432,34 @@ export default function App() {
    *    but the GM, whose device holds it, still saw it on — two different ACs for one character.
    * Both are real player edits of this character (one undo step, published like any other change). Every
    * other mode goes through `saveModeDef` / `removeModeDef` as it always did.
+   * Round 2 (2026-10-21): a mode ANOTHER roster character owns (src/rules/modes.ts modeOwnedElsewhere — its
+   * stored `charId` names that character), switched on here, takes the same copy path: an edit, and switching
+   * it off (the Modes panel saves it right after that toggle, src/sheet/ModesPanel.tsx), make this character
+   * its own copy, owned here, and the other character's mode is never written.
    */
   const saveOwnModeDef = (mode: ModeDef) => {
-    if (!active || !carriedOnlyModes?.has(mode.id)) return saveModeDef(mode);
-    const copy: ModeDef = { ...mode, id: freshModeId() };
+    const ownedElsewhere = !!active && modeOwnedElsewhere(content?.modes[mode.id], active.id);
+    if (!active || !(carriedOnlyModes?.has(mode.id) || ownedElsewhere)) return saveModeDef(mode);
+    copyModeHere(mode);
+  };
+  /*
+   * This character's OWN copy of `mode` (as edited), under a fresh id and owned here, with this character's play
+   * (its own and its companions' active modes, its temporary Hit Points' source) pointed at it; the original
+   * leaves this entry's `carried`. The original record's numbers are never written. Used for a carried mode and
+   * another character's (above), and — through ModesSaveAsCopyContext — by the Modes editor's Save for a mode
+   * ANOTHER roster character also uses (src/rules/modes.ts modeAlsoElsewhere; review 2026-10-21: "Rage" on for
+   * A and B, A's +2→+3 changed B's numbers too). Never from the toggle's claim: copying before the toggle would
+   * switch the original back on.
+   * When the original is THIS character's own and another character uses it, it stops being this character's
+   * (`releaseHere`: the sole other user's, or no one's when several use it): its numbers stay exactly as the
+   * other character has them, and it is listed where it is used — there, and no longer here, where only the
+   * copy is (else A listed both "Rage"s).
+   */
+  const copyModeHere = (mode: ModeDef) => {
+    if (!active) return saveModeDef(mode);
+    releaseHere(mode.id);
+    // Made on this character, so it belongs to this character (src/rules/modes.ts, Guy 2026-10-21).
+    const copy: ModeDef = { ...mode, id: freshModeId(), charId: active.id };
     saveModeDef(copy);
     carryModePin(mode.id, copy.id); // a pinned mode's copy stays pinned (2026-10-20, r3-R3-pin-lost-on-copy)
     const id = active.id;
@@ -1433,8 +1467,27 @@ export default function App() {
       r.map((c) => (c.id === id ? withoutCarried(c.play ? { ...c, play: repointMode(c.play, mode.id, copy.id) } : c, 'modes', mode.id) : c)),
     );
   };
+  /** A mode THIS character owns that another roster character uses, which this character is leaving (its own
+   *  copy, or "Remove from this character"), numbers untouched, so it is listed where it is used
+   *  (src/rules/modes.ts modeListedFor) instead of staying on this character's list, switched off. Used by
+   *  exactly ONE other character, it becomes that character's (checker, round 4): left with no owner, it was
+   *  listed on EVERY character once that one was deleted from the roster. Used by two or more, it is saved
+   *  with no owner (listed where it is used). A player action, never a load. Anything else is left as it is. */
+  const releaseHere = (modeId: string) => {
+    const def = content?.modes[modeId];
+    if (!active || !def || def.charId !== active.id || !modeAlsoElsewhere(def, active.id, modeUsageMap)) return;
+    const others = [...(modeUsageMap.get(modeId) ?? [])].filter((id) => id !== active.id);
+    const { charId: _owner, ...unowned } = def;
+    saveModeDef(others.length === 1 ? { ...unowned, charId: others[0] } : (unowned as ModeDef));
+  };
   const removeOwnModeDef = (modeId: string) => {
-    if (!active || !carriedOnlyModes?.has(modeId)) return removeModeDef(modeId);
+    // A mode another character has too — that character's own, or one that another character uses, whoever
+    // owns it — is taken off THIS character only, exactly like a carried one, and never deleted from the device
+    // (src/rules/modes.ts modeAlsoElsewhere; the panel's Delete then reads "Remove from this character").
+    const def = activeContent?.modes[modeId];
+    const elsewhere = !!active && !!def && modeAlsoElsewhere(def, active.id, modeUsageMap);
+    if (!active || !(carriedOnlyModes?.has(modeId) || elsewhere)) return removeModeDef(modeId);
+    releaseHere(modeId);
     const id = active.id;
     const defs = activeContent?.modes;
     setRoster((r) =>
@@ -1488,6 +1541,15 @@ export default function App() {
 
   let screen: ReactNode;
   const which = pickScreen({ effectiveMode, hasContent: !!content, hasCharacter: !!character });
+  // The hamburger menu's page list, the same on every page: which page is on screen (marked in the menu)
+  // and a way to every page that can be opened right now. Only the page you are on is special — see PageMenu.
+  const pageNav = buildPageNav(which, {
+    sheet: character ? () => setMode('sheet') : undefined,
+    roster: () => setMode('roster'),
+    campaigns: onOpenCampaigns,
+    homebrew: () => setMode('homebrew'),
+    settings: openSettings,
+  });
   // Every branch below 'roster'/'loading' is only reached once pickScreen has confirmed content is
   // loaded, so `content` is non-null there — but TS can't infer that through `which`. Assert once.
   const readyContent = content!;
@@ -1575,7 +1637,14 @@ export default function App() {
           const c = roster.find((x) => x.id === id);
           if (c) {
             commitStructural(); // new character — persist immediately
-            setRoster((r) => [...r, duplicateChar(c)]);
+            // The copy gets its OWN copies of the modes the original owns, switched on where the original's
+            // were (data/carried.ts duplicateWithOwnModes; Guy 2026-10-21, "modes need to be per character").
+            // Only here, on the Duplicate itself: a load never writes a mode.
+            const dup = duplicateWithOwnModes(c, content?.modes ?? loadModes());
+            for (const m of dup.modes) saveModeDef(m);
+            // A pinned mode's copy is pinned too; the panel shows a pin only where that mode is listed.
+            for (const [from, to] of Object.entries(dup.ids)) carryModePin(from, to);
+            setRoster((r) => [...r, dup.copy]);
           }
         }}
         onArchive={(id, archived) => setRoster((r) => r.map((c) => (c.id === id ? { ...c, archived } : c)))}
@@ -1698,6 +1767,7 @@ export default function App() {
         onOpenCampaigns={onOpenCampaigns}
         modes={content?.modes}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
+        activeCharId={active?.id}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
       />
@@ -1713,6 +1783,8 @@ export default function App() {
       <CopyOnWriteItemsContext.Provider value={carriedOnlyItems}>
       <CopyOnWriteModesContext.Provider value={carriedOnlyModes}>
       <ModesRemoveFromCharacterContext.Provider value={true}>
+      {/* The Modes editor saves a mode another character also uses as this character's own copy (copyModeHere). */}
+      <ModesSaveAsCopyContext.Provider value={copyModeHere}>
       <CharacterSheet
         // This else is reached only when pickScreen returned 'sheet', which requires content AND a
         // character — so `character` is non-null here; TS just can't infer it through `which`.
@@ -1787,6 +1859,7 @@ export default function App() {
           setMode('builder');
         }}
       />
+      </ModesSaveAsCopyContext.Provider>
       </ModesRemoveFromCharacterContext.Provider>
       </CopyOnWriteModesContext.Provider>
       </CopyOnWriteItemsContext.Provider>
@@ -1876,7 +1949,10 @@ export default function App() {
           </>
         )}
       >
-        {screen}
+        <PageNavContext.Provider value={pageNav}>
+          {/* Every Modes panel on every screen lists user modes per character from this (`modeUsageMap`). */}
+          <ModeUsageContext.Provider value={modeUsageMap}>{screen}</ModeUsageContext.Provider>
+        </PageNavContext.Provider>
       </ErrorBoundary>
       </CustomizationContext.Provider>
     </ContentContext.Provider>

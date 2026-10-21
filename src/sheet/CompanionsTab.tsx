@@ -1828,7 +1828,8 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           onStepValue={(id, delta) => onPlay((p) => stepCompanionConditionValue(p, condFor, id, delta), `ccond:${condFor}:${id}`)}
           onClose={() => setCondFor(null)}
           modesEnabled
-          library={playerModeLibrary(Object.values(content.modes), charKey)}
+          // The whole library: the panel lists only this character's (see the VitalsRail call site).
+          library={playerModeLibrary(Object.values(content.modes))}
           // Gated content modes sit beside the catalog — see the note at the VitalsRail call site.
           predefined={[...CATALOG_MODES, ...contentGatedModes(Object.values(content.modes))]}
           catalog={CATALOG_MODES}

@@ -18,8 +18,10 @@ export interface Prefs {
   /** Reveal the builder's "Other" Sources shelf — the niche grab-bag of Society scenarios, blog
    *  articles, and Free RPG Day specials. Hidden by default to keep the source list short. */
   showNicheSources: boolean;
-  /** Mode ids the user pinned to the top of the Modes panel. A pinned mode always shows, even when
-   *  it would otherwise be hidden (gated archetype mode with "Show all" off). Device-global. */
+  /** Mode ids the user pinned to the top of the Modes panel. Device-global, on purpose — but a pinned mode
+   *  shows in a character's Pinned group only when that character's panel lists it anyway: its own modes, a
+   *  built-in or gated mode relevant to it, or one switched on there (src/sheet/ModesPanel.tsx, 2026-10-21).
+   *  A pin that does not fit stays pinned and shows, pin on, under "Show all" or a search. */
   pinnedModes: string[];
   /** Release tag (e.g. "v0.1.5") whose update banner the user dismissed — that version never re-nags. */
   dismissedUpdate?: string;
@@ -48,6 +50,10 @@ export interface Prefs {
    *  the sheet. Off applies everything. Device-global and cloud-synced like the rest of this bundle, so
    *  a flip on one device reaches the others; App.tsx re-derives the whole roster when it changes. */
   trustGate: boolean;
+  /** The Archives of Nethys button in a description popup's header (src/sheet/AonLink.tsx). On (the
+   *  default) every popup whose record has an Archives page shows it; off hides it on every popup. A
+   *  record with no page (homebrew, a carried custom record, the app's own modes) never shows one. */
+  showAonLink: boolean;
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';
@@ -61,6 +67,7 @@ const DEFAULTS: Prefs = {
   startupScreen: 'last',
   undoButtons: 'auto',
   trustGate: true,
+  showAonLink: true,
 };
 
 let prefs: Prefs = { ...DEFAULTS };

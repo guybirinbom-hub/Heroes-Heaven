@@ -3401,6 +3401,18 @@ button.strike-name:hover {
   font-size: 16px;
   color: var(--app-text-dim);
 }
+/* The page you are on. The menu lists every page in the same order on every page, so this row marks
+   "you are here" instead of the row going missing; choosing it just closes the menu. */
+.topmenu-item.current,
+.topmenu-item.current:hover {
+  background: color-mix(in srgb, var(--app-accent) 18%, transparent);
+  color: color-mix(in srgb, var(--app-accent) 70%, var(--app-text));
+  font-weight: 600;
+  cursor: default;
+}
+.topmenu-item.current i {
+  color: var(--app-accent);
+}
 .appearance-menu {
   position: absolute;
   top: calc(100% - 4px);
@@ -4535,6 +4547,25 @@ button.strike-name:hover {
 .me-field select {
   width: 100%;
   box-sizing: border-box;
+}
+/* "Available to" when there is no choice (a character's own Modes panel): the owner, read-only, set like the
+   field it stands in for — same size, padding and box, with no border to say it cannot be changed. */
+.me-scope-fixed {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 7px;
+  border: 1.5px solid transparent;
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  font-size: 12.5px;
+  color: var(--app-text);
+}
+/* The line under the owner choice that says what "Not tied to a character" means: the label's dim small type. */
+.me-scope-hint {
+  margin-top: 3px;
+  margin-bottom: 0;
+  line-height: 1.35;
 }
 .me-mods-label {
   font-size: 11px;
@@ -6776,6 +6807,23 @@ button.strike-name:hover {
 .ff-trait.rune {
   border-color: var(--app-accent);
   color: var(--app-accent);
+}
+/* A rune chip whose rune ships is a button that opens the rune's description (ItemDetail RuneChips):
+   the same pill, with the dotted underline every other clickable term carries. */
+button.ff-trait.rune-link {
+  background: none;
+  font: inherit;
+  font-size: 11px;
+  line-height: inherit;
+  margin: 0;
+  cursor: pointer;
+  text-decoration: underline dotted currentColor;
+  text-underline-offset: 2px;
+}
+button.ff-trait.rune-link:hover,
+button.ff-trait.rune-link:focus-visible {
+  border-width: 2px;
+  padding: 0 5px;
 }
 /* Special item categories (intelligent/cursed/relic/artifact/apex) — emphasised. */
 .ff-trait.category {
@@ -12602,6 +12650,9 @@ html:has(.builder), html:has(.builder) body { overscroll-behavior-y: none; }
 
   /* Inputs that trigger iOS focus-zoom → 16px on phones. */
   .search input, .gen-input, .gen-textarea, .me-field input, .me-field select, .ai-level input, .coin-input, .roster-select { font-size: 16px; }
+  /* The mode editor's fixed owner line keeps the size of the fields beside it; its hint gets the label floor. */
+  .me-scope-fixed { font-size: 16px; }
+  .me-scope-hint { font-size: 12px; }
   .coin-input { min-height: 36px; padding: 6px; }
 
   /* Native <select> boxes (rarity, damage type, etc.) had no styling → a blank gray OS control. Give
