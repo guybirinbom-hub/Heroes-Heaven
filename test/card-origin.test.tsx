@@ -444,8 +444,10 @@ describe('card step 7b: no builder option literal can quietly lose its record', 
     expect(found).toEqual(RECORD_NULL.map((r) => `${r.file} ${r.description}`).sort());
   });
   // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
-  it('only the two known non-option literals are exempt', () => {
+  it('only the three known non-option literals are exempt', () => {
     expect(hits.filter((h) => h.exempt).map((h) => `${h.file} ${h.exempt}`).sort()).toEqual([
+      // Two campaign memberships: joining by code, and (1a06cbf) putting back one this character is in.
+      'src/builder/shared.tsx a campaign membership, no option',
       'src/builder/shared.tsx a campaign membership, no option',
       'src/builder/shared.tsx builds a description node, offers no option',
     ]);
