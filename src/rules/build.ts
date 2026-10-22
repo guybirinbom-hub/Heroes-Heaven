@@ -38,6 +38,7 @@ import type {
   SkillIncrease,
   SpellcastingEntry,
   SubclassOption,
+  GiftVariant,
   Tradition,
   VariantRules,
   CharacterOptions,
@@ -191,6 +192,9 @@ export interface BuildState {
   /** The answer to a subclass option's `grantedSpellChoice`, keyed by option id (witch patrons that
    *  teach the familiar one of two spells). */
   subclassSpellChoice?: Record<string, string>;
+  /** The answer to a subclass option's own variant question (`giftVariants.answeredBy: 'choice'`), keyed
+   *  by option id: an elemental sorcerer's influence ('fire'), a genie sorcerer's genie type ('janni'). */
+  subclassVariant?: Record<string, string>;
   /** Animist primary apparition (option id); only the primary grants its vessel focus spell. */
   primaryApparition?: string | null;
   /** A subclass's restricted skill-choice pick (gunslinger Pistolero way, investigator Empiricism). */
@@ -1050,6 +1054,10 @@ export interface MissingChoice {
   label: string;
   /** False for choices that are genuinely optional, so an amber marker keeps one meaning. */
   required: boolean;
+  /** A second page whose card asks the same question — the bloodline's dragon, element or genie type,
+   *  asked on Level 0 and again under the bloodline card on its own level (`SubclassFollowUps`). That
+   *  page's tag and strip chip count it too; the Create/Save list still names it once. */
+  alsoPage?: number;
 }
 
 /**
@@ -1070,7 +1078,17 @@ export interface MissingChoice {
  */
 export function levelChoices(build: BuildState, content: ContentDatabase): MissingChoice[] {
   const out: MissingChoice[] = [];
-  for (const label of originMissing(build, content)) out.push({ page: 0, label, required: true });
+  /* The first class's chosen bloodline asks its follow-ups on its own level's page as well (a final
+   * check, 2026-10-21: Level 1 showed the open Elemental influence card under a header saying "all
+   * set"). Only the first class: the level pages mount the follow-ups under its subclass card alone. */
+  const subOpt = build.classId ? content.classes[build.classId]?.subclass?.options.find((o) => o.id === build.subclassId) : undefined;
+  const subPage = subOpt ? subclassAnchorLevel(build, content) : null;
+  const askedOnSubPage = new Set([
+    ...(subOpt?.dragonChoice?.length ? ['Dragon exemplar'] : []),
+    ...(subOpt?.giftVariants?.answeredBy === 'choice' ? [subOpt.giftVariants.prompt] : []),
+  ]);
+  for (const label of originMissing(build, content))
+    out.push({ page: 0, label, required: true, ...(subPage && askedOnSubPage.has(label) ? { alsoPage: subPage } : {}) });
   /* A sanctification the chosen deity does not allow — answered before the deity, or kept through a
    * deity change. Named rather than swapped, like a cause the sanctification forbids (which legal
    * answer they meant is the player's call), and on the PAGE of the picker that answers it: the
@@ -1527,6 +1545,12 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
       })
     )
       out.push('Dragon exemplar');
+    /* …and the question an elemental or genie bloodline asks of its own (`giftVariants`): unanswered, the
+     * sorcerer is drawn every element's (genie's) gifts at once, each saying only one is theirs. */
+    for (const { classId, subclassId } of heldClasses(build)) {
+      const o = classId ? content.classes[classId]?.subclass?.options.find((x) => x.id === subclassId) : undefined;
+      if (o?.giftVariants?.answeredBy === 'choice' && !optionGiftVariant(o, build)) out.push(o.giftVariants.prompt);
+    }
     if ((cls.features ?? []).some((f) => f.featureId === 'devotion-spells')) {
       const opts = championDevotionOptions(build, content);
       if (opts.length > 1 && !(build.devotionSpell && opts.includes(build.devotionSpell))) out.push('Devotion spell');
@@ -4669,6 +4693,63 @@ export function optionDragon(
 }
 
 /**
+ * The variant of a bloodline whose sorcerous gifts the character has (`SubclassOption.giftVariants`).
+ *
+ * A draconic sorcerer's is the row of the dragon it casts as (`optionDragon`), so its tradition and its
+ * gifts can never disagree, and a dragon with no row of its own — the ten older chromatic and metallic
+ * dragons the exemplar list still carries — takes its tradition's row (bloodline-23: the tradition *"affects
+ * both your bloodline's features and your sorcerous gift spells"*). An elemental or genie sorcerer's is
+ * the player's answer to the option's own question; undefined while it is unanswered, because nothing in
+ * print makes one element the default — `optionGifts` then draws every variant's gifts, each saying so.
+ */
+export function optionGiftVariant(
+  opt: SubclassOption | undefined,
+  build: Pick<BuildState, 'dragonExemplar' | 'subclassVariant'>,
+): GiftVariant | undefined {
+  const gv = opt?.giftVariants;
+  if (!opt || !gv) return undefined;
+  if (gv.answeredBy === 'dragon') {
+    const dragon = optionDragon(opt, build.dragonExemplar);
+    if (!dragon) return undefined;
+    return gv.options.find((v) => v.slug === dragon.slug) ?? gv.options.find((v) => v.slug === dragon.tradition);
+  }
+  const slug = build.subclassVariant?.[opt.id];
+  return gv.options.find((v) => v.slug === slug);
+}
+
+/**
+ * A subclass option's sorcerous gifts as this character has them: the ids of its flat `grantedSpells`
+ * that no variant lists, then the chosen variant's (`optionGiftVariant`) — or, while an element or genie
+ * question is unanswered, every variant's. While the question is open `ask` names it (its `prompt`,
+ * `giftVariantAsk`) and `askIds` are the gifts it decides (`giftVariantIds`): every variant's, or for a
+ * dragon not chosen yet the first dragon's row, the one its tradition falls back to (`optionDragon`) —
+ * which a checker found drawn as "always known" with nothing saying it would change (2026-10-21). `rankOf`
+ * is the rank print files each variant gift at. An option with no variants gives its `grantedSpells`.
+ *
+ * Before this (lane C4, 2026-10-15) the flat list was all there was: a draconic sorcerer was drawn all
+ * four Player Core 2 2nd-rank gifts and an elemental one all six cantrips, each marked "only one of
+ * these is yours", because the record could not say which. One id listed by two variants (elemental's
+ * Chain Lightning, air and metal) is one gift.
+ */
+export function optionGifts(
+  opt: SubclassOption | undefined,
+  build: Pick<BuildState, 'dragonExemplar' | 'subclassVariant'>,
+): { ids: string[]; rankOf: Map<string, number>; ask?: string; askIds?: string[] } {
+  const flat = opt?.grantedSpells ?? [];
+  const gv = opt?.giftVariants;
+  if (!opt || !gv) return { ids: [...flat], rankOf: new Map() };
+  const anyVariant = new Set(gv.options.flatMap((v) => v.gifts.map((g) => g.id)));
+  const chosen = optionGiftVariant(opt, build);
+  const answered = gv.answeredBy === 'dragon' ? !!opt.dragonChoice?.some((d) => d.slug === build.dragonExemplar) : !!chosen;
+  const gifts = chosen ? chosen.gifts : gv.options.flatMap((v) => v.gifts);
+  return {
+    ids: [...new Set([...flat.filter((id) => !anyVariant.has(id)), ...gifts.map((g) => g.id)])],
+    rankOf: new Map(gifts.map((g) => [g.id, g.rank])),
+    ...(answered ? {} : { ask: gv.prompt, askIds: [...new Set(gifts.map((g) => g.id))] }),
+  };
+}
+
+/**
  * Are a STORED natural attack (build.naturalAttacks — a WG import, or a save from before the feat
  * carried the grant itself) and a feat/ancestry-GRANTED strike the same attack? By name, or by shape:
  * the owner's lizardfolk carried "Iruxi Fangs" (d8 piercing, brawling) from an older save while Iruxi
@@ -6062,12 +6143,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     /* …plus the spell the option let the player CHOOSE ("dizzying colors or grease") — the answer to
      * `grantedSpellChoice`, honoured only while it names one of that option's own choices. */
     const chosenGrant = subOption?.grantedSpellChoice && build.subclassSpellChoice?.[subOption.id];
+    /* …and of a bloodline whose gifts follow a variant (dragon, element, genie type), only the shared
+     * gifts and the chosen variant's, each at the rank print files it — or every variant's while the
+     * question is unanswered (`optionGifts`; the entry then says which question, `giftVariantAsk`). */
+    const gifts = optionGifts(subOption, build);
     const optionSpells = [
-      ...(subOption?.grantedSpells ?? []),
+      ...gifts.ids,
       ...(chosenGrant && subOption?.grantedSpellChoice?.options.includes(chosenGrant) ? [chosenGrant] : []),
     ];
     for (const id of optionSpells)
-      if (!notYetGranted.has(id)) (grantedByRank[ladderRank.get(id) ?? content.spells[id]?.rank ?? 1] ??= []).push(id);
+      if (!notYetGranted.has(id)) (grantedByRank[gifts.rankOf.get(id) ?? ladderRank.get(id) ?? content.spells[id]?.rank ?? 1] ??= []).push(id);
     /* *"You add any spells from this class feature to your spellbook."* (Studious Spells) — the magus's
      * studious spells and the hybrid study's own spell are not only usable in the two restricted slots,
      * they are IN THE BOOK, so an ordinary slot can hold them too. Ours put them solely into two
@@ -6128,6 +6213,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // re-preparation can never drop them.
       ...(sp.type === 'prepared' ? { cantripsPrepared: true } : {}),
       ...(grantedByRank[0]?.length ? { grantedCantrips: [...grantedByRank[0]] } : {}),
+      ...(gifts.ask
+        ? { giftVariantAsk: gifts.ask, giftVariantIds: (gifts.askIds ?? []).filter((id) => Object.values(grantedByRank).some((ids) => ids?.includes(id))) }
+        : {}),
     };
     // The larger cap the pool had, so the play overlay still draws a cantrip the player PREPARED on the
     // sheet into an opening past the new cap (`cantripOpenings`), and the sheet counts what is over it.
@@ -12471,8 +12559,6 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
 
   // Spellcasting: recover cantrips / spells-by-rank / signatures (subtracting granted spells).
   {
-    const grantedSpellSet = new Set<string>();
-    for (const o of grantOptions) for (const s of o.grantedSpells ?? []) grantedSpellSet.add(s);
     // Find the PRIMARY class's caster entry. Prefer the canonical id `${cls.id}-casting`, but fall
     // back to a STRUCTURAL match: any character whose entry id differs (imported characters, the old
     // seed, hand-authored data) would otherwise have its cantrips/prepared/repertoire/signatures
@@ -12495,11 +12581,27 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       spells: Record<number, string[]>,
       signatures: Record<number, string | string[]>,
     ): string[] => {
-      /* What THIS class's own options grant. `grantedSpellSet` pools both classes' options, so under
-       * Dual Class a Sorcerer/Wizard's bloodline cantrip (daze) was taken out of the WIZARD's book on
+      /* What THIS class's own options grant. A set pooling both classes' options (an unread copy of it
+       * stood above until 2026-10-21) took a Sorcerer/Wizard's bloodline cantrip (daze) out of the WIZARD's book on
        * every rebuild — a pick the player made, lost. A single class: the same set as before. */
       const own = new Set([...(klass.subclass?.options ?? []), ...(klass.extraChoices ?? []).flatMap((g) => g.options)].map((o) => o.id));
-      const grantedSpellSet = new Set(grantOptions.filter((o) => own.has(o.id)).flatMap((o) => o.grantedSpells ?? []));
+      /* …and of a bloodline whose gifts follow a variant (`giftVariants`), the variant gifts THIS ENTRY was
+       * drawn, not every variant's: the dragon, element or genie answer is not read back off the sheet, so
+       * the option's whole list would take a player's own pick for a gift whenever it is another
+       * variant's — a janni sorcerer's own Invisibility (the jaathoom's gift) lost on every rebuild. An
+       * entry built before the variants were told apart was drawn them all, and loses what it always did.
+       * A FEAT's spell there is not a gift (the `spellSources` mark, as in `recoverVariant` below): an air
+       * sorcerer's Adaptive Adept Breathe Fire made fire's gift look drawn, and the player's own Breathe
+       * Fire at 3rd was dropped as a gift (a last check, 2026-10-21). */
+      const drawnGifts = new Set(
+        [...(classEntry.grantedCantrips ?? []), ...Object.values(classEntry.grantedRepertoire ?? {}).flat()].filter((id) => !classEntry.spellSources?.[id]),
+      );
+      const giftIdsOf = (o: SubclassOption): string[] => {
+        if (!o.giftVariants) return o.grantedSpells ?? [];
+        const anyVariant = new Set(o.giftVariants.options.flatMap((v) => v.gifts.map((g) => g.id)));
+        return [...(o.grantedSpells ?? []).filter((id) => !anyVariant.has(id)), ...[...anyVariant].filter((id) => drawnGifts.has(id))];
+      };
+      const grantedSpellSet = new Set(grantOptions.filter((o) => own.has(o.id)).flatMap(giftIdsOf));
       /* What a FEAT put in the entry (`spellSources`, written only when the build pushed it): Adapted
        * Cantrip's cantrip, Adaptive Adept's 1st-rank spell in a repertoire. Read back as a pick it would
        * spend one of the player's places on the next build and lose its "from" label. */
@@ -12559,8 +12661,48 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
        * Cantrip" label (2026-10-15). */
       return (classEntry.bookCantrips ?? classEntry.cantrips).filter((s) => !grantedSpellSet.has(s) && !fromFeats.has(s));
     };
+    /* The bloodline's VARIANT answer — dragon, element or genie type — read back off the gifts the entry
+     * was drawn (`giftVariants`). With no stored build every sorcerer used to come back unanswered: a fire
+     * elemental drew all six cantrips again and a divine dragon cast arcane (a checker's probe, 2026-10-21).
+     * An answer is set only when exactly ONE fits: every gift it gives at a rank the entry reaches is
+     * drawn there, it gives at least one there, and (a dragon) its tradition is the entry's. Several fit —
+     * a 2nd-level sorcerer, the eleven dragons sharing the arcane row — and the question stays open
+     * (UNKNOWN ≠ EMPTY).
+     *
+     * …and an entry that drew SEVERAL variant gifts at one rank answers nothing at all: it was built with
+     * the question open, or before it existed. The old flat list drew the four tradition rows at 2nd, 5th
+     * and 8th, and the row of the entry's own tradition is one of the 44 — it always fit, and was often
+     * the only one, so an Umbral dragon came back as "occult" and an Adamantine one at 17th as "primal"
+     * (a final check's probe, 2026-10-21). An entry built with the answer draws one per rank. */
+    const recoverVariant = (entry: SpellcastingEntry, klass: ClassDef, subclassId: string | null | undefined): void => {
+      const opt = klass.subclass?.options.find((o) => o.id === subclassId);
+      const gv = opt?.giftVariants;
+      if (!opt || !gv) return;
+      // A FEAT's spell beside the gift is not the bloodline's: Adaptive Adept writes its 1st-rank pick into
+      // `grantedRepertoire[1]` with a `spellSources` mark, and an air sorcerer's Breathe Fire through it
+      // looked like a second element's gift, so the refusal below dropped the answer (a re-check, 2026-10-21).
+      // A gift itself is never marked, which is why the mark tells them apart.
+      const drawnAt = (rank: number) => ((rank === 0 ? entry.grantedCantrips : entry.grantedRepertoire?.[rank]) ?? []).filter((id) => !entry.spellSources?.[id]);
+      // These bloodlines give a gift at every rank, so the highest rank holding one is the highest reached.
+      const reached = Math.max(0, ...Object.entries(entry.grantedRepertoire ?? {}).filter(([, ids]) => ids?.length).map(([r]) => Number(r)));
+      const variantIds = new Set(gv.options.flatMap((v) => v.gifts.map((g) => g.id)));
+      const variantRanks = new Set(gv.options.flatMap((v) => v.gifts.map((g) => g.rank)));
+      if ([...variantRanks].some((r) => r <= reached && new Set(drawnAt(r).filter((id) => variantIds.has(id))).size > 1)) return;
+      const fits = (v: GiftVariant | undefined): boolean =>
+        !!v && v.gifts.some((g) => g.rank <= reached) && v.gifts.every((g) => g.rank > reached || drawnAt(g.rank).includes(g.id));
+      if (gv.answeredBy === 'dragon') {
+        const found = (opt.dragonChoice ?? []).filter((d) => d.tradition === entry.tradition && fits(optionGiftVariant(opt, { dragonExemplar: d.slug })));
+        if (found.length === 1) b.dragonExemplar = found[0].slug;
+        return;
+      }
+      const found = gv.options.filter(fits);
+      if (found.length === 1) b.subclassVariant = { ...(b.subclassVariant ?? {}), [opt.id]: found[0].slug };
+    };
     const classEntry = cls ? findPrimaryCasterEntry(c, cls, cls2dc) : undefined;
-    if (classEntry && cls) b.cantrips = recoverSurface(classEntry, cls, c.subclassId, b.spells, b.signatures);
+    if (classEntry && cls) {
+      b.cantrips = recoverSurface(classEntry, cls, c.subclassId, b.spells, b.signatures);
+      recoverVariant(classEntry, cls, c.subclassId);
+    }
     // Dual Class: recover the SECOND caster class's own spell surface into cantrips2/spells2/
     // signatures2, so it survives a builder rebuild (buildCharacter re-populates the entry from these).
     const classEntry2 = cls2dc ? findSecondCasterEntry(c, cls2dc, cls) : undefined;
@@ -12570,6 +12712,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       b.cantrips2 = recoverSurface(classEntry2, cls2dc, c.subclassId2, spells2, signatures2);
       if (Object.keys(signatures2).length) b.signatures2 = signatures2;
       b.spells2 = spells2;
+      recoverVariant(classEntry2, cls2dc, c.subclassId2);
     }
     // Caster archetype pool (dedication-based id). Recover it SEPARATELY from the class pool: into
     // build.archetypeSpells when the class is itself a caster (two casters), else the legacy single

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
-import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, FeatChoiceDef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
+import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, FeatChoiceDef, GiftVariant, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { BOOK_SPLIT_MARK, enabledBookSet, entrySourceOn, sourceCatalog, sourceIdToken, storedSources, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
@@ -56,7 +56,7 @@ import {
   removeChosenIds,
   withCustomAnswer,
 } from '../rules/build';
-import { archetypeCantripCounts, archetypeTradition, choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
+import { archetypeCantripCounts, archetypeTradition, choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, optionGiftVariant, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
 import { bookCantripLabel, bookTitle } from '../rules/spellcasting';
 import { listValues } from '../data';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
@@ -3579,6 +3579,97 @@ export function SubCard({ icon, label, count, pending, children }: { icon: strin
   );
 }
 
+/** A bloodline variant's gifts as one picker line — "Cantrip: Gale Blast · 1st rank: Tailwind · 3rd rank:
+ *  Wall of Wind · 6th rank: Chain Lightning" — so the element, genie or dragon question shows what each
+ *  answer gives ("rank" spelled out: a bare "2nd Shatter" read as a level). Pass the UNFILTERED database:
+ *  a gift is granted whatever books are on, and the Cinder dragon's 5th-rank Flame Dancer (Rage of
+ *  Elements) otherwise read "flame-dancer". */
+export function giftVariantLine(v: GiftVariant, content: ContentDatabase): string {
+  return v.gifts.map((g) => `${g.rank ? `${ordinalRank(g.rank)} rank` : 'Cantrip'}: ${content.spells[g.id]?.name ?? g.id}`).join(' · ');
+}
+
+/**
+ * The follow-up questions a chosen subclass option asks of its own: a spell it lets the player choose
+ * (`grantedSpellChoice`), the draconic bloodline's dragon (`dragonChoice`) and the element or genie type
+ * whose gifts the bloodline gives (`giftVariants`). Level 0 asks them for every held class
+ * (`OriginPickers`); the Level 1 page asks them again under its own subclass card, where the bloodline can
+ * be picked too — an elemental sorcerer chosen there met six locked cantrips and a note sending it back to
+ * Level 0 (a checker, 2026-10-21). Both cards write the same fields, like the two subclass pickers.
+ */
+export function SubclassFollowUps({ subOptions, build, actions, content }: EditorProps & { subOptions: readonly SubclassOption[] }) {
+  const fullDb = useContent();
+  return (
+    <>
+      {subOptions.map((subOpt) => {
+        // A spell the subclass option lets the player CHOOSE — witch patrons that teach the familiar
+        // "dizzying colors or grease" (Ripple in the Deep) / "summon animal or summon plant or fungus"
+        // (Wilding Steward). `grantedSpells` is a flat list, so the "or" rides `grantedSpellChoice`.
+        // EITHER held class's subclass (lane C2): an X/Witch's patron teaches its familiar too, and the
+        // answer is keyed by the option, so the two classes can never share one.
+        const gsc = subOpt.grantedSpellChoice;
+        if (!gsc) return null;
+        const cur = build.subclassSpellChoice?.[subOpt.id] ?? '';
+        return (
+          <SubCard key={`gsc-${subOpt.id}`} icon="ti-sparkles" label={gsc.prompt}>
+            <PopupSelect
+              title={gsc.prompt}
+              value={gsc.options.includes(cur) ? cur : ''}
+              onChange={(v) => actions.patch({ subclassSpellChoice: { ...(build.subclassSpellChoice ?? {}), [subOpt.id]: v } })}
+              options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description, record: { bucket: 'spells', id } }))}
+            />
+          </SubCard>
+        );
+      })}
+      {(() => {
+        // Sorcerer Draconic: pick the dragon exemplar (sets spell tradition + second bloodline skill).
+        // Whichever held class is the sorcerer (lane C2): an X/Sorcerer's dragon was never asked, so its
+        // entry cast in the first dragon's tradition. Only a bloodline carries one — at most one held.
+        const subOpt = subOptions.find((o) => o.dragonChoice?.length);
+        if (!subOpt?.dragonChoice?.length) return null;
+        // Empty until picked — the dragon sets your spell tradition, so silently showing the first one
+        // decides the most important thing about the character on the player's behalf. Marked pending like
+        // every other open question (`setupMissing` lists it): the first dragon's gifts stand in until then.
+        const cur = subOpt.dragonChoice.find((d) => d.slug === build.dragonExemplar)?.slug ?? '';
+        // Named as the gift notes and the Create/Save list name it (a final check, 2026-10-21: the notes
+        // said "dragon exemplar" and pointed at a card called "Dragon").
+        return (
+          <SubCard icon="ti-flame" label="Dragon exemplar" pending={!cur}>
+            <PopupSelect
+              title="Dragon exemplar"
+              value={cur}
+              onChange={(v) => actions.patch({ dragonExemplar: v })}
+              // …and the 2nd/5th/8th gifts it gives (`giftVariants`), which differ from dragon to dragon.
+              options={subOpt.dragonChoice.map((d) => {
+                const v = optionGiftVariant(subOpt, { dragonExemplar: d.slug });
+                return { value: d.slug, label: `${d.label} (${d.tradition})`, ...(v ? { note: giftVariantLine(v, fullDb ?? content) } : {}) };
+              })}
+            />
+          </SubCard>
+        );
+      })()}
+      {subOptions.map((subOpt) => {
+        // Elemental and genie bloodlines: the question the option asks of its own (`giftVariants`), whose
+        // answer picks the sorcerous gifts at some ranks — bloodline-24 *"choose the type of elemental that
+        // influenced your bloodline"*, bloodline-11 *"choose the type of genie"*. Keyed by the option, so
+        // either held class's bloodline asks it. Empty until picked: nothing in print makes one the default.
+        const gv = subOpt.giftVariants;
+        if (gv?.answeredBy !== 'choice') return null;
+        const cur = optionGiftVariant(subOpt, build)?.slug ?? '';
+        return (
+          <SubCard key={`gv-${subOpt.id}`} icon="ti-sparkles" label={gv.prompt} pending={!cur}>
+            <PopupSelect
+              title={gv.prompt}
+              value={cur}
+              onChange={(v) => actions.patch({ subclassVariant: { ...(build.subclassVariant ?? {}), [subOpt.id]: v } })}
+              options={gv.options.map((v) => ({ value: v.slug, label: v.label, note: giftVariantLine(v, fullDb ?? content) }))}
+            />
+          </SubCard>
+        );
+      })}
+    </>
+  );
+}
+
 /** Weapon groups a fighter can pick for Weapon Mastery — the distinct groups of the simple/martial/
  *  unarmed/advanced weapons in content, with a capitalized label. Excludes non-weapon "shield" group. */
 function fighterWeaponGroupOptions(content: ContentDatabase): { id: string; label: string }[] {
@@ -4506,46 +4597,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           </SubCard>
         );
       })()}
-      {heldSubOptions.map((subOpt) => {
-        // A spell the subclass option lets the player CHOOSE — witch patrons that teach the familiar
-        // "dizzying colors or grease" (Ripple in the Deep) / "summon animal or summon plant or fungus"
-        // (Wilding Steward). `grantedSpells` is a flat list, so the "or" rides `grantedSpellChoice`.
-        // EITHER held class's subclass (lane C2): an X/Witch's patron teaches its familiar too, and the
-        // answer is keyed by the option, so the two classes can never share one.
-        const gsc = subOpt.grantedSpellChoice;
-        if (!gsc) return null;
-        const cur = build.subclassSpellChoice?.[subOpt.id] ?? '';
-        return (
-          <SubCard key={`gsc-${subOpt.id}`} icon="ti-sparkles" label={gsc.prompt}>
-            <PopupSelect
-              title={gsc.prompt}
-              value={gsc.options.includes(cur) ? cur : ''}
-              onChange={(v) => actions.patch({ subclassSpellChoice: { ...(build.subclassSpellChoice ?? {}), [subOpt.id]: v } })}
-              options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description, record: { bucket: 'spells', id } }))}
-            />
-          </SubCard>
-        );
-      })}
-      {(() => {
-        // Sorcerer Draconic: pick the dragon exemplar (sets spell tradition + second bloodline skill).
-        // Whichever held class is the sorcerer (lane C2): an X/Sorcerer's dragon was never asked, so its
-        // entry cast in the first dragon's tradition. Only a bloodline carries one — at most one held.
-        const subOpt = heldSubOptions.find((o) => o.dragonChoice?.length);
-        if (!subOpt?.dragonChoice?.length) return null;
-        // Empty until picked — the dragon sets your spell tradition, so silently showing the first one
-        // decides the most important thing about the character on the player's behalf.
-        const cur = subOpt.dragonChoice.find((d) => d.slug === build.dragonExemplar)?.slug ?? '';
-        return (
-          <SubCard icon="ti-flame" label="Dragon">
-            <PopupSelect
-              title="Dragon exemplar"
-              value={cur}
-              onChange={(v) => actions.patch({ dragonExemplar: v })}
-              options={subOpt.dragonChoice.map((d) => ({ value: d.slug, label: `${d.label} (${d.tradition})` }))}
-            />
-          </SubCard>
-        );
-      })()}
+      <SubclassFollowUps subOptions={heldSubOptions} build={build} actions={actions} content={content} />
       {[
         ...(cls?.extraChoices ?? []).map((g) => [g, cls?.id] as const),
         ...(cls2?.extraChoices ?? []).map((g) => [g, cls2?.id] as const),

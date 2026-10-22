@@ -95,6 +95,28 @@ for (const bucket of Object.keys(core)) {
         }
       }
     }
+    /*
+     * 3b. …and a class's subclass and extra-choice OPTIONS — a bloodline's, mystery's or patron's own
+     * spells. They sit one level down (`classes.<id>.subclass.options[]`), where the walk above never
+     * looked: a checker found the sorcerer's 105 per-variant gifts (`giftVariants`, 2026-10-21) and every
+     * option's `grantedSpells` unguarded. The fields: the walk's own, the option's advanced focus spell,
+     * its "X or Y" pick (`grantedSpellChoice`) and each variant's gifts.
+     */
+    const options = [...(rec.subclass?.options ?? []), ...(rec.extraChoices ?? []).flatMap((g) => g?.options ?? [])];
+    for (const o of options) {
+      const at = `${bucket}/${id}.options[${o?.id}]`;
+      for (const f of SPELL_FIELDS) {
+        for (const g of asList(o?.[f])) {
+          const sid = typeof g === 'string' ? g : g?.spellId;
+          if (sid && refuses(f, sid)) bad.push(`${at}.${f} → ${sid}`);
+        }
+      }
+      if (typeof o?.advancedFocusSpell === 'string' && isSuperseded(o.advancedFocusSpell)) bad.push(`${at}.advancedFocusSpell → ${o.advancedFocusSpell}`);
+      for (const sid of o?.grantedSpellChoice?.options ?? []) if (isSuperseded(sid)) bad.push(`${at}.grantedSpellChoice → ${sid}`);
+      for (const v of o?.giftVariants?.options ?? []) {
+        for (const g of v?.gifts ?? []) if (isSuperseded(g?.id)) bad.push(`${at}.giftVariants[${v.slug}] → ${g.id}`);
+      }
+    }
   }
 }
 
@@ -106,8 +128,30 @@ for (const m of src.matchAll(/^\s*'([a-z0-9-]+)':\s*\{[^\n]*options:\s*\[([^\]]*
   }
 }
 
+/*
+ * KNOWN, LISTED, NOT EXCUSED FOREVER. Walk 3b's first run (2026-10-21) found three routes no walk had
+ * reached: two pre-remaster bloodlines naming the Core Rulebook printing — Harrow (bloodline-18, Stolen
+ * Fate Player's Guide) 9th: weird; Shadow (bloodline-14, Advanced Player's Guide) 4th: phantasmal killer,
+ * 9th: weird. Which spell those characters receive is a parity question (what Wanderer's Guide gives them
+ * is not read yet), so they wait in the app's chat-todo.md "Future correctness pass" instead of being
+ * repointed inside the bloodline-gifts job. Each line must still fire: a fixed one fails the run until it
+ * is taken off this list, so the list can only shrink.
+ */
+const KNOWN = new Set([
+  'classes/sorcerer.options[bloodline-harrow].grantedSpells → weird',
+  'classes/sorcerer.options[bloodline-shadow].grantedSpells → phantasmal-killer',
+  'classes/sorcerer.options[bloodline-shadow].grantedSpells → weird',
+]);
+const spentKnown = [...KNOWN].filter((k) => !bad.includes(k));
+if (spentKnown.length) {
+  console.log('superseded-grant: FAIL — listed routes no longer fire; take them off KNOWN:');
+  for (const k of spentKnown) console.log(`   ${k}`);
+  process.exit(1);
+}
+bad.splice(0, bad.length, ...bad.filter((b) => !KNOWN.has(b)));
+
 const supersededCount = Object.values(core.spells ?? {}).filter((s) => s.edition === 'superseded' || s.remasteredAs).length;
-console.log(`${supersededCount} legacy-printing spell record(s) in the corpus (edition 'superseded', or 'legacy' + remasteredAs).`);
+console.log(`${supersededCount} legacy-printing spell record(s) in the corpus (edition 'superseded', or 'legacy' + remasteredAs); ${KNOWN.size} known route(s) listed for the future correctness pass.`);
 if (!bad.length) {
   console.log('superseded-grant: ok — nothing grants or offers one.');
   process.exit(0);

@@ -328,11 +328,38 @@ export function overCantripCapNote(places: number, prepared = false, over = 1): 
   return `One cantrip too many — this class lets you choose ${places}; ${where}`;
 }
 
-/** The marker on a sorcerous gift drawn at a rank where the bloodline's record lists one gift per
- *  VARIANT (`variantGiftCount`, lane C4): print gives the character one of the `count`, and the record
- *  does not say which, so all are drawn — together one of the rank's places — and each says so. */
-export function variantGiftNote(count: number): string {
-  return `Your bloodline gives only one of these ${count} (by dragon, element or genie) — the app can’t tell which yet`;
+/** The marker on a sorcerous gift drawn at a rank where the bloodline gives one gift per VARIANT and the
+ *  player has not chosen theirs yet (`variantGiftCount`, `SpellcastingEntry.giftVariantAsk`): print gives
+ *  the character one of the `count`, so all are drawn — together one of the rank's places — and each
+ *  says where the question is (`ask`: its card's name, 'Elemental influence', 'Genie type'). Once it is
+ *  answered only that variant's gift is drawn and there is nothing to say. Lane C4 (2026-10-15) drew them
+ *  with "the app can’t tell which yet", because the data could not; it can now (`giftVariants`). Short
+ *  sentences, the card's own name (a checker's reading for the owner, 2026-10-21). "In the builder", not
+ *  a page: the card is on Level 0 and, for the first class, under its bloodline card on Level 1 too, and
+ *  the note shows on Level 1 itself (a final check, 2026-10-21); the page's "!" marks lead to it. */
+export function variantGiftNote(count: number, ask?: string): string {
+  return ask
+    ? `Only one of these ${count} is yours. Choose your ${lowerFirst(ask)} in the builder`
+    : `Your bloodline gives only one of these ${count}`;
+}
+
+/** The marker on the ONE gift drawn for a question still open — a draconic sorcerer's 2nd-, 5th- or
+ *  8th-rank gift before the dragon is chosen, which is the first dragon's, the one its tradition falls
+ *  back to (`SpellcastingEntry.giftVariantIds`). */
+export function unansweredGiftNote(ask: string): string {
+  return `This gift follows your ${lowerFirst(ask)}, which isn’t chosen yet. Choose it in the builder`;
+}
+
+/** The question's card name ("Genie type") inside a sentence ("choose your genie type"). */
+const lowerFirst = (s: string): string => s.charAt(0).toLowerCase() + s.slice(1);
+
+/** The note a sorcerous gift carries while the question that picks it is open, or undefined: the
+ *  one-of-these-N note where `count` (`variantGiftCount` at its rank) draws several, else the
+ *  not-chosen-yet note on a gift that question decides. The builder's chips and the sheet's cards ask
+ *  this one function, so they can never say different things. `id` must be a gift the entry draws. */
+export function bloodlineGiftNote(entry: { giftVariantAsk?: string; giftVariantIds?: string[] } | undefined, id: string, count: number): string | undefined {
+  if (count > 1) return variantGiftNote(count, entry?.giftVariantAsk);
+  return entry?.giftVariantAsk && entry.giftVariantIds?.includes(id) ? unansweredGiftNote(entry.giftVariantAsk) : undefined;
 }
 
 /**

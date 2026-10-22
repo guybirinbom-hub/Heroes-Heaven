@@ -585,20 +585,20 @@ const grantsAt = (entry: SpellcastingEntry, rank: number): string[] =>
  * spell and cantrip from your bloodline"*, *"your first new spell is always the sorcerous gift spell for
  * that rank"* (class-62).
  *
- * ⚠ Three bloodline records list every VARIANT's gift at some ranks (`variantGiftCount`): draconic one per
- * dragon tradition at 2nd, 5th and 8th; elemental one per element at cantrip, 1st, 3rd and 6th; genie one
- * per genie type at 2nd, 5th and 8th. Print gives the chosen variant's alone, and the data cannot say
- * which that is: the option's `grantedSpells` is one flat list, `dragonChoice` names each dragon's
- * tradition but not its gifts, elemental and genie carry no choice at all, and only the description
- * prose pairs each gift with its variant. So the gifts are drawn, every one saying only one of them is
- * the character's (`variantGiftNote`), and together they take the ONE place print gives.
+ * ⚠ Three bloodlines give a different gift per VARIANT at some ranks: draconic one per dragon exemplar at
+ * 2nd, 5th and 8th; elemental one per element at cantrip, 1st, 3rd and 6th; genie one per genie type at
+ * 2nd, 5th and 8th. Print gives the chosen variant's alone, and since `giftVariants` (2026-10-21) the
+ * build draws only that one — the dragon's from the exemplar the player chose, the element's and the
+ * genie's from the builder's own question (`optionGifts`). While an elemental or genie sorcerer has not
+ * answered it, every variant's gift is drawn (`variantGiftCount`), each saying only one is the
+ * character's and where to choose (`variantGiftNote`), and together they take the ONE place print gives.
  *
  * Lane C3 tried one place per listed gift for one round, and it was worse (C3 check round 1): a draconic
  * or genie sorcerer had no place of its own at 2nd/5th/8th, an elemental none at cantrip/1st/3rd/6th,
  * every print-correct pick there was marked over with "remove one", and removing one never cleared the
  * marker — following it deleted correct picks while the wrong gifts stayed. Extra spells drawn for free
- * cost the player nothing they own; a refused add and a false "remove one" do. The fix that settles it is
- * data: each variant's gifts by rank, and element and genie-type questions in the builder.
+ * cost the player nothing they own; a refused add and a false "remove one" do. The fix that settled it was
+ * data: each variant's gifts by rank, and element and genie-type questions in the builder (2026-10-21).
  * (Phoenix listed two at 2nd only because its 4th-rank gift, Cleanse Affliction, is a 2nd-rank spell;
  * the bloodline's grant ladder, `classFeatures/bloodline.grantedSpells`, now files it at 4th.)
  *
@@ -612,12 +612,13 @@ export function grantedPlaces(entry: SpellcastingEntry, rank: number): number {
 }
 
 /**
- * How many gifts the record lists at `rank` (0 = cantrips) when it lists ONE PER VARIANT — more than one
+ * How many gifts the entry draws at `rank` (0 = cantrips) when it draws ONE PER VARIANT — more than one
  * where print gives one (`grantedPlaces`). 0 at every other rank and for any entry without
- * `grantsCountInside`. Measured lane C4 (2026-10-15): draconic (one per dragon tradition, 2nd/5th/8th),
- * elemental (one per element: cantrip, 1st, 3rd, 6th) and genie (one per genie type, 2nd/5th/8th) — the
- * record does not say which is the character's, so every one is drawn and each says so
- * (`variantGiftNote`). A gift id listed twice (elemental's Chain Lightning, air and metal) is one.
+ * `grantsCountInside`. Only an elemental or genie sorcerer who has not answered the builder's question
+ * draws them so (`optionGifts`, `giftVariantAsk`): every element's (cantrip, 1st, 3rd, 6th) or every
+ * genie type's (2nd, 5th, 8th), each saying so (`variantGiftNote`). A draconic sorcerer never does — its
+ * gifts follow the exemplar its tradition comes from. A gift id two variants share (elemental's Chain
+ * Lightning, air and metal) is one.
  */
 export function variantGiftCount(entry: SpellcastingEntry | undefined, rank: number): number {
   if (!entry?.grantsCountInside) return 0;

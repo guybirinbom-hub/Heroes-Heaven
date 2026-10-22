@@ -7,6 +7,7 @@ import { Builder } from '../src/builder/Builder';
 import { SpellsTab } from '../src/sheet/SpellsTab';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import { applyPlayState, initialPlay } from '../src/rules/play';
+import { sourceCatalog } from '../src/rules/sources';
 import type { Character } from '../src/rules/types';
 
 /**
@@ -136,6 +137,30 @@ describe('the builder: a Fighter with Witch Dedication takes Basic Lesson under 
       const bare = planted(db.classFeatures['lesson-of-life'] as unknown as Record<string, unknown>, 'grantedSpells', undefined, look);
       expect(bare.grants).toEqual([]);
       expect(bare.notes).toEqual([]);
+    },
+    T,
+  );
+
+  // mutation-proof
+  it(
+    'a granted spell from a book the player switched off is still named, not shown as its id',
+    () => {
+      // The level pages list from the book-filtered database; a grant is drawn whatever books are on, so
+      // its chip named the spell from the filtered one and showed "updraft" (the bloodline-gifts check of
+      // 2026-10-21 found it on the gift chips; the book and feat grant chips shared the lookup).
+      const ROE = 'Pathfinder Rage of Elements';
+      expect(db.spells.updraft?.source?.book, 'fixture: a 1st-rank Rage of Elements spell').toBe(ROE);
+      const books = sourceCatalog(db).allBooks.filter((b) => b !== ROE);
+      const look = () => {
+        const r = openAt(pc('fighter', 6, WITCH, { ...OWN, ...lesson('aon-lesson-of-life'), enabledSources: books } as Partial<BuildState>), 4);
+        try {
+          return row(r.host, '1st rank');
+        } finally {
+          r.stop();
+        }
+      };
+      const got = planted(db.classFeatures['lesson-of-life'] as unknown as Record<string, unknown>, 'grantedSpells', ['updraft'], look);
+      expect(got.grants).toEqual(['Updraft']);
     },
     T,
   );

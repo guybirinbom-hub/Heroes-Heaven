@@ -49,7 +49,7 @@ import {
   backgroundSkillIncreaseAllowed,
   skillIncreaseCap,
 } from '../rules/build';
-import { casterSlots, repertoireCounts, spellbookBudget, wizardSpellbookBudget, cantripsKnown, bookCantripCapacity, bookCantripLabel, bookNoun, bookTitle, variantGiftNote } from '../rules/spellcasting';
+import { casterSlots, repertoireCounts, spellbookBudget, wizardSpellbookBudget, cantripsKnown, bookCantripCapacity, bookCantripLabel, bookNoun, bookTitle, bloodlineGiftNote } from '../rules/spellcasting';
 import {
   askedAtDailyPrep,
   characterSenseKeys,
@@ -77,7 +77,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId, SpellAccessGrant, SpellcastingEntry, Tradition } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, choiceOptionRecord, levelRowClasses, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, requestArchetypeTraditionChange, type OptionRecord } from './shared';
+import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, SubclassFollowUps, cap, choiceOptionRecord, levelRowClasses, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, requestArchetypeTraditionChange, type OptionRecord } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -761,7 +761,7 @@ export function Builder({
   const bookGrantEls = (rank: number, picks: readonly string[], pageLevel?: number, andAbove = false) => {
     const grants = bookGrantChips(pageBookEntry, rank, picks, andAbove);
     const noun = pageBookEntry?.bookNoun ?? 'book';
-    const name = (id: string) => content.spells[id]?.name ?? id;
+    const name = (id: string) => ovContent.spells[id]?.name ?? id; // granted: named whatever books are on (see giftChips)
     return {
       chips: grants.map(({ id, from }) => (
         <span className="spr-chip spr-chip-gift spr-chip-book-grant" key={'grant:' + id} title={`Added to your ${noun}${from ? ` by ${from}` : ''} — not one of the spells you choose here`}>
@@ -788,7 +788,7 @@ export function Builder({
    *  dedication's on a level page, the second class's on its Level 0 card. */
   const featGrantEls = (entry: SpellcastingEntry | undefined, rank: number, picks: readonly string[], pageLevel?: number) => {
     const grants = featRepertoireGrants(entry, rank, picks);
-    const name = (id: string) => content.spells[id]?.name ?? id;
+    const name = (id: string) => ovContent.spells[id]?.name ?? id; // granted: named whatever books are on (see giftChips)
     return {
       chips: grants.map(({ id, from }) => (
         <span className="spr-chip spr-chip-gift" key={'feat-grant:' + id} title={`Known through ${from} — not one of the spells you choose here`}>
@@ -808,30 +808,37 @@ export function Builder({
     };
   };
   /** The bloodline's gift in a row, drawn as LOCKED chips so the smaller count says why — the gift is
-   *  the bloodline's, one of the row's places, and has no ✕ (`giftChipIds`). `variants`: the record
-   *  lists one gift per variant at this rank (`variantGiftCount`, lane C4) — together they are the one
-   *  place, and each chip says only one of them is the character's. */
-  const giftChips = (ids: string[], variants = 0) => [
-    ...ids.map((id) => (
-      <span
-        className="spr-chip spr-chip-gift"
-        key={'gift:' + id}
-        title={variants ? `${variantGiftNote(variants)}; together they take one of these places` : 'Granted by your bloodline — one of these places, and always known'}
-      >
-        {content.spells[id]?.name ?? id}
-        <i className="ti ti-lock" aria-hidden="true" />
-      </span>
-    )),
-    // A title is hover-only, so a phone never showed why four to six locked gifts sit beside "3 / 3":
-    // the same sentence as visible text, once per row (the sheet already prints it, .spell-offbook-note).
-    ...(variants && ids.length
-      ? [
-          <span className="spr-gift-note" key="gift-note">
-            {variantGiftNote(variants)}; together they take one of these places.
-          </span>,
-        ]
-      : []),
-  ];
+   *  the bloodline's, one of the row's places, and has no ✕ (`giftChipIds`). While the question that
+   *  picks a gift is open (`giftVariantAsk`) its chip says so, in the sheet's words (`bloodlineGiftNote`):
+   *  one gift per variant at this rank (`variantGiftCount`) — together the one place, only one of them the
+   *  character's — or a dragon's gift before the dragon is chosen. Named from `ovContent`, the unfiltered
+   *  database: a gift is granted whatever books are on (`content` keeps only the player's own picks from a
+   *  book that is off), and a Cinder dragon's Flame Dancer otherwise read "flame-dancer". */
+  const giftChips = (ids: string[], entry: SpellcastingEntry | undefined, rank: number) => {
+    const variants = variantGiftCount(entry, rank);
+    const noteOf = (id: string) => {
+      const n = bloodlineGiftNote(entry, id, variants);
+      return n && (variants ? `${n}. Together they take one of these places` : n);
+    };
+    const note = ids.map(noteOf).find(Boolean);
+    return [
+      ...ids.map((id) => (
+        <span className="spr-chip spr-chip-gift" key={'gift:' + id} title={noteOf(id) ?? 'Granted by your bloodline — one of these places, and always known'}>
+          {ovContent.spells[id]?.name ?? id}
+          <i className="ti ti-lock" aria-hidden="true" />
+        </span>
+      )),
+      // A title is hover-only, so a phone never showed why four to six locked gifts sit beside "3 / 3":
+      // the same sentence as visible text, once per row (the sheet already prints it, .spell-offbook-note).
+      ...(note
+        ? [
+            <span className="spr-gift-note" key="gift-note">
+              {note}.
+            </span>,
+          ]
+        : []),
+    ];
+  };
   /* The cantrip row's cap — a book's ten, else the cantrips the class knows, LESS a sorcerer's gift
    * cantrip (lane C2, 2026-10-14). Print counts the bloodline's cantrip inside the five
    * (`grantsCountInside`) and the row offered all five beside it, so the sheet drew the gift and four
@@ -1765,7 +1772,7 @@ export function Builder({
               </p>
             )}
             <div className="spr-chips">
-              {giftChips(giftChipIds(castEntry1, 0, rowCantrips), variantGiftCount(castEntry1, 0))}
+              {giftChips(giftChipIds(castEntry1, 0, rowCantrips), castEntry1, 0)}
               {/* With no leveled book rows yet (no Basic spellcasting feat), this is the book's last row, so it
                   also shows a leveled grant (Basic Witchcraft's lesson taken first). */}
               {bookGrantEls(0, rowCantrips, lvl, !!archBook && !archBookRanksAt(build.level).length).chips}
@@ -1970,7 +1977,7 @@ export function Builder({
                   </span>
                 </div>
                 <div className="spr-chips">
-                  {giftChips(giftChipIds(castEntry1, rank, chosen), variantGiftCount(castEntry1, rank))}
+                  {giftChips(giftChipIds(castEntry1, rank, chosen), castEntry1, rank)}
                   {grantEls.chips}
                   {featEls.chips}
                   {chosen.map((id, idx) => (
@@ -2073,7 +2080,7 @@ export function Builder({
               </p>
             )}
             <div className="spr-chips">
-              {giftChips(giftChipIds(castEntry2, 0, cantrips2), variantGiftCount(castEntry2, 0))}
+              {giftChips(giftChipIds(castEntry2, 0, cantrips2), castEntry2, 0)}
               {cantrips2.map((id) => (
                 <span className="spr-chip" key={id}>
                   {content.spells[id]?.name ?? id}
@@ -2126,7 +2133,7 @@ export function Builder({
                 </span>
               </div>
               <div className="spr-chips">
-                {giftChips(gifts, variantGiftCount(castEntry2, rank))}
+                {giftChips(gifts, castEntry2, rank)}
                 {featEls2.chips}
                 {chosen.map((id, idx) => (
                   <span className="spr-chip" key={id + ':' + idx}>
@@ -2172,7 +2179,7 @@ export function Builder({
    * partial functions that disagreed with each other.
    */
   const missing = useMemo(() => levelChoices(build, content), [build, content]);
-  const pendingCount = (lvl: number) => missing.filter((m) => m.page === lvl).length;
+  const pendingCount = (lvl: number) => missing.filter((m) => m.page === lvl || m.alsoPage === lvl).length;
   const requiredUnmet = (lvl: number) => pendingCount(lvl) > 0;
   const setupMissingList = useMemo(() => missing.filter((m) => m.page === 0).map((m) => m.label), [missing]);
 
@@ -2810,6 +2817,17 @@ export function Builder({
                               const def = content.classFeatures[build.subclassId!]?.choice;
                               return def && !askedAtDailyPrep(def) ? renderChoice(def, `feature:${build.subclassId}`, build.subclassId!) : null;
                             })()}
+                          {/* …and the questions the chosen OPTION asks of its own — the sorcerer's dragon,
+                              element or genie type, a patron's spell — the same cards as Level 0
+                              (`SubclassFollowUps`), so a bloodline picked here is answered here. */}
+                          {cls?.subclass && subAnchorId && build.subclassId && (
+                            <SubclassFollowUps
+                              subOptions={cls.subclass.options.filter((o) => o.id === build.subclassId)}
+                              build={build}
+                              actions={actions}
+                              content={content}
+                            />
+                          )}
                           {/* …and its effectChoices, for the same reason. build.ts resolves these
                               (resolvePick over grantOptions) and the picker was mounted only for
                               features in `cls.features`, so the mastermind's, the runelord's and the

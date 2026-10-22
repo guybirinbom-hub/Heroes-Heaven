@@ -5,6 +5,7 @@ import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
 import { SpellsTab } from '../src/sheet/SpellsTab';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { sourceCatalog } from '../src/rules/sources';
 import type { Character } from '../src/rules/types';
 
 /**
@@ -128,6 +129,30 @@ describe('the builder: a repertoire row draws the Adaptive Adept spell', () => {
         const notes = [...row!.querySelectorAll('.spr-gift-note')].map((n) => flat(n.textContent));
         expect(notes).toContain('Grease is known through Adaptive Adept from 5th level — it does not use one of these places.');
         expect(notes.join(' '), 'no "only one of these" gift note').not.toMatch(/only one of these/);
+      } finally {
+        r.stop();
+      }
+    },
+    T,
+  );
+
+  it(
+    'a spell it gives from a book the player switched off is still named, not shown as its id',
+    () => {
+      // The level pages list from the book-filtered database, and the feat's spell is drawn whatever books
+      // are on. Today the filter keeps it anyway — it is the player's own answer (`collectChosenIds`) — so
+      // this pins what the player sees, not the full-database lookup in `featGrantEls` (reverting that
+      // lookup alone leaves this green, measured 2026-10-21). A feat granting a FIXED spell into the
+      // repertoire would need it; Adaptive Adept is the only route today.
+      const ROE = 'Pathfinder Rage of Elements';
+      expect(db.spells['verdant-sprout']?.source?.book, 'fixture: a 1st-rank Rage of Elements spell').toBe(ROE);
+      const books = sourceCatalog(db).allBooks.filter((b) => b !== ROE);
+      const r = openAt({ ...withAdapted(pc('sorcerer', 6, { keyAbility: 'cha' }), 'electric-arc', 'verdant-sprout'), enabledSources: books } as BuildState, 1);
+      try {
+        const row = [...r.host.querySelectorAll<HTMLElement>('.spell-pick-row')].find((x) => /^1st rank/.test(flat(x.querySelector('.spr-head span')?.textContent)));
+        const chip = [...(row?.querySelectorAll<HTMLElement>('.spr-chip-gift') ?? [])].find((c) => (c.title ?? '').startsWith('Known through Adaptive Adept'));
+        expect(chip, 'the Adaptive Adept chip').toBeTruthy();
+        expect(flat(chip!.textContent)).toBe('Verdant Sprout');
       } finally {
         r.stop();
       }

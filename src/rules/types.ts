@@ -3912,6 +3912,14 @@ export interface CommanderTactics {
   maxTier: 'basic' | 'expert' | 'master' | 'legendary';
 }
 
+/** One variant of a bloodline's sorcerous gifts (`SubclassOption.giftVariants`): a draconic exemplar, an
+ *  elemental influence or a genie type, with the gifts it gives and the rank print files each at. */
+export interface GiftVariant {
+  slug: string;
+  label: string;
+  gifts: { id: string; rank: number }[];
+}
+
 /**
  * One option of a class choice — a subclass (Instinct, Doctrine, Bloodline, …) or
  * an "extra choice" (psychic subconscious mind, animist apparition, exemplar ikon,
@@ -4049,6 +4057,27 @@ export interface SubclassOption {
   skillChoiceLore?: boolean;
   /** Sorcerer Draconic: the dragon exemplar options (each sets the spell tradition + 2nd bloodline skill). */
   dragonChoice?: { slug: string; label: string; tradition: Tradition; skill: SkillId; damageType: string }[];
+  /**
+   * Sorcerous gifts that follow a VARIANT of the bloodline, one list per variant: the draconic exemplar
+   * (bloodline-23, *"choose the tradition related to the dragon exemplar … this affects … your sorcerous
+   * gift spells"*; each exemplar's own page, draconic-exemplar-1 to -44), the elemental influence
+   * (bloodline-24, *"You are granted different spells at certain ranks according to this influence"*) and
+   * the genie type (bloodline-11, *"This determines what granted spells you receive at 2nd, 5th, and 8th
+   * level"*). Each gift carries the rank print files it at, which can be above the spell's own (the
+   * Sovereign dragon's 5th-rank Overwhelming Memory, a 3rd-rank spell).
+   *
+   * `grantedSpells` stays the flat list of every gift; `optionGifts` (build.ts) keeps the ones no variant
+   * lists plus the chosen variant's. `answeredBy: 'dragon'` — the variants are keyed by `dragonChoice`
+   * slug and answered by `BuildState.dragonExemplar` (a dragon with no row of its own takes the row keyed
+   * by its tradition). `'choice'` — the option asks its own question, answered in
+   * `BuildState.subclassVariant[optionId]`. `prompt` is the question's name, on its builder card and in
+   * every note that sends the player to it.
+   */
+  giftVariants?: {
+    answeredBy: 'dragon' | 'choice';
+    prompt: string;
+    options: GiftVariant[];
+  };
   /** This subclass requires choosing a deity even when the class normally doesn't (rogue Avenger). */
   requiresDeity?: boolean;
   /** Overrides the class's spell-slot progression (cleric Battle Creed = the reduced two-rank table). */
@@ -6113,6 +6142,18 @@ export interface SpellcastingEntry {
    *  never spend one of the player's places and can't be removed in play. (For an entry marked
    *  `grantsCountInside` the player's allowance is that much SMALLER instead — `grantedPlaces`.) */
   grantedRepertoire?: Record<number, string[]>;
+  /**
+   * The question a sorcerer has not answered yet whose answer picks the bloodline's gifts — the `prompt`
+   * of the option's `giftVariants` ('Elemental influence', 'Genie type', 'Dragon exemplar'). Until it is
+   * answered an element's or genie's every variant gift is drawn, each saying only one is the character's
+   * and where to choose (`variantGiftNote`); a dragon's are the first dragon's, the one its tradition
+   * falls back to (`optionDragon`), each saying it follows the unanswered question (`unansweredGiftNote`).
+   * Absent once answered.
+   */
+  giftVariantAsk?: string;
+  /** The gifts drawn because of that open question (`giftVariantAsk`) — the ones whose notes point at it.
+   *  The bloodline's other gifts are the same whatever the answer and say nothing. */
+  giftVariantIds?: string[];
   /**
    * This class's granted spells and cantrip are PART of its printed allowance, not on top of it — the
    * sorcerer's sorcerous gift: *"you learn two 1st-rank spells of your choice and four cantrips of your

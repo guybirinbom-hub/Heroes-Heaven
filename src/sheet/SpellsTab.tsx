@@ -71,7 +71,7 @@ import {
   variantGiftCount,
 } from '../rules/spellOptions';
 import { enabledBookSet, entrySourceOn } from '../rules/sources';
-import { bookTitle, keptOffListNote, notInBookNote, overCantripCapNote, overGiftNote, variantGiftNote } from '../rules/spellcasting';
+import { bloodlineGiftNote, bookTitle, keptOffListNote, notInBookNote, overCantripCapNote, overGiftNote } from '../rules/spellcasting';
 import { heighteningApplies } from '../rules/heightening';
 import { useAstNode } from './useAst';
 import { isBucketLoaded, type AstNode } from './astStore';
@@ -1768,7 +1768,8 @@ export function SpellsTab({
     // …and any class's picks past a cap a Dual Class cantrip bonus no longer gives it: drawn, and said.
     const pastCap = pastCapCantripIds(main, cantripsOver);
     // …and a gift cantrip the record lists one of per VARIANT (elemental: one per element), each drawn
-    // and each saying only one is the character's (`variantGiftCount`, lane C4).
+    // and each saying only one is the character's (`variantGiftCount`, lane C4) — the builder's words
+    // (`bloodlineGiftNote`).
     const variantCantrips = variantGiftCount(main, 0);
     if (main.cantrips.length || tradedCantrips.length || emptyCantrips > 0) {
       const cards = rankSpellIds(main.cantrips, (id) => id)
@@ -1783,7 +1784,7 @@ export function SpellsTab({
             offBookNote(main, id) ??
             (pastCantrips.has(id) ? overGiftNote(main.cantripCap ?? 0, true, false, cantripsOver) : undefined) ??
             (pastCap.has(id) ? overCantripCapNote(main.cantripCap ?? 0, !!main.cantripsPrepared, cantripsOver) : undefined) ??
-            (variantCantrips && main.grantedCantrips?.includes(id) ? variantGiftNote(variantCantrips) : undefined);
+            (main.grantedCantrips?.includes(id) ? bloodlineGiftNote(main, id, variantCantrips) : undefined);
           return sp && visible(sp) ? (
             <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} note={note} onClick={() => openDetail(sp)} />
           ) : null;
@@ -1915,7 +1916,7 @@ export function SpellsTab({
               note={
                 offBookNote(main, id) ??
                 (pastRank.has(id) ? overGiftNote(rankPlaces, false, !!main.repertoireOnSheet?.includes(rank)) : undefined) ??
-                (variantHere && grantedHere.includes(id) ? variantGiftNote(variantHere) : undefined)
+                (grantedHere.includes(id) ? bloodlineGiftNote(main, id, variantHere) : undefined)
               }
               cost={sp?.cast}
               meta={'rank ' + rank}

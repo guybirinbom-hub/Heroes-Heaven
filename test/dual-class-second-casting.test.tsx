@@ -23,7 +23,7 @@ import { content } from './_content';
 import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
 import { SpellsTab } from '../src/sheet/SpellsTab';
-import { buildCharacter, deriveBuildFromCharacter, emptyBuild, setupMissing, type BuildState } from '../src/rules/build';
+import { buildCharacter, deriveBuildFromCharacter, emptyBuild, levelChoices, setupMissing, type BuildState } from '../src/rules/build';
 import {
   applyPlayState,
   initialPlay,
@@ -530,7 +530,7 @@ describe('the builder: the second class\'s card is built like the first class\'s
     try {
       expect(card(r.host, 'Sorcerer spells — Divine spontaneous'), 'the second card\'s tradition is the dragon\'s').toBeTruthy();
       expect(card(r.host, 'Sorcerer spells — Arcane spontaneous')).toBeNull();
-      expect(r.host.querySelector('[data-subcard="Dragon"]'), 'the Dragon question on the Level 0 page').toBeTruthy();
+      expect(r.host.querySelector('[data-subcard="Dragon exemplar"]'), 'the Dragon question on the Level 0 page').toBeTruthy();
     } finally {
       r.stop();
     }
@@ -647,40 +647,39 @@ describe('a sorcerer\'s bloodline gift is one of its places — every pick is dr
   });
 
   // mutation-proof
-  it('a record listing EVERY variant\'s gift: the gifts take ONE place, as print gives one — no pick of the player\'s own is called over', () => {
-    /* Lane C4 (2026-10-15). For one round (C3) each listed gift took a place of its own, so a draconic
-     * sorcerer had NO 2nd-rank place left: its print-correct picks were all marked "Past your allowance…
-     * remove one", and removing one never cleared the note — following it deleted every correct pick
-     * while the other dragons' gifts stayed (C3 check round 1). Print gives ONE gift per rank (class-62),
-     * so the gifts take one place. The record cannot yet say which of them is the character's own
-     * (`variantGiftCount`), so all of them are drawn, each card saying so (`variantGiftNote`). */
+  it('a draconic sorcerer is drawn its OWN dragon\'s gift — one place, and another dragon\'s gift is a pick of its own', () => {
+    /* Lane C4 (2026-10-15) drew all four Player Core 2 2nd-rank gifts here (Augury, Blazing Bolt, Blood
+     * Vendetta, Shatter), each saying "the app can't tell which yet", because the record was one flat
+     * list. Since `giftVariants` (2026-10-21) the build draws the gift of the dragon the player chose —
+     * a divine dragon's Augury (draconic-exemplar-42) — and nothing else. The C3 lesson still holds:
+     * the gift takes ONE place (class-62), so the player keeps three of their own. */
     const b = dual('fighter', 'sorcerer', 7, { subclassId2: 'bloodline-draconic', dragonExemplar: 'divine', spells2: { 2: ['blur', 'mist', 'invisibility'] } });
     const ch = built(b);
     const sorc = entryOf(sheetOf(ch), 'sorcerer')!;
-    const gifts2 = sorc.grantedRepertoire?.[2] ?? [];
-    expect(gifts2.length, 'fixture: the record lists four 2nd-rank gifts, one per dragon tradition').toBe(4);
+    expect(sorc.grantedRepertoire?.[2], 'the divine dragon\'s 2nd-rank gift alone').toEqual(['augury']);
     expect(sorc.slots?.[2]?.max, 'fixture: four 2nd-rank places').toBe(4);
-    expect(grantedPlaces(sorc, 2), 'four gifts listed, ONE place').toBe(1);
+    expect(grantedPlaces(sorc, 2), 'the gift is one of them').toBe(1);
     expect(repertoireCap(sorc, 2), 'three of the player\'s own beside the gift').toBe(3);
-    expect(sorc.repertoire?.[2], 'every pick drawn, beside the record\'s gifts').toEqual(expect.arrayContaining(['blur', 'mist', 'invisibility']));
+    expect(sorc.repertoire?.[2]).toEqual(['augury', 'blur', 'mist', 'invisibility']);
     expect(sorc.overCap, 'three of their own is the printed four, not over').toBeUndefined();
-    // The builder offers the same three, and a gift the player also picked gives its place back.
+    expect(sorc.giftVariantAsk, 'a dragon answers the question').toBeUndefined();
+    // The builder offers the same three; the gift picked by hand gives its place back, and ANOTHER
+    // dragon's gift is now an ordinary pick that takes one.
     const own = entryOf(ch, 'sorcerer');
     expect(ownPlacesBeside(own, 2, 4, ['blur', 'mist', 'invisibility'])).toBe(3);
     expect(ownPlacesBeside(own, 2, 4, ['augury'])).toBe(4);
-    expect(variantGiftCount(sorc, 2)).toBe(4);
-    expect(variantGiftCount(sorc, 1), 'control: one gift at 1st (fear) is no variant list').toBe(0);
-    // The cards: no pick says "over"; each listed gift says only one of them is the character's.
+    expect(ownPlacesBeside(own, 2, 4, ['blazing-bolt']), 'the arcane dragon\'s gift is not this one\'s').toBe(3);
+    expect(variantGiftCount(sorc, 2)).toBe(0);
+    // The cards: Augury drawn plainly, the other dragons' gifts nowhere, no "only one of these".
     const r = renderDom(<SpellsTab character={sheetOf(ch)} content={db} onPlay={noop} />);
     try {
       const notesOf = (name: string) =>
         [...r.host.querySelectorAll<HTMLElement>('.spell-card')]
           .filter((c) => c.querySelector('.spell-name')?.textContent === name)
           .map((c) => c.querySelector('.spell-offbook-note')?.textContent ?? null);
-      for (const pick of ['Blur', 'Mist', 'Invisibility']) expect(notesOf(pick), pick).toEqual([null]);
-      for (const id of gifts2) expect(notesOf(db.spells[id].name), id).toEqual([variantGiftNote(4)]);
-      expect(notesOf('Fear'), 'a one-gift rank\'s gift carries no marker').toEqual([null]);
-      expect(r.host.textContent ?? '').not.toMatch(/Past your allowance|One too many/);
+      for (const pick of ['Blur', 'Mist', 'Invisibility', 'Augury', 'Fear']) expect(notesOf(pick), pick).toEqual([null]);
+      for (const other of ['Blazing Bolt', 'Blood Vendetta', 'Shatter']) expect(notesOf(other), other).toEqual([]);
+      expect(r.host.textContent ?? '').not.toMatch(/Past your allowance|One too many|only one of these/);
     } finally {
       r.stop();
     }
@@ -690,33 +689,67 @@ describe('a sorcerer\'s bloodline gift is one of its places — every pick is dr
   it('…and an elemental sorcerer at 1st level keeps the four cantrips and two 1st-rank spells print gives it', () => {
     const MINE = ['detect-magic', 'light', 'prestidigitation', 'know-the-way'];
     expect(MINE.every((id) => db.spells[id]?.traditions?.includes('primal')), 'fixture: four primal cantrips').toBe(true);
+    // Unanswered: every element's gift drawn, together one place, each saying where to choose.
     const elem = entryOf(sheetOf(built(singleSorc(1, { subclassId: 'bloodline-elemental', cantrips: MINE, spells: { 1: ['fear', 'grease'] } }))), 'sorcerer')!;
-    expect(elem.grantedCantrips?.length, 'fixture: six gift cantrips, one per element').toBe(6);
-    expect(elem.grantedRepertoire?.[1]?.length, 'fixture: six 1st-rank gifts').toBe(6);
+    expect(elem.grantedCantrips?.length, 'no element chosen: six gift cantrips, one per element').toBe(6);
+    expect(elem.grantedRepertoire?.[1]?.length, 'and six 1st-rank gifts').toBe(6);
+    expect(elem.giftVariantAsk).toBe('Elemental influence');
     expect(elem.cantripCap, 'fixture: five cantrips, the gift among them').toBe(5);
     expect(cantripsOverOf(elem), 'four of their own beside the gift is the printed five').toBe(0);
     expect(repertoireCap(elem, 1), 'two of their own beside the gift').toBe(2);
     expect(elem.overCap).toBeUndefined();
     expect(variantGiftCount(elem, 0)).toBe(6);
-    // A gift listed twice (Chain Lightning, air and metal) is one of five at 6th — and still one place.
+    // Answered (fire): the fire gifts alone, and the same places.
+    const fire = entryOf(sheetOf(built(singleSorc(1, { subclassId: 'bloodline-elemental', subclassVariant: { 'bloodline-elemental': 'fire' }, cantrips: MINE, spells: { 1: ['fear', 'grease'] } }))), 'sorcerer')!;
+    expect(fire.grantedCantrips).toEqual(['ignition']);
+    expect(fire.grantedRepertoire?.[1]).toEqual(['breathe-fire']);
+    expect(fire.giftVariantAsk).toBeUndefined();
+    expect(cantripsOverOf(fire)).toBe(0);
+    expect(repertoireCap(fire, 1)).toBe(2);
+    expect(variantGiftCount(fire, 0)).toBe(0);
+    // A gift two elements share (Chain Lightning, air and metal) is drawn ONCE — one of five at 6th —
+    // and still one place.
     const elem11 = entryOf(built(singleSorc(11, { subclassId: 'bloodline-elemental' })), 'sorcerer')!;
-    expect(elem11.grantedRepertoire?.[6]?.filter((id) => id === 'chain-lightning'), 'fixture: listed twice').toHaveLength(2);
+    expect(elem11.grantedRepertoire?.[6]?.filter((id) => id === 'chain-lightning'), 'drawn once').toHaveLength(1);
     expect(variantGiftCount(elem11, 6)).toBe(5);
     expect(grantedPlaces(elem11, 6)).toBe(1);
   });
 
   // mutation-proof
-  it('only draconic, elemental and genie list one gift per variant — phoenix\'s 4th-rank gift is filed at 4th', () => {
+  it('Fighter/Sorcerer (elemental second): the element draws its gifts, is asked while open, and survives a rebuild', () => {
+    // Every other giftVariants test has the sorcerer as the only class (a final check, 2026-10-21): the
+    // second class's question (`setupMissing` over `heldClasses`) and its read-back (`recoverVariant` on
+    // the second entry) were untested.
+    const fire = dual('fighter', 'sorcerer', 5, { subclassId2: 'bloodline-elemental', subclassVariant: { 'bloodline-elemental': 'fire' } });
+    const ch = built(fire);
+    expect(entryOf(ch, 'sorcerer')?.grantedCantrips).toEqual(['ignition']);
+    expect(entryOf(ch, 'sorcerer')?.grantedRepertoire?.[3]).toEqual(['fireball']);
+    expect(deriveBuildFromCharacter(ch, db).subclassVariant).toEqual({ 'bloodline-elemental': 'fire' });
+    expect(setupMissing(fire, db)).not.toContain('Elemental influence');
+    const open = dual('fighter', 'sorcerer', 5, { subclassId2: 'bloodline-elemental' });
+    expect(setupMissing(open, db)).toContain('Elemental influence');
+    // Asked on Level 0 only: the level pages mount the follow-ups under the FIRST class's subclass card,
+    // so counting it on Level 1 would be a "choice left" nothing there can clear.
+    expect(levelChoices(open, db).find((m) => m.label === 'Elemental influence')).toEqual({ page: 0, label: 'Elemental influence', required: true });
+    expect(entryOf(built(open), 'sorcerer')?.grantedCantrips).toHaveLength(6);
+    expect(deriveBuildFromCharacter(built(open), db).subclassVariant ?? {}).toEqual({});
+  });
+
+  // mutation-proof
+  it('only draconic, elemental and genie give one gift per variant — phoenix\'s 4th-rank gift is filed at 4th', () => {
     /* C3 check round 1: phoenix is no variant bloodline. AoN bloodline-15 prints "4th Remove Curse";
      * our own text, "4th: Cleanse Affliction" — a 2nd-rank spell, so filing the gift under the spell's
      * own rank gave every phoenix two 2nd-rank gifts and none at 4th. The bloodline's grant ladder
-     * (classFeatures/bloodline.grantedSpells, the psychic's shape) now says the rung. */
+     * (classFeatures/bloodline.grantedSpells, the psychic's shape) now says the rung.
+     *
+     * Since `giftVariants` (2026-10-21) a bloodline draws more than one gift at a rank ONLY while its own
+     * question is unanswered — never a dragon, whose exemplar answers it. */
     const multi: string[] = [];
     for (const o of db.classes.sorcerer!.subclass!.options) {
       const e = entryOf(built(singleSorc(19, { subclassId: o.id, dragonExemplar: o.dragonChoice?.[0]?.slug ?? null })), 'sorcerer')!;
       if ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].some((rank) => variantGiftCount(e, rank) > 0)) multi.push(o.id);
     }
-    expect(multi.sort()).toEqual(['bloodline-draconic', 'bloodline-elemental', 'bloodline-genie']);
+    expect(multi.sort()).toEqual(['bloodline-elemental', 'bloodline-genie']);
     const phoenix = (level: number) => entryOf(built(singleSorc(level, { subclassId: 'bloodline-phoenix' })), 'sorcerer')!;
     const p7 = phoenix(7);
     expect(p7.grantedRepertoire?.[2]).toEqual(['see-the-unseen']);
@@ -875,26 +908,48 @@ describe('a sorcerer\'s bloodline gift is one of its places — every pick is dr
     });
 
     // mutation-proof
-    it('a draconic card: three places of its own at 2nd beside the four listed gifts, each chip saying only one is theirs', () => {
-      // Lane C4: C3 offered "3 / 0 known" here — no 2nd-rank pick of the player's own at all.
+    it('a draconic card: three places of its own at 2nd beside its own dragon\'s one gift', () => {
+      // Lane C4: C3 offered "3 / 0 known" here — no 2nd-rank pick of the player's own at all — and C4
+      // drew all four dragons' gifts with "only one of these 4". The divine dragon's is Augury.
       const r = openAt(dual('fighter', 'sorcerer', 7, { subclassId2: 'bloodline-draconic', dragonExemplar: 'divine', spells2: { 2: ['blur', 'mist', 'invisibility'] } }), 0);
       try {
         const el = r.host.querySelector<HTMLElement>('[data-setupcard="Sorcerer spells — Divine spontaneous"]');
         expect(el, 'the second-class card').toBeTruthy();
         const s = row(el, /^2nd rank$/);
         expect(s.count).toBe('3 / 3 known');
-        expect([...s.gifts].sort()).toEqual(['Augury', 'Blazing Bolt', 'Blood Vendetta', 'Shatter']);
-        expect(s.giftTitles.every((t) => t.startsWith(variantGiftNote(4))), s.giftTitles.join(' | ')).toBe(true);
-        // A title is hover-only — a phone never shows it — so the row also SAYS it, once, as text
-        // (C3 check round 2, low: the chips explained themselves to a mouse alone).
-        expect(s.giftNotes).toEqual([`${variantGiftNote(4)}; together they take one of these places.`]);
-        // Control: a one-gift rank keeps its words.
+        expect(s.gifts).toEqual(['Augury']);
+        expect(s.giftTitles).toEqual(['Granted by your bloodline — one of these places, and always known']);
+        expect(s.giftNotes, 'one gift needs no sentence').toEqual([]);
         const one = row(el, /^1st rank$/);
         expect(one.gifts).toEqual(['Fear']);
-        expect(one.giftTitles).toEqual(['Granted by your bloodline — one of these places, and always known']);
-        expect(one.giftNotes, 'a one-gift rank needs no sentence').toEqual([]);
       } finally {
         r.stop();
+      }
+    });
+
+    // mutation-proof
+    it('an elemental sorcerer who has not chosen an element: six locked cantrip gifts, and the row says where to choose', () => {
+      // A title is hover-only — a phone never shows it — so the row also SAYS it, once, as text
+      // (C3 check round 2, low: the chips explained themselves to a mouse alone).
+      const r = openAt(singleSorc(1, { subclassId: 'bloodline-elemental' }), 1);
+      try {
+        const c = row(r.host, /^Cantrips$/);
+        expect(c.gifts).toHaveLength(6);
+        expect(c.giftTitles.every((t) => t.startsWith(variantGiftNote(6, 'Elemental influence'))), c.giftTitles.join(' | ')).toBe(true);
+        expect(c.giftNotes).toEqual([`${variantGiftNote(6, 'Elemental influence')}. Together they take one of these places.`]);
+        expect(c.giftNotes[0]).toContain('Choose your elemental influence in the builder');
+      } finally {
+        r.stop();
+      }
+      // Chosen: the one gift, and no sentence.
+      const fire = openAt(singleSorc(1, { subclassId: 'bloodline-elemental', subclassVariant: { 'bloodline-elemental': 'fire' } }), 1);
+      try {
+        const c = row(fire.host, /^Cantrips$/);
+        expect(c.gifts).toEqual(['Ignition']);
+        expect(c.giftNotes).toEqual([]);
+        expect(row(fire.host, /^1st rank$/).gifts).toEqual(['Breathe Fire']);
+      } finally {
+        fire.stop();
       }
     });
   });

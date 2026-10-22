@@ -196953,5 +196953,1070 @@
    }
   ],
   "why": "equipment-5189-4693 (the twin's own page) prints \"Frequency once per day\"; the counter the replay of 08572ad added before its frequency row existed. A row keeps it through npm run data: the chain's frequency fill sees the frequency field and adds no counter (package I rebuild round; reprint-check CHECK 10)."
+ },
+ {
+  "category": "classes",
+  "id": "sorcerer",
+  "path": [
+   "subclass",
+   "options",
+   "id=bloodline-draconic"
+  ],
+  "field": "giftVariants",
+  "value": {
+   "answeredBy": "dragon",
+   "prompt": "Dragon exemplar",
+   "options": [
+    {
+     "slug": "arcane",
+     "label": "Arcane",
+     "gifts": [
+      {
+       "id": "blazing-bolt",
+       "rank": 2
+      },
+      {
+       "id": "subconscious-suggestion",
+       "rank": 5
+      },
+      {
+       "id": "quandary",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "divine",
+     "label": "Divine",
+     "gifts": [
+      {
+       "id": "augury",
+       "rank": 2
+      },
+      {
+       "id": "divine-immolation",
+       "rank": 5
+      },
+      {
+       "id": "divine-inspiration",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "occult",
+     "label": "Occult",
+     "gifts": [
+      {
+       "id": "blood-vendetta",
+       "rank": 2
+      },
+      {
+       "id": "slither",
+       "rank": 5
+      },
+      {
+       "id": "unrelenting-observation",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "primal",
+     "label": "Primal",
+     "gifts": [
+      {
+       "id": "shatter",
+       "rank": 2
+      },
+      {
+       "id": "howling-blizzard",
+       "rank": 5
+      },
+      {
+       "id": "earthquake",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "adamantine",
+     "label": "Adamantine",
+     "gifts": [
+      {
+       "id": "shatter",
+       "rank": 2
+      },
+      {
+       "id": "impaling-spike",
+       "rank": 5
+      },
+      {
+       "id": "earthquake",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "barrage",
+     "label": "Barrage",
+     "gifts": [
+      {
+       "id": "telekinetic-maneuver",
+       "rank": 2
+      },
+      {
+       "id": "telekinetic-haul",
+       "rank": 5
+      },
+      {
+       "id": "quandary",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "bog",
+     "label": "Bog",
+     "gifts": [
+      {
+       "id": "sudden-blight",
+       "rank": 2
+      },
+      {
+       "id": "corrosive-muck",
+       "rank": 5
+      },
+      {
+       "id": "desiccate",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "brine",
+     "label": "Brine",
+     "gifts": [
+      {
+       "id": "water-breathing",
+       "rank": 2
+      },
+      {
+       "id": "corrosive-muck",
+       "rank": 5
+      },
+      {
+       "id": "desiccate",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "cinder",
+     "label": "Cinder",
+     "gifts": [
+      {
+       "id": "floating-flame",
+       "rank": 2
+      },
+      {
+       "id": "flame-dancer",
+       "rank": 5
+      },
+      {
+       "id": "rainbow-fumarole",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "cloud",
+     "label": "Cloud",
+     "gifts": [
+      {
+       "id": "resist-energy",
+       "rank": 2
+      },
+      {
+       "id": "howling-blizzard",
+       "rank": 5
+      },
+      {
+       "id": "punishing-winds",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "conspirator",
+     "label": "Conspirator",
+     "gifts": [
+      {
+       "id": "paranoia",
+       "rank": 2
+      },
+      {
+       "id": "synaptic-pulse",
+       "rank": 5
+      },
+      {
+       "id": "unrelenting-observation",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "coral",
+     "label": "Coral",
+     "gifts": [
+      {
+       "id": "water-breathing",
+       "rank": 2
+      },
+      {
+       "id": "control-water",
+       "rank": 5
+      },
+      {
+       "id": "whirlpool",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "crystal",
+     "label": "Crystal",
+     "gifts": [
+      {
+       "id": "expeditious-excavation",
+       "rank": 2
+      },
+      {
+       "id": "wall-of-stone",
+       "rank": 5
+      },
+      {
+       "id": "earthquake",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "delight",
+     "label": "Delight",
+     "gifts": [
+      {
+       "id": "laughing-fit",
+       "rank": 2
+      },
+      {
+       "id": "breath-of-life",
+       "rank": 5
+      },
+      {
+       "id": "moment-of-renewal",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "despair",
+     "label": "Despair",
+     "gifts": [
+      {
+       "id": "paranoia",
+       "rank": 2
+      },
+      {
+       "id": "wave-of-despair",
+       "rank": 5
+      },
+      {
+       "id": "canticle-of-everlasting-grief",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "diabolic",
+     "label": "Diabolic",
+     "gifts": [
+      {
+       "id": "blood-vendetta",
+       "rank": 2
+      },
+      {
+       "id": "divine-immolation",
+       "rank": 5
+      },
+      {
+       "id": "canticle-of-everlasting-grief",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "empyreal",
+     "label": "Empyreal",
+     "gifts": [
+      {
+       "id": "share-life",
+       "rank": 2
+      },
+      {
+       "id": "breath-of-life",
+       "rank": 5
+      },
+      {
+       "id": "divine-inspiration",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "executor",
+     "label": "Executor",
+     "gifts": [
+      {
+       "id": "revealing-light",
+       "rank": 2
+      },
+      {
+       "id": "divine-immolation",
+       "rank": 5
+      },
+      {
+       "id": "divine-inspiration",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "forest",
+     "label": "Forest",
+     "gifts": [
+      {
+       "id": "animal-messenger",
+       "rank": 2
+      },
+      {
+       "id": "natures-pathway",
+       "rank": 5
+      },
+      {
+       "id": "punishing-winds",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "fortune",
+     "label": "Fortune",
+     "gifts": [
+      {
+       "id": "invisibility",
+       "rank": 2
+      },
+      {
+       "id": "scouting-eye",
+       "rank": 5
+      },
+      {
+       "id": "uncontrollable-dance",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "horned",
+     "label": "Horned",
+     "gifts": [
+      {
+       "id": "one-with-plants",
+       "rank": 2
+      },
+      {
+       "id": "toxic-cloud",
+       "rank": 5
+      },
+      {
+       "id": "desiccate",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "magma",
+     "label": "Magma",
+     "gifts": [
+      {
+       "id": "revealing-light",
+       "rank": 2
+      },
+      {
+       "id": "toxic-cloud",
+       "rank": 5
+      },
+      {
+       "id": "rainbow-fumarole",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "mirage",
+     "label": "Mirage",
+     "gifts": [
+      {
+       "id": "see-the-unseen",
+       "rank": 2
+      },
+      {
+       "id": "hallucination",
+       "rank": 5
+      },
+      {
+       "id": "disappearance",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "mocking",
+     "label": "Mocking",
+     "gifts": [
+      {
+       "id": "laughing-fit",
+       "rank": 2
+      },
+      {
+       "id": "cloak-of-colors",
+       "rank": 5
+      },
+      {
+       "id": "uncontrollable-dance",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "oath",
+     "label": "Oath",
+     "gifts": [
+      {
+       "id": "cleanse-affliction",
+       "rank": 2
+      },
+      {
+       "id": "truespeech",
+       "rank": 5
+      },
+      {
+       "id": "divine-inspiration",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "omen",
+     "label": "Omen",
+     "gifts": [
+      {
+       "id": "status",
+       "rank": 2
+      },
+      {
+       "id": "wave-of-despair",
+       "rank": 5
+      },
+      {
+       "id": "hidden-mind",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "phase",
+     "label": "Phase",
+     "gifts": [
+      {
+       "id": "blur",
+       "rank": 2
+      },
+      {
+       "id": "banishment",
+       "rank": 5
+      },
+      {
+       "id": "disappearance",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "requiem",
+     "label": "Requiem",
+     "gifts": [
+      {
+       "id": "see-the-unseen",
+       "rank": 2
+      },
+      {
+       "id": "banishment",
+       "rank": 5
+      },
+      {
+       "id": "spirit-song",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "resurrection",
+     "label": "Resurrection",
+     "gifts": [
+      {
+       "id": "spirit-sense",
+       "rank": 2
+      },
+      {
+       "id": "invoke-spirits",
+       "rank": 5
+      },
+      {
+       "id": "moment-of-renewal",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "rime",
+     "label": "Rime",
+     "gifts": [
+      {
+       "id": "shatter",
+       "rank": 2
+      },
+      {
+       "id": "howling-blizzard",
+       "rank": 5
+      },
+      {
+       "id": "arctic-rift",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "rune",
+     "label": "Rune",
+     "gifts": [
+      {
+       "id": "embed-message",
+       "rank": 2
+      },
+      {
+       "id": "imaginary-lockbox",
+       "rank": 5
+      },
+      {
+       "id": "quandary",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "sage",
+     "label": "Sage",
+     "gifts": [
+      {
+       "id": "translate",
+       "rank": 2
+      },
+      {
+       "id": "scouting-eye",
+       "rank": 5
+      },
+      {
+       "id": "quandary",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "sea",
+     "label": "Sea",
+     "gifts": [
+      {
+       "id": "water-breathing",
+       "rank": 2
+      },
+      {
+       "id": "mariners-curse",
+       "rank": 5
+      },
+      {
+       "id": "desiccate",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "sky",
+     "label": "Sky",
+     "gifts": [
+      {
+       "id": "augury",
+       "rank": 2
+      },
+      {
+       "id": "lightning-storm",
+       "rank": 5
+      },
+      {
+       "id": "divine-inspiration",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "sovereign",
+     "label": "Sovereign",
+     "gifts": [
+      {
+       "id": "clear-mind",
+       "rank": 2
+      },
+      {
+       "id": "overwhelming-memory",
+       "rank": 5
+      },
+      {
+       "id": "dream-council",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "stormcrown",
+     "label": "Stormcrown",
+     "gifts": [
+      {
+       "id": "deafness",
+       "rank": 2
+      },
+      {
+       "id": "lightning-storm",
+       "rank": 5
+      },
+      {
+       "id": "punishing-winds",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "time",
+     "label": "Time",
+     "gifts": [
+      {
+       "id": "loose-times-arrow",
+       "rank": 2
+      },
+      {
+       "id": "banishment",
+       "rank": 5
+      },
+      {
+       "id": "quandary",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "umbral",
+     "label": "Umbral",
+     "gifts": [
+      {
+       "id": "reapers-lantern",
+       "rank": 2
+      },
+      {
+       "id": "shadow-blast",
+       "rank": 5
+      },
+      {
+       "id": "disappearance",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "underworld",
+     "label": "Underworld",
+     "gifts": [
+      {
+       "id": "resist-energy",
+       "rank": 2
+      },
+      {
+       "id": "toxic-cloud",
+       "rank": 5
+      },
+      {
+       "id": "earthquake",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "vizier",
+     "label": "Vizier",
+     "gifts": [
+      {
+       "id": "dispel-magic",
+       "rank": 2
+      },
+      {
+       "id": "subconscious-suggestion",
+       "rank": 5
+      },
+      {
+       "id": "hidden-mind",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "vorpal",
+     "label": "Vorpal",
+     "gifts": [
+      {
+       "id": "revealing-light",
+       "rank": 2
+      },
+      {
+       "id": "impaling-spike",
+       "rank": 5
+      },
+      {
+       "id": "ferrous-form",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "wailing",
+     "label": "Wailing",
+     "gifts": [
+      {
+       "id": "noise-blast",
+       "rank": 2
+      },
+      {
+       "id": "confusing-cry",
+       "rank": 5
+      },
+      {
+       "id": "spirit-song",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "whisper",
+     "label": "Whisper",
+     "gifts": [
+      {
+       "id": "humanoid-form",
+       "rank": 2
+      },
+      {
+       "id": "scouting-eye",
+       "rank": 5
+      },
+      {
+       "id": "dream-council",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "wish",
+     "label": "Wish",
+     "gifts": [
+      {
+       "id": "phantasmal-treasure",
+       "rank": 2
+      },
+      {
+       "id": "hallucination",
+       "rank": 5
+      },
+      {
+       "id": "confusing-colors",
+       "rank": 8
+      }
+     ]
+    }
+   ]
+  },
+  "why": "bloodline-23 (Draconic, Player Core 2): \"Sorcerous Gifts ... 2nd: see Draconic Exemplars below; 5th: see Draconic Exemplars below; 8th: see Draconic Exemplars below\" and \"choose the tradition related to the dragon exemplar who influenced your bloodline ... this affects both your bloodline's features and your sorcerous gift spells\". Each exemplar's own 2nd/5th/8th gifts are its page's \"Sorcerous Gifts\" line: draconic-exemplar-41, draconic-exemplar-42, draconic-exemplar-43, draconic-exemplar-44, draconic-exemplar-1, draconic-exemplar-2, draconic-exemplar-3, draconic-exemplar-4, draconic-exemplar-5, draconic-exemplar-6, draconic-exemplar-7, draconic-exemplar-8, draconic-exemplar-9, draconic-exemplar-10, draconic-exemplar-11, draconic-exemplar-12, draconic-exemplar-13, draconic-exemplar-14, draconic-exemplar-15, draconic-exemplar-16, draconic-exemplar-17, draconic-exemplar-18, draconic-exemplar-19, draconic-exemplar-20, draconic-exemplar-21, draconic-exemplar-22, draconic-exemplar-23, draconic-exemplar-24, draconic-exemplar-25, draconic-exemplar-26, draconic-exemplar-27, draconic-exemplar-28, draconic-exemplar-29, draconic-exemplar-30, draconic-exemplar-31, draconic-exemplar-32, draconic-exemplar-33, draconic-exemplar-34, draconic-exemplar-35, draconic-exemplar-36, draconic-exemplar-37, draconic-exemplar-38, draconic-exemplar-39, draconic-exemplar-40 (Draconic Codex pg. 206; Player Core 2 pg. 150 for the four tradition rows). Keyed by our dragonChoice slug and answered by the Dragon exemplar question the builder already asks. The ten legacy dragons in that list (black ... white) have no page of their own and take their tradition's row. Before this row the option's flat grantedSpells listed all four Player Core 2 2nd-rank gifts at once and the app could not tell which was the character's."
+ },
+ {
+  "category": "classes",
+  "id": "sorcerer",
+  "path": [
+   "subclass",
+   "options",
+   "id=bloodline-elemental"
+  ],
+  "field": "giftVariants",
+  "value": {
+   "answeredBy": "choice",
+   "prompt": "Elemental influence",
+   "options": [
+    {
+     "slug": "air",
+     "label": "Air",
+     "gifts": [
+      {
+       "id": "gale-blast",
+       "rank": 0
+      },
+      {
+       "id": "tailwind",
+       "rank": 1
+      },
+      {
+       "id": "wall-of-wind",
+       "rank": 3
+      },
+      {
+       "id": "chain-lightning",
+       "rank": 6
+      }
+     ]
+    },
+    {
+     "slug": "earth",
+     "label": "Earth",
+     "gifts": [
+      {
+       "id": "scatter-scree",
+       "rank": 0
+      },
+      {
+       "id": "pummeling-rubble",
+       "rank": 1
+      },
+      {
+       "id": "earthbind",
+       "rank": 3
+      },
+      {
+       "id": "petrify",
+       "rank": 6
+      }
+     ]
+    },
+    {
+     "slug": "fire",
+     "label": "Fire",
+     "gifts": [
+      {
+       "id": "ignition",
+       "rank": 0
+      },
+      {
+       "id": "breathe-fire",
+       "rank": 1
+      },
+      {
+       "id": "fireball",
+       "rank": 3
+      },
+      {
+       "id": "tree-of-seasons",
+       "rank": 6
+      }
+     ]
+    },
+    {
+     "slug": "metal",
+     "label": "Metal",
+     "gifts": [
+      {
+       "id": "electric-arc",
+       "rank": 0
+      },
+      {
+       "id": "thunderstrike",
+       "rank": 1
+      },
+      {
+       "id": "lightning-bolt",
+       "rank": 3
+      },
+      {
+       "id": "chain-lightning",
+       "rank": 6
+      }
+     ]
+    },
+    {
+     "slug": "water",
+     "label": "Water",
+     "gifts": [
+      {
+       "id": "frostbite",
+       "rank": 0
+      },
+      {
+       "id": "hydraulic-push",
+       "rank": 1
+      },
+      {
+       "id": "aqueous-orb",
+       "rank": 3
+      },
+      {
+       "id": "scintillating-safeguard",
+       "rank": 6
+      }
+     ]
+    },
+    {
+     "slug": "wood",
+     "label": "Wood",
+     "gifts": [
+      {
+       "id": "tangle-vine",
+       "rank": 0
+      },
+      {
+       "id": "cleanse-cuisine",
+       "rank": 1
+      },
+      {
+       "id": "wall-of-thorns",
+       "rank": 3
+      },
+      {
+       "id": "tangling-creepers",
+       "rank": 6
+      }
+     ]
+    }
+   ]
+  },
+  "why": "bloodline-24 (Elemental, Player Core 2): \"At 1st level, choose the type of elemental that influenced your bloodline: air, earth, fire, metal, water, or wood. You can't change this later. You are granted different spells at certain ranks according to this influence.\" Each element's cantrip, 1st, 3rd and 6th gifts are that page's own \"Sorcerous Gifts\" line. The builder never asked the question, so every element's gifts were drawn at once."
+ },
+ {
+  "category": "classes",
+  "id": "sorcerer",
+  "path": [
+   "subclass",
+   "options",
+   "id=bloodline-genie"
+  ],
+  "field": "giftVariants",
+  "value": {
+   "answeredBy": "choice",
+   "prompt": "Genie type",
+   "options": [
+    {
+     "slug": "janni",
+     "label": "Janni",
+     "gifts": [
+      {
+       "id": "create-food",
+       "rank": 2
+      },
+      {
+       "id": "banishment",
+       "rank": 5
+      },
+      {
+       "id": "confusing-colors",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "jaathoom",
+     "label": "Jaathoom",
+     "gifts": [
+      {
+       "id": "invisibility",
+       "rank": 2
+      },
+      {
+       "id": "illusory-scene",
+       "rank": 5
+      },
+      {
+       "id": "punishing-winds",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "ifrit",
+     "label": "Ifrit",
+     "gifts": [
+      {
+       "id": "enlarge",
+       "rank": 2
+      },
+      {
+       "id": "elemental-form",
+       "rank": 5
+      },
+      {
+       "id": "quandary",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "faydhaan",
+     "label": "Faydhaan",
+     "gifts": [
+      {
+       "id": "water-walk",
+       "rank": 2
+      },
+      {
+       "id": "control-water",
+       "rank": 5
+      },
+      {
+       "id": "desiccate",
+       "rank": 8
+      }
+     ]
+    },
+    {
+     "slug": "jabali",
+     "label": "Jabali",
+     "gifts": [
+      {
+       "id": "revealing-light",
+       "rank": 2
+      },
+      {
+       "id": "wall-of-stone",
+       "rank": 5
+      },
+      {
+       "id": "earthquake",
+       "rank": 8
+      }
+     ]
+    }
+   ]
+  },
+  "why": "Our record's own remaster text (the classFeatures/bloodline-genie description row of this overlay): \"At 1st level, choose the type of genie that influenced your bloodline: faydhaan, ifrit, jaathoom, jabali or janni. You can't change your genie type later. This determines what granted spells you receive at 2nd, 5th, and 8th level\", each type's 2nd, 5th and 8th spells on its own line. The Archives mirror's bloodline-11 is the legacy Advanced Player's Guide printing (\"janni, djinni, efreeti, marid, or shaitan\"); its rows map one to one after the remaster renames (djinni to jaathoom, efreeti to ifrit, marid to faydhaan, shaitan to jabali; glitterdust to revealing light, maze to quandary, horrid wilting to desiccate, scintillating pattern to confusing colors). The builder never asked the question, so every genie's spells were drawn at once."
  }
 ]
