@@ -17,15 +17,51 @@ import { InfoTerm } from './InfoTerm';
 import { traitDesc, traitLabel } from '../rules/glossary';
 import { featUse, usesLabel, periodLabel, spendFeatUse, refundFeatUse, resetEncounterUses, isSubDaily } from '../rules/featUses';
 import type { PlayUpdater } from '../rules/play';
+import { liveContentEdits, livePlaces } from '../rules/blocks/active';
+import { archetypeSourceOf } from '../rules/archetypeSource';
 
-const BUCKETS = ['Class', 'Archetype', 'Ancestry & heritage', 'Skill', 'General'];
-const BUCKET_ICON: Record<string, string> = {
-  Class: 'ti-shield-half',
-  Archetype: 'ti-arrows-shuffle',
-  'Ancestry & heritage': 'ti-user',
-  Skill: 'ti-star',
-  General: 'ti-medal',
-};
+type BucketKind = NonNullable<FeatEntry['bucketKind']>;
+/** The section kinds in page order: the feat type each one holds, and its heading icon. */
+const KINDS: readonly { kind: BucketKind; type: string; icon: string }[] = [
+  { kind: 'class', type: 'Class', icon: 'ti-shield-half' },
+  { kind: 'archetype', type: 'Archetype', icon: 'ti-arrows-shuffle' },
+  { kind: 'ancestry', type: 'Ancestry & heritage', icon: 'ti-user' },
+  { kind: 'skill', type: 'Skill', icon: 'ti-star' },
+  { kind: 'general', type: 'General', icon: 'ti-medal' },
+];
+/**
+ * The page's sections (and filter chips), in order: each class by its own name, then each archetype by
+ * its own name (the one taken earliest first), then Ancestry & heritage, Skill, General.
+ *
+ * Bug 2026-11-08: there used to be ONE "Class" and ONE "Archetype" section, and a feat an archetype
+ * granted (Bastion Dedication → Reactive Shield) sat under "Class" because it is a class feat. The row
+ * builder now names the section (featEntries, `archetypeSourceOf`); this only orders what is present.
+ */
+export function featSections(entries: readonly FeatEntry[], character?: Character, content?: ContentDatabase): { label: string; kind: BucketKind }[] {
+  // The classes in the character's own order (Dual Class: the first class, then the second).
+  const classOrder = character && content ? classSectionNames(character, content) : [];
+  const seen = new Map<string, { label: string; kind: BucketKind; first: number; at: number }>();
+  entries.forEach((e, i) => {
+    const kind = e.bucketKind ?? 'class';
+    const s = seen.get(e.bucket);
+    const at = kind === 'class' && classOrder.includes(e.bucket) ? classOrder.indexOf(e.bucket) - entries.length : i;
+    if (!s) seen.set(e.bucket, { label: e.bucket, kind, first: e.level, at });
+    else s.first = Math.min(s.first, e.level);
+  });
+  // Kind by kind in KINDS order; inside a kind, archetypes by the level first taken, the rest as listed.
+  return KINDS.flatMap((k) =>
+    [...seen.values()]
+      .filter((s) => s.kind === k.kind)
+      .sort((a, b) => (a.kind === 'archetype' ? a.first - b.first || a.label.localeCompare(b.label) : a.at - b.at))
+      .map(({ label, kind }) => ({ label, kind })),
+  );
+}
+
+/** Each held class's section name: the class's own name ("Fighter"), never the word "Class". */
+function classSectionNames(character: Character, content: ContentDatabase): string[] {
+  const ids = [character.classId, character.variantRules?.dualClass ? character.classId2 : undefined].filter((x): x is string => !!x);
+  return ids.map((id) => content.classes[id]?.name ?? 'Class');
+}
 
 function featBucket(category: string): string {
   switch (category) {
@@ -80,6 +116,37 @@ export function regrantedFeatureIds(character: Character, content: ContentDataba
 
 export function featEntries(character: Character, content: ContentDatabase): FeatEntry[] {
   const entries: FeatEntry[] = [];
+  /*
+   * Bug 2026-11-08: the SECTION a row sits in. A class section is named after the class; an archetype
+   * section after the archetype, and it holds everything that archetype gives — its own feats, the
+   * feats they grant (Bastion Dedication → Reactive Shield, a class feat) and a class archetype's
+   * substituted class features (Warrior of Legend). `archetypeSourceOf` decides which archetype.
+   */
+  const archOf = archetypeSourceOf(character, content);
+  const classNames = classSectionNames(character, content);
+  const classNameOf = (clsId: string | undefined) => (clsId && content.classes[clsId]?.name) || classNames[0] || 'Class';
+  // An archetype that shares a class's name (only possible on odd builds) stays its own section.
+  const archSection = (name: string) => (classNames.includes(name) ? `${name} archetype` : name);
+  const section = (type: string, archetype: string | undefined, clsId?: string): Pick<FeatEntry, 'bucket' | 'bucketKind'> =>
+    archetype
+      ? { bucket: archSection(archetype), bucketKind: 'archetype' }
+      : type === 'Class' || type === 'Archetype'
+        ? // An archetype feat whose archetype cannot be named keeps the old shared "Archetype" section.
+          type === 'Archetype' ? { bucket: 'Archetype', bucketKind: 'archetype' } : { bucket: classNameOf(clsId), bucketKind: 'class' }
+        : { bucket: type, bucketKind: KINDS.find((k) => k.type === type)?.kind ?? 'class' };
+  /** The held class that offers a subclass / extra-choice pick (by option id, else by its group's name). */
+  const heldClassIds = [character.classId, character.variantRules?.dualClass ? character.classId2 : undefined].filter((x): x is string => !!x);
+  const choiceClassId = (c: { id?: string; group: string }) =>
+    heldClassIds.find((id) => {
+      const cls = content.classes[id];
+      const groups = [...(cls?.subclass ? [cls.subclass] : []), ...(cls?.extraChoices ?? [])];
+      return groups.some((g) => g.name === c.group || (!!c.id && (g.options ?? []).some((o) => o.id === c.id)));
+    }) ?? heldClassIds[0];
+  /** The class a class FEAT belongs to under Dual Class: the held class its traits name, else the first. */
+  const featClassId = (traits: string[]) =>
+    character.variantRules?.dualClass && character.classId2 && traits.includes(character.classId2) && !traits.includes(character.classId ?? '')
+      ? character.classId2
+      : (character.classId ?? undefined);
   /** A record's display name from ANY collection a granter can live in. Falling back to the id shows
    *  a raw slug, which is what "Granted by cloistered-cleric" was. */
   const recordName = (id: string) =>
@@ -171,17 +238,19 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
    * The player's own Overrides edit of this record's text (Overrides → "Change an existing
    * feat/feature"). contentFor (rules/blocks/content.ts) writes it into the description, but a record with a page
    * draws the page and discards the description — so the edit is carried as an ours line, and
-   * FeatDetail shows it wherever the page is shown instead of the edited text.
+   * FeatDetail shows it wherever the page is shown instead of the edited text. Only a LIVE edit
+   * (`liveContentEdits`, rules/blocks/active.ts — the Tweaks switch and the edit's own on/off), the same
+   * one contentFor laid over; the memo below keys on the whole `character`, so a switch flip reaches it.
    */
   const overrideOf = (map: 'feats' | 'classFeatures', id: string | undefined): OursLine[] => {
-    const edited = id ? character.overrides?.contentEdits?.[map]?.[id]?.description : undefined;
+    const edited = id ? liveContentEdits(character)?.[map]?.[id]?.description : undefined;
     if (typeof edited !== 'string' || !edited.trim()) return [];
     const text = edited
       .split(/\n\s*\n|<\/p>|<br\s*\/?>/i)
       .map((s) => toPlainText(s))
       .filter(Boolean)
       .join('\n');
-    return text ? [{ kind: 'override', text: `Your override: ${text}` }] : [];
+    return text ? [{ kind: 'override', text: `Your text: ${text}` }] : [];
   };
   /**
    * A homebrew record's typed use lines — Trigger, Requirements, Frequency, Access (types.ts Feat,
@@ -196,12 +265,21 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
     }
     return out;
   };
+  /* Tweaks phase 2 WP7: the LIVE extra feat places (blocks/active.ts `livePlaces`), by the slot key their pick is
+   * stored under — a feat row whose slot is one says so on its card ("Tweak: extra class feat place"). */
+  const placeOfSlot = new Map(livePlaces(character).flatMap((p) => (p.slotKey ? [[p.slotKey, p] as const] : [])));
+  const placeLine = (slotKey: string | undefined): OursLine[] => {
+    const p = slotKey ? placeOfSlot.get(slotKey) : undefined;
+    return p?.category ? [{ kind: 'place', text: `Tweak: extra ${p.category} feat place` }] : [];
+  };
   for (const fc of character.feats) {
     const feat = content.feats[fc.featId];
     if (!feat) continue;
     const picked = withPicks(fc.featId);
     // The enhancement tier, if an augmentation is pointing at this feat.
     const enhancedBy = (character.enhancements ?? []).find((e) => e.featId === fc.featId)?.from;
+    // The record's own type, for its popup line ("Class feat"), whatever section the row sits in.
+    const featType = feat.traits.includes('archetype') ? 'Archetype' : featBucket(feat.category);
     entries.push({
       key: `feat:${fc.featId}:${fc.level}`,
       featId: fc.featId,
@@ -212,6 +290,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       description: feat.description,
       ours: [
         ...picked.ours,
+        // WP7: the extra feat place a tweak added that holds this feat (section 4 kind `place`).
+        ...placeLine(fc.slotKey),
         // The running ENHANCEMENT tier (section 4 kind `enhancement`), out of the print-styled stat row.
         ...(enhancedBy ? [{ kind: 'enhancement' as const, text: `Enhancement ${enhancementText(enhancedBy)}` }] : []),
         ...usesRetune(feat),
@@ -227,7 +307,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       // extra-choice options as well as feats — so resolving the name through `content.feats` alone
       // showed a raw slug ("cloistered-cleric") for every granter that is not a feat.
       grantedBy: fc.grantedBy ? recordName(fc.grantedBy) : undefined,
-      bucket: feat.traits.includes('archetype') ? 'Archetype' : featBucket(feat.category),
+      ...section(featType, archOf.ofFeat(fc.featId, fc.grantedBy), featClassId(feat.traits)),
+      featType,
       rarity: feat.rarity,
       prerequisites: feat.prerequisites,
     });
@@ -287,7 +368,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...atLevelLines(character, content, 'classFeatures', variantId), ...overrideOf('classFeatures', variantId)],
         descRefs: feature.descRefs,
         isFeature: true,
-        bucket: 'Class',
+        // A class archetype's substituted feature sits under that archetype (Warrior of Legend).
+        ...section('Class', archAdded.some((a) => a.featureId === f.featureId) ? archOf.ofFeature(f.featureId) : undefined, clsId),
         rarity: feature.rarity,
       });
     }
@@ -318,10 +400,49 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...atLevelLines(character, content, 'classFeatures', fid), ...overrideOf('classFeatures', fid)],
         descRefs: feature.descRefs,
         isFeature: true,
-        bucket: 'Class',
+        ...section('Class', undefined, clsId),
         groupLabel: subOpt?.name,
         rarity: feature.rarity,
       });
+    }
+  }
+  /*
+   * Class features an ARCHETYPE feat hands over (`grantsClassFeatures`): Ranger Dedication → Hunt Prey,
+   * Rogue Dedication → Surprise Attack, Kineticist Dedication → Channel Elements and Elemental Blast.
+   * `ownedFeatureIds` owns them (derive.ts, its last pass), so their mechanics already fire — but no loop
+   * here listed them, so a player who took the dedication saw the feature nowhere (bug 2026-11-08, with
+   * the per-archetype sections). Each goes under its archetype's section, followed through any feature
+   * it grants in turn; a feature already listed (a class's own, a regranted one) is not listed twice.
+   */
+  {
+    const owned = ownedFeatureIds(character, content);
+    const listed = (id: string) => entries.some((e) => e.featureId === id || e.trustFeatureId === id);
+    for (const fc of character.feats) {
+      const rec = content.feats[fc.featId];
+      const arch = rec?.grantsClassFeatures?.length ? archOf.ofFeat(fc.featId, fc.grantedBy) : undefined;
+      if (!arch) continue;
+      const queue = [...rec!.grantsClassFeatures!];
+      for (let id = queue.shift(); id !== undefined; id = queue.shift()) {
+        const feature = content.classFeatures[id];
+        if (!feature || !owned.has(id) || listed(id)) continue;
+        const picked = withPicks(id);
+        entries.push({
+          key: `feature:archetype:${id}`,
+          featureId: id,
+          name: feature.name + pickSuffix(id),
+          level: fc.level,
+          traits: feature.traits,
+          actionCost: feature.actionCost,
+          description: feature.description,
+          ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...atLevelLines(character, content, 'classFeatures', id), ...overrideOf('classFeatures', id)],
+          descRefs: feature.descRefs,
+          isFeature: true,
+          grantedBy: rec!.name,
+          ...section('Class', arch),
+          rarity: feature.rarity,
+        });
+        queue.push(...(feature.grantsClassFeatures ?? []));
+      }
     }
   }
   // Subclass + extra-choice picks (bloodline, ikons, apparitions, elements, minds…).
@@ -343,7 +464,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       // description rendered as plain text — 1,199 dead links across the choice options.
       descRefs: c.descRefs,
       isFeature: true,
-      bucket: 'Class',
+      // Dual Class: the second class's subclass and extra-choice picks ride in this same list
+      // (build.ts classChoices), so the row's class is found from the class that offers the option.
+      ...section('Class', undefined, choiceClassId(c)),
       // Most of these picks ARE class-feature records (a rogue's racket, a witch's lesson), and 51 of
       // them are gated — without the id the row printed its full text and the marker had nothing to
       // name. Not `featureId`: that one also draws use pips.
@@ -367,7 +490,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         ours: [...atLevelLines(character, content, 'classFeatures', f.id), ...overrideOf('classFeatures', f.id)],
         descRefs: f.descRefs,
         isFeature: true,
-        bucket: 'Class',
+        // An Inventor's own modifications sit under Inventor the class; Inventor Dedication's (Basic
+        // Modification sets `character.inventor` too) under the Inventor archetype.
+        ...(heldClassIds.includes('inventor') ? section('Class', undefined, 'inventor') : section('Class', archOf.ofFeat('inventor-dedication'))),
         trustFeatureId: f.id,
         rarity: f.rarity,
       });
@@ -385,7 +510,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       ours: [],
       descRefs: g.descRefs,
       isFeature: true,
-      bucket: 'Class',
+      ...section('Class', undefined),
       trustFeatureId: g.featureId,
       rarity: g.rarity,
     });
@@ -412,7 +537,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       ],
       descRefs: heritage.descRefs,
       isFeature: true,
-      bucket: 'Ancestry & heritage',
+      ...section('Ancestry & heritage', undefined),
       // Which of the two this is, so a player seeing two heritage rows knows why.
       ...(hid === character.secondHeritageId && hid !== character.heritageId
         ? { groupLabel: 'Second heritage' }
@@ -561,14 +686,19 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
   }, [character, content]);
 
   const q = query.trim().toLowerCase();
+  // One chip per section the character actually has: each class by name, each archetype by name, then
+  // Ancestry & heritage / Skill / General (bug 2026-11-08). Based on all entries, independent of the search box.
+  const sections = useMemo(() => featSections(entries, character, content), [entries, character, content]);
+  const presentBuckets = sections.map((s) => s.label);
+  // A pick whose section is gone (another character opened in this same sheet, an archetype retrained
+  // away) is ignored: the chips are names now, so "Fighter" picked on one character matched nothing on
+  // the next and the page went blank with no chip lit, not even All.
+  const livePicked = new Set([...picked].filter((b) => presentBuckets.includes(b)));
   // EMPTY picked = show every type; otherwise only the picked ones.
-  const showAll = picked.size === 0;
-  // Only offer a type chip when the character actually has entries of that type (e.g. no Archetype
-  // feats → no Archetype filter). Based on all entries, independent of the search box.
-  const presentBuckets = BUCKETS.filter((b) => entries.some((e) => e.bucket === b));
+  const showAll = livePicked.size === 0;
   const filtered = entries.filter(
     (e) =>
-      (showAll || picked.has(e.bucket)) &&
+      (showAll || livePicked.has(e.bucket)) &&
       // bug 2026-09-13: search-rank — the same fields as before, through the shared rule, so the
       // owner's "water skin" spelling finds a row here too. The group heading stays searchable (it
       // used to match via the fake trait entry), and rarity keeps its own exact term.
@@ -580,7 +710,8 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
 
   function toggle(b: string) {
     setPicked((prev) => {
-      const n = new Set(prev);
+      // Stale picks (a section this character no longer has) are dropped on the next click.
+      const n = new Set([...prev].filter((x) => presentBuckets.includes(x)));
       if (n.has(b)) n.delete(b);
       else n.add(b);
       return n;
@@ -661,7 +792,7 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
             All
           </button>
           {presentBuckets.map((b) => (
-            <button key={b} className={'fchip' + (picked.has(b) ? ' on' : '')} onClick={() => toggle(b)} title={`Show only ${b}${picked.size ? ' (and other picked types)' : ''}`}>
+            <button key={b} className={'fchip' + (livePicked.has(b) ? ' on' : '')} onClick={() => toggle(b)} title={`Show only ${b}${livePicked.size ? ' (and other picked types)' : ''}`}>
               {b}
             </button>
           ))}
@@ -669,7 +800,7 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
       </div>
 
       <section className="card">
-        {BUCKETS.filter((b) => showAll || picked.has(b)).map((b) => {
+        {sections.filter((s) => showAll || livePicked.has(s.label)).map(({ label: b, kind }) => {
           /* bug 2026-09-13: search-rank. This box matches beyond the name — traits, the group
            * heading, the rarity and the full description — so typing a feat's own name listed it
            * wherever its LEVEL put it, behind every feat that merely mentions it. Ranked first, level
@@ -684,7 +815,7 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
           return (
             <div key={b}>
               <div className="ff-sec">
-                <i className={'ti ' + BUCKET_ICON[b]} aria-hidden="true" />
+                <i className={'ti ' + KINDS.find((k) => k.kind === kind)?.icon} aria-hidden="true" />
                 {b}
                 <span className="ff-count">{rows.length}</span>
               </div>

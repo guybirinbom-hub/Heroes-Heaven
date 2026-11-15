@@ -15,8 +15,8 @@ import { RemasteredLine, remasteredAsOf } from './RemasteredLine';
 import { isRecordRef, type CardRecord, type OursLine, type RecordCardProps } from './cardModel';
 import { textOf, treeHasSource, withoutItemLists } from './astVisibility';
 import type { AstNode } from './astStore';
-import { SHARED_FEATURE_FOOTER, classOwnFeatureId, sharedFeatureBook, sharedFeatureFallback } from '../rules/featureText';
-import { FUTURE_TREATMENT, LEVEL_FOLDS, linkClassOf, pointerOf, printedSet, scopeTree, withPointer } from './cardScope';
+import { SHARED_FEATURE_FOOTER, sharedFeatureBook, sharedFeatureFallback } from '../rules/featureText';
+import { FUTURE_TREATMENT, LEVEL_FOLDS, linkClassOf, linkedId, linkedNode, pointerOf, printedSet, scopeTree, withPointer } from './cardScope';
 import { DescBody } from './DescBody';
 import type { SourceInfo } from '../rules/types';
 import { browseResolvesStubs, mineResolvesStubs, useStubbedTree } from './astStubs';
@@ -166,9 +166,10 @@ function InsetRecordCard({ record, node, scope, printed, ours, footer, fallbackT
   const { tree: page } = useStubbedTree(scoped, `${host}:${slug}`, content, !!stubs);
   const pageFailed = usePageLoadFailed(!loading && !astNode, host || undefined, slug);
   const [drill, setDrill] = useState<DescNode | null>(null);
+  // Same path as the popup card (linkedNode): a class-feature link opens the character's own class paragraph.
   const openRef = (bucket: string, s: string) => {
-    const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[s];
-    if (rec) setDrill({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug: s });
+    const n = linkedNode(content, bucket, s, [{ key: root.key, slug, classId: nodeClassOf(root) }], scope?.classId);
+    if (n) setDrill(n);
   };
   const close = () => setDrill(null);
   const drillCard = drill ? <RecordCard node={drill} mode="browse" chrome="popup" onExit={onExit ?? close} onBackToSource={onExit ? close : undefined} /> : null;
@@ -201,7 +202,8 @@ function InsetRecordCard({ record, node, scope, printed, ours, footer, fallbackT
         {/* DescBody's own markdown / rich-HTML branches, no tree key (section 5): it never reaches a page. */}
         {shared?.pending
           ? <div className="card-inset-text ast-loading" aria-busy="true" />
-          : <DescBody description={shared ? shared.text : root.description} descRefs={root.descRefs} className="card-inset-text" onExit={onExit} />}
+          : <DescBody description={shared ? shared.text : root.description} descRefs={root.descRefs} className="card-inset-text" onExit={onExit}
+              linkNode={(b, s) => linkedNode(content, b, s, [{ key: root.key, slug, classId: nodeClassOf(root) }], scope?.classId)} />}
         {oursBox}
         {sourceLine}
         {remastered}
@@ -265,8 +267,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
      is the nearest class page on the stack up to the link, else the character's (cardScope.ts
      linkClassOf). Any other link opens what it names, as before. */
   const trail = (upto: number) => stack.slice(0, upto + 1).map((n) => ({ key: n.key, slug: n.slug ?? astSlug(n.title), classId: nodeClassOf(n) }));
-  const ownId = (bucket: string | undefined, slug: string) =>
-    bucket === 'classFeatures' && content ? classOwnFeatureId(slug, linkClassOf(trail(stack.length - 1), scope?.classId), content) : slug;
+  const ownId = (bucket: string | undefined, slug: string) => linkedId(content, bucket, slug, trail(stack.length - 1), scope?.classId);
   const mine = mode === 'mine' && stack.length === 1;
   /* Card step 12 / package M: the class the open node is read for — the mine card's scope (else, with no
      character, the class its node carries); a page opened from a link: the nearest class page on the stack
@@ -296,9 +297,8 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   const pinned = pin?.has(pinNode) ?? false;
   // Open a linked term: from an ast cross-link (resolved "bucket:slug") …
   const openRef = (bucket: string, slug: string) => {
-    const id = ownId(bucket, slug);
-    const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[id];
-    if (rec) setStack((s) => [...s, { title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug: id }]);
+    const n = linkedNode(content, bucket, slug, trail(stack.length - 1), scope?.classId);
+    if (n) setStack((s) => [...s, n]);
   };
   // … or from a markdown DescRef (fallback path).
   const open = (ref: DescRef) => {
@@ -480,7 +480,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
                 core.json) shows the quiet placeholder, never the other class's page. */}
             {shared?.pending
               ? <div className="sd-desc ast-loading" aria-busy="true" />
-              : <DescBody description={shared ? shared.text : cur.description} descRefs={cur.descRefs} onExit={exit} />}
+              : <DescBody description={shared ? shared.text : cur.description} descRefs={cur.descRefs} onExit={exit} linkNode={(b, s) => linkedNode(content, b, s, trail(stack.length - 1), scope?.classId)} />}
             {mine ? oursBox : null}
             {sourceLine}
             {remastered}

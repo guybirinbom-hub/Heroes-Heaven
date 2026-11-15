@@ -1,7 +1,16 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { checkFeatReaders, type FeatReaderHit } from '../src/rules/blocks/check';
-import { FEAT_READERS_HOME, readAllow, scanFeatReaders, scanText, srcFiles } from '../scripts/lib/feat-readers.mjs';
+import { checkFeatReaders, checkSlotCategoryReaders, type FeatReaderHit } from '../src/rules/blocks/check';
+import {
+  FEAT_READERS_HOME,
+  readAllow,
+  scanFeatReaders,
+  scanSlotCategoryReaders,
+  scanSlotCategoryText,
+  scanText,
+  SLOT_CATEGORY_ALLOW,
+  srcFiles,
+} from '../scripts/lib/feat-readers.mjs';
 
 /**
  * CASE D's guard (docs/overrides-redesign.md spec item 2, Building blocks item 9; plan
@@ -39,8 +48,11 @@ describe('feat readers guard on the real files', () => {
   it('the addedFeats list is the stored reader and storage only (plan section 5)', () => {
     const allowed = [
       /^src\/rules\/blocks\/stored\.ts#/,
+      // the write door (Tweaks part B plan 5.1, WP1): THE storage writer of every old Overrides key
+      /^src\/rules\/blocks\/write\.ts#/,
       /^src\/rules\/build\.ts#(collectChosenIds|removeChosenIds|deriveBuildFromCharacter)(>|$)/,
-      /^src\/builder\/shared\.tsx#OverridesCard(>|$)/,
+      // (the old Overrides card, src/builder/shared.tsx#OverridesCard, retired in plan B WP7: the Tweaks
+      // editors write every given feat through the write door above)
       // the stored key's NAME, read by no character: the registry's storage.key and the check's key list
       /^src\/rules\/blocks\/registry\.ts#BLOCK_KINDS$/,
       /^src\/rules\/blocks\/check\.ts#LEGACY_KEYS$/,
@@ -110,15 +122,18 @@ describe('feat readers guard: each planted bad case fails', () => {
     expect(errorsOf(FILES, noWhy).join('\n')).toMatch(/stored\.ts#readLegacyBlocks: no reason/);
 
     const badCount = clone(ALLOW);
-    badCount.featPicks['src/builder/Builder.tsx#Builder>picked'].count = 0;
-    expect(errorsOf(FILES, badCount).join('\n')).toMatch(/Builder>picked: "count" must be a whole number from 1/);
+    // tweaks p2 WP7: the slot card's own-pick read moved into slotPickLines (a book slot's and an extra place's card).
+    badCount.featPicks['src/builder/Builder.tsx#Builder>slotPickLines>picked'].count = 0;
+    expect(errorsOf(FILES, badCount).join('\n')).toMatch(/Builder>slotPickLines>picked: "count" must be a whole number from 1/);
 
     expect(errorsOf(FILES, null).join('\n')).toMatch(/missing or not an object/);
     expect(errorsOf(FILES, { featPicks: [] }).join('\n')).toMatch(/"featPicks" must be an object/);
     // A store left out of the list: every place naming it is unlisted.
     const { addedFeats: _gone, ...noAdded } = clone(ALLOW);
     expect(errorsOf(FILES, noAdded).filter((m) => m.includes('names "addedFeats"')).length).toBe(Object.keys(ALLOW.addedFeats).length);
-  });
+    // Seven whole-source scans: 5.1-5.3 s in a 28-29-file vt.mjs run (WP6, WP7 and its fix round each hit the
+    // default 5 s once; alone it passes in about 2 s), so it gets a load-proof limit instead of a flaky red.
+  }, 30_000);
 });
 
 describe('feat readers guard: what is NOT a read', () => {
@@ -159,5 +174,98 @@ describe('feat readers guard: what is NOT a read', () => {
       'featPicks K>m 6',
       'featPicks top 7',
     ]);
+  });
+});
+
+/**
+ * Tweaks phase 2, WP7 (plan C10): an extra feat place's key is `<level>:extra<category>:<n>`, so every reader of
+ * a slot key's CATEGORY asks slotCategoryOf (heldFeats.ts) or slotRefOf (featSlots.ts). The raw reads still
+ * allowed (slot geometry kept on purpose, the Character.feats row, splits of things that are not slot keys) are
+ * listed in src/rules/blocks/slot-category-readers.json; scripts/blocks-check.mjs fails on any other.
+ */
+describe('slot-category readers guard (WP7, C10)', () => {
+  const CAT_ALLOW = readAllow(ROOT, SLOT_CATEGORY_ALLOW) as Record<string, Record<string, { count: number; why: string }>>;
+  const catErrors = (files: SrcFile[], allow: unknown = CAT_ALLOW): string[] =>
+    checkSlotCategoryReaders(scanSlotCategoryReaders(files) as FeatReaderHit[], allow).errors;
+
+  it('passes on the real files: every raw read of a slot key category is listed with its reason and count', () => {
+    expect(catErrors(FILES)).toEqual([]);
+    for (const [key, e] of Object.entries(CAT_ALLOW.slotCategory)) {
+      expect(e.why.trim().length, key).toBeGreaterThan(20);
+      expect(Number.isInteger(e.count) && e.count >= 1, key).toBe(true);
+    }
+  }, 30_000);
+
+  it('the three raw-category keepers named by the plan are listed (rekey, losing slot, the Character.feats row)', () => {
+    const keys = Object.keys(CAT_ALLOW.slotCategory);
+    expect(keys).toContain('src/rules/featSlots.ts#rekeyFeatSlots');
+    expect(keys.some((k) => k.startsWith('src/rules/featSlots.ts#picksLosingSlot'))).toBe(true);
+    expect(keys).toContain('src/rules/build.ts#buildCharacter');
+  });
+
+  it("PLANT: slotName going back to a raw `key.split(':')[1]` fails", () => {
+    const e = catErrors(withReplaced('src/builder/shared.tsx', 'const cat = slotCategoryOf(key);', "const cat = key.split(':')[1];"));
+    expect(e).toHaveLength(1);
+    expect(e[0]).toMatch(/^src\/builder\/shared\.tsx#slotName>cat \(line \d+\): reads a slot key's category 1×.*slotCategoryOf/);
+  }, 30_000);
+
+  it('PLANT: each shape of a new raw read fails (split index, array binding, SLOT_PREFIX index 2, exec then m[2], a regex copy)', () => {
+    const plants: [string, string][] = [
+      ['plantedSplit', "\nexport const plantedSplit = (k: string) => k.split(':')[1] === 'class';\n"],
+      ['plantedBind', "\nexport function plantedBind(k: string) {\n  const [, cat] = k.split(':');\n  return cat;\n}\n"],
+      ['plantedExec', '\nexport const plantedExec = (k: string) => SLOT_PREFIX.exec(k)![2];\n'],
+      ['plantedExecVar', '\nexport function plantedExecVar(k: string) {\n  const m = SLOT_PREFIX.exec(k);\n  return m ? m[2] : undefined;\n}\n'],
+      ['plantedRegex', '\nexport const plantedRegex = /^(\\d+):([a-z]+):(\\d+)$/;\n'],
+    ];
+    for (const [name, text] of plants) {
+      const e = catErrors(withAppended('src/rules/featSlots.ts', text));
+      expect(e, name).toHaveLength(1);
+      expect(e[0], name).toMatch(new RegExp(`^src/rules/featSlots\\.ts#${name} .*reads a slot key's category 1×`));
+    }
+  }, 30_000);
+
+  // WP7 run 2 (the run-1 checker's item 3): the shapes the first scan let through.
+  it('PLANT: each further shape fails (.at(1) on a split, match(SLOT_PREFIX) at 2, a SLOT_PREFIX alias, split(/:/)[1], a bound split then [1])', () => {
+    const plants: [string, string][] = [
+      ['plantedAt', "\nexport const plantedAt = (k: string) => k.split(':').at(1) === 'class';\n"],
+      ['plantedMatch', '\nexport const plantedMatch = (k: string) => k.match(SLOT_PREFIX)![2];\n'],
+      ['plantedAlias', '\nexport function plantedAlias(k: string) {\n  const RE = SLOT_PREFIX;\n  return RE.exec(k)![2];\n}\n'],
+      ['plantedRegexSplit', '\nexport const plantedRegexSplit = (k: string) => k.split(/:/)[1];\n'],
+      ['plantedParts', "\nexport function plantedParts(k: string) {\n  const parts = k.split(':');\n  return parts[1];\n}\n"],
+    ];
+    for (const [name, text] of plants) {
+      const e = catErrors(withAppended('src/rules/featSlots.ts', text));
+      expect(e, name).toHaveLength(1);
+      expect(e[0], name).toMatch(new RegExp(`^src/rules/featSlots\\.ts#${name} .*reads a slot key's category 1×`));
+    }
+  }, 30_000);
+
+  it('PLANT: a second raw read inside an allowlisted place (a count above the listed one) fails', () => {
+    const e = catErrors(withReplaced('src/rules/featSlots.ts', 'place: category !== m[2]', "place: category !== m[2] && m[2] !== ''"));
+    expect(e).toHaveLength(1);
+    expect(e[0]).toMatch(/featSlots\.ts#slotRefOf .*reads a slot key's category 2×, but .* allows 1/);
+  }, 30_000);
+
+  // Each test that scans the real files takes 1-3 s alone; beside a full named run it passed vitest's 5 s default
+  // once (2026-10-25), so every such test carries the file's 30 s limit.
+  it('a stale entry and a missing list fail', () => {
+    const stale = clone(CAT_ALLOW);
+    stale.slotCategory['src/rules/build.ts#noSuchReader'] = { count: 1, why: 'a place that no longer exists at all' };
+    expect(catErrors(FILES, stale).join('\n')).toMatch(/build\.ts#noSuchReader: names "slotCategory" nowhere any more \(stale\)/);
+    expect(catErrors(FILES, null).join('\n')).toMatch(/missing or not an object/);
+  }, 30_000);
+
+  it('what is NOT a read: a split of index 0 or 2, a comment, a string', () => {
+    const text = [
+      "export const lvl = (k: string) => Number(k.split(':')[0]);",
+      "export const idx = (k: string) => Number(k.split(':')[2]);",
+      "// k.split(':')[1] in a comment",
+      "export const words = \"k.split(':')[1]\";",
+      "export const other = (k: string) => k.split('-')[1];",
+      "export const first = (k: string) => k.split(':').at(0);",
+      "export function lvlOf(k: string) {\n  const parts = k.split(':');\n  return parts[0];\n}",
+      'export const notSlot = (k: string) => k.match(/(a)(b)/)![2];',
+    ].join('\n');
+    expect(scanSlotCategoryText('src/x.ts', text)).toEqual([]);
   });
 });

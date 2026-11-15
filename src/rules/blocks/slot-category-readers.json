@@ -1,0 +1,61 @@
+{
+  "$comment": "Tweaks phase 2, WP7 (work/tweaks-phase2-notes/plan.md C10): an extra feat place's pick lives under `<level>:extra<category>:<n>`, so a slot key's second part is not always a book category. Every reader of a key's category asks slotCategoryOf (src/rules/heldFeats.ts) or slotRefOf (src/rules/featSlots.ts). These are the places still allowed to read a key's category text raw — `x.split(':')[1]`, an array binding of a ':' split's second part, SLOT_PREFIX's match at index 2, or a regex literal copying its `:([a-z]+):` capture — each with its count and true reason (scripts/lib/feat-readers.mjs `scanSlotCategoryReaders`, checked by checkSlotCategoryReaders in src/rules/blocks/check.ts from scripts/blocks-check.mjs). A new read of a SLOT key's category goes through the helpers; a split of something that is not a slot key is listed with that reason.",
+  "slotCategory": {
+    "src/rules/heldFeats.ts#slotCategoryOf>cat": {
+      "count": 1,
+      "why": "THE helper: slotCategoryOf reads the key's second part and takes an extra place's `extra` off."
+    },
+    "src/rules/featSlots.ts#slotRefOf": {
+      "count": 1,
+      "why": "THE helper: slotRefOf compares the raw category with slotCategoryOf's to say whether the key is an extra place."
+    },
+    "src/rules/featSlots.ts#picksLosingSlot>drawn>nth": {
+      "count": 1,
+      "why": "Kept raw on purpose (C10): slot geometry. A key's ordinal among its RAW category's drawn slots; an extra place's `extraclass` is in no level's list (nth < 0), so it is never named as losing a slot."
+    },
+    "src/rules/featSlots.ts#picksLosingSlot>drawn": {
+      "count": 1,
+      "why": "Kept raw on purpose (C10): slot geometry. The raw category a drawn pick is looked up by in the next list; only drawn book keys reach it."
+    },
+    "src/rules/featSlots.ts#rekeyFeatSlots": {
+      "count": 2,
+      "why": "Kept raw on purpose (C10): slot geometry. A key's RAW category decides where it moves; an extra place's `extraclass` is in no SLOT_ORDER category, so it stays stale under its own key and never moves (C8)."
+    },
+    "src/rules/featSlots.ts#rekeyFeatSlots>refused": {
+      "count": 1,
+      "why": "Kept raw on purpose (C10): slot geometry. Whether the drawn slot a stale key would take refuses its pick, read by its raw category."
+    },
+    "src/rules/build.ts#buildCharacter": {
+      "count": 1,
+      "why": "Kept raw on purpose (C10, rev 3 s2): the featPicks loop's Character.feats row keeps `category: 'extra<cat>'` for an extra place — today's value for that key and what v0.1.44 / v0.1.45 publish, so build.hash does not move. A reader needing the book category reads slotCategoryOf(row.slotKey)."
+    },
+    "src/rules/slotKey.ts#SLOT_PREFIX": {
+      "count": 1,
+      "why": "THE slot-key pattern itself (its category capture)."
+    },
+    "src/builder/shared.tsx#RuleInfo": {
+      "count": 1,
+      "why": "Not a slot key: a rule reference `<bucket>:<slug>` split into its two parts."
+    },
+    "src/sheet/AstRenderer.tsx#Inline": {
+      "count": 1,
+      "why": "Not a slot key: a link reference `<bucket>:<slug>` split into its two parts."
+    },
+    "src/rules/companions.ts#speedLines": {
+      "count": 1,
+      "why": "Not a slot key: a companion speed value `<base>:<cap>`."
+    },
+    "src/rules/companions.ts#deriveAnimalCompanion": {
+      "count": 1,
+      "why": "Not a slot key: a companion speed value `<base>:<cap>`."
+    },
+    "src/rules/skillOrderNotice.ts#skillOrderChanges": {
+      "count": 2,
+      "why": "Not a slot key: a skill increase lane key `<lane>:<level>` (and its rest) split into its parts."
+    },
+    "src/rules/skillOrderNotice.ts#skillOrderChanges>laneKeys": {
+      "count": 2,
+      "why": "Not a slot key: lane keys `<lane>:<level>` sorted by their level part."
+    }
+  }
+}

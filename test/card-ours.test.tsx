@@ -264,7 +264,7 @@ describe('card step 11: the ours box on the Feats-tab card', () => {
     // batch card premise: feat-5544 "Frequency once per day"
     expect(noPage, 'a feat with no page and no slice ships').toBeTruthy();
     const ch = { ...withFeats(base, noPage), overrides: { contentEdits: { feats: { [noPage]: { description: 'Synthesized override words.\n\nA second paragraph.' } } } } } as unknown as Character;
-    const cdb = contentFor(db, ch.overrides);
+    const cdb = contentFor(db, ch);
     const v = await openCard(ch, featEntries(ch, cdb).find((e) => e.featId === noPage)!.name, cdb);
     expect(v.page, `${noPage}: no page`).toBe(false);
     // batch card premise: feat-5544 "Frequency once per day"

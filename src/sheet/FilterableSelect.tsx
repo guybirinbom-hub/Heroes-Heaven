@@ -377,6 +377,7 @@ export function FilterableSelect<T>({
   limit = 150,
   ineligible,
   resultsFooter,
+  resultsBarExtra,
 }: {
   title: string;
   icon?: string;
@@ -399,6 +400,9 @@ export function FilterableSelect<T>({
    *  feat picker to surface matches that exist in the full content but are hidden from this
    *  picker (disabled source books / wrong slot). */
   resultsFooter?: (query: string, openDesc: (node: DescNode) => void) => ReactNode;
+  /** Beside the name search in the results bar — the builder spell picker's "Show spells of other traditions"
+   *  switch (Tweaks phase 2, WP4). Absent = nothing drawn. */
+  resultsBarExtra?: ReactNode;
 }) {
   useEscapeClose(onClose);
   // Each range slider's scale is trimmed to the values present in THIS list, so the whole
@@ -698,6 +702,7 @@ export function FilterableSelect<T>({
               ) : (
                 <span />
               )}
+              {resultsBarExtra}
               {/* bug 2026-09-12 #1: "after i press the show ineligible button nothing changes". The
                 * `|| hideInel` that used to sit here kept the button on screen in its default (hidden)
                 * state even when the current results held NOTHING ineligible — a 1st-level ancestry or

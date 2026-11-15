@@ -3,6 +3,7 @@
 // odd character must never throw the publish/sync path.
 import type { ActiveCondition, Character, ContentDatabase, ProficiencyRank } from '../rules/types';
 import { deriveMaxHp, deriveAc, derivePerception } from '../rules/derive';
+import { heldClassNames } from '../rules/heldClasses';
 import { contentFor } from '../rules/blocks/content';
 
 export interface PartySummary {
@@ -47,7 +48,7 @@ function cap(s: string): string {
  *  one content path), so the card's max HP, AC and Perception are the sheet's: before 2026-10-20 every
  *  caller passed the plain view and an edit of a feat's numbers never reached a card. */
 export function computeSummary(c: Character, content: ContentDatabase): PartySummary {
-  content = contentFor(content, c?.overrides);
+  content = contentFor(content, c);
   const safe = <T,>(fn: () => T, fallback: T): T => {
     try {
       return fn();
@@ -64,7 +65,7 @@ export function computeSummary(c: Character, content: ContentDatabase): PartySum
   return {
     name: c.name || 'Unnamed',
     ancestry: c.ancestryId ? content.ancestries[c.ancestryId]?.name : undefined,
-    className: c.classId ? content.classes[c.classId]?.name : undefined,
+    className: heldClassNames(c, content.classes),
     level: c.level ?? 0,
     hpCur: c.hitPoints?.current ?? hpMax,
     hpMax,

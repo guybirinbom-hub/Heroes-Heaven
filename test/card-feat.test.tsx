@@ -343,10 +343,10 @@ describe('card step 11: the Feats-tab popup is the row\'s mine card', () => {
     expect(boxOf(luck)).toContain('Reliable Luck: changes this to 1/hour; your use counter follows it.');
     expect(pageParas(pageCard(luck).body).filter((p) => squash(p.textContent).startsWith('Frequency')).length, 'the page\'s Frequency line, once').toBe(1);
     const ch = { ...withFeats(base, 'caustic-nectar'), overrides: { contentEdits: { feats: { 'caustic-nectar': { description: 'Synthesized override words.' } } } } } as unknown as Character;
-    const cdb = contentFor(db, ch.overrides);
+    const cdb = contentFor(db, ch);
     // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
     const ov = await openRow(ch, 'Caustic Nectar', cdb);
-    expect(boxOf(ov)).toContain('Your override: Synthesized override words.');
+    expect(boxOf(ov)).toContain('Your text: Synthesized override words.');
     expect(pageCard(ov).text).toMatch(/sickened 1/);
     const en = { ...withFeats(base, 'automaton-armament'), enhancements: [{ featId: 'automaton-armament', from: 'Lesser Augmentation' }] } as Character;
     const enh = await openRow(en, featEntries(en, db).find((e) => e.featId === 'automaton-armament')!.name);

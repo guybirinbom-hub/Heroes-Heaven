@@ -49,6 +49,7 @@ export function DescBody({
   remasteredAs,
   emptyNote,
   onOpenRecord,
+  linkNode,
 }: {
   description?: string;
   descRefs?: DescRef[];
@@ -59,6 +60,9 @@ export function DescBody({
    *  RemasteredLine's clickPoint). A popup drawn inside a window would
    *  sit in that window's stacking context, under any window above it. Absent = the popup, as before. */
   onOpenRecord?: (bucket: string, id: string, at?: OpenAt) => void;
+  /** Without `onOpenRecord`: the node a link opens, when it is not just the link's own record (a class
+   *  feature opens the character's own class paragraph — cardScope's linkedNode). */
+  linkNode?: (bucket: string, slug: string) => DescNode | undefined;
   /** desk #158: this record is the older printing and its reprint ships as its own record — the popup
    *  says so and links to it. */
   remasteredAs?: RemasteredAs;
@@ -81,6 +85,11 @@ export function DescBody({
    *  `onOpenRecord`, the host's way. */
   const openRecord = (bucket: string, slug: string, at?: OpenAt) => {
     if (onOpenRecord) return onOpenRecord(bucket, slug, at);
+    if (linkNode) {
+      const n = linkNode(bucket, slug);
+      if (n) setNode(n);
+      return;
+    }
     const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[slug];
     if (rec) setNode({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug });
   };
@@ -133,7 +142,7 @@ export function DescBody({
   // (each carries data-ref-key/data-ref-id pointing at a content entry to pop up).
   if (isRichHtml(description, dirAuto)) {
     const open = (key: string, id: string, at: OpenAt) => {
-      if (onOpenRecord) return onOpenRecord(key, id, at);
+      if (onOpenRecord || linkNode) return openRecord(key, id, at);
       const map = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[key];
       const e = map?.[id];
       if (e) setNode({ title: e.name, description: e.description ?? '', descRefs: e.descRefs, key });
@@ -172,6 +181,7 @@ export function DescBody({
               if (n.key && n.slug) onOpenRecord(n.key, n.slug, at);
               return;
             }
+            if (n && linkNode && n.key && n.slug) return openRecord(n.key, n.slug);
             if (n) setNode(n);
           }}
         />

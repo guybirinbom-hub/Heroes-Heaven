@@ -84,12 +84,14 @@ describe('Sanctified Relic — the benefit stays off the owner’s sheet', () =>
  * disagreement be created and then resolved it backwards.
  */
 describe('a relic’s sanctification is not the character’s', () => {
-  const champion = (deityId: string, deityPick: string, relicPick: string) =>
+  /* The champion's own answer is Deity and Cause's choice. Until 2026-10-27 this fixture answered on the deity
+   * card, which a champion is no longer asked (effectChoiceOffered): nothing else read that answer for them. */
+  const champion = (deityId: string, ownPick: string, relicPick: string) =>
     build('champion', 13, {
       deityId,
       featPicks: { '2:class:0': 'sanctified-relic' },
+      featChoices: { 'feature:deity-champion': ownPick },
       effectChoices: {
-        [`${deityId}:sanctification`]: deityPick,
         'sanctified-relic:divine-attribute': 'cha',
         'sanctified-relic:relic-sanctification': relicPick,
       },

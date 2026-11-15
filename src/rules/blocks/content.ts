@@ -10,10 +10,9 @@
  * `saveBonuses`) saw one max HP on the sheet while the GM's tracker, the card and the HP the GM wrote
  * back (pcSheetTruth `sheetWithVitals`: damage = max − current) used another.
  *
- * Now `contentFor(db, overrides)` is the ONE door, and the derive boundary calls it from the
- * character's OWN overrides, so a caller cannot skip it:
- *   - `buildCharacter` and `deriveBuildFromCharacter` (rules/build.ts), from `build.overrides` /
- *     `c.overrides`;
+ * Now `contentFor(db, host)` is the ONE door, and the derive boundary calls it with the character (or
+ * build) ITSELF — `{ overrides, options }`, plan B B13 — so a caller cannot skip it:
+ *   - `buildCharacter` and `deriveBuildFromCharacter` (rules/build.ts), from `build` / `c`;
  *   - `applyPlayState` (rules/play.ts) — so `livePlay` (sheet/memberSheets.ts) too;
  *   - `deriveMaxHp` (rules/derive.ts) — so `initialPlay`, the roster card and pcSheetTruth's max-HP
  *     readers (`maxHpOf` → `vitalsFromSheet` → `sheetWithVitals`, the GM_EDITS_PC_HP write) too;
@@ -28,7 +27,7 @@
  * ORDER WITH THE CARRIED RECORDS (commit c1acf8f, src/data/carried.ts — owner ruling 2026-10-20):
  *   1. the view first — `ownContent(content, savedChar)` on this device's own character,
  *      `foreignContent(content, sheet)` on anyone else's — the custom records the sheet carries;
- *   2. then `contentFor(view, overrides)` on top.
+ *   2. then `contentFor(view, host)` on top.
  * Why that order: the overlay patches only ids the database HOLDS, so a player's edit of their own
  * homebrew feat, which on a GM's device exists only as a carried copy, reaches that device only when the
  * carried record is already in the view; and a foreign view lets the carried copy WIN over the viewer's
@@ -42,11 +41,21 @@
  * edits travel in `overrides.contentEdits` and are laid over it again on every device. A carried copy
  * collected from here would bake one character's edit into the record every other character reads.
  *
- * The Tweaks master switch and per-entry on/off (`overrides.meta['contentEdits:…']`, checker C3) are not
- * read here yet: no character carries `overrides.v` before part B, so the switch reads ON for all of them
- * (`tweaksSwitchOn`) and today's behaviour — the edits always apply — is unchanged. Part B adds both.
+ * THE SWITCH AND EACH EDIT'S OWN ON/OFF (plan B, WP2 / B13): the edits laid over are the host's LIVE ones
+ * (`liveContentEdits`, blocks/active.ts — the one reader): none while the Tweaks master switch is off, and
+ * none that is paused (`overrides.meta['contentEdits:<bucket>/<id>'].on === false`, checker C3). A text
+ * edit has no start level (B25). That is why the door takes the HOST (`{ overrides, options }`, a
+ * Character or a BuildState), never the bare overrides object: the switch is `options.overridesEnabled`.
+ *
+ * ⚠ contentFor cannot UN-apply an edit. A database it made (`MADE`), or one that already holds an edit's
+ * values (`alreadyApplied`), is returned as it is — so a host must never hand the derive boundary a
+ * database edited for ANOTHER switch / on-off state. Every memo that calls contentFor therefore keys on
+ * the host's `options` too, not only on its `overrides` (App.tsx `sheetContent`, Builder.tsx `ovContent`,
+ * GmEditSheet.tsx `sheetContent`); and `setTweaksSwitch` (blocks/write.ts) always writes a NEW overrides
+ * object, so a memo keyed on `overrides` alone also refreshes on the switch.
  */
-import type { BuildOverrides, ContentDatabase } from '../types';
+import type { BuildOverrides, CharacterOptions, ContentDatabase } from '../types';
+import { liveContentEdits } from './active';
 
 type ContentEdits = NonNullable<BuildOverrides['contentEdits']>;
 /** The two buckets an edit can patch, in the overlay's order. */
@@ -55,9 +64,13 @@ type Rec = Record<string, unknown>;
 
 const isRec = (v: unknown): v is Rec => !!v && typeof v === 'object' && !Array.isArray(v);
 
-/** The edits object when it patches anything, else null (an empty `contentEdits` changes nothing). */
-function editsOf(ov: BuildOverrides | null | undefined): ContentEdits | null {
-  const e = ov?.contentEdits;
+/** The host's live edits when they patch anything, else null (an empty `contentEdits` changes nothing). */
+function editsOf(host: { overrides?: BuildOverrides; options?: CharacterOptions } | null | undefined): ContentEdits | null {
+  // A bare overrides object handed in place of the host would silently drop every edit (its
+  // `.overrides` is absent). tsc refuses it in src/; the scripts and tests it never sees are refused here.
+  // tweaks-ok: developer TypeError for a coding mistake (contentFor called with the overrides object)
+  if (host && 'contentEdits' in host) throw new TypeError('contentFor(db, host): pass the character or build ({ overrides, options }), not its overrides object');
+  const e = liveContentEdits(host);
   if (!isRec(e)) return null;
   return EDIT_MAPS.some((m) => isRec(e[m]) && Object.keys(e[m] as Rec).length > 0) ? e : null;
 }
@@ -124,19 +137,21 @@ const MADE = new WeakMap<object, object>();
 const CACHE = new WeakMap<object, WeakMap<object, ContentDatabase>>();
 
 /**
- * THE content path: `db` with the character's own `overrides.contentEdits` laid over it.
+ * THE content path: `db` with the host's own LIVE `overrides.contentEdits` laid over it (`host` = the
+ * Character or BuildState itself: `{ overrides, options }`).
  *
- * - No edits (absent, or empty buckets) → `db` itself.
- * - The same `db` and the same `contentEdits` object → the same database object on every call (C9), so
- *   every memo downstream keyed on the database's identity (bookBlocksOf, the sheet's tabs) stays warm.
+ * - No live edits (absent, empty buckets, the switch off, every edit paused) → `db` itself.
+ * - The same `db` and the same live edits object (`liveContentEdits` is memoised per contentEdits × meta,
+ *   per switch state) → the same database object on every call (C9), so every memo downstream keyed on
+ *   the database's identity (bookBlocksOf, the sheet's tabs) stays warm.
  * - Idempotent: a database these edits were already laid over (by this function, or copied from one) is
  *   returned as it is, so the derive boundary may call it on a database its host already prepared.
  * - Stacking stays as the old overlay had it: other edits laid over a prepared database patch on top.
  *
  * `db` is the character's VIEW (carried records first — see the header for the order and why).
  */
-export function contentFor(db: ContentDatabase, overrides: BuildOverrides | null | undefined): ContentDatabase {
-  const edits = editsOf(overrides);
+export function contentFor(db: ContentDatabase, host: { overrides?: BuildOverrides; options?: CharacterOptions } | null | undefined): ContentDatabase {
+  const edits = editsOf(host);
   if (!edits || !db) return db;
   if (MADE.get(db) === edits) return db;
   let byEdits = CACHE.get(db);

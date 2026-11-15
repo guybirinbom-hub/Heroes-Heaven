@@ -3,6 +3,7 @@ import type { CharacterAppearance, ContentDatabase, Item, ModeDef } from '../rul
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { deriveMaxHp } from '../rules/derive';
+import { heldClassNames } from '../rules/heldClasses';
 import { exportWg, exportNative, importCharacter, type ImportReport } from '../data/transfer';
 import { ownContent } from '../data/carried';
 import { rankBySearch, searchMatches } from '../data/searchRank';
@@ -13,6 +14,7 @@ import { useAvatar } from './usePortrait';
 import { confirmDialog, chooseDialog } from './confirm';
 import { HeroesHeavenLogo } from './Logo';
 import { downloadText, fileSlug } from './download';
+import { tweaksWgCannotCarry } from '../rules/blocks/wgExport';
 
 type Filter = 'all' | 'active' | 'archived';
 
@@ -42,6 +44,30 @@ async function sanitizePortraits(saved: SavedChar): Promise<SavedChar> {
     }
   }
   return out;
+}
+
+/** Before a Wanderer's Guide export (plan B, WP9a, B20): list every tweak the file cannot carry and ask.
+ *  True = go on (nothing to list, or "Export anyway"); false = Cancel / Escape / the X, and no file. */
+async function wgTweaksOk(c: SavedChar, content: ContentDatabase): Promise<boolean> {
+  const lost = tweaksWgCannotCarry(c, ownContent(content, c));
+  if (!lost.length) return true;
+  return confirmDialog({
+    title: "Some tweaks can't go to Wanderer's Guide",
+    message: (
+      <>
+        {/* The list scrolls on its own: `.picker` clips (overflow: hidden) at 92vh, so a long list would
+            push "Export anyway" out of reach on a phone. */}
+        <ul className="wg-tweaks-lost" style={{ maxHeight: '45vh', overflowY: 'auto' }}>
+          {lost.map((line, i) => (
+            <li key={i}>{line}</li>
+          ))}
+        </ul>
+        <p>The numbers in the file include the tweaks that are on, but a re-import will not bring any of them back as tweaks.</p>
+      </>
+    ),
+    confirmLabel: 'Export anyway',
+    cancelLabel: 'Cancel',
+  });
 }
 
 /** The character roster: search, filter, import/export, and per-character cards with actions.
@@ -95,7 +121,7 @@ export function RosterScreen({
   const originOf = (c: SavedChar) => {
     const db = content ? ownContent(content, c) : null;
     const anc = db && c.character.ancestryId ? db.ancestries[c.character.ancestryId]?.name : '';
-    const cls = db && c.character.classId ? db.classes[c.character.classId]?.name : '';
+    const cls = db ? heldClassNames(c.character, db.classes) : '';
     return `${anc ?? ''} | ${cls ?? ''}`;
   };
   /* bug 2026-09-13: search-rank. This box matches beyond the name — ancestry and class too — so a
@@ -202,6 +228,9 @@ export function RosterScreen({
         },
       ],
     });
+    // Plan B, WP9a (B20): the WG file has nowhere to put a tweak — it carries the numbers of the live
+    // ones and none of the tweaks themselves. Say which, before a file is written; Cancel writes none.
+    if (target === 'wg' && content && !(await wgTweaksOk(c, content))) return;
     if (target === 'wg' || target === 'native') await doExport(c, target);
   };
 
@@ -281,7 +310,7 @@ export function RosterScreen({
             const db = content ? ownContent(content, c) : null;
             const ch = db ? applyPlayState(c.character, c.play, db) : c.character;
             const anc = db && ch.ancestryId ? db.ancestries[ch.ancestryId]?.name : undefined;
-            const cls = db && ch.classId ? db.classes[ch.classId]?.name : undefined;
+            const cls = db ? heldClassNames(ch, db.classes) : undefined;
             const hpMax = db ? deriveMaxHp(ch, db) : null;
             const initials = ch.name.slice(0, 2).toUpperCase();
             return (

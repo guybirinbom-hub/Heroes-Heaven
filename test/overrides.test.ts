@@ -87,10 +87,11 @@ describe('Overrides — creative per-case rule-breaks', () => {
     const featId = Object.keys(db.feats)[0];
     const origName = db.feats[featId].name;
     // no content edits → identical reference (memo-safe)
+    // contentFor takes the HOST ({ overrides, options }: the character or build), plan B B13.
     expect(contentFor(db, {})).toBe(db);
-    expect(contentFor(db, { addedFeats: [] })).toBe(db);
+    expect(contentFor(db, { overrides: { addedFeats: [] } })).toBe(db);
     // with an edit → a new db, the entry changed, the shared base untouched, other fields preserved
-    const eff = contentFor(db, { contentEdits: { feats: { [featId]: { name: 'EDITED' } } } });
+    const eff = contentFor(db, { overrides: { contentEdits: { feats: { [featId]: { name: 'EDITED' } } } } });
     expect(eff).not.toBe(db);
     expect(eff.feats[featId].name).toBe('EDITED');
     expect(db.feats[featId].name).toBe(origName);

@@ -227,7 +227,7 @@ const oracle = (level: number, spells: Record<number, string[]>): BuildState =>
 const ragingCleric = (level: number): BuildState =>
   ({ ...preparedCleric(level), featPicks: { '2:class:0': 'barbarian-dedication' } }) as BuildState;
 
-const built = (b: BuildState): Character => buildCharacter(b, contentFor(db, b.overrides));
+const built = (b: BuildState): Character => buildCharacter(b, contentFor(db, b));
 
 /**
  * The EXACT chain App.tsx's builder `onCreate` runs (and GmEditSheet's, line for line): build the

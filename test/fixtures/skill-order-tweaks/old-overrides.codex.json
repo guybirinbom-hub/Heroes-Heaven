@@ -1,0 +1,302 @@
+{
+  "app": "wanderers-codex",
+  "formatVersion": 1,
+  "kind": "character",
+  "character": {
+    "id": "char-tweaks-fixture-fighter",
+    "schemaVersion": 1,
+    "name": "Tweaks Fixture Fighter",
+    "level": 7,
+    "xp": 0,
+    "ancestryId": "human",
+    "heritageId": "skilled-human",
+    "heritageResistanceChoice": null,
+    "backgroundResistanceChoice": null,
+    "backgroundId": "acolyte",
+    "classId": "fighter",
+    "subclassId": null,
+    "overrides": {
+      "proficiencies": {
+        "thievery": "trained",
+        "fortitude": "trained",
+        "perception": "trained",
+        "lore:Sailing Lore": "trained"
+      },
+      "attributes": {
+        "str": 18
+      },
+      "maxHp": 120,
+      "addedFeats": [
+        {
+          "featId": "toughness",
+          "level": 3,
+          "category": "general"
+        }
+      ],
+      "addedLanguages": [
+        "draconic"
+      ],
+      "addedSpells": [
+        {
+          "spellId": "consecrate",
+          "rank": 2
+        }
+      ],
+      "allowedFeats": [
+        "fleet"
+      ],
+      "contentEdits": {
+        "feats": {
+          "toughness": {
+            "description": "<p>TEST: Toughness text edited through the old Overrides card.</p>"
+          }
+        }
+      }
+    },
+    "keyAbility": "dex",
+    "abilities": {
+      "str": 18,
+      "dex": 16,
+      "con": 14,
+      "int": 10,
+      "wis": 14,
+      "cha": 10
+    },
+    "partialBoosts": [],
+    "proficiencies": {
+      "perception": "trained",
+      "saves": {
+        "fortitude": "trained",
+        "reflex": "expert",
+        "will": "expert"
+      },
+      "skills": {
+        "acrobatics": "trained",
+        "arcana": "untrained",
+        "athletics": "expert",
+        "crafting": "untrained",
+        "deception": "untrained",
+        "diplomacy": "untrained",
+        "intimidation": "untrained",
+        "medicine": "untrained",
+        "nature": "untrained",
+        "occultism": "untrained",
+        "performance": "untrained",
+        "religion": "trained",
+        "society": "trained",
+        "stealth": "expert",
+        "survival": "untrained",
+        "thievery": "trained",
+        "lore:scribing": "trained",
+        "lore:Sailing Lore": "trained"
+      },
+      "attacks": {
+        "unarmed": "expert",
+        "simple": "expert",
+        "martial": "expert",
+        "advanced": "trained"
+      },
+      "defenses": {
+        "unarmored": "trained",
+        "light": "trained",
+        "medium": "trained",
+        "heavy": "trained"
+      },
+      "classDc": "trained"
+    },
+    "hitPoints": {
+      "current": 120,
+      "temp": 0,
+      "maxOverride": 120
+    },
+    "heroPoints": 1,
+    "recoveryDcReduction": 1,
+    "conditions": [],
+    "classResources": {},
+    "languages": [
+      "common",
+      "draconic"
+    ],
+    "feats": [
+      {
+        "featId": "student-of-the-canon",
+        "level": 1,
+        "category": "skill"
+      },
+      {
+        "featId": "shield-block",
+        "level": 1,
+        "category": "general",
+        "grantedBy": "shield-block"
+      },
+      {
+        "featId": "toughness",
+        "level": 3,
+        "category": "general",
+        "slotKey": "override:toughness"
+      }
+    ],
+    "skillIncreases": [
+      {
+        "level": 3,
+        "skill": "athletics"
+      },
+      {
+        "level": 5,
+        "skill": "thievery"
+      },
+      {
+        "level": 7,
+        "skill": "stealth"
+      }
+    ],
+    "grantedSkills": {
+      "acrobatics": "your class",
+      "religion": "your background",
+      "lore:scribing": "your background"
+    },
+    "inventory": [],
+    "currency": {},
+    "spellcasting": [],
+    "details": {},
+    "notes": []
+  },
+  "build": {
+    "name": "Tweaks Fixture Fighter",
+    "level": 7,
+    "ancestryId": "human",
+    "heritageId": "skilled-human",
+    "backgroundId": "acolyte",
+    "classId": "fighter",
+    "subclassId": null,
+    "extraChoices": {},
+    "deityId": null,
+    "divineFont": null,
+    "devotionSpell": null,
+    "pathToPerfection": [],
+    "voiceOfNature": null,
+    "qiTradition": null,
+    "fighterWeaponGroup": null,
+    "fighterWeaponGroup2": null,
+    "primaryApparition": null,
+    "subclassSkill": null,
+    "subclassLore": null,
+    "dragonExemplar": null,
+    "commanderTactics": [],
+    "runesmithRunes": [],
+    "grantedChoiceFeatTraits": {},
+    "inventorArmorStats": null,
+    "bodyRune": null,
+    "inventorModifications": {},
+    "gateForks": {},
+    "gateExpands": {},
+    "keyAbility": "dex",
+    "ancestryBoosts": [],
+    "backgroundBoosts": [],
+    "levelBoosts": [
+      "dex",
+      "con",
+      "wis",
+      "str"
+    ],
+    "classSkills": [
+      "athletics",
+      "stealth",
+      "society"
+    ],
+    "heritageSkill": null,
+    "backgroundSkillChoice": null,
+    "heritageFeatId": null,
+    "umtFeatId": null,
+    "featSkillChoices": {},
+    "dedicationSkillFeats": {},
+    "languages": [],
+    "featPicks": {},
+    "featChoices": {},
+    "skillIncreases": {
+      "3": "athletics",
+      "5": "thievery",
+      "7": "stealth"
+    },
+    "bonusSkillIncreases": {},
+    "backgroundSkillIncreases": {},
+    "attributeBoosts": {
+      "5": [
+        "dex",
+        "con",
+        "wis",
+        "str"
+      ]
+    },
+    "cantrips": [],
+    "spells": {},
+    "signatures": {},
+    "archetypeTradition": null,
+    "archetypeKeyAbility": null,
+    "archetypeEidolonType": null,
+    "archetypeSpells": {
+      "cantrips": [],
+      "spells": {},
+      "tradition": null,
+      "keyAbility": null
+    },
+    "inventory": [],
+    "companions": [],
+    "overrides": {
+      "proficiencies": {
+        "thievery": "trained",
+        "fortitude": "trained",
+        "perception": "trained",
+        "lore:Sailing Lore": "trained"
+      },
+      "attributes": {
+        "str": 18
+      },
+      "maxHp": 120,
+      "addedFeats": [
+        {
+          "featId": "toughness",
+          "level": 3,
+          "category": "general"
+        }
+      ],
+      "addedLanguages": [
+        "draconic"
+      ],
+      "addedSpells": [
+        {
+          "spellId": "consecrate",
+          "rank": 2
+        }
+      ],
+      "allowedFeats": [
+        "fleet"
+      ],
+      "contentEdits": {
+        "feats": {
+          "toughness": {
+            "description": "<p>TEST: Toughness text edited through the old Overrides card.</p>"
+          }
+        }
+      }
+    }
+  },
+  "play": {
+    "damage": 0,
+    "tempHp": 0,
+    "heroPoints": 1,
+    "mythicPoints": 3,
+    "xp": 0,
+    "focusUsed": 0,
+    "expendedSlots": {},
+    "slotsUsed": {},
+    "conditions": [],
+    "inventory": [],
+    "currency": {},
+    "pinned": [],
+    "pinnedDescs": [],
+    "resources": {},
+    "notes": [],
+    "companions": []
+  }
+}

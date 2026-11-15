@@ -1,33 +1,39 @@
 // @vitest-environment jsdom
 import { readFileSync } from 'node:fs';
-import { act, createElement, useState } from 'react';
+import { act } from 'react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { content } from './_content';
-import { renderDom } from './_render';
-import { OverridesCard, pruneOverrides, type BuilderActions } from '../src/builder/shared';
-import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { pruneOverrides } from '../src/rules/blocks/write';
 import type { BuildOverrides } from '../src/rules/types';
+import { addEditor, enter, focus, hero, leave, mountTweaks, openMenu, openRow, pick, press, rowBy, settle, typeInto } from './_tweaks-harness';
 
 /**
- * Phone audit 2026-10-14, the Overrides card.
+ * Phone audit 2026-10-14, the Overrides card — its two findings, now held by the Tweaks editors that
+ * replaced the card (plan B WP7: "port, never delete").
  *
  * D5 — "Set maximum HP" never saved anything. The card's writeOv rebuilt the overrides object one
  * hand-written line per key and had no `maxHp` line, so every value typed into the box was dropped before
- * it reached the build. It is generic now (pruneOverrides) and this file holds a sample of EVERY key
- * BuildOverrides declares, read off src/rules/types.ts — a key added there later fails here until it has
- * a sample, and then it is proven to survive.
+ * it reached the build. It is generic now (pruneOverrides, blocks/write.ts) and this file holds a sample of
+ * EVERY key BuildOverrides declares, read off src/rules/types.ts — a key added there later fails here until
+ * it has a sample, and then it is proven to survive. The editor half: Tweaks → Set a number → Maximum HP
+ * saves what is typed (the box is still `aria-label="Max HP"`).
  *
  * D6 — the number boxes snapped back when emptied: Dex 12, Backspace, Backspace, 8 saved 128, because an
- * empty box reverted the override mid-edit and refilled with the computed 12. The boxes are drafts now
+ * empty box reverted the override mid-edit and refilled with the computed 12. The boxes are drafts
  * (DraftNumberInput): they may be empty while edited and decide when the player leaves them — a number
- * saves, an empty box reverts to the computed value, a tap with no typing changes nothing.
+ * saves, an empty box removes the tweak (the card's "back to the computed value"), a tap with no typing
+ * changes nothing. Held here on a score set's own row editor (Dexterity set to 12), where the card's
+ * Dex box was.
  */
 
+const db = content();
 afterEach(() => {
   for (const n of [...document.body.children]) n.remove();
 });
 
-/** A non-empty value for every BuildOverrides key. */
+/** A non-empty value for every BuildOverrides key, in Tweaks part B's shape: the meta carries `mode`,
+ *  `source`, `moved` and `of` (plan B WP1), and `v` is set. (scripts/blocks-parity-snapshot.mjs keeps an OLD
+ *  copy of this sample on purpose — frozen there as the old-character fixture; this one may move on.) */
 const SAMPLE: Required<BuildOverrides> = {
   allowedFeats: ['toughness'],
   addedFeats: [{ featId: 'toughness', level: 1, category: 'general' }],
@@ -40,7 +46,11 @@ const SAMPLE: Required<BuildOverrides> = {
   maxHp: 30,
   contentEdits: { feats: { toughness: { name: 'Tougher' } } },
   blocks: [{ id: 't1', kind: 'number.add', v: 1, target: 'skill:athletics', value: 1 }],
-  meta: { 'proficiencies:athletics': { reason: 'Guild training', of: 'expert' } },
+  meta: {
+    'proficiencies:athletics': { reason: 'Guild training', mode: 'atLeast', of: 'expert', moved: true },
+    'addedFeats:toughness@1': { source: 'import', of: 'toughness@1' },
+  },
+  v: 2,
 };
 
 /** The keys `interface BuildOverrides` declares (its own two-space-indented members). */
@@ -76,154 +86,149 @@ describe('D5: the overrides writer keeps every BuildOverrides key', () => {
     expect(pruneOverrides({}, { contentEdits: { feats: { toughness: {} } } })).toEqual({ contentEdits: { feats: { toughness: {} } } });
     expect(pruneOverrides({}, { maxHp: Number.NaN })).toBeUndefined();
   });
+
+  it('pruneOverrides keeps v (plan B, B27), and an object holding nothing but v and empty meta is no overrides (B15)', () => {
+    // `v` is the Tweaks marker: dropping it would flip a stamped character back to "ON by read".
+    expect(pruneOverrides({ v: 2, maxHp: 30 }, { attributes: { dex: 8 } })).toEqual({ v: 2, maxHp: 30, attributes: { dex: 8 } });
+    expect(pruneOverrides({ v: 3, maxHp: 30 }, {})).toEqual({ v: 3, maxHp: 30 }); // a newer app's v is never lowered
+    expect(pruneOverrides({}, { maxHp: 30 })).not.toHaveProperty('v'); // …and never added
+    expect(pruneOverrides({ v: 2, maxHp: 30 }, { maxHp: undefined })).toBeUndefined();
+    expect(pruneOverrides({ v: 2, meta: {} }, {})).toBeUndefined();
+    expect(pruneOverrides({ v: 2, meta: { 'maxHp:max-hp': {} } }, {})).toBeUndefined();
+    // a meta that still says something is kept (UNKNOWN ≠ EMPTY)
+    expect(pruneOverrides({ v: 2, meta: { 'maxHp:max-hp': { reason: 'x', of: '30' } } }, {})).toEqual({ v: 2, meta: { 'maxHp:max-hp': { reason: 'x', of: '30' } } });
+  });
 });
 
-/* ---- the real card ----------------------------------------------------------------------------- */
+/* ---- the real editors -------------------------------------------------------------------------- */
 
-const BASE: BuildState = {
-  ...emptyBuild(),
-  name: 't',
-  level: 1,
-  ancestryId: 'human',
-  backgroundId: 'acolyte',
-  classId: 'fighter',
-};
-
-/** The card over a live build: actions.patch really updates it, and the character is rebuilt. */
-function mount(initial: BuildState = BASE) {
-  const db = content();
-  let latest: BuildState = initial;
-  let patches = 0;
-  function Host() {
-    const [b, setB] = useState(initial);
-    latest = b;
-    const actions = new Proxy({} as BuilderActions, {
-      get: (_t, prop) =>
-        prop === 'patch'
-          ? (p: Partial<BuildState> | ((x: BuildState) => Partial<BuildState>)) => {
-              patches++;
-              setB((x) => ({ ...x, ...(typeof p === 'function' ? p(x) : p) }));
-            }
-          : () => undefined,
-    });
-    return createElement(OverridesCard, { build: b, actions, content: db, character: buildCharacter(b, db) });
-  }
-  const r = renderDom(createElement(Host));
-  return { r, build: () => latest, patches: () => patches };
+/** A level-1 fighter, Tweaks on (the old card's BASE). */
+const BASE = (ov?: BuildOverrides) => hero(db, 'fighter', 1, ov);
+const box = (label: string, root: ParentNode = document) => root.querySelector<HTMLInputElement>(`input[aria-label="${label}"]`)!;
+const addGo = (host: ParentNode) => addEditor(host)!.querySelector<HTMLButtonElement>('button.tw-add-go')!;
+async function openRowOf(host: HTMLElement, what: string | RegExp) {
+  const row = rowBy(host, what);
+  expect(row, `no row ${String(what)}`).toBeTruthy();
+  await press(row!.querySelector('.tw-row-head'));
+  return openRow(host)!;
 }
 
-const box = (label: string) => document.querySelector<HTMLInputElement>(`input[aria-label="${label}"]`)!;
-function focus(el: HTMLInputElement) {
-  act(() => el.focus());
-}
-function blur(el: HTMLInputElement) {
-  act(() => el.blur());
-}
-/** Set the box's text the way a keystroke does (native setter + input event). */
-function typeInto(el: HTMLInputElement, text: string) {
-  const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')!.set!;
-  act(() => {
-    setter.call(el, text);
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-  });
-}
-
-describe('D5: Set maximum HP saves what is typed, and clearing it reverts', () => {
-  it('30 is saved; an emptied box goes back to the computed maximum', () => {
-    const { r, build } = mount();
-    const hp = box('Max HP');
+describe('D5: Set a number → Maximum HP saves what is typed, and emptying it removes the tweak', () => {
+  it('30 is saved; an emptied box takes the tweak away', async () => {
+    const r = mountTweaks(db, BASE());
+    await openMenu(r.host, 'Set a number');
+    await pick(addEditor(r.host)!, 'What', 'Maximum HP');
+    const hp = box('Max HP', addEditor(r.host)!);
     expect(hp, 'no Max HP box').toBeTruthy();
-    const computed = hp.value;
-    focus(hp);
-    typeInto(hp, '30');
-    blur(hp);
-    expect(build().overrides?.maxHp).toBe(30);
-    expect(box('Max HP').value).toBe('30');
-    expect(document.querySelector('[data-subcard="Set maximum HP"]')?.textContent).toContain('1');
-
-    focus(box('Max HP'));
-    typeInto(box('Max HP'), '');
-    blur(box('Max HP'));
-    expect(build().overrides?.maxHp).toBeUndefined();
-    expect(box('Max HP').value).toBe(computed);
+    expect(hp.placeholder, 'the book maximum').toMatch(/^book: \d+$/);
+    await enter(hp, '30');
+    await press(addGo(r.host));
+    expect(r.build().overrides?.maxHp).toBe(30);
+    // The new tweak opens as its row, its box holding the number.
+    expect(box('Max HP', openRow(r.host)!).value).toBe('30');
+    await enter(box('Max HP', openRow(r.host)!), '');
+    expect(r.build().overrides?.maxHp).toBeUndefined();
+    expect(r.host.querySelector('li.tw-row[data-kind="number.setMaxHp"]'), 'the row goes with it').toBeNull();
     r.stop();
   });
 
-  it('Enter saves too, and a value below 1 is held at 1', () => {
-    const { r, build } = mount();
+  it('Enter saves too, and a value below 1 is held at 1', async () => {
+    const r = mountTweaks(db, BASE());
+    await openMenu(r.host, 'Set a number');
+    await pick(addEditor(r.host)!, 'What', 'Maximum HP');
     focus(box('Max HP'));
     typeInto(box('Max HP'), '0');
     act(() => {
       box('Max HP').dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     });
-    expect(build().overrides?.maxHp).toBe(1);
+    await settle();
+    await press(addGo(r.host));
+    expect(r.build().overrides?.maxHp).toBe(1);
+    // …and on the row's own box.
+    const row = openRow(r.host)!;
+    focus(box('Max HP', row));
+    typeInto(box('Max HP', row), '-5');
+    act(() => {
+      box('Max HP', row).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    });
+    await settle();
+    expect(r.build().overrides?.maxHp).toBe(1);
     r.stop();
   });
 });
 
-describe('D6: an override box can be emptied while typing', () => {
-  it('Dex 12 → Backspace, Backspace, 8 saves 8 (it saved 128)', () => {
-    const { r, build } = mount();
-    const dex = box('Dex');
-    const start = dex.value;
-    expect(start.length, 'a two-digit starting Dex').toBe(2);
+describe('D6: a tweak number box can be emptied while typing', () => {
+  it('Dex 12 → Backspace, Backspace, 8 saves 8 (it saved 128)', async () => {
+    const r = mountTweaks(db, BASE({ v: 2, attributes: { dex: 12 } } as BuildOverrides));
+    const row = await openRowOf(r.host, 'Dexterity set to 12');
+    const dex = box('Dexterity score', row);
+    expect(dex.value).toBe('12');
     focus(dex);
-    typeInto(dex, start.slice(0, 1));
+    typeInto(dex, '1');
     typeInto(dex, '');
-    expect(box('Dex').value, 'the emptied box refilled mid-edit').toBe('');
-    typeInto(box('Dex'), '8');
-    expect(box('Dex').value).toBe('8');
-    blur(box('Dex'));
-    expect(build().overrides?.attributes).toEqual({ dex: 8 });
-    expect(box('Dex').value).toBe('8');
+    expect(box('Dexterity score', row).value, 'the emptied box refilled mid-edit').toBe('');
+    typeInto(box('Dexterity score', row), '8');
+    expect(box('Dexterity score', row).value).toBe('8');
+    leave(box('Dexterity score', row));
+    await settle();
+    expect(r.build().overrides?.attributes).toEqual({ dex: 8 });
+    expect(box('Dexterity score', openRow(r.host)!).value).toBe('8');
     r.stop();
   });
 
-  it('emptied and left = back to the computed score; a tap with no typing changes nothing', () => {
-    const { r, build, patches } = mount({ ...BASE, overrides: { attributes: { str: 9 } } });
-    expect(box('Str').value).toBe('9');
-    focus(box('Str'));
-    typeInto(box('Str'), '');
-    blur(box('Str'));
-    expect(build().overrides).toBeUndefined();
-    expect(box('Str').value).not.toBe('');
+  it('emptied and left = the tweak goes; a tap with no typing changes nothing', async () => {
+    const r = mountTweaks(db, BASE({ v: 2, attributes: { str: 9, con: 14 } } as BuildOverrides));
+    let row = await openRowOf(r.host, 'Strength set to 9');
+    expect(box('Strength score', row).value).toBe('9');
+    await enter(box('Strength score', row), '');
+    expect(r.build().overrides?.attributes).toEqual({ con: 14 });
 
-    const before = patches();
-    focus(box('Con'));
-    blur(box('Con'));
-    expect(patches(), 'tapping a box and leaving it wrote an override').toBe(before);
-    expect(build().overrides).toBeUndefined();
+    row = await openRowOf(r.host, 'Constitution set to 14');
+    const before = r.patches();
+    focus(box('Constitution score', row));
+    leave(box('Constitution score', row));
+    await settle();
+    expect(r.patches(), 'tapping a box and leaving it wrote a tweak').toBe(before);
+    expect(r.build().overrides?.attributes).toEqual({ con: 14 });
     r.stop();
   });
 
-  it('a minus typed first is not glued onto the old value ("-1" gave 121)', () => {
-    const { r, build } = mount();
-    focus(box('Dex'));
-    typeInto(box('Dex'), '');
-    typeInto(box('Dex'), '-1');
-    blur(box('Dex'));
-    expect(build().overrides?.attributes).toEqual({ dex: -1 });
+  it('a minus typed first is not glued onto the old value ("-1" gave 121)', async () => {
+    const r = mountTweaks(db, BASE({ v: 2, attributes: { dex: 12 } } as BuildOverrides));
+    const row = await openRowOf(r.host, 'Dexterity set to 12');
+    focus(box('Dexterity score', row));
+    typeInto(box('Dexterity score', row), '');
+    typeInto(box('Dexterity score', row), '-1');
+    leave(box('Dexterity score', row));
+    await settle();
+    expect(r.build().overrides?.attributes).toEqual({ dex: -1 });
     r.stop();
   });
 
-  it('text the browser cannot read as a number ("-", "1e") changes nothing — it is not an emptied box', () => {
+  it('text the browser cannot read as a number ("-", "1e") changes nothing — it is not an emptied box', async () => {
     // A real type="number" input holding "-" reports value "" with validity.badInput — the same value as
     // an emptied box. Before the fix that cleared the override (final check 2026-10-14). jsdom has no
     // badInput, so the box is given the browser's answer by hand.
-    const { r, build } = mount({ ...BASE, overrides: { attributes: { str: 9 } } });
-    const str = box('Str');
+    const r = mountTweaks(db, BASE({ v: 2, attributes: { str: 9 } } as BuildOverrides));
+    const row = await openRowOf(r.host, 'Strength set to 9');
+    const str = box('Strength score', row);
     focus(str);
     Object.defineProperty(str, 'validity', { configurable: true, get: () => ({ badInput: true }) });
     typeInto(str, '');
-    blur(str);
-    expect(build().overrides?.attributes).toEqual({ str: 9 });
-    expect(box('Str').value).toBe('9');
+    leave(str);
+    await settle();
+    expect(r.build().overrides?.attributes).toEqual({ str: 9 });
+    expect(box('Strength score', openRow(r.host)!).value).toBe('9');
     r.stop();
   });
 
-  it('the boxes ask the phone for its number keyboard', () => {
-    const { r } = mount();
-    for (const l of ['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha', 'Max HP']) expect(box(l).getAttribute('inputmode'), l).toBe('numeric');
+  it('the boxes ask the phone for its number keyboard', async () => {
+    const r = mountTweaks(db, BASE({ v: 2, attributes: { dex: 12 } } as BuildOverrides));
+    const row = await openRowOf(r.host, 'Dexterity set to 12');
+    for (const l of ['Dexterity score', 'From level']) expect(box(l, row).getAttribute('inputmode'), l).toBe('numeric');
+    await openMenu(r.host, 'Set a number');
+    await pick(addEditor(r.host)!, 'What', 'Maximum HP');
+    for (const l of ['Max HP', 'From level']) expect(box(l, addEditor(r.host)!).getAttribute('inputmode'), l).toBe('numeric');
     r.stop();
   });
 });

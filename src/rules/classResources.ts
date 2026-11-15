@@ -6,7 +6,8 @@
  *
  * Sourced from a per-class research pass over the Foundry pack data + Remaster rules.
  */
-import type { AbilityId } from './types';
+import type { AbilityId, Character } from './types';
+import { heldClasses, type HeldClassFields } from './heldClasses';
 
 export interface ClassResource {
   id: string;
@@ -72,7 +73,7 @@ export const CLASS_RESOURCES: Record<string, ClassResource[]> = {
      * preparations."* (Alchemist Dedication.)
      *
      * The entry above carries no `feat` gate, and `resourcesForCharacter` admits an ungated resource
-     * only when `classId === 'alchemist'` — so a dedicated alchemist had no vial counter at all, and
+     * only when the character holds the alchemist class — so a dedicated alchemist had no vial counter at all, and
      * with no vials their Quick Alchemy had nothing to spend. Same id as the class entry, and the class
      * entry is listed FIRST, so the `seen` dedup gives a real alchemist their 2 + Int and this one to
      * everyone else.
@@ -235,21 +236,41 @@ export function resourceMaxFor(
 }
 
 /** A resource's starting/refreshed value: toggles off, meters empty, pools full — except where a rest
- *  restores less than the cap (`initialPerLevel`), which is Sanguimancy HP's whole shape. */
-export function resourceInitial(r: ClassResource, level: number, abilityMods: Record<AbilityId, number>): number {
+ *  restores less than the cap (`initialPerLevel`), which is Sanguimancy HP's whole shape.
+ *
+ *  "Full" is the maximum the sheet SHOWS, so it goes through resourceMaxFor with the character's
+ *  `resourceFloors`. It used the bare formula, so an alchemist with Additional Servings started at
+ *  2 + Int and every rest refilled to it, while the tracker read "4 / 5" (found 2026-10-23). */
+export function resourceInitial(
+  r: ClassResource,
+  level: number,
+  abilityMods: Record<AbilityId, number>,
+  resourceFloors?: Record<string, number>,
+): number {
   if (r.kind === 'toggle' || r.meter) return 0;
-  const max = resourceMax(r, level, abilityMods);
+  const max = resourceMaxFor(r, { level, resourceFloors }, abilityMods);
   if (r.initialPerLevel != null) return Math.min(max, r.initialPerLevel * level);
   return max;
 }
 
-/** The resources a character actually has: their base class's, PLUS any granted by an archetype
- *  dedication they own (e.g. Barbarian Dedication → Rage, Swashbuckler Dedication → Panache). */
-export function resourcesForCharacter(classId: string | null, featIds: Set<string> = new Set()): ClassResource[] {
+/**
+ * The resources a character actually has: every held class's, PLUS any granted by an archetype
+ * dedication they own (e.g. Barbarian Dedication → Rage, Swashbuckler Dedication → Panache).
+ *
+ * Pass the character (or BuildState) whenever one is in hand: a bare class id names the first class
+ * only. Every caller used to pass `classId`, so a Dual Class character's SECOND class had no counter or
+ * toggle at all — a Fighter/Barbarian could not Rage, a Rogue/Alchemist had no vials and threw a lesser
+ * vial at 12th level. `heldClasses` admits the second class only under the Dual Class rule, so a
+ * `classId2` left behind with the rule off still grants nothing.
+ */
+export function resourcesForCharacter(holder: string | null | HeldClassFields, featIds: Set<string> = new Set()): ClassResource[] {
+  const classIds = new Set(
+    holder !== null && typeof holder === 'object' ? heldClasses(holder).map((s) => s.classId) : [holder],
+  );
   const out: ClassResource[] = [];
   const seen = new Set<string>();
   for (const [clsId, list] of Object.entries(CLASS_RESOURCES)) {
-    const isBaseClass = classId === clsId;
+    const isBaseClass = classIds.has(clsId);
     for (const r of list) {
       if ((isBaseClass || (r.feat && featIds.has(r.feat))) && !seen.has(r.id)) {
         out.push(r);
@@ -260,14 +281,40 @@ export function resourcesForCharacter(classId: string | null, featIds: Set<strin
   return out;
 }
 
-/** The initial resource map for a character (id -> value), or {} if it has none. */
+/**
+ * The initial resource map for a character (id -> value), or {} if it has none. A rest refills to the
+ * same map for the character the sheet draws (App.tsx's onRest passes `restedClassResources(...)` to
+ * rest() as `initialResources`), so pass the character's `resourceFloors` whenever it has them, or the
+ * start value and every refill sit below the maximum the sheet shows.
+ */
 export function initialClassResources(
-  classId: string | null,
+  holder: string | null | HeldClassFields,
   level: number,
   abilityMods: Record<AbilityId, number>,
   featIds: Set<string> = new Set(),
+  resourceFloors?: Record<string, number>,
 ): Record<string, number> {
   const out: Record<string, number> = {};
-  for (const r of resourcesForCharacter(classId, featIds)) out[r.id] = resourceInitial(r, level, abilityMods);
+  for (const r of resourcesForCharacter(holder, featIds)) out[r.id] = resourceInitial(r, level, abilityMods, resourceFloors);
   return out;
+}
+
+/**
+ * What a night's rest refills the class resources to: the initial map for the character AS THE SHEET
+ * SHOWS IT — the play-overlaid character, with the ability mods the tracker uses — so every refilled
+ * pool lands exactly on the maximum the tracker draws (`resourceMaxFor` over the same character).
+ *
+ * The rest used to refill to the STORED character's `classResources`, which the build computes before
+ * the play overlay: an invested apex item (Crown of Intellect) raises Intelligence only in
+ * applyPlayState, so a 17th-level alchemist's vials refilled to 2 + the old Int while the tracker read
+ * one or more higher. Same resources, same feats and same floors as the tracker reads.
+ */
+export function restedClassResources(character: Character, abilityMods: Record<AbilityId, number>): Record<string, number> {
+  return initialClassResources(
+    character,
+    character.level,
+    abilityMods,
+    new Set(character.feats.map((f) => f.featId)),
+    character.resourceFloors,
+  );
 }

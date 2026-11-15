@@ -101,8 +101,11 @@ const SCHEMA_MESSAGE =
  * ────────────────────────────────────────────────────────────────────────────── */
 
 /** What became of one publish: it landed, it failed, or a newer one for the same key replaced it
- *  before it was sent. */
-export type PublishResult = 'ok' | 'failed' | 'superseded';
+ *  before it was sent. Two failures are PROVEN by the server and stop the sending (App, data/campaignGone.ts):
+ *  'gone' — the campaign no longer exists (its GM deleted it); 'refused' — it exists and its GM removed
+ *  this player. 'failed' is every other failure, an unknown one included: it is sent again later. */
+export type PublishResult = 'ok' | 'failed' | 'superseded' | 'gone' | 'refused';
+type LaneOutcome = Exclude<PublishResult, 'superseded'>;
 
 /**
  * Upserts for one (campaign, character) go out ONE AT A TIME, in call order, and a send still waiting
@@ -111,9 +114,9 @@ export type PublishResult = 'ok' | 'failed' | 'superseded';
  * stamp is taken at SEND time, so landing order and stamp order agree; an unpublish takes the same lane,
  * so an upsert in flight can no longer land after a detach.
  */
-const lanes = new Map<string, { busy: boolean; next: { run: () => Promise<boolean>; resolve: (r: PublishResult) => void } | null }>();
+const lanes = new Map<string, { busy: boolean; next: { run: () => Promise<LaneOutcome>; resolve: (r: PublishResult) => void } | null }>();
 
-function enqueue(key: string, run: () => Promise<boolean>): Promise<PublishResult> {
+function enqueue(key: string, run: () => Promise<LaneOutcome>): Promise<PublishResult> {
   return new Promise((resolve) => {
     const lane = lanes.get(key) ?? { busy: false, next: null };
     lanes.set(key, lane);
@@ -125,19 +128,19 @@ function enqueue(key: string, run: () => Promise<boolean>): Promise<PublishResul
 
 async function drain(
   key: string,
-  lane: { busy: boolean; next: { run: () => Promise<boolean>; resolve: (r: PublishResult) => void } | null },
+  lane: { busy: boolean; next: { run: () => Promise<LaneOutcome>; resolve: (r: PublishResult) => void } | null },
 ): Promise<void> {
   lane.busy = true;
   while (lane.next) {
     const op = lane.next;
     lane.next = null;
-    let ok = false;
+    let res: LaneOutcome = 'failed';
     try {
-      ok = await op.run();
+      res = await op.run();
     } catch {
-      ok = false;
+      res = 'failed';
     }
-    op.resolve(ok ? 'ok' : 'failed');
+    op.resolve(res);
   }
   lane.busy = false;
   lanes.delete(key);
@@ -203,12 +206,61 @@ export function publishCharacter(
   const client = supabase;
   return enqueue(`${campaignId}|${charId}`, async () => {
     const owner = await currentUserId();
-    if (!owner) return false;
+    if (!owner) return 'failed';
     const { error } = await client
       .from('campaign_characters')
       .upsert({ campaign_id: campaignId, owner_id: owner, char_id: charId, name, summary, sheet, updated_at: new Date().toISOString() });
-    return !error;
+    if (!error) return 'ok';
+    return whyPublishRefused(client, campaignId, owner, error);
   });
+}
+
+/** Postgres' answer when the campaign row an upsert points at does not exist (foreign_key_violation). */
+const FK_VIOLATION = '23503';
+/** …and when a row rule refuses it (insufficient_privilege) — `cc_owner_write` for a removed player. */
+const RLS_VIOLATION = '42501';
+/** The CAMPAIGN key's name (Postgres' default for supabase-campaign-characters.sql's inline `references`).
+ *  23503 also fires for `owner_id → auth.users`, which says nothing about the campaign. PostgREST hands
+ *  Postgres' text through supabase-js unchanged: the name is in `message` ("…violates foreign key
+ *  constraint "campaign_characters_campaign_id_fkey""); `details` is read too, in case a server puts it there. */
+const CAMPAIGN_FK = 'campaign_characters_campaign_id_fkey';
+
+/**
+ * A publish failed: is the campaign GONE, was this player REMOVED, or don't we know? One read of the
+ * campaign row (every signed-in user may read `campaigns` — supabase-campaigns.sql). A guess must never
+ * say "gone", so each proven answer needs TWO agreeing facts:
+ *  - 'gone': the upsert broke the CAMPAIGN foreign key, named in the error (only a signed-in write that passed the row rules
+ *    gets that far) AND the read, signed in as the same account, succeeded and found no row;
+ *  - 'refused': a row rule refused the upsert AND the read found the campaign with this account in its
+ *    `removed` list (the kick — kickFromParty).
+ * Anything else — another error, a read that failed or threw, a session that changed or ended (a
+ * signed-out read finds no rows of anything), a campaign that is there and does not list this player —
+ * is 'failed', which App retries exactly as before.
+ */
+async function whyPublishRefused(
+  client: NonNullable<typeof supabase>,
+  campaignId: string,
+  owner: string,
+  error: { code?: string; message?: string; details?: string | null },
+): Promise<LaneOutcome> {
+  const code = error.code;
+  if (code !== FK_VIOLATION && code !== RLS_VIOLATION) return 'failed';
+  // Only the campaign's own key can say "gone" (a checker's finding, 2026-10-23).
+  if (code === FK_VIOLATION && !`${error.message ?? ''} ${error.details ?? ''}`.includes(CAMPAIGN_FK)) return 'failed';
+  try {
+    if ((await currentUserId()) !== owner) return 'failed';
+    const { data, error: readError } = await client.from('campaigns').select('id,removed').eq('id', campaignId).maybeSingle();
+    if (readError) return 'failed';
+    // …and still the same account AFTER the read: a sign-out or another account's sign-in while it was on its
+    // way changes whose token it carried (none reads no rows at all) — a checker's finding, 2026-10-23.
+    if ((await currentUserId()) !== owner) return 'failed';
+    if (!data) return code === FK_VIOLATION ? 'gone' : 'failed';
+    const removed = (data as { removed?: unknown }).removed;
+    if (code === RLS_VIOLATION && Array.isArray(removed) && removed.includes(owner)) return 'refused';
+    return 'failed';
+  } catch {
+    return 'failed';
+  }
 }
 
 /** Remove a character from a campaign (on detach / delete) — on the same lane as its publishes. */
@@ -217,7 +269,7 @@ export function unpublishCharacter(campaignId: string, charId: string): Promise<
   const client = supabase;
   return enqueue(`${campaignId}|${charId}`, async () => {
     const { error } = await client.from('campaign_characters').delete().eq('campaign_id', campaignId).eq('char_id', charId);
-    return !error;
+    return error ? 'failed' : 'ok';
   });
 }
 

@@ -445,11 +445,13 @@ export function listCampaignHbSources(): { id: string; name: string; campaignId:
   return [...out.values()];
 }
 
-/** The player's own homebrew as one string that ignores key order — "did a sync change it?". */
+/** The player's own homebrew as one string that ignores key order — "did a sync change it?". Modes too
+ *  (2026-11-13): the content database merges them from storage like homebrew, and without them a mode
+ *  edited on another device reached this device's storage but not its open screen until a relaunch. */
 export function homebrewFingerprint(): string {
   const sorted = (r: Record<string, unknown>) => Object.keys(r).sort().map((k) => [k, r[k]]);
   const c = loadHomebrewContent();
-  return JSON.stringify([sorted(loadHomebrewSources()), HOMEBREW_TYPES.map((t) => sorted(c[t]))]);
+  return JSON.stringify([sorted(loadHomebrewSources()), HOMEBREW_TYPES.map((t) => sorted(c[t])), sorted(loadModes())]);
 }
 
 /** The dirty set as it sits on disk. The publish READS it and leaves it there: a key goes only once its

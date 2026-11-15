@@ -47,11 +47,32 @@ describe('a feat can widen another record’s daily menu', () => {
     const add = db.feats['radiant-armament'].choiceOptionAdditions![0];
     const sanct = add.addIfSanctified!.map((s) => s.sanctification);
     expect(sanct).toEqual(['holy', 'unholy']);
-    // An unsanctified character gets neither: the additions are keyed to the character's own answer.
+    // Never both: the additions are keyed to the character's own sanctification (Iomedae's champion: holy only).
     const c = withFeats('champion', 12, ['radiant-armament'], { deityId: 'iomedae', extraChoices: { blessing: ['blessed-armament'] } });
     const opts = menu(c, 'blessed-armament');
     expect(opts).not.toEqual([]);
     expect(opts.filter((o) => o === 'holy' || o === 'unholy').length).toBeLessThanOrEqual(1);
+  });
+
+  it("a champion who answered holy in Deity and Cause is offered the holy rune (and not the unholy one)", () => {
+    // 2026-10-27: that answer reached no shape sanctificationOf read, so only a deity-card answer opened the rune,
+    // and the card no longer asks a champion. The trait the answer grants is read now. Abadar can be holy or
+    // unholy, so only the answer itself can open the rune here.
+    const c = withFeats('champion', 12, ['radiant-armament'], {
+      deityId: 'abadar',
+      featChoices: { 'feature:deity-champion': 'holy' },
+      extraChoices: { blessing: ['blessed-armament'] },
+    });
+    const opts = menu(c, 'blessed-armament');
+    expect(opts).toContain('holy');
+    expect(opts).not.toContain('unholy');
+  });
+
+  it('a champion of Iomedae (must be holy) who never answered is offered the holy rune too', () => {
+    const c = withFeats('champion', 12, ['radiant-armament'], { deityId: 'iomedae', extraChoices: { blessing: ['blessed-armament'] } });
+    const opts = menu(c, 'blessed-armament');
+    expect(opts).toContain('holy');
+    expect(opts).not.toContain('unholy');
   });
 
   it("Greater Armament adds all eight of the runes it names, and doesn't duplicate the five already there", () => {

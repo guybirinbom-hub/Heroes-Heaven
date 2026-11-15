@@ -146,7 +146,9 @@ async function start(filename = FILE, text = TEXT) {
   return s;
 }
 
-describe('a browser tab, the PWA and the PC app keep the anchor download', () => {
+// Where the browser has no "Save as" window (jsdom has none, like Firefox, Safari and phone browsers). Where it
+// has one — the PC app's WebView2, Chrome and Edge on a PC — test/download-save-as.test.tsx (2026-11-08).
+describe('a browser tab, the PWA and the PC app without a "Save as" window keep the anchor download', () => {
   for (const [where, tauri, mobile] of [
     ['a browser tab', false, false],
     ['a phone browser or the installed web app (PWA)', false, true],

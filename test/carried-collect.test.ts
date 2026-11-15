@@ -138,6 +138,27 @@ describe('collectCarried — what a sent sheet carries', () => {
     expect(Object.keys(collectCarried(withNotes, d, { isPrinted: () => false })!.spells ?? {}).sort()).toEqual([BOLT.id, WARD.id].sort());
   });
 
+  it('a homebrew heritage named only by a phase-2 "Take anyway" block rides along, and stops once the block is gone (tweaks p2 WP1, C32)', () => {
+    // tweaks p2 WP1: a choice block stores the record id as its own whole string field (C32), so the GM's device
+    // gets the heritage the player took anyway; the block's id and kind are no record and are never carried.
+    const HERITAGE = { id: 'hb-heritage-reef-born', name: 'Reef-Born', traits: [], ancestryId: 'hb-ancestry-none', source: HB };
+    const d = { ...db(), heritages: { [HERITAGE.id]: HERITAGE } } as unknown as ContentDatabase;
+    const block = { id: 't1_k3f9', kind: 'choice.allowAnywayAnyPicker', v: 1, picker: 'heritage', record: HERITAGE.id, reason: 'GM: raised in the reef' };
+    const withBlock = (blocks: unknown[]): SavedChar => {
+      const s = sheet();
+      return { ...s, build: { ...(s.build as object), heritageId: HERITAGE.id, overrides: { blocks } } } as unknown as SavedChar;
+    };
+    expect(Object.keys(collectCarried(withBlock([block]), d, { isPrinted: () => false })!.heritages ?? {})).toEqual([HERITAGE.id]);
+    // named ONLY by the block (the pick itself cleared): still carried — a paused or kept block still points at it
+    const onlyBlock = withBlock([{ ...block, on: false }]);
+    delete (onlyBlock.build as { heritageId?: string }).heritageId;
+    expect(Object.keys(collectCarried(onlyBlock, d, { isPrinted: () => false })!.heritages ?? {})).toEqual([HERITAGE.id]);
+    // the block deleted and the pick gone: nothing of it rides along
+    const gone = withBlock([]);
+    delete (gone.build as { heritageId?: string }).heritageId;
+    expect(collectCarried(gone, d, { isPrinted: () => false })!.heritages).toBeUndefined();
+  });
+
   it('nothing to carry is undefined, and a sheet\'s own `carried` is never read as a reference', () => {
     const plain = { id: 'c-plain', character: { name: 'Plain' }, build: {}, play: {} } as unknown as SavedChar;
     expect(collectCarried(plain, db(), { isPrinted: () => false })).toBeUndefined();

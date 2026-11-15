@@ -15,16 +15,27 @@
  *     or one whose editor is built is still listed there;
  *   - a built catalog row and its registry entry list different bookFields;
  *   - an entry uses an editor part, source kind or old Overrides key that does not exist;
+ *   - an entry's `group` is not one of the Tweaks page's groups, or a menu that holds two kinds for the same
+ *     target lacks a chooser label (`editor.option`) on one of them or gives both the same label (plan B, B19);
  *   - an entry accepts a target kind the target registry does not have for that aspect;
  *   - an entry's test file is missing or has no it()/describe() title naming the entry's id;
  *   - a file under src/rules/blocks/ imports from scripts/, work/ or the batch tools (item 12);
  *   - (checkBookFieldReaders, item 10) a file under src/ READS a moved book field (the registry's
  *     `bookFields`) anywhere but blocks/book.ts, with no BOOK_FIELD_ALLOW entry — or an entry is stale;
  *   - (checkFeatReaders, item 9 / case D) a place names the raw feat stores (`featPicks`, `addedFeats`)
- *     that blocks/feat-readers.json does not list with a reason, or more or fewer times than it lists.
- * It prints (never fails on) the "not in Tweaks yet" list and the kinds that nothing applies yet.
+ *     that blocks/feat-readers.json does not list with a reason, or more or fewer times than it lists;
+ *   - (checkOverridesReaders, spec item 4 "one reader") a place outside the Tweaks home files names
+ *     `overrides` that blocks/overrides-readers.json does not list with a reason, or more or fewer times;
+ *   - (checkVisibleOverrideWords, spec item 1, plan B section 7.2) text a player could read says "override"
+ *     outside VISIBLE_WORDS_SKIP and with no `// tweaks-ok: <reason>` marker, or a skip entry / marker is stale.
+ *   - (checkChoiceKinds, Tweaks phase 2 WP1) a choice kind has no `rowText` case in blocks/wgExport.ts, a place
+ *     it accepts or a rule it lists has no words (`placeWords` / `ruleWords`), or no test title names it;
+ *   - (Tweaks phase 2 WP1, rev 3 finding 20) a `bookOnly: true` row is "built", or is a "to-add" row with no
+ *     bookFields (outside BOOK_ONLY_NO_FIELDS, each with its reason; a stale entry fails too).
+ * It prints (never fails on) the "not in Tweaks yet" list and the kinds that nothing applies yet; the to-add
+ * rows marked bookOnly are printed apart from the per-phase count ("book-only, waits for the re-implementation").
  */
-import type { BlockKindDef } from './registry';
+import { TWEAK_GROUPS, isChoiceKind, placeWords as registryPlaceWords, ruleWords as registryRuleWords, type BlockKindDef } from './registry';
 import type { OwnerDef, TargetDef } from './targets';
 
 export interface BlocksCheckInput {
@@ -43,7 +54,25 @@ export interface BlocksCheckInput {
   blockFiles: { path: string; text: string }[];
   /** Read a repo file (for the test files); null when it does not exist. */
   readFile: (path: string) => string | null;
+  /** The Tweaks page's list headings a kind's `group` may name (plan B, B19); registry TWEAK_GROUPS when absent. */
+  tweakGroups?: readonly string[];
+  /** The place / rule wording (registry `placeWords` / `ruleWords` when absent; a test plants a gap here). */
+  placeWords?: (p: Record<string, unknown>) => string | undefined;
+  ruleWords?: (rule: unknown) => string | undefined;
+  /** The to-add bookOnly rows allowed no bookFields (BOOK_ONLY_NO_FIELDS when absent; a planted catalog passes its own). */
+  bookOnlyNoFields?: { id: string; why: string }[];
 }
+
+/**
+ * The to-add rows allowed `bookOnly: true` with no bookFields, each with the reason (rev 3, finding 20: a
+ * book-only to-add row names the book fields it waits for; these rows' book data is not a record field).
+ * An entry whose row is gone, not to-add, not bookOnly or has bookFields now fails the check (stale).
+ */
+export const BOOK_ONLY_NO_FIELDS: { id: string; why: string }[] = [
+  { id: 'structure.advancement', why: 'its book data is the CLASS_ADVANCEMENT code table (src/rules/advancement.ts), not a record field' },
+];
+
+const WG_EXPORT_FILE = 'src/rules/blocks/wgExport.ts';
 
 export interface BlocksCheckResult {
   errors: string[];
@@ -129,6 +158,7 @@ export function checkBlocks(input: BlocksCheckInput): BlocksCheckResult {
     }
   };
   const builtRows = new Map<string, Record<string, unknown>>();
+  const noFieldsOk = input.bookOnlyNoFields ?? BOOK_ONLY_NO_FIELDS;
   rows.forEach((r, i) => {
     const where = `catalog row ${isObj(r) && typeof r.id === 'string' ? r.id : `#${i}`}`;
     if (!isObj(r)) return err(`${where}: not an object`);
@@ -151,6 +181,12 @@ export function checkBlocks(input: BlocksCheckInput): BlocksCheckResult {
     else catalogLanes(where, r.lanes);
     if (!strArr(r.bookFields)) err(`${where}: bookFields must be a list`);
     if (typeof r.bookOnly !== 'boolean') err(`${where}: bookOnly must be true or false`);
+    // Rev 3 (finding 20): bookOnly marks a kind no tweak writes. A built row is a registered tweak kind, so it
+    // never carries the mark; a to-add row carries it only with the book fields it waits for.
+    if (r.bookOnly === true && r.status === 'built') err(`${where}: bookOnly on a "built" row — a registered kind is not book-only`);
+    if (r.bookOnly === true && r.status === 'to-add' && strArr(r.bookFields) && !r.bookFields.length && !noFieldsOk.some((x) => x.id === r.id)) {
+      err(`${where}: bookOnly on a "to-add" row with no bookFields — name the book fields it waits for (or list it in BOOK_ONLY_NO_FIELDS with the reason)`);
+    }
     if (typeof r.note !== 'string') err(`${where}: no note`);
     if (r.status === 'built' && typeof r.id === 'string') builtRows.set(r.id, r);
   });
@@ -166,6 +202,13 @@ export function checkBlocks(input: BlocksCheckInput): BlocksCheckResult {
   for (const f of allFeatures) if (!featuresSeen.has(f)) err(`feature ${f} of the design's Feature list is in no catalog row and no notBlocks entry`);
   for (const n of featuresSeen) if (allFeatures.length && !allFeatures.includes(n)) err(`the catalog names feature ${n}, which the Feature list does not have`);
   for (const l of allLanes) if (!lanesSeen.has(l)) err(`lane "${l}" of docs/mechanic-lanes.md is in no catalog row and no notBlocks entry`);
+  for (const x of noFieldsOk) {
+    const r = rows.find((row) => isObj(row) && row.id === x.id);
+    if (!x.why.trim()) err(`BOOK_ONLY_NO_FIELDS ${x.id}: no reason`);
+    if (!r || r.status !== 'to-add' || r.bookOnly !== true || !strArr(r.bookFields) || r.bookFields.length) {
+      err(`BOOK_ONLY_NO_FIELDS ${x.id}: stale — no to-add bookOnly row with empty bookFields has this id; remove the entry`);
+    }
+  }
 
   /* ── the target registry ── */
   const ownerKinds = new Set(input.owners.map((o) => o.kind as string));
@@ -207,6 +250,9 @@ export function checkBlocks(input: BlocksCheckInput): BlocksCheckResult {
     if (!inTweaks && (!later || !later.why.trim())) err(`${where}: not in Tweaks yet and not on STILL_TO_ADD with a reason (decision 24)`);
     if (inTweaks && later) err(`${where}: its editor is built, but STILL_TO_ADD still lists it`);
     if (!inTweaks) notInTweaks.push(k.id);
+    // B19: every kind names the Tweaks page heading its rows are listed under, one of the known ones.
+    const groups = input.tweakGroups ?? TWEAK_GROUPS;
+    if (typeof k.group !== 'string' || !groups.includes(k.group)) err(`${where}: group "${String(k.group)}" is not one of the Tweaks page's groups (${groups.join(', ')})`);
     if (k.editor) {
       if (!PLACES.includes(k.editor.place)) err(`${where}: editor place must be "main" or "advanced"`);
       if (!k.editor.menus.length) err(`${where}: editor has no menu entry`);
@@ -217,7 +263,14 @@ export function checkBlocks(input: BlocksCheckInput): BlocksCheckResult {
       if (!kinds.length) err(`${where}: accepts no target`);
       for (const tk of kinds) if (!input.targets.some((t) => t.kind === tk && t.aspect === aspect)) err(`${where}: accepts target "${tk}" (${aspect}), which the target registry does not have`);
       if (!input.targets.some((t) => t.built && t.aspect === aspect && kinds.includes(t.kind))) err(`${where}: none of its targets is built`);
+    } else {
+      // records / pickers / places / questions (phase 2): one non-empty list of names, each named once.
+      const list = Object.values(k.accepts)[0] as unknown;
+      const member = Object.keys(k.accepts)[0];
+      if (Object.keys(k.accepts).length !== 1 || !strArr(list) || !list.length) err(`${where}: accepts.${member} must be one non-empty list of names`);
+      else if (new Set(list).size !== list.length) err(`${where}: accepts.${member} names a value twice`);
     }
+    if (k.rules != null && (!strArr(k.rules) || !k.rules.length)) err(`${where}: rules must be a non-empty list of names`);
     // "Every entry has a test": the id must be in the TITLE of an it() / describe() / test() there — a
     // name in a list of ids somewhere in the file is not a test of the kind.
     const text = input.readFile(k.test);
@@ -226,6 +279,36 @@ export function checkBlocks(input: BlocksCheckInput): BlocksCheckResult {
       // Whole names only: a title naming 'number.setMaxHp' is not a test of 'number.set'.
       const named = new RegExp(`(^|[^A-Za-z0-9.])${k.id.replace(/\./g, '\\.')}(?![A-Za-z0-9])`);
       if (!testTitles(text).some((t) => named.test(t))) err(`${where}: no it()/describe() title in ${k.test} names '${k.id}'`);
+    }
+  }
+  // B19, the shared-menu rule: when one "Add a tweak" menu holds two kinds that accept the same target (same
+  // aspect and target kind, or the same record collection), the editor needs a chooser — so each of them
+  // names its `editor.option`, and no two of them name the same label.
+  const shareTarget = (a: BlockKindDef, b: BlockKindDef): boolean => {
+    if ('aspect' in a.accepts && 'aspect' in b.accepts) {
+      const bk = b.accepts.kinds;
+      return a.accepts.aspect === b.accepts.aspect && a.accepts.kinds.some((x) => bk.includes(x));
+    }
+    // records, and the phase-2 pickers / places / questions: the same member, and a value both name.
+    for (const m of ['records', 'pickers', 'places', 'questions'] as const) {
+      if (m in a.accepts && m in b.accepts) {
+        const al = (a.accepts as Record<string, readonly string[]>)[m];
+        const bl = (b.accepts as Record<string, readonly string[]>)[m];
+        return al.some((x) => bl.includes(x));
+      }
+    }
+    return false;
+  };
+  const byMenu = new Map<string, BlockKindDef[]>();
+  for (const k of input.registry) for (const m of k.editor?.menus ?? []) byMenu.set(m, [...(byMenu.get(m) ?? []), k]);
+  for (const [menu, kinds] of byMenu) {
+    for (let i = 0; i < kinds.length; i++) {
+      for (let j = i + 1; j < kinds.length; j++) {
+        const [a, b] = [kinds[i], kinds[j]];
+        if (!shareTarget(a, b)) continue;
+        for (const k of [a, b]) if (!k.editor?.option?.trim()) err(`registry ${k.id}: menu "${menu}" holds ${a.id} and ${b.id} for the same target, so ${k.id} needs editor.option (the chooser label, B19)`);
+        if (a.editor?.option?.trim() && a.editor.option.trim() === b.editor?.option?.trim()) err(`registry ${a.id} / ${b.id}: menu "${menu}" offers both as "${a.editor.option}" — the chooser labels must differ (B19)`);
+      }
     }
   }
   for (const id of builtRows.keys()) if (!regIds.has(id)) err(`catalog row ${id}: status "built" but the registry has no entry with this id`);
@@ -239,15 +322,86 @@ export function checkBlocks(input: BlocksCheckInput): BlocksCheckResult {
     }
   }
 
+  /* ── Tweaks phase 2: every choice kind prints and is tested ── */
+  const choice = checkChoiceKinds({
+    registry: input.registry,
+    wgExport: input.blockFiles.find((f) => f.path === WG_EXPORT_FILE)?.text ?? null,
+    readFile: input.readFile,
+    placeWords: input.placeWords,
+    ruleWords: input.ruleWords,
+  });
+  errors.push(...choice.errors);
+
   /* ── what the check prints ── */
-  const toAdd = rows.filter((r) => isObj(r) && r.status !== 'built');
+  // Rev 3 (finding 20): a to-add row marked bookOnly waits for the re-implementation (decision 25), so it is
+  // printed apart, out of the per-phase count of what a phase still owes.
+  const bookOnlyWaiting = rows.filter((r) => isObj(r) && r.status === 'to-add' && r.bookOnly === true);
+  const toAdd = rows.filter((r) => isObj(r) && r.status !== 'built' && !(r.status === 'to-add' && r.bookOnly === true));
   const byPhase = new Map<number, number>();
   for (const r of toAdd) byPhase.set(r.phase as number, (byPhase.get(r.phase as number) ?? 0) + 1);
-  info.push(`catalog: ${rows.length} kinds — ${builtRows.size} built, ${toAdd.length} still to add or shaped by a ruling (${[...byPhase].sort((a, b) => a[0] - b[0]).map(([p, n]) => `phase ${p}: ${n}`).join(', ')})`);
+  info.push(`catalog: ${rows.length} kinds — ${builtRows.size} built, ${toAdd.length} still to add or shaped by a ruling (${[...byPhase].sort((a, b) => a[0] - b[0]).map(([p, n]) => `phase ${p}: ${n}`).join(', ')}); book-only, waits for the re-implementation: ${bookOnlyWaiting.length}`);
   info.push(`not in Tweaks yet (no editor on the screen): ${notInTweaks.length ? notInTweaks.join(', ') : 'none'}`);
   const notYet = input.registry.filter((k) => k.applies === 'not-yet').map((k) => k.id);
   info.push(`registered but nothing applies them yet: ${notYet.length ? notYet.join(', ') : 'none'}`);
   return { errors, info };
+}
+
+/* ───────────── Tweaks phase 2 (WP1): the choice kinds, lite ───────────── */
+
+export interface ChoiceKindsInput {
+  registry: BlockKindDef[];
+  /** src/rules/blocks/wgExport.ts, as text (null when missing). */
+  wgExport: string | null;
+  readFile: (path: string) => string | null;
+  placeWords?: (p: Record<string, unknown>) => string | undefined;
+  ruleWords?: (rule: unknown) => string | undefined;
+}
+
+/** A sample of every field a place may name, so `placeWords` has what it needs for each place kind. */
+const PLACE_SAMPLE = { level: 4, category: 'class', set: 'level', lane: 'main', ordinal: 0, index: 0 };
+
+/**
+ * Every choice kind (registry `isChoiceKind`: stored in `overrides.blocks`, pointing at records, pickers,
+ * places or questions rather than a stat) has:
+ *   - its own `case '<id>'` in wgExport.ts's `rowText`, so the Wanderer's Guide list names it (C34) rather than
+ *     falling back to the bare title — WP13: only a kind this version applies. A kind nothing applies yet
+ *     (`applies: 'not-yet'`) reads as a newer app's block and is listed as one, so a case for it is an error
+ *     (the C34 list holds the built kinds only);
+ *   - words for every place it accepts (`placeWords`) and every rule it lists (`ruleWords`), so no row,
+ *     breakdown line or export line prints "undefined";
+ *   - a test title naming its id (the generic registry check asks the same; this one reads the file again so
+ *     the rule stands on its own).
+ */
+export function checkChoiceKinds(input: ChoiceKindsInput): BlocksCheckResult {
+  const errors: string[] = [];
+  const err = (m: string) => errors.push(m);
+  const pw = input.placeWords ?? registryPlaceWords;
+  const rw = input.ruleWords ?? registryRuleWords;
+  const kinds = input.registry.filter((k) => isChoiceKind(k));
+  const ids = new Set(kinds.map((k) => k.id));
+  const exportCode = input.wgExport == null ? null : codeOnly(input.wgExport, ids);
+  for (const k of kinds) {
+    const where = `choice kind ${k.id}`;
+    const hasCase = exportCode != null && new RegExp(`\\bcase\\s+'${k.id.replace(/\./g, '\\.')}'\\s*:`).test(exportCode);
+    if (k.applies === 'not-yet') {
+      if (hasCase) err(`${where}: nothing applies it yet, so its stored block reads as a newer app's — "case '${k.id}':" in ${WG_EXPORT_FILE} can never run (C34 lists the built kinds only)`);
+    } else if (exportCode == null) err(`${where}: ${WG_EXPORT_FILE} is missing, so no rowText case can name it`);
+    else if (!hasCase) err(`${where}: no "case '${k.id}':" in ${WG_EXPORT_FILE}'s rowText — the Wanderer's Guide list would print only its title (C34)`);
+    if ('places' in k.accepts) {
+      for (const place of k.accepts.places) {
+        const words = pw({ ...PLACE_SAMPLE, place });
+        if (typeof words !== 'string' || !words.trim()) err(`${where}: placeWords has no words for the place "${place}"`);
+      }
+    }
+    for (const rule of k.rules ?? []) {
+      const words = rw(rule);
+      if (typeof words !== 'string' || !words.trim()) err(`${where}: ruleWords has no words for the rule "${rule}"`);
+    }
+    const text = input.readFile(k.test);
+    const named = new RegExp(`(^|[^A-Za-z0-9.])${k.id.replace(/\./g, '\\.')}(?![A-Za-z0-9])`);
+    if (text == null || !testTitles(text).some((t) => named.test(t))) err(`${where}: no it()/describe() title in ${k.test} names it`);
+  }
+  return { errors, info: [] };
 }
 
 /* ───────────── item 10: no book field has two code paths ───────────── */
@@ -563,11 +717,55 @@ export interface FeatReaderAllowEntry {
  * Pure: the script feeds it the scan of the real files, the test plants bad cases in memory.
  */
 export function checkFeatReaders(hits: FeatReaderHit[], allow: unknown): BlocksCheckResult {
+  const where = 'src/rules/blocks/feat-readers.json';
+  return checkReaderAllow(hits, allow, {
+    where,
+    missing: `${where}: missing or not an object — it lists, per raw feat store, the places allowed to name it`,
+    unlisted: (h, at) =>
+      `${h.key}${at}: names "${h.field}" ${h.count}× — a reader of the feats a build holds must ask src/rules/heldFeats.ts (heldFeatSlots / heldFeatIds / featIdAtSlot) so a feat given through Tweaks works like a picked one (case D); if this is slot geometry, slot UI or storage, list it in ${where} under "${h.field}" with its true reason`,
+    above: (h, at, allowed) => `${h.key}${at}: names "${h.field}" ${h.count}×, but ${where} allows ${allowed} — a new read here must go through src/rules/heldFeats.ts (or be listed with its reason)`,
+    total: (field, t) => `feat readers: "${field}" named ${t.reads}× in ${t.places} place(s) outside src/rules/heldFeats.ts (each checked against ${where})`,
+  });
+}
+
+/**
+ * Tweaks phase 2, WP7 (C10): every read of a slot key's CATEGORY text outside `slotCategoryOf` / `slotRefOf` is
+ * listed in src/rules/blocks/slot-category-readers.json with its count and reason (scripts/lib/feat-readers.mjs
+ * `scanSlotCategoryReaders` finds them). An extra place's key reads `extraclass` raw; only the slot geometry and the
+ * `Character.feats` row keep that on purpose. Pure.
+ */
+export function checkSlotCategoryReaders(hits: FeatReaderHit[], allow: unknown): BlocksCheckResult {
+  const where = 'src/rules/blocks/slot-category-readers.json';
+  return checkReaderAllow(hits, allow, {
+    where,
+    missing: `${where}: missing or not an object — it lists the places allowed to read a slot key's category raw`,
+    unlisted: (h, at) =>
+      `${h.key}${at}: reads a slot key's category ${h.count}× — an extra feat place's key is \`<level>:extra<category>:<n>\`, so read the category through slotCategoryOf (src/rules/heldFeats.ts) or slotRefOf (src/rules/featSlots.ts); if this is slot geometry kept raw on purpose, or a split of something that is not a slot key, list it in ${where} with its true reason`,
+    above: (h, at, allowed) => `${h.key}${at}: reads a slot key's category ${h.count}×, but ${where} allows ${allowed} — a new read goes through slotCategoryOf / slotRefOf (or is listed with its reason)`,
+    total: (_field, t) => `slot-category readers: ${t.reads} raw read(s) in ${t.places} place(s) outside slotCategoryOf / slotRefOf (each checked against ${where})`,
+  });
+}
+
+/** What one reader guard says (the feat stores' or the overrides'): the rule is the same, the advice is not. */
+interface ReaderGuardText {
+  /** The allowlist file, repo-relative. */
+  where: string;
+  missing: string;
+  unlisted: (h: FeatReaderHit, at: string) => string;
+  above: (h: FeatReaderHit, at: string, allowed: number) => string;
+  total: (field: string, t: { reads: number; places: number }) => string;
+}
+
+/**
+ * THE rule both reader guards share (`checkFeatReaders`, `checkOverridesReaders`): every hit's place listed in
+ * the allowlist with exactly its count and a reason; no stale, empty or malformed entry. Pure.
+ */
+function checkReaderAllow(hits: FeatReaderHit[], allow: unknown, text: ReaderGuardText): BlocksCheckResult {
   const errors: string[] = [];
   const info: string[] = [];
-  const where = 'src/rules/blocks/feat-readers.json';
+  const where = text.where;
   if (!isObj(allow)) {
-    errors.push(`${where}: missing or not an object — it lists, per raw feat store, the places allowed to name it`);
+    errors.push(text.missing);
     return { errors, info };
   }
   const sections = new Map<string, Record<string, unknown>>();
@@ -587,14 +785,12 @@ export function checkFeatReaders(hits: FeatReaderHit[], allow: unknown): BlocksC
     const entry = sections.get(h.field)?.[h.key];
     seen.add(`${h.field}\u0000${h.key}`);
     if (entry === undefined) {
-      errors.push(
-        `${h.key}${at}: names "${h.field}" ${h.count}× — a reader of the feats a build holds must ask src/rules/heldFeats.ts (heldFeatSlots / heldFeatIds / featIdAtSlot) so a feat given through Tweaks works like a picked one (case D); if this is slot geometry, slot UI or storage, list it in ${where} under "${h.field}" with its true reason`,
-      );
+      errors.push(text.unlisted(h, at));
       continue;
     }
     if (!isObj(entry)) continue; // reported below
     if (typeof entry.count === 'number' && Number.isInteger(entry.count) && entry.count >= 1) {
-      if (h.count > entry.count) errors.push(`${h.key}${at}: names "${h.field}" ${h.count}×, but ${where} allows ${entry.count} — a new read here must go through src/rules/heldFeats.ts (or be listed with its reason)`);
+      if (h.count > entry.count) errors.push(text.above(h, at, entry.count));
       else if (h.count < entry.count) errors.push(`${where} "${h.field}" ${h.key}: lists ${entry.count}, the scan finds ${h.count} — lower the count, so the entry cannot cover a new read later`);
     }
   }
@@ -610,9 +806,126 @@ export function checkFeatReaders(hits: FeatReaderHit[], allow: unknown): BlocksC
       if (!seen.has(`${field}\u0000${key}`)) errors.push(`${name}: names "${field}" nowhere any more (stale) — remove the entry`);
     }
   }
-  for (const [field, t] of [...totals].sort((a, b) => a[0].localeCompare(b[0]))) {
-    info.push(`feat readers: "${field}" named ${t.reads}× in ${t.places} place(s) outside src/rules/heldFeats.ts (each checked against ${where})`);
+  for (const [field, t] of [...totals].sort((a, b) => a[0].localeCompare(b[0]))) info.push(text.total(field, t));
+  return { errors, info };
+}
+
+/* ───────────── spec item 4: one reader of a character's tweaks (plan B WP2, section 7.1) ───────────── */
+
+/** The files exempt from the "one reader" scan — kept in step with scripts/lib/feat-readers.mjs
+ *  OVERRIDES_READERS_HOMES (the scanner skips them; this names them in the messages). */
+export const OVERRIDES_READERS_HOME_NAMES = 'src/rules/blocks/{stored,active,content,write,save,migrate}.ts, src/rules/heldFeats.ts';
+
+/**
+ * Spec item 4's guard: "every read of tweaks goes through one accessor that applies on/off, the start level
+ * and the master switch". A place outside the home files that reads `.overrides` (`?.overrides`,
+ * `['overrides']`, `{ overrides }`, the string `'overrides'`) could apply a paused or switched-off tweak, so
+ * each one is listed in src/rules/blocks/overrides-readers.json with its count and its TRUE reason (a writer
+ * through blocks/write.ts, storage carried as it is, a memo key, another concept named `overrides`). Fails on
+ * an unlisted place, a count above or below the listed one, an empty reason, a stale entry, a malformed list —
+ * the same rule as `checkFeatReaders`. Pure: scripts/blocks-check.mjs feeds it the scan of src/, the test
+ * plants bad cases in memory.
+ */
+export function checkOverridesReaders(hits: FeatReaderHit[], allow: unknown): BlocksCheckResult {
+  const where = 'src/rules/blocks/overrides-readers.json';
+  return checkReaderAllow(hits, allow, {
+    where,
+    missing: `${where}: missing or not an object — it lists the places outside the Tweaks reader allowed to name "overrides"`,
+    unlisted: (h, at) =>
+      `${h.key}${at}: names "${h.field}" ${h.count}× — read a character's tweaks only through src/rules/blocks/active.ts (liveAttributeSets, liveRemovedFeatIds, isAllowedAnyway, liveGivenFeatures, liveGivenSpells, liveGivenLanguages, liveMaxHpSet, liveContentEdits, rankTweaks, activeNumberBlocks; contentFor(db, host) for the content edits), so the master switch, each tweak's on/off and its start level apply (spec item 4); if this is a writer through blocks/write.ts, storage carried as it is, a memo key or another concept named "overrides", list it in ${where} with its true reason`,
+    above: (h, at, allowed) => `${h.key}${at}: names "${h.field}" ${h.count}×, but ${where} allows ${allowed} — a new read here must go through src/rules/blocks/active.ts (or be listed with its reason)`,
+    total: (field, t) => `tweak readers: "${field}" named ${t.reads}× in ${t.places} place(s) outside ${OVERRIDES_READERS_HOME_NAMES} (each checked against ${where})`,
+  });
+}
+
+/* ───────────── spec item 1: the player never reads "override" (plan B WP9b, section 7.2) ───────────── */
+
+/** One piece of text that names the word, from scripts/lib/visible-words.mjs: a string literal, a template chunk
+ *  or JSX text that reads as prose. `marker` is the reason of a `// tweaks-ok:` comment covering it ('' = none
+ *  given); absent when no marker covers it. */
+export interface VisibleWordHit {
+  path: string;
+  line: number;
+  text: string;
+  kind?: string;
+  marker?: string;
+}
+/** A `// tweaks-ok: <reason>` comment; `used` when it covers a hit. */
+export interface VisibleWordMarker {
+  path: string;
+  line: number;
+  reason: string;
+  used: boolean;
+}
+/** A file whose "override" text is not about tweaks, or never reaches a player. */
+export interface VisibleWordSkip {
+  path: string;
+  why: string;
+}
+
+/**
+ * The files the "no visible override" check skips, each with its reason. An entry for a file with no hit fails
+ * (stale): it could hide a real one later. The plan's other candidates (the customization files, the tracker's
+ * own overrides, astStubs.ts `override-title-right`) need no entry: none of their literals reads as prose.
+ */
+export const VISIBLE_WORDS_SKIP: VisibleWordSkip[] = [
+  {
+    path: 'src/rules/blocks/check.ts',
+    why: "this guard's own messages (printed by npm run verify, never in the app) name the stored `overrides` keys and the overrides-readers allowlist",
+  },
+];
+
+/**
+ * Spec item 1's guard: "Overrides" is now Tweaks, and no text a player can read says "override" (the stored
+ * names stay: plan B section 8). Fails on:
+ *   - a hit outside the skip list with no `// tweaks-ok: <reason>` marker on the line above (say "tweak", or
+ *     reword);
+ *   - a marker with no reason, or one that covers no hit (stale);
+ *   - a skip entry with no reason, a repeated path, or a path with no hit (stale);
+ *   - a skip list that is not `{ path, why }[]`.
+ * Pure: scripts/blocks-check.mjs feeds it the scan of src/ (scripts/lib/visible-words.mjs); the test plants
+ * bad cases in memory.
+ */
+export function checkVisibleOverrideWords(hits: VisibleWordHit[], allow: unknown, markers: VisibleWordMarker[] = []): BlocksCheckResult {
+  const errors: string[] = [];
+  const info: string[] = [];
+  const where = 'VISIBLE_WORDS_SKIP (src/rules/blocks/check.ts)';
+  const skip = new Map<string, number>();
+  if (!Array.isArray(allow)) errors.push(`${where}: must be a list of { path, why }`);
+  else {
+    for (const e of allow as unknown[]) {
+      if (!isObj(e) || typeof e.path !== 'string' || !e.path.trim()) {
+        errors.push(`${where}: an entry is not { path, why } — ${JSON.stringify(e)}`);
+        continue;
+      }
+      if (typeof e.why !== 'string' || !e.why.trim()) errors.push(`${where} ${e.path}: no reason ("why")`);
+      if (skip.has(e.path)) errors.push(`${where} ${e.path}: listed twice`);
+      skip.set(e.path, 0);
+    }
   }
+  let marked = 0;
+  for (const h of hits) {
+    const path = h.path.replace(/\\/g, '/');
+    if (skip.has(path)) {
+      skip.set(path, (skip.get(path) ?? 0) + 1);
+      continue;
+    }
+    if (h.marker !== undefined) {
+      if (h.marker.trim()) marked++;
+      else errors.push(`${path}:${h.line}: a "// tweaks-ok:" marker gives no reason — say why the player may read "override" here`);
+      continue;
+    }
+    errors.push(
+      `${path}:${h.line}: a player can read "override" here — Overrides is now Tweaks (spec item 1): say "tweak" or reword; only the stored names stay (overrides, overridesEnabled, override:<id>). If this text is truly not shown, or names the old card on purpose, put "// tweaks-ok: <reason>" on the line above: ${h.text}`,
+    );
+  }
+  for (const m of markers) {
+    if (!m.used) errors.push(`${m.path.replace(/\\/g, '/')}:${m.line}: a "// tweaks-ok:" marker covers no text that says "override" (stale) — remove it`);
+  }
+  for (const [path, n] of skip) {
+    if (n === 0) errors.push(`${where} ${path}: no text there says "override" any more (stale) — remove the entry, so it cannot hide a real one later`);
+  }
+  info.push(`visible words: ${hits.length} text(s) say "override" — ${[...skip.values()].reduce((a, b) => a + b, 0)} in ${skip.size} skipped file(s), ${marked} marked "tweaks-ok"`);
   return { errors, info };
 }
 
@@ -664,7 +977,7 @@ export function checkContentPath(files: { path: string; text: string }[]): Block
       const line = code.slice(0, m.index ?? 0).split('\n').length;
       const text = (lines[line - 1] ?? '').trim();
       errors.push(
-        `${path}:${line}: names ${RAW_CONTENT_OVERLAY} outside ${CONTENT_PATH_HOME} — lay a character's content-edits over a database only through ${CONTENT_PATH_DOOR}(db, overrides) (Building blocks item 7: one content path, so the sheet, party card, tracker and GM HP write agree): ${text.slice(0, 160)}`,
+        `${path}:${line}: names ${RAW_CONTENT_OVERLAY} outside ${CONTENT_PATH_HOME} — lay a character's content-edits over a database only through ${CONTENT_PATH_DOOR}(db, host) (Building blocks item 7: one content path, so the sheet, party card, tracker and GM HP write agree): ${text.slice(0, 160)}`,
       );
     }
   }

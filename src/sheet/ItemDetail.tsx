@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import type { Character, ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
 import { bumpItemCounter, bumpItemQuantity, removeInventoryItem, setItemDesignation, toggleItemFlag, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
-import { containerOptionsFor, deriveShield, propertyRuneDefs } from '../rules/derive';
+import { containerOptionsFor, deriveShield, deriveStrike, propertyRuneDefs } from '../rules/derive';
+import { isVersatileVial } from '../rules/versatileVial';
 import { formatItemPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
@@ -468,6 +469,18 @@ export function ItemDetail({
       ? `${reinTier ? `With ${REINFORCING_NAMES[reinTier].toLowerCase()} reinforcing` : 'As you carry it'}: ` +
         `Hardness ${shieldEff.hardness} · HP ${shieldEff.hp} (BT ${shieldEff.brokenThreshold})`
       : null;
+  /*
+   * bug 2026-10-23: the versatile vial. Same shape as the shield line above: the stat rows keep the
+   * record's printed lesser vial ("Damage 1d6 acid"), but a vial this character makes is the highest type
+   * they could Craft, so at 12th level their Strike reads 3d6 while this popup said 1d6. One extra line
+   * names the character's own vial, from `deriveStrike` — the very sentence the Strike's damage breakdown
+   * prints (its `dieNote`), so the two cannot drift. Absent when the vial is still the printed lesser
+   * type, or the vial was made by someone else.
+   */
+  const vialLine =
+    character && isVersatileVial(item.id)
+      ? deriveStrike({ ...character, inventory: [{ ...inv, equipped: true }] }, content, { ...inv, equipped: true })?.dieNote ?? null
+      : null;
   const attached = inventory.filter((i) => i.attachedTo === inv.instanceId);
   // If THIS item is affixed to something, name the host so the card can show it.
   const host = inv.attachedTo ? inventory.find((i) => i.instanceId === inv.attachedTo) : undefined;
@@ -565,6 +578,7 @@ export function ItemDetail({
             ))}
           </div>
           {shieldEffLine && <div className="sd-rune-hint sd-shield-eff">{shieldEffLine}</div>}
+          {vialLine && <div className="sd-rune-hint sd-vial-own">{vialLine}</div>}
           {attached.length > 0 && (
             <div className="sd-attach">
               <span className="sd-uses-title">Attached</span>

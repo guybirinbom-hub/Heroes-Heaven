@@ -12,9 +12,12 @@
 import { searchMatches } from '../data/searchRank';
 import type { BuildState } from './build';
 import { backgroundGrantedFeats, kineticSlotAllows, levelGrants, loreKey, resolveBackground } from './build';
-import { maxTakes } from './featGrants';
-import { heldFeatIds, heldFeatSlots } from './heldFeats';
+import { anyListLifts, heldBackPlaceKeys, heldBackPlaceWords, placeLiveForKey, removedPlaceKeys } from './blocks/active';
+import { categoryWords, levelWords, liftedAll, notOursWords, onlyAtWords, refusal, type SlotRefusal, type SlotRule } from './choiceRefusal';
+import { takesAllowed } from './featGrants';
+import { heldFeatIds, heldFeatSlots, slotCategoryOf } from './heldFeats';
 import { mythicSlotAllows } from './mythic';
+import { SLOT_KEYED, SLOT_PREFIX, VARIANT_KEYED, VARIANT_SLOT } from './slotKey';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey } from './types';
 import { SKILLS } from './types';
 import { skillAbility } from './derive';
@@ -41,55 +44,128 @@ function skillKeysOfFeat(f: Feat): ProficiencyKey[] {
   return [...out];
 }
 
+export type { SlotRefusal, SlotRule };
+
 export interface FeatSlotRef {
   level: number;
+  /** The BOOK category: an extra place's `extraclass` key reads 'class' (`slotRefOf`, C10). */
   category: FeatCategory;
   idx: number;
+  /** The stored slot key (WP7, C10): an extra place's `<level>:extra<category>:<n>`, which `featSlotKey` cannot
+   *  rebuild from the three fields. Absent: `featSlotKey(p)`. */
+  key?: string;
+  /** An extra feat place (`choice.addPlace`), not a book slot. */
+  place?: boolean;
 }
 
 /** The featPicks key for a slot — "level:category:idx" (mirrors the builder's slotKey). */
 export const featSlotKey = (p: FeatSlotRef) => `${p.level}:${p.category}:${p.idx}`;
 
+/**
+ * A slot key read as a place (Tweaks phase 2, WP7, C10): `4:class:0` → the book slot; `4:extraclass:483920` → the
+ * extra class place at 4 (`place: true`, its `n` as `idx`, the BOOK category). `key` is the slot part of `key`.
+ * null: not a slot key. With `slotCategoryOf` (heldFeats.ts) the one reader of a key's category: `fitsSlot`,
+ * `slotBookRefusals` and `moveTargetFor` build their ref here, so a place's pick fits its own place and is never
+ * counted as taken elsewhere by itself.
+ */
+export function slotRefOf(key: string): (FeatSlotRef & { key: string; place: boolean }) | null {
+  const m = SLOT_PREFIX.exec(key);
+  if (!m) return null;
+  // A SLOT_PREFIX match always has a category, so slotCategoryOf always answers.
+  const category = slotCategoryOf(m[0]) as FeatCategory;
+  return { level: Number(m[1]), category, idx: Number(m[3]), key: m[0], place: category !== m[2] };
+}
+
+/**
+ * Put `featId` in the slot `key` (or empty it with null) — the ONE feat placement (Tweaks phase 2, C44): the
+ * Builder's `setFeat` and every phase-2 write that places a feat (Take anyway, Allow here, Take again, an extra
+ * place's pick) go through it. A new feat invalidates the old slot's sub-choice — INCLUDING a multi-pick one,
+ * whose answers live at `<slot>#0..#n`, not at the bare slot key. Deleting only the bare key left Splinter
+ * Faith's four answers behind: swap it out of a slot and back in and the player got "nature, pain, zeal,
+ * death" — four domains they never picked for this feat, one of them the *"up to one domain that isn't on
+ * either list"* (feat-7596). The feat's own embedded choice ("choose a domain", "choose an energy type") is
+ * left UNSET: a pre-filled picker doesn't read as a question (Domain Initiate arrived with a domain the player
+ * never chose, and the focus spell that came with it was a surprise). Pure: returns a new build.
+ */
+export function withFeat<B extends Pick<BuildState, 'featPicks' | 'featChoices'>>(b: B, key: string, featId: string | null): B {
+  const featPicks = { ...b.featPicks };
+  const featChoices = { ...b.featChoices };
+  for (const k of Object.keys(featChoices)) {
+    if (k === key || k.startsWith(`${key}#`)) delete featChoices[k];
+  }
+  if (featId) featPicks[key] = featId;
+  else delete featPicks[key];
+  return { ...b, featPicks, featChoices };
+}
+
 /** One level's feat-slot list, exactly as the Builder's level page draws it (same arguments). The feats
  *  taken — a slot Ultimate Flexibility adds — include the ones given through Tweaks (case D, decision D4:
- *  every `levelGrants` caller that passes taken feats reads `heldFeatIds`). */
-const slotListAt = (b: BuildState, content: ContentDatabase, level: number, taken = heldFeatIds(b)) =>
+ *  every `levelGrants` caller that passes taken feats reads `heldFeatIds`). The STORAGE view (WP7, C9, C11): a
+ *  paused extra place holding Ultimate Flexibility keeps its bonus slot drawn, so a pause never moves a slot. */
+const slotListAt = (b: BuildState, content: ContentDatabase, level: number, taken = heldFeatIds(b, undefined, { includePaused: true })) =>
   levelGrants(level, b.classId, content, b.subclassId, b.variantRules, b.classId2, b.subclassId2, b.mythicEnabled, taken).featSlots;
 
-/** Every level's feat-slot list. */
+/** The slot key of the `ordinal`th printed `category` slot at `level`, as that level's page draws it; null when it
+ *  draws fewer (a removal or an "Add a place" target that is not drawn: "Not in use", C29). */
+export function printedSlotKey(b: BuildState, content: ContentDatabase, level: number, category: string, ordinal: number): string | null {
+  const at = slotsOf(slotListAt(b, content, level), category)[ordinal];
+  return at === undefined ? null : `${level}:${category}:${at}`;
+}
+
+/** One printed feat slot as a place "Remove a place" names (C17): its level, category and nth-of-its-category. */
+export interface PrintedFeatPlace {
+  key: string;
+  level: number;
+  category: FeatCategory;
+  ordinal: number;
+}
+/** Every printed feat slot from level 1 to the character's level, in page order. */
+export function printedFeatPlaces(b: BuildState, content: ContentDatabase): PrintedFeatPlace[] {
+  const taken = heldFeatIds(b, undefined, { includePaused: true });
+  const out: PrintedFeatPlace[] = [];
+  for (let level = 1; level <= b.level; level++) {
+    const list = slotListAt(b, content, level, taken);
+    list.forEach((category, i) => out.push({ key: `${level}:${category}:${i}`, level, category, ordinal: slotsOf(list, category).indexOf(i) }));
+  }
+  return out;
+}
+
+/** The printed feat slots a LIVE "Remove a place" removes, as slot keys (C17): each removal's (level, category,
+ *  ordinal) read against the level's slot list as drawn now, so it follows its slot across every slot toggle. */
+export function removedSlotKeys(b: BuildState, content: ContentDatabase): ReadonlySet<string> {
+  return removedPlaceKeys(b, (level) => slotListAt(b, content, level));
+}
+
+/** Every level's feat-slot list (the storage view's taken feats, as `slotListAt`: no slot moves on a pause, C11). */
 function featSlotLists(b: BuildState, content: ContentDatabase): FeatCategory[][] {
-  const taken = heldFeatIds(b);
+  const taken = heldFeatIds(b, undefined, { includePaused: true });
   return Array.from({ length: 20 }, (_, i) => slotListAt(b, content, i + 1, taken));
 }
 
-/** Every build map whose keys START with a slot key: the pick, its sub-choice (`<slot>#n`), and the
- *  spell / Lore / effect / pick-a-feat answers made under it (`<slot>:granted-spell`, `<slot>:0`,
- *  `<slot>:<choice id>`, `<slot>#1`). */
-export const SLOT_KEYED = ['featPicks', 'featChoices', 'featSpellChoices', 'featLoreChoices', 'effectChoices', 'pickFeatChoices'] as const;
-const SLOT_PREFIX = /^(\d+):([a-z]+):(\d+)(?=$|[#:])/;
-/**
- * …and the keys that carry a slot AFTER `#`: a later pick taking's answer (build.ts `pickTakingVariants`,
- * package F 2026-10-16) — `major-lesson#10:class:4` in grantedFeatChoices, its familiar-spell pick
- * `granted:major-lesson#10:class:4:granted-spell`, a Lore subject `advanced-witchcraft#10:class:4:major-lesson:0`.
- * The slot there is the GRANTING feat's, so it moves with that pick: left behind, a "Move to slot" or Dual
- * Class switched on lost the second Major Lesson's answer and its hex with nothing said (checker, same day).
- */
-const VARIANT_KEYED = ['grantedFeatChoices', 'featSpellChoices', 'featLoreChoices'] as const;
-const VARIANT_SLOT = /#(\d+:[a-z]+:\d+)(?=$|:)/;
+/** Every feat category some level 1–20 of this character's slot lists draws (Tweaks phase 2 WP7, C13: an extra
+ *  impulse, mythic or bonus place is offered only to a character whose own book places draw one). */
+export function drawnSlotCategories(b: BuildState, content: ContentDatabase): ReadonlySet<FeatCategory> {
+  return new Set(featSlotLists(b, content).flat());
+}
+
+/** Every build map whose keys START with a slot key (the pick and every answer made under it), and a slot key at
+ *  the start of a key — both in slotKey.ts, a leaf (the write door refuses a tweak holding a slot key, C32; the
+ *  Character.tweakKept writer reads the same maps, C46). The `#`-variant maps (VARIANT_KEYED) live there too. */
+export { SLOT_KEYED, SLOT_PREFIX };
 const moveVariantSlot = (k: string, move: (slot: string) => string) => k.replace(VARIANT_SLOT, (_, s: string) => `#${move(s)}`);
 /** The order `levelGrants` pushes a level's slots in. A test holds every level list to it. */
 export const SLOT_ORDER: FeatCategory[] = ['ancestry', 'class', 'skill', 'general', 'bonus', 'impulse', 'archetype', 'mythic'];
 /** Where a category sits in a level's list: [class, skill, archetype, mythic] → mythic at [3]. */
-const slotsOf = (list: FeatCategory[], cat: string) => list.flatMap((c, i) => (c === cat ? [i] : []));
+const slotsOf = (list: readonly FeatCategory[], cat: string) => list.flatMap((c, i) => (c === cat ? [i] : []));
 /** How many slots come before the block of category `r` (its SLOT_ORDER index) — where it is, or would be. */
-const before = (list: FeatCategory[], r: number) => list.filter((c) => SLOT_ORDER.indexOf(c) < r).length;
+const before = (list: readonly FeatCategory[], r: number) => list.filter((c) => SLOT_ORDER.indexOf(c) < r).length;
 /**
  * The slot a key means: the nth slot of its category at its level. A drawn key is its place among that
  * category's slots; a key no slot draws counts from where the category's block is, or would be. Never
  * the index itself — that is a position in the WHOLE level list, which Paragon, Dual Class, Free
  * Archetype and Mythic all move.
  */
-const ordinalOf = (list: FeatCategory[], cat: string, idx: number) => {
+export const ordinalOf = (list: readonly FeatCategory[], cat: string, idx: number) => {
   const live = slotsOf(list, cat).indexOf(idx);
   return live >= 0 ? live : idx - before(list, SLOT_ORDER.indexOf(cat as FeatCategory));
 };
@@ -148,26 +224,32 @@ export function picksLosingSlot(prev: BuildState, next: BuildState, content: Con
 export function fitsSlot(b: BuildState, content: ContentDatabase, from: string, to: string): boolean {
   const id = b.featPicks?.[from];
   const f = id ? content.feats[id] : undefined;
-  const m = SLOT_PREFIX.exec(to);
-  if (!f || !m || m[0] !== to) return false;
+  // Through `slotRefOf` (WP7, C10): an extra place is asked as its BOOK category with its own stored key, so a
+  // filled extra class place takes its feat (read raw, `extraclass` refused every feat).
+  const ref = slotRefOf(to);
+  if (!f || !ref || ref.key !== to) return false;
   const featPicks = { ...b.featPicks };
   delete featPicks[from];
   featPicks[to] = f.id;
-  return slotTakes({ ...b, featPicks }, content, { level: Number(m[1]), category: m[2] as FeatCategory, idx: Number(m[3]) })(f);
+  return slotTakes({ ...b, featPicks }, content, ref)(f);
 }
 
 /**
  * Where "Move to slot" puts a feat with no slot: the first EMPTY slot of its kind at its level that
  * takes it (`fitsSlot`). A slot of its kind that would refuse it is never offered — moving a rogue feat
  * left over from a changed second class into the fighter's own class slot turned a flagged feat into a
- * pick that looked legitimate. null: no such slot, so the row offers Remove only.
+ * pick that looked legitimate. A slot a live "Remove a place" removes is never offered (WP6, C17): it is not
+ * drawn. An extra place's pick (WP7, C8/C10) is never moved into a book slot: it is drawn in its own place's card,
+ * and with no readable block it stays a feat with no slot (Remove only), as on every older app. null: no such
+ * slot, so the row offers Remove only.
  */
 export function moveTargetFor(b: BuildState, content: ContentDatabase, from: string): string | null {
-  const m = SLOT_PREFIX.exec(from);
-  if (!m || m[0] !== from) return null;
-  for (const i of slotsOf(slotListAt(b, content, Number(m[1])), m[2])) {
-    const to = `${m[1]}:${m[2]}:${i}`;
-    if (!b.featPicks[to] && fitsSlot(b, content, from, to)) return to;
+  const ref = slotRefOf(from);
+  if (!ref || ref.key !== from || ref.place) return null;
+  const removed = removedSlotKeys(b, content);
+  for (const i of slotsOf(slotListAt(b, content, ref.level), ref.category)) {
+    const to = `${ref.level}:${ref.category}:${i}`;
+    if (!removed.has(to) && !b.featPicks[to] && fitsSlot(b, content, from, to)) return to;
   }
   return null;
 }
@@ -363,39 +445,120 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
   return Object.values(content.feats).filter((f) => !content.duplicateIds?.has(f.id) && takes(f));
 }
 
-/** Does slot `p` take feat f? The one test behind the picker's list and `fitsSlot`. */
+/**
+ * Does slot `p` take feat f? The one test behind the picker's list and `fitsSlot`. Tweaks phase 2 (WP5, C22): the
+ * book's refusals (`slotRefusal`) less what a LIVE "Pick from any list" lifts (`anyListLifts`) — taken only when
+ * every refusal can be lifted AND is. A character with no such tweak gets exactly the book's answer
+ * (test/tweaks-p2-slot-sweep.test.ts holds every slot of the sweep characters to the pre-WP5 lists).
+ */
 function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef): (f: Feat) => boolean {
-  const currentKey = featSlotKey(p);
+  const refuse = slotRefusal(build, content, p);
+  const lifts = anyListLifts(build);
+  return (f) => liftedAll(refuse(f), lifts.get(f.id));
+}
+
+/**
+ * EVERY rule slot `p` refuses feat f for (Tweaks phase 2, WP5, C22) — an empty list is the book's "yes". The same
+ * tests `slotTakes` always ran, in the same order: the level, "only at 1st level" and the cap first, then the
+ * place's list — ONE `list` refusal, with the words of the first test that fails (a general feat in a class slot
+ * is "A general feat, not a class feat", never also "Not a Fighter feat"). A fighter bonus slot's own level cap is
+ * the `level` rule; a mythic or impulse slot's rule is `slotRule`, not liftable (C18: `mythicSlotAllows` and
+ * `kineticSlotAllows` mix the list with the one-destiny and element rules).
+ */
+export function slotRefusal(build: BuildState, content: ContentDatabase, p: FeatSlotRef): (f: Feat) => SlotRefusal[] {
+  const listTest = slotListTest(build, content, p);
+  // The slot's own stored key (WP7, C10): an extra place's `<level>:extra<category>:<n>` is not `featSlotKey(p)`.
+  const taken = takenElsewhere(build, content, p.key ?? featSlotKey(p));
+  const levelCap = p.category === 'bonus' ? (p.level === 20 ? 18 : p.level - 1) : p.level;
+  return (f) => {
+    const out: SlotRefusal[] = [];
+    if (f.level > levelCap) out.push(refusal('level', levelWords(f.level, levelCap)));
+    if (f.onlyAtLevel != null && p.level !== f.onlyAtLevel) out.push(refusal('onlyAtLevel', onlyAtWords(f.onlyAtLevel)));
+    // The cap is the book's plus a LIVE "Take a feat more times" (WP8, C23: `takesAllowed`, the featPicks loop's own).
+    const cap = takesAllowed(f.id, content, build, f);
+    if ((taken.all.get(f.id) ?? 0) >= cap) {
+      // WP7 step 6b (finding 18): the copy that makes the cap sits in an extra place that does not count now.
+      const at = (taken.live.get(f.id) ?? 0) < cap ? taken.heldBack.get(f.id) : undefined;
+      // `heldBack`'s key is the place's own slot key: its words follow that place's own block (paused vs Tweaks off).
+      out.push(refusal('taken', at === undefined ? TAKEN_WORDS : heldBackPlaceWords(build, at)));
+    }
+    const list = listTest(f);
+    if (list) out.push(list);
+    return out;
+  };
+}
+
+/** How many times each feat is held OUTSIDE slot `currentKey`: `all` in the STORAGE view (WP7, C9: a paused extra
+ *  place's copy still takes the cap, or resuming it would break the pick), `live` in the live view, and `heldBack`
+ *  the slot key of the first held-back place holding it (the refusal's words). */
+interface TakenElsewhere {
+  all: Map<string, number>;
+  live: Map<string, number>;
+  heldBack: Map<string, string>;
+}
+/** The "Already taken" refusal's words when the copy that makes the cap counts now (a copy held back only by a paused
+ *  extra place has `heldBackPlaceWords` instead): the one "Already taken" row "Take again" is offered on (WP8, D4). */
+export const TAKEN_WORDS = 'Already taken';
+
+/**
+ * How many copies of `featId` the build holds against its take cap (Tweaks phase 2, WP8): exactly what
+ * `slotRefusal`'s "Already taken" counts — every feat slot and extra place in the STORAGE view (a paused place's copy
+ * is still the player's, C9), a given feat no slot holds, a background's granted feat. The one counter behind the
+ * Tweaks row's "taken N of M" and the count's floor (never below the copies used), so the two cannot disagree.
+ */
+export function featCopiesHeld(build: BuildState, content: ContentDatabase, featId: string): number {
+  return takenElsewhere(build, content, '').all.get(featId) ?? 0;
+}
+
+function takenElsewhere(build: BuildState, content: ContentDatabase, currentKey: string): TakenElsewhere {
   // Count takes in OTHER slots; a feat is hidden here once those already reach its cap. A repeatable
   // feat therefore stays offered until the whole build holds maxTakes() copies of it.
-  const taken = new Map<string, number>();
+  const bump = (m: Map<string, number>, id: string) => m.set(id, (m.get(id) ?? 0) + 1);
+  const all = new Map<string, number>();
   // …and a feat GIVEN through Tweaks is held too (case D): it counts against its cap like a pick in
   // another slot. Never this slot's own key — a given feat's `override:<id>` key is no slot.
-  for (const { slotKey: k, featId: v } of heldFeatSlots(build)) if (k !== currentKey) taken.set(v, (taken.get(v) ?? 0) + 1);
-  for (const granted of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) {
-    taken.set(granted, (taken.get(granted) ?? 0) + 1);
+  // WP8 round 4 (F1): `feats` — a given copy beside a slot copy counts while a live "Take a feat more times" leaves
+  // room (`givenCopyCounts`, the given-feat rule buildCharacter reads), with the feat's own book cap.
+  const stored = heldFeatSlots(build, undefined, { includePaused: true, feats: content.feats });
+  for (const { slotKey: k, featId: v } of stored) if (k !== currentKey) bump(all, v);
+  const granted = backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice);
+  for (const id of granted) bump(all, id);
+  // No held-back place (every character without a paused extra place): the two views are one list.
+  if (!heldBackPlaceKeys(build).size) return { all, live: all, heldBack: new Map() };
+  const live = new Map<string, number>();
+  const heldBack = new Map<string, string>();
+  for (const { slotKey: k, featId: v } of heldFeatSlots(build, undefined, { feats: content.feats })) if (k !== currentKey) bump(live, v);
+  for (const id of granted) bump(live, id);
+  for (const e of stored) {
+    if (e.via === 'slot' && e.slotKey !== currentKey && !placeLiveForKey(build, e.slotKey) && !heldBack.has(e.featId)) heldBack.set(e.featId, e.slotKey);
   }
-  const impulseNth = p.category === 'impulse' ? ordinalOf(slotListAt(build, content, p.level), 'impulse', p.idx) : -1;
+  return { all, live, heldBack };
+}
+
+/*
+ * The level and "only at" rules (`slotRefusal`, above): a feat's level is a FLOOR. "**Special** You can select this
+ * feat only at 1st level." is an equality: 28 records print that clause and nothing in the app could say it, so
+ * Bestial Manifestation — a permanent unarmed attack chosen once — was offerable in a 5th, 9th, 13th or 17th-level
+ * ancestry slot. 27 of the 28 are authored. `nocturnal-grippli` is NOT: it ships as category `general`, and general
+ * slots start at 3rd, so an equality on 1 would make it takeable in no slot at all. scripts/scan-choice-sets.mjs
+ * carries it as an EXEMPT row with that reason.
+ */
+
+/** Slot `p`'s LIST test — category, ancestry, class, the archetype / bonus / mythic / impulse places: the first
+ *  refusal, or null. The level and the cap are `slotRefusal`'s. */
+function slotListTest(build: BuildState, content: ContentDatabase, p: FeatSlotRef): (f: Feat) => SlotRefusal | null {
+  // An extra impulse place (WP7, C10) is not one of the gate's bound pair: it takes either element's impulse
+  // (`anyElement`); its `idx` is its 6-digit n, no ordinal. A book slot asks exactly as before.
+  const impulseNth = p.category === 'impulse' && !p.place ? ordinalOf(slotListAt(build, content, p.level), 'impulse', p.idx) : -1;
+  const kinetic = p.place ? { anyElement: true } : undefined;
   // Read once per slot, not once per feat the picker asks about.
   let adopted: string[] | undefined;
   const adoptedHere = () => (adopted ??= adoptedAncestryIds(build, content, p.level));
+  const list = (words: string) => refusal('list', words);
   return (f) => {
-    if (f.level > p.level) return false;
-    /*
-     * "**Special** You can select this feat only at 1st level." 28 records print that clause and
-     * nothing in the app could say it, so Bestial Manifestation — a permanent unarmed attack chosen
-     * once — was offerable in a 5th, 9th, 13th or 17th-level ancestry slot. Distinct from `level`,
-     * which is a FLOOR; this one is an equality.
-     *
-     * 27 of the 28 are authored. `nocturnal-grippli` is NOT: it ships as category `general`, and
-     * general slots start at 3rd, so an equality on 1 would make it takeable in no slot at all.
-     * scripts/scan-choice-sets.mjs carries it as an EXEMPT row with that reason.
-     */
-    if (f.onlyAtLevel != null && p.level !== f.onlyAtLevel) return false;
-    if ((taken.get(f.id) ?? 0) >= maxTakes(f)) return false;
     // Free Archetype slot: any archetype feat (these are stored as class-category feats carrying the
     // 'archetype' trait, so match on the trait rather than the category).
-    if (p.category === 'archetype') return f.traits.includes('archetype');
+    if (p.category === 'archetype') return f.traits.includes('archetype') ? null : list('Not an archetype feat');
     /*
      * Mythic slot. NOT simply "any mythic-trait feat", which broke the printed rule three ways:
      *   - the 12th-level slot MUST buy a destiny dedication ("they must use their extra feat to take
@@ -405,7 +568,7 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
      *   - Mortal Herald, which its own rules page names as a destiny, ships with no `mythic` trait,
      *     so the 14th destiny was unreachable from the one slot the rules say must buy it.
      */
-    if (p.category === 'mythic') return mythicSlotAllows(f, p.level, build.mythicDestiny, content);
+    if (p.category === 'mythic') return mythicSlotAllows(f, p.level, build.mythicDestiny, content) ? null : refusal('slotRule', 'Not a feat this mythic place takes');
     /*
      * Fighter Combat Flexibility (L9) / Improved Flexibility (L15) / Ultimate Flexibility (L20).
      *
@@ -416,12 +579,9 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
      * flexibility slots were unfillable.
      *
      * The cap is the slot's level minus one (≤8 at 9, ≤14 at 15) except at 20, where Ultimate
-     * Flexibility prints "up to 18th level" rather than 19.
+     * Flexibility prints "up to 18th level" rather than 19 — `slotRefusal`'s level rule for this place.
      */
-    if (p.category === 'bonus') {
-      if (!f.traits.includes('fighter')) return false;
-      return f.level <= (p.level === 20 ? 18 : p.level - 1);
-    }
+    if (p.category === 'bonus') return f.traits.includes('fighter') ? null : list('Not a fighter feat');
     /*
      * A KINETIC GATE slot takes an impulse feat — and a DUAL gate binds one slot to each element:
      * *"select two 1st-level impulse feats, one with the trait of the first element and one with the
@@ -443,13 +603,13 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
        * nothing and the slot would be unfillable. The element rules (`kineticSlotAllows`, build.ts)
        * ask `impulseAllowedFor` too: without it a single gate offered all six elements. The rebuild
        * from a character asks the same function before it slots an imported impulse. */
-      return kineticSlotAllows(f.traits, build, p, impulseNth);
+      return kineticSlotAllows(f.traits, build, p, impulseNth, kinetic) ? null : refusal('slotRule', 'Not an impulse this gate place takes');
     }
     /*
      * A CLASS slot takes an ARCHETYPE feat. RAW an archetype feat is bought with a class feat, so a
      * class slot that refused them made every archetype unreachable from the slot that pays for it.
      */
-    if (p.category === 'class' && f.category === 'archetype' && f.traits.includes('archetype')) return true;
+    if (p.category === 'class' && f.category === 'archetype' && f.traits.includes('archetype')) return null;
     /*
      * A class feature may NARROW a skill-feat slot rather than grant it. The investigator's Skillful
      * Lessons gives bonus skill feats, and *"the feat must be one for an Intelligence-, Wisdom-, or
@@ -460,8 +620,10 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
      * stays legal — the clause restricts which skill a skill feat may be FOR, and a feat that is for
      * no particular skill is not excluded by it.
      */
+    // The class's narrowing is of ITS OWN skill-feat slots at those levels; an extra skill place a tweak adds is not
+    // one of them (WP7: each place category offers that category's list).
     const restrict = content.classes[build.classId ?? '']?.restrictedSkillFeatLevels;
-    if (restrict && p.category === 'skill' && restrict.levels.includes(p.level)) {
+    if (restrict && p.category === 'skill' && !p.place && restrict.levels.includes(p.level)) {
       const named = skillKeysOfFeat(f);
       if (named.length) {
         const allowed = new Set<string>(restrict.skills ?? []);
@@ -481,12 +643,13 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
           const restrictSub = restrictCls?.subclass?.options.find((o) => o.id === build.subclassId);
           for (const s of restrictSub?.grants?.skills ?? []) allowed.add(s);
         }
-        if (!named.some((k) => allowed.has(k))) return false;
+        if (!named.some((k) => allowed.has(k))) return list("Not for one of this place's skills");
       }
     }
     // A general feat slot may take any qualifying SKILL feat (skill feats are a subset of general
     // feats). The reverse is not true — a skill slot takes only skill feats.
-    if (f.category !== p.category && !(p.category === 'general' && f.category === 'skill')) return false;
+    if (f.category !== p.category && !(p.category === 'general' && f.category === 'skill'))
+      return list(categoryWords(f.category, p.category));
     // An ancestry slot takes your ancestry's feats — AND, if you took a VERSATILE heritage, that
     // heritage's own feats. A versatile heritage (nephilim, dragonblood, dhampir, …) has
     // `ancestryId: null` and its feats carry the HERITAGE's trait, not an ancestry's. Gating on
@@ -520,7 +683,7 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
         // The trait IS that rule and belongs to no ancestry, so a gate that only ever asked "does
         // this carry my ancestry's trait" could never admit one.
         f.traits.includes('universal-ancestry');
-      if (!ok) return false;
+      if (!ok) return list(notOursWords(f, content.ancestries, build.ancestryId));
     }
     // Class slots take your class's feats OR any archetype feat (multiclass/archetypes). Dual Class
     // also accepts the second class's feats.
@@ -542,7 +705,7 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
       !(build.deviantEnabled && (f.traits.includes('deviant') || f.traits.includes('aftermath'))) &&
       !(build.variantRules?.pervasiveMagic && f.traits.includes('pervasive-magic'))
     )
-      return false;
+      return list(notOursWords(f, content.classes, build.classId));
     // Kineticist impulses are gated to the elements of your kinetic gate (incl. elements gained via
     // Fork the Path, and the ones an ARCHETYPE kineticist named on their dedication).
     //
@@ -550,8 +713,24 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
     // then admits everything, so the guard the class check used to provide is the element list itself.
     // Keeping the check would have re-created the bug it was written beside — an archetype kineticist
     // has elements and was skipped by it.
-    return kineticSlotAllows(f.traits, build, p, impulseNth);
+    return kineticSlotAllows(f.traits, build, p, impulseNth) ? null : refusal('slotRule', 'An impulse of an element you have no gate for');
   };
+}
+
+/**
+ * Every rule the slot `to` refuses the feat at `from` for, read as `fitsSlot` reads it (the build with the feat
+ * moved) and WITHOUT any tweak — the book's own words for a filled card (WP5: the paused mark, the book note). null:
+ * no such feat, or `to` is not a slot key.
+ */
+export function slotBookRefusals(b: BuildState, content: ContentDatabase, from: string, to: string = from): SlotRefusal[] | null {
+  const id = b.featPicks?.[from];
+  const f = id ? content.feats[id] : undefined;
+  const ref = slotRefOf(to);
+  if (!f || !ref || ref.key !== to) return null;
+  const featPicks = { ...b.featPicks };
+  delete featPicks[from];
+  featPicks[to] = f.id;
+  return slotRefusal({ ...b, featPicks }, content, ref)(f);
 }
 
 export interface HiddenFeatMatches {
@@ -564,6 +743,11 @@ export interface HiddenFeatMatches {
   campaign: number;
   /** Matches that can never appear in this slot (wrong type, level too high, already taken). */
   invalid: number;
+  /** `invalid` split by the rule that refuses each (its first `slotRefusal`; WP5), when `refusalOf` was given.
+   *  A feat refused for no rule (the "unexpected residue" below) counts under none. */
+  invalidByRule?: Partial<Record<SlotRule, number>>;
+  /** Of `invalid`, the feats "Take again" would be offered for under "Search every feat" (`takeAgainOf`; WP8). */
+  takeAgain?: number;
   total: number;
 }
 
@@ -589,6 +773,10 @@ export function findHiddenFeatMatches(opts: {
   pervasiveMagic?: boolean;
   /** True for a class slot with the Archetypes toggle off. */
   archetypesHidden: boolean;
+  /** The slot's book refusals (`slotRefusal`): splits `invalid` by rule (WP5). */
+  refusalOf?: (f: Feat) => readonly SlotRefusal[];
+  /** Would the picker offer "Take again" for this feat (WP8)? Counted into `takeAgain` for the note's pointer. */
+  takeAgainOf?: (f: Feat) => boolean;
 }): HiddenFeatMatches | null {
   const q = opts.query.trim().toLowerCase();
   if (!q) return null;
@@ -596,6 +784,13 @@ export function findHiddenFeatMatches(opts: {
   let archetype = 0;
   let campaign = 0;
   let invalid = 0;
+  let takeAgain = 0;
+  const byRule: Partial<Record<SlotRule, number>> = {};
+  const countRule = (f: Feat) => {
+    const rule = opts.refusalOf?.(f)[0]?.rule;
+    if (rule) byRule[rule] = (byRule[rule] ?? 0) + 1;
+    if (opts.takeAgainOf?.(f)) takeAgain++;
+  };
   for (const f of opts.allFeats) {
     if (opts.shownIds.has(f.id)) continue;
     // bug 2026-09-13: search-rank — the SAME rule the picker's own filter uses (FilterableSelect's
@@ -605,6 +800,7 @@ export function findHiddenFeatMatches(opts: {
     if (!searchMatches(q, f.name, [f.description, ...(f.legacyNames ?? [])].join('\n'))) continue;
     if (!opts.slotEligibleIds.has(f.id)) {
       invalid++;
+      countRule(f);
     } else if (
       // Mirrors applyContentToggles: these stay hidden even with every source book enabled.
       (!opts.mythicEnabled && f.traits.includes('mythic')) ||
@@ -627,5 +823,5 @@ export function findHiddenFeatMatches(opts: {
   const total = sources.length + archetype + campaign + invalid;
   if (total === 0) return null;
   sources.sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
-  return { sources, archetype, campaign, invalid, total };
+  return { sources, archetype, campaign, invalid, ...(opts.refusalOf ? { invalidByRule: byRule } : {}), ...(opts.takeAgainOf ? { takeAgain } : {}), total };
 }

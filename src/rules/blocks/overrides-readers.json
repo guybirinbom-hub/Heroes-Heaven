@@ -1,0 +1,113 @@
+{
+  "$comment": "Spec item 4, 'one reader' (docs/overrides-redesign.md; plan B WP2, work/tweaks-part-b-notes/plan.md section 7.1): every read of a character's tweaks goes through src/rules/blocks/active.ts, which applies the Tweaks master switch, each tweak's own on/off and its start level (contentFor(db, host) for the content edits; heldFeats.ts for the given feats). These are the places OUTSIDE the home files (blocks/stored.ts, active.ts, content.ts, write.ts, save.ts, migrate.ts and src/rules/heldFeats.ts) still allowed to name `overrides`, each with the count of names there and its TRUE reason: a writer (through blocks/write.ts, or one a later package moves there), storage carried or listed as it is (paused entries included), a memo key, or another concept named `overrides`. Keys: <file>#<enclosing symbol chain> (scripts/lib/feat-readers.mjs). Checked by checkOverridesReaders (src/rules/blocks/check.ts) in scripts/blocks-check.mjs: an unlisted key, a count above or below the listed one, an empty why or a stale entry fails. A new reader of what a tweak DOES routes through blocks/active.ts instead of being listed here.",
+  "overrides": {
+    "src/App.tsx#App>sheetContent": {
+      "count": 1,
+      "why": "useMemo dependency only: the memo body calls contentFor(activeContent, active?.character) (the live edits through blocks/active.ts); keyed on the character's overrides AND options (beside it), because contentFor cannot un-apply an edit (plan B B13)."
+    },
+    "src/builder/Builder.tsx#Builder": {
+      "count": 1,
+      "why": "Writer: the feat picker's 'Take anyway' stores the write door's result (blocks/write.ts takeAnywayWrite + writeTweak: a paused entry switched back on, else a new choice.allowAnyway; plan B WP8). Writes storage; applies nothing."
+    },
+    "src/builder/Builder.tsx#Builder>listAdditions": {
+      "count": 1,
+      "why": "useMemo dependency only: the memo body reads heldFeatIds(build) (the given feats through heldFeats.ts / activeGivenFeats); build.options is listed beside it for the Tweaks switch."
+    },
+    "src/builder/Builder.tsx#Builder>listAdditions2": {
+      "count": 1,
+      "why": "useMemo dependency only (the second class's pool): the memo body reads heldFeatIds(build); build.options is listed beside it."
+    },
+    "src/builder/Builder.tsx#Builder>content": {
+      "count": 1,
+      "why": "useMemo dependency only (WP10 final check): the Sources-filtered picker content re-reads collectChosenIds(build) — which keeps every STORED tweak's record, paused ones included — after each tweak write, so a feat given from a book that is off asks its question at once. The body reads no tweak itself."
+    },
+    "src/builder/Builder.tsx#Builder>ovContent": {
+      "count": 1,
+      "why": "useMemo dependency only: the memo body calls contentFor(baseContent, build) (the live edits); keyed on build.overrides AND build.options (beside it), because contentFor cannot un-apply an edit (plan B B13)."
+    },
+    "src/builder/Builder.tsx#Builder>turnOnPlace": {
+      "count": 1,
+      "why": "Writer (tweaks p2 WP7): a paused extra feat place's 'Turn on' stores the write door's result (blocks/write.ts writeTweak setOn — nothing but the block's own on, C5) as the draft's new overrides. Writes storage; applies nothing."
+    },
+    "src/builder/Builder.tsx#Builder>setCarrierAnswer": {
+      "count": 1,
+      "why": "Writer (tweaks p2 WP11): an extra skill-increase or boost place's answer picked on its level-page card stores the write door's result (blocks/write.ts writeTweak update — only the block's skill / attribute) as the draft's new overrides. Writes storage; applies nothing."
+    },
+    "src/builder/tweaks/anyList.tsx#confirmAllowHere>write": {
+      "count": 1,
+      "why": "Writer (tweaks p2 WP5): the slot picker's 'Allow here and take anyway' stores the write door's Take anyway result (blocks/write.ts takeAnywayWrite + writeTweak) inside the same writeChoiceTweak patch as the allows and the pick — one write, one undo step. Writes storage; applies nothing."
+    },
+    "src/builder/tweaks/moreTakes.tsx#withMoreTakesPaused>list": {
+      "count": 1,
+      "why": "Writer's dry run (tweaks p2 WP8): reads the stored blocks list as it is to make a scratch copy with every 'Take a feat more times' switched off (on: false), never stored; buildCharacter reads that copy's tweaks through blocks/active.ts, so moreTakesSlotMarks can name the slot copies a pause would drop. Applies nothing itself."
+    },
+    "src/builder/tweaks/moreTakes.tsx#withMoreTakesPaused": {
+      "count": 1,
+      "why": "Writer's dry run (tweaks p2 WP8): the scratch copy's own overrides (the same stored entries, the moreTakes ones with on: false), handed to buildCharacter only and never stored or patched into the draft. Applies nothing itself."
+    },
+    "src/builder/tweaks/model.ts#readDraft": {
+      "count": 1,
+      "why": "Storage listed as it is (plan B WP6, the Tweaks page): hands the draft's stored overrides (with the read-time rank sort, withRankSort) to readTweaks to LIST every stored tweak as a row — paused, broken and unread blocks included; whether each counts is asked of entryLive (blocks/active.ts). Applies nothing; the one place the page reads overrides (tweakRows, tweaksTurnOffList)."
+    },
+    "src/builder/tweaks/model.ts#storedTextEdit>edits": {
+      "count": 1,
+      "why": "Storage listed as it is (plan B WP7, the text part of a text edit's row editor): shows the player's own stored name and description of ONE text edit, paused or live, so a paused edit can still be changed (contentFor lays only the live edits over the record). Applies nothing."
+    },
+    "src/builder/tweaks/TweakEditor.tsx#castingNoteFor>next": {
+      "count": 1,
+      "why": "Writer's dry run (plan B WP7, open point 8): the draft with the chosen feat given — the result of writeTweak (blocks/write.ts), never stored — is built once so castingEntryChanges can name the casting entries it would change; buildCharacter reads the tweaks through blocks/active.ts. Applies nothing itself."
+    },
+    "src/builder/tweaks/TweaksPage.tsx#TweaksPage>write": {
+      "count": 1,
+      "why": "Writer (plan B WP6, WP7): the result of writeTweaks (blocks/write.ts) patched into the Builder's draft as its new overrides; every Tweaks page and editor write (on/off, delete, re-point, add, edit) goes through this one line."
+    },
+    "src/data/transfer.ts#importFromWg": {
+      "count": 2,
+      "why": "Writer: the Wanderer's Guide import appends the imported rituals to the stored addedSpells list and stamps them source 'import' through markImported (blocks/write.ts, spec 2; never writes v, B27)."
+    },
+    "src/data/transfer.ts#importFromWg>prior": {
+      "count": 1,
+      "why": "Writer: the ritual import's stored list before the append — the index markImported stamps from (so only the imported entries are stamped)."
+    },
+    "src/rules/build.ts#buildCharacter>built": {
+      "count": 2,
+      "why": "Storage carried as it is: the Character literal keeps the build's whole stored overrides (paused entries, meta and v included) so a save or reverse build loses nothing (UNKNOWN != EMPTY). Applies nothing."
+    },
+    "src/rules/build.ts#collectChosenIds": {
+      "count": 4,
+      "why": "Storage: lists every id the stored build names for the content (Sources) check — PAUSED entries and Tweaks switched off included (the pause table: a paused entry still holds its book, or resuming it would find nothing)."
+    },
+    "src/rules/build.ts#deriveBuildFromCharacter": {
+      "count": 5,
+      "why": "Storage carried as it is: the reverse build deep-copies the character's stored overrides (paused entries, meta and v included); its overflow writes feats with no slot into the stored list through markImported (blocks/write.ts, stamped source 'import'; never writes v, B27)."
+    },
+    "src/rules/build.ts#deriveBuildFromCharacter>addedFeatIds": {
+      "count": 1,
+      "why": "Storage: the reverse build skips every feat the stored overrides already give (paused ones too), so a given feat never fills a slot on reopen."
+    },
+    "src/rules/build.ts#deriveBuildFromCharacter>existing": {
+      "count": 1,
+      "why": "Writer: the stored given-feat list before the overflow append — the index markImported stamps from."
+    },
+    "src/rules/build.ts#removeChosenIds": {
+      "count": 2,
+      "why": "Writer: hands the stored overrides to dropEntries (blocks/write.ts), which drops the entries whose content is gone with their meta; paused entries are filtered the same."
+    },
+    "src/rules/build.ts#removeChosenIds>ov": {
+      "count": 1,
+      "why": "Writer: the stored overrides threaded through the dropEntries calls (blocks/write.ts)."
+    },
+    "src/rules/blocks/wgExport.ts#tweaksWgCannotCarry": {
+      "count": 1,
+      "why": "Storage listed as it is (plan B WP9a, B20): hands the stored overrides (with the read-time rank sort, withRankSort) to readTweaks to LIST every stored tweak a Wanderer's Guide export cannot carry, paused ones and unread blocks included; whether each is live is asked of entryLive (blocks/active.ts). Applies nothing."
+    },
+    "src/sheet/GmEditSheet.tsx#GmEditSheet>GmEditSheet>sheetContent": {
+      "count": 1,
+      "why": "useMemo dependency only: the memo body calls contentFor(viewContent, work.character) (the live edits); keyed on the character's overrides AND options (beside it), because contentFor cannot un-apply an edit (plan B B13)."
+    },
+    "src/sheet/SpellsTab.tsx#SpellsTab>myRituals": {
+      "count": 1,
+      "why": "useMemo dependency only: the memo body reads liveGivenSpells(character) (blocks/active.ts); character.options and character.level are listed beside it for the switch and the start levels."
+    }
+  }
+}

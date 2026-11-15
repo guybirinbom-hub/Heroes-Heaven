@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BLOCK_KINDS, RESERVED_SOURCE_KINDS, SOURCE_KINDS, blockKind, type BlockInstance } from '../src/rules/blocks/registry';
+import { BLOCK_KINDS, RESERVED_SOURCE_KINDS, SOURCE_KINDS, blockKind, placeWords, ruleWords, type BlockInstance } from '../src/rules/blocks/registry';
 import { TARGETS, parseTargetRef, targetBuilt, targetDefFor, targetRefKey } from '../src/rules/blocks/targets';
 import { parseStoredBlocks, readLegacyBlocks, readTweaks, writeStoredBlocks, type StoredBlock } from '../src/rules/blocks/stored';
 import { loreKey } from '../src/rules/build';
@@ -52,9 +52,52 @@ describe('every registered kind: its breakdown wording (spec item 7)', () => {
     expect(lineOf('choice.allowAnyway')).toBe('Tweak: taken anyway');
     expect(lineOf('text.edit')).toBe('Tweak: your text');
   });
+  // Tweaks phase 2, WP1: the seven choice kinds' breakdown wording (plan section 2b; placeWords / ruleWords).
+  // WP13: a skill increase's rule (WP12) comes after the record rebuild; a stored one is a newer version's, never a line.
+  it("'choice.allowAnywayAnyPicker' — taken anyway; a sanctification names its answer", () => {
+    expect(lineOf('choice.allowAnywayAnyPicker', { params: { picker: 'heritage', record: 'ancient-elf' }, reason: 'GM: raised by elves' })).toBe('Tweak: taken anyway (GM: raised by elves)');
+    expect(lineOf('choice.allowAnywayAnyPicker', { params: { picker: 'sanctification', record: 'x', value: 'unholy' } })).toBe('Tweak: unholy allowed anyway');
+    expect(ruleWords('cap')).toBeUndefined();
+  });
+  it("'choice.anyList' and 'choice.moreTakes' — the rule lifted; how many more takes", () => {
+    expect(lineOf('choice.anyList', { params: { record: 'toughness', rule: 'level' } })).toBe("Tweak: allowed past the feat's level");
+    expect(lineOf('choice.moreTakes', { params: { record: 'fleet', times: 1 } })).toBe('Tweak: may be taken 1 more time');
+    expect(lineOf('choice.moreTakes', { params: { record: 'fleet', times: 3 }, reason: 'GM' })).toBe('Tweak: may be taken 3 more times (GM)');
+  });
+  it("'choice.addPlace' and 'remove.choicePlace' — the place in plain words (placeWords)", () => {
+    expect(lineOf('choice.addPlace', { params: { place: 'feat', level: 4, category: 'class', n: 483920 } })).toBe('Tweak: extra class feat place at level 4');
+    expect(lineOf('choice.addPlace', { params: { place: 'boost', level: 5 } })).toBe('Tweak: extra attribute boost at level 5');
+    expect(lineOf('remove.choicePlace', { params: { place: 'skillIncrease', level: 5, lane: 'bonus' } })).toBe('Tweak: removed skill increase at level 5 (bonus)');
+    expect(lineOf('remove.choicePlace', { params: { place: 'boost', set: 'free', index: 0 } })).toBe('Tweak: removed free boost at level 1 (first)');
+    // WP13: a class-choice, tactic or rune place (WP16, WP17) comes after the record rebuild: no words in this version.
+    for (const place of ['classChoice', 'tactic', 'rune']) expect(placeWords({ place, classId: 'thaumaturge', group: 'implement', ordinal: 1 }), place).toBeUndefined();
+  });
+  // WP13: both kinds stay registered (STILL_TO_ADD) with their lines; a stored block reads as a newer version's until
+  // WP9 / WP10 build them after the record rebuild.
+  it("'choice.changeAnswer' and 'choice.editOptions' — the answer given; the list's additions and removals", () => {
+    expect(lineOf('choice.changeAnswer', { params: { question: 'skillSlot', record: 'x', value: 'lore:sailing' } })).toBe('Tweak: answered lore:sailing, outside the list');
+    expect(lineOf('choice.editOptions', { params: { question: 'choice', record: 'x', add: ['fire'], remove: ['cold'] } })).toBe('Tweak: list edited (+ fire, − cold)');
+  });
+  it('every place a phase-2 kind accepts and every rule it lists has words (placeWords / ruleWords)', () => {
+    const sample = { level: 4, category: 'class', set: 'level', lane: 'main', ordinal: 0, index: 0 };
+    for (const k of BLOCK_KINDS) {
+      if ('places' in k.accepts) for (const place of k.accepts.places) expect(placeWords({ ...sample, place }), `${k.id} ${place}`).toBeTruthy();
+      for (const r of k.rules ?? []) expect(ruleWords(r), `${k.id} ${r}`).toBeTruthy();
+    }
+    expect(placeWords({ place: 'spellSlot' })).toBeUndefined();
+    expect(ruleWords('rarity')).toBeUndefined();
+  });
   it('the registry has exactly the kinds tested above', () => {
     expect(BLOCK_KINDS.map((k) => k.id).sort()).toEqual(
       [
+        // tweaks p2 WP1: the seven choice kinds (plan section 1, WP1)
+        'choice.allowAnywayAnyPicker',
+        'choice.anyList',
+        'choice.moreTakes',
+        'choice.addPlace',
+        'remove.choicePlace',
+        'choice.changeAnswer',
+        'choice.editOptions',
         'number.add',
         'attribute.add',
         'number.set',

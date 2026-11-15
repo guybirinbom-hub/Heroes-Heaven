@@ -177,7 +177,8 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
 
 ## C. One saved workflow — `.claude/workflows/wg-batch.js`
 
-`Workflow({ name: 'wg-batch', args: { batch: 'NNN', count?: N, maxLevel?: L, ids?: 'a,b', print?: true } })`.
+`Workflow({ name: 'wg-batch', args: { batch: 'NNN', count?: N, maxLevel?: L, ids?: 'a,b', print?: true, estimate: '<n> min', strictSteps: 'apply + commit (rules data)' } })`
+(since 2026-10-24 a hook refuses a workflow run whose script or args hold no time estimate and no strict steps).
 `print: true` takes no `count` / `maxLevel` / `ids` (the workflow throws): the packet
 `work/print-batch-PNN.json` is the cut and must exist before launch.
 All agents Opus; effort high except the runner (low). Stages:

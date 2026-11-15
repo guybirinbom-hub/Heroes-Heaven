@@ -7,7 +7,7 @@ file mirrors its prompt blocks so they can be read, argued with, and diffed. Cha
 change this file in the same edit.
 
 ```
-Workflow({ name: 'wg-batch', args: { batch: '030', count?: 40, maxLevel?: 8, ids?: 'a,b', print?: true } })
+Workflow({ name: 'wg-batch', args: { batch: '030', count?: 40, maxLevel?: 8, ids?: 'a,b', print?: true, estimate: '<n> min', strictSteps: 'apply + commit (rules data)' } })
 ```
 
 `batch` is padded to three digits when numeric (`30` → `030`); a print batch keeps its own id (`P01`).

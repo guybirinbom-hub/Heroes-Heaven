@@ -807,7 +807,7 @@ export function loadDescriptions(): Promise<void> {
 }
 
 /** The record kinds whose type promises `traits: Trait[]` (ContentBase in src/rules/types.ts). */
-const TRAITED_BUCKETS = ['ancestries', 'heritages', 'backgrounds', 'classes', 'classFeatures', 'feats', 'spells', 'items', 'deities', 'actions', 'runesmithRune'] as const;
+export const TRAITED_BUCKETS = ['ancestries', 'heritages', 'backgrounds', 'classes', 'classFeatures', 'feats', 'spells', 'items', 'deities', 'actions', 'runesmithRune'] as const;
 
 /**
  * Give every record of a traited kind a `traits` array, as its type promises. 24 class features (all 14

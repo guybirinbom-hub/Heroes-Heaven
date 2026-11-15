@@ -14,7 +14,9 @@ import type {
   ProficiencyKey,
   ProficiencyRank,
   SaveId,
+  SkillStep,
   SpellcastingEntry,
+  TweakBoostStep,
 } from './types';
 import type { BuildState } from './build';
 import { advancementRows } from './advancement';
@@ -56,9 +58,10 @@ import {
   classArchetypeFor,
 } from './derive';
 import { partsOf, resolveTerms } from './blocks/terms';
-import { scoreAddBlocks } from './blocks/active';
+import { countingBoostPicks, liveLegacyRanks, scoreAddBlocks, storedChoiceBlocks, tweakRankLines, type TweakRankLines } from './blocks/active';
+import { historyAgrees, skillIncreaseCap, stepRank, TWEAK_INCREASE_SOURCE } from './ranks';
 import { blockKind } from './blocks/registry';
-import { backgroundTrainings } from './blocks/book';
+import { backgroundTrains } from './blocks/book';
 import { traitLabel } from './glossary';
 import { officialIdOf } from './officialId';
 import { KINETIC_ELEMENTS } from './kineticElements';
@@ -1116,21 +1119,274 @@ function advancementFor(c: Character) {
   return advancementRows(c.classId, c.subclassId, classArchetypeFor(c, c.classId)?.suppressedFeatures).filter((e) => e.level <= c.level);
 }
 
+/** The rank-tweak target of a class-advancement track (plan B WP5), or null for a track no rank tweak
+ *  reaches (a casting entry's own rank is phase 5). */
+function rankTargetOfTrack(track: string): string | null {
+  if (track === 'perception') return 'perception';
+  if (track === 'classDc') return 'class-dc';
+  if (track === 'fortitude' || track === 'reflex' || track === 'will') return `save:${track}`;
+  if (track === 'unarmored' || track === 'light' || track === 'medium' || track === 'heavy') return `armor:${track}`;
+  return null;
+}
+
+const higherRank = (a: ProficiencyRank, b: ProficiencyRank): ProficiencyRank => (PROF_ORDER.indexOf(b) > PROF_ORDER.indexOf(a) ? b : a);
+
+/** A floor's timeline line at the rank it met (plan B WP5): "At least R" with "Tweak (reason)" under
+ *  it, or "(no change: already R)" when the rank was already there. */
+function floorEntry(f: TweakRankLines['floors'][number], cur: ProficiencyRank): { entry: TimelineEntry; rank: ProficiencyRank } {
+  const rank = higherRank(cur, f.rank);
+  const detail = `Tweak${f.reason ? ` (${f.reason})` : ''}`;
+  const text = rank === cur ? `At least ${RANK_LABEL[f.rank]} (no change: already ${RANK_LABEL[cur]})` : `At least ${RANK_LABEL[f.rank]}`;
+  return { entry: { level: f.level, text, detail, rank }, rank };
+}
+
+/** A hold's timeline line, always the LAST one: the build clamps it after every raise (plan B WP5). */
+const holdEntry = (h: NonNullable<TweakRankLines['hold']>): TimelineEntry => ({ level: h.level, text: `Held at ${RANK_LABEL[h.rank]}`, detail: h.line, rank: h.rank });
+
 /** Timeline for a class-advancement track (saves / perception / classDc / spellcasting / armor),
- *  seeded with the class's level-1 base rank. */
+ *  seeded with the class's level-1 base rank — and the track's rank tweaks (plan B WP5): an "at least"
+ *  floor at its start level after that level's class raises (the build applies it after the class
+ *  raises), and an "exactly" hold last. */
 function profTimeline(c: Character, db: ContentDatabase, track: string, baseRank: ProficiencyRank, label: string): TimelineEntry[] {
   const cls = c.classId ? db.classes[c.classId] : undefined;
   const out: TimelineEntry[] = [];
   if (baseRank !== 'untrained') {
     out.push({ level: 1, text: `${RANK_LABEL[baseRank]} ${label}`, detail: cls ? `from your ${cls.name}` : undefined, rank: baseRank });
   }
+  const target = rankTargetOfTrack(track);
+  const tw: TweakRankLines = target ? tweakRankLines(c, target) : { floors: [] };
+  const floors = [...tw.floors];
+  let rank = baseRank;
+  const landFloors = (upTo: number) => {
+    while (floors.length && floors[0].level <= upTo) {
+      const f = floorEntry(floors.shift()!, rank);
+      rank = f.rank;
+      out.push(f.entry);
+    }
+  };
   for (const e of advancementFor(c).filter((e) => e.track === track).sort((a, b) => a.level - b.level)) {
+    landFloors(e.level - 1);
     // package I: a row keyed by the class's own copy of a shared feature (perception-expertise-thaumaturge) reads as
     // the feature's printed name, "Perception expertise", never "Perception expertise thaumaturge".
     const own = c.classId && e.source?.endsWith(`-${c.classId}`) ? e.source.slice(0, -(c.classId.length + 1)) : e.source;
-    out.push({ level: e.level, text: `Raised to ${RANK_LABEL[e.rank]}`, detail: humanize(own), rank: e.rank });
+    // A floor already above this raise: the raise changes nothing, and the line says so — the rank
+    // stays the floor's, so the last line is the sheet's rank (as the skill side's "no change" line).
+    const next = higherRank(rank, e.rank);
+    out.push(
+      next === rank && e.rank !== rank
+        ? { level: e.level, text: `Raised to ${RANK_LABEL[e.rank]} (no change: already ${RANK_LABEL[rank]})`, detail: humanize(own), rank }
+        : { level: e.level, text: `Raised to ${RANK_LABEL[e.rank]}`, detail: humanize(own), rank: next },
+    );
+    rank = next;
   }
+  landFloors(Infinity);
+  if (tw.hold) out.push(holdEntry(tw.hold));
   return out;
+}
+
+/**
+ * A skill's or Lore's timeline (plan B WP5, open point 4): replayed in level order from untrained, the way
+ * `buildCharacter` applies it — the level-1 training (when the skill had one), each "at least" floor at its
+ * start level BEFORE that level's increases ("At least Expert", "Tweak (reason)"), each skill increase
+ * stepped with the build's own `stepRank` and `skillIncreaseCap` ("Skill increase → Expert", or "Skill
+ * increase (no change: already Expert)" when a floor or the level's cap left nothing to raise), then a raise
+ * the replay cannot name (a feat, a class feature such as Warfare Expertise), and an "exactly" hold LAST
+ * ("Held at Trained", "Tweak: exactly trained (reason)") — the clamp the build runs after every raise. Its
+ * last rank is the skill's stored rank; a daily-preparation pick that beats it is not in it.
+ *
+ * Whether the skill was trained at 1st level is not stored on a Character, so it is inferred: the start
+ * (trained or untrained) whose replay reaches the stored rank, when exactly one does; otherwise (both do —
+ * a floor covers it — or neither — a feat raised it further — or a hold set it) only a PRINTED training
+ * (the background's, the class's fixed skill) counts, so the timeline never claims a training it cannot
+ * see. A class-skill pick a later feat raised then shows as the one "Raised to" line.
+ *
+ * Since skill-order WP7 that replay is the FALLBACK: `historySkillTimeline` (below) tells the timeline from the
+ * engine's per-level history whenever the character has one that agrees with the sheet.
+ */
+function skillTimeline(c: Character, db: ContentDatabase, key: ProficiencyKey): TimelineEntry[] {
+  // Skill order WP7: the engine's per-level history names every step; today's replay below is the fallback.
+  const fromHistory = historySkillTimeline(c, db, key, tweakRankLines(c, `skill:${key}`));
+  if (fromHistory) return fromHistory;
+  return replaySkillTimeline(c, db, key);
+}
+
+/** The record a history step names, as a player reads it (a creation training in part B's own words: "from your
+ *  Wizard", "from the Acolyte background", "a trained skill"). */
+function stepRecordName(s: SkillStep, c: Character, db: ContentDatabase): string | undefined {
+  const i = s.source.indexOf(':');
+  const kind = i < 0 ? s.source : s.source.slice(0, i);
+  const id = i < 0 ? '' : s.source.slice(i + 1);
+  switch (kind) {
+    case 'class':
+    case 'class2':
+      return `from your ${db.classes[id]?.name ?? humanize(id)}`;
+    case 'background':
+      return `from the ${db.backgrounds[id]?.name ?? (c.customBackground as { name?: string } | undefined)?.name ?? humanize(id)} background`;
+    case 'classPick':
+      return 'a trained skill';
+    case 'langLore':
+      return 'a Lore in place of a language';
+    case 'deity':
+      return `from your deity, ${db.deities[id]?.name ?? humanize(id)}`;
+    case 'heritage':
+      return db.heritages[id]?.name ?? humanize(id);
+    case 'ancestry':
+      return db.ancestries[id]?.name ?? humanize(id);
+    case 'feat':
+      return db.feats[id]?.name ?? humanize(id);
+    case 'feature':
+    case 'option':
+      return db.classFeatures[id]?.name ?? db.feats[id]?.name ?? humanize(id);
+    case 'pick': {
+      const name = db.feats[id]?.name ?? db.classFeatures[id]?.name ?? db.backgrounds[id]?.name ?? humanize(id);
+      return `${name} (replacement skill)`;
+    }
+    default:
+      return humanize(id || kind);
+  }
+}
+
+/**
+ * A skill's timeline FROM THE ENGINE'S PER-LEVEL HISTORY (skill-order plan section 2, WP7): every step the build
+ * took on this key, in print order, with its record and its level — "1 Trained [Kholo Lore]", "2 Expert [Medic
+ * Dedication]", "1 Kholo Lore: already Trained — you picked Arcana" — where part B's replay could only infer the
+ * 1st-level training and name the rest one "Raised to" line. Part B's own lines keep their words exactly: the
+ * creation training ("Trained" from your class / the background, "a trained skill"), a floor ("At least …",
+ * "Tweak (reason)", its "(no change: already …)"), each increase ("Skill increase → Expert", "(no change: already
+ * Expert)"), and the "exactly" hold LAST. Undefined when the character has no history, or the history does not end
+ * on the sheet's rank (`historyAgrees`: an import patched the rank after the build) — the caller keeps the replay.
+ */
+/** "Tweak: extra skill increase (reason)" — an extra place's own words, its reason read from its stored block (any
+ *  state: a step or a boost step exists only while it was live). Tweaks phase 2 WP11 (C15 / C16). */
+function tweakPlaceDetail(c: Pick<Character, 'overrides' | 'options'>, id: string, what: string): string {
+  const reason = storedChoiceBlocks(c).find((b) => b.key === `blocks:${id}`)?.reason;
+  return `Tweak: extra ${what}${reason ? ` (${reason})` : ''}`;
+}
+
+/** The breakdown line of one extra boost: "Tweak: boost at level 5 (reason)" (C16). */
+function tweakBoostLine(c: Pick<Character, 'overrides' | 'options'>, t: TweakBoostStep): string {
+  const reason = storedChoiceBlocks(c).find((b) => b.key === `blocks:${t.id}`)?.reason;
+  return `Tweak: boost at level ${t.level}${reason ? ` (${reason})` : ''}`;
+}
+
+function historySkillTimeline(c: Character, db: ContentDatabase, key: ProficiencyKey, tw: TweakRankLines): TimelineEntry[] | undefined {
+  const h = c.skillHistory;
+  if (!h || historyAgrees(c, key, tw.hold?.rank) !== true) return undefined;
+  const floors = [...tw.floors];
+  const out: TimelineEntry[] = [];
+  for (const s of h.steps) {
+    if (s.key !== key) continue;
+    const name = stepRecordName(s, c, db);
+    const changed = s.to !== s.from;
+    if (s.phase === 'floor') {
+      const at = floors.findIndex((f) => f.level === s.level);
+      const f = at >= 0 ? floors.splice(at, 1)[0] : undefined;
+      out.push(f ? { ...floorEntry(f, s.from).entry, rank: s.to } : { level: s.level, text: `At least ${RANK_LABEL[s.to]}`, detail: 'Tweak', rank: s.to });
+      continue;
+    }
+    if (s.phase === 'increase' && /^(increase|bonus|bgIncrease|tweakIncrease):/.test(s.source)) {
+      const text =
+        s.note === 'swallow'
+          ? 'Skill increase (no change: held by an older tweak)'
+          : s.note === 'drop'
+            ? 'Skill increase (not applied: this skill cannot take it)'
+            : changed
+              ? `Skill increase → ${RANK_LABEL[s.to]}`
+              : `Skill increase (no change: already ${RANK_LABEL[s.from]})`;
+      // Tweaks phase 2 WP11 (C15): an extra place's increase names its tweak, as a floor does ("Tweak (reason)").
+      const tweak = s.source.startsWith(TWEAK_INCREASE_SOURCE) ? tweakPlaceDetail(c, s.source.slice(TWEAK_INCREASE_SOURCE.length), 'skill increase') : undefined;
+      out.push({ level: s.level, text, ...(tweak ? { detail: tweak } : {}), rank: s.to });
+      continue;
+    }
+    if (s.phase === 'set') {
+      // An old Overrides `=` (or a moved "exactly" at its old place): a live hold says it as the last line.
+      if (!tw.hold) out.push({ level: s.level, text: RANK_LABEL[s.to], detail: 'an older tweak, kept as it was', rank: s.to });
+      continue;
+    }
+    if (s.note === 'redirect') {
+      out.push({ level: s.level, text: `${name ?? 'A grant'}: already ${RANK_LABEL[s.from]} — ${s.pick ? `you picked ${skillLabel(s.pick)}` : 'a replacement skill is owed'}`, rank: s.to });
+      continue;
+    }
+    if (s.note === 'swallow') {
+      out.push({ level: s.level, text: 'No change: held by an older tweak', ...(name ? { detail: name } : {}), rank: s.to });
+      continue;
+    }
+    // The creation phase: one line per training (a second source of the same training says nothing).
+    if (s.phase === 'create' && !changed) continue;
+    const asked = s.rank ?? s.to;
+    out.push({
+      level: s.level,
+      text: changed ? RANK_LABEL[s.to] : `${RANK_LABEL[asked]} (no change: already ${RANK_LABEL[s.from]})`,
+      ...(name ? { detail: name } : {}),
+      rank: s.to,
+    });
+  }
+  if (tw.hold) out.push(holdEntry(tw.hold));
+  return out;
+}
+
+/** Part B's replay (the doc above `skillTimeline`): the timeline for a character with no history, or one whose
+ *  history disagrees with its sheet (`historyAgrees`). */
+function replaySkillTimeline(c: Character, db: ContentDatabase, key: ProficiencyKey): TimelineEntry[] {
+  const stored = (c.proficiencies.skills[key] ?? 'untrained') as ProficiencyRank;
+  const tw = tweakRankLines(c, `skill:${key}`);
+  const incs = (c.skillIncreases ?? []).filter((s) => s.skill === key && s.level <= c.level).sort((a, b) => a.level - b.level);
+  const bg = c.backgroundId ? db.backgrounds[c.backgroundId] : undefined;
+  const cls = c.classId ? db.classes[c.classId] : undefined;
+  const fixed = (cls?.trainedSkills.fixed ?? []) as string[];
+  // The background's own printed training — its fixed skill or one of its Lores — as its book blocks
+  // (blocks/book.ts, Building blocks item 10).
+  const printed = bg && backgroundTrains(bg, key) ? `from the ${bg.name} background` : fixed.includes(key) ? `from your ${cls!.name}` : null;
+
+  const replay = (start: ProficiencyRank, out?: TimelineEntry[]): ProficiencyRank => {
+    let rank = start;
+    for (let lvl = 1; lvl <= c.level; lvl++) {
+      for (const f of tw.floors) {
+        if (f.level !== lvl) continue;
+        const r = floorEntry(f, rank);
+        rank = r.rank;
+        out?.push(r.entry);
+      }
+      for (const si of incs) {
+        if (si.level !== lvl) continue;
+        const next = stepRank(rank, skillIncreaseCap(lvl));
+        out?.push(
+          next === rank
+            ? { level: lvl, text: `Skill increase (no change: already ${RANK_LABEL[rank]})`, rank }
+            : { level: lvl, text: `Skill increase → ${RANK_LABEL[next]}`, rank: next },
+        );
+        rank = next;
+      }
+    }
+    return rank;
+  };
+
+  let trainedAt1: boolean;
+  if (tw.hold) trainedAt1 = !!printed;
+  else if (stored === 'untrained') trainedAt1 = false;
+  else {
+    const fromTrained = replay('trained') === stored;
+    const fromUntrained = replay('untrained') === stored;
+    trainedAt1 = fromTrained !== fromUntrained ? fromTrained : !!printed;
+  }
+
+  const timeline: TimelineEntry[] = [];
+  if (trainedAt1) timeline.push({ level: 1, text: 'Trained', detail: printed ?? 'a trained skill', rank: 'trained' });
+  const replayed = replay(trainedAt1 ? 'trained' : 'untrained', timeline);
+  if (!tw.hold && replayed !== stored) {
+    // What the replay cannot name: a raise from a feat or class feature, or an old Overrides `=` the
+    // Tweaks sort could not take (an unreadable rank) — so the last rank is always the stored one.
+    const up = PROF_ORDER.indexOf(stored) > PROF_ORDER.indexOf(replayed);
+    const legacy = liveLegacyRanks(c).some((e) => e.key === key);
+    timeline.push({
+      level: c.level,
+      text: `${up ? 'Raised' : 'Set'} to ${RANK_LABEL[stored]}`,
+      detail: legacy ? 'an older tweak, kept as it was' :`by level ${c.level}: a feat, class feature or other grant`,
+      rank: stored,
+    });
+  }
+  if (tw.hold) timeline.push(holdEntry(tw.hold));
+  return timeline;
 }
 
 const PROF_ORDER: ProficiencyRank[] = ['untrained', 'trained', 'expert', 'master', 'legendary'];
@@ -1149,26 +1405,8 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const ability = d.ability;
       const parts: CalcPart[] = d.parts.map((p) => ({ label: p.label, ...(p.note ? { note: p.note } : {}), value: p.value }));
       const situational = situationalList(modeConditionalLines(c, { kind: 'skill', detail: ref.skill }), featSituationalLines(c, db, ref));
-      // timeline: trained at L1 + each skill increase for this skill
-      const timeline: TimelineEntry[] = [];
-      if (d.rank !== 'untrained') {
-        const bg = c.backgroundId ? db.backgrounds[c.backgroundId] : undefined;
-        const cls = c.classId ? db.classes[c.classId] : undefined;
-        const fixed = (cls?.trainedSkills.fixed ?? []) as string[];
-        // The background's fixed skill as its book block (blocks/book.ts, Building blocks item 10).
-        const src =
-          bg && backgroundTrainings(bg).skill === ref.skill
-            ? `from the ${bg.name} background`
-            : fixed.includes(ref.skill)
-              ? `from your ${cls!.name}`
-              : 'a trained skill';
-        timeline.push({ level: 1, text: 'Trained', detail: src, rank: 'trained' });
-        let rank: ProficiencyRank = 'trained';
-        for (const si of (c.skillIncreases ?? []).filter((s) => s.skill === ref.skill && s.level <= lvl).sort((a, b) => a.level - b.level)) {
-          rank = PROF_ORDER[Math.min(PROF_ORDER.length - 1, PROF_ORDER.indexOf(rank) + 1)];
-          timeline.push({ level: si.level, text: `Skill increase → ${RANK_LABEL[rank]}`, rank });
-        }
-      }
+      // The training, the increases, the rank tweaks' floor and hold, in the order the build applied them.
+      const timeline = skillTimeline(c, db, ref.skill);
       return {
         title: skillLabel(ref.skill),
         subtitle: `${ABIL_LABEL[ability]} skill`,
@@ -1246,13 +1484,14 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const ac = deriveAc(c, db);
       // A BATTLE FORM SETS the AC, so the usual parts — Dex, proficiency, armour — no longer sum to it.
       // Printing them anyway would show a breakdown that contradicts the number above it, so this
-      // returns the one honest part instead, the same shape `maxOverride` uses for a replaced maximum.
+      // returns the one honest part instead.
       if (ac.fromBattleForm) {
         return {
           title: 'Armor Class',
           totalText: String(ac.value),
           rank: ac.rank,
-          // acTerms' one term: "<form> (battle form)" — no tweak reaches a battle form's AC.
+          // acTerms: the stated AC, "<form> (battle form)", plus a 0 line per AC tweak it ignores
+          // (blocks/active.ts ignoredTweakTerms) — no tweak changes a battle form's AC.
           parts: partsOf(resolveTerms(acTerms(c, db))),
           timeline: [],
           description:
@@ -1383,9 +1622,14 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
        * its own line, and "Boosts & flaws" is what the build made before it. */
       const adds = scoreAddBlocks(c, ref.ability);
       const added = adds.reduce((n, b) => n + (b.value as number), 0);
+      /* Tweaks phase 2 WP11 (C16): each live extra boost the build applied to this attribute (`c.tweakBoostSteps`, the
+       * build's own record of what it added, +2 or +1) is its own line, taken out of "Boosts & flaws". */
+      const extra = (c.tweakBoostSteps ?? []).filter((t) => t.attribute === ref.ability);
+      const extraSum = extra.reduce((n, t) => n + t.value, 0);
       const parts: CalcPart[] = [
         { label: 'Base', value: 10 },
-        { label: 'Boosts & flaws', note: `score ${score - added}`, value: score - 10 - added },
+        { label: 'Boosts & flaws', note: `score ${score - added - extraSum}`, value: score - 10 - added - extraSum },
+        ...extra.map((t) => ({ label: tweakBoostLine(c, t), value: t.value })),
         ...adds.map((b) => ({ label: blockKind(b.kind)!.line(b), value: b.value as number })),
       ];
       const timeline: TimelineEntry[] = [];
@@ -1393,11 +1637,16 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         const a = ref.ability;
         const anc = build.ancestryId ? db.ancestries[build.ancestryId] : undefined;
         if (anc?.abilityFlaws?.includes(a)) timeline.push({ level: 1, text: 'Ancestry flaw −2' });
-        if (build.ancestryBoosts?.includes(a) || build.backgroundBoosts?.includes(a) || build.levelBoosts?.includes(a) || build.keyAbility === a)
+        /* Tweaks phase 2 WP14 (C47): a pick in a boost place a live "Remove a place" removes counts nowhere, so it
+         * is no timeline step — the same seam the build reads (blocks/active.ts `countingBoostPicks`). */
+        const counts = (set: string, list: readonly (AbilityId | null)[] | undefined, at?: number) => countingBoostPicks(build, set, list ?? [], at).includes(a);
+        if (counts('ancestry', build.ancestryBoosts) || counts('background', build.backgroundBoosts) || counts('free', build.levelBoosts) || build.keyAbility === a)
           timeline.push({ level: 1, text: 'Boosted at level 1', detail: 'ancestry / background / class / free boosts' });
         for (const [lvlStr, picks] of Object.entries(build.attributeBoosts ?? {})) {
-          if ((picks as (AbilityId | null)[]).includes(a) && Number(lvlStr) <= lvl) timeline.push({ level: Number(lvlStr), text: 'Attribute boost +2 (or +1 past 18)' });
+          if (counts('level', picks as (AbilityId | null)[], Number(lvlStr)) && Number(lvlStr) <= lvl) timeline.push({ level: Number(lvlStr), text: 'Attribute boost +2 (or +1 past 18)' });
         }
+        // WP11 (C16): an extra boost's entry at its level, with what it added.
+        for (const t of extra) timeline.push({ level: t.level, text: `Attribute boost +${t.value}`, detail: tweakPlaceDetail(c, t.id, 'attribute boost') });
         timeline.sort((x, y) => x.level - y.level);
       }
       return {
@@ -1412,22 +1661,12 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
     }
     case 'hp': {
       const max = deriveMaxHp(c, db);
-      // A manual max-HP override replaces the whole calculation — show it as a single part.
-      if (c.hitPoints.maxOverride != null) {
-        return {
-          title: 'Hit points',
-          subtitle: `Maximum ${max}`,
-          totalText: String(max),
-          parts: [{ label: 'Manual maximum (override)', value: max }],
-          timeline: [],
-          description: DESC.hp,
-          situational: situationalList([], featSituationalLines(c, db, ref)),
-        };
-      }
       /* Max HP's own term list (derive.ts `maxHpTerms`): the ancestry HP the build resolved (a size
        * table, Mightyfall Kobold's 10), class + Con per level, every feat AND worn item with a max-HP
        * clause (a Belt of Good Health was missing), tweak blocks, a mode on Constitution or on max HP,
-       * and Drained — then the 0 floor, when the total went below it. */
+       * and Drained — then the 0 floor, when the total went below it. A SET maximum (Tweaks "Set maximum
+       * HP", plan B case C) is one of those terms: the book lines still show what they were, the set line
+       * carries the difference, and the modes and Drained follow — no separate one-line branch. */
       const r = resolveTerms(maxHpTerms(c, db));
       const parts: CalcPart[] = partsOf(r);
       // Only the real floor gets a line. A catch-all "difference" line here would hide a breakdown that
@@ -1452,7 +1691,8 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
        * reported whatever it could not name as an "Armor Speed penalty" or an unnamed "Speed increase"
        * from the difference. */
       const { speeds, parts: landParts } = landSpeedResolved(c, db);
-      const parts: CalcPart[] = landParts.map((p) => ({ ...p }));
+      // label, note and value only — a part's `layer` is for rules/numberTerms.ts, not the breakdown.
+      const parts: CalcPart[] = landParts.map(({ label, note, value }) => ({ label, ...(note !== undefined ? { note } : {}), value }));
       const naturalLand = speeds.land ?? 0;
 
       // Temporary in-play override (Hasted/Slowed/etc.) — folded into the total so the math reads cleanly.

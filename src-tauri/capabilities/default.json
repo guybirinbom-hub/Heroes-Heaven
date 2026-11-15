@@ -14,9 +14,11 @@
         "core:window:allow-maximize",
         "core:window:allow-unmaximize",
         "core:window:allow-close",
+        "core:window:allow-destroy",
         "core:window:allow-start-dragging",
         "core:window:allow-set-focus",
-        "opener:allow-open-url"
+        "opener:allow-open-url",
+        "opener:allow-default-urls"
       ]
     },
     {
@@ -31,6 +33,23 @@
       "permissions": [
         "dialog:allow-save",
         "fs:allow-write-text-file"
+      ]
+    },
+    {
+      "identifier": "desktop-update",
+      "description": "Windows app only: the update banner's Install the update (src/sheet/UpdateNotice.tsx). Check the newest release's latest.json, download the installer it names (its signature is checked against the pubkey in tauri.conf.json) and run it. Check, download and install only. Guarded by test/update-button.test.tsx.",
+      "windows": [
+        "main"
+      ],
+      "platforms": [
+        "windows",
+        "macOS",
+        "linux"
+      ],
+      "permissions": [
+        "updater:allow-check",
+        "updater:allow-download",
+        "updater:allow-install"
       ]
     }
   ]

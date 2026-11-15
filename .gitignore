@@ -1,6 +1,10 @@
 # dependencies
 node_modules
 
+# PC UI checks' run output (docs/ui-tests.md) — HTML report, diff images, failure traces
+work/.ui-test-results/
+work/.ui-test-report/
+
 # build output
 dist
 dist-ssr

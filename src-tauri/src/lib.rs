@@ -394,6 +394,12 @@ pub fn run() {
   let builder = builder
     .plugin(tauri_plugin_dialog::init())
     .plugin(tauri_plugin_fs::init());
+  // Desktop only: the update banner's "Install the update" (src/sheet/UpdateNotice.tsx). It reads the
+  // newest release's latest.json (endpoint + pubkey in tauri.conf.json), downloads the installer it
+  // names, refuses it unless the signature matches, then runs it in passive mode and restarts the app.
+  // The phone has no such route (an APK can't install itself), so it keeps its download link.
+  #[cfg(desktop)]
+  let builder = builder.plugin(tauri_plugin_updater::Builder::new().build());
   builder
     .setup(|app| {
       if cfg!(debug_assertions) {

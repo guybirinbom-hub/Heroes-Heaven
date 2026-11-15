@@ -37,7 +37,15 @@ export interface FeatEntry {
    *  "<name>: a trait. Feats, items, spells… interact with anything that has this trait." sentence
    *  for something that is not a trait at all. */
   groupLabel?: string;
+  /** The Feats & Features SECTION (and filter) the row sits in: the class's own name ("Fighter"), an
+   *  archetype's name ("Bastion"), "Ancestry & heritage", "Skill" or "General" (bug 2026-11-08). */
   bucket: string;
+  /** What kind of section `bucket` is, for its icon and its place in the order. Unset = 'class'. */
+  bucketKind?: 'class' | 'archetype' | 'ancestry' | 'skill' | 'general';
+  /** The record's OWN type, for the popup's "<type> feat" line ("Class", "Archetype", "Skill" …). A
+   *  class feat an archetype granted sits under that archetype's section but is still a class feat.
+   *  Unset = `bucket`. */
+  featType?: string;
   rarity?: string;
   prerequisites?: string[];
   /** When set, this feat was auto-granted by another feat — the granting feat's display name. */
@@ -374,7 +382,7 @@ export function FeatDetail({ entry, onClose, character }: FeatDetailProps) {
       )}
     </>
   );
-  const kind = entry.isFeature ? 'Feature' : `${entry.bucket} feat`;
+  const kind = entry.isFeature ? 'Feature' : `${entry.featType ?? entry.bucket} feat`;
   const controls = (
     <>
       <div className="sd-sub" data-ours="">

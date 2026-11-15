@@ -1,4 +1,6 @@
-import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useUnsavedWork } from '../data/unsavedWork';
+import { flushSync } from 'react-dom';
 import { listValues } from '../data';
 import './builder.css';
 import {
@@ -17,6 +19,7 @@ import {
   emptyBuild,
   featChoiceLabel,
   featChoicePrompt,
+  featSkillChoiceValue,
   buildChoiceOptions,
   classSubPickOrder,
   classCantripBonus,
@@ -24,6 +27,7 @@ import {
   legacyArchetypeCantrips,
   levelGrants,
   levelChoices,
+  choicesToName,
   loreKey,
   subclassAnchorAt,
   backgroundGrantedFeats,
@@ -32,17 +36,33 @@ import {
   choiceKeys,
   choiceOptionsFor,
   withCustomAnswer,
+  TWEAKS_PAGE,
+  deityMustBeSanctification,
+  SANCTIFICATION_FROM_DEITY,
 } from '../rules/build';
-import { OPEN_SOURCE_LABEL, openChoiceOptions } from '../rules/openChoice';
+import { openChoiceOptions } from '../rules/openChoice';
 import { DOMAIN_SPELLS } from '../rules/domains';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet, mythicCallingRecords, sourceIdToken, sourceRowLabelsFor, storedSources } from '../rules/sources';
-import { eligibleFeatsForSlot, findHiddenFeatMatches, fitsSlot, moveTargetFor, swapSlotKeys } from '../rules/featSlots';
+import { eligibleFeatsForSlot, findHiddenFeatMatches, fitsSlot, moveTargetFor, ordinalOf, removedSlotKeys, slotBookRefusals, slotRefusal, swapSlotKeys, TAKEN_WORDS, withFeat, type FeatSlotRef } from '../rules/featSlots';
+import { AnyListNote, allowable, confirmAllowHere } from './tweaks/anyList';
+import { MoreTakesNote, confirmTakeAgain, moreTakesSlotMarks, pausedMoreTakesCountingCopy, takeAgainPlan } from './tweaks/moreTakes';
+import { CardMenu, FeatSlotCard } from './FeatSlotCard';
+import { RemovedChoicePlace, RemovedPlaceLine, boostSetParts, removeChoicePlace, removePlaceDrafts, restoreChoicePlace } from './tweaks/removePlace';
 // Case D (docs/overrides-redesign.md spec item 2): a feat given through Tweaks is held like a picked one.
-import { heldFeatIds, heldFeatSlots } from '../rules/heldFeats';
+import { featIdAtSlot, heldFeatIds, heldFeatSlots } from '../rules/heldFeats';
 import { classFeatureDescription } from '../rules/featureText';
 // Item 7 (docs/overrides-redesign.md, Building blocks): the one content path for Overrides content edits.
 import { contentFor } from '../rules/blocks/content';
+import { allowedInPicker, featPlaceKeyOf, isAllowedAnyway, livePlaces, removedPlaceBlocks, removedSkillIncreasePlaces, skillPlaceId, storedAllowAnyway, storedChoiceBlocks } from '../rules/blocks/active';
+import { AddPlaceControl, carrierPlaceCardsAt, carrierPlaceRule, featPlaceCardsAt, featPlaceRule, type CarrierPlaceCard, type FeatPlaceCard } from './tweaks/addPlace';
+import { ABILITY_NAME } from '../rules/blocks/names';
+import { TWEAK_INCREASE_SOURCE } from '../rules/ranks';
+import { tweaksPageOn } from '../rules/blocks/stored';
+import { dropChoiceTweak, takeAnywayWrite, writeChoiceTweak, writeTweak } from '../rules/blocks/write';
+import { castingEntryChanges, openForSkillOrder, openForTweaks, skillOrderStamped, stampSkillOrderSave, stampTweaksSave } from '../rules/blocks/save';
+import { SKILL_ORDER_NOTICE_HEADING, SKILL_ORDER_NOTICE_SHOWN, skillOrderChanges, type SkillOrderChange } from '../rules/skillOrderNotice';
+import { confirmCastingChanges } from './tweaks/castingConfirm';
 import {
   resolveBackground,
   restrictedSkillIncreaseAllowed,
@@ -60,8 +80,8 @@ import {
   senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
-import { archetypeCantripCounts, archetypeTradition, dedicationCantripKeys, foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillFallbackPick, skillSlotOptions } from '../rules/build';
-import { bookGrantChips, featRepertoireGrants, giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
+import { archetypeCantripCounts, archetypeTradition, dedicationCantripKeys, featSubtreeIds, foldArchSpellSlotBonuses, grantedChoiceKey, heldClassTrainingClauseOptions, narrowSpellFilter, optionDragon, skillFallbackPick, skillRanksAtLevel, skillRanksAtRecord, skillSlotOptions, type SkillRanks } from '../rules/build';
+import { bookGrantChips, featRepertoireGrants, giftChipIds, ownPlacesBeside, repeatedGrantIds, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
 import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
 import { flexibleCollectionSize } from '../rules/build';
@@ -70,14 +90,16 @@ import { answersInOtherGrantedTakes } from '../rules/build';
 import { effectChoiceOffered } from '../rules/build';
 import { activeCasterArchetype, CASTER_ARCHETYPES, archetypeBook, archetypeBookRankNote, archetypeBookRanks, archetypeBookSentence, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions, type ArchetypeBookRank } from '../rules/casterArchetypes';
 import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
-import { FEAT_PICK_GRANTS, pickKeysFor, pickPrompt, pickableFeats } from '../rules/featPickGrants';
+import { BONUS_SKILL_FEAT_SPEC, FEAT_PICK_GRANTS, UMT_FEAT_SPEC, pickKeysFor, pickPrompt } from '../rules/featPickGrants';
+import { bonusSkillFeatOptions, umtFeatOptions } from './bonusFeatOptions';
 import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
+import { choiceKeptHow, keyedByAnswer, slugWords, withKeptAnswer } from './keptAnswer';
 import { isBoundBackgroundGrant } from '../rules/backgroundGrants';
 import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
-import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId, SpellAccessGrant, SpellcastingEntry, Tradition } from '../rules/types';
+import type { Character, ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId, SpellAccessGrant, SpellcastingEntry, Tradition } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, SubclassFollowUps, cap, choiceOptionRecord, levelRowClasses, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, requestArchetypeTraditionChange, type OptionRecord } from './shared';
+import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FeatPickSelect, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, SubclassFollowUps, cap, choiceOptionRecord, levelRowClasses, loreLabel, requestRemovePick, requestSubclassChange, subclassPickerParts, useBuilderActions, requestArchetypeTraditionChange, type OptionRecord } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -94,6 +116,15 @@ import { useUndoableState } from '../useUndoableState';
 import { claimUndo } from '../undoClaim';
 import { pinOf, samePin } from '../rules/play';
 import { keepBuildCampaigns } from '../data/campaignLeave';
+import { featPlaceCategories, tweakRows, tweaksBadge } from './tweaks/model';
+import { TweaksButton } from './tweaks/TweaksButton';
+import { TweaksPage } from './tweaks/TweaksPage';
+import { BookGreyLine, RevealToggle, ShowTweakContext, StoredPickNote, anyPickerBlock, confirmTakeAnyway, notSaved, storedPickGrey, tweakUndoHint, type AnyPickerKey } from './tweaks/takeAnyway';
+import { TweakMark, tweakMarkState } from './tweaks/TweakMark';
+import { BreakableOptionRow, PlaceCardShell, flashPlace } from './tweaks/choiceParts';
+import { sanctificationBookReason, sanctificationNotAllowed } from '../rules/build';
+import { OpenAnswerNote, OpenAnswerPick, openSpellTweak } from './tweaks/OpenAnswerPick';
+import { skillTweakNotes } from './tweaks/skillNotes';
 
 /**
  * A narrowed option as `PopupSelect` wants it.
@@ -146,9 +177,12 @@ const RANK_ABBR: Record<ProficiencyRank, string> = {
 };
 
 
-type Sel = 'setup' | number;
+// 'tweaks' = the Tweaks page (plan B WP6): opened by the top bar's Tweaks button, never a strip chip.
+type Sel = 'setup' | 'tweaks' | number;
 type Picker =
-  | { kind: 'feat'; level: number; category: FeatCategory; idx: number }
+  // Tweaks phase 2 WP7: an extra feat place's picker carries its stored key (`<level>:extra<category>:<n>`, which the
+  // three fields cannot rebuild) and `place` (its feat list is the place's own: featSlots.ts `slotRefOf`).
+  | { kind: 'feat'; level: number; category: FeatCategory; idx: number; key?: string; place?: boolean }
   // `caster: 2` targets the Dual-Class SECOND caster (writes cantrips2/spells2/signatures2); absent = primary.
   | { kind: 'spell'; rank: number; cap?: number; caster?: 2 }
   | { kind: 'familiar-ability'; companionId: string };
@@ -202,7 +236,9 @@ export function hasChoicesAtLevel(build: BuildState, level: number): boolean {
   const feat = Object.entries(build.featPicks).some(([k, v]) => !!v && Number(k.split(':')[0]) === level);
   const skillIncrease = !!build.skillIncreases[level];
   const attrBoosts = (build.attributeBoosts[level] ?? []).some((x) => x != null);
-  return feat || skillIncrease || attrBoosts;
+  // Tweaks phase 2 WP11: a live extra skill-increase or boost place at this level that holds its answer.
+  const extraPlace = livePlaces(build).some((p) => p.level === level && (p.skill !== undefined || p.attribute !== undefined));
+  return feat || skillIncrease || attrBoosts || extraPlace;
 }
 
 /**
@@ -228,8 +264,13 @@ export function buildFingerprint(b: BuildState): string {
  * press, tap, key or text input anywhere, every build change moves the start along with it; after it,
  * the start is fixed. Undoing back to the start, or typing a name and deleting it again, is unchanged.
  * test/phone-builder-leave.test.tsx.
+ *
+ * `leftCampaign(id)`: a Leave on the Setup card is SAVED at once (App detaches the stored character), so the
+ * start moves along with it — Cancel after a Leave asked "Discard changes?" for a change already kept. Only
+ * the leave moves it: a JOIN lives in the draft until Save, so Cancel after a join still asks.
+ * test/campaign-gone-app.test.tsx ("the builder: Cancel after a campaign Leave or Join").
  */
-export function useBuildChanged(build: BuildState): () => boolean {
+export function useBuildChanged(build: BuildState): (() => boolean) & { leftCampaign: (campaignId: string) => void } {
   const startRef = useRef(build);
   const frozenRef = useRef(false);
   const latestRef = useRef(build);
@@ -247,8 +288,20 @@ export function useBuildChanged(build: BuildState): () => boolean {
       for (const ev of events) document.removeEventListener(ev, freeze, true);
     };
   }, []);
-  return () =>
-    latestRef.current !== startRef.current && buildFingerprint(latestRef.current) !== buildFingerprint(startRef.current);
+  const api = useRef<((() => boolean) & { leftCampaign: (campaignId: string) => void }) | null>(null);
+  if (!api.current) {
+    const changed = () =>
+      latestRef.current !== startRef.current && buildFingerprint(latestRef.current) !== buildFingerprint(startRef.current);
+    api.current = Object.assign(changed, {
+      leftCampaign: (campaignId: string) => {
+        const s = startRef.current;
+        // Always a list: the draft's comes back as one (`b.campaignIds ?? []`), so a join and a leave in one
+        // visit compare equal to a start that had none.
+        startRef.current = { ...s, campaignIds: (s.campaignIds ?? []).filter((id) => id !== campaignId) };
+      },
+    });
+  }
+  return api.current;
 }
 
 /** The one line that says what a spell chip's ★ does (it was a hover tooltip only). */
@@ -268,15 +321,99 @@ export function withArticle(noun: string): string {
   return `${/^[aeiou]/i.test(noun) ? 'an' : 'a'} ${noun}`;
 }
 
+/** How a player takes back a pick they took anyway (lives in tweaks/takeAnyway.tsx so the Setup pickers share it). */
+export { tweakUndoHint };
+
 /**
- * How a player takes back a feat they took anyway, in the words of the device they hold. Desktop keeps
- * its Ctrl+Z sentence; a phone has no keyboard, and its Undo arrows are hidden unless the player turned
- * them on in Settings (the owner's setting — 'auto' is desktop-only), so it names what is really there.
+ * ONE redundant grant's replacement pick ("already trained in X → a skill of your choice"): the card the engine's
+ * `Character.skillFallbacks` entry asks for, answered under `<recordId>:fallback:<skill or slot>` — the key build.ts
+ * reads through `skillFallbackPick`. Drawn under a feat's own card (`featQuestions`) and, since skill-order WP5
+ * (plan D14), under a class option's training on the level page its pick opened (Root Epithet's epithets at 3rd:
+ * "If you are already trained in the granted skill, you become trained in a different skill of your choice, as
+ * normal", class-feature-1066). `from` names the record when the card is not drawn under it.
  */
-export function overrideUndoHint(isMobile: boolean, showUndoButtons: boolean): string {
-  if (!isMobile) return 'You can undo with Ctrl+Z.';
-  if (showUndoButtons) return 'You can undo it with the Undo arrow at the top.';
-  return 'Changed your mind? Clear the feat with the ✕ on its slot.';
+function SkillFallbackPick({
+  recordId,
+  fb,
+  build,
+  ranks,
+  patch,
+  from,
+}: {
+  recordId: string;
+  fb: NonNullable<Character['skillFallbacks']>[number];
+  build: BuildState;
+  /** The ranks when the record was taken (skill-order WP7: `recordRanks`, the record's print place — its own
+   *  other trainings laid on). Never the finished character's: a skill trained only at a later level was not
+   *  "already trained" then, and is a live replacement (ruling 2). */
+  ranks: SkillRanks;
+  patch: (p: Partial<BuildState>) => void;
+  from?: string;
+}) {
+  // `slot` keys the deity half of "Religion and your deity's skill" apart
+  // from Religion itself — the engine reads the same key (build.ts).
+  const fbKey = `${recordId}:fallback:${fb.slot ?? fb.skill}`;
+  /* The heading used to say "Already trained in X" whatever the rank was.
+     Golden League Xun's clause fires on a character who is already an
+     EXPERT, and telling them they are trained misstates why the picker
+     appeared — so read the rank they actually hold, WHEN THE RECORD WAS TAKEN (skill-order WP7, P6: Barbarian
+     Dedication at 4 with Athletics increases at 3 and 5 says "Already trained", not the finished "expert"). */
+  const atRecord = ranks[fb.skill];
+  const held = atRecord && atRecord !== 'untrained' ? atRecord : 'trained';
+  const heading = `${from ? `${from}: ` : ''}${fb.note ? cap(fb.note) : `Already ${held} in ${cap(fb.skill)}`}`;
+  /* Ghost Hunter's replacement is *"a new LORE skill of your choice"*, so the
+     player types a subject; the sixteen-skill select cannot express one. */
+  if (fb.lore)
+    return (
+      <SubCard icon="ti-bulb" label={`${heading} — replacement Lore`}>
+        <input
+          className="lvl-lore-input"
+          placeholder="Lore subject (e.g. Warfare)…"
+          value={build.featLoreChoices?.[fbKey] ?? ''}
+          onChange={(e) => patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [fbKey]: e.target.value } })}
+        />
+      </SubCard>
+    );
+  return (
+    <SubCard icon="ti-bulb" label={`${heading} — replacement skill`}>
+      <PopupSelect
+        title="Replacement skill"
+        placeholder="Choose a skill…"
+        // The engine's own read (an old save's answer included), so the
+        // picker never shows empty over a skill the build is granting.
+        value={skillFallbackPick(build, recordId, fb.slot ?? fb.skill) ?? ''}
+        onChange={(v) =>
+          patch({
+            featSkillChoices: { ...(build.featSkillChoices ?? {}), [fbKey]: v as (typeof SKILLS)[number] },
+          })
+        }
+        // The replacement grants `fb.rank ?? 'trained'`, through maxRank —
+        // so every skill the character already has AT THAT RANK is a
+        // second dead end, and this picker (offered precisely BECAUSE one
+        // grant was redundant) used to list all sixteen of them as live.
+        // Above trained the printed clause also NAMES its pool — *"two
+        // other skills of your choice in which you're trained"* — so an
+        // untrained skill is dead for the opposite reason.
+        options={SKILLS.map((s) => {
+          const want = fb.rank ?? 'trained';
+          const cur = ranks[s] ?? 'untrained';
+          const has = PROFICIENCY_RANKS.indexOf(cur) >= PROFICIENCY_RANKS.indexOf(want);
+          const untrained = want !== 'trained' && cur === 'untrained';
+          const dead = s !== build.featSkillChoices?.[fbKey] && (has || untrained);
+          return {
+            value: s,
+            label: cap(s),
+            disabled: dead,
+            disabledReason: !dead
+              ? undefined
+              : untrained
+                ? `Untrained — this replacement asks for a skill you are already trained in.`
+                : `Already ${cur} — pick a skill this would raise to ${want}.`,
+          };
+        })}
+      />
+    </SubCard>
+  );
 }
 
 const ord =(r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
@@ -287,10 +424,19 @@ export function Builder({
   onCancel,
   onCreate,
   onLeaveCampaign,
+  derivedBuild,
+  skillOrderNotice = true,
 }: {
   content: ContentDatabase;
   /** An existing build to edit; omitted when creating a new character. */
   initial?: BuildState;
+  /** Skill order D13 (plan work/skill-rank-level-by-level/plan.md, WP9): the one-time "skill ranks are now worked
+   *  out level by level" notice, shown for an unstamped `initial`, and the `skillOrder` stamp at open and at Save.
+   *  `false` in the GM's edit sheet: no notice, no stamp (the player sees it on their own next open). */
+  skillOrderNotice?: boolean;
+  /** `initial` was rebuilt from the sheet (the character had no stored build — `editableBuildOf(...).derived`):
+   *  the Tweaks page says a picked skill may show as given by a tweak (plan B open point 3). */
+  derivedBuild?: boolean;
   onCancel: () => void;
   onCreate: (build: BuildState) => void;
   /** THIS character leaves a campaign (data/campaignLeave.ts) — threaded to the Campaigns setup card.
@@ -312,15 +458,36 @@ export function Builder({
     redo: redoBuild,
     canUndo: canUndoBuild,
     canRedo: canRedoBuild,
-  } = useUndoableState<BuildState>(() => initial ?? emptyBuild(), { keep: keepBuildCampaigns }); // undo never changes campaigns (data/campaignLeave.ts)
+  } = useUndoableState<BuildState>(
+    // Plan B, B4: the draft is stamped ONCE at open (v, the Tweaks switch as it reads, each old entry's
+    // mode / of / moved / baseline — blocks/save.ts). It moves no number, it is not the player's change
+    // (useBuildChanged starts from it, so Cancel asks nothing), and only Save stores it.
+    // Skill order D13 (WP9): the player's host also stamps `skillOrder` into the draft here — the same kind of
+    // open stamp (no number moves; only Save stores it). The GM's edit sheet does not (`skillOrderNotice`).
+    () => {
+      if (!initial) return emptyBuild();
+      const opened = openForTweaks(initial, baseContent);
+      return skillOrderNotice ? openForSkillOrder(opened, baseContent) : opened;
+    },
+    { keep: keepBuildCampaigns }, // undo never changes campaigns (data/campaignLeave.ts)
+  );
+  /* Skill order ruling 3 (WP9, plan 3.3): what the level-by-level order changed on THIS saved character, worked
+   * out ONCE at open from the unstamped `initial` (one build). Empty — and so no element anywhere — for a new
+   * character, a stamped build, the GM's edit sheet, or a build the change left alone. */
+  const [skillOrderLines] = useState<SkillOrderChange[]>(() =>
+    initial && skillOrderNotice && !skillOrderStamped(initial) ? skillOrderChanges(initial, baseContent) : [],
+  );
+  const [skillOrderAll, setSkillOrderAll] = useState(false);
   // Effective content = the shared DB with this build's Overrides content-edits overlaid (text/field
   // edits to feats/features). Returns the same ref when there are no edits, so pickers/memos are stable.
   // `ovContent` is the FULL (override-applied) DB used for the live character + grants; `content` is
   // that DB with disabled source books filtered out — what the pickers offer. Already-chosen ids are
   // always kept so disabling a book a character already used never breaks it.
   // contentFor (rules/blocks/content.ts): the host passes the character's view (its carried records), the
-  // edits go over it last; the same object for the same view and edits.
-  const ovContent = useMemo(() => contentFor(baseContent, build.overrides), [baseContent, build.overrides]);
+  // edits go over it last; the same object for the same view and edits. Only the LIVE edits (the Tweaks
+  // switch, each edit's own on/off — plan B WP2), so the memo keys on `options` too: contentFor cannot
+  // un-apply an edit, and the Options toggle writes `options` alone.
+  const ovContent = useMemo(() => contentFor(baseContent, build), [baseContent, build.overrides, build.options]); // eslint-disable-line react-hooks/exhaustive-deps
   const sourceCat = useMemo(() => sourceCatalog(baseContent), [baseContent]);
   // desk #170: the Sources rows that print a Mythic Calling, named by the Level 0 picker's hint when every
   // calling's book is off (read off the unfiltered database; `content` below has them removed).
@@ -333,20 +500,31 @@ export function Builder({
     const toggled = applyContentToggles(sourced, { mythicEnabled: build.mythicEnabled, kingmakerEnabled: build.kingmakerEnabled, deviantEnabled: build.deviantEnabled }, keep);
     // "Hide legacy data": drop legacy/legacy-era content (superseded is already pruned at import).
     return applyEditionFilter(toggled, { hideLegacy: build.hideLegacy }, keep);
-    // `build` is read for keepIds but intentionally not a dep: re-running only when sources change is
-    // enough — a freshly-picked item is always from an enabled book, so it's present regardless.
+    // `build` is read for keepIds but is not a dep as a whole: an item freshly picked in a level slot is always
+    // from an enabled book, so it is present regardless. A TWEAK is not: the Tweaks pickers ignore Sources (R12),
+    // so a feat, class feature or spell given in this session may come from a book that is off. `build.overrides`
+    // is a dep so `keep` is read again after every tweak write (ovContent keeps its identity when no text edit
+    // changed); without it the given feat was missing here and asked no question until Save and reopen
+    // (WP10 final check; test/tweaks-editors.test.tsx "an off-book feat given in this session…").
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ovContent, build.enabledSources, build.mythicEnabled, build.kingmakerEnabled, build.hideLegacy, sourceCat]);
+  }, [ovContent, build.enabledSources, build.mythicEnabled, build.kingmakerEnabled, build.deviantEnabled, build.hideLegacy, sourceCat, build.overrides]);
   const actions = useBuilderActions(setBuild, ovContent);
-  // Editing an existing character opens on the Setup page (options/sources/overrides at a glance);
-  // creating a new one starts on Level 0 (identity: ancestry/background/class).
-  const [sel, setSel] = useState<Sel>(initial ? 'setup' : 0);
+  // The builder always opens on the Setup page: editing a character (options/sources at a glance) AND
+  // creating a new one (Guy, 2026-11-08: "when creatung new chracater it needs to open on setup not lv 1").
+  // Creation used to start on page 0. test/builder-opens-on-setup.test.tsx.
+  const [sel, setSel] = useState<Sel>('setup');
   const [picker, setPicker] = useState<Picker | null>(null);
+  // Tweaks phase 2 (WP4): the class spell picker's "Show spells of other traditions" (default off, Tweaks page on).
+  const [revealOtherSpells, setRevealOtherSpells] = useState(false);
+  // …and each granted feat's open spell answer's own (WP4 finish B1), by its answer key.
+  const [revealGranted, setRevealGranted] = useState<Record<string, boolean>>({});
   // Clicking a filled feat card opens its description as a popup (the Replace button swaps it).
   const [featDescPopup, setFeatDescPopup] = useState<DescNode | null>(null);
   // The full item catalog, sorted once, for the equipment picker's filter panel.
   // Class-feat picker: reveal archetype feats (multiclass/archetypes). Off by default.
   const [showArch, setShowArch] = useState(false);
+  // WP5: the feat pickers' "Search every feat" reveal (Tweaks page on; default off).
+  const [anyFeatReveal, setAnyFeatReveal] = useState(false);
   /* The level strip scrolls sideways once there are more chips than fit — at level 20 that is most of
    * them, and on a phone barely half. Keep the selected one in view so the page you are ON is never
    * the one you have to go looking for. `block: 'nearest'` so this never scrolls the page itself. */
@@ -406,11 +584,17 @@ export function Builder({
    */
   const buildChanged = useBuildChanged(build);
   const askingLeave = useRef(false);
+  // The Tweaks page's "Add a tweak" editor holds a draft the build does not have yet (it is added only by
+  // "Add", B22): leaving then loses it, so it counts as a change (plan B WP7; TweaksPage onPendingChange).
+  const tweakAddPending = useRef(false);
+  // The same question Cancel asks, asked when the web tab is closed or reloaded: a new character lives only
+  // in this draft until Save, so the browser asks first (data/unsavedWork.ts; Guy 2026-11-08).
+  useUnsavedWork(() => buildChanged() || tweakAddPending.current);
   const requestLeave = async (): Promise<void> => {
     if (askingLeave.current) return;
     askingLeave.current = true;
     try {
-      // An Overrides number box writes what was typed only when it is LEFT (DraftNumberInput), and
+      // A Tweaks number box writes what was typed only when it is LEFT (DraftNumberInput), and
       // Android's Back reaches this door without taking focus from it — so "50 typed into Max HP, then
       // Back" read as no change and left without asking, the typed value gone (final check 2026-10-14).
       // Leave the focused field first and let React apply what it commits, then compare.
@@ -419,7 +603,7 @@ export function Builder({
         focused.blur();
         await new Promise((r) => setTimeout(r, 0));
       }
-      if (!buildChanged()) {
+      if (!buildChanged() && !tweakAddPending.current) {
         onCancel();
         return;
       }
@@ -481,33 +665,6 @@ export function Builder({
     };
   }, [build.pinnedDescs, actions]);
 
-  // Skill ranks the character has *before* the selected level's increase (for the "X → Y" display).
-  // Memoized so the full buildCharacter pipeline doesn't re-run on every level-page render.
-  const baseSkills = useMemo(() => {
-    if (typeof sel !== 'number' || sel < 1) return null;
-    // "Before this level's increase" must include ONLY increases at LOWER levels. Deleting just this
-    // level's increase still re-applied higher-level increases (buildCharacter applies them in level
-    // order), which inflated the rank shown as the starting point and could disable a legal increase.
-    /* …and ALL THREE stores, not just the ordinary one. The extra increases (swashbuckler Stylish
-     * Tricks, Reborn Soul's past-life Lores) land at the level being edited too, so leaving them in
-     * showed this level's own pick as the starting rank — "expert → master" for a skill still at
-     * trained, and the legal top rank greyed out. */
-    const below = (m: Record<number, ProficiencyKey> | undefined) => {
-      const rest: Record<number, ProficiencyKey> = {};
-      for (const [lvl, key] of Object.entries(m ?? {})) if (Number(lvl) < sel) rest[Number(lvl)] = key;
-      return rest;
-    };
-    return buildCharacter(
-      {
-        ...build,
-        skillIncreases: below(build.skillIncreases),
-        bonusSkillIncreases: below(build.bonusSkillIncreases),
-        backgroundSkillIncreases: below(build.backgroundSkillIncreases),
-      },
-      content,
-    ).proficiencies.skills;
-  }, [build, content, sel]);
-
   // Only show levels up to the character's current level; the +/− stepper extends/trims it.
   const strip: Sel[] = ['setup', 0, ...Array.from({ length: build.level }, (_, i) => i + 1)];
   const slotKey = (lvl: number, cat: FeatCategory, idx: number) => `${lvl}:${cat}:${idx}`;
@@ -515,7 +672,7 @@ export function Builder({
   // Feats eligible for a given slot (right category + level, not already taken, trait-gated to the
   // chosen ancestry/class) — see eligibleFeatsForSlot. `db` defaults to the source-FILTERED content
   // (what the picker offers); the picker also runs it against ovContent to explain hidden matches.
-  const eligibleFor = (p: { level: number; category: FeatCategory; idx: number }, db: ContentDatabase = content) =>
+  const eligibleFor = (p: FeatSlotRef, db: ContentDatabase = content) =>
     eligibleFeatsForSlot(build, db, p);
 
   // Caster info (for the Spells section + spell picker). A subclass can override
@@ -698,7 +855,8 @@ export function Builder({
    * Display only: the answers become ordinary picks on the first edit (`writeCantrip`), never on open.
    * Nothing the player stored is rewritten by arriving at this page. */
   const legacyCantrips = archCaster && !build.cantrips.length
-    ? legacyArchetypeCantrips(archCaster.dedicationId, build, content).filter((id) => archetypeCantripAllowed(archCaster, id))
+    ? // The same allow-list as build.ts's `archCantripOk`: a cantrip a live `spell` Take anyway names stays (merge check).
+      legacyArchetypeCantrips(archCaster.dedicationId, build, content).filter((id) => archetypeCantripAllowed(archCaster, id) || allowedInPicker(build, 'spell', id))
     : [];
   const rowCantrips = legacyCantrips.length ? legacyCantrips : build.cantrips;
   /* Editing a row that is showing the fallback materialises it first: the two stored answers become
@@ -713,6 +871,177 @@ export function Builder({
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
   const featPrereqChar = useMemo(() => buildCharacter(build, ovContent), [build, ovContent]);
+  // Tweaks phase 2, WP8: the slot copies a "Take a feat more times" is about, read off that character (C28).
+  const moreTakesMarks = useMemo(() => moreTakesSlotMarks(build, ovContent, featPrereqChar), [build, ovContent, featPrereqChar]);
+  /*
+   * THE SKILL RANKS A LEVEL PAGE OR A RECORD'S QUESTION READS (skill-order plan section 2, WP7; ruling 1: level by
+   * level). Every one of these used to read the FINISHED character, so the 3rd-level page counted a feat taken at
+   * 4th and a feat's replacement picker greyed a skill a later increase trains. They read the engine's per-level
+   * history of `featPrereqChar` instead (build.ts `skillRanksAtLevel` / `skillRanksAtRecord`, the "exactly" holds
+   * active at that level laid over it), so the increase picker no longer builds the character a second time.
+   */
+  /** The level a feat taking is read at: its slot key's level, else its feat row's, else the character's. */
+  const featLevelOf = (featId: string, key?: string): number =>
+    Number(/^(\d+):/.exec(key ?? '')?.[1]) || featPrereqChar.feats.find((f) => f.featId === featId)?.level || build.level;
+  /** The ranks when a record was taken — at its print place (`<kind>:<id>`), nothing it or what it grants does
+   *  counted — with its OWN other trainings laid on (`own`: a feat's fixed skills, the other slots' answers), so a
+   *  slot or a replacement that repeats one of them still reads as the dead end it is. */
+  const recordRanks = (recordId: string, kind: 'feat' | 'option', level: number, own: SkillRanks = {}, slotKey?: string): SkillRanks => {
+    const at: SkillRanks =
+      skillRanksAtRecord(featPrereqChar, `${kind}:${recordId}`, level, kind === 'feat' ? featSubtreeIds(featPrereqChar, recordId, slotKey) : new Set([recordId])) ??
+      featPrereqChar.proficiencies.skills;
+    const out: SkillRanks = { ...at };
+    for (const [k, r] of Object.entries(own) as [ProficiencyKey, ProficiencyRank | undefined][])
+      if (r && PROFICIENCY_RANKS.indexOf(r) > PROFICIENCY_RANKS.indexOf(out[k] ?? 'untrained')) out[k] = r;
+    return out;
+  };
+  // The Tweaks button's count and dot (B12): every listed tweak, read the way the page reads them.
+  const tweaksOn = tweaksPageOn(build);
+  // C35 (Tweaks phase 2, WP4): the level-page subclass picker's parts, the same as the Setup picker's.
+  const subParts = subclassPickerParts(build, content, actions, tweakUndoHint(isMobile, showUndoButtons, 'pick'), build.classId ? content.classes[build.classId] : undefined);
+  const tweakBadge = useMemo(() => (tweaksOn ? tweaksBadge(tweakRows(build, featPrereqChar, ovContent)) : null), [tweaksOn, build, featPrereqChar, ovContent]);
+  // The page the Tweaks page returns to (its button again, or its Done). A chip, the level-up effect and
+  // "Advance to level N" close it by setting `sel` themselves.
+  // A level page the level has since dropped below (Undo while Tweaks is open) clamps like the level effect.
+  const prevSel = useRef<Sel>('setup');
+  const leaveTweaks = () => {
+    const p = prevSel.current;
+    setSel(typeof p === 'number' && p > build.level ? build.level : p);
+  };
+  // The row the Tweaks page opens on: set by "Show in Tweaks" (the attribute card, B17), cleared by the button.
+  const [tweaksFocus, setTweaksFocus] = useState<string | null>(null);
+  const toggleTweaks = () => {
+    if (sel === 'tweaks') leaveTweaks();
+    else {
+      setTweaksFocus(null);
+      prevSel.current = sel;
+      setSel('tweaks');
+    }
+  };
+  const openTweaksAt = (key: string) => {
+    setTweaksFocus(key);
+    if (sel !== 'tweaks') prevSel.current = sel;
+    setSel('tweaks');
+  };
+  /** Tweaks phase 2 WP6: the card menu's "Remove this place" — one write, no confirm (C17); a refusal is said. */
+  const removeFeatPlace = (level: number, category: string, ordinal: number) => {
+    const p = { level, category, ordinal };
+    const tried = writeChoiceTweak(build, removePlaceDrafts(build, p));
+    if (tried.refused) {
+      void notSaved(tried.refused);
+      return;
+    }
+    actions.patch((b) => {
+      const r = writeChoiceTweak(b, removePlaceDrafts(b, p));
+      return r.refused ? {} : r.build;
+    });
+  };
+  /** Tweaks phase 2 WP7: "Add a place" at the end of a level's section — ONE `choice.addPlace` block (its `n` drawn by
+   *  the write door, C4), asking nothing (C21); a refusal is said. The place's empty card then appears, owed. */
+  const addFeatPlace = (level: number, category: string) => {
+    const drafts = [{ kind: 'choice.addPlace', fields: { place: 'feat', level, category } }];
+    const tried = writeChoiceTweak(build, drafts);
+    if (tried.refused) {
+      void notSaved(tried.refused);
+      return;
+    }
+    actions.patch((b) => {
+      const r = writeChoiceTweak(b, drafts);
+      return r.refused ? {} : r.build;
+    });
+  };
+  /** WP7 (C12): "Remove this place" on an extra place's card — its block(s) only, never a `remove.choicePlace` (that
+   *  removes a PRINTED slot) and never the pick: the feat stays under its key, a feat with no slot that still counts.
+   *  Asks nothing; Ctrl+Z brings the place back. A refusal is said, as for adding one. */
+  const dropFeatPlace = (c: FeatPlaceCard) => {
+    const dropAll = (b: BuildState): { build: BuildState; refused?: string } => {
+      let cur = b;
+      for (const blk of c.blocks) {
+        const r = dropChoiceTweak(cur, blk.key);
+        if (r.refused) return { build: b, refused: r.refused };
+        cur = r.build;
+      }
+      return { build: cur };
+    };
+    const tried = dropAll(build);
+    if (tried.refused) {
+      void notSaved(tried.refused);
+      return;
+    }
+    actions.patch((b) => {
+      const r = dropAll(b);
+      return r.refused ? {} : r.build;
+    });
+  };
+  /** Tweaks phase 2 WP11 (C15 / C16): "Add a place" → an EMPTY extra skill-increase or boost place at a level — one
+   *  `choice.addPlace` block, asking nothing (C21); its card then appears, owed, and the player answers it there. */
+  const addCarrierPlace = (level: number, place: 'skillIncrease' | 'boost') => {
+    const drafts = [{ kind: 'choice.addPlace', fields: { place, level } }];
+    const tried = writeChoiceTweak(build, drafts);
+    if (tried.refused) {
+      void notSaved(tried.refused);
+      return;
+    }
+    actions.patch((b) => {
+      const r = writeChoiceTweak(b, drafts);
+      return r.refused ? {} : r.build;
+    });
+  };
+  /** WP11: an extra place's answer, picked on its card — ONLY the block's `skill` / `attribute` (an `update` through
+   *  the write door; Clear leaves the place empty, never deletes it). A refusal is said. */
+  const setCarrierAnswer = (key: string, field: 'skill' | 'attribute', value: string | undefined) => {
+    const w = { op: 'update' as const, key, draft: { fields: { [field]: value } } };
+    const tried = writeTweak(build, w);
+    if (tried.refused) {
+      void notSaved(tried.refused);
+      return;
+    }
+    actions.patch((b) => {
+      const r = writeTweak(b, w);
+      return r.refused ? {} : { overrides: r.overrides };
+    });
+  };
+  /** WP11: "Remove this place" on an extra skill-increase or boost card — its block only (the answer is IN it), asking
+   *  nothing; Ctrl+Z brings it back. Never a `remove.choicePlace` (that removes a PRINTED place, WP14). */
+  const dropCarrierPlace = (key: string) => {
+    const tried = dropChoiceTweak(build, key);
+    if (tried.refused) {
+      void notSaved(tried.refused);
+      return;
+    }
+    actions.patch((b) => {
+      const r = dropChoiceTweak(b, key);
+      return r.refused ? {} : r.build;
+    });
+  };
+  /** WP7: a paused place's "Turn on" — the tweak's own switch, through the write door (C5: nothing but `on`); a
+   *  refusal is said. */
+  const turnOnPlace = (key: string) => {
+    const tried = writeTweak(build, { op: 'setOn', key, on: true });
+    if (tried.refused) {
+      void notSaved(tried.refused);
+      return;
+    }
+    actions.patch((b) => {
+      const r = writeTweak(b, { op: 'setOn', key, on: true });
+      return r.refused ? {} : { overrides: r.overrides };
+    });
+  };
+  // Tweaks switched off while its page is open (Undo can do it): back to the page before.
+  useEffect(() => {
+    if (!tweaksOn && sel === 'tweaks') leaveTweaks();
+  }, [tweaksOn, sel]); // eslint-disable-line react-hooks/exhaustive-deps
+  // WP6 final check: a feat picker whose place a "Remove a place" removed (an undo while it was open) closes, so a
+  // later Restore or redo never brings it back up unasked.
+  // WP7: so does an extra place's picker once its place is no longer live (an undo or the Tweaks page deleted or paused it).
+  useEffect(() => {
+    if (picker?.kind !== 'feat') return;
+    if (picker.place && picker.key) {
+      if (!livePlaces(build).some((p) => p.slotKey === picker.key)) setPicker(null);
+      return;
+    }
+    if (removedSlotKeys(build, ovContent).has(slotKey(picker.level, picker.category, picker.idx))) setPicker(null);
+  }, [picker, build, ovContent]);
   // The senses the character actually HAS, for the per-option gates in the effect-choice pickers.
   // Memoized for the same reason featPrereqChar is: deriveDefenses walks feats, items, modes and
   // stances, and a picker re-renders on every keystroke.
@@ -839,6 +1168,17 @@ export function Builder({
         : []),
     ];
   };
+  /** A cantrip the class grants on top (an oracle's mystery cantrip, a psychic's conscious mind) that the
+   *  player picked again takes none of the row's places (`ownPlacesBeside`), so its count rises by one —
+   *  one visible line says why (`repeatedGrantIds`). Not under a BOOK row: a book's size is its own. */
+  const repeatedGrantNotes = (entry: SpellcastingEntry | undefined, picks: readonly string[], book: boolean) =>
+    book
+      ? []
+      : repeatedGrantIds(entry, 0, picks).map((id) => (
+          <span className="spr-gift-note" key={'repeat-note:' + id}>
+            {ovContent.spells[id]?.name ?? id} is granted by your class already — it uses none of these places.
+          </span>
+        ));
   /* The cantrip row's cap — a book's ten, else the cantrips the class knows, LESS a sorcerer's gift
    * cantrip (lane C2, 2026-10-14). Print counts the bloodline's cantrip inside the five
    * (`grantsCountInside`) and the row offered all five beside it, so the sheet drew the gift and four
@@ -924,42 +1264,24 @@ export function Builder({
                                     // An OPEN set ("any 1st-level dwarf ancestry feat") is resolved
                                     // against content at render time and searched, because the legal
                                     // list is too long to enumerate on the record and would go stale.
+                                    // One control per answer (OpenAnswerPick: the kept answer, its barred line, and
+                                    // for an open SPELL choice the WP4 reveal / Take anyway / mark).
                                     (() => {
                                       const keys = choiceKeys(key, def);
-                                      // `keep`: a stored answer stays in its own picker (Adapted Cantrip's allegro
-                                      // from before its no-tradition rule, 2026-10-15) instead of reading blank.
-                                      const all = openChoiceOptions(def.from, content, {
-                                        hideLegacy: build.hideLegacy,
-                                        character: featPrereqChar,
-                                        keep: keys.map((kk) => build.featChoices[kk]),
-                                      });
-                                      return keys.map((k, i) => {
-                                        const answers = keys.map((kk) => build.featChoices[kk]);
-                                        const taken = new Set(def.distinct ? answers.filter((a, j) => j !== i && a) : []);
-                                        // A kept answer the rule does not allow says so UNDER the control, where
-                                        // the player looks — not only inside the picker (Q27, checker 2026-10-15).
-                                        const barred = all.find((o) => o.id === build.featChoices[k])?.notAllowed;
-                                        return (
-                                          <Fragment key={k}>
-                                            <SearchSelect
-                                              bare
-                                              label={featChoicePrompt(def.prompt, def.flag)}
-                                              // NOT the raw `from.type` — that printed the slug at the
-                                              // player ("Search own-deity-spell…") on sixteen records.
-                                              placeholder={`Search ${OPEN_SOURCE_LABEL[def.from?.type ?? ''] ?? 'options'}…`}
-                                              value={build.featChoices[k] ?? null}
-                                              onChange={(v) => actions.setFeatChoice(k, v)}
-                                              options={openOptionsWithRecords(all.filter((o) => !taken.has(o.id)), def.from)}
-                                            />
-                                            {barred && (
-                                              <div className="choice-inert" data-choice-barred>
-                                                <i className="ti ti-alert-triangle" aria-hidden="true" />
-                                                <span>{barred}</span>
-                                              </div>
-                                            )}
-                                          </Fragment>
-                                        );
-                                      });
+                                      return keys.map((k) => (
+                                        <OpenAnswerPick
+                                          key={k}
+                                          def={def}
+                                          k={k}
+                                          keys={keys}
+                                          label={featChoicePrompt(def.prompt, def.flag)}
+                                          build={build}
+                                          content={content}
+                                          character={featPrereqChar}
+                                          actions={actions}
+                                          undoHint={tweakUndoHint(isMobile, showUndoButtons, 'pick')}
+                                        />
+                                      ));
                                     })()
                                   ) : (
                                     // "Choose two DIFFERENT terrains" needs one picker per pick. A
@@ -968,7 +1290,23 @@ export function Builder({
                                     (() => {
                                       const keys = choiceKeys(key, def);
                                       const answers = keys.map((k) => build.featChoices[k]);
-                                      return keys.map((k, i) => (
+                                      // WP4: a sanctification answer the deity refuses (SANCTIFICATION_FROM_DEITY).
+                                      const sanct = def.flag === 'sanctification';
+                                      // A "must be" deity answers Deity and Cause itself (buildCharacter applies the trait):
+                                      // the picker shows that answer rather than an open question. Shown, never stored.
+                                      const mustBe =
+                                        sanct && content.classFeatures[recordId] && SANCTIFICATION_FROM_DEITY.has(recordId)
+                                          ? deityMustBeSanctification(build, content)
+                                          : undefined;
+                                      const sanctKey =(v: string): AnyPickerKey => ({ picker: 'sanctification', record: recordId, value: v });
+                                      const takeSanctAnyway = async (k: string, v: string, pick: boolean) => {
+                                        const rule = sanctificationBookReason(recordId, v, build, content);
+                                        if (!rule) return;
+                                        const write = await confirmTakeAnyway<BuildState>({ name: cap(v), rule, undoHint: tweakUndoHint(isMobile, showUndoButtons, 'pick'), k: sanctKey(v), host: build });
+                                        if (!write) return;
+                                        actions.patch((b) => write(b, pick ? (x) => ({ ...x, featChoices: { ...x.featChoices, [k]: v } }) : (x) => x));
+                                      };
+                                      const pickers: ReactNode[] = keys.map((k, i) => (
                                         <PopupSelect
                                           key={k}
                                           title={featChoicePrompt(def.prompt, def.flag)}
@@ -977,15 +1315,21 @@ export function Builder({
                                               ? `${featChoicePrompt(def.prompt, def.flag)} ${i + 1} of ${keys.length}…`
                                               : `${featChoicePrompt(def.prompt, def.flag)}…`
                                           }
-                                          value={build.featChoices[k] ?? ''}
+                                          value={build.featChoices[k] || mustBe || ''}
                                           onChange={(v) => actions.setFeatChoice(k, v)}
                                           // A typed answer needs a row of its own or the filled control cannot
                                           // show it — applied per PICK, after `distinct` has removed the other
                                           // picks' answers, so pick 2 never re-offers what pick 1 typed.
-                                          options={withCustomAnswer(
-                                            choiceOptionsFor(opts, def, answers, i).map((o) => pickerOption(o, choiceOptionRecord(def, o.value, content))),
-                                            def,
+                                          // WP9: then a stored answer the list does not offer, by name and greyed
+                                          // (`withKeptAnswer`; what the sheet does with it per `choiceKeptHow`).
+                                          options={withKeptAnswer(
+                                            withCustomAnswer(
+                                              choiceOptionsFor(opts, def, answers, i).map((o) => pickerOption(o, choiceOptionRecord(def, o.value, content))),
+                                              def,
+                                              answers[i],
+                                            ),
                                             answers[i],
+                                            { labelOf: (v) => slugWords(featChoiceLabel(v)), how: choiceKeptHow(def, keyedByAnswer(recordId)) },
                                           )}
                                           addCustom={
                                             // Suppressed while a narrowing is in force — see the
@@ -994,8 +1338,26 @@ export function Builder({
                                               ? { ...def.allowCustom, onAdd: (text) => actions.setFeatChoice(k, text) }
                                               : undefined
                                           }
+                                          // WP4: a sanctification the deity refuses gets "Take anyway" (Tweaks page on).
+                                          breakable={sanct && tweaksOn ? { reasonOf: (v) => sanctificationNotAllowed(recordId, v, build, content), onTakeAnyway: (v) => void takeSanctAnyway(k, v, true) } : undefined}
+                                          grey={sanct && storedPickGrey(build, answers[i] ? sanctKey(answers[i]!) : null, answers[i] ? sanctificationBookReason(recordId, answers[i]!, build, content) : null)}
                                         />
                                       ));
+                                      return pickers.concat(
+                                        sanct
+                                          ? keys.map((k, i) =>
+                                              answers[i] ? (
+                                                <StoredPickNote
+                                                  key={`note-${k}`}
+                                                  host={build}
+                                                  k={sanctKey(answers[i]!)}
+                                                  rule={sanctificationBookReason(recordId, answers[i]!, build, content)}
+                                                  onTakeAnyway={tweaksOn ? () => void takeSanctAnyway(k, answers[i]!, false) : undefined}
+                                                />
+                                              ) : null,
+                                            )
+                                          : [],
+                                      );
                                     })()
                                   )}
                                   {/* A restriction the app cannot enforce — name the part that is on the
@@ -1066,6 +1428,399 @@ export function Builder({
                                 </SubCard>
                               );
   };
+
+  /**
+   * A feat's OWN questions — the cards drawn under the card that holds it (plan B WP8). They lived inside the
+   * level page's slot loop, so a feat given through Tweaks asked nothing anywhere (D2); moved here as they
+   * were, they serve both: the slot card calls this with its slot key, and the Tweaks page draws it under a
+   * given feat's row (`renderFeatQuestions`) with `override:<featId>` — where a given feat's answers are
+   * stored (heldFeats.ts `overrideSlotKey`). `key` is that taking's answer key; `picked` the feat.
+   * The cards, in the slot's order: the armor a cascade take trained, the feat's `choice`, its trained-skill
+   * picks, the redundant-grant replacements, the "already have it" replacement feats, its Lore subjects, its
+   * bonus skill feats, its pick-a-feat grants, the questions of the feats it grants, a held caster
+   * dedication's cantrips, its effect choices, its pick-a-cantrip grant.
+   * test/tweaks-given-feat-editor.test.tsx holds a slot's cards to the DOM drawn before the move.
+   */
+  const featQuestions = (picked: string, key: string) => (
+    <>
+                          {/* Armor Proficiency (and any derived-cascade feat) has no dropdown — show
+                              which armor THIS take trained, resolved from the built character so three
+                              identical rows read Light / Medium / Heavy. */}
+                          {FEAT_GRANTS[picked]?.armorCascade &&
+                            (() => {
+                              // This taking's own row: its answer key travels with it (build.ts pushes
+                              // `slotKey` on a slot row and on a given feat's `override:` row alike).
+                              const grant = featPrereqChar.feats.find((f) => f.slotKey === key && f.featId === picked)?.choice?.label;
+                              return grant ? (
+                                <SubCard icon="ti-shield" label="Trains you in">
+                                  <span className="lvl-card-val">{grant}</span>
+                                </SubCard>
+                              ) : null;
+                            })()}
+                          {content.feats[picked]?.choice &&
+                            // A choice that GRANTS a feat (flag 'feat', e.g. Pitborn) is handled by the
+                            // pick-a-feat picker below — don't also render the inert proficiency-choice dropdown.
+                            !(content.feats[picked]!.choice!.flag === 'feat' && FEAT_PICK_GRANTS[picked]) &&
+                            /* A DAILY choice belongs to daily preparations, not the build. The two class-feature
+                               sites above already guarded; this one did not, so Harbinger's Armament asked for
+                               today's rune here AND again every morning — two stores for one answer, and the
+                               builder's copy moved nothing (build.ts skips daily answers) while the morning's did.
+                               Guarded on `askedAtDailyPrep`, not on `daily`, so a kind the Rest sheet cannot
+                               render keeps its picker here rather than becoming askable nowhere. */
+                            !askedAtDailyPrep(content.feats[picked]!.choice) &&
+                            (() => {
+                              return renderChoice(content.feats[picked]!.choice!, key, picked);
+                            })()}
+                          {/* Dedication skill-training CHOICES ("trained in Acrobatics or Athletics") and
+                              the bonus skill feat (Rogue Dedication) — surfaced from FEAT_GRANTS below
+                              the picked feat, so the player resolves each grant in context. */}
+                          {[
+                              ...(FEAT_GRANTS[picked]?.skillChoices ?? []).map((slot, si) => ({
+                                slot,
+                                skKey: `${picked}:${si}`,
+                                ctx: { featId: picked, index: si, choiceValue: null as string | null },
+                              })),
+                              /* …and the slots belonging to the grant the player's OWN answer selected.
+                                 Clan Lore's twelve listed clans hand over a named pair of skills; an
+                                 unlisted clan's are "determined by your GM", so that one answer — and no
+                                 other — asks a further question. Keyed by the answer exactly as
+                                 featSkillChoiceValue keys it, so the builder and the engine read one key. */
+                              ...(choiceGrantFor(FEAT_GRANTS[picked], build.featChoices?.[key])?.skillChoices ?? []).map(
+                                (slot, si) => ({
+                                  slot,
+                                  skKey: `${picked}:${build.featChoices?.[key]}:${si}`,
+                                  ctx: { featId: picked, index: si, choiceValue: build.featChoices?.[key] ?? null },
+                                }),
+                              ),
+                            ].map(({ slot, skKey, ctx }, _si, all) => {
+                              /* Skill order WP7 (plan section 2; P8, P9): "would this grant change nothing?" is asked
+                                 at the feat's own print place — the ranks when it was taken (a Society increase at
+                                 3rd does not grey Society in a 1st-level feat's slot) — with the feat's fixed
+                                 skills and its OTHER slots' current answers laid on (a second slot repeating the
+                                 first is still the dead end the finished ranks used to show). */
+                              const ownHere: SkillRanks = { ...(FEAT_GRANTS[picked]?.skills ?? {}) };
+                              for (const o of all) {
+                                if (o.skKey === skKey) continue;
+                                const v = (build.featSkillChoices?.[o.skKey] ?? skillSlotOptions(o.slot, build, content, o.ctx)[0]) as ProficiencyKey | undefined;
+                                if (v && PROFICIENCY_RANKS.indexOf(o.slot.rank) > PROFICIENCY_RANKS.indexOf(ownHere[v] ?? 'untrained')) ownHere[v] = o.slot.rank;
+                              }
+                              const slotRanks = recordRanks(picked, 'feat', featLevelOf(picked, key), ownHere, key);
+                              /* Shared with the engine — a slot whose skill the printed text DERIVES
+                                 from an answer already given (Surki Lore's magiphage tradition) offers
+                                 that one skill, not four. Computing the list here a second way is how
+                                 the builder and the sheet come to disagree about one slot. */
+                              /* `ctx` is what lets a later slot drop the skill an IDENTICAL sibling
+                                 already took — Magical Knowledge's *"…and IN ANOTHER from trained to
+                                 expert"* over two slots listing the same four skills. The engine
+                                 resolves the same way through the same helper. */
+                              const opts = skillSlotOptions(slot, build, content, ctx);
+                              // The option this slot is CURRENTLY granting — the player's answer, or the
+                              // engine's default when unanswered. Its rank on the built character already
+                              // includes this grant, so it can never be judged redundant against itself.
+                              const effective = build.featSkillChoices?.[skKey] ?? opts[0];
+                              return (
+                                <SubCard key={skKey} icon="ti-bulb" label="Trained skill">
+                                  <PopupSelect
+                                    title="Trained skill"
+                                    placeholder="Choose a skill…"
+                                    // Empty until picked — falling back to opts[0] displayed a skill the
+                                    // player never chose as though they had.
+                                    value={build.featSkillChoices?.[skKey] ?? ''}
+                                    onChange={(v) =>
+                                      actions.patch({
+                                        featSkillChoices: { ...(build.featSkillChoices ?? {}), [skKey]: v as (typeof SKILLS)[number] },
+                                      })
+                                    }
+                                    // skillLabel, not cap: a Lore option would otherwise read
+                                    // "Lore:spirit" instead of "Spirit Lore".
+                                    // WP9: a stored skill the slot does not offer shows by name, greyed: the
+                                    // engine (`featSkillChoiceValue`) ignores it for the slot's first option.
+                                    options={withKeptAnswer(
+                                      opts.map((s) => {
+                                        const cur = slotRanks[s] ?? 'untrained';
+                                        const dead = s !== effective && skillSlotGrant(slot, cur) === null;
+                                        return {
+                                          value: s as string,
+                                          label: skillLabel(s),
+                                          disabled: dead,
+                                          disabledReason: dead ? `Already ${cur} — this grant would change nothing.` : undefined,
+                                        };
+                                      }),
+                                      build.featSkillChoices?.[skKey],
+                                      {
+                                        labelOf: (v) => skillLabel(v as ProficiencyKey),
+                                        how: () => {
+                                          const used = featSkillChoiceValue(build, content, ctx.featId, ctx.index, ctx.choiceValue);
+                                          return { counts: false, instead: used ? skillLabel(used) : undefined };
+                                        },
+                                      },
+                                    )}
+                                  />
+                                </SubCard>
+                              );
+                            })}
+                          {/* Redundant-grant fallback ("already trained in X → a skill of your choice"):
+                              the derived character reports each triggered slot; offer the replacement. */}
+                          {(featPrereqChar.skillFallbacks ?? [])
+                              .filter((fb) => fb.featId === picked)
+                              .map((fb) => (
+                                <SkillFallbackPick
+                                  key={`${picked}:fallback:${fb.slot ?? fb.skill}`}
+                                  recordId={picked}
+                                  fb={fb}
+                                  build={build}
+                                  ranks={recordRanks(picked, 'feat', featLevelOf(picked, key), FEAT_GRANTS[picked]?.skills ?? {}, key)}
+                                  patch={actions.patch}
+                                />
+                              ))}
+                          {/* "For each of these feats you already have, you can INSTEAD gain a different
+                              feat from the following list" — the engine reports which grants landed on a
+                              feat the character already had; offer the replacement it owes them. */}
+                          {(featPrereqChar.featSubstitutions ?? [])
+                              .filter((sb) => sb.featId === picked)
+                              .map((sb) => (
+                                <SubCard
+                                  key={sb.key}
+                                  icon="ti-bulb"
+                                  label={`Already have ${content.feats[sb.ifHave]?.name ?? sb.ifHave} — replacement feat`}
+                                >
+                                  <PopupSelect
+                                    title="Replacement feat"
+                                    placeholder="Choose a feat…"
+                                    value={build.pickFeatChoices?.[sb.key] ?? ''}
+                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [sb.key]: v } })}
+                                    // A feat already held is a dead end — print says "a DIFFERENT feat",
+                                    // and the engine refuses it, so the picker must not offer it live.
+                                    options={sb.options
+                                      .filter((id) => content.feats[id])
+                                      .map((id) => {
+                                        const held = id !== build.pickFeatChoices?.[sb.key] && featPrereqChar.feats.some((f) => f.featId === id);
+                                        return {
+                                          value: id,
+                                          label: content.feats[id]!.name,
+                                          description: content.feats[id]!.description,
+                                          record: { bucket: 'feats', id },
+                                          disabled: held,
+                                          disabledReason: held ? 'Already have this feat — pick a different one.' : undefined,
+                                        };
+                                      })}
+                                  />
+                                </SubCard>
+                              ))}
+                          {Array.from({ length: FEAT_GRANTS[picked]?.loreChoices ?? 0 }).map((_, li) => {
+                              // Keyed by SLOT, not by feat id. Additional Lore is `maxTakable: null` and
+                              // its Special clause demands a NEW subcategory each time, so a bare-id key
+                              // made take 2 an alias of take 1 and two takes trained ONE Lore. Same fix
+                              // and same shape as the pick-a-feat lane's slot key in build.ts.
+                              const loreKey2 = `${key}:${li}`;
+                              // The old key is still READ, so a character saved before this keeps its
+                              // subject; the first edit migrates it to the slot key.
+                              const loreLegacy = `${picked}:${li}`;
+                              return (
+                                <SubCard key={`lore-${loreKey2}`} icon="ti-bulb" label="Trained Lore">
+                                  <input
+                                    className="lvl-lore-input"
+                                    placeholder="Lore subject (e.g. Warfare)…"
+                                    value={build.featLoreChoices?.[loreKey2] ?? build.featLoreChoices?.[loreLegacy] ?? ''}
+                                    onChange={(e) => actions.patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [loreKey2]: e.target.value } })}
+                                  />
+                                </SubCard>
+                              );
+                            })}
+                          {/* One picker PER granted skill feat. Magical Knowledge prints "You gain a
+                              skill feat associated with each of the skills you chose" over a two-skill
+                              choice, so a single control could only ever deliver one of the two. Index
+                              0 keeps the bare feat-id key, so an existing answer never moves. */}
+                          {Array.from({ length: bonusSkillFeatCount(FEAT_GRANTS[picked]) }).map((_, bi) => {
+                              const bKey = bonusSkillFeatKey(picked, bi);
+                              const mine = build.dedicationSkillFeats?.[bKey] ?? '';
+                              // A feat a SIBLING picker already took is dropped by buildCharacter as a
+                              // duplicate, so offering it here would spend a printed grant on nothing.
+                              const siblings = new Set(
+                                Array.from({ length: bonusSkillFeatCount(FEAT_GRANTS[picked]) }, (_, j) => build.dedicationSkillFeats?.[bonusSkillFeatKey(picked, j)])
+                                  .filter((v, j) => !!v && j !== bi) as string[],
+                              );
+                              return (
+                                <SubCard key={`bonus-skill-${bKey}`} icon="ti-medal" label="Bonus skill feat">
+                                  <FeatPickSelect
+                                    build={build}
+                                    content={content}
+                                    actions={actions}
+                                    spec={BONUS_SKILL_FEAT_SPEC}
+                                    feats={skillFeats}
+                                    hide={siblings}
+                                    title="Bonus skill feat"
+                                    placeholder="Choose a skill feat…"
+                                    value={mine ?? ''}
+                                    pick={(b, v) => ({ ...b, dedicationSkillFeats: { ...(b.dedicationSkillFeats ?? {}), [bKey]: v } })}
+                                  />
+                                </SubCard>
+                              );
+                            })}
+                          {/* Pick-a-feat grants (General Training, Basic Maneuver, Natural Ambition, …):
+                              the player chooses a bonus feat from the grant's filtered pool. */}
+                          {FEAT_PICK_GRANTS[picked] &&
+                            (() => {
+                              const spec = FEAT_PICK_GRANTS[picked];
+                              // Stored per SLOT, so a repeatable grant taken twice shows two pickers
+                              // rather than two views of one answer. The bare feat-id key is still
+                              // READ, so a character saved before this keeps the pick it had.
+                              // A `picks` spec asks more than once; index 0 keeps the bare key so an
+                              // existing answer never moves — the same convention build.ts reads.
+                              const idKeys = pickKeysFor(picked, spec.picks);
+                              return (
+                                <SubCard icon="ti-medal" label={spec.prompt}>
+                                  {pickKeysFor(key, spec.picks).map((k, i) => (
+                                    <FeatPickSelect
+                                      key={k}
+                                      build={build}
+                                      content={content}
+                                      actions={actions}
+                                      spec={spec}
+                                      title={pickPrompt(spec.prompt, i, spec.picks)}
+                                      placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
+                                      value={build.pickFeatChoices?.[k] ?? build.pickFeatChoices?.[idKeys[i]] ?? ''}
+                                      pick={(b, v) => ({ ...b, pickFeatChoices: { ...(b.pickFeatChoices ?? {}), [k]: v } })}
+                                    />
+                                  ))}
+                                </SubCard>
+                              );
+                            })()}
+                          {/* A GRANTED feat's own sub-choice (Seeker of Truths grants Domain Initiate →
+                              pick its domain here; the granted feat has no slot of its own). Routed
+                              through grantedChoicePicker so this path and the background path cannot
+                              drift — the inline copy that used to live here handled `domains` but not
+                              `skills`, which is why an Assurance grant had no options even when reached. */}
+                          {(FEAT_FEAT_GRANTS[picked] ?? []).map((gid) => grantedChoicePicker(gid))}
+                          {heldDedicationCantrips(picked)}
+                          {/* Effect choices ("choose one of N" — a dragon tattoo's resistance type, an
+                              energy heart's element): each picked option confers a concrete effect. */}
+                          {(content.feats[picked]?.effectChoices ?? [])
+                              // A choice the record's own ENHANCEMENT tier asks is only asked once an
+                              // augmentation names this feat. Rendering it before that is a live
+                              // control whose answer nothing applies — the shape Q27 rules out.
+                              .filter(
+                                (ch) =>
+                                  !(content.feats[picked]?.enhancement?.choiceIds ?? []).includes(ch.id) ||
+                                  (featPrereqChar.enhancements ?? []).some((e) => e.featId === picked),
+                              )
+                              .map((ch) => {
+                              /*
+                               * A REPEATABLE feat's OPEN pick is answered per TAKING — Qi Spells is
+                               * *"choose a different spell each time"* — so its answer is keyed by
+                               * SLOT rather than by record, or every take writes over the last one.
+                               * The 21 enumerated repeatable picks moved to `choice` instead;
+                               * `spellFilter` is the one shape `choice` cannot hold, so these four
+                               * change the KEY rather than the lane. The record key is still READ, so
+                               * a monk who answered before this keeps the spell they chose.
+                               */
+                              const perTaking = !!ch.spellFilter && maxTakes(content.feats[picked]) > 1;
+                              const ecKey = perTaking ? `${key}:${ch.id}` : `${picked}:${ch.id}`;
+                              const ecValue = build.effectChoices?.[ecKey] ?? (perTaking ? build.effectChoices?.[`${picked}:${ch.id}`] : undefined);
+                              const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
+                              // An OPEN pick ("any 1st-rank arcane spell") gets a searchable spell list;
+                              // a fixed set gets the plain dropdown. Hidden until its unlock level.
+                              if (ch.spellFilter) {
+                                if (build.level < (ch.spellFilter.minLevel ?? 1)) return null;
+                                // "Choose a different spell each time" (the qi-spells family): the
+                                // spells OTHER takes of this same feat already claimed are greyed
+                                // with the reason — never removed, and never this slot's own stored
+                                // answer (Q27; same rule as `choice.distinctAcrossTakes`).
+                                const claimed = new Set<string>();
+                                if (perTaking && ch.spellFilter.distinctAcrossTakes) {
+                                  // Every OTHER taking the build holds — the slot picks, and a given one
+                                  // (its answers under `override:<featId>`; case D, plan B WP8). The STORAGE
+                                  // view (Tweaks phase 2, WP7, C9): a paused extra place's taking keeps its
+                                  // answer claimed, or resuming it would make two takings share one spell.
+                                  for (const { slotKey: k, featId: id } of heldFeatSlots(build, build.level, { includePaused: true })) {
+                                    if (id !== picked || k === key) continue;
+                                    const v = build.effectChoices?.[`${k}:${ch.id}`];
+                                    if (v) claimed.add(v);
+                                  }
+                                  // The legacy record-keyed answer belongs to whichever take reads it
+                                  // through the fallback — do not grey it against ITSELF.
+                                  const legacy = build.effectChoices?.[`${picked}:${ch.id}`];
+                                  if (legacy && legacy !== ecValue) claimed.add(legacy);
+                                }
+                                const opts = spellsMatching(narrowSpellFilter(ch.spellFilter, build, content), content, build.hideLegacy).map((s) => ({
+                                  id: s.id,
+                                  name: s.name,
+                                  note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
+                                  ...(claimed.has(s.id) && s.id !== ecValue
+                                    ? { disabled: `Already chosen by another ${content.feats[picked]?.name ?? 'take'} — choose a different spell each time.` }
+                                    : {}),
+                                }));
+                                return (
+                                  <SubCard key={`ec-${ecKey}`} icon="ti-sparkles" label={ch.prompt}>
+                                    <SearchSelect bare label="Spell" placeholder="Search spells…" value={ecValue ?? null} onChange={set} options={opts} />
+                                  </SubCard>
+                                );
+                              }
+                              return (
+                                <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
+                                  <PopupSelect
+                                    title={ch.prompt}
+                                    placeholder={`${ch.prompt}…`}
+                                    value={ecValue ?? ''}
+                                    onChange={set}
+                                    // An option may carry a note instead of a grant (a kineticist gate
+                                    // junction: only Elemental Resistance moves a stat). Show the note as
+                                    // the description so the player can read each option before picking.
+                                    // …and an option that names a RECORD the character must OWN to
+                                    // pick it ("one of YOUR 1st- or 5th-level automaton ancestry
+                                    // feats") is greyed with the reason rather than offered and then
+                                    // silently dropped by the engine (Q9 filtering + Q27 display).
+                                    // …and an option gated on a SENSE the character must already have
+                                    // ("You must have low-light vision before you can gain darkvision
+                                    // with this feat") is greyed with its reason too. The answer ALREADY
+                                    // STORED is never greyed, so a pick cannot vanish out from under the
+                                    // player and a gate cannot invalidate itself once its own grant lands.
+                                    options={(ch.options ?? []).map((o) => {
+                                      const mustOwn = (content.feats[picked]?.enhancementPicker?.choiceIds ?? []).includes(ch.id);
+                                      const missing = mustOwn && !featPrereqChar.feats.some((f) => f.featId === o.value);
+                                      const gateWhy = senseGateReason(
+                                        o.requiresAnySense,
+                                        builderSenses,
+                                        build.effectChoices?.[ecKey] === o.value,
+                                      );
+                                      return {
+                                        value: o.value,
+                                        label: o.label,
+                                        description: o.note,
+                                        // The note is the option's own text, not a record's (card step 7b).
+                                        record: null,
+                                        disabled: missing || !!gateWhy,
+                                        ...(missing ? { disabledReason: 'You do not have this feat.' } : {}),
+                                        ...(!missing && gateWhy ? { disabledReason: gateWhy } : {}),
+                                      };
+                                    })}
+                                  />
+                                </SubCard>
+                              );
+                            })}
+                          {/* Pick-a-cantrip grants (Dragon Spit, Hag Magic, …): choose an innate spell. */}
+                          {FEAT_CANTRIP_GRANTS[picked] &&
+                            (() => {
+                              const spec = FEAT_CANTRIP_GRANTS[picked];
+                              const opts = spec.options
+                                .map((id) => content.spells[id])
+                                .filter(Boolean)
+                                .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
+                                .map((s) => ({ value: s.id, label: s.name, description: s.description, record: { bucket: 'spells', id: s.id } }));
+                              return (
+                                <SubCard icon="ti-sparkles" label={spec.prompt}>
+                                  <PopupSelect
+                                    title={spec.prompt}
+                                    placeholder={`${spec.prompt}…`}
+                                    value={build.pickCantripChoices?.[picked] ?? ''}
+                                    onChange={(v) => actions.patch({ pickCantripChoices: { ...(build.pickCantripChoices ?? {}), [picked]: v } })}
+                                    options={opts}
+                                  />
+                                </SubCard>
+                              );
+                            })()}
+    </>
+  );
 
   /**
    * The sub-choice belonging to a feat the character was GIVEN rather than picked.
@@ -1153,6 +1908,27 @@ export function Builder({
         </SubCard>
       );
     }
+    const answerKey = grantedChoiceKey(grantedId, grantVariant);
+    const answer = build.grantedFeatChoices?.[answerKey] ?? '';
+    /* WP4 finish (B1): a granted feat's open SPELL answer gets the picked-feat path's tweak parts (OpenAnswerPick's
+     * `openSpellTweak`): the reveal, greyed rows with "Take anyway", the mark or the barred line under the control.
+     * The engine's open spell grant reads granted feats' answers too (`feats` holds them), so the one seam there
+     * already covers it. Any other open choice is built exactly as before. */
+    const openSpell =
+      def.kind === 'open' && def.from?.type === 'spell'
+        ? openSpellTweak({
+            def,
+            answers: [answer],
+            answer,
+            build,
+            content,
+            character: featPrereqChar,
+            revealing: !!revealGranted[answerKey],
+            undoHint: tweakUndoHint(isMobile, showUndoButtons, 'pick'),
+            actions,
+            write: (x, id) => ({ ...x, grantedFeatChoices: { ...(x.grantedFeatChoices ?? {}), [answerKey]: id } }),
+          })
+        : null;
     const opts: NarrowedOption[] =
       def.kind === 'domains'
         ? /* Through buildChoiceOptions (no slotKey — this IS the granted taking), not a bare pool:
@@ -1169,14 +1945,12 @@ export function Builder({
                * a granted feat's menu is open rather than enumerated. The picked-feat path (renderChoice)
                * has handled `open` since it shipped; this one never did.
                */
-              openChoiceOptions(def.from, content, {
-                hideLegacy: build.hideLegacy,
-                character: featPrereqChar,
-                keep: [build.grantedFeatChoices?.[grantedChoiceKey(grantedId, grantVariant)]],
-              }).map((o) => ({
+              (openSpell?.all ?? openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy, character: featPrereqChar, keep: [answer] })).map((o) => ({
                 value: o.id,
                 label: o.note ? `${o.name} (${o.note})` : o.name,
                 ...(o.description ? { description: o.description } : {}),
+                // A revealed spell (or a stored one) the tradition rule refuses: greyed with its reason (WP4 finish).
+                ...(o.liftable && o.notAllowed && !openSpell?.kept.has(o.id) ? { disabled: o.notAllowed } : {}),
               }))
             : // A granted feat's menu can be widened by another record just like a picked one's — the
             // widening is addressed by record id, and a granted feat has the same id either way.
@@ -1190,14 +1964,12 @@ export function Builder({
               content,
             );
     if (!opts.length) return null;
-    const answerKey = grantedChoiceKey(grantedId, grantVariant);
     // The second taking says so on the card, or the player sees the same question twice with no way
     // to tell which is which — Q27's "never leave them wondering whether they missed a pick". A pick's
     // later taking is keyed by its granting SLOT (`pickTakingVariants`: two Major Lessons through two
     // Advanced Witchcraft feats), so it says the level it was taken at.
     const takenAt = /^(\d+):/.exec(grantVariant ?? '')?.[1];
     const label = `${content.feats[grantedId]!.name}${grantVariant ? (takenAt ? ` (taken at level ${takenAt})` : ' (second)') : ''}: ${featChoicePrompt(def.prompt, def.flag)}`;
-    const answer = build.grantedFeatChoices?.[answerKey] ?? '';
     const setAnswer = (v: string) =>
       actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [answerKey]: v } });
     // Why the list is short, in the narrowing record's own words. A menu silently cut from 12 entries
@@ -1223,14 +1995,27 @@ export function Builder({
           onChange={setAnswer}
           // Trailblazer's "one terrain you've explored (such as forest or underground)" arrives on this
           // lane, not the slot one — a granted feat's question is as open as a picked one's.
-          options={withCustomAnswer(shownOpts.map((o) => pickerOption(o, choiceOptionRecord(def, o.value, content))), def, answer)}
+          // WP9: then a stored answer the list does not offer, by name and greyed (`withKeptAnswer`). The open kind
+          // already keeps its answer (`keep`), so it never gets a second row.
+          options={withKeptAnswer(withCustomAnswer(shownOpts.map((o) => pickerOption(o, choiceOptionRecord(def, o.value, content))), def, answer), answer, {
+            labelOf: (v) => (def.kind === 'skills' ? skillLabel(v as ProficiencyKey) : slugWords(featChoiceLabel(v))),
+            how: choiceKeptHow(def, keyedByAnswer(grantedId)),
+          })}
           // A narrowed list with a "type your own" row is not narrowed. Terrain Stalker carries
           // `allowCustom` because the book lets a GM name a tenth terrain — but Isgeri Reclaimer says
           // "either rubble or underbrush", so while its limit is in force the typing row goes away.
           // `withCustomAnswer` above still shows an answer typed BEFORE the limit existed, rather than
           // deleting a player's pick behind their back.
           addCustom={!limitReasons.length && def.allowCustom ? { ...def.allowCustom, onAdd: setAnswer } : undefined}
+          breakable={openSpell?.breakable}
+          reveal={
+            openSpell?.tweaksOn && openSpell.liftable
+              ? { label: 'Show spells of other traditions', on: !!revealGranted[answerKey], onToggle: (on) => setRevealGranted((m) => ({ ...m, [answerKey]: on })) }
+              : undefined
+          }
+          grey={!!openSpell?.barred}
         />
+        {openSpell && <OpenAnswerNote t={openSpell} build={build} />}
         {/* The picked-feat path has rendered these two since it shipped; this one never did, so a note
             or an inert admission authored on a record went invisible the moment the record was GRANTED
             rather than picked — Adopted Ancestry's "an uncommon or rare one needs your GM's access"
@@ -1502,6 +2287,78 @@ export function Builder({
   // class keeps it exactly as before.
   const eligibleSpells = (rank: number) =>
     poolSpellsFor(rank, tradition, listAdditions, !!listReplacement && (!secondEntryId || listReplacement.entryId !== secondEntryId), !casting);
+  /* Tweaks phase 2 (WP4): the spells a pool's picker at `rank` (cantrips, or every rank up to it) leaves out — every
+   * other tradition's, and with `narrowed` (a dedication that names its cantrips) its own tradition's too — less
+   * `have` (the pool's effective list) and less what `fits` refuses (a book rank's own window). A spell a live
+   * `spell` "Take anyway" names is offered un-greyed; the rest only under the reveal, greyed with the reason and
+   * "Take anyway". Spells of no tradition never join. */
+  const spellsOffPool = (rank: number, have: ReadonlySet<string>, trad: string | undefined, o: { narrowed: boolean; fits?: (s: Sp) => boolean }): Sp[] => {
+    const out = new Map<string, Sp>();
+    for (const t of ['arcane', 'divine', 'occult', 'primal']) {
+      if (t === trad && !o.narrowed) continue;
+      for (const s of rank === 0 ? spellIndex.cantrips[t] ?? NO_SPELLS : spellIndex.upTo[t]?.[rank] ?? NO_SPELLS) if (!have.has(s.id) && (!o.fits || o.fits(s))) out.set(s.id, s);
+    }
+    return [...out.values()].sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
+  };
+  /** The book's words against a spell in pool 1 (the first class, or a non-caster's archetype pool) or 2 (Dual
+   *  Class's second): a dedication's named cantrips first, else the pool's tradition. */
+  const spellOffReason = (id: string, pool: 1 | 2): string => {
+    if (pool === 1 && !casting && archCaster && content.spells[id]?.rank === 0 && !archetypeCantripAllowed(archCaster, id))
+      return `Not one of the cantrips ${content.feats[archCaster.dedicationId]?.name ?? 'this dedication'} names.`;
+    return `Not on the ${cap((pool === 2 ? tradition2 : tradition) ?? '')} spell list.`;
+  };
+  /** C1: is a STORED spell off its pool's EFFECTIVE list (the tradition, or the replacement list, plus the pool's
+   *  list additions; a dedication's named cantrips)? Unknown spells and a pool with no tradition: never. */
+  const spellOffPool = (id: string, pool: 1 | 2): boolean => {
+    const sp = content.spells[id];
+    const trad = pool === 2 ? tradition2 : tradition;
+    if (!sp || !trad) return false;
+    return !(pool === 2 ? eligibleSpells2(sp.rank) : eligibleSpells(sp.rank)).some((s) => s.id === id);
+  };
+  /** The Tweak mark on a spell chip a `spell` "Take anyway" covers (live, or paused with the book's words); nothing
+   *  for a spell on the pool's effective list. A stored off-list spell with no tweak (or Tweaks off) is greyed by
+   *  `spellChipGrey` instead (C45). */
+  const spellChipMark = (id: string, pool: 1 | 2 = 1) => {
+    if (!spellOffPool(id, pool)) return null;
+    const b = anyPickerBlock(build, { picker: 'spell', record: id });
+    if (!b) return null;
+    const state = tweakMarkState(build, b);
+    if (state === 'off') return null;
+    const rule = spellOffReason(id, pool);
+    return <TweakMark kind="choice.allowAnywayAnyPicker" state={state} rule={rule} reason={b.reason} bookWarning={state === 'paused' ? rule : undefined} onShow={tweaksOn ? () => openTweaksAt(b.key) : undefined} />;
+  };
+  /** C45 on the spell chips: a stored spell its pool's list refuses and no tweak marks (no block, or Tweaks off) is
+   *  greyed by name (`data-pick-grey` on the chip) with the book's line under the row — the one look every other
+   *  picker uses (`BookGreyLine`), with "Take anyway" (the tweak only) while the Tweaks page is on. */
+  const spellChipGreyed = (id: string, pool: 1 | 2 = 1): boolean => {
+    if (!spellOffPool(id, pool)) return false;
+    const b = anyPickerBlock(build, { picker: 'spell', record: id });
+    return !b || tweakMarkState(build, b) === 'off';
+  };
+  const spellChipGrey = (ids: readonly string[], pool: 1 | 2 = 1) =>
+    [...new Set(ids)]
+      .filter((id) => spellChipGreyed(id, pool))
+      .map((id) => {
+        const name = content.spells[id]?.name ?? id;
+        const rule = spellOffReason(id, pool);
+        const take = async () => {
+          const write = await confirmTakeAnyway<BuildState>({ name, rule, undoHint: tweakUndoHint(isMobile, showUndoButtons, 'pick'), k: { picker: 'spell', record: id }, host: build });
+          if (write) actions.patch((b) => write(b, (x) => x));
+        };
+        return (
+          <BookGreyLine
+            key={`grey:${id}`}
+            rule={`${name}: ${rule}`}
+            act={
+              tweaksOn ? (
+                <button type="button" className="pick-add tw-break-act" onClick={() => void take()}>
+                  Take anyway
+                </button>
+              ) : undefined
+            }
+          />
+        );
+      });
   // ── Dual Class: the SECOND caster's spell surface (writes cantrips2/spells2/signatures2). Only when
   //    the dual-class variant is on AND the second class is itself a slot caster. These mirror the
   //    primary caster derivations above, and feed the consolidated "Second class spells" card + the
@@ -1566,25 +2423,12 @@ export function Builder({
     () => Object.values(content.familiarAbilities).sort((a, b) => a.name.localeCompare(b.name)),
     [content],
   );
-  // Level-1 wizard class feats — the option list for the School of Unified Magical Theory bonus feat.
-  const umtFeatOpts = useMemo(
-    () =>
-      listValues(content, content.feats)
-        .filter((f) => f.category === 'class' && f.level <= 1 && (f.traits ?? []).includes('wizard'))
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } })),
-    [content.feats],
-  );
+  // Level-1 wizard class feats — the option list for the School of Unified Magical Theory bonus feat
+  // (bonusFeatOptions.ts; drawn by FeatPickSelect, which adds the "Search every feat" reveal, WP5).
+  const umtFeats = useMemo(() => umtFeatOptions(content), [content]);
   const isUmtSchool = build.classId === 'wizard' && build.subclassId === 'school-of-unified-magical-theory';
   // Skill feats — option list for a dedication's bonus skill feat (Rogue Dedication).
-  const skillFeatOpts = useMemo(
-    () =>
-      listValues(content, content.feats)
-        .filter((f) => f.category === 'skill')
-        .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
-        .map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } })),
-    [content.feats],
-  );
+  const skillFeats = useMemo(() => bonusSkillFeatOptions(content), [content]);
 
   // --- per-level spell progression (spells are chosen on the level where they're gained) ---
   // Spell slots per rank at a given character level (0 = before play).
@@ -1777,8 +2621,9 @@ export function Builder({
                   also shows a leveled grant (Basic Witchcraft's lesson taken first). */}
               {bookGrantEls(0, rowCantrips, lvl, !!archBook && !archBookRanksAt(build.level).length).chips}
               {rowCantrips.map((id) => (
-                <span className="spr-chip" key={id}>
+                <span className={'spr-chip' + (spellChipGreyed(id) ? ' tw-grey-chip' : '')} key={id} {...(spellChipGreyed(id) ? { 'data-pick-grey': '' } : {})}>
                   {content.spells[id]?.name ?? id}
+                  {spellChipMark(id)}
                   <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => writeCantrip(id)}>
                     <i className="ti ti-x" aria-hidden="true" />
                   </button>
@@ -1805,7 +2650,9 @@ export function Builder({
                 + add
               </button>
               {bookGrantEls(0, rowCantrips, lvl, !!archBook && !archBookRanksAt(build.level).length).notes}
+              {repeatedGrantNotes(castEntry1, rowCantrips, !!bookWord)}
             </div>
+            {spellChipGrey(rowCantrips)}
           </div>
         )}
         {flatBudget && (g.bookGained > 0 || capstoneAt(lvl) > 0) && (
@@ -1868,8 +2715,9 @@ export function Builder({
                     <div className="spr-chips">
                       {grantEls.chips}
                       {chosen.map((id, idx) => (
-                        <span className="spr-chip" key={id + ':' + idx}>
+                        <span className={'spr-chip' + (spellChipGreyed(id) ? ' tw-grey-chip' : '')} key={id + ':' + idx} {...(spellChipGreyed(id) ? { 'data-pick-grey': '' } : {})}>
                           {content.spells[id]?.name ?? id}
+                          {spellChipMark(id)}
                           <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.removeSpellAt(rank, idx)}>
                             <i className="ti ti-x" aria-hidden="true" />
                           </button>
@@ -1880,6 +2728,7 @@ export function Builder({
                       </button>
                       {grantEls.notes}
                     </div>
+                    {spellChipGrey(chosen)}
                     {/* The held place, said where the press lands (the whole-pool line above covers a full pool). */}
                     {full && floorHeld > 0 && poolSpent < flatAt(lvl) && (
                       <p className="lvl-note spr-why">
@@ -1981,7 +2830,7 @@ export function Builder({
                   {grantEls.chips}
                   {featEls.chips}
                   {chosen.map((id, idx) => (
-                    <span className="spr-chip" key={id + ':' + idx}>
+                    <span className={'spr-chip' + (spellChipGreyed(id) ? ' tw-grey-chip' : '')} key={id + ':' + idx} {...(spellChipGreyed(id) ? { 'data-pick-grey': '' } : {})}>
                       {sigAvailable && (
                         <button
                           type="button"
@@ -1994,6 +2843,7 @@ export function Builder({
                         </button>
                       )}
                       {content.spells[id]?.name ?? id}
+                      {spellChipMark(id)}
                       <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.removeSpellAt(rank, idx)}>
                         <i className="ti ti-x" aria-hidden="true" />
                       </button>
@@ -2005,6 +2855,7 @@ export function Builder({
                   {grantEls.notes}
                   {featEls.notes}
                 </div>
+                {spellChipGrey(chosen)}
               </div>
             );
           })}
@@ -2033,20 +2884,22 @@ export function Builder({
     const asksEffect = (rec.effectChoices ?? []).some((ch) => effectChoiceOffered(ch, build, content, sid));
     const spec = FEAT_PICK_GRANTS[sid];
     if (!def && !asksEffect && !spec) return null;
-    const featOpts = spec ? pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats', id: o.id } })) : [];
     return (
       <SetupCard icon="ti-versions" label={`Dual Class — ${rec.name}`}>
         {def && renderChoice(def, `feature:${sid}`, sid)}
         <EffectChoicesPicker recordId={sid} choices={rec.effectChoices} build={build} actions={actions} content={content} />
         {spec &&
           pickKeysFor(sid, spec.picks).map((k, i) => (
-            <PopupSelect
+            <FeatPickSelect
               key={k}
+              build={build}
+              content={content}
+              actions={actions}
+              spec={spec}
               title={pickPrompt(spec.prompt, i, spec.picks)}
               placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
               value={build.pickFeatChoices?.[k] ?? ''}
-              onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [k]: v } })}
-              options={featOpts}
+              pick={(b, v) => ({ ...b, pickFeatChoices: { ...(b.pickFeatChoices ?? {}), [k]: v } })}
             />
           ))}
       </SetupCard>
@@ -2082,8 +2935,9 @@ export function Builder({
             <div className="spr-chips">
               {giftChips(giftChipIds(castEntry2, 0, cantrips2), castEntry2, 0)}
               {cantrips2.map((id) => (
-                <span className="spr-chip" key={id}>
+                <span className={'spr-chip' + (spellChipGreyed(id, 2) ? ' tw-grey-chip' : '')} key={id} {...(spellChipGreyed(id, 2) ? { 'data-pick-grey': '' } : {})}>
                   {content.spells[id]?.name ?? id}
+                  {spellChipMark(id, 2)}
                   <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.toggleCantrip2(id, cantripRowCap2)}>
                     <i className="ti ti-x" aria-hidden="true" />
                   </button>
@@ -2107,7 +2961,9 @@ export function Builder({
               >
                 + add
               </button>
+              {repeatedGrantNotes(castEntry2, cantrips2, !!bookWord2)}
             </div>
+            {spellChipGrey(cantrips2, 2)}
           </div>
         )}
         {isWizardBook2 && (
@@ -2136,7 +2992,7 @@ export function Builder({
                 {giftChips(gifts, castEntry2, rank)}
                 {featEls2.chips}
                 {chosen.map((id, idx) => (
-                  <span className="spr-chip" key={id + ':' + idx}>
+                  <span className={'spr-chip' + (spellChipGreyed(id, 2) ? ' tw-grey-chip' : '')} key={id + ':' + idx} {...(spellChipGreyed(id, 2) ? { 'data-pick-grey': '' } : {})}>
                     {sigAvailable2 && (
                       <button
                         type="button"
@@ -2149,6 +3005,7 @@ export function Builder({
                       </button>
                     )}
                     {content.spells[id]?.name ?? id}
+                    {spellChipMark(id, 2)}
                     <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.removeSpellAt2(rank, idx)}>
                       <i className="ti ti-x" aria-hidden="true" />
                     </button>
@@ -2159,6 +3016,7 @@ export function Builder({
                 </button>
                 {featEls2.notes}
               </div>
+              {spellChipGrey(chosen, 2)}
             </div>
           );
         })}
@@ -2180,6 +3038,8 @@ export function Builder({
    */
   const missing = useMemo(() => levelChoices(build, content), [build, content]);
   const pendingCount = (lvl: number) => missing.filter((m) => m.page === lvl || m.alsoPage === lvl).length;
+  // A given feat's unanswered questions, which the Tweaks page asks (plan B WP8): its tag, its rows, the button's dot.
+  const tweaksPending = useMemo(() => missing.filter((m) => m.page === TWEAKS_PAGE), [missing]);
   const requiredUnmet = (lvl: number) => pendingCount(lvl) > 0;
   const setupMissingList = useMemo(() => missing.filter((m) => m.page === 0).map((m) => m.label), [missing]);
 
@@ -2188,7 +3048,8 @@ export function Builder({
     // list EVERY page, not just the origin one. This dialog used to read `setupMissingList` alone, so
     // a level-12 character with nine empty feat slots saved without a word.
     if (missing.length > 0) {
-      const shown = missing.slice(0, 12);
+      // Twelve names at most; a given feat's Tweaks line is always among them (no level chip leads to it).
+      const shown = choicesToName(missing, 12);
       const ok = await confirmDialog({
         title: initial ? 'Save with choices left?' : 'Create with choices left?',
         message: (
@@ -2211,7 +3072,23 @@ export function Builder({
       });
       if (!ok) return;
     }
-    onCreate(build);
+    // B16: a Save that changes a spellcasting entry (its type, its prepared slots, a smaller repertoire or
+    // cantrip count, the entry gone — a feat picked or given, a given feat paused, Tweaks off) asks first.
+    // The character as stored against the one this Save makes (featPrereqChar: this build, ovContent).
+    if (initial) {
+      // The question is advice: if the stored build cannot be built to compare, Save still saves.
+      let changes: ReturnType<typeof castingEntryChanges> = [];
+      try {
+        changes = castingEntryChanges(buildCharacter(initial, baseContent), featPrereqChar);
+      } catch (err) {
+        console.warn('Could not compare the casting entries before saving:', err);
+      }
+      if (changes.length && !(await confirmCastingChanges(changes))) return;
+    }
+    // The same stamp as at open (idempotent): it also stamps an entry an un-routed writer added since. Skill order
+    // D13 (WP9): the player's host stamps `skillOrder` too, so the notice never shows again; the GM's never does.
+    const stamped = stampTweaksSave(build, baseContent);
+    onCreate(skillOrderNotice ? stampSkillOrderSave(stamped, baseContent) : stamped);
   };
 
   const nextRank = (cur: ProficiencyRank, lvl: number): ProficiencyRank => {
@@ -2225,6 +3102,7 @@ export function Builder({
 
   return (
     <PinContext.Provider value={pinApi}>
+    <ShowTweakContext.Provider value={tweaksOn ? openTweaksAt : undefined}>
     <div className="builder">
       {/* The builder is the one full screen with no `.chrome` bar, so on the desktop app — which draws
           its own title bar — it was the one screen you could neither drag, minimise, maximise nor close
@@ -2308,6 +3186,8 @@ export function Builder({
             </button>
           </div>
         )}
+        {/* The dot also says a given feat still owes an answer on the Tweaks page (plan B WP8). */}
+        {tweakBadge && <TweaksButton count={tweakBadge.count} dot={tweakBadge.dot || tweaksPending.length > 0} open={sel === 'tweaks'} onToggle={toggleTweaks} />}
         <button className="b-cancel" onClick={() => void requestLeave()}>
           Cancel
         </button>
@@ -2339,9 +3219,53 @@ export function Builder({
 
       <div className="builder-body" ref={bodyRef}>
         <div className="bmain">
+          {sel === 'tweaks' && tweaksOn && (
+            <TweaksPage
+              build={build}
+              actions={actions}
+              content={ovContent}
+              bookContent={baseContent}
+              character={featPrereqChar}
+              derivedBuild={derivedBuild}
+              onDone={leaveTweaks}
+              onPendingChange={(dirty) => (tweakAddPending.current = dirty)}
+              renderFeatQuestions={featQuestions}
+              pending={tweaksPending}
+              focusKey={tweaksFocus}
+              // WP4 (the WP2 report's open item): a row's "Go to" opens its page, then flashes the place it names.
+              // WP14: 'setup' means character creation — the heritage, the background's skill and the ancestry,
+              // background and free boosts are all drawn on the strip's "0" page (its "Setup" chip holds Sources and
+              // Options), so Go to opens page 0.
+              onGoTo={(g) => {
+                setSel(g.page === 'setup' ? 0 : Math.min(g.page, build.level));
+                if (g.placeKey) window.setTimeout(() => flashPlace(g.placeKey!), 80);
+              }}
+            />
+          )}
           {sel === 'setup' && (
             <div className="card-sec">
               <div className="bsec-title">Setup</div>
+              {/* Skill order ruling 3 (WP9, plan 3.3): what the level-by-level order changed on this character,
+                  once (the Save stamps the build). No element at all when nothing changed. */}
+              {skillOrderLines.length > 0 && (
+                <div className="setup-note skill-order-notice" data-skill-order-notice="" role="status">
+                  <p className="skill-order-head">
+                    <i className="ti ti-info-circle" aria-hidden="true" /> {SKILL_ORDER_NOTICE_HEADING}
+                  </p>
+                  <ul className="skill-order-lines">
+                    {(skillOrderAll ? skillOrderLines : skillOrderLines.slice(0, SKILL_ORDER_NOTICE_SHOWN)).map((l, i) => (
+                      <li key={`${l.kind}:${i}`} data-skill-order-line={l.kind}>
+                        {l.text}
+                      </li>
+                    ))}
+                  </ul>
+                  {!skillOrderAll && skillOrderLines.length > SKILL_ORDER_NOTICE_SHOWN && (
+                    <button type="button" className="link-btn skill-order-more" onClick={() => setSkillOrderAll(true)}>
+                      …and {skillOrderLines.length - SKILL_ORDER_NOTICE_SHOWN} more
+                    </button>
+                  )}
+                </div>
+              )}
               <div className="setup-note">Campaign options — optional variant rules for this character.</div>
               <div className="lvl-cards">
                 {/* SOURCES FIRST (owner, 2026-09-22) — the order lives in RuleCards, which the
@@ -2351,15 +3275,13 @@ export function Builder({
                     build={build}
                     actions={actions}
                     content={content}
-                    onLeaveCampaign={onLeaveCampaign}
+                    // The leave is saved at once, so Cancel must not offer to discard it (useBuildChanged).
+                    onLeaveCampaign={onLeaveCampaign && ((cid) => { onLeaveCampaign(cid); buildChanged.leftCampaign(cid); })}
                     // Not an undo step: an undo would only find nothing to change (keepBuildCampaigns).
                     setCampaignIds={(f) => setBuild((b) => ({ ...b, campaignIds: f(b.campaignIds ?? []) }), { record: false })}
                   />
-                  <OptionsCard build={build} actions={actions} content={content} />
+                  <OptionsCard build={build} actions={actions} content={content} character={featPrereqChar} tweaksContent={ovContent} />
                 </RuleCards>
-                {build.options?.overridesEnabled && (
-                  <OverridesCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
-                )}
                 {hasSnareCrafting(featPrereqChar.feats.map((f) => f.featId)) && (
                   <SnareFormulasCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
                 )}
@@ -2403,7 +3325,7 @@ export function Builder({
                     <i className="ti ti-hexagon" aria-hidden="true" /> Attributes
                   </div>
                   <div className="lvl-cards">
-                    <AttributeEditor build={build} actions={actions} content={content} />
+                    <AttributeEditor build={build} actions={actions} content={content} onOpenTweaks={tweaksOn ? openTweaksAt : undefined} />
                   </div>
                 </div>
                 <div className="lvl-group">
@@ -2512,7 +3434,6 @@ export function Builder({
             sel >= 1 &&
             (() => {
               const lvl = sel;
-              if (baseSkills == null) return null; // unreachable (sel is a valid level here) — narrows the memo
               // No `future` state any more: the strip only lists levels 1..build.level, and the clamp
               // above keeps `sel` inside that range, so a page above the character's level cannot be
               // open. The greyed-out "future level" page and its "Advance to level N" link went with it.
@@ -2520,7 +3441,9 @@ export function Builder({
               // `build` last: the level list is archetype-aware only when the resolver can see the
               // dedication that carries the class archetype (War Mage: no Arcane Bond row, a War Magic one).
               // Taken feats: the held ones, given included — the same list every levelGrants caller passes (case D, D4).
-              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, heldFeatIds(build), build);
+              // The STORAGE view (Tweaks phase 2, WP7, C9/C11): slots are drawn from every stored pick, so pausing an
+              // extra place that holds Ultimate Flexibility never takes its slot away (no rekey on a pause).
+              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, heldFeatIds(build, undefined, { includePaused: true }), build);
               // Package M round 2 (Dual Class): the class each automatic row belongs to, as levelGrants
               // carries it (shared.tsx levelRowClasses) — its text and its card are read for it.
               const rowClasses = levelRowClasses(g.features);
@@ -2529,20 +3452,52 @@ export function Builder({
                  change took away, any key the slot list does not produce. The sheet still grants every
                  one, so each is listed here to be moved or removed by the player. Derived on every
                  render; nothing is written when a character opens. */
-              const drawnKeys = new Set(g.featSlots.map((cat, i) => slotKey(lvl, cat, i)));
+              /* Tweaks phase 2 WP6 (C17): the printed slots a LIVE "Remove a place" removes, each with its removal's key.
+                 Not drawn: a thin line takes the card's place, and a pick it held is one of the no-slot rows below. */
+              const removedHere = removedPlaceBlocks(build, (l) => (l === lvl ? g.featSlots : []));
+              /* WP14 (C47): this level's skill-increase places a LIVE removal names, lane → the removal's key. */
+              const removedSkillPlaces = removedSkillIncreasePlaces(build);
+              const removedSkillHere = new Map<string, string>(
+                (['main', 'bonus', 'background'] as const).flatMap((lane) => {
+                  const k = removedSkillPlaces.get(skillPlaceId(lane, lvl));
+                  return k ? [[lane, k] as [string, string]] : [];
+                }),
+              );
+              /* Tweaks phase 2 WP7 (C11, C42): every READABLE extra feat place at this level draws its card — live, paused
+                 or with Tweaks off — and its key is drawn, so its pick is never a "feat with no slot" here and its
+                 questions are asked once (by its card while live, by nothing while it does not count). A key with no
+                 block, or an unreadable / newer one, draws nothing and stays a feat with no slot (UNKNOWN ≠ EMPTY). */
+              const placeCards = featPlaceCardsAt(build, lvl);
+              // WP11: the extra skill-increase and boost places at this level (one card per block, every state, C42).
+              const carrierCards = carrierPlaceCardsAt(build, lvl);
+              const drawnKeys = new Set([...g.featSlots.map((cat, i) => slotKey(lvl, cat, i)).filter((k) => !removedHere.has(k)), ...placeCards.map((c) => c.slotKey)]);
               const noSlot = Object.entries(build.featPicks).filter(([k, v]) => !!v && Number(k.split(':')[0]) === lvl && !drawnKeys.has(k));
               const bg = resolveBackground(build, content);
               const bgFeatAtThisLevel = lvl === 1 && bg?.grantedFeatId;
               const anyContent =
-                g.features.length || g.featSlots.length || g.skillIncrease || g.attributeBoosts || bgFeatAtThisLevel || hasSpellGains(lvl);
+                g.features.length || g.featSlots.length || g.skillIncrease || g.attributeBoosts || bgFeatAtThisLevel || hasSpellGains(lvl) || placeCards.length || carrierCards.length;
 
-              // Ranks before this level's increase (memoized above as baseSkills; non-null here since
-              // this IIFE only renders when sel is a valid level).
+              /* The ranks THIS level's skill increases start from (skill-order plan section 2, WP7; ruling 1): the
+               * per-level history at this level — everything placed before its increases (its class features,
+               * heritage, feats and the floors starting here; never a feat or increase of a LATER level: the
+               * 3rd-level page of a character who takes Barbarian Dedication at 4th reads Athletics untrained) —
+               * with the "exactly" holds as they stand AT this level (a floor or hold that starts later is not there
+               * yet, spec 9, D8). The bonus increase starts after the main one, the background's after both: the
+               * order the engine applies them in. Before WP7 this was a second whole buildCharacter (`baseSkills`). */
+              const ranksHere = (point: 'beforeIncreases' | 'afterMain' | 'afterBonus' | 'afterBackground'): SkillRanks =>
+                skillRanksAtLevel(featPrereqChar, lvl, point) ?? featPrereqChar.proficiencies.skills;
+              const baseSkills = ranksHere('beforeIncreases');
               const chosenIncrease = build.skillIncreases[lvl];
               const loreKeys = Object.keys(baseSkills).filter((k) => k.startsWith('lore:')) as ProficiencyKey[];
-              // A Lore trained by THIS level's increase isn't in baseSkills yet — keep it selectable.
+              // A Lore trained by THIS level's increase isn't in the ranks before it — keep it selectable.
               if (chosenIncrease?.startsWith('lore:') && !loreKeys.includes(chosenIncrease)) loreKeys.push(chosenIncrease);
               const skillOptions: ProficiencyKey[] = [...SKILLS, ...loreKeys];
+              // What a rank tweak means for each increase option (tweaks/skillNotes.ts, plan B WP8): a skill
+              // held "exactly" is greyed with why, and a stored pick a floor made useless says so. Read with the
+              // sheet's own read-time rank sort, so an old entry counts the way the sheet counts it.
+              const tweakHost = featPrereqChar.tweakRankSort ? { ...build, tweakRankSort: featPrereqChar.tweakRankSort } : build;
+              const increaseNote = (pick: ProficiencyKey | null | undefined, from: SkillRanks = baseSkills) =>
+                pick ? skillTweakNotes(tweakHost, lvl, pick, from[pick] ?? 'untrained', true).note : undefined;
 
               // The subclass (Doctrine / Bloodline / Arcane School / …) is granted as a class
               // feature at this level but is really the player's choice — render it as the
@@ -2568,6 +3523,14 @@ export function Builder({
                 return !!(rec?.choice && !askedAtDailyPrep(rec.choice)) || !!rec?.effectChoices?.length || !!FEAT_PICK_GRANTS[fid];
               };
               const askingFeatures = g.features.filter((f) => f.id !== subAnchorId && featureAsks(f.id));
+              /* A class option's training above 1st level that owes a replacement skill (skill-order plan D14, WP5:
+                 Root Epithet's epithets, class-feature-1066 "…you become trained in a different skill of your choice,
+                 as normal"). The engine reports it on `skillFallbacks` under the option's id; it is asked on the page
+                 the option's pick opened, named after the option (the pick itself is made in the class's choices). */
+              const clauseOptionsHere = heldClassTrainingClauseOptions(build, content)
+                .filter((o) => o.level === lvl)
+                .map((o) => o.optionId);
+              const optionFallbacksHere = (featPrereqChar.skillFallbacks ?? []).filter((fb) => clauseOptionsHere.includes(fb.featId));
               const askingGrantedFeats = bgFeatAtThisLevel
                 ? backgroundGrantedFeats(bg, build.backgroundSkillChoice).filter((gid) => !!content.feats[gid]?.choice)
                 : [];
@@ -2587,7 +3550,11 @@ export function Builder({
                  background's — are left out. Deduped by (feat, VARIANT), not by feat id: a granter that owes
                  two takings of one feat (Anvil Dwarf's two Specialty Crafting specialties, two Major Lessons
                  through two Advanced Witchcraft feats) gets a picker per taking. */
-              const slotPickedIds = new Set(Object.values(build.featPicks).filter(Boolean));
+              // The feats whose own card asks their grants' questions (`featQuestions`): every slot pick, and
+              // a given feat while the Tweaks page is there to draw its row (plan B WP8) — so a given feat's
+              // grants ask under its row there, not here. With Tweaks off an import-stamped given feat still
+              // holds, and its grants keep asking here: no page would draw them otherwise.
+              const slotPickedIds = new Set(heldFeatIds(build, undefined, tweaksOn ? undefined : { via: ['slot'] }));
               const handledGrants = new Set<string>([
                 ...[...slotPickedIds].flatMap((id) => FEAT_FEAT_GRANTS[id as string] ?? []),
                 ...backgroundGrantedFeats(bg, build.backgroundSkillChoice),
@@ -2613,6 +3580,251 @@ export function Builder({
               );
               const grantedAsksAny = grantedAsksHere.length > 0 || grantedLoreHere.length > 0 || grantedEffectsHere.length > 0;
 
+              /* One feat slot's pick as its card reads it — a book slot's, and (Tweaks phase 2 WP7) a live extra place's,
+                 which draws the same notes and questions under its own card: whether its prerequisites still hold, and
+                 the lines under the card. */
+              const slotPickLines = (key: string) => {
+                const picked = build.featPicks[key];
+                // Re-validate an already-picked feat: later edits (boosts, removed feats, a
+                // different subclass) can break prerequisites that were met when picking.
+                // Warn only — never auto-remove — and respect a deliberate override.
+                const pickedFeat = picked ? content.feats[picked] : undefined;
+                // A LIVE "Take anyway" only (blocks/active.ts): a paused one keeps the pick, and its warning returns.
+                const overridden = !!picked && isAllowedAnyway(build, picked);
+                const revalidation =
+                  // Skill order WP7 (plan D5; P5): its skill lines read the end of THIS level, without the feat
+                  // and what it grants — a feat at 3rd does not meet "expert" with the increase from 5th. THIS
+                  // slot's row only (WP7 round 2): another copy of a repeatable feat still counts.
+                  pickedFeat && !overridden ? checkPrerequisites(pickedFeat, featPrereqChar, content, { atLevel: lvl, without: featSubtreeIds(featPrereqChar, picked, key) }) : null;
+                const nowInvalid = !!revalidation && !revalidation.met;
+                // A pick this slot's own picker would refuse — a second class changed under a rogue feat
+                // in the fighter's slot, a save or import that put it there. Flagged here from the live
+                // build, never moved or removed: the player replaces or clears it.
+                const unfit = !!picked && !!ovContent.feats[picked] && !fitsSlot(build, ovContent, key, key);
+                /* WP5 (C22): the book's refusals of the pick, read WITHOUT a tweak — a "Pick from any list" covering
+                 * them draws its Tweak mark here (live: no "Not valid" note, since `fitsSlot` learns the allow;
+                 * paused: "Tweak paused" and the note returns; Tweaks off: the note alone). */
+                const bookRefusals = picked && ovContent.feats[picked] ? (slotBookRefusals(build, ovContent, key) ?? []) : [];
+                /* Tweaks phase 2 (WP4, C28): the Tweak mark BESIDE the card (never inside its button) for a pick a
+                 * phase-1 "Take anyway" (`allowedFeats`) covers — only while the book really refuses it (the
+                 * prerequisites read without the tweak). Live: "Tweak"; paused: "Tweak paused" + the book's words
+                 * (its own warning line returns as well); Tweaks switched off: nothing. */
+                const allowBlock = picked ? storedAllowAnyway(build, picked) : undefined;
+                const allowState = allowBlock ? tweakMarkState(build, allowBlock) : 'off';
+                const bookCheck = allowBlock && allowState !== 'off' && pickedFeat ? (revalidation ?? checkPrerequisites(pickedFeat, featPrereqChar, content, { atLevel: lvl, without: featSubtreeIds(featPrereqChar, picked, key) })) : null;
+                // …or the archetype dedication rule the feat picker's own "Take anyway" lifts (Magaambyan
+                // Attendant's gate: the second dedication too early).
+                const dedWhy = allowBlock && allowState !== 'off' && pickedFeat ? dedicationBlock(takenForDedicationRule(build, key, lvl), pickedFeat, content) : null;
+                const featMarkRule = dedWhy ?? (bookCheck && !bookCheck.met ? (bookCheck.unmet.length ? `Unmet: ${bookCheck.unmet.join('; ')}` : 'Prerequisites not met.') : null);
+                const lines = (
+                  <>
+                    {allowBlock && featMarkRule && (
+                      <div className="tw-pick-note">
+                        <TweakMark kind="choice.allowAnyway" state={allowState} rule={featMarkRule} reason={allowBlock.reason} bookWarning={allowState === 'paused' ? featMarkRule : undefined} onShow={tweaksOn ? () => openTweaksAt(allowBlock.key) : undefined} />
+                      </div>
+                    )}
+                    {/* The picked feat's TrustMarker line under the filled card, as the heritage
+                        card shows it: a created feat with no rules encoded applies nothing, and the
+                        slot is where the player spent the pick (see TrustMarker). */}
+                    {picked && <TrustMarker bucket="feats" id={picked} />}
+                    {/* WHY the triangle on the card is there, in words. It was only the icon's
+                        hover tooltip, which a phone never shows, and a tap on the icon opens the
+                        feat's description — so a phone player could not find out what was wrong.
+                        test/phone-builder-shell.test.tsx. */}
+                    {picked && nowInvalid && (
+                      <div className="lvl-note lvl-unfit lvl-invalid-note" data-invalid={key}>
+                        <i className="ti ti-alert-triangle" aria-hidden="true" /> Prerequisites no longer met
+                        {revalidation!.unmet.length ? `: ${revalidation!.unmet.join('; ')}` : ''}. Still on your
+                        character — replace it, or meet the prerequisite again.
+                      </div>
+                    )}
+                    {(() => {
+                      // WP8 round 4 (B2): Tweaks on, the feat's "Take a feat more times" paused — the copy that still
+                      // counts gets no note (the cap is its slot's only refusal); the dropped copy keeps it below.
+                      if (picked && pausedMoreTakesCountingCopy(build, featPrereqChar, key, picked, bookRefusals)) return null;
+                      const note = unfit ? (
+                        <div className="lvl-note lvl-unfit" data-unfit={key}>
+                          <i className="ti ti-alert-triangle" aria-hidden="true" /> Not valid for this slot — still on your character. Replace or clear it.
+                        </div>
+                      ) : undefined;
+                      return picked && bookRefusals.length ? <AnyListNote host={build} featId={picked} refusals={bookRefusals} bookLine={note} /> : note;
+                    })()}
+                    {/* WP8: a copy past the book's take cap — live, the Tweak mark; its tweak paused, the copy the engine
+                        drops: "Taken more times than the feat allows — tweak paused" (with the book's note above). */}
+                    {picked && <MoreTakesNote mark={moreTakesMarks.get(key)} />}
+                    {/* The record-level NOTE — "this bonus lands on your hierophant, not you",
+                        "recorded only", "your GM decides which ally wears the relic". It renders on
+                        the Feats tab and was read NOWHERE in the builder, which is precisely where
+                        the player is deciding whether to spend the slot. 14 feats carry one. */}
+                    {picked && content.feats[picked]?.note && (
+                      <div className="lvl-note">
+                        <i className="ti ti-info-circle" aria-hidden="true" /> {content.feats[picked]!.note}
+                      </div>
+                    )}
+                    {/* The feat's full description opens in a popup when the card is clicked
+                        (setFeatDescPopup) — no inline expand. */}
+                    {/* The feat's own questions (plan B WP8: `featQuestions`, beside renderChoice —
+                        the same cards a feat given through Tweaks asks under its row there). */}
+                    {picked && featQuestions(picked, key)}
+                  </>
+                );
+                return { picked, revalidation, nowInvalid, lines };
+              };
+
+              /* Tweaks phase 2 WP7: one extra feat place's card (WP2's PlaceCardShell, Guy's "Normal card + chip"), the SAME
+                 label in every state. Live: the place's own slot card — its picker (the place's own list), its pick's
+                 notes and questions under it, the Tweak mark beside it, and "Remove this place" (the block only, C12).
+                 Paused: greyed, the mark paused, "Turn on". Tweaks off: greyed, no mark, no controls (C42). */
+              const placeCard = (c: FeatPlaceCard) => {
+                const cat = c.category as FeatCategory;
+                const title = `Extra ${(FEAT_LABEL[cat] ?? `${cat} feat`).toLowerCase()} (level ${lvl})`;
+                const heldId = featIdAtSlot(build, c.slotKey) || undefined;
+                const held = heldId ? (content.feats[heldId]?.name ?? heldId) : undefined;
+                const mark = (
+                  <TweakMark
+                    kind="choice.addPlace"
+                    state={c.state}
+                    rule={featPlaceRule(c)}
+                    reason={c.block.reason}
+                    onShow={tweaksOn ? () => openTweaksAt(c.block.key) : undefined}
+                  />
+                );
+                if (c.state !== 'live')
+                  return <PlaceCardShell key={c.slotKey} title={title} state={c.state} held={held} placeKey={c.slotKey} mark={mark} onTurnOn={c.state === 'paused' ? () => turnOnPlace(c.block.key) : undefined} />;
+                const { picked, revalidation, nowInvalid, lines } = slotPickLines(c.slotKey);
+                const open = () => setPicker({ kind: 'feat', level: lvl, category: cat, idx: c.n, key: c.slotKey, place: true });
+                return (
+                  <PlaceCardShell key={c.slotKey} title={title} state="live" held={held} placeKey={c.slotKey} mark={mark} below={lines}>
+                    <FeatSlotCard
+                      label={title}
+                      icon={FEAT_ICON[cat] ?? 'ti-square-plus'}
+                      picked={!!picked}
+                      pickedName={picked ? (content.feats[picked]?.name ?? picked) : undefined}
+                      invalid={nowInvalid ? `Prerequisites no longer met: ${revalidation!.unmet.join('; ')}` : undefined}
+                      onCard={() => {
+                        if (!picked) return open();
+                        const f = content.feats[picked];
+                        if (f?.description) setFeatDescPopup({ title: f.name, description: f.description, descRefs: f.descRefs, key: 'feats', slug: picked });
+                      }}
+                      onReplace={open}
+                      onClear={() => actions.setFeat(c.slotKey, null)}
+                      // C12: the place's block only — never `remove.choicePlace` (that removes a printed slot). Asks nothing.
+                      menu={[{ label: 'Remove this place', icon: 'ti-square-minus', onSelect: () => dropFeatPlace(c) }]}
+                    />
+                  </PlaceCardShell>
+                );
+              };
+
+              /* Tweaks phase 2 WP11 (C15 / C16): an extra skill-increase or boost place's card — the same shell, the same
+                 label in every state. Live: the place's own picker. A skill increase starts from `afterBackground` (after
+                 this level's main, bonus and background increases) plus the extra places stored before it at this level,
+                 with the level's own greys and cap (as the book card: legendary, the level's cap, a locked Lore, a rank
+                 tweak's hold); the skills and the Lores the character knows by then (a new Lore is the "Add a Lore" tweak).
+                 A stored answer outside that list shows by name, greyed (UNKNOWN ≠ EMPTY: never cleared). A boost offers
+                 the six attributes. Picking writes ONLY the block's answer; "Remove this place" takes the block (asks
+                 nothing; Ctrl+Z). Paused: greyed, "Turn on". Tweaks off: greyed, no controls (C42). Opening writes nothing. */
+              const carrierStart = (c: CarrierPlaceCard): SkillRanks => {
+                const r: SkillRanks = { ...ranksHere('afterBackground') };
+                for (const o of carrierCards) {
+                  if (o === c) break;
+                  if (o.place !== 'skillIncrease') continue;
+                  const s = featPrereqChar.skillHistory?.steps.find((x) => x.source === `${TWEAK_INCREASE_SOURCE}${o.block.key.slice('blocks:'.length)}`);
+                  if (s) r[s.key] = s.to;
+                }
+                return r;
+              };
+              const carrierCard = (c: CarrierPlaceCard) => {
+                const isSkill = c.place === 'skillIncrease';
+                const title = isSkill ? 'Extra skill increase (tweak)' : 'Extra attribute boost (tweak)';
+                const held = c.answer ? (isSkill ? skillLabel(c.answer as ProficiencyKey) : (ABILITY_NAME[c.answer] ?? c.answer)) : undefined;
+                const id = c.block.key.slice('blocks:'.length);
+                const mark = (
+                  <TweakMark
+                    kind="choice.addPlace"
+                    state={c.state}
+                    rule={carrierPlaceRule(c)}
+                    reason={c.block.reason}
+                    onShow={tweaksOn ? () => openTweaksAt(c.block.key) : undefined}
+                  />
+                );
+                if (c.state !== 'live')
+                  return <PlaceCardShell key={c.block.key} title={title} state={c.state} held={held} placeKey={c.block.key} mark={mark} onTurnOn={c.state === 'paused' ? () => turnOnPlace(c.block.key) : undefined} />;
+                let picker: ReactNode;
+                let result: ReactNode = null;
+                let note: string | undefined;
+                if (isSkill) {
+                  const start = carrierStart(c);
+                  const known = [...SKILLS, ...(Object.keys(start).filter((k) => k.startsWith('lore:') && start[k as ProficiencyKey] !== 'untrained') as ProficiencyKey[])];
+                  const step = featPrereqChar.skillHistory?.steps.find((x) => x.source === `${TWEAK_INCREASE_SOURCE}${id}`);
+                  const options = known.map((k) => {
+                    const cur = start[k] ?? 'untrained';
+                    const next = naturalNextRank(cur);
+                    const atAbsoluteMax = next === cur;
+                    const allowedByLevel = PROFICIENCY_RANKS.indexOf(next) <= PROFICIENCY_RANKS.indexOf(skillIncreaseCap(lvl));
+                    const tw = skillTweakNotes(tweakHost, lvl, k, cur, k === c.answer);
+                    // WP14 fix round 1: the place's own answer that raised nothing (capped) says "no change", never "E → M".
+                    const capped = k === c.answer && (step?.note === 'cap' || !allowedByLevel);
+                    return {
+                      value: k,
+                      label: `${skillLabel(k)} (${atAbsoluteMax ? `${RANK_ABBR[cur]} — max` : capped ? `${RANK_ABBR[cur]} — no change` : `${RANK_ABBR[cur]} → ${RANK_ABBR[next]}`})`,
+                      disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k] || !!tw.disabled,
+                      disabledReason: atAbsoluteMax ? 'Already legendary — nothing left to increase.' : !allowedByLevel ? `This level's increases cap at ${skillIncreaseCap(lvl)}.` : (LOCKED_SKILL_KEYS[k] ?? tw.reason),
+                    };
+                  });
+                  if (c.answer && !known.includes(c.answer as ProficiencyKey)) {
+                    note = `${held} is not a skill or Lore you know at level ${lvl} — this increase doesn't count until you pick another.`;
+                    options.push({ value: c.answer as ProficiencyKey, label: held ?? c.answer, disabled: true, disabledReason: note });
+                  } else if (step?.note === 'drop') note = `${held} can't take this increase — pick another skill.`;
+                  // Fix round 1: a capped step raised nothing (e.g. the main increase at this level took the same skill
+                  // first) — say so instead of "→ expert".
+                  else if (step?.note === 'cap') note = `No change: ${held} is already ${step.from} (this level caps at ${skillIncreaseCap(lvl)}).`;
+                  picker = (
+                    <PopupSelect
+                      title={title}
+                      placeholder="Choose a skill…"
+                      value={c.answer ?? ''}
+                      onChange={(v) => setCarrierAnswer(c.block.key, 'skill', v || undefined)}
+                      clearLabel="Clear"
+                      options={options}
+                    />
+                  );
+                  if (c.answer && step && step.note !== 'drop' && step.note !== 'cap') result = <span className="lvl-result">→ {step.to}</span>;
+                } else {
+                  const stepB = (featPrereqChar.tweakBoostSteps ?? []).find((t) => t.id === id);
+                  picker = (
+                    <PopupSelect
+                      title={title}
+                      placeholder="Choose an attribute…"
+                      value={c.answer ?? ''}
+                      onChange={(v) => setCarrierAnswer(c.block.key, 'attribute', v || undefined)}
+                      clearLabel="Clear"
+                      options={(['str', 'dex', 'con', 'int', 'wis', 'cha'] as const).map((a) => ({ value: a, label: ABILITY_NAME[a] ?? a }))}
+                    />
+                  );
+                  if (stepB) result = <span className="lvl-result">+{stepB.value}{stepB.value === 1 ? ' (18 or more)' : ''}</span>;
+                }
+                return (
+                  <PlaceCardShell key={c.block.key} title={title} state="live" held={held} placeKey={c.block.key} mark={mark}>
+                    <div className={'lvl-card' + (c.answer ? '' : ' empty')} data-carrier-card={c.place} data-block-key={c.block.key}>
+                      <span className="lvl-card-icon">
+                        <i className={`ti ${isSkill ? 'ti-arrow-up' : 'ti-hexagon'}`} aria-hidden="true" />
+                      </span>
+                      <div className="lvl-card-text">
+                        <div className="lvl-card-label">{title}</div>
+                        <div className="lvl-card-row">
+                          {picker}
+                          {result}
+                        </div>
+                        {note && <div className="lvl-auto lvl-skill-note" data-carrier-note={c.answer}>{note}</div>}
+                        <button type="button" className="tw-place-remove" data-remove-carrier={c.block.key} onClick={() => dropCarrierPlace(c.block.key)}>
+                          <i className="ti ti-square-minus" aria-hidden="true" /> Remove this place
+                        </button>
+                      </div>
+                    </div>
+                  </PlaceCardShell>
+                );
+              };
+
               return (
                 <>
                 <div className="card-sec lvl-page">
@@ -2628,6 +3840,15 @@ export function Builder({
                       </span>
                     ) : null}
                   </div>
+                  {/* Skill order ruling 3 (WP9, plan 3.3): this level's lines of the one-time notice, where the
+                      change happened. */}
+                  {skillOrderLines
+                    .filter((l) => l.levels.includes(lvl))
+                    .map((l, i) => (
+                      <div className="lvl-note skill-order-note" data-skill-order-note={l.kind} key={`skill-order:${l.kind}:${i}`}>
+                        <i className="ti ti-info-circle" aria-hidden="true" /> {l.text}
+                      </div>
+                    ))}
 
                   {(g.features.some((f) => f.id !== subAnchorId) || bgFeatAtThisLevel) && (
                     <div className="lvl-zone">
@@ -2711,7 +3932,7 @@ export function Builder({
                         player scans for things to answer, rather than under "You gain automatically" —
                         each one labelled with the feature that asked it, so it is still obvious where
                         it came from. */}
-                    {(askingFeatures.length > 0 || askingGrantedFeats.length > 0 || loreAskingGrantedFeats.length > 0) && (
+                    {(askingFeatures.length > 0 || askingGrantedFeats.length > 0 || loreAskingGrantedFeats.length > 0 || optionFallbacksHere.length > 0) && (
                       <div className="lvl-group">
                         <div className="lvl-group-h">
                           <i className="ti ti-help-circle" aria-hidden="true" /> Choices from what you gained
@@ -2734,18 +3955,20 @@ export function Builder({
                                   evolution feat — a granted feature that hands you a feat to pick. */}
                               {FEAT_PICK_GRANTS[f.id] && (() => {
                                 const spec = FEAT_PICK_GRANTS[f.id];
-                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats', id: o.id } }));
                                 /* A spec may grant SEVERAL feats (*"choose up to two…"*). Answers past
                                  * the first are keyed `<id>#<i>`, so index 0 keeps the bare key and no
                                  * saved character loses its pick. See FeatPickSpec.picks. */
                                 return pickKeysFor(f.id, spec.picks).map((key, i) => (
-                                  <PopupSelect
+                                  <FeatPickSelect
                                     key={key}
+                                    build={build}
+                                    content={content}
+                                    actions={actions}
+                                    spec={spec}
                                     title={pickPrompt(spec.prompt, i, spec.picks)}
                                     placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
                                     value={build.pickFeatChoices?.[key] ?? ''}
-                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [key]: v } })}
-                                    options={opts}
+                                    pick={(b, v) => ({ ...b, pickFeatChoices: { ...(b.pickFeatChoices ?? {}), [key]: v } })}
                                   />
                                 ));
                               })()}
@@ -2771,6 +3994,20 @@ export function Builder({
                               );
                             }),
                           )}
+                          {optionFallbacksHere.map((fb) => (
+                            <SkillFallbackPick
+                              key={`optfb-${fb.featId}:fallback:${fb.slot ?? fb.skill}`}
+                              recordId={fb.featId}
+                              fb={fb}
+                              build={build}
+                              // Skill order WP7 (the WP5 checker's F1): the ranks at the OPTION's print place (3rd
+                              // level, its class features), like a feat's replacement — not the finished ones, so a
+                              // skill a later source trains (this level's increase included) is a live replacement.
+                              ranks={recordRanks(fb.featId, 'option', lvl)}
+                              patch={actions.patch}
+                              from={content.classFeatures[fb.featId]?.name ?? fb.featId}
+                            />
+                          ))}
                         </div>
                       </div>
                     )}
@@ -2796,8 +4033,13 @@ export function Builder({
                                      subclass picker (the level page's card). Same helper as the
                                      Setup one in shared.tsx, so both ask before dropping spells. */
                                   onChange={(v) => requestSubclassChange(v, build, content, actions)}
-                                  options={cls.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } }))}
+                                  /* C35: the same sanctification grey, Take anyway and stored-pick note as
+                                     the Setup picker (`subclassPickerParts`) — this copy had no grey at all. */
+                                  options={cls.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id }, ...subParts.option(o) }))}
+                                  breakable={subParts.breakable}
+                                  grey={subParts.grey}
                                 />
+                                {subParts.note}
                               </div>
                               {!build.subclassId && <span className="lvl-pending">!</span>}
                             </div>
@@ -2847,17 +4089,19 @@ export function Builder({
                           {cls?.subclass && subAnchorId && build.subclassId && FEAT_PICK_GRANTS[build.subclassId] && (() => {
                             const sid = build.subclassId!;
                             const spec = FEAT_PICK_GRANTS[sid];
-                            const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats', id: o.id } }));
                             return (
                               <SubCard icon="ti-medal" label={spec.prompt}>
                                 {pickKeysFor(sid, spec.picks).map((k, i) => (
-                                  <PopupSelect
+                                  <FeatPickSelect
                                     key={k}
+                                    build={build}
+                                    content={content}
+                                    actions={actions}
+                                    spec={spec}
                                     title={pickPrompt(spec.prompt, i, spec.picks)}
                                     placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
                                     value={build.pickFeatChoices?.[k] ?? ''}
-                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [k]: v } })}
-                                    options={opts}
+                                    pick={(b, v) => ({ ...b, pickFeatChoices: { ...(b.pickFeatChoices ?? {}), [k]: v } })}
                                   />
                                 ))}
                               </SubCard>
@@ -2966,15 +4210,17 @@ export function Builder({
                               .filter((oid) => FEAT_PICK_GRANTS[oid])
                               .flatMap((oid) => {
                                 const spec = FEAT_PICK_GRANTS[oid];
-                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats', id: o.id } }));
                                 return pickKeysFor(oid, spec.picks).map((key, i) => (
-                                  <PopupSelect
+                                  <FeatPickSelect
                                     key={`ecp-${key}`}
+                                    build={build}
+                                    content={content}
+                                    actions={actions}
+                                    spec={spec}
                                     title={pickPrompt(spec.prompt, i, spec.picks)}
                                     placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
                                     value={build.pickFeatChoices?.[key] ?? ''}
-                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [key]: v } })}
-                                    options={opts}
+                                    pick={(b, v) => ({ ...b, pickFeatChoices: { ...(b.pickFeatChoices ?? {}), [key]: v } })}
                                   />
                                 ));
                               })}
@@ -2987,13 +4233,17 @@ export function Builder({
                               </span>
                               <div className="lvl-card-text">
                                 <div className="lvl-card-label">Bonus wizard feat (Unified Magical Theory)</div>
-                                <PopupSelect
+                                <FeatPickSelect
                                   className="lvl-subsel"
+                                  build={build}
+                                  content={content}
+                                  actions={actions}
+                                  spec={UMT_FEAT_SPEC}
+                                  feats={umtFeats}
                                   title="Bonus wizard class feat"
                                   placeholder="Choose a feat…"
                                   value={build.umtFeatId ?? ''}
-                                  onChange={(v) => actions.patch({ umtFeatId: v || null })}
-                                  options={umtFeatOpts}
+                                  pick={(b, v) => ({ ...b, umtFeatId: v || null })}
                                 />
                               </div>
                               {!build.umtFeatId && <span className="lvl-pending">!</span>}
@@ -3001,516 +4251,49 @@ export function Builder({
                           )}
                           {g.featSlots.map((catg, i) => {
                       const key = slotKey(lvl, catg, i);
-                      const picked = build.featPicks[key];
-                      // Re-validate an already-picked feat: later edits (boosts, removed feats, a
-                      // different subclass) can break prerequisites that were met when picking.
-                      // Warn only — never auto-remove — and respect a deliberate override.
-                      const pickedFeat = picked ? content.feats[picked] : undefined;
-                      const overridden = !!picked && (build.overrides?.allowedFeats?.includes(picked) ?? false);
-                      const revalidation =
-                        pickedFeat && !overridden ? checkPrerequisites(pickedFeat, featPrereqChar, content) : null;
-                      const nowInvalid = !!revalidation && !revalidation.met;
-                      // A pick this slot's own picker would refuse — a second class changed under a rogue feat
-                      // in the fighter's slot, a save or import that put it there. Flagged here from the live
-                      // build, never moved or removed: the player replaces or clears it.
-                      const unfit = !!picked && !!ovContent.feats[picked] && !fitsSlot(build, ovContent, key, key);
+                      const removedBy = removedHere.get(key);
+                      if (removedBy) {
+                        const reason = storedChoiceBlocks(build).find((b) => b.key === removedBy)?.reason;
+                        return (
+                          <RemovedPlaceLine
+                            key={key}
+                            slotKey={key}
+                            label={FEAT_LABEL[catg]}
+                            reason={reason}
+                            // Restore = the removal deleted (the pick never left its key, so the slot is back with it).
+                            onRestore={() =>
+                              actions.patch((b) => {
+                                const r = dropChoiceTweak(b, removedBy);
+                                return r.refused ? {} : r.build;
+                              })
+                            }
+                            onShow={tweaksOn ? () => openTweaksAt(removedBy) : undefined}
+                          />
+                        );
+                      }
+                      // The pick's notes and questions: one reader for a book slot and an extra place (WP7, `slotPickLines`).
+                      const { picked, revalidation, nowInvalid, lines } = slotPickLines(key);
                       return (
-                        <div className="lvl-slot-wrap" key={key}>
-                          <div className="lvl-slot">
-                            <button
-                              // A FILLED slot: clicking shows the feat's description (toggle); use the
-                              // Replace button to swap it. An EMPTY slot: clicking opens the picker.
-                              className={'lvl-card' + (picked ? '' : ' empty')}
-                              type="button"
-                              data-ctl="slot"
-                              data-ctl-title={FEAT_LABEL[catg]}
-                              data-ctl-state={picked ? 'picked' : 'empty'}
-                              title={picked ? 'Show description' : undefined}
-                              onClick={() => {
-                                if (!picked) return setPicker({ kind: 'feat', level: lvl, category: catg, idx: i });
-                                const f = content.feats[picked];
-                                // `slug`: the pick's OWN page — its name can be another feat's key (descNodeOf).
-                                if (f?.description) setFeatDescPopup({ title: f.name, description: f.description, descRefs: f.descRefs, key: 'feats', slug: picked });
-                              }}
-                            >
-                              <span className="lvl-card-icon">
-                                <i className={'ti ' + FEAT_ICON[catg]} aria-hidden="true" />
-                              </span>
-                              <div className="lvl-card-text">
-                                <div className="lvl-card-label">{FEAT_LABEL[catg]}</div>
-                                <div className="lvl-card-val">{picked ? content.feats[picked]?.name ?? picked : 'Choose…'}</div>
-                              </div>
-                              {picked && nowInvalid && (
-                                <span
-                                  className="lvl-invalid"
-                                  title={`Prerequisites no longer met: ${revalidation!.unmet.join('; ')}`}
-                                >
-                                  <i className="ti ti-alert-triangle" aria-hidden="true" />
-                                </span>
-                              )}
-                              {!picked && <span className="lvl-pending">!</span>}
-                            </button>
-                            {picked && (
-                              <>
-                                <button
-                                  className="lvl-replace-btn"
-                                  type="button"
-                                  onClick={() => setPicker({ kind: 'feat', level: lvl, category: catg, idx: i })}
-                                >
-                                  <i className="ti ti-repeat" aria-hidden="true" /> Replace
-                                </button>
-                                <button
-                                  className="lvl-clear-btn"
-                                  type="button"
-                                  aria-label="Clear feat"
-                                  onClick={() => actions.setFeat(key, null)}
-                                >
-                                  <i className="ti ti-x" aria-hidden="true" />
-                                </button>
-                              </>
-                            )}
-                          </div>
-                          {/* The picked feat's TrustMarker line under the filled card, as the heritage
-                              card shows it: a created feat with no rules encoded applies nothing, and the
-                              slot is where the player spent the pick (see TrustMarker). */}
-                          {picked && <TrustMarker bucket="feats" id={picked} />}
-                          {/* WHY the triangle on the card is there, in words. It was only the icon's
-                              hover tooltip, which a phone never shows, and a tap on the icon opens the
-                              feat's description — so a phone player could not find out what was wrong.
-                              test/phone-builder-shell.test.tsx. */}
-                          {picked && nowInvalid && (
-                            <div className="lvl-note lvl-unfit lvl-invalid-note" data-invalid={key}>
-                              <i className="ti ti-alert-triangle" aria-hidden="true" /> Prerequisites no longer met
-                              {revalidation!.unmet.length ? `: ${revalidation!.unmet.join('; ')}` : ''}. Still on your
-                              character — replace it, or meet the prerequisite again.
-                            </div>
-                          )}
-                          {unfit && (
-                            <div className="lvl-note lvl-unfit" data-unfit={key}>
-                              <i className="ti ti-alert-triangle" aria-hidden="true" /> Not valid for this slot — still on your character. Replace or clear it.
-                            </div>
-                          )}
-                          {/* The record-level NOTE — "this bonus lands on your hierophant, not you",
-                              "recorded only", "your GM decides which ally wears the relic". It renders on
-                              the Feats tab and was read NOWHERE in the builder, which is precisely where
-                              the player is deciding whether to spend the slot. 14 feats carry one. */}
-                          {picked && content.feats[picked]?.note && (
-                            <div className="lvl-note">
-                              <i className="ti ti-info-circle" aria-hidden="true" /> {content.feats[picked]!.note}
-                            </div>
-                          )}
-                          {/* The feat's full description opens in a popup when the card is clicked
-                              (setFeatDescPopup) — no inline expand. */}
-                          {/* Armor Proficiency (and any derived-cascade feat) has no dropdown — show
-                              which armor THIS take trained, resolved from the built character so three
-                              identical rows read Light / Medium / Heavy. */}
-                          {picked &&
-                            FEAT_GRANTS[picked]?.armorCascade &&
-                            (() => {
-                              const grant = featPrereqChar.feats.find(
-                                (f) => f.featId === picked && f.level === lvl && f.category === catg,
-                              )?.choice?.label;
-                              return grant ? (
-                                <SubCard icon="ti-shield" label="Trains you in">
-                                  <span className="lvl-card-val">{grant}</span>
-                                </SubCard>
-                              ) : null;
-                            })()}
-                          {picked &&
-                            content.feats[picked]?.choice &&
-                            // A choice that GRANTS a feat (flag 'feat', e.g. Pitborn) is handled by the
-                            // pick-a-feat picker below — don't also render the inert proficiency-choice dropdown.
-                            !(content.feats[picked]!.choice!.flag === 'feat' && FEAT_PICK_GRANTS[picked]) &&
-                            /* A DAILY choice belongs to daily preparations, not the build. The two class-feature
-                               sites above already guarded; this one did not, so Harbinger's Armament asked for
-                               today's rune here AND again every morning — two stores for one answer, and the
-                               builder's copy moved nothing (build.ts skips daily answers) while the morning's did.
-                               Guarded on `askedAtDailyPrep`, not on `daily`, so a kind the Rest sheet cannot
-                               render keeps its picker here rather than becoming askable nowhere. */
-                            !askedAtDailyPrep(content.feats[picked]!.choice) &&
-                            (() => {
-                              return renderChoice(content.feats[picked]!.choice!, key, picked);
-                            })()}
-                          {/* Dedication skill-training CHOICES ("trained in Acrobatics or Athletics") and
-                              the bonus skill feat (Rogue Dedication) — surfaced from FEAT_GRANTS below
-                              the picked feat, so the player resolves each grant in context. */}
-                          {picked &&
-                            [
-                              ...(FEAT_GRANTS[picked]?.skillChoices ?? []).map((slot, si) => ({
-                                slot,
-                                skKey: `${picked}:${si}`,
-                                ctx: { featId: picked, index: si, choiceValue: null as string | null },
-                              })),
-                              /* …and the slots belonging to the grant the player's OWN answer selected.
-                                 Clan Lore's twelve listed clans hand over a named pair of skills; an
-                                 unlisted clan's are "determined by your GM", so that one answer — and no
-                                 other — asks a further question. Keyed by the answer exactly as
-                                 featSkillChoiceValue keys it, so the builder and the engine read one key. */
-                              ...(choiceGrantFor(FEAT_GRANTS[picked], build.featChoices?.[key])?.skillChoices ?? []).map(
-                                (slot, si) => ({
-                                  slot,
-                                  skKey: `${picked}:${build.featChoices?.[key]}:${si}`,
-                                  ctx: { featId: picked, index: si, choiceValue: build.featChoices?.[key] ?? null },
-                                }),
-                              ),
-                            ].map(({ slot, skKey, ctx }) => {
-                              /* Shared with the engine — a slot whose skill the printed text DERIVES
-                                 from an answer already given (Surki Lore's magiphage tradition) offers
-                                 that one skill, not four. Computing the list here a second way is how
-                                 the builder and the sheet come to disagree about one slot. */
-                              /* `ctx` is what lets a later slot drop the skill an IDENTICAL sibling
-                                 already took — Magical Knowledge's *"…and IN ANOTHER from trained to
-                                 expert"* over two slots listing the same four skills. The engine
-                                 resolves the same way through the same helper. */
-                              const opts = skillSlotOptions(slot, build, content, ctx);
-                              // The option this slot is CURRENTLY granting — the player's answer, or the
-                              // engine's default when unanswered. Its rank on the built character already
-                              // includes this grant, so it can never be judged redundant against itself.
-                              const effective = build.featSkillChoices?.[skKey] ?? opts[0];
-                              return (
-                                <SubCard key={skKey} icon="ti-bulb" label="Trained skill">
-                                  <PopupSelect
-                                    title="Trained skill"
-                                    placeholder="Choose a skill…"
-                                    // Empty until picked — falling back to opts[0] displayed a skill the
-                                    // player never chose as though they had.
-                                    value={build.featSkillChoices?.[skKey] ?? ''}
-                                    onChange={(v) =>
-                                      actions.patch({
-                                        featSkillChoices: { ...(build.featSkillChoices ?? {}), [skKey]: v as (typeof SKILLS)[number] },
-                                      })
-                                    }
-                                    // skillLabel, not cap: a Lore option would otherwise read
-                                    // "Lore:spirit" instead of "Spirit Lore".
-                                    options={opts.map((s) => {
-                                      const cur = featPrereqChar.proficiencies.skills[s] ?? 'untrained';
-                                      const dead = s !== effective && skillSlotGrant(slot, cur) === null;
-                                      return {
-                                        value: s,
-                                        label: skillLabel(s),
-                                        disabled: dead,
-                                        disabledReason: dead ? `Already ${cur} — this grant would change nothing.` : undefined,
-                                      };
-                                    })}
-                                  />
-                                </SubCard>
-                              );
-                            })}
-                          {/* Redundant-grant fallback ("already trained in X → a skill of your choice"):
-                              the derived character reports each triggered slot; offer the replacement. */}
-                          {picked &&
-                            (featPrereqChar.skillFallbacks ?? [])
-                              .filter((fb) => fb.featId === picked)
-                              .map((fb) => {
-                                // `slot` keys the deity half of "Religion and your deity's skill" apart
-                                // from Religion itself — the engine reads the same key (build.ts).
-                                const fbKey = `${picked}:fallback:${fb.slot ?? fb.skill}`;
-                                /* The heading used to say "Already trained in X" whatever the rank was.
-                                   Golden League Xun's clause fires on a character who is already an
-                                   EXPERT, and telling them they are trained misstates why the picker
-                                   appeared — so read the rank they actually hold. */
-                                const held = featPrereqChar.proficiencies.skills[fb.skill] ?? 'trained';
-                                const heading = fb.note ? cap(fb.note) : `Already ${held} in ${cap(fb.skill)}`;
-                                /* Ghost Hunter's replacement is *"a new LORE skill of your choice"*, so the
-                                   player types a subject; the sixteen-skill select cannot express one. */
-                                if (fb.lore)
-                                  return (
-                                    <SubCard key={fbKey} icon="ti-bulb" label={`${heading} — replacement Lore`}>
-                                      <input
-                                        className="lvl-lore-input"
-                                        placeholder="Lore subject (e.g. Warfare)…"
-                                        value={build.featLoreChoices?.[fbKey] ?? ''}
-                                        onChange={(e) => actions.patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [fbKey]: e.target.value } })}
-                                      />
-                                    </SubCard>
-                                  );
-                                return (
-                                  <SubCard key={fbKey} icon="ti-bulb" label={`${heading} — replacement skill`}>
-                                    <PopupSelect
-                                      title="Replacement skill"
-                                      placeholder="Choose a skill…"
-                                      // The engine's own read (an old save's answer included), so the
-                                      // picker never shows empty over a skill the build is granting.
-                                      value={skillFallbackPick(build, picked, fb.slot ?? fb.skill) ?? ''}
-                                      onChange={(v) =>
-                                        actions.patch({
-                                          featSkillChoices: { ...(build.featSkillChoices ?? {}), [fbKey]: v as (typeof SKILLS)[number] },
-                                        })
-                                      }
-                                      // The replacement grants `fb.rank ?? 'trained'`, through maxRank —
-                                      // so every skill the character already has AT THAT RANK is a
-                                      // second dead end, and this picker (offered precisely BECAUSE one
-                                      // grant was redundant) used to list all sixteen of them as live.
-                                      // Above trained the printed clause also NAMES its pool — *"two
-                                      // other skills of your choice in which you're trained"* — so an
-                                      // untrained skill is dead for the opposite reason.
-                                      options={SKILLS.map((s) => {
-                                        const want = fb.rank ?? 'trained';
-                                        const cur = featPrereqChar.proficiencies.skills[s] ?? 'untrained';
-                                        const has = PROFICIENCY_RANKS.indexOf(cur) >= PROFICIENCY_RANKS.indexOf(want);
-                                        const untrained = want !== 'trained' && cur === 'untrained';
-                                        const dead = s !== build.featSkillChoices?.[fbKey] && (has || untrained);
-                                        return {
-                                          value: s,
-                                          label: cap(s),
-                                          disabled: dead,
-                                          disabledReason: !dead
-                                            ? undefined
-                                            : untrained
-                                              ? `Untrained — this replacement asks for a skill you are already trained in.`
-                                              : `Already ${cur} — pick a skill this would raise to ${want}.`,
-                                        };
-                                      })}
-                                    />
-                                  </SubCard>
-                                );
-                              })}
-                          {/* "For each of these feats you already have, you can INSTEAD gain a different
-                              feat from the following list" — the engine reports which grants landed on a
-                              feat the character already had; offer the replacement it owes them. */}
-                          {picked &&
-                            (featPrereqChar.featSubstitutions ?? [])
-                              .filter((sb) => sb.featId === picked)
-                              .map((sb) => (
-                                <SubCard
-                                  key={sb.key}
-                                  icon="ti-bulb"
-                                  label={`Already have ${content.feats[sb.ifHave]?.name ?? sb.ifHave} — replacement feat`}
-                                >
-                                  <PopupSelect
-                                    title="Replacement feat"
-                                    placeholder="Choose a feat…"
-                                    value={build.pickFeatChoices?.[sb.key] ?? ''}
-                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [sb.key]: v } })}
-                                    // A feat already held is a dead end — print says "a DIFFERENT feat",
-                                    // and the engine refuses it, so the picker must not offer it live.
-                                    options={sb.options
-                                      .filter((id) => content.feats[id])
-                                      .map((id) => {
-                                        const held = id !== build.pickFeatChoices?.[sb.key] && featPrereqChar.feats.some((f) => f.featId === id);
-                                        return {
-                                          value: id,
-                                          label: content.feats[id]!.name,
-                                          description: content.feats[id]!.description,
-                                          record: { bucket: 'feats', id },
-                                          disabled: held,
-                                          disabledReason: held ? 'Already have this feat — pick a different one.' : undefined,
-                                        };
-                                      })}
-                                  />
-                                </SubCard>
-                              ))}
-                          {picked &&
-                            Array.from({ length: FEAT_GRANTS[picked]?.loreChoices ?? 0 }).map((_, li) => {
-                              // Keyed by SLOT, not by feat id. Additional Lore is `maxTakable: null` and
-                              // its Special clause demands a NEW subcategory each time, so a bare-id key
-                              // made take 2 an alias of take 1 and two takes trained ONE Lore. Same fix
-                              // and same shape as the pick-a-feat lane's slot key in build.ts.
-                              const loreKey2 = `${key}:${li}`;
-                              // The old key is still READ, so a character saved before this keeps its
-                              // subject; the first edit migrates it to the slot key.
-                              const loreLegacy = `${picked}:${li}`;
-                              return (
-                                <SubCard key={`lore-${loreKey2}`} icon="ti-bulb" label="Trained Lore">
-                                  <input
-                                    className="lvl-lore-input"
-                                    placeholder="Lore subject (e.g. Warfare)…"
-                                    value={build.featLoreChoices?.[loreKey2] ?? build.featLoreChoices?.[loreLegacy] ?? ''}
-                                    onChange={(e) => actions.patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [loreKey2]: e.target.value } })}
-                                  />
-                                </SubCard>
-                              );
-                            })}
-                          {/* One picker PER granted skill feat. Magical Knowledge prints "You gain a
-                              skill feat associated with each of the skills you chose" over a two-skill
-                              choice, so a single control could only ever deliver one of the two. Index
-                              0 keeps the bare feat-id key, so an existing answer never moves. */}
-                          {picked &&
-                            Array.from({ length: bonusSkillFeatCount(FEAT_GRANTS[picked]) }).map((_, bi) => {
-                              const bKey = bonusSkillFeatKey(picked, bi);
-                              const mine = build.dedicationSkillFeats?.[bKey] ?? '';
-                              // A feat a SIBLING picker already took is dropped by buildCharacter as a
-                              // duplicate, so offering it here would spend a printed grant on nothing.
-                              const siblings = new Set(
-                                Array.from({ length: bonusSkillFeatCount(FEAT_GRANTS[picked]) }, (_, j) => build.dedicationSkillFeats?.[bonusSkillFeatKey(picked, j)])
-                                  .filter((v, j) => !!v && j !== bi) as string[],
-                              );
-                              return (
-                                <SubCard key={`bonus-skill-${bKey}`} icon="ti-medal" label="Bonus skill feat">
-                                  <PopupSelect
-                                    title="Bonus skill feat"
-                                    placeholder="Choose a skill feat…"
-                                    value={mine}
-                                    onChange={(v) =>
-                                      actions.patch({
-                                        dedicationSkillFeats: { ...(build.dedicationSkillFeats ?? {}), [bKey]: v },
-                                      })
-                                    }
-                                    options={skillFeatOpts.filter((o) => !siblings.has(o.value))}
-                                  />
-                                </SubCard>
-                              );
-                            })}
-                          {/* Pick-a-feat grants (General Training, Basic Maneuver, Natural Ambition, …):
-                              the player chooses a bonus feat from the grant's filtered pool. */}
-                          {picked &&
-                            FEAT_PICK_GRANTS[picked] &&
-                            (() => {
-                              const spec = FEAT_PICK_GRANTS[picked];
-                              const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } }));
-                              // Stored per SLOT, so a repeatable grant taken twice shows two pickers
-                              // rather than two views of one answer. The bare feat-id key is still
-                              // READ, so a character saved before this keeps the pick it had.
-                              // A `picks` spec asks more than once; index 0 keeps the bare key so an
-                              // existing answer never moves — the same convention build.ts reads.
-                              const idKeys = pickKeysFor(picked, spec.picks);
-                              return (
-                                <SubCard icon="ti-medal" label={spec.prompt}>
-                                  {pickKeysFor(key, spec.picks).map((k, i) => (
-                                    <PopupSelect
-                                      key={k}
-                                      title={pickPrompt(spec.prompt, i, spec.picks)}
-                                      placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
-                                      value={build.pickFeatChoices?.[k] ?? build.pickFeatChoices?.[idKeys[i]] ?? ''}
-                                      onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [k]: v } })}
-                                      options={opts}
-                                    />
-                                  ))}
-                                </SubCard>
-                              );
-                            })()}
-                          {/* A GRANTED feat's own sub-choice (Seeker of Truths grants Domain Initiate →
-                              pick its domain here; the granted feat has no slot of its own). Routed
-                              through grantedChoicePicker so this path and the background path cannot
-                              drift — the inline copy that used to live here handled `domains` but not
-                              `skills`, which is why an Assurance grant had no options even when reached. */}
-                          {picked && (FEAT_FEAT_GRANTS[picked] ?? []).map((gid) => grantedChoicePicker(gid))}
-                          {picked && heldDedicationCantrips(picked)}
-                          {/* Effect choices ("choose one of N" — a dragon tattoo's resistance type, an
-                              energy heart's element): each picked option confers a concrete effect. */}
-                          {picked &&
-                            (content.feats[picked]?.effectChoices ?? [])
-                              // A choice the record's own ENHANCEMENT tier asks is only asked once an
-                              // augmentation names this feat. Rendering it before that is a live
-                              // control whose answer nothing applies — the shape Q27 rules out.
-                              .filter(
-                                (ch) =>
-                                  !(content.feats[picked]?.enhancement?.choiceIds ?? []).includes(ch.id) ||
-                                  (featPrereqChar.enhancements ?? []).some((e) => e.featId === picked),
-                              )
-                              .map((ch) => {
-                              /*
-                               * A REPEATABLE feat's OPEN pick is answered per TAKING — Qi Spells is
-                               * *"choose a different spell each time"* — so its answer is keyed by
-                               * SLOT rather than by record, or every take writes over the last one.
-                               * The 21 enumerated repeatable picks moved to `choice` instead;
-                               * `spellFilter` is the one shape `choice` cannot hold, so these four
-                               * change the KEY rather than the lane. The record key is still READ, so
-                               * a monk who answered before this keeps the spell they chose.
-                               */
-                              const perTaking = !!ch.spellFilter && maxTakes(content.feats[picked]) > 1;
-                              const ecKey = perTaking ? `${key}:${ch.id}` : `${picked}:${ch.id}`;
-                              const ecValue = build.effectChoices?.[ecKey] ?? (perTaking ? build.effectChoices?.[`${picked}:${ch.id}`] : undefined);
-                              const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
-                              // An OPEN pick ("any 1st-rank arcane spell") gets a searchable spell list;
-                              // a fixed set gets the plain dropdown. Hidden until its unlock level.
-                              if (ch.spellFilter) {
-                                if (build.level < (ch.spellFilter.minLevel ?? 1)) return null;
-                                // "Choose a different spell each time" (the qi-spells family): the
-                                // spells OTHER takes of this same feat already claimed are greyed
-                                // with the reason — never removed, and never this slot's own stored
-                                // answer (Q27; same rule as `choice.distinctAcrossTakes`).
-                                const claimed = new Set<string>();
-                                if (perTaking && ch.spellFilter.distinctAcrossTakes) {
-                                  for (const [k, id] of Object.entries(build.featPicks)) {
-                                    if (id !== picked || k === key) continue;
-                                    const v = build.effectChoices?.[`${k}:${ch.id}`];
-                                    if (v) claimed.add(v);
-                                  }
-                                  // The legacy record-keyed answer belongs to whichever take reads it
-                                  // through the fallback — do not grey it against ITSELF.
-                                  const legacy = build.effectChoices?.[`${picked}:${ch.id}`];
-                                  if (legacy && legacy !== ecValue) claimed.add(legacy);
-                                }
-                                const opts = spellsMatching(narrowSpellFilter(ch.spellFilter, build, content), content, build.hideLegacy).map((s) => ({
-                                  id: s.id,
-                                  name: s.name,
-                                  note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
-                                  ...(claimed.has(s.id) && s.id !== ecValue
-                                    ? { disabled: `Already chosen by another ${content.feats[picked]?.name ?? 'take'} — choose a different spell each time.` }
-                                    : {}),
-                                }));
-                                return (
-                                  <SubCard key={`ec-${ecKey}`} icon="ti-sparkles" label={ch.prompt}>
-                                    <SearchSelect bare label="Spell" placeholder="Search spells…" value={ecValue ?? null} onChange={set} options={opts} />
-                                  </SubCard>
-                                );
-                              }
-                              return (
-                                <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
-                                  <PopupSelect
-                                    title={ch.prompt}
-                                    placeholder={`${ch.prompt}…`}
-                                    value={ecValue ?? ''}
-                                    onChange={set}
-                                    // An option may carry a note instead of a grant (a kineticist gate
-                                    // junction: only Elemental Resistance moves a stat). Show the note as
-                                    // the description so the player can read each option before picking.
-                                    // …and an option that names a RECORD the character must OWN to
-                                    // pick it ("one of YOUR 1st- or 5th-level automaton ancestry
-                                    // feats") is greyed with the reason rather than offered and then
-                                    // silently dropped by the engine (Q9 filtering + Q27 display).
-                                    // …and an option gated on a SENSE the character must already have
-                                    // ("You must have low-light vision before you can gain darkvision
-                                    // with this feat") is greyed with its reason too. The answer ALREADY
-                                    // STORED is never greyed, so a pick cannot vanish out from under the
-                                    // player and a gate cannot invalidate itself once its own grant lands.
-                                    options={(ch.options ?? []).map((o) => {
-                                      const mustOwn = (content.feats[picked]?.enhancementPicker?.choiceIds ?? []).includes(ch.id);
-                                      const missing = mustOwn && !featPrereqChar.feats.some((f) => f.featId === o.value);
-                                      const gateWhy = senseGateReason(
-                                        o.requiresAnySense,
-                                        builderSenses,
-                                        build.effectChoices?.[ecKey] === o.value,
-                                      );
-                                      return {
-                                        value: o.value,
-                                        label: o.label,
-                                        description: o.note,
-                                        // The note is the option's own text, not a record's (card step 7b).
-                                        record: null,
-                                        disabled: missing || !!gateWhy,
-                                        ...(missing ? { disabledReason: 'You do not have this feat.' } : {}),
-                                        ...(!missing && gateWhy ? { disabledReason: gateWhy } : {}),
-                                      };
-                                    })}
-                                  />
-                                </SubCard>
-                              );
-                            })}
-                          {/* Pick-a-cantrip grants (Dragon Spit, Hag Magic, …): choose an innate spell. */}
-                          {picked &&
-                            FEAT_CANTRIP_GRANTS[picked] &&
-                            (() => {
-                              const spec = FEAT_CANTRIP_GRANTS[picked];
-                              const opts = spec.options
-                                .map((id) => content.spells[id])
-                                .filter(Boolean)
-                                .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
-                                .map((s) => ({ value: s.id, label: s.name, description: s.description, record: { bucket: 'spells', id: s.id } }));
-                              return (
-                                <SubCard icon="ti-sparkles" label={spec.prompt}>
-                                  <PopupSelect
-                                    title={spec.prompt}
-                                    placeholder={`${spec.prompt}…`}
-                                    value={build.pickCantripChoices?.[picked] ?? ''}
-                                    onChange={(v) => actions.patch({ pickCantripChoices: { ...(build.pickCantripChoices ?? {}), [picked]: v } })}
-                                    options={opts}
-                                  />
-                                </SubCard>
-                              );
-                            })()}
-                        </div>
+                        <FeatSlotCard
+                          key={key}
+                          label={FEAT_LABEL[catg]}
+                          icon={FEAT_ICON[catg]}
+                          picked={!!picked}
+                          pickedName={picked ? (content.feats[picked]?.name ?? picked) : undefined}
+                          invalid={nowInvalid ? `Prerequisites no longer met: ${revalidation!.unmet.join('; ')}` : undefined}
+                          onCard={() => {
+                            if (!picked) return setPicker({ kind: 'feat', level: lvl, category: catg, idx: i });
+                            const f = content.feats[picked];
+                            // `slug`: the pick's OWN page — its name can be another feat's key (descNodeOf).
+                            if (f?.description) setFeatDescPopup({ title: f.name, description: f.description, descRefs: f.descRefs, key: 'feats', slug: picked });
+                          }}
+                          onReplace={() => setPicker({ kind: 'feat', level: lvl, category: catg, idx: i })}
+                          onClear={() => actions.setFeat(key, null)}
+                          // WP6 (C17, C20): Tweaks on only; asks nothing — Restore on the thin line and Ctrl+Z undo it.
+                          menu={tweaksOn ? [{ label: 'Remove this place', icon: 'ti-square-minus', onSelect: () => removeFeatPlace(lvl, catg, ordinalOf(g.featSlots, catg, i)) }] : undefined}
+                        >
+                          {lines}
+                        </FeatSlotCard>
                       );
                     })}
                           {noSlot.map(([k, id]) => {
@@ -3518,7 +4301,8 @@ export function Builder({
                             // The first EMPTY slot of its kind here that TAKES it — never one its own picker would refuse.
                             const to = moveTargetFor(build, ovContent, k);
                             return (
-                              <div className="lvl-slot lvl-noslot-row" key={`noslot-${k}`} data-noslot={k}>
+                              <Fragment key={`noslot-${k}`}>
+                              <div className="lvl-slot lvl-noslot-row" data-noslot={k}>
                                 <div className="lvl-card lvl-noslot">
                                   <span className="lvl-card-icon">
                                     <i className="ti ti-alert-triangle" aria-hidden="true" />
@@ -3542,8 +4326,37 @@ export function Builder({
                                   <i className="ti ti-trash" aria-hidden="true" /> Remove
                                 </button>
                               </div>
+                              {removedHere.has(k) && (
+                                <div className="lvl-note" data-removed-held={k}>
+                                  <i className="ti ti-info-circle" aria-hidden="true" /> {name} stays as a feat with no slot.
+                                </div>
+                              )}
+                              {/* WP7 (C12): an extra place deleted (its block gone, its pick kept under the key) says so too. */}
+                              {!removedHere.has(k) && featPlaceKeyOf(k) === k && (
+                                <div className="lvl-note" data-place-gone={k}>
+                                  <i className="ti ti-info-circle" aria-hidden="true" /> {name} stays as a feat with no slot.
+                                </div>
+                              )}
+                              {/* The feat's own questions: levelChoices still asks them for every pick (WP6 final check),
+                                  so the no-slot row draws the same cards a slot card draws. */}
+                              {featQuestions(id, k)}
+                              </Fragment>
                             );
                           })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Tweaks phase 2 WP7: the extra feat places a tweak adds at this level, after the book's slots, under
+                        their own heading (the WP2 sample). Every readable place, in every state (C42). */}
+                    {(placeCards.length > 0 || carrierCards.length > 0) && (
+                      <div className="lvl-group tw-added-places" data-added-places={lvl}>
+                        <div className="lvl-group-h">
+                          <i className="ti ti-square-plus" aria-hidden="true" /> Added by a tweak
+                        </div>
+                        <div className="lvl-cards">
+                          {placeCards.map(placeCard)}
+                          {carrierCards.map(carrierCard)}
                         </div>
                       </div>
                     )}
@@ -3554,6 +4367,19 @@ export function Builder({
                           <i className="ti ti-bulb" aria-hidden="true" /> Skills
                         </div>
                         <div className="lvl-cards">
+                          {/* Tweaks phase 2 WP14 (C47): a place a live "Remove a place" removes draws its kept row
+                              (or the thin line when empty) instead of the picker; the store is never written. */}
+                          {removedSkillHere.get('main') ? (
+                            <RemovedChoicePlace
+                              placeKey={`skillIncrease:main:${lvl}`}
+                              text={`Skill increase at level ${lvl} removed`}
+                              answer={chosenIncrease ? skillLabel(chosenIncrease) : undefined}
+                              reason={storedChoiceBlocks(build).find((b) => b.key === removedSkillHere.get('main'))?.reason}
+                              onRestore={() => restoreChoicePlace(actions.patch, removedSkillHere.get('main')!)}
+                              onShow={tweaksOn ? () => openTweaksAt(removedSkillHere.get('main')!) : undefined}
+                            />
+                          ) : (
+                          <div className="lvl-slot" data-increase-place={`main:${lvl}`}>
                           <div className={'lvl-card' + (chosenIncrease ? '' : ' empty')}>
                             <span className="lvl-card-icon">
                               <i className="ti ti-arrow-up" aria-hidden="true" />
@@ -3575,19 +4401,21 @@ export function Builder({
                                       // The level's proficiency cap may forbid this bump yet — show the real
                                       // next step ("E → M") but grey it out until the character is high enough.
                                       const allowedByLevel = PROFICIENCY_RANKS.indexOf(next) <= PROFICIENCY_RANKS.indexOf(skillIncreaseCap(lvl));
+                                      // A skill a tweak holds "exactly" (never the pick stored here).
+                                      const tw = skillTweakNotes(tweakHost, lvl, k, cur, k === chosenIncrease);
                                       return {
                                         value: k,
                                         label: `${skillLabel(k)} (${atAbsoluteMax ? `${RANK_ABBR[cur]} — max` : `${RANK_ABBR[cur]} → ${RANK_ABBR[next]}`})`,
                                         // …and a skill a record LOCKS: Bardic Lore "can't be increased by
                                         // any other means". It was offered live and un-greyed, and three
                                         // increases spent on it took a level-20 bard to master.
-                                        disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k],
+                                        disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k] || !!tw.disabled,
                                         // The greying was already right; only the reason was missing.
                                         disabledReason: atAbsoluteMax
                                           ? 'Already legendary — nothing left to increase.'
                                           : !allowedByLevel
                                             ? `This level's increases cap at ${skillIncreaseCap(lvl)}.`
-                                            : LOCKED_SKILL_KEYS[k],
+                                            : (LOCKED_SKILL_KEYS[k] ?? tw.reason),
                                       };
                                     }),
                                   ]}
@@ -3606,8 +4434,16 @@ export function Builder({
                                   </span>
                                 )}
                               </div>
+                              {increaseNote(chosenIncrease) && (
+                                <div className="lvl-auto lvl-skill-note" data-skill-note={chosenIncrease}>
+                                  {increaseNote(chosenIncrease)}
+                                </div>
+                              )}
                             </div>
                           </div>
+                          {tweaksOn && <CardMenu items={[{ label: 'Remove this place', icon: 'ti-square-minus', onSelect: () => removeChoicePlace(build, actions.patch, { place: 'skillIncrease', level: lvl, lane: 'main' }) }]} />}
+                          </div>
+                          )}
                         </div>
                       </div>
                     )}
@@ -3625,7 +4461,11 @@ export function Builder({
                         on: !!g.bonusSkillIncrease,
                         label: 'Bonus skill increase',
                         store: build.bonusSkillIncreases,
-                        restrict: restrictedSkillIncreaseAllowed(build, content),
+                        /* Skill order WP6 (plan D15): the restriction of the class that owns THIS level's
+                         * bonus increase (Dual Class: either class), as the engine's print lane drops it. */
+                        restrict: restrictedSkillIncreaseAllowed(build, content, lvl),
+                        // Skill order WP7: it starts after this level's main increase (the engine's order).
+                        ranks: ranksHere('afterMain'),
                         write: (next: Record<number, ProficiencyKey>) => actions.patch({ bonusSkillIncreases: next }),
                       },
                       {
@@ -3636,6 +4476,8 @@ export function Builder({
                         label: 'Background skill increase',
                         store: build.backgroundSkillIncreases,
                         restrict: backgroundSkillIncreaseAllowed(build, content),
+                        // …after the main and the bonus one.
+                        ranks: ranksHere('afterBonus'),
                         write: (next: Record<number, ProficiencyKey>) => actions.patch({ backgroundSkillIncreases: next }),
                       },
                     ]
@@ -3650,12 +4492,33 @@ export function Builder({
                          * raise Medicine — buildCharacter now drops such a pick, and greying it here is
                          * what stops the player making it. Same helper both sides. */
                         const narrowed = lane.restrict?.levels.includes(lvl) ? lane.restrict : null;
+                        // WP14 (C47): this lane's place removed by a live "Remove a place" — its kept row or thin line.
+                        const removedBy = removedSkillHere.get(lane.key);
+                        if (removedBy)
+                          return (
+                            <div className="lvl-group" key={lane.key}>
+                              <div className="lvl-group-h">
+                                <i className="ti ti-bulb" aria-hidden="true" /> Skills (bonus increase)
+                              </div>
+                              <div className="lvl-cards">
+                                <RemovedChoicePlace
+                                  placeKey={`skillIncrease:${lane.key}:${lvl}`}
+                                  text={`${lane.label} at level ${lvl} removed`}
+                                  answer={chosenBonus ? skillLabel(chosenBonus) : undefined}
+                                  reason={storedChoiceBlocks(build).find((b) => b.key === removedBy)?.reason}
+                                  onRestore={() => restoreChoicePlace(actions.patch, removedBy)}
+                                  onShow={tweaksOn ? () => openTweaksAt(removedBy) : undefined}
+                                />
+                              </div>
+                            </div>
+                          );
                         return (
                           <div className="lvl-group" key={lane.key}>
                             <div className="lvl-group-h">
                               <i className="ti ti-bulb" aria-hidden="true" /> Skills (bonus increase)
                             </div>
                             <div className="lvl-cards">
+                              <div className="lvl-slot" data-increase-place={`${lane.key}:${lvl}`}>
                               <div className={'lvl-card' + (chosenBonus ? '' : ' empty')}>
                                 <span className="lvl-card-icon">
                                   <i className="ti ti-arrow-up" aria-hidden="true" />
@@ -3680,29 +4543,37 @@ export function Builder({
                                       }}
                                       clearLabel="Clear"
                                       options={skillOptions.map((k) => {
-                                        const cur = baseSkills[k] ?? 'untrained';
+                                        const cur = lane.ranks[k] ?? 'untrained';
                                         const next = naturalNextRank(cur);
                                         const atAbsoluteMax = next === cur;
                                         const allowedByLevel = PROFICIENCY_RANKS.indexOf(next) <= PROFICIENCY_RANKS.indexOf(skillIncreaseCap(lvl));
+                                        const tw = skillTweakNotes(tweakHost, lvl, k, cur, k === chosenBonus);
                                         return {
                                           value: k,
                                           label: `${skillLabel(k)} (${atAbsoluteMax ? `${RANK_ABBR[cur]} — max` : `${RANK_ABBR[cur]} → ${RANK_ABBR[next]}`})`,
-                                          disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k] || (!!narrowed && !narrowed.skills.has(k)),
+                                          disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k] || (!!narrowed && !narrowed.skills.has(k)) || !!tw.disabled,
                                           disabledReason: atAbsoluteMax
                                             ? 'Already legendary — nothing left to increase.'
                                             : !allowedByLevel
                                               ? `This level's increases cap at ${skillIncreaseCap(lvl)}.`
-                                              : LOCKED_SKILL_KEYS[k] ?? (narrowed && !narrowed.skills.has(k) ? narrowed.reason : undefined),
+                                              : (LOCKED_SKILL_KEYS[k] ?? (narrowed && !narrowed.skills.has(k) ? narrowed.reason : undefined) ?? tw.reason),
                                         };
                                       })}
                                     />
                                     {chosenBonus && (
                                       <span className="lvl-result">
-                                        → {nextRank(baseSkills[chosenBonus] ?? 'untrained', lvl)}
+                                        → {nextRank(lane.ranks[chosenBonus] ?? 'untrained', lvl)}
                                       </span>
                                     )}
                                   </div>
+                                  {increaseNote(chosenBonus, lane.ranks) && (
+                                    <div className="lvl-auto lvl-skill-note" data-skill-note={chosenBonus}>
+                                      {increaseNote(chosenBonus, lane.ranks)}
+                                    </div>
+                                  )}
                                 </div>
+                              </div>
+                              {tweaksOn && <CardMenu items={[{ label: 'Remove this place', icon: 'ti-square-minus', onSelect: () => removeChoicePlace(build, actions.patch, { place: 'skillIncrease', level: lvl, lane: lane.key }) }]} />}
                               </div>
                             </div>
                           </div>
@@ -3766,11 +4637,22 @@ export function Builder({
                                   .flatMap((l) => build.attributeBoosts[l] ?? [])
                                   .filter((x): x is NonNullable<typeof x> => !!x)
                               : [];
+                            /* WP14 (C47): a boost place a live "Remove a place" removes draws no select (its kept row
+                               sits under the card); the card's menu removes one place, Tweaks on only. A removed
+                               place's pick still greys its attribute in the other selects: it stays stored. */
+                            const bp = boostSetParts(build, actions.patch, 'level', boostCount, build.attributeBoosts[lvl], lvl, tweaksOn ? openTweaksAt : undefined);
+                            const counting = Array.from({ length: boostCount }, (_, i) => i).filter((i) => !bp.removed.has(i));
                             return (
+                          <div className="lvl-slot-wrap" data-boost-set={`level:${lvl}`}>
+                          <div className="lvl-slot">
                           <div
                             className={
                               'lvl-card' +
-                              ((build.attributeBoosts[lvl] ?? []).filter(Boolean).length < boostCount ? ' empty' : '')
+                              ((bp.removed.size
+                                ? counting.filter((i) => build.attributeBoosts[lvl]?.[i]).length < counting.length
+                                : (build.attributeBoosts[lvl] ?? []).filter(Boolean).length < boostCount)
+                                ? ' empty'
+                                : '')
                             }
                           >
                             <span className="lvl-card-icon">
@@ -3778,10 +4660,11 @@ export function Builder({
                             </span>
                             <div className="lvl-card-text">
                               <div className="lvl-card-label">
-                                {boostCount === 1 ? 'Attribute boost' : `Attribute boosts — choose ${boostCount} different`}
+                                {/* Fix round 1: the places still counting (a removed one draws no select). */}
+                                {counting.length <= 1 ? 'Attribute boost' : `Attribute boosts — choose ${counting.length} different`}
                               </div>
                               <div className="lvl-card-row">
-                                {Array.from({ length: boostCount }, (_, i) => (
+                                {counting.map((i) => (
                                   <AbilitySelect
                                     key={i}
                                     value={build.attributeBoosts[lvl]?.[i] ?? null}
@@ -3793,6 +4676,10 @@ export function Builder({
                               </div>
                             </div>
                           </div>
+                          {bp.menu && <CardMenu items={bp.menu} />}
+                          </div>
+                          {bp.rows}
+                          </div>
                             );
                           })()}
                         </div>
@@ -3800,6 +4687,18 @@ export function Builder({
                     )}
 
                     {!anyContent && !grantedAsksAny && <div className="setup-note">No choices at this level.</div>}
+                    {/* Tweaks phase 2 WP7: "Add a place" at the end of the level's section, Tweaks on only (C21: one
+                        block, asks nothing; opening it writes nothing, C36). */}
+                    {tweaksOn && (
+                      <AddPlaceControl
+                        key={`add-place-${lvl}`}
+                        level={lvl}
+                        categories={() => featPlaceCategories(build, content)}
+                        label={(c) => FEAT_LABEL[c as FeatCategory] ?? `${c} feat`}
+                        onAdd={(c) => addFeatPlace(lvl, c)}
+                        onAddCarrier={(place) => addCarrierPlace(lvl, place)}
+                      />
+                    )}
                   </fieldset>
                 </div>
                 {renderSpellsForLevel(lvl)}
@@ -3840,7 +4739,12 @@ export function Builder({
         // The archetype dedication rule — taken feats excluding this slot. Evaluated PER CANDIDATE
         // (ruling Q25): the requirement, its count and its exceptions all come off whichever
         // dedication the character already has, so there is no slot-wide yes/no to compute here.
-        const pickerKey = slotKey(picker.level, picker.category, picker.idx);
+        // WP7: an extra feat place's picker writes under the place's own key.
+        const pickerKey = picker.key ?? slotKey(picker.level, picker.category, picker.idx);
+        // WP6 (C17): a slot a live "Remove a place" removes takes no pick (an undo can land while its picker is open).
+        if (removedSlotKeys(build, ovContent).has(pickerKey)) return null;
+        // WP7: …nor does an extra place that is no longer live (paused, deleted, Tweaks switched off).
+        if (picker.place && !livePlaces(build).some((p) => p.slotKey === pickerKey)) return null;
         /* Carry the SLOT with each feat, not just its id. A feat listed by an archetype counts toward
          * that archetype's gate only when it was taken in an archetype slot — see `countsForArchetype`.
          * Dropping the key here is what let a cleric's own Domain Initiate count as a Soul Warden feat.
@@ -3879,17 +4783,89 @@ export function Builder({
         // so a re-open of the slot would grey the player's own pick.
         const noOpWhy = (f: Feat): string | undefined =>
           build.featPicks?.[pickerKey] === f.id ? undefined : exhaustedGrantReason(f, featPrereqChar);
+        /* Skill order WP7 (plan section 2; P10): a candidate's skill prerequisites read the end of THIS slot's level
+         * (D5), and a candidate REPLACES the feat the slot holds — so that feat and what it grants are left out (an
+         * investigator's Barbarian Dedication in this slot does not meet Athletic Strategist's "trained in
+         * Athletics" for the feat that would take its place). One set for every row of this picker. Only THIS slot's
+         * row is left out (WP7 round 2, checker finding 1): Additional Lore here leaves the Legal Lore of the
+         * Additional Lore taken at 2nd in place, so Contract Negotiator stays met. */
+        const occupant = featIdAtSlot(build, pickerKey);
+        const prereqAt = { atLevel: picker.level, without: occupant ? featSubtreeIds(featPrereqChar, occupant, pickerKey) : undefined };
         // "Hide ineligible" filter predicate — mirrors the row's unmet/allowed logic below.
+        /* WP5 (C20, C22): "Search every feat" (Tweaks page on, default off) adds the feats this slot refuses, greyed
+         * with the rule's words: "Allow here" for a list / level / only-at-level refusal (one `choice.anyList` per
+         * rule), "Allow here and take anyway" when the prerequisites fail too, no button for a rule no tweak lifts
+         * here (a mythic or impulse place's own rule, the cap). Read from the book (`slotRefusal`, no tweak), on the
+         * source-filtered pool the picker offers. A feat a live allow lifts is already in `feats`. */
+        const bookRefuse = tweaksOn ? slotRefusal(build, content, picker) : null;
+        const featIds = new Set(feats.map((f) => f.id));
+        const offSlot =
+          bookRefuse && anyFeatReveal
+            ? listValues(content, content.feats)
+                .filter((f) => !featIds.has(f.id) && !(archHidden && f.traits.includes('archetype')) && bookRefuse(f).length > 0)
+                .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
+            : [];
+        const offIds = new Set(offSlot.map((f) => f.id));
+        const pickerItems = offSlot.length ? [...feats, ...offSlot] : feats;
         const featIneligible = (f: Feat) => {
-          if (build.overrides?.allowedFeats?.includes(f.id)) return false;
+          // A revealed off-slot row is drawn greyed with its own button, never hidden by "Hide ineligible".
+          if (offIds.has(f.id)) return false;
+          if (isAllowedAnyway(build, f.id)) return false;
           if (dedBlockedWhy(f)) return true;
           if (noOpWhy(f)) return true;
-          return !checkPrerequisites(f, featPrereqChar, content).met;
+          return !checkPrerequisites(f, featPrereqChar, content, prereqAt).met;
         };
         // "Why is my feat missing?" — everything needed to diff a search against the FULL content
         // (ovContent, the same pool the Overrides add-feat picker browses).
-        const shownIds = new Set(feats.map((f) => f.id));
+        const shownIds = new Set(pickerItems.map((f) => f.id));
         const slotEligibleIds = new Set(eligibleFor(picker, ovContent).map((f) => f.id));
+        const allowFeatHere = async (f: Feat, takeAnyway?: string) => {
+          const refusals = bookRefuse?.(f) ?? [];
+          if (!allowable(refusals)) return;
+          const write = await confirmAllowHere<BuildState>({ name: f.name, featId: f.id, refusals, host: build, undoHint: tweakUndoHint(isMobile, showUndoButtons), takeAnyway });
+          if (!write) return;
+          actions.patch((b) => write(b, (x) => withFeat(x, pickerKey, f.id)));
+          setPicker(null);
+        };
+        // WP8 (D4): "Take again" — confirm, then the pick and the block change as ONE write (one undo step).
+        const takeFeatAgain = async (f: Feat) => {
+          const write = await confirmTakeAgain<BuildState>({ name: f.name, featId: f.id, slotKey: pickerKey, host: build, content, undoHint: tweakUndoHint(isMobile, showUndoButtons) });
+          if (!write) return;
+          /* WP8 round 4 (F2): the commit plans again on the build the patch is handed (it may have changed while the
+           * confirm was open). A refusal there keeps that build whole; it is recorded inside the patch and said after
+           * it, and the picker stays open. `flushSync` runs the patch now, so the refusal is known on the next line
+           * (a plain state update runs its updater later). */
+          let refused: string | undefined;
+          flushSync(() =>
+            actions.patch((b) => {
+              const r = write(b, (x) => withFeat(x, pickerKey, f.id));
+              refused = r.refused;
+              return r.build;
+            }),
+          );
+          if (refused) {
+            void notSaved(refused);
+            return;
+          }
+          setPicker(null);
+        };
+        /* Why an off-slot row cannot be taken past the slot's own rule (a blocked dedication, a forbidden or no-op
+         * feat, unmet prerequisites); undefined when allowed anyway or met. */
+        const offSlotUnmetWhy = (f: Feat): string | undefined => {
+          if (isAllowedAnyway(build, f.id)) return undefined;
+          const blockedWhy = dedBlockedWhy(f) ?? forbiddenFeatReason(f.id, featPrereqChar, content) ?? noOpWhy(f);
+          if (blockedWhy) return blockedWhy;
+          const pre = checkPrerequisites(f, featPrereqChar, content, prereqAt);
+          return pre.met ? undefined : pre.unmet.length ? `Unmet: ${pre.unmet.join('; ')}` : "You don't meet this feat's prerequisites.";
+        };
+        /** WP8: the book refuses this feat here ONLY for the cap ("Already taken"). */
+        const onlyTheCap = (f: Feat) => {
+          const refusals = bookRefuse?.(f) ?? [];
+          return refusals.length === 1 && refusals[0].rule === 'taken' && refusals[0].words === TAKEN_WORDS;
+        };
+        /** WP8 round 3: would "Search every feat" draw "Take again" for this feat? The row below and the hidden-feat
+         *  note's pointer read this one test (no button with Tweaks off, a paused tweak, or prerequisites unmet). */
+        const takeAgainOffered = (f: Feat) => !!bookRefuse && onlyTheCap(f) && !('refused' in takeAgainPlan(build, content, f.id, pickerKey)) && !offSlotUnmetWhy(f);
         const enabledBooks = enabledBookSet(build.enabledSources);
         // Picking a feat from a disabled book: confirm, then enable that book for this character —
         // the feat then appears as a normal result (with the usual prerequisite gating). Never
@@ -3917,7 +4893,7 @@ export function Builder({
           <FilterableSelect
             title={`Choose ${withArticle(FEAT_LABEL[picker.category].toLowerCase())}`}
             icon="ti-medal"
-            items={feats}
+            items={pickerItems}
             spec={FEAT_SPEC}
             rowKey={(f) => f.id}
             onClose={() => setPicker(null)}
@@ -3934,6 +4910,8 @@ export function Builder({
                 deviantEnabled: build.deviantEnabled,
                 pervasiveMagic: build.variantRules?.pervasiveMagic,
                 archetypesHidden: archHidden,
+                refusalOf: slotRefusal(build, ovContent, picker),
+                ...(tweaksOn && !anyFeatReveal ? { takeAgainOf: takeAgainOffered } : {}),
               });
               if (!hidden) return null;
               const parts: string[] = [];
@@ -3945,10 +4923,21 @@ export function Builder({
               // of which applies is the wrong-reason failure Q27 calls worse than a vague one: a
               // nephilim searching for Bestial Manifestation in a 5th-level slot was told "wrong type,
               // level too high, or already taken", and it is none of those.
-              if (hidden.invalid)
-                parts.push(
-                  `${hidden.invalid} not valid for this slot (wrong type, wrong level — some feats can only be taken at 1st — or already taken)`,
-                );
+              // WP5: split by the rule that refuses each (`slotRefusal`), so the reasons named are the ones that apply.
+              if (hidden.invalid) {
+                const r = hidden.invalidByRule ?? {};
+                const why = [
+                  r.list && `${r.list} from another list`,
+                  r.level && `${r.level} above this slot's level`,
+                  r.onlyAtLevel && `${r.onlyAtLevel} only at another level`,
+                  r.taken && `${r.taken} already taken`,
+                  r.slotRule && `${r.slotRule} outside this slot's own rule`,
+                ].filter(Boolean);
+                // WP8 round 3: an already-taken feat "Take again" would be offered for points there too (Tweaks on only).
+                const liftTo = [(r.list || r.level || r.onlyAtLevel) && 'allow one here', (hidden.takeAgain ?? 0) > 0 && 'take one again'].filter(Boolean);
+                const lift = tweaksOn && !anyFeatReveal && liftTo.length ? ` — turn on “Search every feat” to ${liftTo.join(' or ')}` : '';
+                parts.push(`${hidden.invalid} not valid for this slot${why.length ? ` (${why.join(', ')})` : ''}${lift}`);
+              }
               const CAP = 20;
               return (
                 <>
@@ -4001,8 +4990,30 @@ export function Builder({
                 </button>
               ) : undefined
             }
+            resultsBarExtra={tweaksOn ? <RevealToggle reveal={{ label: 'Search every feat', on: anyFeatReveal, onToggle: setAnyFeatReveal }} /> : undefined}
             renderRow={(f, openDesc) => {
-              const pre = checkPrerequisites(f, featPrereqChar, content);
+              const pre = checkPrerequisites(f, featPrereqChar, content, prereqAt);
+              if (offIds.has(f.id)) {
+                const refusals = bookRefuse?.(f) ?? [];
+                const node = descNodeOf(f, 'feats');
+                const words = refusals.map((x) => x.words).join('; ');
+                const unmetWhy = offSlotUnmetWhy(f);
+                const note = [`Level ${f.level}`, ...f.traits.slice(0, 4)].join(' · ');
+                /* WP8 (D4, C23): an "Already taken" row whose ONLY refusal is the cap, the copy making it counting now (never
+                 * a copy held back only by a paused extra place: that row keeps its own words), gets "Take again" — the
+                 * pick and the "Take a feat more times" change in one write. Its block paused: no button, the words say
+                 * so (the player turns that tweak on instead, D1). Prerequisites unmet: no button either. */
+                if (onlyTheCap(f)) {
+                  const plan = takeAgainPlan(build, content, f.id, pickerKey);
+                  const lead = <span className="picker-lvl">{f.level}</span>;
+                  if ('refused' in plan || unmetWhy)
+                    return <PickerRow lead={lead} name={f.name} meta={<div className="picker-traits">{note}</div>} onOpenDesc={node ? () => openDesc(node) : undefined} dim selectDisabled disabledReason={'refused' in plan ? plan.refused : `${words}; ${unmetWhy}`} onSelect={() => {}} />;
+                  return <BreakableOptionRow name={f.name} note={note} reason={words} action="again" onOpenDesc={node ? () => openDesc(node) : undefined} onAct={() => void takeFeatAgain(f)} />;
+                }
+                if (!allowable(refusals))
+                  return <PickerRow lead={<span className="picker-lvl">{f.level}</span>} name={f.name} meta={<div className="picker-traits">{note}</div>} onOpenDesc={node ? () => openDesc(node) : undefined} dim selectDisabled disabledReason={words} onSelect={() => {}} />;
+                return <BreakableOptionRow name={f.name} note={note} reason={unmetWhy ? `${words}; ${unmetWhy}` : words} action={unmetWhy ? 'allowTake' : 'allow'} onOpenDesc={node ? () => openDesc(node) : undefined} onAct={() => void allowFeatHere(f, unmetWhy)} />;
+              }
               // A new dedication is blocked until the archetype already started is satisfied. The
               // SENTENCE is the value, not a boolean: each clause names its own count, its own
               // archetypes and its own exceptions (ruling Q25), so one fixed "two feats" line was
@@ -4016,16 +5027,16 @@ export function Builder({
               const dedBlockedWhyRow = dedBlockedWhy(f) ?? forbiddenFeatReason(f.id, featPrereqChar, content);
               const dedBlocked = !!dedBlockedWhyRow;
               // …and a feat whose grant is already used up (see noOpWhy). Same treatment as a blocked
-              // dedication: dimmed, with the sentence, and still takeable through Overrides — a player
+              // dedication: dimmed, with the sentence, and still takeable through Tweaks — a player
               // deliberately spending a slot on nothing is their call, not a bug to hard-block.
               const noOpWhyRow = noOpWhy(f);
               const unmet = !pre.met || dedBlocked || !!noOpWhyRow;
-              // Overrides (creative editing): a feat you don't qualify for isn't dead-greyed — you can
-              // "Take anyway", which records this one feat as a deliberate override (no global switch).
-              // Offered ONLY when the Overrides feature is enabled; otherwise unmet feats stay blocked
-              // (no hidden override state).
-              const canOverride = !!build.options?.overridesEnabled;
-              const allowed = build.overrides?.allowedFeats?.includes(f.id) ?? false;
+              // Tweaks (creative editing): a feat you don't qualify for isn't dead-greyed — you can
+              // "Take anyway", which records this one feat as a "Take anyway" tweak (choice.allowAnyway).
+              // Offered ONLY while the Tweaks page is on (tweaksPageOn); otherwise unmet feats stay blocked
+              // (no hidden tweak state).
+              const canOverride = tweaksPageOn(build);
+              const allowed = isAllowedAnyway(build, f.id);
               const node = descNodeOf(f, 'feats');
               // Replace: the feat in this slot NOW is marked (highlight + ✓), so the player can find it
               // and compare the others with it. test/phone-builder-shell.test.tsx.
@@ -4049,7 +5060,7 @@ export function Builder({
                   meta={
                     <>
                       {f.traits.length > 0 && <div className="picker-traits">{f.traits.join(' · ')}</div>}
-                      {/* Only when the row is still takeable (Overrides on). Once the action is
+                      {/* Only when the row is still takeable (Tweaks on). Once the action is
                           disabled, PickerRow prints this same sentence as the shared reason line, and
                           two copies of it read as a rendering bug rather than emphasis. */}
                       {dedBlocked && !(unmet && !allowed && !canOverride) && (
@@ -4079,9 +5090,11 @@ export function Builder({
                       )}
                       {unmet && (allowed || canOverride) && (
                         <div className="picker-override-note">
-                          {allowed ? 'Allowed via override.' : 'Override: you can take this anyway, ignoring the rule.'}
+                          {allowed ? 'Allowed by a tweak.' : 'Tweak: you can take this anyway, ignoring the rule.'}
                         </div>
                       )}
+                      {/* WP5: in this list only because a live "Pick from any list" lifts the slot's rule. */}
+                      {bookRefuse && bookRefuse(f).length > 0 && <div className="picker-override-note">Allowed here by a tweak.</div>}
                     </>
                   }
                   onOpenDesc={node ? () => openDesc(node) : undefined}
@@ -4121,13 +5134,18 @@ export function Builder({
                           : "You don't meet this feat's prerequisites.";
                       const ok = await confirmDialog({
                         title: `Take ${f.name} anyway?`,
-                        message: `${why}\n\nThis records a deliberate override for this feat only. ${overrideUndoHint(isMobile, showUndoButtons)}`,
+                        message: `${why}\n\nThis records a tweak for this feat only; it is listed on the Tweaks page. ${tweakUndoHint(isMobile, showUndoButtons)}`,
                         confirmLabel: 'Take anyway',
                         danger: true,
                       });
                       if (!ok) return;
-                      actions.patch({
-                        overrides: { ...build.overrides, allowedFeats: [...(build.overrides?.allowedFeats ?? []), f.id] },
+                      // Through the write door (plan B WP8): a PAUSED "Take anyway" for this feat is switched
+                      // back on, never listed twice (the old writer appended the id again); a new one is a
+                      // `choice.allowAnyway` with its meta `of` (and `v` where the switch reads the option).
+                      actions.patch((b) => {
+                        const w = takeAnywayWrite(b, f.id);
+                        const r = w ? writeTweak(b, w) : null;
+                        return r && !r.refused ? { overrides: r.overrides } : {};
                       });
                     }
                     actions.setFeat(pickerKey, f.id);
@@ -4193,11 +5211,53 @@ export function Builder({
         const isCantrip = picker.rank === 0;
         // A book is a set — a spell is in it or not — so a dedication's book rank toggles, as a class book does.
         const preparedMode = !isCantrip && prepared && !wizBook && !(archBook && !c2);
+        /* Tweaks phase 2 (WP4; the finish job added the second class, a dedication's book rank and a non-caster's
+         * archetype pool): a spell a live `spell` "Take anyway" names joins the list un-greyed; "Show spells of
+         * other traditions" (Tweaks page on, default off) adds the rest, greyed with the reason and "Take anyway" —
+         * ONE write holds the tweak and the pick (one undo step). The engine's class and book passes never filtered
+         * by tradition (step 1 + the finish read), so those are picker-only; a dedication that NAMES its cantrips
+         * (Oatia Skysage) is dropped in the engine, whose `archetypeCantripAllowed` drop a live allow lifts (the
+         * B3 seam in build.ts). The rows read the pool's EFFECTIVE list (`items`: list additions and a book rank's
+         * own narrowing included), so a spell a feat adds is never offered as "off the list". */
+        const poolTrad = c2 ? tradition2 : tradition;
+        const tweakable = !!poolTrad && (c2 ? !!casting2 : !!casting || !!archCaster);
+        const others = tweakable
+          ? spellsOffPool(picker.rank, new Set(items.map((s) => s.id)), poolTrad, {
+              // A dedication that names its cantrips refuses its OWN tradition's other cantrips too.
+              narrowed: !c2 && !casting && picker.rank === 0 && !!archCaster?.config.cantripOptions,
+              // A book rank's own rank window and "not twice in the book" (the same filters as `items`).
+              fits: (s) => (!bookRank || (s.rank >= bookRank.minSpellRank && s.rank <= bookRank.maxSpellRank && !elsewhere!.has(s.id))) && !bookGranted?.has(s.id),
+            })
+          : NO_SPELLS;
+        const allowedHere = others.filter((s) => allowedInPicker(build, 'spell', s.id));
+        const offList = tweaksOn && revealOtherSpells ? others.filter((s) => !allowedInPicker(build, 'spell', s.id)) : NO_SPELLS;
+        const offIds = new Set(offList.map((s) => s.id));
+        const allowIds = new Set(allowedHere.map((s) => s.id));
+        const shown = allowedHere.length || offList.length ? [...items, ...allowedHere, ...offList].sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name)) : items;
+        const takeSpellAnyway = async (sp: Sp) => {
+          const write = await confirmTakeAnyway<BuildState>({ name: sp.name, rule: spellOffReason(sp.id, c2 ? 2 : 1), undoHint: tweakUndoHint(isMobile, showUndoButtons, 'pick'), k: { picker: 'spell', record: sp.id }, host: build });
+          if (!write) return;
+          const rank = picker.rank;
+          actions.patch((b) =>
+            write(b, (x) => {
+              if (c2) {
+                if (rank !== 0) return { ...x, spells2: { ...(x.spells2 ?? {}), [rank]: [...(x.spells2?.[rank] ?? []), sp.id] } };
+                const base2 = x.cantrips2 ?? [];
+                return base2.includes(sp.id) ? x : { ...x, cantrips2: [...base2, sp.id] };
+              }
+              if (rank !== 0) return { ...x, spells: { ...x.spells, [rank]: [...(x.spells[rank] ?? []), sp.id] } };
+              // As writeCantrip: an old save's cantrips (legacyCantrips) are written down first.
+              const base = legacyCantrips.length ? legacyCantrips : x.cantrips;
+              return base.includes(sp.id) ? { ...x, cantrips: base } : { ...x, cantrips: [...base, sp.id] };
+            }),
+          );
+          setPicker(null);
+        };
         return (
           <FilterableSelect
             key={'spell-' + (c2 ? '2-' : '') + picker.rank}
             title={picker.rank === 0 ? 'Add cantrip' : `Add ${ord(picker.rank)}-rank spell`}
-            items={items}
+            items={shown}
             spec={SPELL_SPEC_BUILDER}
             rowKey={(sp) => sp.id}
             onClose={() => setPicker(null)}
@@ -4206,12 +5266,22 @@ export function Builder({
                 {have} / {cap_}
               </span>
             }
+            resultsBarExtra={
+              tweakable && tweaksOn ? <RevealToggle reveal={{ label: 'Show spells of other traditions', on: revealOtherSpells, onToggle: setRevealOtherSpells }} /> : undefined
+            }
             renderRow={(sp, openDesc) => {
               const list = isCantrip ? cantripList : spellList;
               const count = list.filter((x) => x === sp.id).length;
               const chosen = count > 0;
               const disabled = preparedMode ? atCap : !chosen && atCap;
               const node = descNodeOf(sp, 'spells');
+              const meta = [sp.rank === 0 ? 'Cantrip' : `${ord(sp.rank)} rank`, ...sp.traits.slice(0, 4)].join(' · ');
+              /* An off-list spell no LIVE allow covers is only ever added through "Take anyway" — a prepared
+               * caster's second copy too (C3: its "Add" used to add one more past a paused allow with no confirm;
+               * the confirm switches the paused allow back on). A chosen one in a known list keeps its row, so
+               * the player can still take it out. */
+              if (offIds.has(sp.id) && !disabled && (!chosen || preparedMode))
+                return <BreakableOptionRow name={sp.name} note={count > 0 ? `${meta} · ×${count}` : meta} reason={spellOffReason(sp.id, c2 ? 2 : 1)} onOpenDesc={node ? () => openDesc(node) : undefined} onAct={() => void takeSpellAnyway(sp)} />;
               return (
                 <PickerRow
                   lead={
@@ -4223,11 +5293,7 @@ export function Builder({
                     </>
                   }
                   name={sp.name}
-                  meta={
-                    <div className="picker-traits">
-                      {[sp.rank === 0 ? 'Cantrip' : `${ord(sp.rank)} rank`, ...sp.traits.slice(0, 4)].join(' · ')}
-                    </div>
-                  }
+                  meta={<div className="picker-traits">{allowIds.has(sp.id) ? `${meta} · Allowed by a tweak` : meta}</div>}
                   onOpenDesc={node ? () => openDesc(node) : undefined}
                   chosen={!preparedMode && chosen}
                   selectLabel={preparedMode ? 'Add' : chosen ? 'Added' : 'Add'}
@@ -4305,6 +5371,7 @@ export function Builder({
       })()}
 
     </div>
+    </ShowTweakContext.Provider>
     </PinContext.Provider>
   );
 }

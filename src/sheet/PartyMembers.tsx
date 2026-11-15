@@ -317,9 +317,10 @@ export function useMemberViewer(
        * their own sheet does (App.tsx `sheetContent`): before 2026-10-20 a teammate read the plain view,
        * and an edit of a feat's max HP or save never reached them. Cached, so a re-render gets the same
        * object. The popups keep the plain view through the context, as the player's own sheet and the GM
-       * sheet do (showing an edited name or text on a card is phase 4).
+       * sheet do (showing an edited name or text on a card is phase 4). Only the LIVE edits: the door
+       * takes the character itself (its Tweaks switch and each edit's own on/off — plan B WP2).
        */
-      const sheetDb = contentFor(view, viewing.sheet.character.overrides);
+      const sheetDb = contentFor(view, viewing.sheet.character);
       sheetEl = (
         <div className="party-viewer">
           {/* Popups and links resolve through the context: the same view. */}

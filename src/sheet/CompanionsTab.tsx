@@ -38,7 +38,7 @@ import {
   updatePlayCompanion,
   type PlayUpdater,
 } from '../rules/play';
-import { formatMod, modeGateIds, ownedFeatureIds, subclassOfHeldClass } from '../rules/derive';
+import { formatMod, heldClasses, modeGateIds, ownedFeatureIds, subclassOfHeldClass } from '../rules/derive';
 import { InventoryTab } from './InventoryTab';
 import { HpControl } from './HpControl';
 import { specificFamiliars } from '../rules/specificFamiliars';
@@ -1833,7 +1833,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           // Gated content modes sit beside the catalog — see the note at the VitalsRail call site.
           predefined={[...CATALOG_MODES, ...contentGatedModes(Object.values(content.modes))]}
           catalog={CATALOG_MODES}
-          classId={character.classId}
+          classId={heldClasses(character).map((s) => s.classId)}
           ancestryId={character.ancestryId}
           // Class features too — see the note at the matching VitalsRail call site.
           featIds={modeGateIds(character, content)}

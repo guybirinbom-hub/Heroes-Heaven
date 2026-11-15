@@ -2,6 +2,8 @@ import type { ModeDef } from '../rules/types';
 import { modeTargetLabel } from '../rules/modes';
 import { formatMod } from '../rules/derive';
 import { useEscapeClose } from './useEscapeClose';
+import { TrustMarker } from './TrustMarker';
+import { trustHeldBack } from '../data/trustGate';
 
 /**
  * What a mode actually does, in full: how long it lasts, its note, and every modifier spelled out one
@@ -12,6 +14,7 @@ import { useEscapeClose } from './useEscapeClose';
  */
 export function ModeDetailModal({ mode, onClose }: { mode: ModeDef; onClose: () => void }) {
   useEscapeClose(onClose);
+  const held = !!trustHeldBack('modes', mode.id)?.length;
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label={mode.name}>
@@ -22,6 +25,10 @@ export function ModeDetailModal({ mode, onClose }: { mode: ModeDef; onClose: () 
           </button>
         </div>
         <div className="confirm-body">
+          {/* A mode the trust gate holds back keeps its toggle and applies nothing — the line says so
+              under the name, above the text, as every record popup does (see TrustMarker). Not in the
+              head: that row is a no-wrap flex row, so the line landed between the name and the X. */}
+          <TrustMarker bucket="modes" id={mode.id} />
           {mode.duration && <p className="mode-info-dur">Lasts {mode.duration}.</p>}
           {mode.note && <p>{mode.note}</p>}
           {mode.modifiers.length > 0 ? (
@@ -34,7 +41,14 @@ export function ModeDetailModal({ mode, onClose }: { mode: ModeDef; onClose: () 
               ))}
             </ul>
           ) : (
-            !mode.note && <p>Nothing on the sheet changes — this is here so you can see it is running.</p>
+            !mode.note &&
+            (held ? (
+              /* Held back, not designed to do nothing: the sentence below would read as intent. The
+                 marker above already says "Not yet verified", so this does not repeat it. */
+              <p>Nothing on the sheet changes until its rules are verified.</p>
+            ) : (
+              <p>Nothing on the sheet changes — this is here so you can see it is running.</p>
+            ))
           )}
         </div>
       </div>

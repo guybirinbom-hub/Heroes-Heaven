@@ -83,21 +83,32 @@ export const CHOICE_FEAT_GRANTS: Record<string, Record<string, string[]>> = {
  * the only authorings available were "hand it to everyone" or "hand it to nobody". Both records
  * shipped as nobody, and featGrantsAuto.ts carries a ⚠ above stonemasons-eye saying exactly that.
  *
- * Read in buildCharacter's feat->feat expansion, where `proficiencies.skills` already holds class,
- * background, free picks and skill increases but NO feat grant. That placement is what "already
- * trained" MEANS — reading it later would let a feat's own grant open its own gate.
+ * Decided after the skill ranks are worked out level by level (skill-order plan D10, WP4): `rankGatedGrants`
+ * in build.ts reads the per-level skill history, at the moment each entry's `when` names (below). The
+ * feat->feat expansion still works out today's order's answer, for the legacy side channel only
+ * (`skillOrderLegacyOf`); it no longer pushes a row. "Already trained" is the rank just BEFORE the carrier's
+ * own steps — reading it after would let a feat's own grant open its own gate.
  *
  * ⚠ `countOwnGrant` is the printed difference between the two, and is not cosmetic.
  *   Stonemason's Eye says "ALREADY trained" — trained by something OTHER than this feat. Its own
  *   Crafting grant must NOT open the gate, or every character taking it would get Specialty Crafting.
  *   Gildedsoul says "if you're trained in Society" with no "already", and that sentence follows the
  *   feat's own choice of Diplomacy OR Society — so picking Society here DOES satisfy it.
+ *
+ * ⚠ `when` is WHICH MOMENT the record's own sentence asks about (skill-order plan D10, WP4):
+ *   'taken'    — "if you're ALREADY trained": the rank just before the carrier's own place in print order
+ *                (its level, before its own steps). A later skill increase is not an answer to it.
+ *   'reached'  — "AS SOON AS you meet the prerequisites": granted at the first level the rank holds (never
+ *                before the carrier's own level), and the granted row carries that level.
+ *   'standing' — a plain "if you're trained": the finished rank, as before (R9: Gildedsoul reads either way).
+ * test/skill-rank-gated.test.ts requires `when` on every entry, and `countOwnGrant` only on 'standing'.
  */
+export type RankGatedWhen = 'taken' | 'reached' | 'standing';
 export const FEAT_RANK_FEAT_GRANTS: Record<
   string,
-  { skill: ProficiencyKey; rank: ProficiencyRank; feat: string; countOwnGrant?: boolean }[]
+  { skill: ProficiencyKey; rank: ProficiencyRank; feat: string; when: RankGatedWhen; countOwnGrant?: boolean }[]
 > = {
-  'stonemasons-eye': [{ skill: 'crafting', rank: 'trained', feat: 'specialty-crafting' }],
+  'stonemasons-eye': [{ skill: 'crafting', rank: 'trained', feat: 'specialty-crafting', when: 'taken' }],
   /*
    * Intuitive Crafting — *"You are trained in Crafting. If you were ALREADY trained in Crafting, you
    * INSTEAD gain the Specialty Crafting skill feat in a specialty of your choice."* The same sentence
@@ -105,8 +116,8 @@ export const FEAT_RANK_FEAT_GRANTS: Record<
    * means trained by something other than this feat, so its own Crafting grant must not open its own
    * door. Left UNBOUND — print says "of your choice", unlike Stonemason's Eye, which names stonemasonry.
    */
-  'intuitive-crafting': [{ skill: 'crafting', rank: 'trained', feat: 'specialty-crafting' }],
-  gildedsoul: [{ skill: 'society', rank: 'trained', feat: 'courtly-graces', countOwnGrant: true }],
+  'intuitive-crafting': [{ skill: 'crafting', rank: 'trained', feat: 'specialty-crafting', when: 'taken' }],
+  gildedsoul: [{ skill: 'society', rank: 'trained', feat: 'courtly-graces', when: 'standing', countOwnGrant: true }],
   /*
    * Student of Water: *"AS SOON AS YOU MEET THE PREREQUISITES for Underwater Marauder and Water
    * Sprint, you gain those feats."* Two feats, two different Athletics gates — Underwater Marauder
@@ -114,8 +125,8 @@ export const FEAT_RANK_FEAT_GRANTS: Record<
    * else at all.
    */
   'student-of-water': [
-    { skill: 'athletics', rank: 'trained', feat: 'underwater-marauder' },
-    { skill: 'athletics', rank: 'master', feat: 'water-sprint' },
+    { skill: 'athletics', rank: 'trained', feat: 'underwater-marauder', when: 'reached' },
+    { skill: 'athletics', rank: 'master', feat: 'water-sprint', when: 'reached' },
   ],
   /*
    * Raging Intimidation: *"AS SOON AS YOU MEET THE PREREQUISITES for the skill feats Intimidating
@@ -128,8 +139,8 @@ export const FEAT_RANK_FEAT_GRANTS: Record<
    * is no own grant that could open a gate.
    */
   'raging-intimidation': [
-    { skill: 'intimidation', rank: 'trained', feat: 'intimidating-glare' },
-    { skill: 'intimidation', rank: 'legendary', feat: 'scare-to-death' },
+    { skill: 'intimidation', rank: 'trained', feat: 'intimidating-glare', when: 'reached' },
+    { skill: 'intimidation', rank: 'legendary', feat: 'scare-to-death', when: 'reached' },
   ],
 };
 

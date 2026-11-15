@@ -6,6 +6,7 @@ import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import { confirmDialog } from './confirm';
 import { leaveCampaignQuestion } from '../data/campaignLeave';
+import { CampaignGoneNote } from './CampaignGoneNote';
 
 interface PartyPageProps {
   content: ContentDatabase;
@@ -70,6 +71,7 @@ export function PartyPage({ content, campaigns, characters, onOpenOwn, onClose, 
         <PartyMembers campaignId={selectedId} isGm={selectedCampaign?.role === 'gm'} content={content} onView={(m) => void open(selectedId, m.charId, m.ownerId)} />
         {/* This character leaves the campaign — a GM's character too (the campaign stays; a GM ends it by
             deleting it on the Campaigns page). */}
+        {selectedCampaign && <CampaignGoneNote campaignId={selectedCampaign.id} block gm={selectedCampaign.role === 'gm'} />}
         {onLeave && selectedCampaign && (
           <div className="party-leave-row">
             <button className="chip danger" onClick={() => void leave()}>

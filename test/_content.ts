@@ -21,9 +21,12 @@ let cachedGated: ContentDatabase | null = null;
  * The default stays UNGATED on purpose: the engine and its tests must keep seeing the complete
  * database, so only the trust-gate tests ask for the gated one.
  */
-export function content(opts?: { trustGate?: boolean }): ContentDatabase {
+export function content(opts?: { trustGate?: boolean; plant?: (core: Record<string, Record<string, unknown>>) => void }): ContentDatabase {
   const gate = opts?.trustGate === true;
-  if (gate ? cachedGated : cached) return (gate ? cachedGated : cached)!;
+  // `plant` edits the raw parsed core BEFORE the shared normalisation below, so a test can feed the
+  // reader a record the data itself no longer has (a trait-less one). A planted load is never cached.
+  const plant = opts?.plant;
+  if (!plant && (gate ? cachedGated : cached)) return (gate ? cachedGated : cached)!;
   const core = JSON.parse(readFileSync('public/core.json', 'utf8')) as Record<string, Record<string, unknown>>;
   /*
    * Descriptions ship in a SECOND file (61% of the data, and nobody reads one until they open it), so
@@ -43,6 +46,7 @@ export function content(opts?: { trustGate?: boolean }): ContentDatabase {
     }
   }
   // The same normalisation the app's loadContent applies (24 class features ship with no traits key).
+  plant?.(core);
   ensureTraits(core);
   const gated = gate ? applyTrustGate(core) : core;
   const merged: Record<string, unknown> = {};
@@ -60,6 +64,7 @@ export function content(opts?: { trustGate?: boolean }): ContentDatabase {
   db.hiddenTwins = findHiddenTwins(db, db.duplicateIds);
   db.umbrellaIds = findUmbrellaIds(db.items as unknown as Record<string, unknown>);
   db.combinationFormIds = findCombinationFormIds(db.items as unknown as Record<string, unknown>);
+  if (plant) return db;
   if (gate) cachedGated = db;
   else cached = db;
   return db;

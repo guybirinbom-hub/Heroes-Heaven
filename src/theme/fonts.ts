@@ -2,8 +2,14 @@
  * Font registry — the TYPEFACE axis of the design system.
  *
  * Orthogonal to palette and style: a font sets only --app-font (the body text
- * stack). Each entry is a system-font stack with graceful fallbacks, so they
- * work offline with no bundled font files — the first family the OS has wins.
+ * stack). The first family the browser can use wins.
+ *
+ * Every FREE family a stack leads with is BUNDLED (Fontsource, src/theme/bundled-fonts.css, imported
+ * once from main.tsx), so that choice looks the same on every device and offline. Those stacks lead
+ * with the exact name the bundled @font-face declares ('Inter Variable', not 'Inter') and keep the old
+ * system names after it as fallbacks. Stacks that lead with an Apple / Microsoft / paid family
+ * (humanist, book, tome) are still system-only and differ per device.
+ * test/bundled-fonts.test.ts holds the two files together.
  */
 
 export interface AppFont {
@@ -22,7 +28,7 @@ export const fonts: Record<string, AppFont> = {
   grotesque: {
     id: 'grotesque',
     name: 'Grotesque',
-    stack: "'Inter', 'Helvetica Neue', Arial, sans-serif",
+    stack: "'Inter Variable', 'Inter', 'Helvetica Neue', Arial, sans-serif",
   },
   humanist: {
     id: 'humanist',
@@ -32,7 +38,7 @@ export const fonts: Record<string, AppFont> = {
   rounded: {
     id: 'rounded',
     name: 'Rounded',
-    stack: "'Quicksand', 'Trebuchet MS', Verdana, sans-serif",
+    stack: "'Quicksand Variable', 'Quicksand', 'Trebuchet MS', Verdana, sans-serif",
   },
   book: {
     id: 'book',
@@ -47,12 +53,12 @@ export const fonts: Record<string, AppFont> = {
   slab: {
     id: 'slab',
     name: 'Slab',
-    stack: "Rockwell, 'Roboto Slab', 'Courier New', Georgia, serif",
+    stack: "'Roboto Slab Variable', 'Roboto Slab', Rockwell, 'Courier New', Georgia, serif",
   },
   mono: {
     id: 'mono',
     name: 'Monospace',
-    stack: "'Cascadia Code', Consolas, 'SF Mono', 'Roboto Mono', monospace",
+    stack: "'Cascadia Code Variable', 'Cascadia Code', Consolas, 'SF Mono', 'Roboto Mono', monospace",
   },
   readable: {
     id: 'readable',
@@ -72,11 +78,15 @@ export const fontList: AppFont[] = Object.values(fonts);
  * Resolve every stack's families ONCE, off the critical path.
  *
  * The Font axis in the Customize panel is the only place in the app that asks the browser for these
- * ten stacks, and most of the families they name are not installed — 'Inter', 'Quicksand', 'Iowan Old
- * Style', 'Roboto Slab', 'SF Mono', 'Atkinson Hyperlegible', 'OpenDyslexic'. A cold family lookup
- * walks the system font list: laying the ten out in an offscreen box measured 14.4 / 26.3 / 30.2 ms
- * in three dev-preview renderer processes that had never seen them, against 0.1-0.5 ms on every call
- * after. That cache belongs to the RENDERER PROCESS, not the document — it survives a reload, so only
+ * ten stacks. The six free leaders (Inter, Quicksand, Roboto Slab, Cascadia Code, Atkinson Hyperlegible,
+ * OpenDyslexic) are bundled since 2026-10-24 (bundled-fonts.css), so drawing "Ag" here also makes the
+ * browser fetch each bundled family's upright latin file once (italic files are fetched only when italic
+ * text is drawn in that family). The system-only leaders and fallbacks ('Iowan Old Style', Optima,
+ * 'SF Mono', ...) are still looked up in the system font list. The timings below were measured BEFORE
+ * the bundling, when most of these families were not installed: a cold family lookup walked the system
+ * font list, and laying the ten out in an offscreen box measured 14.4 / 26.3 / 30.2 ms in three
+ * dev-preview renderer processes that had never seen them, against 0.1-0.5 ms on every call after;
+ * they have not been re-measured with the bundled faces. That cache belongs to the RENDERER PROCESS, not the document — it survives a reload, so only
  * a brand-new tab (the app's own cold start) is ever cold, and a page can hold exactly one cold
  * sample. Doing it here while the app is idle moves the cost off the first open; a second call has
  * nothing left to do and says so by returning nothing.

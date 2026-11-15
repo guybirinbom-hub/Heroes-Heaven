@@ -2,7 +2,10 @@
  * BLOCKS guard — the building-block catalog, the block registry and the target registry agree,
  * (item 10) the moved book fields are read only in src/rules/blocks/book.ts, and (item 9, case D) the raw
  * feat stores are named only where src/rules/blocks/feat-readers.json gives a reason
- * (scripts/lib/feat-readers.mjs scans; every other reader asks src/rules/heldFeats.ts), and (item 7, one
+ * (scripts/lib/feat-readers.mjs scans; every other reader asks src/rules/heldFeats.ts), (spec item 4, one
+ * reader) a character's `overrides` is named outside the Tweaks home files only where
+ * src/rules/blocks/overrides-readers.json gives a reason (the same scanner), (spec item 1) no text a player
+ * can read says "override" (scripts/lib/visible-words.mjs scans; VISIBLE_WORDS_SKIP in check.ts), and (item 7, one
  * content path) the raw contentEdits overlay `applyOverrides` is named only inside
  * src/rules/blocks/content.ts, whose one export is `contentFor`.
  *
@@ -28,9 +31,9 @@ const read = (p) => (existsSync(join(ROOT, p)) ? readFileSync(join(ROOT, p), 'ut
 
 const registry = await import(src('src/rules/blocks/registry.ts'));
 const targets = await import(src('src/rules/blocks/targets.ts'));
-const { checkBlocks, checkBookFieldReaders, checkFeatReaders, checkContentPath, BOOK_FIELD_ALLOW } = await import(src('src/rules/blocks/check.ts'));
+const { checkBlocks, checkBookFieldReaders, checkFeatReaders, checkOverridesReaders, checkSlotCategoryReaders, checkVisibleOverrideWords, VISIBLE_WORDS_SKIP, checkContentPath, BOOK_FIELD_ALLOW } = await import(src('src/rules/blocks/check.ts'));
 // The scanner is tooling (it lives beside this script); the tree it scans and the allowlist are ROOT's.
-const { readAllow, scanFeatReaders, srcFiles: featSrcFiles, FEAT_READERS_ALLOW } = await import('./lib/feat-readers.mjs');
+const { readAllow, scanFeatReaders, scanOverridesReaders, scanSlotCategoryReaders, srcFiles: featSrcFiles, FEAT_READERS_ALLOW, OVERRIDES_READERS_ALLOW, SLOT_CATEGORY_ALLOW } = await import('./lib/feat-readers.mjs');
 
 const blockDir = 'src/rules/blocks';
 // Every code file under the folder, subfolders included (item 12's import scan must see them all).
@@ -86,6 +89,36 @@ if (featAllow !== undefined) {
   info.push(...feats.info);
 }
 
+/* Spec item 4, one reader (plan B WP2, section 7.1): every read of a character's tweaks goes through
+ * src/rules/blocks/active.ts (switch, on/off, start level); the places outside the home files that still
+ * name `overrides` are only the ones src/rules/blocks/overrides-readers.json gives a reason for. */
+let overridesAllow;
+try {
+  overridesAllow = readAllow(ROOT, OVERRIDES_READERS_ALLOW);
+} catch (e) {
+  errors.push(`${OVERRIDES_READERS_ALLOW} is not valid JSON — ${e.message}`);
+}
+if (overridesAllow !== undefined) {
+  const tweaks = checkOverridesReaders(scanOverridesReaders(featSrcFiles(ROOT)), overridesAllow);
+  errors.push(...tweaks.errors);
+  info.push(...tweaks.info);
+}
+
+/* Tweaks phase 2, WP7 (C10): an extra feat place's key is `<level>:extra<category>:<n>`, so a slot key's
+ * category is read through slotCategoryOf / slotRefOf; the places that still read it raw are only the ones
+ * src/rules/blocks/slot-category-readers.json gives a reason for. */
+let slotCatAllow;
+try {
+  slotCatAllow = readAllow(ROOT, SLOT_CATEGORY_ALLOW);
+} catch (e) {
+  errors.push(`${SLOT_CATEGORY_ALLOW} is not valid JSON — ${e.message}`);
+}
+if (slotCatAllow !== undefined) {
+  const cats = checkSlotCategoryReaders(scanSlotCategoryReaders(featSrcFiles(ROOT)), slotCatAllow);
+  errors.push(...cats.errors);
+  info.push(...cats.info);
+}
+
 /* Item 7, one content path: the raw overlay `applyOverrides` is named only inside
  * src/rules/blocks/content.ts, which exports `contentFor` alone. Scanned: every code file of the app (src/),
  * its tests (test/), the tooling (scripts/) and the tracker (tracker/), plus the root config files; a
@@ -106,6 +139,17 @@ function codeFilesUnder(rel) {
   walk(rel);
   return out;
 }
+/* Spec item 1 (plan B WP9b, section 7.2): "Overrides" is now Tweaks, so no text a player can read under src/
+ * says "override" — outside VISIBLE_WORDS_SKIP (each file with its reason) and the `// tweaks-ok: <reason>`
+ * markers. The scanner (scripts/lib/visible-words.mjs) is tooling beside this script; the tree is ROOT's. */
+{
+  const { scanVisibleWordFiles } = await import('./lib/visible-words.mjs');
+  const { hits, markers } = scanVisibleWordFiles(featSrcFiles(ROOT));
+  const words = checkVisibleOverrideWords(hits, VISIBLE_WORDS_SKIP, markers);
+  errors.push(...words.errors);
+  info.push(...words.info);
+}
+
 const contentPath = checkContentPath(['', 'src', 'test', 'scripts', 'tracker'].flatMap(codeFilesUnder));
 errors.push(...contentPath.errors);
 info.push(...contentPath.info);

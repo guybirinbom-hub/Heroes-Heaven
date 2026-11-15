@@ -1,0 +1,322 @@
+{
+  "app": "wanderers-codex",
+  "formatVersion": 1,
+  "kind": "character",
+  "character": {
+    "id": "char-tweaks-cleric-fixture",
+    "schemaVersion": 1,
+    "name": "Tweaks Cleric Fixture",
+    "level": 4,
+    "xp": 0,
+    "ancestryId": "human",
+    "heritageId": "skilled-human",
+    "heritageResistanceChoice": null,
+    "backgroundResistanceChoice": null,
+    "backgroundId": "acolyte",
+    "classId": "cleric",
+    "subclassId": "battle-creed",
+    "classChoices": [
+      {
+        "group": "Doctrine",
+        "name": "Battle Creed",
+        "description": "You've undergone a special training to focus your body toward combat. While you still adhere to the teachings of your faith, you also know that you serve as an instrument of your church. More so than any warpriest, the physical rigors that come with battle are key to your training. You've dedicated yourself to the battle creed, a specific approach that puts combat prowess first, even at the expense of a cleric's typical spellcasting and restorative abilities. Defeating one's enemies is more important than healing an ally in the heat of battle; the time for healing comes after. As you abide by the battle creed, your physical and martial capabilities grow stronger. You must select Battle Harbinger Dedication as your 2nd- level class feat.\n\n**Prerequisites:**\n\n- You must be a cleric.\n- You don't gain the Resolute Faith class feature.\n- You don't gain the Miraculous Spell class feature.\n\n**Spellcasting Adjustment**: Your spellcasting capabilities are more restricted. At 1st level, you can prepare one 1st-rank spell and five cantrips. As you increase in level, your number of spell slots and the highest rank of spells you can cast from spell slots increases, shown in Battle Harbinger Spells per Day. Because of your focus on your physical training at the expense of magical aptitude, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank. For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks.\n\n| Your Level | Cantrips | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1 | 5 | 1 | - | - | - | - | - | - | - | - |\n| 2 | 5 | 2 | - | - | - | - | - | - | - | - |\n| 3 | 5 | 2 | 1 | - | - | - | - | - | - | - |\n| 4 | 5 | 2 | 2 | - | - | - | - | - | - | - |\n| 5 | 5 | - | 2 | 2 | - | - | - | - | - | - |\n| 6 | 5 | - | 2 | 2 | - | - | - | - | - | - |\n| 7 | 5 | - | - | 2 | 2 | - | - | - | - | - |\n| 8 | 5 | - | - | 2 | 2 | - | - | - | - | - |\n| 9 | 5 | - | - | - | 2 | 2 | - | - | - | - |\n| 10 | 5 | - | - | - | 2 | 2 | - | - | - | - |\n| 11 | 5 | - | - | - | - | 2 | 2 | - | - | - |\n| 12 | 5 | - | - | - | - | 2 | 2 | - | - | - |\n| 13 | 5 | - | - | - | - | - | 2 | 2 | - | - |\n| 14 | 5 | - | - | - | - | - | 2 | 2 | - | - |\n| 15 | 5 | - | - | - | - | - | - | 2 | 2 | - |\n| 16 | 5 | - | - | - | - | - | - | 2 | 2 | - |\n| 17 | 5 | - | - | - | - | - | - | - | 2 | 2 |\n| 18 | 5 | - | - | - | - | - | - | - | 2 | 2 |\n| 19 | 5 | - | - | - | - | - | - | - | 2 | 2 |\n| 20 | 5 | - | - | - | - | - | - | - | 2 | 2 |\n\n**Divine Font Adjustment:** Instead of preparing Heal or Harm spells with your divine font, you instead gain the battle font, which allows you to prepare battle aura spells. You gain 4 additional spell slots each day at your highest rank of cleric spell slots. You can prepare only Bane or Bless in these slots. Any feats and effects that refer to a battle aura refers to these spells, regardless of whether they were cast with your standard spell slots or your divine font spell slots. At 5th level, the number of additional slots increases to 5, and at 15th level, the total number of additional slots increases to 6. Your battle auras use your class DC instead of your spell DC.\n\n**Doctrine Adjustment:** Instead of choosing a doctrine, you follow the battle creed. At 1st level, you gain the benefits of the initial creed. You gain additional benefits from your creed at the listed levels.\n\nInitial Creed (1st): You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. You're trained in martial weapons. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level when you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor.\n\nLesser Creed (5th): You gain expert proficiency with your deity's favored weapon, martial weapons, simple weapons, and unarmed attacks. When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect. Your proficiency rank for your class DC increases to expert.\n\nModerate Creed (9th): You gain Reactive Strike as a cleric feat.\n\nGreater Creed (11th): Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert.\n\nMajor Creed (13th): You gain master proficiency with your deity's favored weapon. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead.\n\nTrue Creed (15th): Your proficiency rank for your class DC increases to master. Your proficiency rank for Will saves increases to master.\n\nFinal Creed (19th): Your proficiency ranks for light and medium armor, as well as for unarmed defense, increase to master. Your proficiency rank for your class DC increases to legendary.",
+        "level": 1,
+        "id": "battle-creed",
+        "descRefs": [
+          {
+            "label": "Battle Harbinger Dedication",
+            "key": "feats"
+          },
+          {
+            "label": "Resolute Faith",
+            "key": "classFeatures"
+          },
+          {
+            "label": "Miraculous Spell",
+            "key": "classFeatures"
+          },
+          {
+            "label": "Heal",
+            "key": "spells"
+          },
+          {
+            "label": "Harm",
+            "key": "spells"
+          },
+          {
+            "label": "Bane",
+            "key": "spells"
+          },
+          {
+            "label": "Bless",
+            "key": "spells"
+          },
+          {
+            "label": "Initial Creed",
+            "key": "classFeatures"
+          },
+          {
+            "label": "Deadly Simplicity",
+            "key": "feats"
+          },
+          {
+            "label": "Divine Defense",
+            "key": "classFeatures"
+          },
+          {
+            "label": "Lesser Creed",
+            "key": "classFeatures"
+          },
+          {
+            "label": "Moderate Creed",
+            "key": "classFeatures"
+          },
+          {
+            "label": "Reactive Strike",
+            "key": "feats"
+          },
+          {
+            "label": "Greater Creed",
+            "key": "classFeatures"
+          },
+          {
+            "label": "Major Creed",
+            "key": "classFeatures"
+          },
+          {
+            "label": "True Creed",
+            "key": "classFeatures"
+          },
+          {
+            "label": "Final Creed",
+            "key": "classFeatures"
+          }
+        ]
+      }
+    ],
+    "keyAbility": "wis",
+    "abilities": {
+      "str": 12,
+      "dex": 12,
+      "con": 12,
+      "int": 10,
+      "wis": 14,
+      "cha": 10
+    },
+    "partialBoosts": [],
+    "proficiencies": {
+      "perception": "trained",
+      "saves": {
+        "fortitude": "expert",
+        "reflex": "trained",
+        "will": "expert"
+      },
+      "skills": {
+        "acrobatics": "untrained",
+        "arcana": "untrained",
+        "athletics": "expert",
+        "crafting": "untrained",
+        "deception": "untrained",
+        "diplomacy": "untrained",
+        "intimidation": "untrained",
+        "medicine": "untrained",
+        "nature": "untrained",
+        "occultism": "untrained",
+        "performance": "untrained",
+        "religion": "trained",
+        "society": "untrained",
+        "stealth": "trained",
+        "survival": "untrained",
+        "thievery": "untrained",
+        "lore:scribing": "trained"
+      },
+      "attacks": {
+        "unarmed": "trained",
+        "simple": "trained",
+        "martial": "trained",
+        "advanced": "untrained"
+      },
+      "defenses": {
+        "unarmored": "trained",
+        "light": "trained",
+        "medium": "trained",
+        "heavy": "untrained"
+      },
+      "classDc": "trained"
+    },
+    "hitPoints": {
+      "current": 44,
+      "temp": 0
+    },
+    "heroPoints": 1,
+    "conditions": [],
+    "classResources": {},
+    "languages": [
+      "common"
+    ],
+    "feats": [
+      {
+        "featId": "student-of-the-canon",
+        "level": 1,
+        "category": "skill"
+      },
+      {
+        "featId": "reactive-strike",
+        "level": 1,
+        "category": "class"
+      }
+    ],
+    "skillIncreases": [
+      {
+        "level": 3,
+        "skill": "athletics"
+      }
+    ],
+    "grantedSkills": {
+      "religion": "your class",
+      "lore:scribing": "your background"
+    },
+    "inventory": [],
+    "currency": {},
+    "spellcasting": [
+      {
+        "id": "cleric-casting",
+        "name": "Divine prepared spellcasting",
+        "type": "prepared",
+        "tradition": "divine",
+        "keyAbility": "wis",
+        "proficiency": "trained",
+        "cantrips": [],
+        "cantripCap": 5,
+        "cantripsPrepared": true,
+        "prepared": {
+          "1": [
+            {
+              "spellId": null,
+              "expended": false
+            },
+            {
+              "spellId": null,
+              "expended": false
+            }
+          ],
+          "2": [
+            {
+              "spellId": null,
+              "expended": false
+            },
+            {
+              "spellId": null,
+              "expended": false
+            }
+          ]
+        },
+        "font": {
+          "type": "battle",
+          "slots": 4,
+          "rank": 2,
+          "useClassDc": true,
+          "allowed": [
+            "bane",
+            "bless"
+          ]
+        }
+      }
+    ],
+    "details": {},
+    "notes": []
+  },
+  "build": {
+    "name": "Tweaks Cleric Fixture",
+    "level": 4,
+    "ancestryId": "human",
+    "heritageId": "skilled-human",
+    "backgroundId": "acolyte",
+    "classId": "cleric",
+    "subclassId": "battle-creed",
+    "extraChoices": {},
+    "deityId": null,
+    "divineFont": null,
+    "devotionSpell": null,
+    "pathToPerfection": [],
+    "voiceOfNature": null,
+    "qiTradition": null,
+    "fighterWeaponGroup": null,
+    "fighterWeaponGroup2": null,
+    "primaryApparition": null,
+    "subclassSkill": null,
+    "subclassLore": null,
+    "dragonExemplar": null,
+    "commanderTactics": [],
+    "runesmithRunes": [],
+    "grantedChoiceFeatTraits": {},
+    "inventorArmorStats": null,
+    "bodyRune": null,
+    "inventorModifications": {},
+    "gateForks": {},
+    "gateExpands": {},
+    "keyAbility": "wis",
+    "ancestryBoosts": [],
+    "backgroundBoosts": [],
+    "levelBoosts": [
+      "wis",
+      "con",
+      "dex",
+      "str"
+    ],
+    "classSkills": [
+      "athletics",
+      "stealth",
+      "society"
+    ],
+    "heritageSkill": null,
+    "backgroundSkillChoice": null,
+    "heritageFeatId": null,
+    "umtFeatId": null,
+    "featSkillChoices": {},
+    "dedicationSkillFeats": {},
+    "languages": [],
+    "featPicks": {},
+    "featChoices": {},
+    "skillIncreases": {
+      "2": "society",
+      "3": "athletics",
+      "4": "stealth"
+    },
+    "bonusSkillIncreases": {},
+    "backgroundSkillIncreases": {},
+    "attributeBoosts": {},
+    "cantrips": [],
+    "spells": {},
+    "signatures": {},
+    "archetypeTradition": null,
+    "archetypeKeyAbility": null,
+    "archetypeEidolonType": null,
+    "archetypeSpells": {
+      "cantrips": [],
+      "spells": {},
+      "tradition": null,
+      "keyAbility": null
+    },
+    "inventory": [],
+    "companions": []
+  },
+  "play": {
+    "damage": 0,
+    "tempHp": 0,
+    "heroPoints": 1,
+    "mythicPoints": 3,
+    "xp": 0,
+    "focusUsed": 0,
+    "expendedSlots": {},
+    "slotsUsed": {},
+    "conditions": [],
+    "inventory": [],
+    "currency": {},
+    "pinned": [],
+    "pinnedDescs": [],
+    "resources": {},
+    "notes": [],
+    "companions": []
+  }
+}

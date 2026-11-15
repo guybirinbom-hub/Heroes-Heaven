@@ -4,6 +4,7 @@ import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
 import { deityDomainsOf, deriveSpellcasting, deriveClassDc, entryClassIdOf, formatMod } from '../rules/derive';
 import { signatureSpellsAt } from '../rules/build';
+import { liveGivenSpells } from '../rules/blocks/active';
 import { toggleKnownRitual,
   bumpItemCounter,
   bumpItemQuantity,
@@ -61,6 +62,7 @@ import {
   cantripsOverOf,
   chosenAt,
   collectionUsed,
+  emptyCantripPlaces,
   hiddenAt,
   pickerSpellOptions,
   repertoireCap,
@@ -73,6 +75,7 @@ import {
 import { enabledBookSet, entrySourceOn } from '../rules/sources';
 import { bloodlineGiftNote, bookTitle, keptOffListNote, notInBookNote, overCantripCapNote, overGiftNote } from '../rules/spellcasting';
 import { heighteningApplies } from '../rules/heightening';
+import { linkedNode } from './cardScope';
 import { useAstNode } from './useAst';
 import { isBucketLoaded, type AstNode } from './astStore';
 import { HEIGHTEN_STRING_LANE, arrowAt, printedInsideFooter, spellCardModel, stringLaneFooter } from './spellCard';
@@ -173,9 +176,12 @@ export function SpellDetail({
   atRank,
   signature,
   notes,
+  classId,
   onClose,
 }: {
   spell: Spell;
+  /** The viewing character's class: a class feature a spell page links opens that class's own record. */
+  classId?: string;
   maxRank?: number;
   /** The rank of the SLOT this spell was opened from — a prepared/font slot heightens what it holds. */
   atRank?: number;
@@ -227,9 +233,11 @@ export function SpellDetail({
   const bodyLoading = rowsLoading && !keptOnString;
   // A cross-link in the page's prose opens that record's description popup, as DescBody's page path does.
   const [drill, setDrill] = useState<DescNode | null>(null);
-  const openRecord = (bucket: string, slug: string) => {
-    const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: Spell['descRefs'] }> | undefined> | null)?.[bucket]?.[slug];
-    if (rec) setDrill({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug });
+  // A class feature a spell page links (spell repertoire, weapon specialization) opens the character's own class's record.
+  const linkNode = (bucket: string, linked: string) => linkedNode(content, bucket, linked, [], classId);
+  const openRecord = (bucket: string, linked: string) => {
+    const n = linkNode(bucket, linked);
+    if (n) setDrill(n);
   };
   const remasteredAs = (spell as { remasteredAs?: RemasteredAs }).remasteredAs;
   const baseRank = spell.rank;
@@ -372,7 +380,7 @@ export function SpellDetail({
           ) : (
             /* desk #158 — the `shownBase &&` guard was dropped so a spell whose text is empty can still
                show the "Remastered as …" line; DescBody still renders nothing when there is neither. */
-            <DescBody description={shownBase} descRefs={spell.descRefs} onExit={onClose} remasteredAs={remasteredAs} />
+            <DescBody description={shownBase} descRefs={spell.descRefs} onExit={onClose} remasteredAs={remasteredAs} linkNode={linkNode} />
           )}
           {onTree && cut!.heightening.length > 0 && (
             // Card step 17: every printed Heightened entry, each with what the page prints under it; the ones
@@ -415,6 +423,7 @@ export function SpellDetail({
                   descRefs={spell.descRefs}
                   className={'sd-desc' + (r > baseRank && heighteningApplies(h, baseRank, r) ? ' applies' : '')}
                   onExit={onClose}
+                  linkNode={linkNode}
                 />
               ))}
             </div>
@@ -513,6 +522,15 @@ const LEARN_A_SPELL: Record<number, { price: string; dc: number }> = {
   9: { price: '1,500 gp', dc: 36 },
   10: { price: '7,000 gp', dc: 41 },
 };
+
+/**
+ * The entry's manage button label — and the word every hint that points at that button uses. A
+ * cleric made spontaneous by Flexible Spellcaster still prepares cantrips (`cantripsPrepared`), and
+ * its empty cantrip places said "tap Prepare to choose" beside a button reading "Repertoire".
+ */
+export function manageButtonLabel(entry: Pick<SpellcastingEntry, 'type'>): 'Prepare' | 'Repertoire' {
+  return entry.type === 'spontaneous' ? 'Repertoire' : 'Prepare';
+}
 
 /**
  * Does Learn a Spell do anything for this caster?
@@ -1001,7 +1019,7 @@ function ManageSpellsModal({
             {/* A replaced list still casts on its own tradition, so name BOTH — an elementalist wizard
                 is an arcane caster picking from the elemental list, and the header used to say only
                 "Arcane spells" while offering something else entirely. */}
-            {`${spontaneous ? 'Repertoire' : 'Prepare'} — ${listReplacement ? `${cap(listReplacement.list)} list (${cap(entry.tradition)})` : `${cap(entry.tradition)} spells`}`}
+            {`${manageButtonLabel(entry)} — ${listReplacement ? `${cap(listReplacement.list)} list (${cap(entry.tradition)})` : `${cap(entry.tradition)} spells`}`}
           </span>
           <button className="picker-close" style={{ marginLeft: 'auto' }} onClick={onClose} aria-label="Close">
             <i className="ti ti-x" aria-hidden="true" />
@@ -1467,7 +1485,8 @@ function pastGiftIds(entry: SpellcastingEntry, ids: string[], granted: string[],
 }
 
 /** Any other class's own cantrips drawn PAST its cap (`cantripCapWas` — a save made while a Dual Class
- *  cantrip bonus still fed this class too): the last `by` of the player's picks, never a cantrip a
+ *  cantrip bonus still fed this class too, or any non-book caster whose places shrank under its picks):
+ *  the last `by` of the player's picks, never a cantrip a
  *  record or a feat put in the list — the same set `cantripsOverOf` counts. */
 function pastCapCantripIds(entry: SpellcastingEntry, by: number): Set<string> {
   if (entry.grantsCountInside || by <= 0) return new Set();
@@ -1652,11 +1671,14 @@ export function SpellsTab({
   // — "You learn the Commune ritual if you didn't know it already". Eleven feats/features/items say
   // exactly that, and none of them reached this list, so the section stayed empty for all of them.
   // With none from either source the section (and its catalog bar) is hidden entirely.
+  // The given ones are the LIVE ones only (`liveGivenSpells`, ../rules/blocks/active.ts — the Tweaks
+  // switch, each entry's own on/off and start level; an imported ritual ignores the switch), so the memo
+  // keys on `options` and `level` too.
   const myRituals = useMemo(() => {
     const granted = new Map((character.grantedRituals ?? []).map((g) => [g.spellId, g]));
     const ids = [
       ...new Set([
-        ...(character.overrides?.addedSpells ?? []).map((a) => a.spellId),
+        ...liveGivenSpells(character).map((a) => a.spellId),
         ...granted.keys(),
         // …and the ones the player LEARNED, through the picker in the section below. 148 of the 151
         // rituals are on no spell list (rituals are tradition-less by rule), so before this the only
@@ -1670,7 +1692,7 @@ export function SpellsTab({
       .filter((s): s is Spell => !!s && !!s.ritual)
       .map((s) => ({ spell: s, grant: granted.get(s.id) }))
       .sort((a, b) => a.spell.rank - b.spell.rank || a.spell.name.localeCompare(b.spell.name));
-  }, [character.overrides, character.grantedRituals, character.knownRituals, content]);
+  }, [character.overrides, character.options, character.level, character.grantedRituals, character.knownRituals, content]);
   // Highest rank the character can cast — bounds the heightening rank selector (spellMaxRank, shared
   // with the Pinned list's reopened spell pin, MainTab PinnedDescCard).
   const maxRank = spellMaxRank(character);
@@ -1753,15 +1775,11 @@ export function SpellsTab({
      * caster asked "why don't I have a place for my cantrips?" and the sheet had no answer. The
      * spell-slot convention already shows "Empty slot" cards, so unfilled cantrip openings get the
      * same treatment, pointing at where the picking actually happens (the builder). */
-    // A cantrip a FEAT put in a known (not prepared) pool — Adapted Cantrip's — fills none of the cap's
-    // places: the cap already paid for it (its -1, on under the trust gate since package K, 2026-10-15).
-    // Counted, a bard with three picks of four showed no empty place while the builder said 3 / 4.
-    // ⚠ A class grant given ON TOP of the picks (an oracle's mystery cantrip, a psychic's conscious mind)
-    // is still counted here, so such a caster with a free place shows none. Leaving it out is NOT the fix
-    // on its own: the builder counts a pick that is also a grant as a pick, so the sheet would then offer a
-    // place the builder refuses (package K's last check, measured). Both sides need one rule — chat-todo.md.
-    const featCantrips = main.cantripsPrepared ? 0 : main.cantrips.filter((id) => id in (main.spellSources ?? {})).length;
-    const emptyCantrips = Math.max(0, (main.cantripCap ?? 0) - (main.cantrips.length - featCantrips));
+    // What fills a place is the player's OWN cantrips: never a feat's in a known pool (Adapted Cantrip's,
+    // package K) nor one the class grants on top (an oracle's mystery cantrip, a psychic's conscious mind).
+    // ONE rule with the builder's row (`emptyCantripPlaces` / `ownPlacesBeside`): counting the grants here
+    // hid an oracle's free place and all three of a new psychic's (2026-10-23).
+    const emptyCantrips = emptyCantripPlaces(main);
     const cantripsOver = cantripsOverOf(main);
     // A sorcerer's cantrip drawn past its five (the gift is one of them — lane C2): drawn, and said.
     const pastCantrips = pastGiftIds(main, main.cantrips, main.grantedCantrips ?? [], cantripsOver);
@@ -1783,7 +1801,7 @@ export function SpellsTab({
           const note =
             offBookNote(main, id) ??
             (pastCantrips.has(id) ? overGiftNote(main.cantripCap ?? 0, true, false, cantripsOver) : undefined) ??
-            (pastCap.has(id) ? overCantripCapNote(main.cantripCap ?? 0, !!main.cantripsPrepared, cantripsOver) : undefined) ??
+            (pastCap.has(id) ? overCantripCapNote(main.cantripCap ?? 0, !!main.cantripsPrepared, cantripsOver, manageButtonLabel(main)) : undefined) ??
             (main.grantedCantrips?.includes(id) ? bloodlineGiftNote(main, id, variantCantrips) : undefined);
           return sp && visible(sp) ? (
             <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} note={note} onClick={() => openDetail(sp)} />
@@ -1805,9 +1823,10 @@ export function SpellsTab({
                 <SpellCard
                   key={'ec' + i}
                   name="Empty cantrip"
-                  // A prepared caster prepares cantrips each morning — the Prepare button is the
-                  // affordance; a spontaneous class's cantrips are known, chosen in the builder.
-                  meta={main.cantripsPrepared ? 'tap Prepare to choose' : 'pick in the builder (Edit)'}
+                  // A prepared caster prepares cantrips each morning — the manage button is the
+                  // affordance (named by its own label: a flexible cleric's reads "Repertoire"); a
+                  // spontaneous class's cantrips are known, chosen in the builder.
+                  meta={main.cantripsPrepared ? `tap ${manageButtonLabel(main)} to choose` : 'pick in the builder (Edit)'}
                   empty
                 />
               )),
@@ -2614,7 +2633,7 @@ export function SpellsTab({
                   )}
                   {onPlay && (main.type === 'prepared' || main.type === 'spontaneous') && (
                     <button className="ms-btn" onClick={() => setManageId(main.id)} title="Manage spells for this session">
-                      <i className="ti ti-pencil-plus" aria-hidden="true" /> {main.type === 'spontaneous' ? 'Repertoire' : 'Prepare'}
+                      <i className="ti ti-pencil-plus" aria-hidden="true" /> {manageButtonLabel(main)}
                     </button>
                   )}
                   {/* Learn a Spell widens a finite repository (a spellbook, a repertoire). A cleric or
@@ -2787,6 +2806,7 @@ export function SpellsTab({
           atRank={detailAtRank}
           signature={signatureIds.has(detail.id)}
           notes={spellNotesFor(character, detail.id)}
+          classId={character.classId ?? undefined}
           onClose={() => setDetail(null)}
         />
       )}

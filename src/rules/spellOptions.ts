@@ -631,12 +631,47 @@ export function variantGiftCount(entry: SpellcastingEntry | undefined, rank: num
  * are `picks`. A pick that IS one of the record's gift ids is not one of the player's own on the sheet
  * (`drawnAt` strips grants), so it is given its place back here — the row's count and the sheet's
  * (own picks, grants stripped, against the allowance less the gift) are then the same number. `entry`
- * is buildCharacter's own class entry; `count` itself for any entry without `grantsCountInside`.
+ * is buildCharacter's own class entry; `count` itself for any entry without `grantsCountInside`…
+ *
+ * …except at CANTRIP rank, where every class's grants count this way (2026-10-23). An oracle's mystery
+ * cantrip and a psychic's conscious-mind cantrips ride ON TOP of the cantrips the player chooses (print:
+ * *"five divine cantrips of your choice"*, class-feature-956; *"three occult cantrips of your choice"*
+ * plus *"additional spells in your repertoire, starting with … two cantrips"*, class-feature-1141), and
+ * the sheet (`emptyCantripPlaces`) and the save round-trip both read a pick of one as the grant — while
+ * this row counted it as a place. Picked again, it now gives its place back here too, and the build
+ * draws every own pick beside it (buildCharacter's `ownCantripPicks`). Ranks 1+ are unchanged.
  */
 export function ownPlacesBeside(entry: SpellcastingEntry | undefined, rank: number, count: number, picks: readonly string[]): number {
-  if (!entry?.grantsCountInside) return count;
+  if (!entry || (!entry.grantsCountInside && rank !== 0)) return count;
   const granted = grantsAt(entry, rank);
   return Math.max(0, count - grantedPlaces(entry, rank) + picks.filter((id) => granted.includes(id)).length);
+}
+
+/** The builder's line under a cantrip row: the picks that are ALSO one of the class's own grants riding on
+ *  top (an oracle's mystery cantrip, a psychic's conscious-mind cantrip picked again), which take none of
+ *  the row's places (`ownPlacesBeside`) — said, so the row's count going up by one is not a mystery. [] for
+ *  a sorcerer, whose picked gift IS the gift's one place (`grantsCountInside`), and at ranks 1+. */
+export function repeatedGrantIds(entry: SpellcastingEntry | undefined, rank: number, picks: readonly string[]): string[] {
+  if (!entry || entry.grantsCountInside || rank !== 0) return [];
+  const granted = grantsAt(entry, rank);
+  return picks.filter((id) => granted.includes(id));
+}
+
+/**
+ * How many "Empty cantrip" places the sheet draws for a class entry — the same count the builder's row
+ * leaves free (`ownPlacesBeside`). The places are the cap less a sorcerer's gift (`grantedPlaces`); what
+ * fills them is the player's OWN cantrips: never one the class grants (an oracle's mystery cantrip, a
+ * psychic's conscious-mind cantrips — on top of the cap in print; counted, such a caster with a place free
+ * showed none, and a new psychic none of its three, 2026-10-23), and in a KNOWN pool never one a feat put
+ * there (Adapted Cantrip's: the cap already paid for it, package K). A PREPARED entry the play overlay
+ * opened (`cantripSlots`) counts its filled openings: an opening holding anything is not empty.
+ */
+export function emptyCantripPlaces(entry: SpellcastingEntry): number {
+  const places = Math.max(0, (entry.cantripCap ?? 0) - grantedPlaces(entry, 0));
+  if (entry.cantripsPrepared && entry.cantripSlots) return Math.max(0, places - entry.cantripSlots.filter(Boolean).length);
+  const granted = grantsAt(entry, 0);
+  const fromFeats = entry.cantripsPrepared ? {} : entry.spellSources ?? {};
+  return Math.max(0, places - entry.cantrips.filter((id) => !granted.includes(id) && !(id in fromFeats)).length);
 }
 
 /** What a FEAT made known in a REPERTOIRE at `rank` (1+) beside the row's `picks` — Adaptive Adept's

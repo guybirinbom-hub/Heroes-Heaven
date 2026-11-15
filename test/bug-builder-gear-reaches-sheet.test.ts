@@ -29,7 +29,7 @@ import type { Character, InventoryItem } from '../src/rules/types';
 const db = () => content();
 
 /** The exact chain App.tsx runs: build the character, then rebuild it with the play state carried. */
-const build1 = (b: BuildState) => buildCharacter(b, contentFor(db(), b.overrides));
+const build1 = (b: BuildState) => buildCharacter(b, contentFor(db(), b));
 const rebuild = (play: PlayState, prev: Character, next: Character) => playForRebuild(play, next, prev);
 
 const base = (items: BuildState['inventory']): BuildState => ({

@@ -44,12 +44,14 @@ import type {
 } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
-import { carriedToKeep, collectCarried, loadOwnTombstones, normalizeCarried } from './carried';
-import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, loreKey, signaturesAt, type BuildState } from '../rules/build';
+import { carriedToKeep, collectCarried, loadOwnTombstones, normalizeCarried, ownContent } from './carried';
+import { rebuildRoster } from './rebuild';
+import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, loreKey, signaturesAt, skillKeyLabel, type BuildState } from '../rules/build';
 import { maxTakes } from '../rules/featGrants';
 import { CORE_BOOKS, sourceCatalog, storedSources } from '../rules/sources';
-import { applyPlayState } from '../rules/play';
+import { applyPlayState, initialPlay, type PlayState } from '../rules/play';
 import { contentFor } from '../rules/blocks/content';
+import { markImported } from '../rules/blocks/write';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 import { sanitize } from '../sheet/sanitizeHtml';
 import {
@@ -310,7 +312,7 @@ export function exportWg(saved: SavedChar, content: ContentDatabase): string {
    * put them (docs/overrides-redesign.md, Building blocks item 6: part B makes this export warn and list
    * what it cannot carry) — so the edits reach the file only as their effect on that snapshot.
    */
-  content = contentFor(content, saved.character.overrides);
+  content = contentFor(content, saved.character);
   const ch = applyPlayState(saved.character, saved.play, content);
   const d = ch.details ?? {};
 
@@ -413,7 +415,7 @@ function importNative(obj: any, content: ContentDatabase): ImportResult {
   // this device cannot resolve itself (`carriedToKeep`): a copy of this account's own record would
   // outlive its Homebrew-page Delete once the tombstone expires (ruling 2026-09-12 #7).
   const carried = carriedToKeep(normalizeCarried(obj.carried), content, loadOwnTombstones());
-  const saved: SavedChar = {
+  const fromFile: SavedChar = {
     id: newRosterId(),
     character: normalizeCharacter(character),
     build: obj.build ?? undefined,
@@ -421,6 +423,7 @@ function importNative(obj: any, content: ContentDatabase): ImportResult {
     archived: false,
     ...(carried ? { carried } : {}),
   };
+  const saved = rebuiltImport(fromFile, content);
   return {
     saved,
     report: {
@@ -432,6 +435,53 @@ function importNative(obj: any, content: ContentDatabase): ImportResult {
     customItems: [],
     customModes: [],
   };
+}
+
+/**
+ * A Heroes Heaven file's `character` is a derived cache, built by whichever app version exported it (old
+ * Overrides, an older engine). Re-derive it now, exactly as the launch rebuild would (`rebuildRoster`: the
+ * entry's own view, the player-owned fields carried, a throw keeps the file's snapshot, a build-less file is
+ * left as it is), so the sheet shows today's numbers at once instead of after the next app start
+ * (2026-10-23). The import is still an EDIT: App's onImport puts it in the roster and cloud sync stamps
+ * and uploads it as before — it is never registered as a derived refresh.
+ *
+ * A rebuild keeps only what lives in build and play (and CARRIED_CHARACTER_FIELDS), so whatever the file
+ * holds ONLY on its character goes into play first (`withPlayFromCharacter`). Build and carried records stay
+ * the file's. A rebuild that throws keeps the file's character — with that play, which is the player's.
+ */
+export function rebuiltImport(fromFile: SavedChar, content: ContentDatabase): SavedChar {
+  if (!fromFile.build) return fromFile;
+  const entry = withPlayFromCharacter(fromFile, ownContent(content, fromFile));
+  return rebuildRoster([entry], content)[0];
+}
+
+/**
+ * An imported entry WITH a build: whatever the player owns that sits only on its `character` goes into play,
+ * where every rebuild (launch, cloud adopt, builder Save) keeps it — the sheet reads play over the character
+ * for all of it. An import is an edit, so this writes; a load never calls it. (2026-10-23, two checker
+ * findings: a Wanderer's Guide import has no play state at all, and its XP, HP, hero points, conditions,
+ * notes, bio and portrait were gone at the next app start.)
+ *  - No play state: seeded with the player-state half of `initialPlay` (what App's first play edit stores).
+ *    The build-made lists — gear, companions, class resources, description pins, formula picks — are left
+ *    out: App's lazy seed fills them from the CURRENT character, and a stale file's copy would freeze them.
+ *  - Notes the play state does not hold (`play.notes ?? character.notes`) are copied in; bio and portrait
+ *    are merged under play's own fields (the sheet merges them field by field). The deity stays the build's.
+ */
+export function withPlayFromCharacter(sc: SavedChar, view: ContentDatabase): SavedChar {
+  if (!sc.build) return sc;
+  const ch = sc.character;
+  let base = sc.play;
+  if (!base) {
+    const { inventory: _i, companions: _c, resources: _r, pinnedDescs: _p, formulaPicks: _f, ...seed } = initialPlay(ch, view);
+    base = seed as PlayState;
+  }
+  const { deityId: _deity, ...bio } = ch.details ?? {};
+  const moved = {
+    ...(base.notes === undefined && ch.notes?.length ? { notes: ch.notes } : {}),
+    ...(Object.keys(bio).length ? { details: { ...bio, ...base.details } } : {}),
+    ...(ch.appearance ? { appearance: { ...ch.appearance, ...base.appearance } } : {}),
+  };
+  return sc.play && !Object.keys(moved).length ? sc : { ...sc, play: { ...base, ...moved } };
 }
 
 /** Read an ability modifier out of WG's `content.attributes` (key spelling varies). */
@@ -1081,7 +1131,11 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
       else spellWarn.push(nm);
     }
     if (adds.length) {
-      build.overrides = { ...build.overrides, addedSpells: [...(build.overrides?.addedSpells ?? []), ...adds] };
+      // Stamped `source: 'import'` (spec 2, plan B WP2): an imported ritual was the character's own spell, so
+      // it ignores the Tweaks master switch. `markImported` stamps only the entries appended here and never
+      // writes `v` (B27): the imported character keeps reading Tweaks ON.
+      const prior = build.overrides?.addedSpells ?? [];
+      build.overrides = markImported({ ...build.overrides, addedSpells: [...prior, ...adds] }, 'addedSpells', prior.length);
       resolved.push(`${adds.length} ritual${adds.length === 1 ? '' : 's'} imported.`);
     }
   }
@@ -1418,11 +1472,18 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
       return r && RANK_ORDER.indexOf(r) > RANK_ORDER.indexOf(cur) ? r : cur;
     };
     const skills = character.proficiencies.skills as Record<string, ProficiencyRank>;
+    /* Skill order WP8 (plan section 2): a rank the rebuilt character cannot reach is still patched on here,
+     * but the next launch rebuilds the character from its build and the patch is gone — so the player is
+     * told, one line per skill, while the file is in front of them. `character` is the rebuild above. */
+    const rankWord = (r: ProficiencyRank) => r.charAt(0).toUpperCase() + r.slice(1);
+    const unreached = (key: string, file: ProficiencyRank, rebuilt: ProficiencyRank) =>
+      warnings.push(`${skillKeyLabel(key)}: the file has ${rankWord(file)}; the rebuilt character has ${rankWord(rebuilt)}.`);
     let bumped = 0;
     for (const sk of SKILLS) {
       const before = skills[sk] ?? 'untrained';
       const after = bump(before, `SKILL_${sk.toUpperCase()}`);
       if (after !== before) {
+        unreached(sk, after, before);
         skills[sk] = after;
         bumped++;
       }
@@ -1436,6 +1497,7 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
       if (!r || r === 'untrained') continue;
       const before = skills[lk] ?? 'untrained';
       if (RANK_ORDER.indexOf(r) > RANK_ORDER.indexOf(before)) {
+        unreached(lk, r, before);
         skills[lk] = r;
         lores++;
       }
@@ -1615,7 +1677,12 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     // Normalize before returning (the native path does too): a hand-edited WG file can carry
     // string/NaN numerics (experience, coins, hp) that would otherwise poison later math. This
     // coerces those to the character's canonical shape without dropping any of the patched-in data.
-    saved: { id: newRosterId(), character: normalizeCharacter(character), build, archived: false },
+    // Its XP, HP, hero points, conditions, notes, bio and portrait are patched onto `character` above; the
+    // launch rebuild keeps only build and play, so they go into play here (withPlayFromCharacter, 2026-10-23).
+    saved: withPlayFromCharacter(
+      { id: newRosterId(), character: normalizeCharacter(character), build, archived: false },
+      customItems.length ? { ...content, items: { ...content.items, ...Object.fromEntries(customItems.map((i) => [i.id, i])) } } : content,
+    ),
     report: { source: 'Wanderer’s Guide', lossless: false, resolved, warnings },
     customItems,
     customModes,

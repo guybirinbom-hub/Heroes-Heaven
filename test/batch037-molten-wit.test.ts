@@ -250,8 +250,10 @@ describe('batch 037 — Molten Wit builds all three printed branches', () => {
     expect(rank(c, 'diplomacy'), 'the second branch must not fire').toBe('untrained');
     expect((c.skillFallbacks ?? []).some((f) => f.featId === 'molten-wit')).toBe(false);
     // The record's own half is untouched by any of this: the answer still trains its skill and
-    // hands over the feat printed with it.
-    expect(rank(c, 'deception')).toBe('trained');
+    // hands over the feat printed with it. skill-order WP3: MW1 — worked out level by level, the feat
+    // trains Deception at 1st and the 3rd-level increase then raises it to expert (it used to be spent
+    // first and the feat's training swallowed it, leaving trained).
+    expect(rank(c, 'deception')).toBe('expert');
     expect(has(c, 'charming-liar')).toBe(true);
   });
 

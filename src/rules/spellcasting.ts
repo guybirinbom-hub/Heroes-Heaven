@@ -309,22 +309,26 @@ export function overGiftNote(places: number, cantrip: boolean, onSheet = false, 
 /** The marker on a class's own cantrip drawn past its cap (`cantripCapWas`): a save made while a
  *  Dual Class cantrip bonus still fed this class as well as the class that took the feat — and, since
  *  package K (2026-10-15), a spontaneous caster saved by the released app with Adapted Cantrip, whose
- *  builder offered one place more than print allows.
+ *  builder offered one place more than print allows — and, since 2026-10-23, any non-book caster whose
+ *  places shrank under its picks (Flexible Spellcaster at 2nd–3rd, a removed Cantrip Expansion).
  *
  *  `prepared`: the class prepares its cantrips on the sheet, and a cantrip prepared there into an
  *  opening the larger cap gave is in no builder list — the Prepare button is where it is emptied.
  *
  *  `over`: how many are past the cap (an old save can be more than one, as for `overGiftNote`).
  *
+ *  `button`: the label of the entry's manage button (SpellsTab `manageButtonLabel`) — a cleric made
+ *  spontaneous by Flexible Spellcaster still prepares cantrips, but its button reads "Repertoire".
+ *
  *  "this class lets you choose N", not "this class has N": the cards shown also hold the class's own
  *  granted cantrips and a feat's (an oracle with Adapted Cantrip draws seven against a choice of four), so
  *  "has 4" next to seven cards read as wrong — and still did after the player removed the extra one. */
-export function overCantripCapNote(places: number, prepared = false, over = 1): string {
+export function overCantripCapNote(places: number, prepared = false, over = 1, button = 'Prepare'): string {
   if (over > 1) {
-    const where = prepared ? `leave ${over} empty with the Prepare button, or remove ${over} in the builder` : `remove ${over} in the builder`;
+    const where = prepared ? `leave ${over} empty with the ${button} button, or remove ${over} in the builder` : `remove ${over} in the builder`;
     return `${over} cantrips too many — this class lets you choose ${places}; ${where}`;
   }
-  const where = prepared ? 'leave one empty with the Prepare button, or remove one in the builder' : 'remove one in the builder';
+  const where = prepared ? `leave one empty with the ${button} button, or remove one in the builder` : 'remove one in the builder';
   return `One cantrip too many — this class lets you choose ${places}; ${where}`;
 }
 

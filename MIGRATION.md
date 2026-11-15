@@ -32,6 +32,15 @@ what to do next. Nothing here needs re-measuring — every number was verified a
 5. Never auto-fill a player's choice (a long-standing rule in this app, unrelated to but unaffected by
    this migration).
 
+## After every `npm run data`
+
+- Read its output from the top and check the final "wrote" lines: it can abort silently.
+- Re-stamp the trust ledger: `wg-diff.mjs --out work/.wg-diff-all.json`, then `trust-ledger.mjs`.
+- Run `node scripts/vt.mjs test/tweaks-legacy-fixture.test.ts`. If a DELTA in
+  `test/fixtures/tweaks-legacy-before.json` changed, re-take the fixture by its `header.retake` recipe
+  (a worktree at its `engineCommit`, on the new data: `public/core.json`, `public/core-descriptions.json`
+  and the re-stamped `src/data/trust-ledger.json`), never on the current engine.
+
 ## 3. Where everything lives
 
 | What | Path |

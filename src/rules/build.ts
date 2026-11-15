@@ -48,8 +48,10 @@ import type {
   WeaponCategory,
   WeaponRunes,
   PinnedDesc,
+  TweakRankSort,
+  TweakBoostStep,
 } from './types';
-import type { Ancestry, ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, Heritage, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, RestrictedSlotGrant, Size, SourceInfo, SpellChoiceFilter, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
+import type { Ancestry, ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, Heritage, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, RestrictedSlotGrant, Size, SkillHistory, SourceInfo, SpellChoiceFilter, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS, CLASS_OWN_PICK_MAPS, classOptionInBook, classOptionOn, classOptionRecords, entrySourceOn, mythicCallingRecords, type ClassOptionRecord } from './sources';
 import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, heldClasses, heldClassFeatureIds, holdsClass, holdsSubclass, effectiveChoiceOptions, narrowChoiceOptions, outsideDomains, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
@@ -58,9 +60,9 @@ import { applyCounterMods } from './counterMods';
 /* `grantsFor`, never the raw FEAT_GRANTS table: this is the APPLY side, and a grant whose kind the
  * trust gate turned off must hand the character nothing (docs/trust-gate.md section 3). The Builder
  * keeps reading the raw table so its pickers still render. */
-import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, grantsFor, grantsRecordOff, LOCKED_SKILL_KEYS, maxTakes, upgradeRankAt } from './featGrants';
+import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, grantsFor, grantsRecordOff, LOCKED_SKILL_KEYS, maxTakes, takesAllowed, upgradeRankAt, upgradeSteps, type FeatGrant } from './featGrants';
 import { engineLaneOff } from './trustLanes';
-import { EXTRA_FEAT_TAKINGS, FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE, FEAT_RANK_FEAT_GRANTS, FEAT_SUBSTITUTE_GRANTS, SKILL_RANK_BEFORE_OWN_GRANTS, featFeatGrantsFor } from './featFeatGrants';
+import { EXTRA_FEAT_TAKINGS, FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE, FEAT_RANK_FEAT_GRANTS, FEAT_SUBSTITUTE_GRANTS, SKILL_RANK_BEFORE_OWN_GRANTS, featFeatGrantsFor, type RankGatedWhen } from './featFeatGrants';
 import { BACKGROUND_CANTRIP_GRANTS, BACKGROUND_GRANT_BOUND_CHOICE } from './backgroundGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickableFeats } from './featPickGrants';
 import { elementTraitsOf, gateElementLimit, impulseAllowedFor, kineticistElements } from './kineticElements';
@@ -75,11 +77,40 @@ import { activeCasterArchetype, archetypeBook, archetypeBookMaxRank, archetypeCa
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
 import { apparitionSlots, bookCantripCapacity, bookNoun, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
-import { rankTweaks, scoreAddBlocks } from './blocks/active';
-import { featIdAtSlot, heldFeatIds, heldFeatSlots } from './heldFeats';
+import {
+  allowedInPicker,
+  featPlaceKeyOf,
+  givenCopyCounts,
+  liveAttributeSets,
+  liveGivenFeatures,
+  liveGivenLanguages,
+  liveGivenSpells,
+  liveLegacyRanks,
+  liveMaxHpSet,
+  liveRemovedFeatIds,
+  livePlaces,
+  liveCarriers,
+  placeLiveForKey,
+  rankTweaks,
+  removedPlaceKeys,
+  countingBoostPicks,
+  removedBoostIndexes,
+  removedSkillIncreasePlaces,
+  skillPlaceId,
+  scoreAddBlocks,
+  skillHoldsAt,
+  type LivePlace,
+} from './blocks/active';
+import { featIdAtSlot, heldFeatIds, heldFeatSlots, OVERRIDE_SLOT, slotCategoryOf, type HeldFeatSlot } from './heldFeats';
+import { readKeptBoosts, readKeptFeatCopies, readKeptFeatPlaces, readKeptSkillIncreases, restoreKeptFeatPlaces, restoreKeptSkillIncreases, tweakKeptOf } from './tweakKept';
+import { choiceBlockRecordIds, tweaksPageOn } from './blocks/stored';
 import { backgroundTrainings, bookBlocksOf, growingValue, standingNumberBlocks } from './blocks/book';
 import { contentFor } from './blocks/content';
+import { rankSortFromSnapshot, withoutUnsortedRanks, type AtSlotRanks } from './blocks/migrate';
+import { dropChoiceBlocks, dropEntries, markImported } from './blocks/write';
 import { loreKey } from './loreKey';
+import { firstLevelAtRank, SKILL_FROM_LEVEL, skillIncreaseCap, skillRankAt, skillRankBeforeSource, skillRanksAt, skillRanksBeforeSource, stepRank, TWEAK_INCREASE_SOURCE, type SkillPoint } from './ranks';
+import { applySkillOp, compareOrderPath, judgeScope, newSkillLedger, resolveSkillPass, SKILL_PHASE_RANK, skillReplayMismatches, type SkillEffect, type SkillEvent, type SkillEventMeta, type SkillEventPhase, type SkillJudge, type SkillOp, type SkillPassFeatRow, type SkillPassResult, type SkillPlace, type SkillPrereqLine, type SkillRecord, type SkillView, type SkillViewKind } from './skillPass';
 
 /**
  * The kineticist's element rules for one feat slot: the test the Builder's picker asks (`slotTakes`,
@@ -95,12 +126,16 @@ import { loreKey } from './loreKey';
  *
  * Any other slot takes an impulse only for an element the character has at their level, and takes
  * every feat that is not an impulse.
+ *
+ * `anyElement` (Tweaks phase 2, WP7, C10): an EXTRA impulse place a tweak adds is not one of the gate's bound pair,
+ * so it skips the one-element-per-slot binding and keeps `impulseAllowedFor` (an element the character has). A book
+ * slot never passes it.
  */
-export function kineticSlotAllows(traits: readonly string[], build: BuildState, slot: { level: number; category: string }, nth: number): boolean {
+export function kineticSlotAllows(traits: readonly string[], build: BuildState, slot: { level: number; category: string }, nth: number, opts?: { anyElement?: boolean }): boolean {
   if (slot.category !== 'impulse') return !traits.includes('impulse') || impulseAllowedFor(traits, elementTraitsOf(build, build.level));
   if (!traits.includes('impulse')) return false;
   const els = elementTraitsOf(build, slot.level);
-  return impulseAllowedFor(traits, els) && (els.length < 2 || traits.includes(els[nth]));
+  return impulseAllowedFor(traits, els) && (!!opts?.anyElement || els.length < 2 || traits.includes(els[nth]));
 }
 
 /** The player's in-progress choices. The builder UI owns one of these. */
@@ -408,6 +443,16 @@ export interface BuildState {
   naturalAttacks?: NaturalAttack[];
   /** Animal companions, familiars (eidolons are derived from the summoner subclass). */
   companions: CompanionConfig[];
+  /**
+   * Skill order (plan work/skill-rank-level-by-level/plan.md D13, WP9): `2` = this build was opened and saved
+   * by an app that works skill ranks out level by level, so the Builder's one-time notice of what that changed
+   * (src/rules/skillOrderNotice.ts) has been shown. Absent on every build saved before it (UNKNOWN ≠ EMPTY:
+   * absent means "not seen yet", never "nothing changed"). Written ONLY by `emptyBuild` (a new character never
+   * had the old order), the Builder's open stamp and its Save (blocks/save.ts `openForSkillOrder`,
+   * `stampSkillOrderSave`) — never on load, never in a GM's edit sheet. A newer app's higher number is kept.
+   * Never copied onto the Character: the engine does not read it.
+   */
+  skillOrder?: 2;
 }
 
 
@@ -497,6 +542,8 @@ export function emptyBuild(): BuildState {
     archetypeSpells: { cantrips: [], spells: {}, tradition: null, keyAbility: null },
     inventory: [],
     companions: [],
+    // Skill order D13 (WP9): a new character starts on the level-by-level order, so it has nothing to be told.
+    skillOrder: 2,
   };
 }
 
@@ -671,11 +718,17 @@ export function passionBackground(
   own: Background | undefined,
   featId = 'free-heart',
 ): Background | undefined {
-  // The first taking that holds it: a slot, else the feat given through Tweaks (`override:<id>`).
-  const slot = heldFeatSlots(build).find((e) => e.featId === featId)?.slotKey;
+  const slot = passionFeatTaking(build, featId)?.slotKey;
   const id = slot ? build.featChoices?.[slot] : undefined;
   const bg = id ? content.backgrounds?.[id] : undefined;
   return bg && bg.id !== own?.id ? bg : undefined;
+}
+
+/** The held feat whose sub-choice is the passion background: the first taking that holds it — a slot, else
+ *  the feat given through Tweaks (`override:<id>`). `passionBackground` reads its answer; the skill ledger
+ *  places the background's trainings at it (WP2). */
+export function passionFeatTaking(build: BuildState, featId = 'free-heart'): HeldFeatSlot | undefined {
+  return heldFeatSlots(build).find((e) => e.featId === featId);
 }
 
 export function backgroundTrainedSkill(build: BuildState, background: Background | undefined): SkillId | undefined {
@@ -683,11 +736,71 @@ export function backgroundTrainedSkill(build: BuildState, background: Background
   // The fixed skill is the background's book block (blocks/book.ts, Building blocks item 10).
   const fixed = backgroundTrainings(background).skill;
   if (fixed) return fixed;
-  const choice = background.trainedSkillChoice;
-  if (!choice?.length) return undefined;
-  return build.backgroundSkillChoice && choice.includes(build.backgroundSkillChoice)
-    ? build.backgroundSkillChoice
-    : choice[0];
+  return backgroundSkillPick(build, background)?.value;
+}
+
+/** A choice's answer as the engine reads it: `value` is what counts (the stored answer when it is one of the
+ *  offered options, else the first option), `answered` says the stored answer was one of them. */
+export type ResolvedPick<T extends string = string> = { value: T; answered: boolean };
+
+const resolvePick = <T extends string>(stored: T | null | undefined, opts: readonly T[]): ResolvedPick<T> =>
+  stored && opts.includes(stored) ? { value: stored, answered: true } : { value: opts[0], answered: false };
+
+/**
+ * The background trained-skill CHOICE (`Background.trainedSkillChoice`), the ONE reader of
+ * `build.backgroundSkillChoice` (tweaks phase 2 WP3, decision C24). Undefined when the background asks no
+ * such choice. Every rule that resolves the answer reads it here — the trained skill, the Setup "!" line, the
+ * Assurance a background binds to "your chosen skill", the Lore riding the pick — so a later tweak that
+ * carries another answer (feature 14) changes them all at once.
+ */
+export function backgroundSkillPick(
+  build: Pick<BuildState, 'backgroundSkillChoice'>,
+  background: Background | undefined,
+): ResolvedPick<SkillId> | undefined {
+  const choice = background?.trainedSkillChoice;
+  return choice?.length ? resolvePick(build.backgroundSkillChoice, choice) : undefined;
+}
+
+/**
+ * The class / subclass restricted skill choice, the ONE reader of `build.subclassSkill` (tweaks phase 2 WP3,
+ * C24). `list` is the choice being answered; absent, it is the chosen subclass option's `skillChoice`, else
+ * the class's own `trainedSkills.choice` (the order the Setup "!" line has always used). One stored answer
+ * serves both kinds: no class has both. Undefined when nothing asks.
+ */
+export function subclassSkillPick(
+  build: Partial<Pick<BuildState, 'classId' | 'subclassId' | 'subclassSkill'>>,
+  content: ContentDatabase,
+  list?: readonly SkillId[],
+): ResolvedPick<SkillId> | undefined {
+  let opts = list;
+  if (!opts) {
+    const cls = build.classId ? content.classes[build.classId] : undefined;
+    const sub = cls?.subclass?.options.find((o) => o.id === build.subclassId);
+    opts = sub?.skillChoice?.length ? sub.skillChoice : cls?.trainedSkills.choice;
+  }
+  return opts?.length ? resolvePick(build.subclassSkill, opts) : undefined;
+}
+
+/**
+ * The background's NAMED Lore picks ("Legal Lore OR Underworld Lore", `trainedLoreOptions`), the ONE
+ * resolver of `backgroundLore`…`backgroundLore4` against that list (tweaks phase 2 WP3, C24). Usually one
+ * pick; Concordance Researcher prints FOUR of six (`trainedLoreOptionsCount`). Stored picks that aren't
+ * offered are ignored, and empty places fill with the earliest unpicked options, so an unanswered count-1
+ * choice trains `trainedLoreOptions[0]`. Empty when the background names no Lore options (a free-text Lore
+ * is `backgroundChosenLoreKeys`).
+ */
+export function backgroundLorePicks(
+  build: Partial<Pick<BuildState, 'backgroundLore' | 'backgroundLore2' | 'backgroundLore3' | 'backgroundLore4'>>,
+  background: Background | undefined,
+): string[] {
+  const loreOptions = background?.trainedLoreOptions ?? [];
+  if (!loreOptions.length) return [];
+  const count = Math.min(background!.trainedLoreOptionsCount ?? 1, loreOptions.length);
+  const stored = [build.backgroundLore, build.backgroundLore2, build.backgroundLore3, build.backgroundLore4];
+  const picks: string[] = [];
+  for (const s of stored) if (s && loreOptions.includes(s) && !picks.includes(s) && picks.length < count) picks.push(s);
+  for (const o of loreOptions) if (picks.length < count && !picks.includes(o)) picks.push(o);
+  return picks;
 }
 
 export const SKILL_INCREASE_LEVELS = [3, 5, 7, 9, 11, 13, 15, 17, 19];
@@ -867,11 +980,15 @@ export function countsForArchetype(f: Feat, inArchetypeSlot?: boolean): boolean 
  * context. Never a pick-a-feat answer (Spell Trickster: *"These feats don't count toward this total"*,
  * featPickGrants.ts). `level` is the Builder's viewed level for the given feats (spec item 9); slot picks
  * are never level-filtered here, as the picker never did.
+ *
+ * Tweaks phase 2, WP7: the STORAGE view (C9) — a pick decided against a paused extra place's dedication must still
+ * hold when it is resumed — and the slot's BOOK category (`slotCategoryOf`, C10), so a feat in an extra archetype
+ * place counts toward its archetype as one in a Free Archetype slot does.
  */
 export function takenForDedicationRule(build: BuildState, exceptKey: string, level?: number): TakenFeat[] {
-  return heldFeatSlots(build, level)
+  return heldFeatSlots(build, level, { includePaused: true })
     .filter((e) => e.slotKey !== exceptKey)
-    .map((e): TakenFeat => (e.via === 'slot' ? { id: e.featId, category: e.slotKey.split(':')[1] } : e.featId));
+    .map((e): TakenFeat => (e.via === 'slot' ? { id: e.featId, category: slotCategoryOf(e.slotKey) } : e.featId));
 }
 
 export function dedicationBlock(
@@ -1046,14 +1163,42 @@ export function extraPickCount(g: { pickByLevel: Record<string, number>; id?: st
   return n;
 }
 
+/** The Tweaks page, as a `MissingChoice.page` (plan B, WP8): a feat given through Tweaks asks its own
+ *  questions under its row there, never on a level page. Never a level chip (they are 0 and up). */
+export const TWEAKS_PAGE = -1;
+
+/** How a `levelChoices` label names the page a choice waits on — the ONE place a page becomes words, so no
+ *  line can print "Level -1". */
+export function choicePlace(page: number): string {
+  return page === TWEAKS_PAGE ? 'Tweaks' : `Level ${page}`;
+}
+
+/**
+ * The lines a list that names at most `max` choices shows (the Builder's "Save with choices left?"), in
+ * `levelChoices` order: every Tweaks line first in priority — no level chip leads to a given feat's question, so
+ * a Tweaks line cut under "…and N more" was counted but never named (WP10 browser test, step 9) — then the
+ * others from the top. The rest are the "…and N more".
+ */
+export function choicesToName(missing: readonly MissingChoice[], max: number): MissingChoice[] {
+  const tweaks = missing.filter((m) => m.page === TWEAKS_PAGE).slice(0, max);
+  const keep = new Set<MissingChoice>(tweaks);
+  for (const m of missing) {
+    if (keep.size >= max) break;
+    keep.add(m);
+  }
+  return missing.filter((m) => keep.has(m));
+}
+
 /** One choice the player has not made yet, and which builder page it is waiting on. */
 export interface MissingChoice {
-  /** Where to find it: 0 is the origin page, a number ≥ 1 is that level's page. */
+  /** Where to find it: 0 is the origin page, a number ≥ 1 is that level's page, `TWEAKS_PAGE` the Tweaks page. */
   page: number;
   /** How to name it in a list. Level pages prefix themselves ("Level 4 — class feat"). */
   label: string;
   /** False for choices that are genuinely optional, so an amber marker keeps one meaning. */
   required: boolean;
+  /** A given feat's question only (page `TWEAKS_PAGE`): the feat, so its Tweaks row can say it owes one. */
+  featId?: string;
   /** A second page whose card asks the same question — the bloodline's dragon, element or genie type,
    *  asked on Level 0 and again under the bloodline card on its own level (`SubclassFollowUps`). That
    *  page's tag and strip chip count it too; the Create/Save list still names it once. */
@@ -1093,7 +1238,9 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
    * deity change. Named rather than swapped, like a cause the sanctification forbids (which legal
    * answer they meant is the player's call), and on the PAGE of the picker that answers it: the
    * dedication's level, the champion's Deity feature's level — never Setup, where nothing clears it. */
-  for (const s of sanctificationsOffDeity(build, content)) out.push({ page: s.page, label: `Level ${s.page} — ${s.label}`, required: true });
+  // A given Cleric Dedication's answer is fixed on the Tweaks page, so its line names that page (plan B WP8).
+  for (const s of sanctificationsOffDeity(build, content))
+    out.push({ page: s.page, label: `${choicePlace(s.page)} — ${s.label}`, required: true, ...(s.featId ? { featId: s.featId } : {}) });
 
   const cls = build.classId ? content.classes[build.classId] : undefined;
   // The second class only under Dual Class: a `classId2` left behind with the rule off asks nothing.
@@ -1138,24 +1285,50 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
   }
 
   // The feats taken, for the slot a FEAT adds (Ultimate Flexibility) — given ones too (case D, D4: all
-  // five `levelGrants` callers that pass taken feats read `heldFeatIds`).
-  const picks = heldFeatIds(build);
+  // five `levelGrants` callers that pass taken feats read `heldFeatIds`). The STORAGE view (Tweaks phase 2, WP7,
+  // C9/C11): the slots owed are the slots drawn, and a paused extra place's Ultimate Flexibility keeps its slot.
+  const picks = heldFeatIds(build, undefined, { includePaused: true });
+  // WP7 step 4: the LIVE extra feat places (`choice.addPlace`), by level, one per slot key. A paused or Tweaks-off
+  // place is not live, so it owes nothing; a filled one owes nothing here either (its feat's own questions are
+  // asked below, from the live view).
+  const placesAt = new Map<number, LivePlace[]>();
+  for (const p of livePlaces(build)) {
+    if (p.place !== 'feat' || !p.slotKey || [...placesAt.values()].some((l) => l.some((q) => q.slotKey === p.slotKey))) continue;
+    placesAt.set(p.level, [...(placesAt.get(p.level) ?? []), p]);
+  }
+  const removedSi = removedSkillIncreasePlaces(build);
   for (let lvl = 1; lvl <= build.level; lvl++) {
     const g = levelGrants(
       lvl, build.classId, content, build.subclassId, build.variantRules,
       build.classId2, build.subclassId2, build.mythicEnabled, picks, build,
     );
-    const at = (label: string) => out.push({ page: lvl, label: `Level ${lvl} — ${label}`, required: true });
+    const at = (label: string) => out.push({ page: lvl, label: `${choicePlace(lvl)} — ${label}`, required: true });
+    // A printed slot a live "Remove a place" removes is not owed (tweaks p2 WP6, C17).
+    const removed = removedPlaceKeys(build, (l) => (l === lvl ? g.featSlots : []));
     for (const [i, cat] of g.featSlots.entries()) {
-      if (!build.featPicks[`${lvl}:${cat}:${i}`]) at(`${cat} feat`);
+      const key = `${lvl}:${cat}:${i}`;
+      if (!build.featPicks[key] && !removed.has(key)) at(`${cat} feat`);
     }
-    if (g.skillIncrease && !build.skillIncreases[lvl]) at('skill increase');
-    if (g.bonusSkillIncrease && !build.bonusSkillIncreases?.[lvl]) at('skill increase');
-    if (g.backgroundSkillIncrease && !build.backgroundSkillIncreases?.[lvl]) at('skill increase');
+    // …then the level's empty LIVE extra feat places, after its book slots (C11).
+    for (const p of placesAt.get(lvl) ?? []) if (!featIdAtSlot(build, p.slotKey!)) at(`extra ${p.category} feat`);
+    /* Tweaks phase 2 WP14 (C47): a skill-increase or boost place a live removal names is not owed — empty or holding
+     * its (kept, not counting) answer; paused or with Tweaks off it is owed again like any place. */
+    if (g.skillIncrease && !build.skillIncreases[lvl] && !removedSi.has(skillPlaceId('main', lvl))) at('skill increase');
+    if (g.bonusSkillIncrease && !build.bonusSkillIncreases?.[lvl] && !removedSi.has(skillPlaceId('bonus', lvl))) at('skill increase');
+    if (g.backgroundSkillIncrease && !build.backgroundSkillIncreases?.[lvl] && !removedSi.has(skillPlaceId('background', lvl))) at('skill increase');
     if (g.attributeBoosts) {
-      const done = new Set((build.attributeBoosts[lvl] ?? []).filter(Boolean)).size;
-      const want = attributeBoostCount(build.variantRules);
+      const want0 = attributeBoostCount(build.variantRules);
+      const removed = removedBoostIndexes(build, 'level', lvl);
+      const done = new Set(countingBoostPicks(build, 'level', build.attributeBoosts[lvl] ?? [], lvl).filter(Boolean)).size;
+      const want = want0 - [...removed.keys()].filter((i) => i < want0).length;
       if (done < want) at(want - done === 1 ? 'attribute boost' : `attribute boosts (${want - done})`);
+    }
+    /* Tweaks phase 2 WP11 (C15 / C16): an EMPTY live extra skill-increase or boost place is owed, after the level's
+     * own; a paused one, one with Tweaks off, or one holding its answer owes nothing. */
+    for (const p of livePlaces(build)) {
+      if (p.level !== lvl) continue;
+      if (p.place === 'skillIncrease' && p.skill === undefined) at('extra skill increase');
+      if (p.place === 'boost' && p.attribute === undefined) at('extra attribute boost');
     }
     if (subclassAnchorLevel(build, content) === lvl && !build.subclassId) at(cls?.subclass?.name ?? 'subclass');
 
@@ -1190,13 +1363,22 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
         if (build.effectChoices?.[`${f.id}:${ch.id}`]) continue;
         at(`${rec?.name ?? f.name} — choose`);
       }
+      /* …and Deity and Cause's own holy/unholy question while the deity leaves a choice: *"If you "can be" holy or
+       * unholy according to your deity's sanctification entry, you make that choice"*. Until 2026-10-27 a champion of
+       * Abadar who never answered was silently unsanctified. A "must be" deity answers it (buildCharacter). */
+      if (SANCTIFICATION_FROM_DEITY.has(f.id) && rec?.choice?.flag === 'sanctification' && !build.featChoices?.[`feature:${f.id}`] && !build.featChoices?.[`feature:${f.id}:0`]) {
+        if ((deitySanctifications(build, content)?.allowed.size ?? 0) > 1) at(`${rec.name ?? f.name} — choose`);
+      }
     }
   }
 
   // A feat you picked can ask a follow-up ("Assurance — in which skill?"). The feat arrived; the
   // answer never did, and nothing counted it.
-  for (const [key, featId] of Object.entries(build.featPicks ?? {})) {
-    if (!featId) continue;
+  // …and a feat GIVEN through Tweaks asks the same, under its row on the Tweaks page (plan B WP8, page
+  // TWEAKS_PAGE; its answers live under `override:<featId>`). `questionFeatSlots` lists the slot picks first,
+  // in featPicks order and unfiltered, so a character with no given feat gets exactly the list it always had.
+  for (const { slotKey: key, featId, via } of questionFeatSlots(build)) {
+    const given = via === 'override';
     const feat = content.feats[featId];
     if (!feat?.choice) continue;
     // …unless it is a DAILY pick. Those are answered at daily preparations and the builder no longer
@@ -1219,6 +1401,10 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
     // A multi-pick choice fans out to `key#0`, `key#1`, … so it is answered only when EVERY pick is.
     const picked = choiceKeys(key, feat.choice).every((k) => build.featChoices?.[k]);
     const lvl = Number(key.split(':')[0]);
+    const page = given ? TWEAKS_PAGE : Number.isFinite(lvl) && lvl >= 1 ? lvl : 0;
+    // A slot pick's line names no page (the level page it sits on says so); a given feat's names Tweaks.
+    const name = given ? `${choicePlace(TWEAKS_PAGE)} — ${feat.name}` : feat.name;
+    const mark = given ? { featId } : {};
     if (picked || build.grantedFeatChoices?.[featId]) {
       /* …but a kept answer the record's own picker marks NOT ALLOWED is no answer (Q27): an Adapted Cantrip
        * cantrip from no magical tradition, an Adaptive Adept spell off that cantrip's tradition. 4cca755 put
@@ -1226,30 +1412,49 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
        * nothing was left and Create/Save asked nothing (package F, 2026-10-16). The same test as the
        * picker's (`openChoiceOptions`' `notAllowed`), read off the build alone. */
       if (picked && choiceKeys(key, feat.choice).some((k) => openAnswerBarred(feat.choice!.from, build, content, build.featChoices?.[k])))
-        out.push({ page: Number.isFinite(lvl) && lvl >= 1 ? lvl : 0, label: `${feat.name} — choose again`, required: true });
+        out.push({ page, label: `${name} — choose again`, required: true, ...mark });
       continue;
     }
     out.push({
-      page: Number.isFinite(lvl) && lvl >= 1 ? lvl : 0,
-      label: `${feat.name} — choose`,
+      page,
+      label: `${name} — choose`,
       required: true,
+      ...mark,
     });
   }
 
   /* A held caster dedication that did NOT win the one archetype pool asks for its own cantrips, cast at
-   * will (owner ruling #162, Spellshot beside Beast Gunner) — on its card, so its page owes the answer. */
-  const heldNow = Object.entries(build.featPicks ?? {}).filter(([k, v]) => !!v && !(Number(k.split(':')[0]) > build.level));
-  // The pool winner counts a dedication given through Tweaks too (case D); the cantrip question below is
-  // asked on a SLOT's card only — a given dedication's card is part B's editor (D2).
+   * will (owner ruling #162, Spellshot beside Beast Gunner) — on its card, so its page owes the answer: a
+   * slot's level page, or a given dedication's row on the Tweaks page (plan B WP8). The same walk the pool
+   * winner beside it reads (slot picks at or below the level, then the given feats held at it). */
+  const heldNow = questionFeatSlots(build).filter((e) => !(e.level > build.level));
   const poolWinner = activeCasterArchetype(heldFeatSlots(build, build.level).filter((e) => !(e.level > build.level)).map((e) => e.featId))?.dedicationId;
-  for (const [key, featId] of heldNow) {
+  for (const { slotKey: key, featId, via } of heldNow) {
     const keys = LEGACY_ARCHETYPE_CANTRIP_KEYS[featId];
     if (!keys || !poolWinner || featId === poolWinner) continue;
     const owed = keys.filter((k) => !content.spells[build.effectChoices?.[k] ?? '']).length;
     const lvl = Number(key.split(':')[0]);
-    if (owed) out.push({ page: Number.isFinite(lvl) && lvl >= 1 ? lvl : 0, label: `${content.feats[featId]?.name ?? featId} — ${owed === 1 ? 'choose a cantrip' : `choose ${owed} cantrips`}`, required: true });
+    const given = via === 'override';
+    const name = `${given ? `${choicePlace(TWEAKS_PAGE)} — ` : ''}${content.feats[featId]?.name ?? featId}`;
+    if (owed)
+      out.push({
+        page: given ? TWEAKS_PAGE : Number.isFinite(lvl) && lvl >= 1 ? lvl : 0,
+        label: `${name} — ${owed === 1 ? 'choose a cantrip' : `choose ${owed} cantrips`}`,
+        required: true,
+        ...(given ? { featId } : {}),
+      });
   }
   return out;
+}
+
+/**
+ * The feats whose own questions the Builder draws (plan B WP8): every slot pick (unfiltered, featPicks order —
+ * each walker keeps its own level rule), then the given feats held at the character's level — but those only
+ * while the Tweaks page is there to ask them (`tweaksPageOn`). An import-stamped given feat stays on with
+ * Tweaks off, and with no page to answer on its question would be a "choice left" nothing can clear.
+ */
+function questionFeatSlots(build: BuildState): HeldFeatSlot[] {
+  return heldFeatSlots(build, build.level, tweaksPageOn(build) ? undefined : { via: ['slot'] });
 }
 
 /** Does the OPEN choice's own picker mark this kept `answer` as not allowed (`OpenOption.notAllowed`)?
@@ -1259,7 +1464,9 @@ function openAnswerBarred(from: FeatChoiceDef['from'], build: BuildState, conten
   if (!answer || from?.type !== 'spell') return false;
   // Slot picks and the feats given through Tweaks (case D), each with the answer under its own key.
   const feats = heldFeatSlots(build).map(({ slotKey, featId }) => ({ featId, choice: build.featChoices?.[slotKey] ? { value: build.featChoices[slotKey] } : undefined }));
-  const options = openChoiceOptions(from, content, { hideLegacy: build.hideLegacy, character: { feats } as unknown as Character, keep: [answer] });
+  // A spell a live "Take anyway" names passes its tradition rules (Tweaks phase 2, WP4); paused, the line returns.
+  const allowed = (id: string) => allowedInPicker(build, 'spell', id);
+  const options = openChoiceOptions(from, content, { hideLegacy: build.hideLegacy, character: { feats } as unknown as Character, keep: [answer], allowed });
   return !!options.find((o) => o.id === answer)?.notAllowed;
 }
 
@@ -1343,19 +1550,77 @@ export function subclassAnchorLevel(build: BuildState, content: ContentDatabase)
 export function restrictedSkillIncreaseAllowed(
   build: Partial<BuildState>,
   content: ContentDatabase,
+  /** Skill order WP6 (plan D15): with a level, the restriction of the class that OWNS that level's bonus
+   *  increase (Dual Class: either class); without one, the first class's, as before (the live path). */
+  level?: number,
 ): { levels: number[]; skills: Set<string>; reason: string } | null {
+  const lanes = restrictedSkillIncreaseLanes(build, content);
+  if (level === undefined) return lanes.find((l) => l.classId === build.classId) ?? null;
+  const owner = bonusSkillIncreaseOwner(build, content, level);
+  return (owner && lanes.find((l) => l.classId === owner && l.levels.includes(level))) || null;
+}
+
+/**
+ * The restricted bonus skill increase of EACH class, one lane per class (plan D15, skill order WP6). Dual
+ * Class (GM Core, rules-1329: "add everything from each class except Hit Points and starting skills") owes
+ * the second class's extra increase too — a thaumaturge/swashbuckler has Thaumaturgic Expertise's at 9th and
+ * 17th AND Stylish Tricks' at 3rd, 7th and 15th, each on its own class's terms. The second class's subclass
+ * resolves through `subclassId2`; the build stores no second `subclassSkill`, so a class-2 `skillChoice`
+ * adds nothing (plan 7.3 item 4).
+ */
+export function restrictedSkillIncreaseLanes(
+  build: Partial<BuildState>,
+  content: ContentDatabase,
+): { classId: string; levels: number[]; skills: Set<string>; reason: string }[] {
+  const out: { classId: string; levels: number[]; skills: Set<string>; reason: string }[] = [];
+  const laneOf = (classId: string | null | undefined, subclassId: string | null | undefined, ownAnswer: boolean) => {
+    const cls = classId ? content.classes[classId] : undefined;
+    const r = cls?.restrictedSkillIncreaseLevels;
+    if (!cls || !r) return;
+    const skills = new Set<string>(r.skills ?? []);
+    if (r.includeSubclassGrantedSkills) {
+      const sub = cls.subclass?.options.find((o) => o.id === subclassId);
+      for (const s of sub?.grants?.skills ?? []) skills.add(s);
+      // …and the class skill the option takes AWAY (Vindicator: Religion INSTEAD OF Nature).
+      for (const s of sub?.grants?.removesSkills ?? []) skills.delete(s);
+      // The option's own skill choice joins only when ANSWERED (an unanswered one adds nothing here).
+      const pick = ownAnswer && sub?.skillChoice?.length ? subclassSkillPick(build, content, sub.skillChoice) : undefined;
+      if (pick?.answered) skills.add(pick.value);
+    }
+    out.push({ classId: cls.id, levels: r.levels, skills, reason: r.reason });
+  };
+  laneOf(build.classId, build.subclassId, true);
+  if (build.variantRules?.dualClass && build.classId2) laneOf(build.classId2, build.subclassId2, false);
+  return out;
+}
+
+/** Sorted union of level lists (absent lists add nothing). */
+const unionLevels = (...lists: (readonly number[] | undefined)[]): number[] =>
+  [...new Set(lists.flatMap((l) => l ?? []))].sort((a, b) => a - b);
+
+/**
+ * The levels that grant a skill increase, ordinary (`main`) and extra (`bonus`), for one class or a Dual
+ * Class pair (plan D15, skill order WP6). Dual Class takes the UNION, one increase per level: GM Core
+ * rules-1331 — "a dual-class rogue/ranger still gets the extra skill feat and skill increase at levels where
+ * the other class doesn't provide them" (benefits shared by both classes come once per level). Read by
+ * `levelGrants` (the Builder's slots and the pending counter) and by `buildCharacter`'s print lanes; the
+ * live path keeps the first class's levels on purpose (the notice names an increase that now counts).
+ */
+export function classSkillIncreaseLevels(cls: ClassDef | undefined, cls2: ClassDef | undefined): { main: number[]; bonus: number[] } {
+  return {
+    main: unionLevels(cls?.skillIncreaseLevels ?? SKILL_INCREASE_LEVELS, cls2 ? cls2.skillIncreaseLevels ?? SKILL_INCREASE_LEVELS : undefined),
+    bonus: unionLevels(cls?.bonusSkillIncreaseLevels, cls2?.bonusSkillIncreaseLevels),
+  };
+}
+
+/** The class whose extra (bonus) skill increase a level is (the first class wins a shared level, since the
+ *  build stores one answer per level), or null. */
+export function bonusSkillIncreaseOwner(build: Partial<BuildState>, content: ContentDatabase, level: number): string | null {
   const cls = build.classId ? content.classes[build.classId] : undefined;
-  const r = cls?.restrictedSkillIncreaseLevels;
-  if (!r) return null;
-  const skills = new Set<string>(r.skills ?? []);
-  if (r.includeSubclassGrantedSkills) {
-    const sub = cls?.subclass?.options.find((o) => o.id === build.subclassId);
-    for (const s of sub?.grants?.skills ?? []) skills.add(s);
-    // …and the class skill the option takes AWAY (Vindicator: Religion INSTEAD OF Nature).
-    for (const s of sub?.grants?.removesSkills ?? []) skills.delete(s);
-    for (const s of sub?.skillChoice ?? []) if (build.subclassSkill === s) skills.add(s);
-  }
-  return { levels: r.levels, skills, reason: r.reason };
+  if (cls?.bonusSkillIncreaseLevels?.includes(level)) return cls.id;
+  const cls2 = build.variantRules?.dualClass && build.classId2 ? content.classes[build.classId2] : undefined;
+  if (cls2?.bonusSkillIncreaseLevels?.includes(level)) return cls2.id;
+  return null;
 }
 
 /**
@@ -1418,19 +1683,49 @@ export function backgroundSkillIncreaseAllowed(
  * Neither our data nor Wanderer's Guide encoded the gate, so a champion who answered "none" was still
  * offered all seven causes with nothing on screen saying which were illegal.
  *
- * Returns TRUE while the sanctification question is unanswered — the same convention
- * `choiceFlagAnswer`'s callers keep, so a half-built champion sees the whole list rather than none.
+ * While the sanctification question is unanswered, the DEITY's Sanctification entry still limits it: a
+ * champion of Iomedae ("must be holy") can never become unholy, so Desecration and Iniquity stay illegal
+ * before they click anything. Found 2026-10-27 by the Tweaks WP13 browser test: that champion saw both as
+ * plain choices, with no reason and no "Take anyway". With no deity chosen yet (or a deity allowing the
+ * trait), an unanswered question allows the option — the same convention `choiceFlagAnswer`'s callers
+ * keep, so a half-built champion sees the whole list rather than none.
  */
 export function subclassOptionAllowed(
   option: { traits?: string[] },
   build: Partial<BuildState>,
   content: ContentDatabase,
 ): boolean {
+  return !subclassBookReason(option, build, content);
+}
+
+/** The book's rule against a subclass option ("Needs an unholy sanctification."), or null when it is legal. */
+function subclassBookReason(option: { traits?: string[] }, build: Partial<BuildState>, content: ContentDatabase): string | null {
   const need = option.traits?.find((t) => t === 'holy' || t === 'unholy');
-  if (!need) return true;
+  if (!need) return null;
+  const needs = `Needs ${need === 'unholy' ? 'an' : 'a'} ${need} sanctification.`;
   const sanct = choiceFlagAnswer('sanctification', build, content);
-  if (!sanct) return true;
-  return sanct === need;
+  if (sanct) return sanct === need ? null : needs;
+  const by = deitySanctifications(build, content);
+  if (!by || by.allowed.has(need)) return null;
+  const order = ['holy', 'unholy', 'none'].filter((v) => by.allowed.has(v));
+  return `${needs} ${by.deity} allows only: ${order.join(', ')}.`;
+}
+
+/**
+ * C35: one answer for BOTH subclass pickers (Setup and the level page) and the Setup "!" line. `bookReason` is the
+ * book's rule ("Needs a holy sanctification.") whether or not a tweak lifts it; `reason` is null while a live
+ * "Take anyway" for this option of this class (`tweaked`) lifts it. Paused or off, `reason` returns.
+ */
+export function subclassOptionState(
+  option: { id: string; traits?: string[] },
+  build: BuildState,
+  content: ContentDatabase,
+  classId: string | null | undefined = build.classId,
+): { bookReason: string | null; reason: string | null; tweaked: boolean } {
+  const bookReason = subclassBookReason(option, build, content);
+  if (!bookReason) return { bookReason: null, reason: null, tweaked: false };
+  const tweaked = allowedInPicker(build, 'subclass', option.id, { classId: classId ?? undefined });
+  return { bookReason, reason: tweaked ? null : bookReason, tweaked };
 }
 
 export function setupMissing(build: BuildState, content: ContentDatabase): string[] {
@@ -1446,22 +1741,22 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
   if (!build.heritageId) out.push('Heritage');
   if (!background) out.push('Background');
   if (!cls) out.push('Class');
+  /* Tweaks phase 2 WP14 (C47): a boost place a live removal names is owed nothing, empty or filled. */
+  const ancRemoved = removedBoostIndexes(build, 'ancestry');
+  const bgRemoved = removedBoostIndexes(build, 'background');
+  const freeRemoved = removedBoostIndexes(build, 'free');
   if (ancestry) {
     const slots = build.options?.alternateAncestryBoosts ? 2 : boostSlots(ancestry.abilityBoosts).length;
     let n = 0;
-    for (let i = 0; i < slots; i++) if (!build.ancestryBoosts[i]) n++;
+    for (let i = 0; i < slots; i++) if (!build.ancestryBoosts[i] && !ancRemoved.has(i)) n++;
     if (n) out.push(n === 1 ? 'Ancestry boost' : `Ancestry boosts (${n})`);
   }
   if (background && build.backgroundId !== CUSTOM_BACKGROUND_ID) {
     const slots = boostSlots(backgroundEffectiveBoosts(build as BuildState, background)).length;
     let n = 0;
-    for (let i = 0; i < slots; i++) if (!build.backgroundBoosts[i]) n++;
+    for (let i = 0; i < slots; i++) if (!build.backgroundBoosts[i] && !bgRemoved.has(i)) n++;
     if (n) out.push(n === 1 ? 'Background boost' : `Background boosts (${n})`);
-    if (
-      background.trainedSkillChoice?.length &&
-      !(build.backgroundSkillChoice && background.trainedSkillChoice.includes(build.backgroundSkillChoice))
-    )
-      out.push('Background trained skill');
+    if (backgroundSkillPick(build, background)?.answered === false) out.push('Background trained skill');
   }
   if (cls) {
     // The key-attribute choice: a racket-style keyAbilityOptions subclass, or the class's own
@@ -1478,7 +1773,12 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
      * carrying an illegal cause, and nothing said so — the picker offered all seven unfiltered. Named
      * as outstanding setup rather than silently swapped, because which legal cause they meant is the
      * player's call. (The picker's own filter is the other half — see shared.tsx.) */
-    if (sub && cls.subclass && !subclassOptionAllowed(sub, build, content)) out.push(cls.subclass.name);
+    if (sub && cls.subclass && subclassOptionState(sub, build, content).reason) out.push(cls.subclass.name);
+    // …and the Dual Class second class's the same way (a Fighter/Champion of Iomedae holding Desecration).
+    const second = heldClasses(build)[1];
+    const cls2 = second?.classId ? content.classes[second.classId] : undefined;
+    const sub2 = cls2?.subclass?.options.find((o) => o.id === second?.subclassId);
+    if (sub2 && cls2?.subclass && subclassOptionState(sub2, build, content, cls2.id).reason) out.push(cls2.subclass.name);
     /* …and a class archetype's REQUIRED dedication. Bloodrager: *"You must select Bloodrager Dedication
      * as your 2nd-level class feat"*; Light Mortar: the same for Munitions Master Dedication. Reported
      * as outstanding setup once the level is reached without it — the sentence tells the player what to
@@ -1497,7 +1797,8 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
   // …and a deity a picked record rules out (a Razmiran priest's must be Razmir). Named, never swapped.
   {
     const named = deityNamedBy(build, content);
-    if (named && build.deityId && build.deityId !== named.id) out.push(`Deity — ${named.reason}`);
+    // A live "Take anyway" on the stored deity answers it (Tweaks phase 2, WP4); paused, the line returns.
+    if (named && build.deityId && build.deityId !== named.id && !allowedInPicker(build, 'deity', build.deityId)) out.push(`Deity — ${named.reason}`);
   }
   /* …and the deity card's own Sanctification question, while a cleric, Vindicator or Mortal Herald of a
    * "can be" deity has not answered it: their holy/unholy trait comes from nowhere else. The cleric is
@@ -1516,7 +1817,7 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
   if (heritage?.grantsGeneralFeat && !build.heritageFeatId) out.push('Heritage general feat');
   if (heritage?.choiceResistance && !build.heritageResistanceChoice) out.push('Heritage resistance');
   {
-    const n = build.levelBoosts.filter((b) => !b).length;
+    const n = build.levelBoosts.filter((b, i) => !b && !freeRemoved.has(i)).length;
     if (n) out.push(n === 1 ? 'Free attribute boost' : `Free attribute boosts (${n})`);
   }
   if (build.options?.voluntaryFlaw && !build.options.voluntaryFlawAbility) out.push('Voluntary flaw attribute');
@@ -1530,10 +1831,7 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
    * character with one of these outstanding is still legal to save; it is just no longer silent.
    */
   if (cls) {
-    const sub = cls.subclass?.options.find((o) => o.id === build.subclassId);
-    const skillChoice = sub?.skillChoice?.length ? sub.skillChoice : cls.trainedSkills.choice;
-    if (skillChoice?.length && !(build.subclassSkill && skillChoice.includes(build.subclassSkill)))
-      out.push('Class trained skill');
+    if (subclassSkillPick(build, content)?.answered === false) out.push('Class trained skill');
     /* …for whichever HELD class's option asks it (`heldClasses`): under Dual Class the second class's
      * draconic bloodline asks the Dragon question on Level 0 too (lane C2), and an unanswered one cast
      * arcane in silence — buildCharacter falls back to the first dragon. One answer for both classes
@@ -1574,7 +1872,7 @@ function collectBoosts(
   build: BuildState,
   content: ContentDatabase,
   uptoLevel: number,
-): { boosts: AbilityId[]; flaws: AbilityId[] } {
+): { boosts: AbilityId[]; flaws: AbilityId[]; tweak: { index: number; id: string; level: number; attribute: AbilityId }[] } {
   const boosts: AbilityId[] = [];
   const flaws: AbilityId[] = [];
 
@@ -1587,11 +1885,15 @@ function collectBoosts(
     for (const sel of sels) if (sel && !seen.has(sel)) (seen.add(sel), boosts.push(sel));
   };
 
+  /* Tweaks phase 2 WP14 (C47): the ONE boost seam — a pick at a place a live removal names is taken out by its STORED
+   * position, before any filter or slice below (`countingBoostPicks`: the same list when the set has no removal). */
+  const counting = (set: string, list: readonly (AbilityId | null)[] | undefined, level?: number): (AbilityId | null)[] =>
+    countingBoostPicks(build, set, list ?? [], level) as (AbilityId | null)[];
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
   if (ancestry) {
     if (build.options?.alternateAncestryBoosts) {
       // Replace the ancestry's listed boosts AND flaws with two free attribute boosts.
-      pushDistinct((build.ancestryBoosts ?? []).slice(0, 2));
+      pushDistinct(counting('ancestry', build.ancestryBoosts).slice(0, 2));
     } else {
       const eff = heritageAdjustedAncestryAttributes(
         ancestry,
@@ -1614,7 +1916,7 @@ function collectBoosts(
        * Wisdom — the owner's "why cant i choose wisdom for the ancestry boost?", 2026-09-12.
        */
       const ancTaken = new Set<AbilityId>(fixedBoosts(eff.abilityBoosts));
-      pushDistinct((build.ancestryBoosts ?? []).filter((a) => a == null || !ancTaken.has(a)));
+      pushDistinct(counting('ancestry', build.ancestryBoosts).filter((a) => a == null || !ancTaken.has(a)));
     }
   }
   // Voluntary Flaw: an additional attribute flaw the player elected to take (toggle in Setup, attribute
@@ -1630,7 +1932,7 @@ function collectBoosts(
     // the Deep) was on cannot keep applying after the trade is switched back off.
     const bgFixed = new Set<AbilityId>(fixedBoosts(effBoosts));
     pushDistinct(
-      (build.backgroundBoosts ?? []).slice(0, boostSlots(effBoosts).length).filter((a) => a == null || !bgFixed.has(a)),
+      counting('background', build.backgroundBoosts).slice(0, boostSlots(effBoosts).length).filter((a) => a == null || !bgFixed.has(a)),
     );
   }
 
@@ -1647,7 +1949,28 @@ function collectBoosts(
   // uses its first option — the common case is a single fixed key attribute.)
   if (cls2b?.keyAbility[0]) boosts.push(cls2b.keyAbility[0]);
 
-  pushDistinct(build.levelBoosts);
+  pushDistinct(counting('free', build.levelBoosts));
+
+  /* Tweaks phase 2 WP11 (C16): an EXTRA attribute boost a tweak adds (`choice.addPlace`, place `boost`, a carrier:
+   * the block holds the attribute) is its own one-boost group at its level, after that level's own set, in level
+   * order — so the partial rule (+1 at 18 or more) resolves where it lands, and it may boost an attribute the
+   * level's set already boosted (a tweak is its own source). Read only through blocks/active.ts `liveCarriers`
+   * (a paused place, Tweaks off, or an unreadable attribute outside the six adds nothing). `tweak` names each one's
+   * position in `boosts`, so the scores pass can record what it added (`Character.tweakBoostSteps`). The book's
+   * boost counts are untouched. */
+  const tweakBoosts = liveCarriers(build, 'boost')
+    .filter((t) => t.level <= uptoLevel && ['str', 'dex', 'con', 'int', 'wis', 'cha'].includes(t.answer))
+    .map((t, order) => ({ ...t, order }))
+    .sort((a, b) => a.level - b.level || a.order - b.order);
+  const tweak: { index: number; id: string; level: number; attribute: AbilityId }[] = [];
+  const pushTweakBoostsAt = (atLevel: (lvl: number) => boolean) => {
+    for (const t of tweakBoosts) {
+      if (!atLevel(t.level) || tweak.some((x) => x.id === t.id)) continue;
+      tweak.push({ index: boosts.length, id: t.id, level: t.level, attribute: t.answer as AbilityId });
+      boosts.push(t.answer as AbilityId);
+    }
+  };
+  pushTweakBoostsAt((l) => l <= 1);
 
   // Mid-career attribute boosts (5/10/15/20, or the Gradual schedule), applied in level order so the
   // +1-past-18 partial rule resolves the same way the rules describe it. Cap each level to the active
@@ -1655,13 +1978,17 @@ function collectBoosts(
   const boostCount = attributeBoostCount(build.variantRules);
   for (const lvl of attributeBoostLevels(build.variantRules)) {
     if (lvl > uptoLevel) continue;
-    pushDistinct((build.attributeBoosts[lvl] ?? []).slice(0, boostCount));
+    // WP11: the extra boosts of the levels before this set, then (after the set) this level's own.
+    pushTweakBoostsAt((l) => l < lvl);
+    pushDistinct(counting('level', build.attributeBoosts[lvl], lvl).slice(0, boostCount));
+    pushTweakBoostsAt((l) => l <= lvl);
   }
+  pushTweakBoostsAt(() => true);
 
   // ABP Attribute Apex (level 17) is NOT an ordinary boost — it works like an apex item ("raise to 18,
   // or +2 if already 18+"). It's applied separately in computeAbilitiesDetailed after all boosts.
 
-  return { boosts, flaws };
+  return { boosts, flaws, tweak };
 }
 
 /**
@@ -1683,37 +2010,34 @@ export function computeAbilitiesDetailed(
   build: BuildState,
   content: ContentDatabase,
   uptoLevel: number = build.level,
-): { scores: AbilityScores; partial: AbilityId[] } {
-  const { boosts, flaws } = collectBoosts(build, content, uptoLevel);
+): { scores: AbilityScores; partial: AbilityId[]; tweakSteps: TweakBoostStep[] } {
+  const { boosts, flaws, tweak } = collectBoosts(build, content, uptoLevel);
   const s: AbilityScores = { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 };
   for (const f of flaws) s[f] -= 2;
   const partial = new Set<AbilityId>();
-  for (const b of boosts) {
+  // WP11 (C16): what each live extra boost added, at its place in the order.
+  const tweakAt = new Map(tweak.map((t) => [t.index, t]));
+  const tweakSteps: TweakBoostStep[] = [];
+  boosts.forEach((b, i) => {
     if (s[b] >= 18) partial.add(b);
-    s[b] += s[b] >= 18 ? 1 : 2;
-  }
+    const add = s[b] >= 18 ? 1 : 2;
+    const t = tweakAt.get(i);
+    if (t) tweakSteps.push({ id: t.id, level: t.level, attribute: t.attribute, value: add });
+    s[b] += add;
+  });
   // ABP Attribute Apex (gained at 17th, applied after all ordinary boosts): works like an apex item —
   // raise the chosen attribute to 18, or by 2 if it's already 18+ (NOT a normal +2/+1 boost).
   if (build.variantRules?.abp && uptoLevel >= 17 && build.abpApex) {
     const a = build.abpApex;
     s[a] = s[a] >= 18 ? s[a] + 2 : 18;
   }
-  return { scores: s, partial: [...partial] };
+  return { scores: s, partial: [...partial], tweakSteps };
 }
 
-/** The highest proficiency a skill increase can reach at a given character level. */
-export function skillIncreaseCap(level: number): ProficiencyRank {
-  if (level >= 15) return 'legendary';
-  if (level >= 7) return 'master';
-  return 'expert';
-}
-
-/** Raise a rank by one step, never past the cap and never below the current rank. */
-function stepRank(current: ProficiencyRank, cap: ProficiencyRank): ProficiencyRank {
-  const ci = PROFICIENCY_RANKS.indexOf(current);
-  const next = PROFICIENCY_RANKS[Math.min(ci + 1, PROFICIENCY_RANKS.indexOf(cap))];
-  return PROFICIENCY_RANKS.indexOf(next) > ci ? next : current;
-}
+/* `skillIncreaseCap` and `stepRank` live in ./ranks (a leaf, plan B WP5) so explain.ts's skill timeline
+ * replays with the same step without importing this file; `skillIncreaseCap` is re-exported here for the
+ * Builder's existing import. */
+export { skillIncreaseCap };
 
 /** Whichever rank is higher. */
 function maxRank(a: ProficiencyRank, b: ProficiencyRank): ProficiencyRank {
@@ -1746,6 +2070,10 @@ const WEAPON_GROUP_TRACKS: readonly string[] = ['bomb', 'firearm', 'crossbow'];
  * `weapon:<category>`, `armor:<category>`, `skill:<skill or lore:slug>`) → that track's rank in the
  * proficiency block, replaced by `update(current)`. The same tracks today's override loop routes; a
  * category rank, as there, does not reach weapon-GROUP ranks or one weapon's own rank.
+ *
+ * NOT a skill or a Lore (`skill:<key>`): every skill write in this file goes through `buildCharacter`'s
+ * `skillWrite` (the skill ledger, skill-order plan D1; scripts/skill-write-check.mjs), or through
+ * `applyExactClamp` below. A caller routes a skill target with `skillTrackKey` first.
  */
 function updateTrackRank(p: Proficiencies, target: string, update: (cur: ProficiencyRank) => ProficiencyRank): void {
   const i = target.indexOf(':');
@@ -1756,7 +2084,33 @@ function updateTrackRank(p: Proficiencies, target: string, update: (cur: Profici
   else if (kind === 'save' && SAVE_TRACKS.includes(detail)) p.saves[detail as SaveId] = update(p.saves[detail as SaveId]);
   else if (kind === 'weapon' && WEAPON_TRACKS.includes(detail)) p.attacks[detail as WeaponCategory] = update(p.attacks[detail as WeaponCategory]);
   else if (kind === 'armor' && ARMOR_TRACKS.includes(detail)) p.defenses[detail as ArmorCategory] = update(p.defenses[detail as ArmorCategory]);
-  else if (kind === 'skill' && detail) p.skills[detail as ProficiencyKey] = update(p.skills[detail as ProficiencyKey] ?? 'untrained');
+}
+
+/** A Tweaks rank target's skill or Lore key (`skill:<key>` → `<key>`), or null for every other track. */
+function skillTrackKey(target: string): ProficiencyKey | null {
+  return target.startsWith('skill:') && target.length > 'skill:'.length ? (target.slice('skill:'.length) as ProficiencyKey) : null;
+}
+
+/**
+ * Rank seam 3 — "exactly" (see the clamp's own note in `buildCharacter`): every live hold sets its track's
+ * rank, after every raise. One of the two places a skill rank is written outside the skill ledger (the
+ * clamp is not part of the order: it runs after it, on whatever the order produced). Also holds a
+ * gunslinger's firearm rank for a player-made weapon-category hold (B6; never a moved one, B26 c).
+ */
+function applyExactClamp(p: Proficiencies, exactly: readonly { target?: string; rank?: ProficiencyRank; moved?: boolean }[]): void {
+  for (const b of exactly) {
+    if (!b.target || !b.rank) continue;
+    const held = b.rank;
+    const skill = skillTrackKey(b.target);
+    if (skill) p.skills[skill] = held;
+    else updateTrackRank(p, b.target, () => held);
+    // B6: a player-made hold on a weapon category also holds that category's firearm rank (B26 c: never a
+    // moved one). Set, not min: the category is already `held`, so only a higher firearm rank could beat it.
+    if (!b.moved && b.target.startsWith('weapon:')) {
+      const cat = b.target.slice('weapon:'.length) as WeaponCategory;
+      if (p.firearmProf?.[cat] !== undefined) p.firearmProf[cat] = held;
+    }
+  }
 }
 
 /** Apply one advancement entry to the proficiency block / spellcasting entries (never lowers). */
@@ -1871,7 +2225,14 @@ export function trainedSkillOptions(
 ): { value: string; label: string }[] {
   const RANK_ABBR: Record<ProficiencyRank, string> = { untrained: 'U', trained: 'T', expert: 'E', master: 'M', legendary: 'L' };
   const floor = PROFICIENCY_RANKS.indexOf(minRank);
-  return Object.entries(character.proficiencies.skills)
+  /* Every core skill is a key, at untrained when the map leaves it out (checker round 2, 2026-10-23): a per-level
+   * history (skillRanksAtLevel) holds only the skills some step touched, so a `minRank: 'untrained'` pool read
+   * from it (Mechanical Symbiosis: any skill) lost every untouched skill. The finished ranks hold all of them. */
+  const skills: Record<string, ProficiencyRank> = {
+    ...Object.fromEntries(SKILLS.map((s) => [s, 'untrained' as ProficiencyRank])),
+    ...character.proficiencies.skills,
+  };
+  return Object.entries(skills)
     .filter(([, rank]) => PROFICIENCY_RANKS.indexOf(rank) >= floor)
     .sort(([aK, aR], [bK, bR]) => PROFICIENCY_RANKS.indexOf(bR) - PROFICIENCY_RANKS.indexOf(aR) || aK.localeCompare(bK))
     .map(([key, rank]) => ({ value: key, label: `${skillKeyLabel(key)} (${RANK_ABBR[rank]})` }));
@@ -1926,6 +2287,61 @@ const LEGACY_SKILL_SLOT_KEYS: Record<string, string> = {
 export function skillFallbackPick(build: Pick<BuildState, 'featSkillChoices'>, featId: string, skillOrSlot: string): SkillId | undefined {
   const v = build.featSkillChoices?.[`${featId}:fallback:${skillOrSlot}`] ?? (skillOrSlot === 'deity' ? build.featSkillChoices?.[`${featId}:0`] : undefined);
   return v && (SKILLS as readonly string[]).includes(v) ? (v as SkillId) : undefined;
+}
+
+/**
+ * CLASS TRAININGS ABOVE 1ST LEVEL THAT PRINT THEIR OWN "ALREADY TRAINED" CLAUSE (skill-order plan D14, WP5).
+ *
+ * The class features whose own text owes a replacement skill when the training one of its OPTIONS hands over
+ * lands on a skill the character already has — keyed by the feature that asks the question (the `featureId` of
+ * the choice group or subclass), so every option of that group is covered. One record prints it today:
+ * Root Epithet (class-feature-1066), *"This grants you a skill… If you are already trained in the granted skill,
+ * you become trained in a different skill of your choice, as normal."* — its six epithets arrive at 3rd level.
+ *
+ * Print, record by record: "Initial Proficiencies" (rules-2103) is a CREATION rule, so a training above 1st level
+ * owes a replacement only where its own text says so. A class option or class feature that trains a skill above
+ * 1st level WITHOUT the clause (the animist's apparitions opened at 7th and 15th, which train Lores) keeps today's
+ * no-replacement. The whole list, each row with its clause or "—" and its AoN doc id, is
+ * work/skill-rank-level-by-level/wp5-class-trainings.md; test/skill-rank-level-order.test.ts holds this set to
+ * that file's clause rows.
+ *
+ * "Already trained" is ruling 2's (any source, at the option's own print place: that level's class features,
+ * after the earlier levels' feats and increases). The answer is stored like a feat's,
+ * `featSkillChoices['<option id>:fallback:<skill>']`, through `skillFallbackPick`. Judged on the print pass only
+ * (`SkillView.print`): today's engine never applied it, and the live path stays today's (G11).
+ */
+export const CLASS_TRAINING_CLAUSE_FEATURES: ReadonlySet<string> = new Set(['root-epithet']);
+
+/** Every class option the clause covers (`CLASS_TRAINING_CLAUSE_FEATURES`), with the skills it trains. */
+export function classTrainingClauseOptions(content: ContentDatabase): { optionId: string; featureId: string; classId: string; skills: SkillId[] }[] {
+  const out: { optionId: string; featureId: string; classId: string; skills: SkillId[] }[] = [];
+  for (const [classId, c] of Object.entries(content.classes)) {
+    for (const g of [c.subclass, ...(c.extraChoices ?? [])]) {
+      if (!g?.featureId || !CLASS_TRAINING_CLAUSE_FEATURES.has(g.featureId)) continue;
+      for (const o of g.options) if (o.grants?.skills?.length) out.push({ optionId: o.id, featureId: g.featureId, classId, skills: [...o.grants.skills] });
+    }
+  }
+  return out;
+}
+
+/**
+ * The clause options this build holds (either class's extra-choice picks, clamped to what its level opens), each
+ * with the level its pick opened (`extraPickLevel`): the level page whose card asks the replacement. Only picks
+ * above 1st level — a 1st-level option is a creation training (D14: the class-pick skip, as today).
+ */
+export function heldClassTrainingClauseOptions(build: BuildState, content: ContentDatabase): { optionId: string; level: number }[] {
+  const out: { optionId: string; level: number }[] = [];
+  for (const cid of [build.classId, build.variantRules?.dualClass ? build.classId2 : null]) {
+    const c = cid ? content.classes[cid] : undefined;
+    for (const g of c?.extraChoices ?? []) {
+      if (!g.featureId || !CLASS_TRAINING_CLAUSE_FEATURES.has(g.featureId)) continue;
+      (build.extraChoices?.[g.id] ?? []).slice(0, extraPickCount(g, build.level, build)).forEach((id, idx) => {
+        const lvl = extraPickLevel(g, idx);
+        if (lvl > 1 && g.options.some((o) => o.id === id && o.grants?.skills?.length) && !out.some((x) => x.optionId === id)) out.push({ optionId: id, level: lvl });
+      });
+    }
+  }
+  return out;
 }
 
 /**
@@ -2003,15 +2419,19 @@ export function effectChoiceOffered(ch: EffectChoice, build: BuildState, content
     const sib = build.effectChoices?.[`${recordId}:${ch.requiresChoice.id}`];
     if (!sib || !ch.requiresChoice.values.includes(sib)) return false;
   }
-  /* The DEITY's own Sanctification question belongs to a class whose Deity feature hands the
-   * sanctification over — the cleric reads this answer, the champion has always been offered it too.
-   * Every character may follow a deity now (2026-10-14), and a fighter who merely worships Iomedae is
-   * not sanctified: without this the card asked them a question nothing reads, and a "must be holy"
-   * deity's single option was recorded as their pick. A Cleric or Champion Dedication answers through
-   * its own sanctification choice, which follows the deity (`SANCTIFICATION_FROM_DEITY`). */
+  /* The DEITY's own Sanctification question belongs to whoever READS its answer: the cleric (owning
+   * Deity, `deity-cleric`) and the Vindicator and Mortal Herald, who take the deity's sanctification
+   * with no choice of their own — the same test buildCharacter applies the trait on and originMissing
+   * counts the question on. Every character may follow a deity now (2026-10-14), and a fighter who
+   * merely worships Iomedae is not sanctified: without this the card asked them a question nothing
+   * reads, and a "must be holy" deity's single option was recorded as their pick. A champion answers
+   * through Deity and Cause's own choice (`feature:deity-champion`), and a Cleric or Champion
+   * Dedication through its own, which follows the deity (`SANCTIFICATION_FROM_DEITY`). Until
+   * 2026-10-27 the champion was asked here too: they picked Holy on the card, kept seeing the unholy
+   * causes as plain choices and got no trait, because nothing reads this answer for them. A stored
+   * answer is only hidden, never cleared. */
   if (ch.id === 'sanctification' && recordId && recordId === build.deityId && content.deities[recordId]) {
-    // …and the Vindicator and Mortal Herald, who take the deity's sanctification with no choice of their own.
-    return heldClasses(build).some((s) => s.classId && classChoosesDeity(content.classes[s.classId]?.features)) || takesDeitySanctification(build, content);
+    return heldClassFeatureIds(build, content).has('deity-cleric') || takesDeitySanctification(build, content);
   }
   if (!ch.requiresFeature) return true;
   /* BOTH classes. A dual-class character's second class carries its own features and its own
@@ -2326,23 +2746,27 @@ export function heldPickGranters(
   featId: string,
   ownsFeature: (id: string) => boolean,
 ): { granter: string; slot: string }[] {
-  const removed = new Set(build.overrides?.removedFeatIds ?? []);
+  // The LIVE removals (blocks/active.ts, plan B WP2): a paused removal gives the granter back.
+  const removed = liveRemovedFeatIds(build);
   const keys = Object.entries(build.pickFeatChoices ?? {}).filter(([, v]) => v === featId).map(([k]) => k);
   const answerAt = (base: string, index: number) => build.pickFeatChoices?.[index ? `${base}#${index}` : base];
   const slotLevelOk = (s: string) => !(Number(s.split(':')[0]) > level);
   /** A slot the walk KEEPS: it places a feat from its slots in `featPicks` order, at or below this level,
-   *  up to the feat's `maxTakes` — a second Basic Witchcraft slot (a stale or reordered save) is dropped,
-   *  and its answers are never read (final check, 2026-10-15). */
+   *  up to the feat's cap — a second Basic Witchcraft slot (a stale or reordered save) is dropped,
+   *  and its answers are never read (final check, 2026-10-15). Never an extra feat place that is held back
+   *  (paused, or Tweaks off — Tweaks phase 2, WP7, C9): the walk skips it, so it neither picks nor takes a cap place.
+   *  The cap is the loop's own (`takesAllowed`, WP8 C23): a second Natural Ambition a live "Take a feat more times"
+   *  keeps picks its feat, and that feat's answers are read. */
   const slotKept = (s: string) => {
     const id = build.featPicks?.[s];
-    if (!id || !slotLevelOk(s)) return false;
-    const holding = Object.entries(build.featPicks ?? {}).filter(([x, v]) => v === id && slotLevelOk(x)).map(([x]) => x);
-    return holding.indexOf(s) < maxTakes(content.feats[id]);
+    if (!id || !slotLevelOk(s) || !placeLiveForKey(build, s)) return false;
+    const holding = Object.entries(build.featPicks ?? {}).filter(([x, v]) => v === id && slotLevelOk(x) && placeLiveForKey(build, x)).map(([x]) => x);
+    return holding.indexOf(s) < takesAllowed(id, content, build);
   };
   /** An Overrides-added copy of `id` the walk takes: an ACTIVE given feat at this level that no slot at or
    *  below it already holds — the one reader of given feats (src/rules/heldFeats.ts, case D). */
   let given: ReturnType<typeof heldFeatSlots> | undefined;
-  const overrideHolds = (id: string) => (given ??= heldFeatSlots(build, level, { via: ['override'] })).some((e) => e.featId === id);
+  const overrideHolds = (id: string) => (given ??= heldFeatSlots(build, level, { via: ['override'], feats: content.feats })).some((e) => e.featId === id);
   const out: { granter: string; slot: string }[] = [];
   for (const key of keys) {
     const m = /^(.*?)(?:#(\d+))?$/.exec(key)!;
@@ -2591,9 +3015,7 @@ export function boundBackgroundGrantChoice(
   if (spec.kind === 'fixed') key = spec.skill;
   else if (spec.kind === 'fixedLore') key = loreKey(spec.subject) ?? undefined;
   else if (spec.kind === 'bgSkill') {
-    const opts = background?.trainedSkillChoice ?? [];
-    const picked = build.backgroundSkillChoice;
-    key = picked && opts.includes(picked) ? picked : opts[0];
+    key = backgroundSkillPick(build, background)?.value;
   } else if (spec.kind === 'bgLore') {
     // A two-NAMED-subject record (Driver's driving/piloting) defaults like every other unanswered
     // choice — first option — where the free-text box still binds nothing until typed.
@@ -2809,7 +3231,17 @@ export function buildChoiceOptions(
     }
     return limited(markClaimed(opts));
   }
-  if (def.kind === 'skills') return limited(markClaimed(trainedSkillOptions(character, def.minRank ?? 'trained')));
+  if (def.kind === 'skills') {
+    /* "A skill you're trained in" is asked WHEN THE RECORD IS TAKEN (skill-order plan section 2, WP7): the pool is
+     * the ranks at the end of the record's level, without the record and what it grants — its slot's level, or
+     * its feat row's — never the finished character's (an Assurance at 1st is not offered the skill a 3rd-level
+     * increase trains). A record with no level here (a class feature, a heritage) keeps the finished ranks. */
+    const at = /^(\d+):/.exec(slotKey ?? '')?.[1];
+    const lvl = at ? Number(at) : character.feats.find((f) => f.featId === recordId)?.level;
+    // Without THIS slot's row only (WP7 round 2): a second Assurance's pool keeps what the first one's copy does.
+    const ranks = lvl != null ? skillRanksAtLevel(character, lvl, 'end', featSubtreeIds(character, recordId, slotKey)) : undefined;
+    return limited(markClaimed(trainedSkillOptions(ranks ? { proficiencies: { skills: ranks as Record<string, ProficiencyRank> } } : character, def.minRank ?? 'trained')));
+  }
   const narrowed = limited(markClaimed(narrowChoiceOptions(recordId, def, effectiveChoiceOptions(recordId, def, character, content), character, content))).map(
     /* A sanctification that follows the deity: what the deity's entry does not allow is greyed with
      * the reason (Q27), never removed — the champion's cause picker does the same for a cause the
@@ -3232,15 +3664,30 @@ export const SANCTIFICATION_FROM_DEITY: ReadonlySet<string> = new Set(['deity-ch
  * Sanctification entry allows only 'none' (115 of 486, Pharasma among them), which is also how the
  * cleric's own reading below treats it: no entry, no trait.
  */
-export function deitySanctifications(build: BuildState, content: ContentDatabase): { deity: string; allowed: Set<string> } | null {
+export function deitySanctifications(build: Partial<BuildState>, content: ContentDatabase): { deity: string; allowed: Set<string> } | null {
   const deity = build.deityId ? content.deities[build.deityId] : undefined;
   if (!deity) return null;
   const ch = deity.effectChoices?.find((e) => e.id === 'sanctification');
   return { deity: deity.name, allowed: new Set(ch ? effectChoiceOptions(ch, build, content).map((o) => o.value) : ['none']) };
 }
 
+/** The trait a "must be" deity leaves no choice about, or undefined while the player has one (or the only
+ *  answer is none). Deity (Champion): *"if you "must be" holy or unholy, you gain the trait"*. */
+export function deityMustBeSanctification(build: Partial<BuildState>, content: ContentDatabase): 'holy' | 'unholy' | undefined {
+  const by = deitySanctifications(build, content);
+  const only = by?.allowed.size === 1 ? [...by.allowed][0] : undefined;
+  return only === 'holy' || only === 'unholy' ? only : undefined;
+}
+
 /** The reason an answer to a deity-following sanctification choice is not allowed, or null when it is. */
 export function sanctificationNotAllowed(recordId: string, value: string, build: BuildState, content: ContentDatabase): string | null {
+  const why = sanctificationBookReason(recordId, value, build, content);
+  // A live "Take anyway" on this answer lifts the deity's rule (Tweaks phase 2, WP4); paused, the reason returns.
+  return why && !allowedInPicker(build, 'sanctification', recordId, { value }) ? why : null;
+}
+
+/** The deity's own rule against an answer, whether or not a tweak lifts it (the mark's and the grey line's words). */
+export function sanctificationBookReason(recordId: string, value: string, build: BuildState, content: ContentDatabase): string | null {
   if (!SANCTIFICATION_FROM_DEITY.has(recordId)) return null;
   const by = deitySanctifications(build, content);
   if (!by || by.allowed.has(value)) return null;
@@ -3250,20 +3697,23 @@ export function sanctificationNotAllowed(recordId: string, value: string, build:
 
 /** Every stored sanctification answer the chosen deity does not allow, on the level page of the picker
  *  that answers it, as "Sanctification (Cleric Dedication): Unholy — Sarenrae allows only: holy, none." */
-function sanctificationsOffDeity(build: BuildState, content: ContentDatabase): { page: number; label: string }[] {
-  const out: { page: number; label: string }[] = [];
-  const check = (recordId: string, value: string | undefined, page: number) => {
+function sanctificationsOffDeity(build: BuildState, content: ContentDatabase): { page: number; label: string; featId?: string }[] {
+  const out: { page: number; label: string; featId?: string }[] = [];
+  const check = (recordId: string, value: string | undefined, page: number, featId?: string) => {
     const why = value ? sanctificationNotAllowed(recordId, value, build, content) : null;
     const name = content.feats[recordId]?.name ?? content.classFeatures[recordId]?.name ?? recordId;
-    if (why) out.push({ page, label: `Sanctification (${name}): ${cap(value!)} — ${why}` });
+    if (why) out.push({ page, label: `Sanctification (${name}): ${cap(value!)} — ${why}`, ...(featId ? { featId } : {}) });
   };
-  for (const [slot, featId] of Object.entries(build.featPicks ?? {})) {
-    if (!featId || content.feats[featId]?.choice?.flag !== 'sanctification') continue;
+  // The slot picks, then a dedication given through Tweaks — whose picker is under its row on the Tweaks
+  // page (plan B WP8), so that is the page its mark names.
+  for (const { slotKey: slot, featId, via } of questionFeatSlots(build)) {
+    if (content.feats[featId]?.choice?.flag !== 'sanctification') continue;
+    const given = via === 'override';
     // A feat slot's key opens with its level ("2:class:0"). A pick above the character's level is not
-    // held, and its page is not on the strip to show the mark.
-    const page = Number.parseInt(slot, 10) || 0;
-    if (page > build.level) continue;
-    check(featId, build.featChoices?.[slot] || build.featChoices?.[`${slot}:0`], page);
+    // held, and its page is not on the strip to show the mark. (A given feat is held at the level already.)
+    const page = given ? TWEAKS_PAGE : Number.parseInt(slot, 10) || 0;
+    if (!given && page > build.level) continue;
+    check(featId, build.featChoices?.[slot] || build.featChoices?.[`${slot}:0`], page, given ? featId : undefined);
   }
   for (const id of SANCTIFICATION_FROM_DEITY) {
     if (content.classFeatures[id]?.choice?.flag !== 'sanctification') continue;
@@ -3377,6 +3827,9 @@ function fillSpellCollection(
   granted: Record<number, string[]>,
 ): void {
   entry.type = 'spontaneous';
+  // The name says the type: it was built "Divine prepared spellcasting", and a flexible cleric's
+  // Spells tab kept that name over a spontaneous entry (bug 2026-10-23).
+  entry.name = entry.name.replace(/\bprepared spellcasting\b/, 'spontaneous spellcasting');
   entry.slots = {};
   entry.repertoire = {};
   const floorHeld = (slotCounts[1] ?? 0) > 0 && !(picks[1] ?? []).length ? 1 : 0;
@@ -4204,10 +4657,18 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
     // inventory, so like the gear itself the Sources card never lists or removes it.
     for (const r of it.runes?.property ?? []) add(r);
   }
+  // EVERY stored tweak entry, PAUSED ones and Tweaks switched off included (plan B WP2, the pause table): a
+  // paused entry still holds its book — turning a book off must never drop the record a paused tweak points
+  // at, or resuming it would find nothing. Storage, not a liveness question (allowlisted in
+  // blocks/overrides-readers.json).
   for (const a of build.overrides?.addedFeats ?? []) add(a.featId);
   for (const id of build.overrides?.allowedFeats ?? []) add(id);
   for (const a of build.overrides?.addedFeatures ?? []) add(a.featureId);
   for (const a of build.overrides?.addedSpells ?? []) add(a.spellId);
+  // Tweaks phase 2 (C32): the records the choice tweaks name (a heritage taken anyway, a feat picked from any
+  // list, a subclass's class), paused ones included, read through the one stored reader. Mirrored in
+  // removeChosenIds.
+  for (const r of choiceBlockRecordIds(build)) add(r.id);
   return ids;
 }
 
@@ -4336,13 +4797,22 @@ export function removeChosenIds(build: BuildState, ids: ReadonlySet<string>): Bu
     };
   }
   if (build.overrides) {
-    next.overrides = {
-      ...build.overrides,
-      addedFeats: build.overrides.addedFeats?.filter((a) => !gone(a.featId)),
-      allowedFeats: build.overrides.allowedFeats?.filter((v) => !gone(v)),
-      addedFeatures: build.overrides.addedFeatures?.filter((a) => !gone(a.featureId)),
-      addedSpells: build.overrides.addedSpells?.filter((a) => !gone(a.spellId)),
+    // Through the write door (blocks/write.ts `dropEntries`, plan B WP2): the meta of a dropped entry goes
+    // with it (a stale `{ on: false }` must not re-attach when the same thing is added again) and every kept
+    // entry keeps its own meta under its (maybe shifted) key. Never touches `v` (B27).
+    const idOf = (e: unknown, field: string): string | undefined => {
+      const v = e && typeof e === 'object' ? (e as Record<string, unknown>)[field] : undefined;
+      return typeof v === 'string' ? v : undefined;
     };
+    let ov: BuildOverrides | undefined = build.overrides;
+    ov = dropEntries(ov, 'addedFeats', (e) => !gone(idOf(e, 'featId')));
+    ov = dropEntries(ov, 'allowedFeats', (e) => !gone(typeof e === 'string' ? e : undefined));
+    ov = dropEntries(ov, 'addedFeatures', (e) => !gone(idOf(e, 'featureId')));
+    ov = dropEntries(ov, 'addedSpells', (e) => !gone(idOf(e, 'spellId')));
+    // Tweaks phase 2 (C32): a choice tweak naming a removed record goes with it (the inverse of the
+    // collectChosenIds line); an unreadable or newer block is never touched.
+    ov = dropChoiceBlocks(ov, (id) => gone(id));
+    next.overrides = ov;
   }
   return next;
 }
@@ -4815,23 +5285,109 @@ function restatesModeStrike(stored: { name: string; die?: string; damageType?: s
   return s.endsWith(` ${n}`) && sameAttackShape(stored, g);
 }
 
+/**
+ * THE AT-SLOT PROBE (plan B, B1; work/tweaks-part-b-notes/plan.md section 3.1). Module-private on purpose —
+ * never exported, and a test asserts nothing outside this file can reach it. `legacyRankSort` registers the
+ * build object it builds; `buildCharacter` calls the registered callback right BEFORE the old override loop
+ * (after the class raises and the save picks, before the `=` and rank seam 2) with a copy of every track's
+ * rank — the state the old `=` met — and hands the callback on to the build object of a language-Lore rerun,
+ * so the LAST snapshot always comes from the build that is returned.
+ */
+const AT_SLOT_PROBE = new WeakMap<BuildState, (snap: AtSlotRanks) => void>();
+
+/**
+ * THE SKILL LEDGER at its resolve point (skill-order plan D1/D2, WP1): for a build registered here,
+ * `buildCharacter` hands over the recorded events and the live ranks once every skill write is done.
+ * Module-private; the one registrar is `skillLedgerReplay` (tests only).
+ */
+const SKILL_LEDGER_PROBE = new WeakMap<BuildState, (at: SkillLedgerAt) => void>();
+/** The skill ledger at its resolve point: the events, the live ranks (today's order) and the print pass's result (WP3). */
+export interface SkillLedgerAt {
+  events: readonly SkillEvent[];
+  live: SkillRecord;
+  print: SkillPassResult;
+}
+
+/**
+ * Builds `build` once and replays its skill ledger in code order: every key where the live ranks at the
+ * resolve point and the replay of the recorded writes disagree, as 'key: live X, replay Y'. Empty = the
+ * ledger holds every write the live path made (test/skill-ledger.test.ts, guard G3). Used only by tests.
+ */
+export function skillLedgerReplay(build: BuildState, content: ContentDatabase): string[] {
+  const got = skillLedgerOf(build, content);
+  if (!got) return ['the build never reached the skill ledger resolve point'];
+  return skillReplayMismatches(got.live, got.events);
+}
+
+/**
+ * Builds `build` once and returns its skill ledger at the resolve point — the recorded events (each with its
+ * print place, WP2) and the live ranks — or undefined when the build never got there. Used only by tests
+ * (test/skill-ledger.test.ts: the replay, the place invariants and the level table).
+ */
+export function skillLedgerOf(build: BuildState, content: ContentDatabase): SkillLedgerAt | undefined {
+  const probed = { ...build };
+  let got: SkillLedgerAt | undefined;
+  SKILL_LEDGER_PROBE.set(probed, (at) => (got = at));
+  buildCharacter(probed, content);
+  return got;
+}
+
+/** The sort per build × database (both weak): a Builder preview re-renders the same build object. `null` =
+ *  measured, nothing to sort. */
+const RANK_SORT_MEMO = new WeakMap<BuildState, WeakMap<ContentDatabase, TweakRankSort | null>>();
+
+/**
+ * The read-time sort of a build's OLD Overrides rank entries (plan B, WP3; B1, B2; blocks/migrate.ts): each
+ * unsorted, sortable `overrides.proficiencies` entry → "at least" or "exactly", against the rank the old `=`
+ * REPLACED, measured AT ITS SLOT — never the final rank (B1: raises after the slot — FEAT_GRANTS `maxRank`,
+ * `conditionalSkills` "expert if already trained", archetype steps — were never lowered by the old `=`).
+ *
+ * Fast path: no unsorted sortable entry (every character saved by part B) → `undefined`, no build. Else ONE
+ * inner build of the same build with every unsorted sortable entry removed (sorted entries, and everything
+ * else, stay), read through the at-slot probe. The inner build has nothing left to sort, so it never
+ * recurses (asserted). Pure: it writes nothing — `buildCharacter` emits the result as the DERIVED
+ * `Character.tweakRankSort` and keeps `overrides` the stored object (loading is not an edit, spec 3).
+ */
+export function legacyRankSort(build: BuildState, content: ContentDatabase): TweakRankSort | undefined {
+  const probe = withoutUnsortedRanks(build);
+  if (!probe) return undefined;
+  let byDb = RANK_SORT_MEMO.get(build);
+  const hit = byDb?.get(content);
+  if (hit !== undefined) return hit ?? undefined;
+  const { inner, keys } = probe;
+  if (withoutUnsortedRanks(inner)) throw new Error('legacyRankSort: the at-slot build still holds an unsorted rank entry (it would recurse)');
+  let snap: AtSlotRanks | undefined;
+  AT_SLOT_PROBE.set(inner, (s) => (snap = s));
+  try {
+    buildCharacter(inner, content);
+  } catch {
+    // No at-slot ranks to sort against: every entry stays today's `=` (B2's safe side), never a guess.
+    snap = undefined;
+  }
+  const found = snap as AtSlotRanks | undefined;
+  const sort = found ? rankSortFromSnapshot(build, keys, found) : undefined;
+  const out = sort && Object.keys(sort).length ? sort : undefined;
+  if (!byDb) RANK_SORT_MEMO.set(build, (byDb = new WeakMap()));
+  byDb.set(content, out ?? null);
+  return out;
+}
+
 export function buildCharacter(build: BuildState, content: ContentDatabase): Character {
-  // The build's own Overrides content edits, laid over whatever view the caller passed (carried records
-  // first, then the edits — blocks/content.ts). The one content path: no caller can build without them,
-  // and a database the caller already prepared comes back as the same object.
-  content = contentFor(content, build.overrides);
-  const { scores: abilities, partial: partialBoosts } = computeAbilitiesDetailed(build, content);
-  // Override: force-set raw ability scores (no boost limits). Mutating this object in place flows to
-  // HP (Con), spell slots (Cha/Wis), languages (Int), and — via Character.abilities — every derive.ts
-  // stat (saves, skills, class/spell DC, strikes). An overridden score also clears its partial-boost flag.
-  if (build.overrides?.attributes) {
-    for (const [k, v] of Object.entries(build.overrides.attributes)) {
-      if (typeof v === 'number' && Number.isFinite(v)) {
-        abilities[k as AbilityId] = v;
-        const pi = partialBoosts.indexOf(k as AbilityId);
-        if (pi >= 0) partialBoosts.splice(pi, 1);
-      }
-    }
+  // The build's own LIVE content edits (Tweaks switch, each edit's on/off — blocks/active.ts), laid over
+  // whatever view the caller passed (carried records first, then the edits — blocks/content.ts). The one
+  // content path: no caller can build without them, and a database the caller already prepared comes back
+  // as the same object.
+  content = contentFor(content, build);
+  const { scores: abilities, partial: partialBoosts, tweakSteps: tweakBoostSteps } = computeAbilitiesDetailed(build, content);
+  // Tweaks `attribute.set`: force-set raw ability scores (no boost limits). Mutating this object in place
+  // flows to HP (Con), spell slots (Cha/Wis), languages (Int), and — via Character.abilities — every
+  // derive.ts stat (saves, skills, class/spell DC, strikes). A set score also clears its partial-boost flag.
+  // Only LIVE sets (blocks/active.ts `liveAttributeSets`: switch, on/off, start level): a paused set gives
+  // the computed score back, with its partial-boost flag as computed.
+  for (const { ability, value } of liveAttributeSets(build)) {
+    abilities[ability] = value;
+    const pi = partialBoosts.indexOf(ability);
+    if (pi >= 0) partialBoosts.splice(pi, 1);
   }
   /* A Tweaks `attribute.add` block (docs/overrides-redesign.md, Building blocks item 6 — the build seam)
    * moves the SCORE, after the legacy set above, so a set score and a +2 tweak make set + 2. On the
@@ -4840,7 +5396,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * (`blocks/active.ts`): on, not broken, at or past its start level, Tweaks switch on. A partial boost
    * stays partial: the block adds to whatever the boosts made. */
   for (const ab of Object.keys(abilities) as AbilityId[]) {
-    for (const b of scoreAddBlocks({ overrides: build.overrides, options: build.options, level: build.level }, ab)) abilities[ab] += b.value as number;
+    for (const b of scoreAddBlocks(build, ab)) abilities[ab] += b.value as number;
   }
   const cls = build.classId ? content.classes[build.classId] : undefined;
   // Dual Class variant: a second class contributes its HP/proficiencies/skills/features/feats.
@@ -5070,8 +5626,132 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ? counts
       : Object.fromEntries(Object.entries(counts).map(([r, n]) => [r, Math.min(n, mods.slotCap!)]));
 
+  /*
+   * PRINT PLACES (skill-order plan 1.1, D3, D4, D11; WP2). Every skill-ledger event carries the place print
+   * gives it — its level, its phase inside the level, its order among that phase's records (`SkillPlace`,
+   * src/rules/skillPass.ts) — so WP3 can replay the ledger level by level. These helpers give a record's place;
+   * nothing here changes what the live path writes. Levels are the record's OWN: a class feature's level in
+   * its class's list (the second class's too, D11), an option's pick level, a feat row's level or its
+   * granter's (a row pushed at 1 by a granter of a later level is placed at the granter's), a feat-granted
+   * heritage or background at the granting feat's slot.
+   */
+  /* A record is held at or below the character's level, so its place is too (an unreadable level reads as 1st). */
+  const place = (lvl: number, phase: SkillEventPhase, orderPath?: readonly number[]): SkillPlace => ({
+    level: Number.isFinite(lvl) ? Math.min(Math.max(1, lvl), Math.max(1, level)) : 1,
+    phase,
+    ...(orderPath ? { orderPath } : {}),
+  });
+  /** P0: creation, at 1st level (D4: code order inside it). */
+  const CREATE = place(1, 'create');
+  /** The given (Tweaks) feats in the order `buildCharacter` pushes their rows (`givenRows`). */
+  const givenSlotKeys = heldFeatSlots(build, level, { via: ['override'] }).map((e) => e.slotKey);
+  /** A held feat's P5 order path from its slot key: `<level>:<kind>:<index>` → [1, index] (the index IS the
+   *  `levelGrants(...).featSlots` draw order, D4); `override:<id>` → [2, its place among the given feats]. An extra
+   *  feat place's key (Tweaks phase 2, WP7) `<level>:extra<category>:<n>` → [1, n]: its 6-digit n (100000-999999,
+   *  C4) sorts it after every book slot of its level (a level draws fewer than ten) and before the given feats —
+   *  the place is drawn after its level's book slots (C11), so its questions come after theirs. */
+  const slotKeyPath = (slotKey: string | undefined): number[] | undefined => {
+    if (!slotKey) return undefined;
+    if (slotKey.startsWith(OVERRIDE_SLOT)) {
+      const i = givenSlotKeys.indexOf(slotKey);
+      return [2, i < 0 ? givenSlotKeys.length : i];
+    }
+    const idx = Number(slotKey.split(':')[2]);
+    return Number.isFinite(idx) ? [1, idx] : undefined;
+  };
+  /** The place of the held feat that grants a whole record (plan 1.1 row 7: a second heritage, a feat-granted
+   *  background): its slot's level, in P5. Records it carries go right after it (`[...path, 0]`). */
+  const grantingFeatPlace = (e: HeldFeatSlot | undefined): SkillPlace => place(e?.level ?? 1, 'feat', e ? [...(slotKeyPath(e.slotKey) ?? [0, 0]), 0] : [0, 0]);
+  /** The feat whose pick IS the second heritage (`secondHeritageIdOf`'s own walk). */
+  const secondHeritageGrant = (): SkillPlace =>
+    grantingFeatPlace(heldFeatSlots(build).find((e) => content.feats[e.featId]?.secondHeritage && build.featChoices?.[e.slotKey] === secondHeritageId));
+  /** The feat-granted background (`passionBackground`'s own walk, Free Heart). */
+  const passionPlace = (): SkillPlace => grantingFeatPlace(passionFeatTaking(build));
+  /**
+   * A heritage record's place at `lvl` (its 1st-level training, or a later step of its ladder). The 1st-level
+   * heritage: `atOne` at 1st (P0 `create` for the creation trainings, P4 `heritage` for its feat-grant row and its
+   * own picks), P4 at a later step. A SECOND heritage (a feat's pick): right after that feat, at its level, and P4
+   * at a later step.
+   */
+  const heritagePlace = (hid: string | null | undefined, lvl = 1, atOne: SkillEventPhase = 'heritage'): SkillPlace => {
+    if (hid && hid !== build.heritageId && hid === secondHeritageId) {
+      const g = secondHeritageGrant();
+      return lvl > g.level ? place(lvl, 'heritage') : g;
+    }
+    return lvl > 1 ? place(lvl, 'heritage') : place(1, atOne);
+  };
+  /** Class features by id: [class 0 | second class 1 | archetype-added 2, index] at the level its class lists. */
+  const featurePlaces = new Map<string, SkillPlace>();
+  ([cls, cls2] as (ClassDef | undefined)[]).forEach((c, ci) =>
+    (c?.features ?? []).forEach((f, i) => {
+      if (!featurePlaces.has(f.featureId)) featurePlaces.set(f.featureId, place(f.level, 'feature', [ci, i]));
+    }),
+  );
+  arch.addedFrom.forEach((a, i) => {
+    if (!featurePlaces.has(a.featureId)) featurePlaces.set(a.featureId, place(a.level, 'feature', [2, i]));
+  });
+  /** Chosen options by id (plan 1.1 row 8): the subclass at its anchor level, an extra-choice pick at the level
+   *  its index opens (`extraPickLevel`), a kineticist element added at a gate's threshold at that threshold,
+   *  a class-archetype substitute at 1 (R9). Path: right after the feature that asks the question. */
+  const optionPlaces = new Map<string, SkillPlace>();
+  {
+    const anchorPath = (c: ClassDef, ci: number, featureId: string | undefined): number[] => {
+      const i = featureId ? c.features.findIndex((f) => f.featureId === featureId) : -1;
+      return [ci, i < 0 ? c.features.length : i];
+    };
+    const levelOfFeature = (c: ClassDef, featureId: string | undefined): number | undefined =>
+      featureId ? c.features.find((f) => f.featureId === featureId)?.level : undefined;
+    ([[cls, subOption], [cls2, subOption2]] as [ClassDef | undefined, SubclassOption | undefined][]).forEach(([c, sub], ci) => {
+      if (!c || !sub || optionPlaces.has(sub.id)) return;
+      const lvl = isArchetypeSubstituteOption(sub.id, content)
+        ? 1
+        : (ci === 0 ? subclassAnchorLevel(build, content) : null) ?? levelOfFeature(c, c.subclass?.featureId) ?? 1;
+      optionPlaces.set(sub.id, place(lvl, 'feature', [...anchorPath(c, ci, c.subclass?.featureId), 1]));
+    });
+    ([cls, cls2] as (ClassDef | undefined)[]).forEach((c, ci) => {
+      for (const g of c?.extraChoices ?? []) {
+        (build.extraChoices?.[g.id] ?? []).slice(0, extraPickCount(g, build.level, build)).forEach((id, idx) => {
+          if (optionPlaces.has(id)) return;
+          const lvl = isArchetypeSubstituteOption(id, content) ? 1 : extraPickLevel(g, idx);
+          optionPlaces.set(id, place(lvl, 'feature', [...anchorPath(c!, ci, g.featureId), 1 + idx]));
+        });
+      }
+    });
+    // A kineticist element the build holds beyond its picks: Fork the Path at a gate's threshold, or an
+    // archetype feat's answer at that feat's slot.
+    const kin = defOf('kineticist');
+    if (kin) {
+      const ci = kin === cls ? 0 : 1;
+      const elGroup = kin.extraChoices?.find((g) => g.id === 'element');
+      kineticistElements(build, build.level).forEach((el, i) => {
+        if (optionPlaces.has(el)) return;
+        const forks = Object.entries(build.gateForks ?? {}).filter(([, v]) => v === el).map(([l]) => Number(l)).filter(Number.isFinite);
+        const viaFeat = heldFeatSlots(build, build.level).find((e) => build.featChoices?.[e.slotKey] === el)?.level;
+        const lvl = forks.length ? Math.min(...forks) : viaFeat ?? 1;
+        optionPlaces.set(el, place(lvl, 'feature', [...anchorPath(kin, ci, elGroup?.featureId), 100 + i]));
+      });
+    }
+  }
+  /** A chosen option's place. `early` = its training in the creation block: P0 at 1st level, P3 above. */
+  const optionPlace = (id: string, early = false): SkillPlace => {
+    const p = optionPlaces.get(id) ?? place(1, 'feature', [3]);
+    return early && p.level === 1 ? CREATE : p;
+  };
+  /** A class feature's (or a chosen option's) place, P3. A subclass VARIANT record (`<feature>-<subclass>`)
+   *  sits where its feature does; an inventor modification at its tier's level; anything else at 1st. */
+  const featurePlace = (fid: string): SkillPlace => {
+    const known = optionPlaces.get(fid) ?? featurePlaces.get(fid);
+    if (known) return known;
+    for (const [id, p] of featurePlaces) if (fid.startsWith(`${id}-`)) return p;
+    const tier = (Object.keys(INVENTOR_TIER_LEVEL) as InventorTier[]).find((t) => build.inventorModifications?.[t] === fid);
+    return place(tier ? INVENTOR_TIER_LEVEL[tier] : 1, 'feature', [3]);
+  };
+  /** The same record's place at a later step of its ladder (`lvl`): same phase and order path. Never in P0, which
+   *  is 1st level only — a creation training's later step is the record's own phase (`later`). */
+  const atLevel = (p: SkillPlace, lvl: number, later: SkillEventPhase = p.phase): SkillPlace =>
+    lvl > p.level ? place(lvl, p.phase === 'create' ? later : p.phase, p.orderPath) : p;
+
   const skills = {} as Record<ProficiencyKey, ProficiencyRank>;
-  for (const sk of SKILLS) skills[sk] = 'untrained';
   /**
    * Redundant-grant fallbacks ("already trained → a skill of your choice"), surfaced on
    * Character.skillFallbacks so the builder can offer the replacement picker. `note` says WHY the
@@ -5100,25 +5780,97 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     locked.add(sk);
     lockedFrom[sk] ??= from;
   };
-  if (cls) for (const sk of cls.trainedSkills.fixed) (skills[sk] = 'trained'), lock(sk, 'your class');
+  /*
+   * THE SKILL LEDGER (skill-order plan D1, WP1; src/rules/skillPass.ts). Every skill write from here to
+   * the resolve point (after the feat plain-choice loop) goes through `skillWrite`, and every skill
+   * JUDGEMENT ("already trained?", "which key does this increase land on?") through `skillJudge`. Each does
+   * exactly what the line it replaced did, here, in today's order (the LIVE path), and records an event:
+   * `source` names the record, `lock` / `unlock` the class-pick lock a level-1 training takes or a removal
+   * gives back. A judge is a pure closure over a view of the ranks that RETURNS its effects; `skillJudge`
+   * applies them to the live state in order. scripts/skill-write-check.mjs (npm run verify) refuses a skill
+   * write in this file anywhere else; test/skill-ledger.test.ts proves a replay of the record gives the live
+   * ranks on every snapshot character. A write to a snapshot copy (`skillsBeforeIncreases`) also goes
+   * through `skillWrite`, but is not the live state and records nothing.
+   */
+  const skillLedger = newSkillLedger();
+  const skillWrite = (target: SkillRecord, key: ProficiencyKey, op: SkillOp, rank: ProficiencyRank | undefined, ev: SkillEventMeta, by?: number): void => {
+    applySkillOp(target, key, op, rank);
+    if (target !== skills) return;
+    if (ev.lock) lock(key, ev.lock);
+    if (ev.unlock) {
+      locked.delete(key);
+      delete lockedFrom[key];
+    }
+    skillLedger.write(key, op, rank, ev, by);
+  };
+  /** The live view: the ranks as they stand at the judge's place, the class-pick locks, the character
+   *  level (so every ladder reads today's rank) and today's final feat list — which held today's order's
+   *  rank-gated grants (WP4: kept aside in `legacyRankGatedRows`, read here so the live path is unchanged). */
+  const liveView: SkillView = {
+    rank: (k) => skills[k] ?? 'untrained',
+    locked: (k) => locked.has(k),
+    level,
+    hasFeat: (id, notGrantedBy) => {
+      const is = (f: { featId: string; grantedBy?: string }) => f.featId === id && (notGrantedBy === undefined || f.grantedBy !== notGrantedBy);
+      return feats.some(is) || legacyRankGatedRows.some(is);
+    },
+  };
+  /* `ladder` = the record's rank-upgrade steps (`upgradeSteps`): each step above the judge's own level, up to
+   * the character's, is recorded as a `ladder` event at its level (WP2: one event per step level). Recorded
+   * only — the judge's live writes already carry the final-level rank (`upgradeRankAt(g, level)`). */
+  const skillJudge = (
+    ev: SkillEventMeta,
+    judge: SkillJudge,
+    view: SkillView = liveView,
+    viewKind: SkillViewKind = 'main',
+    ladder?: readonly { level: number; rank: ProficiencyRank }[],
+  ): SkillEffect[] => {
+    const effects = judge(view);
+    const by = skillLedger.judge(ev, viewKind, judge, effects);
+    for (const st of ladder ?? []) if (st.level > ev.place.level && st.level <= level) skillLedger.ladder(by, st.rank, { ...ev, place: atLevel(ev.place, st.level) });
+    for (const e of effects) {
+      if (e.kind === 'write') skillWrite(skills, e.key, e.op, e.rank, e.lock ? { ...ev, lock: e.lock } : ev, by);
+      else if (e.kind === 'fallback') skillFallbacks.push(e.entry);
+      else if (e.kind === 'increase') {
+        const was = skills[e.key] ?? 'untrained';
+        skillWrite(skills, e.key, 'step', skillIncreaseCap(e.level), ev, by);
+        skillIncreases.push({ level: e.level, skill: e.key });
+        // Skill order WP9 (notice line 5): did today's order's increase raise anything when it was spent?
+        if ((skills[e.key] ?? 'untrained') !== was) liveIncreasesRaised.push(`${e.lane}:${e.level}:${e.key}`);
+      } else if (e.kind === 'languageLore') languageLores.push(e.key);
+      else if (e.kind === 'before') skillRankBefore[e.carrier] = e.ranks;
+      // 'rankGate': the feat-grant queue keeps it as today's order's decision (`legacyRankGatedRows`); no rank, no row.
+    }
+    return effects;
+  };
+  /** A plain write whose rank follows a record's level ladder (`at()`, `upgradeRankAt`), split into one `max`
+   *  write per step level (WP2): the rank of the record's own level at its place, then each later step up to the
+   *  character's level. `max` is monotone and every ladder's ranks rise (test/skill-ledger.test.ts), so the live
+   *  result is `max(cur, at(base))` exactly as the one write it replaces. */
+  const ladderWrite = (g: FeatGrant, key: ProficiencyKey, baseRank: ProficiencyRank, ev: SkillEventMeta): void => {
+    const own = upgradeRankAt(g, ev.place.level);
+    skillWrite(skills, key, 'max', own ? maxRank(baseRank, own) : baseRank, ev);
+    for (const st of upgradeSteps(g))
+      if (st.level > ev.place.level && st.level <= level) skillWrite(skills, key, 'max', maxRank(baseRank, st.rank), { ...ev, place: atLevel(ev.place, st.level) });
+  };
+  for (const sk of SKILLS) skillWrite(skills, sk, 'set', 'untrained', { source: 'init', place: CREATE });
+  if (cls) for (const sk of cls.trainedSkills.fixed) skillWrite(skills, sk, 'set', 'trained', { source: `class:${cls.id}`, place: CREATE, lock: 'your class' });
   // Dual Class: also train the second class's fixed skills + lore (its restricted choice defaults to
   // the first option). The free-skill count is the larger of the two (see additionalClassSkills).
   if (cls2) {
-    for (const sk of cls2.trainedSkills.fixed) (skills[sk] = 'trained'), lock(sk, 'your second class');
-    if (cls2.trainedSkills.choice?.length) (skills[cls2.trainedSkills.choice[0]] = 'trained'), lock(cls2.trainedSkills.choice[0], 'your second class');
+    for (const sk of cls2.trainedSkills.fixed) skillWrite(skills, sk, 'set', 'trained', { source: `class2:${cls2.id}`, place: CREATE, lock: 'your second class' });
+    if (cls2.trainedSkills.choice?.length) skillWrite(skills, cls2.trainedSkills.choice[0], 'set', 'trained', { source: `class2:${cls2.id}`, place: CREATE, lock: 'your second class' });
     const cls2Lore = cls2.trainedSkills.lore && loreKey(cls2.trainedSkills.lore);
-    if (cls2Lore) skills[cls2Lore] = 'trained';
+    if (cls2Lore) skillWrite(skills, cls2Lore, 'set', 'trained', { source: `class2:${cls2.id}`, place: CREATE });
   }
   // A class-level restricted skill choice (thaumaturge: one of Arcana/Nature/Occultism/Religion) +
   // its fixed Lore (Esoteric Lore). Reuses build.subclassSkill (no class has both kinds of choice).
   if (cls?.trainedSkills.choice?.length) {
-    const pick =
-      build.subclassSkill && cls.trainedSkills.choice.includes(build.subclassSkill) ? build.subclassSkill : cls.trainedSkills.choice[0];
-    skills[pick] = 'trained';
-    lock(pick, 'your class');
+    const pick = subclassSkillPick(build, content, cls.trainedSkills.choice)!.value;
+    skillWrite(skills, pick, 'set', 'trained', { source: `class:${cls.id}`, place: CREATE, lock: 'your class' });
   }
   const clsLore = cls?.trainedSkills.lore && loreKey(cls.trainedSkills.lore);
-  if (clsLore) skills[clsLore] = 'trained';
+  if (clsLore) skillWrite(skills, clsLore, 'set', 'trained', { source: `class:${cls!.id}`, place: CREATE });
   const bgTrainedSkill = backgroundTrainedSkill(build, background);
   /*
    * A HOMEBREW background — the per-character custom one OR a record from the Homebrew page — may
@@ -5135,11 +5887,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * class's trainings), exactly as the feat lane reads it. Printed backgrounds are untouched.
    */
   const homebrewBg = background?.id === CUSTOM_BACKGROUND_ID || background?.source?.license === 'homebrew';
-  if (bgTrainedSkill && background && homebrewBg && skills[bgTrainedSkill] !== 'untrained') {
-    skillFallbacks.push({ featId: background.id, skill: bgTrainedSkill });
-    const picked = build.featSkillChoices?.[`${background.id}:fallback:${bgTrainedSkill}`];
-    if (picked && SKILLS.includes(picked)) (skills[picked] = maxRank(skills[picked] ?? 'untrained', 'trained')), lock(picked, 'your background');
-  } else if (bgTrainedSkill) (skills[bgTrainedSkill] = 'trained'), lock(bgTrainedSkill, 'your background');
+  /** The ledger source of the background's own trainings. */
+  const bgSrc: SkillEventMeta = { source: `background:${background?.id ?? 'none'}`, place: CREATE, lock: 'your background' };
+  if (bgTrainedSkill && background) {
+    const bgId = background.id;
+    skillJudge({ source: bgSrc.source, place: CREATE }, (view) => {
+      const s = judgeScope(view);
+      // An id outside the sixteen (homebrew data) is never set untrained above, so it reads as "trained
+      // already" exactly as the old `skills[id] !== 'untrained'` read it.
+      const already = !(SKILLS as readonly string[]).includes(bgTrainedSkill) || view.rank(bgTrainedSkill) !== 'untrained';
+      if (homebrewBg && already) {
+        s.push({ kind: 'fallback', entry: { featId: bgId, skill: bgTrainedSkill } });
+        const picked = build.featSkillChoices?.[`${bgId}:fallback:${bgTrainedSkill}`];
+        if (picked && SKILLS.includes(picked)) s.pick(picked, 'trained', 'your background');
+      } else s.write(bgTrainedSkill, 'set', 'trained', 'your background');
+      return s.effects;
+    });
+  }
   // One subject, or several where the background grants several ("Deception, Art Lore, AND Underworld
   // Lore" — an AND, unlike the OR that `trainedLoreOptions` models).
   // Read as the background's book blocks (blocks/book.ts, Building blocks item 10).
@@ -5149,7 +5913,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     /* LOCKED like every other background training (the skill above, the choice Lore below), so the
      * builder can say where it came from: an Acolyte typing "Scribing" on the Trained skills card was
      * told only "Already trained in Scribing Lore" — `grantedSkills` is where the source is read. */
-    if (key) (skills[key] = 'trained'), lock(key, 'your background');
+    if (key) skillWrite(skills, key, 'set', 'trained', bgSrc);
   }
   /*
    * …and a SECOND background's skills, from a feat that grants one: *"you're TRAINED IN THE SKILLS …
@@ -5161,8 +5925,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const passion = passionBackground(build, content, background);
     if (passion) {
       const s = backgroundTrainedSkill(build, passion);
-      if (s) skills[s] = maxRank(skills[s], 'trained');
-      for (const { key } of backgroundTrainings(passion).lores) if (key) skills[key] = 'trained';
+      const passionSrc: SkillEventMeta = { source: `background:${passion.id}`, place: passionPlace() };
+      if (s) skillWrite(skills, s, 'max', 'trained', passionSrc);
+      for (const { key } of backgroundTrainings(passion).lores) if (key) skillWrite(skills, key, 'set', 'trained', passionSrc);
     }
   }
   // The BACKGROUND's own embedded sub-choice ("an Ancestry Lore of your choice", "Guild Lore or
@@ -5180,28 +5945,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // options are named "Acid"/"Cold", which the classifier cannot read as Lores, yet the printed
       // Lore follows the pick (WG's SKILL_LORE_ACID… branches).
       const pickedLore = kind === 'lore' || background.trainedLoreFromChoice ? loreKey(picked) : null;
-      if (pickedLore) (skills[pickedLore] = 'trained'), lock(pickedLore, 'your background');
+      if (pickedLore) skillWrite(skills, pickedLore, 'set', 'trained', bgSrc);
       else if (kind === 'skill' && (SKILLS as readonly string[]).includes(picked)) {
-        (skills[picked as SkillId] = 'trained'), lock(picked as SkillId, 'your background');
+        skillWrite(skills, picked as SkillId, 'set', 'trained', bgSrc);
       }
     }
   }
   // "Legal Lore OR Underworld Lore": two NAMED subjects, so the answer is one of them rather than
   // free text. Unpicked defaults to the first, as every other unanswered choice in the builder does.
+  // The picks resolve in `backgroundLorePicks` (Concordance Researcher's four of six included).
   const loreOptions = background?.trainedLoreOptions ?? [];
-  if (loreOptions.length) {
-    // Usually one pick; Concordance Researcher prints FOUR of six (trainedLoreOptionsCount). Stored
-    // picks that aren't offered are ignored, and empty slots fill with the earliest unpicked
-    // options — count 1 with nothing stored trains loreOptions[0], exactly the old single-pick line.
-    const count = Math.min(background!.trainedLoreOptionsCount ?? 1, loreOptions.length);
-    const stored = [build.backgroundLore, build.backgroundLore2, build.backgroundLore3, build.backgroundLore4];
-    const picks: string[] = [];
-    for (const s of stored) if (s && loreOptions.includes(s) && !picks.includes(s) && picks.length < count) picks.push(s);
-    for (const o of loreOptions) if (picks.length < count && !picks.includes(o)) picks.push(o);
-    for (const p of picks) {
-      const key = loreKey(p);
-      if (key) (skills[key] = 'trained'), lock(key, 'your background');
-    }
+  for (const p of backgroundLorePicks(build, background)) {
+    const key = loreKey(p);
+    if (key) skillWrite(skills, key, 'set', 'trained', bgSrc);
   }
   // A "choose a Lore" background: the player types the subject (Lore is free-text). A record may name
   // the printed first option as the default (Night Watch's "either Legal Lore or the Lore skill for
@@ -5210,29 +5966,26 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // One typed subject normally; Reborn Soul asks for TWO (trainedLoreChoiceCount). The subjects are
     // resolved by `backgroundChosenLoreKeys`, which the restricted-increase picker reads too — the two
     // must name the same Lores or a player is offered an increase on a Lore they aren't trained in.
-    for (const key of backgroundChosenLoreKeys(build, content)) (skills[key] = 'trained'), lock(key, 'your background');
+    for (const key of backgroundChosenLoreKeys(build, content)) skillWrite(skills, key, 'set', 'trained', bgSrc);
   }
   // ADDITIONAL fixed skills beside trainedSkill (Tech-Reliant prints Crafting AND Medicine).
   for (const sk of background?.trainedSkills ?? []) {
-    (skills[sk] = maxRank(skills[sk], 'trained')), lock(sk, 'your background');
+    skillWrite(skills, sk, 'max', 'trained', bgSrc);
   }
   // A per-branch Lore riding the trained-skill pick (Brevic Noble's lineages): the Lore follows the
   // SAME answer grantedFeatByChoice reads, first option when unanswered, so skill/Lore/feat agree.
   if (background?.trainedLoreByChoice && background.trainedSkillChoice?.length) {
-    const pick =
-      build.backgroundSkillChoice && background.trainedSkillChoice.includes(build.backgroundSkillChoice)
-        ? build.backgroundSkillChoice
-        : background.trainedSkillChoice[0];
+    const pick = backgroundSkillPick(build, background)!.value;
     const subj = background.trainedLoreByChoice[pick];
     const key = subj && loreKey(subj);
-    if (key) (skills[key] = 'trained'), lock(key, 'your background');
+    if (key) skillWrite(skills, key, 'set', 'trained', bgSrc);
   }
   // The trained skill comes from the chosen DEITY (Raised by Belief) — the same dereference the
   // deitySkill bound-choice branch performs.
   if (background?.trainedSkillFromDeity && build.deityId) {
     const dsk = content.deities[build.deityId]?.skill;
     if (dsk && (SKILLS as readonly string[]).includes(dsk)) {
-      (skills[dsk as SkillId] = 'trained'), lock(dsk as SkillId, 'your background');
+      skillWrite(skills, dsk as SkillId, 'set', 'trained', bgSrc);
     }
   }
   // "You gain all the mechanical benefits of the <X> heritage you selected at 1st level." Both feats
@@ -5258,31 +6011,61 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * The ladder is taken from whichever owned heritage carries one: `heritageLore` is a flat list with
      * no per-heritage attribution, and exactly one record prints the clause today.
      */
-    const loreStep = [build.heritageId, secondHeritageId]
+    /* One write per step level (skill-order WP2: the Lore is trained when the heritage is gained, expert at
+     * the step's level); every step's rank is at least trained, so the live result is the one `max` the
+     * reached ladder gave before. */
+    const loreSteps = [build.heritageId, secondHeritageId]
       .flatMap((id) => (id ? (content.heritages[id]?.loreProgression ?? []) : []))
-      .filter((s) => level >= s.level)
-      .reduce<ProficiencyRank | undefined>((best, s) => (best ? maxRank(best, s.rank) : s.rank), undefined);
+      .filter((s) => level >= s.level);
+    const loreHeritage = [build.heritageId, secondHeritageId].find((id) => id && content.heritages[id]?.loreChoices);
+    const loreSrc = `heritage:${loreHeritage}`;
     for (const raw of (build.heritageLore ?? []).slice(0, heritageLoreN)) {
       const key = raw ? loreKey(raw) : null;
-      if (key) skills[key] = maxRank(skills[key] ?? 'untrained', loreStep ?? 'trained');
+      if (!key) continue;
+      skillWrite(skills, key, 'max', 'trained', { source: loreSrc, place: heritagePlace(loreHeritage, 1, 'create') });
+      for (const s of loreSteps) skillWrite(skills, key, 'max', s.rank, { source: loreSrc, place: heritagePlace(loreHeritage, s.level) });
     }
   }
-  if (build.heritageSkill) (skills[build.heritageSkill] = 'trained'), lock(build.heritageSkill, 'your heritage');
+  if (build.heritageSkill) skillWrite(skills, build.heritageSkill, 'set', 'trained', { source: `heritage:${build.heritageId}`, place: CREATE, lock: 'your heritage' });
   // Skilled Heritage (human): the chosen skill becomes expert at 5th level.
   if (build.heritageSkill && build.heritageId === 'skilled-human' && level >= 5 && !engineLaneOff('skilled-human')) {
-    skills[build.heritageSkill] = maxRank(skills[build.heritageSkill], 'expert');
+    skillWrite(skills, build.heritageSkill, 'max', 'expert', { source: 'heritage:skilled-human', place: heritagePlace(build.heritageId, 5) });
   }
+  /* The options whose granting feature prints "already trained → a different skill" (plan D14, WP5;
+   * `CLASS_TRAINING_CLAUSE_FEATURES`): either held class's groups. */
+  const clauseOptionIds = new Set<string>();
+  for (const c of [cls, cls2] as (ClassDef | undefined)[])
+    for (const g of [c?.subclass, ...(c?.extraChoices ?? [])])
+      if (g?.featureId && CLASS_TRAINING_CLAUSE_FEATURES.has(g.featureId)) for (const o of g.options) clauseOptionIds.add(o.id);
   // Subclass-/choice-granted skills (druid order, rogue racket, witch patron, eidolon) — also free.
   for (const o of grantOptions) {
-    for (const sk of o.grants?.skills ?? []) (skills[sk] = 'trained'), lock(sk, 'a class choice');
+    const optSrc: SkillEventMeta = { source: `option:${o.id}`, place: optionPlace(o.id, true), lock: 'a class choice' };
+    const granted = o.grants?.skills ?? [];
+    if (granted.length && optSrc.place.level > 1 && clauseOptionIds.has(o.id)) {
+      /* A class training ABOVE 1st level whose feature prints the clause (D14: Root Epithet, class-feature-1066,
+       * "If you are already trained in the granted skill, you become trained in a different skill of your choice,
+       * as normal"). A judge at the option's place (P3 of its level): on the PRINT view a skill already trained
+       * there from any source (ruling 2) owes a replacement — the entry, and the stored answer
+       * `<option id>:fallback:<skill>` applied as a feat's is. On the live view it writes exactly today's line
+       * (trained, locked "a class choice"), so the live path is unchanged (G11). */
+      skillJudge({ source: optSrc.source, place: optSrc.place }, (view) => {
+        const s = judgeScope(view);
+        for (const sk of granted) {
+          if (view.print && s.rank(sk) !== 'untrained') {
+            s.push({ kind: 'fallback', entry: { featId: o.id, skill: sk } });
+            const picked = skillFallbackPick(build, o.id, sk);
+            if (picked) s.pick(picked, 'trained');
+            continue;
+          }
+          s.write(sk, 'set', 'trained', 'a class choice');
+        }
+        return s.effects;
+      });
+    } else for (const sk of granted) skillWrite(skills, sk, 'set', 'trained', optSrc);
     // …and the class skill the option takes AWAY — the ranger's Vindicator: *"trained in Religion
     // INSTEAD OF Nature"*. The class's fixed skill was set and locked above; unset both, so the row
     // reads untrained and the player may spend a free skill on it like any other.
-    for (const sk of o.grants?.removesSkills ?? []) {
-      delete skills[sk];
-      locked.delete(sk);
-      delete lockedFrom[sk];
-    }
+    for (const sk of o.grants?.removesSkills ?? []) skillWrite(skills, sk, 'delete', undefined, { source: optSrc.source, place: optSrc.place, unlock: true });
     // Named Lores (animist apparitions grant two apiece). A Lore is not a SkillId, so these could
     // not ride in `grants.skills` and every apparition's "Apparition Skills" Lore line was inert.
     /* …and the LEVEL LADDER on those Lores. Apparitions print one (War of Immortals pg. 17, "Reading
@@ -5292,12 +6075,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * with no level branch, so every apparition Lore sat at trained from 1st to 20th. Same
      * `loreProgression` shape the heritage Lore ladder above already uses; `maxRank` still guards a
      * Lore the player trained higher elsewhere. */
-    const optLoreStep = (o.loreProgression ?? [])
-      .filter((s) => level >= s.level)
-      .reduce<ProficiencyRank | undefined>((best, s) => (best ? maxRank(best, s.rank) : s.rank), undefined);
+    /* One write per step level (skill-order WP2): trained at the option's own level, then each step at the
+     * level the record's `loreProgression` names (8th and 16th for an apparition) — read from the data, never
+     * hard-coded. Every step's rank is at least trained, so the live result is the old single `max`. */
+    const optLoreSteps = (o.loreProgression ?? []).filter((s) => level >= s.level);
     for (const subj of o.grants?.lores ?? []) {
       const key = loreKey(subj);
-      if (key) (skills[key] = maxRank(skills[key] ?? 'untrained', optLoreStep ?? 'trained')), lock(key, 'a class choice');
+      if (!key) continue;
+      skillWrite(skills, key, 'max', 'trained', optSrc);
+      // (No lock on a step: the training above took it, and a later step is not a creation training.)
+      for (const s of optLoreSteps) skillWrite(skills, key, 'max', s.rank, { source: optSrc.source, place: atLevel(optionPlace(o.id), s.level) });
     }
     // A restricted skill choice (Pistolero way, Empiricism methodology): train the picked skill,
     // defaulting to the first allowed option so the build is always legal.
@@ -5310,17 +6097,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * SKIPPED when a Lore is given, or the character would be trained in two skills for one choice. */
       const loreSubj = o.skillChoiceLore && build.subclassLore ? loreKey(build.subclassLore) : null;
       if (loreSubj) {
-        (skills[loreSubj] = maxRank(skills[loreSubj] ?? 'untrained', 'trained')), lock(loreSubj, 'a class choice');
+        skillWrite(skills, loreSubj, 'max', 'trained', optSrc);
       } else {
-        const pick =
-          build.subclassSkill && o.skillChoice.includes(build.subclassSkill) ? build.subclassSkill : o.skillChoice[0];
-        skills[pick] = 'trained';
-        lock(pick, 'a class choice');
+        const pick = subclassSkillPick(build, content, o.skillChoice)!.value;
+        skillWrite(skills, pick, 'set', 'trained', optSrc);
       }
     }
   }
   // Sorcerer Draconic: the chosen dragon trains a second bloodline skill (Arcana/Religion/Occultism/Nature).
-  if (dragon?.skill) (skills[dragon.skill] = 'trained'), lock(dragon.skill, 'your bloodline dragon');
+  if (dragon?.skill) {
+    const dragonOption = [subOption, subOption2].find((o) => o?.dragonChoice?.length);
+    skillWrite(skills, dragon.skill, 'set', 'trained', { source: `option:${dragonOption?.id ?? 'dragon'}`, place: CREATE, lock: 'your bloodline dragon' });
+  }
   // "Your deity grants you the trained proficiency rank in one skill and with the deity's favored
   // weapon." Only the CLERIC's Deity feature says that — the champion's Deity and Cause does not —
   // so this stays scoped to the cleric even though several classes pick a deity. The weapon half was
@@ -5331,19 +6119,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       : undefined;
   if (clericDeitySkill && (SKILLS as readonly string[]).includes(clericDeitySkill)) {
     const k = clericDeitySkill as SkillId;
-    (skills[k] = maxRank(skills[k] ?? 'untrained', 'trained')), lock(k, 'your deity');
+    skillWrite(skills, k, 'max', 'trained', { source: `deity:${build.deityId}`, place: CREATE, lock: 'your deity' });
   }
   // Clamp the class's free skill picks to the legal count (base + current Int modifier — an Int
   // boost adds a trained skill, see additionalClassSkills), skipping any that duplicate a granted
   // training, so the built character is always legal even if state was reached via a since-lowered Int.
   const maxClassSkills = additionalClassSkills(build, content);
-  let added = 0;
-  for (const sk of build.classSkills) {
-    if (locked.has(sk)) continue;
-    if (added >= maxClassSkills) break;
-    skills[sk] = 'trained';
-    added++;
-  }
+  skillJudge({ source: `classPick:${build.classId ?? 'none'}`, place: CREATE }, (view) => {
+    const s = judgeScope(view);
+    let added = 0;
+    const kept: ProficiencyKey[] = [];
+    for (const sk of build.classSkills) {
+      if (view.locked(sk)) continue;
+      if (added >= maxClassSkills) break;
+      kept.push(sk);
+      added++;
+    }
+    /* Which picks count follows the stored order (the clamp above). The WRITES go in the order the skills
+     * record already holds its keys: the sixteen skills in SKILLS order (seeded above, so their write order
+     * never moved a key), then the picked Lores in the player's own pick order — a Lore is a NEW key, and
+     * the sheet lists Lores in the order the record got them (skill order WP6L item 3: sorting them showed
+     * a player's Lores alphabetically). The reverse build reads the record's key order back, so a
+     * round-trip writes the same steps in the same order (test/bug-builder-roundtrip.test.ts). */
+    const seeded = (k: ProficiencyKey) => (SKILLS as readonly string[]).indexOf(k);
+    for (const sk of [...kept.filter((k) => seeded(k) >= 0)].sort((a, b) => seeded(a) - seeded(b))) s.write(sk, 'set', 'trained');
+    for (const sk of kept.filter((k) => seeded(k) < 0)) s.write(sk, 'set', 'trained');
+    return s.effects;
+  });
   /* "Lore instead of language" (setup house rule): every language slot Intelligence grants may be
    * spent on training in a NEW Lore instead, one slot at a time. A stored Lore the character already
    * has — from the class, background, heritage, a class choice (an animist apparition) or a class
@@ -5360,13 +6162,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const intLanguageSlots = Math.max(0, abilityMod(abilities.int));
   const languageLores: ProficiencyKey[] = [];
   if (build.variantRules?.loreInsteadOfLanguage) {
-    for (const raw of build.languageLores ?? []) {
-      if (languageLores.length >= intLanguageSlots) break;
-      const key = typeof raw === 'string' ? loreKey(raw) : null;
-      if (key && !languageLores.includes(key) && (skills[key] ?? 'untrained') === 'untrained') languageLores.push(key);
-    }
+    skillJudge({ source: 'langLore:int', place: CREATE }, (view) => {
+      const s = judgeScope(view);
+      const picked: ProficiencyKey[] = [];
+      for (const raw of build.languageLores ?? []) {
+        if (picked.length >= intLanguageSlots) break;
+        const key = typeof raw === 'string' ? loreKey(raw) : null;
+        if (key && !picked.includes(key) && view.rank(key) === 'untrained') picked.push(key);
+      }
+      for (const key of picked) s.push({ kind: 'languageLore', key });
+      for (const key of picked) s.write(key, 'set', 'trained', LANGUAGE_LORE_SOURCE);
+      return s.effects;
+    });
   }
-  for (const key of languageLores) (skills[key] = 'trained'), lock(key, LANGUAGE_LORE_SOURCE);
 
   /*
    * TWEAKS — THE RANK SEAMS (docs/overrides-redesign.md, spec item 5, Building blocks item 8).
@@ -5386,18 +6194,35 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    *   2. At today's override loop — "at least" on a save, Perception, class DC, weapon or armor track,
    *      with `maxRank`, after the class raises.
    *   3. Just before the Character literal — "exactly", ONE clamp after every raise.
+   *
+   * OLD CHARACTERS (plan B, WP3; B1, B2, B3, B26): an old entry with no mode is SORTED on this read into
+   * "at least" / "exactly" against the rank the old `=` met at its slot (`legacyRankSort`, one extra build
+   * through the at-slot probe), handed to the readers as the host's `tweakRankSort` and emitted on the
+   * Character as a derived field (`overrides` stays the stored object). Every sorted entry is a MOVED one
+   * (B26): it feeds the readers what the old `=` fed them — (a) a moved skill floor is left out of the
+   * `asOf` replay, (b) a moved hold is also written at the old `=` slot, (c) WP5's caps skip it. What is
+   * left of the move is cases A (an increase the `=` swallowed now counts) and B (a lowered rank stays
+   * lowered after a later raise) and the Lore-row move (a raw `lore:Sailing Lore` floors the real row).
    */
-  const rankTw = rankTweaks({ overrides: build.overrides, options: build.options, level });
-  /** The skill and Lore floors by the level the loop applies them at (a start level, or 1). */
-  const skillFloorsAt = new Map<number, { key: ProficiencyKey; rank: ProficiencyRank }[]>();
+  const tweakRankSort = legacyRankSort(build, content);
+  /** The host of the rank readers: the build plus its read-time sort. */
+  const rankHost = tweakRankSort ? { ...build, tweakRankSort } : build;
+  const rankTw = rankTweaks(rankHost);
+  /** The skill and Lore floors by the level the loop applies them at (a start level, or 1). `moved` = an
+   *  old entry (B26 a): it is left out of the `asOf` replay, as the old `=` was. */
+  const skillFloorsAt = new Map<number, { key: ProficiencyKey; rank: ProficiencyRank; moved: boolean }[]>();
   for (const b of rankTw.atLeast) {
     if (!b.target?.startsWith('skill:') || !b.rank) continue;
     const at = Math.max(1, b.gate?.startLevel ?? 1);
-    skillFloorsAt.set(at, [...(skillFloorsAt.get(at) ?? []), { key: b.target.slice('skill:'.length) as ProficiencyKey, rank: b.rank }]);
+    skillFloorsAt.set(at, [...(skillFloorsAt.get(at) ?? []), { key: b.target.slice('skill:'.length) as ProficiencyKey, rank: b.rank, moved: b.moved === true }]);
   }
-  const applySkillFloors = (at: number) => {
-    for (const f of skillFloorsAt.get(at) ?? []) skills[f.key] = maxRank(skills[f.key] ?? 'untrained', f.rank);
+  const applySkillFloors = (at: number, into: Record<ProficiencyKey, ProficiencyRank> = skills, moved = true) => {
+    for (const f of skillFloorsAt.get(at) ?? [])
+      if (moved || !f.moved) skillWrite(into, f.key, 'max', f.rank, { source: `floor:${f.key}`, place: place(at, 'floor'), ...(f.moved ? { moved: true } : {}) });
   };
+  /* B26 (a): the ranks before the level-1 floors, for `skillsBeforeIncreases` below — which lays on only
+   * the floors the player made, never a moved one (the old `=` was never in it). */
+  const skillsBeforeFloors = { ...skills };
   applySkillFloors(1);
 
   // Skill increases, applied in ascending level order so multiple increases to
@@ -5415,45 +6240,89 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * Soul is owed BOTH extra increases at 3/7/15, on terms that do not overlap. Here the levels list is
    * also what GRANTS the increase — see RestrictedSkillIncrease in types.ts. */
   const bgSiRestrict = backgroundSkillIncreaseAllowed(build, content);
+  /* Skill order WP6 (plan D15): the PRINT lanes. Dual Class owes each class's increases — GM Core rules-1331,
+   * "a dual-class rogue/ranger still gets the extra skill feat and skill increase at levels where the other
+   * class doesn't provide them" — so the main lane is the union of both classes' levels (one per level) and
+   * the bonus lane each class's own, narrowed by the class that owns that level. The LIVE path above keeps the
+   * first class's levels on purpose: it is today's engine (the notice's "before", `--legacy-check`), so the
+   * notice can name the increase that now counts and the new empty slots. One class: the same lists. */
+  const siPrint = classSkillIncreaseLevels(cls, cls2);
   /* batch 037: molten-wit#three-branches — the ranks BEFORE any increase is spent, kept for
    * `skillRankHere(…, asOf)`. *"If you're already trained in one of these skills"* is a question about
    * the level the record was taken at, and every skill increase lands at 3rd or later: without this,
    * a 3rd-level increase spent on the very skill Molten Wit's answer trains made the character
-   * "already trained" at 1st level and handed them the other skill free. */
-  const skillsBeforeIncreases = { ...skills };
+   * "already trained" at 1st level and handed them the other skill free. A Tweaks floor from level 1 is in
+   * it — but never a MOVED one (plan B, B26 a): the old `=` it came from ran after the increases, so the
+   * replay never saw it, and "already trained when the feat was taken?" must answer as it did. */
+  const skillsBeforeIncreases = { ...skillsBeforeFloors };
+  applySkillFloors(1, skillsBeforeIncreases, false);
   const skillIncreases: SkillIncrease[] = [];
+  /** `<lane>:<level>:<key>` of each increase that raised a rank on the live path (`skillJudge`; the legacy side's
+   *  `increasesRaised`, skill-order WP9). */
+  const liveIncreasesRaised: string[] = [];
+  /** WP11: the live extra skill-increase places that hold their skill (any level; the loop takes each at its own). */
+  const tweakSkillPlaces = liveCarriers(build, 'skillIncrease');
+  /* Tweaks phase 2 WP14 (C47): the ONE skill-increase seam — a place a live removal names applies nothing, on the live
+   * view and the print pass alike (its stored answer stays in its store, kept, and comes back with Restore, a pause or
+   * Tweaks off). Empty for a character with no such removal. */
+  const removedSkillPlaces = removedSkillIncreasePlaces(build);
   for (let lvl = 1; lvl <= level; lvl++) {
     // Rank seam 1, a start level above 1: the floor lands before this level's own increases.
     if (lvl > 1) applySkillFloors(lvl);
-    for (const [stored, restrict] of [
-      [siLevels.includes(lvl) ? build.skillIncreases[lvl] : undefined, null],
-      [bonusSiLevels.includes(lvl) ? build.bonusSkillIncreases?.[lvl] : undefined, bonusSiRestrict],
-      [bgSiRestrict?.levels.includes(lvl) ? build.backgroundSkillIncreases?.[lvl] : undefined, bgSiRestrict],
+    for (const [stored, liveOn, liveRestrict, printRestrict, lane] of [
+      [siPrint.main.includes(lvl) ? build.skillIncreases[lvl] : undefined, siLevels.includes(lvl), null, null, 'main'],
+      [siPrint.bonus.includes(lvl) ? build.bonusSkillIncreases?.[lvl] : undefined, bonusSiLevels.includes(lvl), bonusSiRestrict, restrictedSkillIncreaseAllowed(build, content, lvl), 'bonus'],
+      [bgSiRestrict?.levels.includes(lvl) ? build.backgroundSkillIncreases?.[lvl] : undefined, true, bgSiRestrict, bgSiRestrict, 'background'],
     ] as const) {
-      if (!stored) continue;
-      /* An increase saved against the key the OLD engine keyer gave a typed subject — a background's
-       * "Lore of the Sea" trained `lore:lore-of-the-sea` — follows that Lore to its one key now
-       * (`lore:sea`), or the saved expert rank would land on a Lore nothing trains any more. Only when
-       * the stored key names nothing the character is trained in and its re-keyed form does. */
-      const alias = stored.startsWith('lore:') && (skills[stored] ?? 'untrained') === 'untrained' ? loreKey(stored) : null;
-      const key = alias && (skills[alias] ?? 'untrained') !== 'untrained' ? alias : stored;
-      /* A record can forbid its own skill being increased — Bardic Lore: "you can't increase your
-       * proficiency rank in Bardic Lore by any other means". DROPPED rather than applied, so a
-       * character saved before the builder greyed the option does not keep an illegal rank; the level
-       * then reads as an unspent increase, which is the true state and prompts a re-pick. */
-      if (LOCKED_SKILL_KEYS[key]) continue;
-      /* …and so can the FEATURE that granted the bonus increase. Swashbuckler Stylish Tricks: *"you
-       * gain an additional skill increase you can apply only to Acrobatics or the skill from your
-       * swashbuckler's style"*; thaumaturge Thaumaturgic Expertise/Mastery: *"which you can apply only
-       * to Arcana, Nature, Occultism, or Religion"*. Dropped, not applied — same reason as above: a
-       * character saved while the picker was unguarded must not keep a rank print forbids. Only the
-       * BONUS increase is narrowed; the level's ordinary increase stays free. …and so can the
-       * BACKGROUND that granted the third one — *"only to these Lore skills"*, resolved against the
-       * two subjects the player typed. */
-      if (restrict && restrict.levels.includes(lvl) && !restrict.skills.has(key)) continue;
-      skills[key] = stepRank(skills[key] ?? 'untrained', skillIncreaseCap(lvl));
-      skillIncreases.push({ level: lvl, skill: key });
+      if (!stored || removedSkillPlaces.has(skillPlaceId(lane, lvl))) continue;
+      const at = lvl;
+      skillJudge({ source: `${lane === 'main' ? 'increase' : lane === 'bonus' ? 'bonus' : 'bgIncrease'}:${at}`, place: place(at, 'increase', [lane === 'main' ? 0 : lane === 'bonus' ? 1 : 2]) }, (view) => {
+        /* D15: a level only the SECOND class grants (or a bonus level whose owner differs) counts in the
+         * print pass; the live view keeps the first class's lanes, exactly as before (nothing written). */
+        if (!view.print && !liveOn) return [];
+        const restrict = view.print ? printRestrict : liveRestrict;
+        /* An increase saved against the key the OLD engine keyer gave a typed subject — a background's
+         * "Lore of the Sea" trained `lore:lore-of-the-sea` — follows that Lore to its one key now
+         * (`lore:sea`), or the saved expert rank would land on a Lore nothing trains any more. Only when
+         * the stored key names nothing the character is trained in and its re-keyed form does. */
+        const alias = stored.startsWith('lore:') && view.rank(stored) === 'untrained' ? loreKey(stored) : null;
+        const key = alias && view.rank(alias) !== 'untrained' ? alias : stored;
+        /* A record can forbid its own skill being increased — Bardic Lore: "you can't increase your
+         * proficiency rank in Bardic Lore by any other means". DROPPED rather than applied, so a
+         * character saved before the builder greyed the option does not keep an illegal rank; the level
+         * then reads as an unspent increase, which is the true state and prompts a re-pick. */
+        if (LOCKED_SKILL_KEYS[key]) return [{ kind: 'drop', key }];
+        /* …and so can the FEATURE that granted the bonus increase. Swashbuckler Stylish Tricks: *"you
+         * gain an additional skill increase you can apply only to Acrobatics or the skill from your
+         * swashbuckler's style"*; thaumaturge Thaumaturgic Expertise/Mastery: *"which you can apply only
+         * to Arcana, Nature, Occultism, or Religion"*. Dropped, not applied — same reason as above: a
+         * character saved while the picker was unguarded must not keep a rank print forbids. Only the
+         * BONUS increase is narrowed; the level's ordinary increase stays free. …and so can the
+         * BACKGROUND that granted the third one — *"only to these Lore skills"*, resolved against the
+         * two subjects the player typed. */
+        if (restrict && restrict.levels.includes(at) && !restrict.skills.has(key)) return [{ kind: 'drop', key }];
+        return [{ kind: 'increase', key, level: at, lane }];
+      });
     }
+    /* Tweaks phase 2 WP11 (C15): the EXTRA skill increases a tweak adds at this level (`choice.addPlace`, place
+     * `skillIncrease`, a carrier: the block holds the skill) — after the level's main, bonus and background lanes, in
+     * stored order (`[3, n]`), each through the same judge with today's cap. Read only through blocks/active.ts
+     * (`liveCarriers`: a paused place, Tweaks off or an unreadable block adds nothing). The level's own greys hold:
+     * a skill a record locks is dropped (Bardic Lore), and an extra increase raises a skill or a Lore the character
+     * knows by then — a Lore nothing trains at its place is dropped, and its Tweaks row says Broken (section 6). A
+     * player's wish past those rules is WP12's allow, not this lane. Applied on the live and the print view alike. */
+    tweakSkillPlaces.forEach((tp, n) => {
+      if (tp.level !== lvl) return;
+      const at = lvl;
+      skillJudge({ source: `${TWEAK_INCREASE_SOURCE}${tp.id}`, place: place(at, 'increase', [3, n]) }, (view) => {
+        const stored = tp.answer as ProficiencyKey;
+        const alias = stored.startsWith('lore:') && view.rank(stored) === 'untrained' ? loreKey(stored) : null;
+        const key = alias && view.rank(alias) !== 'untrained' ? alias : stored;
+        if (LOCKED_SKILL_KEYS[key]) return [{ kind: 'drop', key }];
+        if (key.startsWith('lore:') && view.rank(key) === 'untrained') return [{ kind: 'drop', key }];
+        return [{ kind: 'increase', key, level: at, lane: 'tweak' }];
+      });
+    });
   }
 
   // Clone the class's rank objects — advancement mutates these, and they must not
@@ -5594,7 +6463,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    *  (after the grant walks), but this focus pass reads the build directly — so a removed lesson still
    *  taught its hex and its familiar spell, and a removed Domain Initiate kept its domain spell and the
    *  Focus Point (package F, 2026-10-16). A removed feat contributes nothing here either. */
-  const removedFeatIds = new Set(build.overrides?.removedFeatIds ?? []);
+  const removedFeatIds = liveRemovedFeatIds(build);
   const featFocusSpells: string[] = [];
   /**
    * batch 035: lesson-of-vengeance#familiar-spell — ordinary (non-focus) spells a CHOICE-OWNED class
@@ -5785,9 +6654,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * construction, and has the one bare key.
    */
   const grantedAnswerKeys = (featId: string): string[] => {
-    if (!Object.values(build.pickFeatChoices ?? {}).includes(featId)) return [featId];
+    // An answer keyed under a held-back extra place (paused / Tweaks off, WP7 C9) is no pick now: the live view.
+    if (!heldFeatSlots(build, level, { via: ['pickFeat'] }).some((e) => e.featId === featId)) return [featId];
     // Capped in the walk's own order (its slots, as `featPicks` lists them), so past the feat's cap the hexes
     // taught are the lessons shown — answers saved in another order kept a dropped taking's hex (final check).
+    // The BOOK cap on purpose (Tweaks phase 2, WP8): this is the GRANTED feat's cap, which the pick walk below holds
+    // with `maxTakes(chosen)` — "a feat more times through a feat's own pick" is not phase 2 — so a "Take a feat more
+    // times" naming the granted feat must not hand over a second taking's answers that the walk drops. A more-taken
+    // GRANTER reaches here through `slotKept` (the loop's `takesAllowed`), so its second taking's feat is counted.
     const order = Object.keys(build.featPicks ?? {});
     const at = (s: string) => (order.includes(s) ? order.indexOf(s) : order.length);
     const takes = heldPickGranters(build, content, level, featId, (k) => ownedClassFeatures(true).has(k))
@@ -5863,8 +6737,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   pushFocusBonus(build.heritageFeatId);
   pushFocusBonus(build.umtFeatId);
   for (const e of heldFeatSlots(build, level, { via: ['override'] })) pushFocusBonus(e.featId);
-  for (const id of Object.values(build.pickFeatChoices ?? {})) pushFocusBonus(id);
-  for (const id of Object.values(build.dedicationSkillFeats ?? {})) pushFocusBonus(id);
+  // The live view (Tweaks phase 2, WP7, C9): an answer keyed under a held-back extra place, or the bonus skill feat
+  // of a dedication held only in such places, stops with the place. Every other stored answer is read as before.
+  for (const e of heldFeatSlots(build, level, { via: ['pickFeat'] })) pushFocusBonus(e.featId);
+  for (const e of heldFeatSlots(build, level, { via: ['dedicationSkill'] })) pushFocusBonus(e.featId);
   // Feats granted by a HERITAGE, a CLASS FEATURE or a chosen SUBCLASS / extra-choice option. These
   // three lanes push the feat with `choice: grantedChoiceById[gid]` — but nothing ever resolved the
   // answer for them, because only the six sources above fed this list. A cloistered cleric is
@@ -6183,9 +7059,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * floored: its stored list is the book, and a pick past the day's preparation is still in it
      * (`bookCantrips`). */
     const cantripBook = !sp.repertoire && (!!sp.spellbook || cls.id === 'wizard' || cls.id === 'witch');
+    /* …and never fewer than the player's own picks. Since the builder gives a pick of a grant its place
+     * back (`ownPlacesBeside`, 2026-10-23), an oracle who picked its mystery's cantrip and five more, then
+     * switched to a mystery granting another, holds six own picks against five places; a cleric whose cap
+     * shrank (Flexible Spellcaster at 2nd–3rd: 5 − 2 + 1), a Wellspring Mage, a caster who dropped Cantrip
+     * Expansion hold more picks than places the same way. A slice hid the extra ones with nothing saying
+     * so; every caster now draws them and reports them over (`cantripCapWas`, `cantripsOverOf`) like the
+     * Dual Class case above — a stored choice is never dropped unseen (owner, 2026-10-23: every caster
+     * gets the same display). A BOOK caster keeps its extra picks in the book instead (`bookCantrips`). */
+    const grants0 = grantedByRank[0] ?? [];
+    const ownCantripPicks = k.cantrips.filter((id) => !grants0.includes(id)).length;
     const cantripsDrawn = cantripBook
       ? cantripAllowance
-      : Math.max(cantripAllowance, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + classCantripBonusUnrouted(build, content) + mods.cantripDelta);
+      : Math.max(cantripAllowance, ownCantripPicks, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + classCantripBonusUnrouted(build, content) + mods.cantripDelta);
+    /* The picks drawn: the first `cantripsDrawn` of the player's own, plus every pick that IS one of the
+     * class's grants (drawn anyway, no place taken). A book is a plain slice: its first places are the
+     * standing preparation, the rest stay in the book (`bookCantrips`). */
+    let ownDrawn = 0;
+    const cantripPicksDrawn = cantripBook ? k.cantrips.slice(0, cantripsDrawn) : k.cantrips.filter((id) => grants0.includes(id) || ownDrawn++ < cantripsDrawn);
     const entry: SpellcastingEntry = {
       id: `${cls.id}-casting`,
       name: `${cap(tradition)} ${sp.type} spellcasting`,
@@ -6202,9 +7093,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // whose builder offered five picks beside the gift (every one before this lane) had its fifth
       // drawn nowhere, with nothing saying so. The builder now offers the allowance less the gift
       // (`grantedPlaces`); an older pick past it is drawn and reported (`cantripsOverOf`).
+      //
+      // …and a pick that is ALSO one of the class's grants (an oracle who picked its mystery's cantrip) is
+      // drawn without taking one of the `cantripsDrawn` places (`cantripPicksDrawn`): the builder gives it
+      // its place back, so a slice dropped the player's last pick.
       cantrips: sp.grantedCountsAgainstRepertoire
-        ? [...new Set([...(grantedByRank[0] ?? []), ...k.cantrips.slice(0, cantripsDrawn)])]
-        : [...new Set([...k.cantrips.slice(0, cantripsDrawn), ...(grantedByRank[0] ?? [])])],
+        ? [...new Set([...grants0, ...cantripPicksDrawn])]
+        : [...new Set([...cantripPicksDrawn, ...grants0])],
       cantripCap: cantripAllowance,
       ...(sp.grantedCountsAgainstRepertoire ? { grantsCountInside: true } : {}),
       // A prepared CLASS prepares its cantrips each morning (kept under the flexible collection:
@@ -6964,19 +7859,44 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (level >= 15 && picks[2]) proficiencies.saves[picks[2]] = maxRank(proficiencies.saves[picks[2]], 'legendary');
   }
 
-  // Override: force-set proficiency on any track to any rank (can also LOWER, unlike progression).
-  // Keys route by track: perception/classDc (scalar), a save, a weapon/armor category, else a skill
-  // id or `lore:<subject>` (assigning a brand-new key just adds that proficiency).
-  for (const [key, rank] of Object.entries(build.overrides?.proficiencies ?? {})) {
-    // An entry sorted as "at least" / "exactly" never takes this `=` — paused, broken or not — it is a
-    // rank block (the seams above and below). Every other entry ('rank.legacySet') is set as before.
-    if (rankTw.sorted.has(key)) continue;
+  // The old Overrides `=`: force-set proficiency on any track to any rank (can also LOWER, unlike
+  // progression). Keys route by track: perception/classDc (scalar), a save, a weapon/armor category, else a
+  // skill id or `lore:<subject>` (assigning a brand-new key just adds that proficiency).
+  // Only the UNSORTED old entries ('rank.legacySet' — since plan B WP3 only those the read-time sort cannot
+  // take, B2), and only while live (blocks/active.ts `liveLegacyRanks`: the Tweaks switch, the entry's
+  // on/off, a start level). An entry sorted as "at least" / "exactly" — stamped, or sorted on this read
+  // (`rankHost.tweakRankSort`) — never takes this `=`, paused, broken or not: it is a rank block (`rankTw`,
+  // the seams above and below).
+  // Plan B, B1 — THE AT-SLOT PROBE: the ranks the old `=` meets, handed to `legacyRankSort` when it built
+  // this build (module-private; nothing else is ever registered).
+  AT_SLOT_PROBE.get(build)?.({
+    perception: proficiencies.perception,
+    classDc: proficiencies.classDc,
+    saves: { ...proficiencies.saves },
+    skills: { ...proficiencies.skills },
+    attacks: { ...proficiencies.attacks },
+    defenses: { ...proficiencies.defenses },
+  });
+  for (const { key, rank } of liveLegacyRanks(rankHost)) {
     if (key === 'perception') proficiencies.perception = rank;
     else if (key === 'classDc') proficiencies.classDc = rank;
     else if (SAVE_TRACKS.includes(key)) proficiencies.saves[key as SaveId] = rank;
     else if (WEAPON_TRACKS.includes(key)) proficiencies.attacks[key as WeaponCategory] = rank;
     else if (ARMOR_TRACKS.includes(key)) proficiencies.defenses[key as ArmorCategory] = rank;
-    else proficiencies.skills[key as ProficiencyKey] = rank;
+    // P2 at 1st level: an old entry has no start level (`entryLive`'s gate; plan D3).
+    else skillWrite(skills, key as ProficiencyKey, 'set', rank, { source: `set:${key}`, place: place(1, 'set') });
+  }
+  /* Plan B, B26 (b) — a MOVED "exactly" (an old entry sorted below its at-slot rank, or stamped "moved" and
+   * not edited since) is ALSO written here, where its old `=` wrote it, so every reader between this slot
+   * and the clamp (`skillRankHere`, the redundant-training fallbacks, the conditional grants) sees the
+   * lowered rank exactly as before; the clamp (seam 3) then keeps it. A hold the player made is not
+   * written here (its limit, C16, is beside the clamp). */
+  for (const b of rankTw.exactly) {
+    if (!b.moved || !b.target || !b.rank) continue;
+    const held = b.rank;
+    const skill = skillTrackKey(b.target);
+    if (skill) skillWrite(skills, skill, 'set', held, { source: `set:${skill}`, place: place(b.gate?.startLevel ?? 1, 'set'), moved: true });
+    else updateTrackRank(proficiencies, b.target, () => held);
   }
   /* Rank seam 2 — "at least" on a save, Perception, class DC, weapon or armor track (spec item 5): a
    * FLOOR, here where today's loop sets ranks, after the class raises above, so a class rank already
@@ -6993,6 +7913,69 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // taken once, so dedup by id (the granted feat wins over a duplicate pick).
   const feats: FeatChoice[] = [];
   const takenFeats = new Set<string>();
+  /**
+   * TODAY'S ORDER'S rank-gated feat grants (FEAT_RANK_FEAT_GRANTS; skill-order plan D10, D19; WP4): the rows the
+   * feat-grant queue pushed before WP4, now worked out into this side list only. They are never feat rows of the
+   * character (the print decision is `rankGatedGrants`, after the resolve) and never enter `takenFeats`, so a
+   * legacy grant blocks no other granter. Two readers: the live view's `hasFeat` (so the live path still sees
+   * what today's order held) and the legacy side channel's `rankGated`.
+   */
+  const legacyRankGatedRows: { featId: string; grantedBy: string }[] = [];
+  /*
+   * A FEAT ROW'S PRINT PLACE (skill-order plan D4, D11; WP2), P5. A slot feat at its slot's level and index; a
+   * Tweaks-given feat after the slot feats; a granted feat right after its granter, depth first, at the later of
+   * its row level and its granter's level — a row the flat grant lane pushed at 1 for a granter of a later level
+   * (a class feature at 9th, a second class's feature) is placed at the granter's level, while the row itself
+   * keeps the level the sheet shows (D11). A dedication's bonus skill feat counts as granted by the dedication.
+   * `n` is the row's push order, stamped before the removal pass and the level sort move rows around.
+   */
+  const rowOrder = new WeakMap<FeatChoice, number>();
+  let rowCount = 0;
+  const stampFeatRows = () => {
+    for (const f of feats) if (!rowOrder.has(f)) rowOrder.set(f, rowCount++);
+  };
+  /** A dedication's bonus skill feat → the dedication row that granted it (`pushBonusSkillFeats`). */
+  const bonusGranter = new Map<FeatChoice, FeatChoice>();
+  const rowPlaces = new WeakMap<FeatChoice, SkillPlace>();
+  /** A granted row → the feat row its place follows (`featRowPlace`): the subtree a "without this row" re-run
+   *  leaves out walks it (skill-order WP7 round 2), so a granted copy is told from a slot copy of the same feat. */
+  const rowGranter = new WeakMap<FeatChoice, FeatChoice>();
+  /** A non-feat granter's place: a heritage, the background or ancestry (1st), a class feature or option. */
+  const granterPlace = (id: string): SkillPlace =>
+    id === build.heritageId || id === secondHeritageId
+      ? heritagePlace(id)
+      : id === background?.id || id === build.ancestryId
+        ? place(1, 'heritage')
+        : featurePlace(id);
+  const featRowPlace = (row: FeatChoice, depth = 0): SkillPlace => {
+    const known = rowPlaces.get(row);
+    if (known) return known;
+    stampFeatRows();
+    const n = rowOrder.get(row) ?? rowCount;
+    const granterRow =
+      bonusGranter.get(row) ??
+      (row.grantedBy
+        ? (row.grantedBySlot ? feats.find((f) => f !== row && f.featId === row.grantedBy && f.slotKey === row.grantedBySlot) : undefined) ??
+          feats.find((f) => f !== row && f.featId === row.grantedBy)
+        : undefined);
+    let out: SkillPlace;
+    if (granterRow && depth < 20) {
+      rowGranter.set(row, granterRow);
+      const g = featRowPlace(granterRow, depth + 1);
+      out = place(Math.max(row.level, g.level), 'feat', [...(g.orderPath ?? []), n]);
+    } else if (row.grantedBy) {
+      const g = granterPlace(row.grantedBy);
+      // A granter in P5 itself (a feat-granted heritage or background): after it; else first in P5.
+      out = place(Math.max(row.level, g.level), 'feat', g.phase === 'feat' ? [...(g.orderPath ?? []), n] : [0, n]);
+    } else out = place(row.level, 'feat', slotKeyPath(row.slotKey) ?? [0, n]);
+    rowPlaces.set(row, out);
+    return out;
+  };
+  /** The place of the feat a record id names (its first row), for a reader that has only the id. */
+  const featIdPlace = (id: string): SkillPlace => {
+    const row = feats.find((f) => f.featId === id);
+    return row ? featRowPlace(row) : place(1, 'feat', [0, rowCount]);
+  };
   /* A repeatable feat with a sub-choice can legally arrive TWICE — once from a slot, once granted
    * (Domain Initiate: a cloistered cleric's doctrine grants it, and "Special: You can select this
    * feat multiple times, selecting a different domain each time"). The granted copy ALWAYS gets its
@@ -7150,11 +8133,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   }
   for (const [slotKey, featId] of Object.entries(build.featPicks)) {
     if (!featId) continue;
+    // Tweaks phase 2, WP7 (C5, C9): an extra feat place whose block is readable and not live (paused, or Tweaks
+    // off) adds nothing — its feat, and everything that feat grants, stops counting; the pick stays stored.
+    if (!placeLiveForKey(build, slotKey)) continue;
     // Repeatable feats (Armor Proficiency ×3, Skill Training, …) may fill several slots; every other
     // feat dedupes to one. Count prior takes of this id — including any earlier auto-grant of it —
     // against the cap, instead of the old flat "already taken?" test which silently dropped take 2+.
+    // Tweaks phase 2, WP8 (C23): the cap is the book's plus a LIVE "Take a feat more times" (`takesAllowed`); paused or
+    // Tweaks off it is the book's, so the extra copy is dropped here exactly as before (its pick stays stored).
     const taken = feats.reduce((n, f) => (f.featId === featId ? n + 1 : n), 0);
-    if (taken >= maxTakes(content.feats[featId])) continue;
+    if (taken >= takesAllowed(featId, content, build)) continue;
+    // The RAW category, on purpose (C10, rev 3 s2): an extra place's row keeps `extra<category>` — today's value for
+    // that key, what v0.1.44 / v0.1.45 publish, and what keeps `build.hash` still. A reader needing the book
+    // category reads `slotCategoryOf(row.slotKey)`.
     const [lvlStr, cat] = slotKey.split(':');
     const lvl = Number(lvlStr);
     if (!Number.isFinite(lvl) || lvl > level) continue;
@@ -7175,7 +8166,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       for (let i = 0; i < bonusCount; i++) {
         const chosen = build.dedicationSkillFeats?.[bonusSkillFeatKey(fc.featId, i)];
         if (chosen && content.feats[chosen] && !takenFeats.has(chosen)) {
-          feats.push({ featId: chosen, level: fc.level, category: 'skill' });
+          const row: FeatChoice = { featId: chosen, level: fc.level, category: 'skill' };
+          feats.push(row);
+          bonusGranter.set(row, fc); // its print place: right after the dedication (WP2)
           takenFeats.add(chosen);
         }
       }
@@ -7187,8 +8180,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // The ACTIVE given feats only (src/rules/heldFeats.ts: on, not removed, Tweaks switch on, at this level),
   // held from their start level (decision D6).
   const givenRows: FeatChoice[] = [];
-  for (const e of heldFeatSlots(build, level, { via: ['override'] })) {
-    if (takenFeats.has(e.featId) || !content.feats[e.featId]) continue;
+  for (const e of heldFeatSlots(build, level, { via: ['override'], feats: content.feats })) {
+    if (!content.feats[e.featId]) continue;
+    /* Tweaks phase 2, WP8 round 4 (F1) — the FOURTH take gate (C23 named three): a given feat already taken is
+     * dropped (today's dedupe) unless a LIVE "Take a feat more times" for it leaves room, i.e. the rows of it so far
+     * stay below `takesAllowed`. No live block: exactly today's `takenFeats.has` dedupe. `heldFeatSlots` reads the
+     * same rule (`givenCopyCounts`), so a given Fleet plus "Take again" in a general slot is two Fleets on both. */
+    if (
+      takenFeats.has(e.featId) &&
+      !givenCopyCounts(build, e.featId, () => feats.reduce((n, f) => (f.featId === e.featId ? n + 1 : n), 0), () => maxTakes(content.feats[e.featId]))
+    )
+      continue;
     takenFeats.add(e.featId);
     /* The synthetic slot key travels with it, so an override-added feat can answer a per-taking
      * `choice` like any other taking — see `choiceSlots` above for why it needs one at all. */
@@ -7205,7 +8207,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // so it's granted with its own effects — then the expansion below carries any further grants.
   /** The rows this walk pushes — the later takings of one feat get an answer key of their own below. */
   const pickRows: FeatChoice[] = [];
-  const removedGranters = new Set(build.overrides?.removedFeatIds ?? []);
+  const removedGranters = liveRemovedFeatIds(build);
   for (const fc of [...feats]) {
     const spec = FEAT_PICK_GRANTS[fc.featId];
     if (!spec) continue;
@@ -7500,11 +8502,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     /* One granter may hand over one feat once. Needed because the Lore rule below lets a feat be
      * granted twice, and without this a repeatable granter in the queue would re-grant its own. */
     const grantedPairs = new Set<string>();
+    /** A queue entry's skill-ledger source: a feat row, a heritage, or (otherwise) a class feature. */
+    const queueSourceOf = (id: string): string =>
+      feats.some((f) => f.featId === id) ? `feat:${id}` : id === build.heritageId || id === secondHeritageId ? `heritage:${id}` : `feature:${id}`;
+    /** …and its print place (WP2), the same three kinds. */
+    const queuePlaceOf = (id: string): SkillPlace =>
+      feats.some((f) => f.featId === id) ? featIdPlace(id) : id === build.heritageId || id === secondHeritageId ? heritagePlace(id) : featurePlace(id);
     /**
      * The rank `skill` has reached at THIS point in the build — where the feat-proficiency pass has
      * not run yet — optionally ignoring one feat's own contribution.
      *
-     * `FEAT_RANK_FEAT_GRANTS` has to be read inside this loop, because a feat it grants must itself
+     * (skill-order WP4: this reader now serves TODAY'S ORDER only — the legacy rank-gated decision and the
+     * live `skillRankBefore` snapshot; the character's rank-gated rows are `rankGatedGrants`' after the resolve.)
+     * `FEAT_RANK_FEAT_GRANTS` was read inside this loop, because a feat it grants had to
      * be queued and expanded (Specialty Crafting could in principle grant further). The proficiency
      * pass is ~150 lines BELOW, and by then the queue is gone. But that means `proficiencies.skills`
      * here holds class, background, free picks and skill increases and NOT ONE feat grant — reading
@@ -7532,12 +8542,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     /* …and a Tweaks "at least" floor whose start level is above 1 (rank seam 1) is replayed in the
      * loop's own order — before the increases of its level — so "trained at 5th?" sees a floor from 5
      * and not one from 7. A floor from level 1 is already in `skillsBeforeIncreases`. With no such
-     * floor this is the plain replay of the increases, as before. */
+     * floor this is the plain replay of the increases, as before. A MOVED floor (an old Overrides entry,
+     * plan B B26 a) is never replayed: the old `=` it came from was invisible to this question. */
     const laterFloorsOf = (skill: ProficiencyKey, asOf: number) =>
       [...skillFloorsAt]
         .filter(([at]) => at > 1 && at <= asOf)
         .sort((a, b) => a[0] - b[0])
-        .flatMap(([at, fs]) => fs.filter((f) => f.key === skill).map((f) => ({ at, rank: f.rank })));
+        .flatMap(([at, fs]) => fs.filter((f) => f.key === skill && !f.moved).map((f) => ({ at, rank: f.rank })));
     const replayedRank = (skill: ProficiencyKey, asOf: number): ProficiencyRank => {
       const floors = skillFloorsAt.size ? laterFloorsOf(skill, asOf) : [];
       let r: ProficiencyRank = skillsBeforeIncreases[skill] ?? 'untrained';
@@ -7652,25 +8663,32 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        *                       Crafting skill feat for stonemasonry."
        *   Gildedsoul       — "If you're trained in Society, you also gain the Courtly Graces feat."
        * Both shipped granting nobody, because every other lane here is unconditional.
+       *
+       * skill-order WP4 (plan D10): this is now TODAY'S ORDER'S decision only, kept for the legacy side
+       * channel (`legacyRankGatedRows`). It pushes no feat row, adds nothing to `takenFeats` or
+       * `grantedPairs` and queues nothing (the six granted records grant nothing further; G5,
+       * test/skill-rank-gated.test.ts). The character's rows come from `rankGatedGrants` after the resolve,
+       * read off the per-level skill history. The judge is still recorded: it gives every carrier a place in
+       * that history (`history.at`), which the 'taken' reading needs.
        */
       for (const rg of FEAT_RANK_FEAT_GRANTS[srcId] ?? []) {
         if (!content.feats[rg.feat]) continue;
-        const have = skillRankHere(rg.skill, rg.countOwnGrant ? undefined : srcId);
-        if (maxRank(have, rg.rank) !== have) continue; // below the printed rank — no grant
-        const pair = `${srcId}|${rg.feat}`;
-        if (grantedPairs.has(pair) || takenFeats.has(rg.feat)) continue;
-        grantedPairs.add(pair);
-        takenFeats.add(rg.feat);
-        feats.push({
-          featId: rg.feat,
-          level: srcFc?.level ?? 1,
-          category: content.feats[rg.feat].category,
-          grantedBy: srcId,
-          // Stonemason's Eye names the specialty ("for stonemasonry") and WG/Foundry both preselect
-          // it, so the granted feat must not ask a twelve-way question it was never offered.
-          choice: boundGrantChoice(build, content, srcId, rg.feat, srcFc?.slotKey) ?? grantedChoiceById[rg.feat]
-        });
-        queue.push(rg.feat);
+        /* A skill judgement (the skill ledger, skill-order plan D1/D10): its view is `skillRankHere` — the
+         * rank before this carrier's own grants (or with them, `countOwnGrant`). */
+        const exceptId = rg.countOwnGrant ? undefined : srcId;
+        const gate = skillJudge(
+          { source: queueSourceOf(srcId), place: queuePlaceOf(srcId) },
+          (view) => {
+            const have = view.rank(rg.skill);
+            return maxRank(have, rg.rank) === have ? [{ kind: 'rankGate', carrier: srcId, feat: rg.feat }] : [];
+          },
+          { ...liveView, rank: (k) => skillRankHere(k, exceptId) },
+          'beforeOwn',
+        );
+        if (!gate.length) continue; // below the printed rank — no grant
+        // Today's dedupe: a feat already held (or already handed over by an earlier rank gate) is not granted.
+        if (grantedPairs.has(`${srcId}|${rg.feat}`) || takenFeats.has(rg.feat) || legacyRankGatedRows.some((r) => r.featId === rg.feat)) continue;
+        legacyRankGatedRows.push({ featId: rg.feat, grantedBy: srcId });
       }
       /*
        * A taking of its OWN — it survives the dedupe rather than being dropped as a feat the character
@@ -7730,7 +8748,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      *
      * Every carrier on the list, whether or not the character took it: an absent entry and an entry
      * of untrained ranks are different claims, and the reader must not have to guess which it holds. */
-    for (const [carrier, skills] of Object.entries(SKILL_RANK_BEFORE_OWN_GRANTS)) {
+    for (const [carrier, keys] of Object.entries(SKILL_RANK_BEFORE_OWN_GRANTS)) {
       if (!takenFeats.has(carrier)) continue;
       /* AS OF THE LEVEL THE CARRIER WAS TAKEN, not the end of the build: the clause asks what was
        * true when the feat was taken, and a later skill increase or a later feat is not an answer to
@@ -7738,14 +8756,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * without the level a 3rd-level increase spent on the skill its own answer trains read as
        * "already trained" and fired the second branch — a free second skill the book never gives. */
       const takenAt = feats.find((f) => f.featId === carrier)?.level ?? 1;
-      const before: Partial<Record<ProficiencyKey, ProficiencyRank>> = {};
-      for (const s of skills) before[s] = skillRankHere(s, carrier, takenAt);
-      skillRankBefore[carrier] = before;
+      /* A skill judgement (the skill ledger, skill-order plan D7/D12): its view is `skillRankHere` as of
+       * that level, without the carrier's own grants; its effect fills `skillRankBefore[carrier]`. */
+      skillJudge(
+        { source: queueSourceOf(carrier), place: queuePlaceOf(carrier) },
+        (view) => {
+          const before: Partial<Record<ProficiencyKey, ProficiencyRank>> = {};
+          for (const s of keys) before[s] = view.rank(s);
+          return [{ kind: 'before', carrier, ranks: before }];
+        },
+        { ...liveView, rank: (k) => skillRankHere(k, carrier, takenAt) },
+        'beforeOwn',
+      );
     }
   }
-  if (build.overrides?.removedFeatIds?.length) {
-    const removed = new Set(build.overrides.removedFeatIds);
-    for (let i = feats.length - 1; i >= 0; i--) if (removed.has(feats[i].featId)) feats.splice(i, 1);
+  // Every row's push order, before the removal and the level sort below move rows (WP2, `featRowPlace`).
+  stampFeatRows();
+  /* The rank-gated CARRIERS, taken before the Tweaks removals below (WP4 checker round 1, finding 1): today's queue
+   * ran before the removal pass, so a carrier a tweak removed still handed its feat over, and Tweaks part B removes
+   * only the named feat ("only this / what it gave" is deferred to phase 3, tweaks plan B25). Sorted by level
+   * (stably), the order the post-removal list had. */
+  const rankGatedCarrierRows = feats.filter((f) => FEAT_RANK_FEAT_GRANTS[f.featId]).sort((a, b) => a.level - b.level);
+  {
+    // The LIVE removals (blocks/active.ts): a paused or switched-off removal gives the feat back.
+    const removed = liveRemovedFeatIds(build);
+    if (removed.size) for (let i = feats.length - 1; i >= 0; i--) if (removed.has(feats[i].featId)) feats.splice(i, 1);
+    // …and from today's order's rank-gated rows, which this pass removed from the feat list before WP4.
+    if (removed.size) for (let i = legacyRankGatedRows.length - 1; i >= 0; i--) if (removed.has(legacyRankGatedRows[i].featId)) legacyRankGatedRows.splice(i, 1);
   }
   feats.sort((a, b) => a.level - b.level);
 
@@ -7802,6 +8839,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // step the character has reached.
     const up = upgradeRankAt(g, level);
     const at = (r: ProficiencyRank) => (up ? maxRank(r, up) : r);
+    /** This record's skill-ledger source: a feat row, a heritage, or a class feature — and its print place (WP2),
+     *  from the level a `minLevel` grant starts at (it grants nothing before it). */
+    const isRow = feats.includes(fc as FeatChoice);
+    const recPlace0 = isRow
+      ? featRowPlace(fc as FeatChoice)
+      : fc.featId === build.heritageId || fc.featId === secondHeritageId
+        ? heritagePlace(fc.featId)
+        : featurePlace(fc.featId);
+    const recMeta: SkillEventMeta = {
+      source: `${isRow ? 'feat' : fc.featId === build.heritageId || fc.featId === secondHeritageId ? 'heritage' : 'feature'}:${fc.featId}`,
+      place: g.minLevel ? atLevel(recPlace0, g.minLevel) : recPlace0,
+      // Which copy (WP7 round 2): kept through the `minLevel` and ladder moves, read by `passWithout`.
+      ...(isRow ? { row: skillRowTag(recPlace0) } : {}),
+    };
+    /** The record's rank-upgrade ladder: a judge records one `ladder` event per later step (WP2). */
+    const recLadder = upgradeSteps(g);
     /*
      * "If you ALREADY WERE trained in light armor and medium armor, you gain training in heavy armor
      * as well." — read BEFORE the static grant below, because that grant is light + medium and would
@@ -7855,67 +8908,89 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         ...Object.entries(src.skills ?? {}),
         ...(src.deitySkill && deitySkillKey && (SKILLS as readonly string[]).includes(deitySkillKey) ? [[deitySkillKey, src.deitySkill, 'deity'] as [string, ProficiencyRank, string]] : []),
       ];
-      for (const [k, r, slot] of staticSkills) {
-        if (!r) continue;
-        const key = k as ProficiencyKey;
-        const cur = proficiencies.skills[key] ?? 'untrained';
-        // "If you were already trained, you instead become trained in a skill of your choice" — the
-        // redundant static grant converts into a replacement pick (recorded for the builder; applied
-        // from featSkillChoices `<featId>:fallback:<skill>`). Lore grants stay as-is (they're new).
-        //
-        // `redundantFallbackIfFeat` narrows that to the LAST of three printed branches: Intuitive
-        // Crafting's *"…IF YOU HAVE BOTH, you instead become trained in a skill of your choice"*
-        // (feat-7200) owes the free skill only to a character who already holds Specialty Crafting
-        // too. A taking this carrier itself granted does not count — "already" means from something
-        // else, the same rule `countOwnGrant: false` enforces on the other side of the pair.
-        const fallbackGateOk = !g.redundantFallbackIfFeat
-          || feats.some((f) => f.featId === g.redundantFallbackIfFeat && f.grantedBy !== fc.featId);
-        if (g.redundantFallback && fallbackGateOk && src === g && !key.startsWith('lore:') && maxRank(cur, at(r)) === cur) {
-          /* The deity's half says so in its heading: a deity whose skill is Religion owes a second
-           * replacement beside Religion's own, and two cards both reading "Already trained in Religion"
-           * could not be told apart. */
-          skillFallbacks.push({ featId: fc.featId, skill: key, ...(slot ? { slot, note: `your deity's skill (${cap(key)}) was already trained` } : {}) });
-          const picked = skillFallbackPick(build, fc.featId, slot ?? key);
-          if (picked) proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
-          continue;
-        }
-        proficiencies.skills[key] = maxRank(cur, at(r));
-      }
+      /* The static grants are a skill JUDGEMENT (the skill ledger, skill-order plan D6): "already trained?"
+       * reads the rank at this record's place, and the ladder (`at`) the level it judges at. */
+      if (staticSkills.length)
+        skillJudge(recMeta, (view) => {
+          const s = judgeScope(view);
+          const upJ = upgradeRankAt(g, view.level);
+          const atJ = (r: ProficiencyRank) => (upJ ? maxRank(r, upJ) : r);
+          for (const [k, r, slot] of staticSkills) {
+            if (!r) continue;
+            const key = k as ProficiencyKey;
+            const cur = s.rank(key);
+            // "If you were already trained, you instead become trained in a skill of your choice" — the
+            // redundant static grant converts into a replacement pick (recorded for the builder; applied
+            // from featSkillChoices `<featId>:fallback:<skill>`). Lore grants stay as-is (they're new).
+            //
+            // `redundantFallbackIfFeat` narrows that to the LAST of three printed branches: Intuitive
+            // Crafting's *"…IF YOU HAVE BOTH, you instead become trained in a skill of your choice"*
+            // (feat-7200) owes the free skill only to a character who already holds Specialty Crafting
+            // too. A taking this carrier itself granted does not count — "already" means from something
+            // else, the same rule `countOwnGrant: false` enforces on the other side of the pair.
+            const fallbackGateOk = !g.redundantFallbackIfFeat || view.hasFeat(g.redundantFallbackIfFeat, fc.featId);
+            if (g.redundantFallback && fallbackGateOk && src === g && !key.startsWith('lore:') && maxRank(cur, atJ(r)) === cur) {
+              /* The deity's half says so in its heading: a deity whose skill is Religion owes a second
+               * replacement beside Religion's own, and two cards both reading "Already trained in Religion"
+               * could not be told apart. */
+              s.push({ kind: 'fallback', entry: { featId: fc.featId, skill: key, ...(slot ? { slot, note: `your deity's skill (${cap(key)}) was already trained` } : {}) } });
+              const picked = skillFallbackPick(build, fc.featId, slot ?? key);
+              if (picked) s.pick(picked, 'trained');
+              continue;
+            }
+            s.write(key, 'max', atJ(r), undefined, true);
+          }
+          return s.effects;
+        }, undefined, undefined, recLadder);
       // Conditional "trained; expert if already trained" — grant upgraded only if the character
       // already meets `base` from another source (evaluated against the current, pre-this-grant rank).
       const condEntries = Object.entries(src.conditionalSkills ?? {}).filter(([, cu]) => cu);
-      /* Every prior rank is read BEFORE anything is granted: the third step below asks whether the
-       * character was ALREADY at the top of the ladder, and this loop is about to raise them to it. */
-      const priorCond = condEntries.map(([k]) => proficiencies.skills[k as ProficiencyKey] ?? 'untrained');
-      condEntries.forEach(([k, cu], i) => {
-        const cur = priorCond[i];
-        const grant = maxRank(cur, cu!.base) === cur ? cu!.upgraded : cu!.base; // cur >= base → upgraded
-        proficiencies.skills[k as ProficiencyKey] = maxRank(cur, at(grant));
-      });
       /* *"If you are already an expert in BOTH skills, you become trained in a skill of your choice."*
        * ONE pick, and only when EVERY conditional skill was already there — see the field's note for
        * why the record-wide `redundantFallback` this record used to carry says neither of those. */
       const csf = src.conditionalSkillsFallback;
-      if (csf && condEntries.length && priorCond.every((r) => maxRank(r, csf.whenAll) === r)) {
-        const first = condEntries[0][0] as ProficiencyKey;
-        skillFallbacks.push({ featId: fc.featId, skill: first, note: `Already ${csf.whenAll} in ${condEntries.map(([k]) => k).join(' and ')}` });
-        const picked = build.featSkillChoices?.[`${fc.featId}:fallback:${first}`];
-        if (picked && SKILLS.includes(picked)) proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
-      }
+      if (condEntries.length)
+        skillJudge(recMeta, (view) => {
+          const s = judgeScope(view);
+          const upJ = upgradeRankAt(g, view.level);
+          const atJ = (r: ProficiencyRank) => (upJ ? maxRank(r, upJ) : r);
+          /* Every prior rank is read BEFORE anything is granted: the third step below asks whether the
+           * character was ALREADY at the top of the ladder, and this loop is about to raise them to it. */
+          const priorCond = condEntries.map(([k]) => s.rank(k as ProficiencyKey));
+          condEntries.forEach(([k, cu], i) => {
+            const cur = priorCond[i];
+            const grant = maxRank(cur, cu!.base) === cur ? cu!.upgraded : cu!.base; // cur >= base → upgraded
+            s.write(k as ProficiencyKey, 'max', atJ(grant), undefined, true);
+          });
+          if (csf && priorCond.every((r) => maxRank(r, csf.whenAll) === r)) {
+            const first = condEntries[0][0] as ProficiencyKey;
+            s.push({ kind: 'fallback', entry: { featId: fc.featId, skill: first, note: `Already ${csf.whenAll} in ${condEntries.map(([k]) => k).join(' and ')}` } });
+            const picked = build.featSkillChoices?.[`${fc.featId}:fallback:${first}`];
+            if (picked && SKILLS.includes(picked)) s.pick(picked, 'trained');
+          }
+          return s.effects;
+        }, undefined, undefined, recLadder);
       /* "If you have LEGENDARY proficiency in OCCULTISM, you gain expert proficiency in Bardic Lore"
        * — a rank gated on a DIFFERENT statistic. The loop above keys off the granted skill’s own
        * prior rank, so it could not say this and Bardic Lore stayed trained at every level. Skill
        * increases are applied far above this loop, so the gate reads the character’s final rank. */
-      for (const [k, cc] of Object.entries(src.crossConditionalSkills ?? {})) {
-        if (!cc) continue;
-        /* ANY of the named skills may open the gate. Loremaster Dedication's is *"if you have legendary
-         * proficiency in A SKILL USED TO DECIPHER WRITING"* — Arcana, Occultism, Religion or Society —
-         * and the map is keyed by the GRANTED skill, so four separate entries cannot express it. */
-        const gates = [cc.whenSkill].flat();
-        if (!gates.some((g) => maxRank(proficiencies.skills[g] ?? 'untrained', cc.whenRank) === (proficiencies.skills[g] ?? 'untrained'))) continue;
-        // Deliberately NOT wrapped in `at()`: the record states one step, not a ladder.
-        proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', cc.rank);
-      }
+      const crossEntries = Object.entries(src.crossConditionalSkills ?? {}).filter(([, cc]) => cc);
+      /* A standing gate on the finished character: the final pass after every level (plan D9, row 16). Its
+       * step's level (the later of the record's and the first level the gate holds) is the resolver's (WP3). */
+      if (crossEntries.length)
+        skillJudge({ ...recMeta, place: { ...recMeta.place, phase: 'final' } }, (view) => {
+          const s = judgeScope(view);
+          for (const [k, cc] of crossEntries) {
+            /* ANY of the named skills may open the gate. Loremaster Dedication's is *"if you have legendary
+             * proficiency in A SKILL USED TO DECIPHER WRITING"* — Arcana, Occultism, Religion or Society —
+             * and the map is keyed by the GRANTED skill, so four separate entries cannot express it. */
+            const gates = [cc!.whenSkill].flat();
+            if (!gates.some((gk) => maxRank(s.rank(gk), cc!.whenRank) === s.rank(gk))) continue;
+            // Deliberately NOT wrapped in `at()`: the record states one step, not a ladder.
+            s.write(k as ProficiencyKey, 'max', cc!.rank);
+          }
+          return s.effects;
+        });
       /* *"If you already have Hunt Prey, you become an expert in Survival"* (Game Hunter Dedication) —
        * gated on OWNING a class feature, which neither rank-conditioned loop above can say. Checked
        * against the class feature lists directly (`ownedFeatureIds` is assembled further down): the
@@ -7926,7 +9001,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         const owns = [...(cls?.features ?? []), ...(cls2?.features ?? [])].some((f) => f.featureId === wanted && f.level <= level);
         if (owns) {
           for (const [k, r] of Object.entries(src.skillsIfFeature.skills)) {
-            if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', r);
+            if (r) skillWrite(skills, k as ProficiencyKey, 'max', r, recMeta);
           }
         }
       }
@@ -7948,9 +9023,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // Skill-training CHOICES ("your choice of Acrobatics or Athletics"): resolve each slot to the
     // player's pick, defaulting to the first option (or Acrobatics for an 'any' slot). Trains that
     // skill (RAISES only).
-    (g.skillChoices ?? []).forEach((slot, idx) => {
+    /* A skill JUDGEMENT (the skill ledger, skill-order plan D6): each slot reads the rank at this record's
+     * place, after the slots before it. */
+    const choiceSlots = g.skillChoices ?? [];
+    /** One slot, on the judge's own scope `s` (so a later slot sees an earlier slot's training). */
+    const judgeSlot = (s: ReturnType<typeof judgeScope>, atJ: (r: ProficiencyRank) => ProficiencyRank, slot: (typeof choiceSlots)[number], idx: number): void => {
       const skill = featSkillChoiceValue(build, content, fc.featId, idx)!;
-      const cur = proficiencies.skills[skill] ?? 'untrained';
+      const cur = s.rank(skill);
       // A conditional slot ("trained; expert if already trained" on a CHOSEN skill — Lion Blade)
       // upgrades when the pick already met `base` before this grant.
       const grant = slot.conditionalRank
@@ -7962,7 +9041,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // was the one lane it never reached. Both records that carry both fields print the upgrade for
       // the chosen skill and nothing else: Dual Studies' *"at 7th level, you each become an expert in
       // the chosen skills"*, and the Tome implement's *"at 5th level, you're an expert in both"*.
-      proficiencies.skills[skill] = maxRank(cur, at(grant));
+      s.write(skill, 'max', atJ(grant), undefined, true);
 
       /*
        * THE REDUNDANCY CLAUSE, on a CHOSEN skill — "if you were already trained, you become trained in
@@ -7997,7 +9076,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * skill of your choice"*.
        */
       const loreSlot = skill.startsWith('lore:');
-      if (slotFallback && (!loreSlot || slot.loreFallback) && maxRank(cur, at(grant)) === cur) {
+      if (slotFallback && (!loreSlot || slot.loreFallback) && maxRank(cur, atJ(grant)) === cur) {
         /*
          * THE REPLACEMENT LANDS AT THE RANK THE DEAD SLOT WOULD HAVE GIVEN, not always at trained.
          *
@@ -8024,29 +9103,40 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
          * rank behind it; handing that character expert (and demanding an already-trained pick)
          * would print-contradict a record whose text gives them nothing at all here.
          */
-        const fbRank = slot.conditionalRank ? 'trained' : at(grant);
-        skillFallbacks.push({
-          featId: fc.featId,
-          skill,
-          ...(fbRank !== 'trained' ? { rank: fbRank } : {}),
-          ...(slot.loreFallback ? { lore: true } : {}),
+        const fbRank = slot.conditionalRank ? 'trained' : atJ(grant);
+        s.push({
+          kind: 'fallback',
+          entry: {
+            featId: fc.featId,
+            skill,
+            ...(fbRank !== 'trained' ? { rank: fbRank } : {}),
+            ...(slot.loreFallback ? { lore: true as const } : {}),
+          },
         });
         if (slot.loreFallback) {
           const subject = build.featLoreChoices?.[`${fc.featId}:fallback:${skill}`];
           const key = subject ? loreKey(subject) : null;
-          if (key) proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', fbRank);
+          if (key) s.pick(key, fbRank, undefined, !slot.conditionalRank);
         } else {
           const picked = build.featSkillChoices?.[`${fc.featId}:fallback:${skill}`];
-          const pickedCur = picked ? (proficiencies.skills[picked] ?? 'untrained') : 'untrained';
+          const pickedCur = picked ? s.rank(picked) : 'untrained';
           // "…in which you're trained" — an untrained skill is not an eligible replacement once the
           // replacement is worth more than training.
           const eligible = fbRank === 'trained' || pickedCur !== 'untrained';
           if (picked && SKILLS.includes(picked) && eligible) {
-            proficiencies.skills[picked] = maxRank(pickedCur, fbRank);
+            s.pick(picked, fbRank, undefined, !slot.conditionalRank);
           }
         }
       }
-    });
+    };
+    if (choiceSlots.length)
+      skillJudge(recMeta, (view) => {
+        const s = judgeScope(view);
+        const upJ = upgradeRankAt(g, view.level);
+        const atJ = (r: ProficiencyRank) => (upJ ? maxRank(r, upJ) : r);
+        choiceSlots.forEach((slot, idx) => judgeSlot(s, atJ, slot, idx));
+        return s.effects;
+      }, undefined, undefined, recLadder);
     /*
      * …and the slots that belong to the grant the player's own answer SELECTED.
      *
@@ -8060,8 +9150,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     (answeredGrant?.skillChoices ?? []).forEach((slot, idx) => {
       const skill = featSkillChoiceValue(build, content, fc.featId, idx, fc.choice?.value);
       if (!skill) return;
-      const cur = proficiencies.skills[skill] ?? 'untrained';
-      proficiencies.skills[skill] = maxRank(cur, at(slot.rank));
+      ladderWrite(g, skill, slot.rank, recMeta); // `at(slot.rank)`, one write per step level (WP2)
     });
     // "Trained in a Lore of your choice" — grant lore:<subject> for each filled Lore slot (RAISES only).
     for (let idx = 0; idx < (g.loreChoices ?? 0); idx++) {
@@ -8109,8 +9198,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         /* `at()` — "At 3rd, 7th, and 15th levels, you gain an additional skill increase you can apply
          * ONLY to the chosen Lore subcategory." The increase is spendable nowhere else, so the ladder
          * IS the rank. This was the one grant lane the level upgrade never reached, which is why a
-         * level-20 Additional Lore read "trained". */
-        proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', at('trained'));
+         * level-20 Additional Lore read "trained". One write per step level (WP2): trained when taken,
+         * expert at 3rd, master at 7th, legendary at 15th. */
+        ladderWrite(g, key, 'trained', recMeta);
       }
     }
     // …and a Lore slot the SELECTED grant asks for — Clan Lore's unlisted clan, whose Lore the GM
@@ -8119,7 +9209,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const subject = build.featLoreChoices?.[`${fc.featId}:${fc.choice?.value}:${idx}`]?.trim();
       const key = subject ? loreKey(subject) : null;
       if (!key) continue;
-      proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', at('trained'));
+      ladderWrite(g, key, 'trained', recMeta);
     }
   }
 
@@ -8152,23 +9242,34 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * make the two halves of one printed clause disagree. Off today: approval #12 keeps the whole
      * record on. */
     const mw = engineLaneOff('molten-wit') ? undefined : skillRankBefore['molten-wit'];
-    const untrained = mw ? (['deception', 'diplomacy'] as const).filter((s) => (mw[s] ?? 'untrained') === 'untrained') : [];
-    if (mw && untrained.length === 1) {
-      // *"you must take the other"* — not a choice, so it lands whether or not the feat's own control
-      // has been answered. The player sees it on the sheet as a trained skill they did not pick.
-      proficiencies.skills[untrained[0]] = maxRank(proficiencies.skills[untrained[0]] ?? 'untrained', 'trained');
-    } else if (mw && untrained.length === 0) {
-      /* *"a DIFFERENT skill of your choice"* — the shipped replacement-pick lane, which is the same
-       * sentence every `redundantFallback` record prints and already has its own builder control and
-       * its own storage key. `note` because the heading this lane derives by default names one skill
-       * ("Already trained in Deception"), and here the pick is owed to both at once. */
-      const key = 'molten-wit:fallback:deception';
-      skillFallbacks.push({ featId: 'molten-wit', skill: 'deception', note: 'Already trained in Deception and Diplomacy' });
-      const picked = build.featSkillChoices?.[key];
-      if (picked && SKILLS.includes(picked)) {
-        proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
-      }
-    }
+    /* A skill JUDGEMENT (the skill ledger, skill-order plan D7): its view is the snapshot — the ranks
+     * before the feat's own grants as of its level, without a moved floor or an old `=` (part B B26 a) —
+     * and its raises land on the live ranks. */
+    if (mw)
+      skillJudge(
+        { source: 'feat:molten-wit', place: featIdPlace('molten-wit') },
+        (view) => {
+          const s = judgeScope(view);
+          const untrained = (['deception', 'diplomacy'] as const).filter((sk) => view.rank(sk) === 'untrained');
+          if (untrained.length === 1) {
+            // *"you must take the other"* — not a choice, so it lands whether or not the feat's own control
+            // has been answered. The player sees it on the sheet as a trained skill they did not pick.
+            s.write(untrained[0], 'max', 'trained');
+          } else if (untrained.length === 0) {
+            /* *"a DIFFERENT skill of your choice"* — the shipped replacement-pick lane, which is the same
+             * sentence every `redundantFallback` record prints and already has its own builder control and
+             * its own storage key. `note` because the heading this lane derives by default names one skill
+             * ("Already trained in Deception"), and here the pick is owed to both at once. */
+            const key = 'molten-wit:fallback:deception';
+            s.push({ kind: 'fallback', entry: { featId: 'molten-wit', skill: 'deception', note: 'Already trained in Deception and Diplomacy' } });
+            const picked = build.featSkillChoices?.[key];
+            if (picked && SKILLS.includes(picked)) s.pick(picked, 'trained');
+          }
+          return s.effects;
+        },
+        { ...liveView, rank: (k) => mw[k] ?? 'untrained' },
+        'noMoved',
+      );
   }
 
   /* Bloodrager Dedication's Arcana-or-Religion grant used to be special-cased here. It has moved to a
@@ -8373,7 +9474,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const prog of content.classFeatures[fid]?.skillProgression ?? []) {
       for (const step of prog.at) {
         if (level < step.level) continue;
-        proficiencies.skills[prog.skill] = maxRank(proficiencies.skills[prog.skill] ?? 'untrained', step.rank);
+        skillWrite(skills, prog.skill, 'max', step.rank, { source: `feature:${fid}`, place: atLevel(featurePlace(fid), step.level) });
       }
     }
   }
@@ -8387,9 +9488,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * time this runs, so a push from here would land in a list nobody reads again. Add a focus lane
    * there, not in this function.
    */
-  const applyAlwaysOn = (g: EffectGrant, srcName?: string, recordId?: string) => {
+  /* `skillMeta` = the record's skill-ledger source ('<kind>:<id>') and print place; every caller names one,
+   * because `recordId` is also the innate-spell record key and two callers deliberately pass none. */
+  const applyAlwaysOn = (g: EffectGrant, srcName: string | undefined, recordId: string | undefined, skillMeta: SkillEventMeta) => {
     mergeEffect(chosenEffects, g, srcName);
-    for (const [k, r] of Object.entries(g.skills ?? {})) if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', r);
+    for (const [k, r] of Object.entries(g.skills ?? {})) if (r) skillWrite(skills, k as ProficiencyKey, 'max', r, skillMeta);
     for (const s of g.innateSpells ?? []) {
       if (!content.spells[s.spellId]) continue;
       chosenInnateGrants.push(s);
@@ -8409,6 +9512,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // `grantsActions` on the heritage, so a 1st-level surki had it and the 9th-level pick was inert.
     for (const a of g.grantsActions ?? []) if (content.actions[a] && !chosenActionIds.includes(a)) chosenActionIds.push(a);
   };
+  /** `applyAlwaysOn` as a `resolvePick` sink for one record kind (its skill-ledger source) at its print place
+   *  (plan 1.1 row 19: a feat P5, a heritage, the background and the deity P4, a class feature or option P3). */
+  const alwaysOnFor = (kind: string, at: SkillPlace) => (g: EffectGrant, srcName: string, recordId: string) =>
+    applyAlwaysOn(g, srcName, recordId, { source: `${kind}:${recordId}`, place: at });
   /*
    * THE ENHANCEMENT TIER — a benefit a record prints but only HAS while another record names it.
    *
@@ -8440,7 +9547,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       gated.length && !enhancedFeatIds.has(fc.featId)
         ? (rec?.effectChoices ?? []).filter((ch) => !gated.includes(ch.id))
         : rec?.effectChoices;
-    resolvePick(fc.featId, choices, applyAlwaysOn, rec?.name ?? fc.featId);
+    resolvePick(fc.featId, choices, alwaysOnFor('feat', featRowPlace(fc)), rec?.name ?? fc.featId);
   }
   // …and the tier's own always-on payload (Arcane Eye's hourly See the Unseen, Arcane Communication's
   // 10-foot telepathy). Attributed to the FEAT, not to the augmentation, so the Spells page's source
@@ -8451,12 +9558,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // fallback above), which would deliver every tier unconditionally — the very defect being fixed.
   for (const e of enhancements) {
     const g = content.feats[e.featId]?.enhancement?.grant;
-    if (g) applyAlwaysOn(g, `${content.feats[e.featId]?.name ?? e.featId} (Enhancement)`, e.featId);
+    if (g) applyAlwaysOn(g, `${content.feats[e.featId]?.name ?? e.featId} (Enhancement)`, e.featId, { source: `feat:${e.featId}`, place: featIdPlace(e.featId) });
   }
   // Both heritages: four of the nine a second-heritage feat can hand over carry their whole
   // mechanical content in `effectChoices`, so resolving only the first would grant nothing.
   for (const hid of [build.heritageId, secondHeritageId]) {
-    if (hid) resolvePick(hid, content.heritages[hid]?.effectChoices, applyAlwaysOn, content.heritages[hid]?.name ?? hid, true);
+    if (hid) resolvePick(hid, content.heritages[hid]?.effectChoices, alwaysOnFor('heritage', heritagePlace(hid)), content.heritages[hid]?.name ?? hid, true);
   }
   /*
    * …and the LEVEL STEP on the skill that pick trained — Ancient Ash: *"You become trained in one
@@ -8478,13 +9585,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const key of Object.keys(opt?.grant?.skills ?? {}) as ProficiencyKey[]) {
       for (const step of prog.at) {
         if (level < step.level) continue;
-        proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', step.rank);
+        skillWrite(skills, key, 'max', step.rank, { source: `heritage:${hid}`, place: heritagePlace(hid, step.level) });
       }
     }
   }
   // The DEITY and the BACKGROUND can carry a pick too (Lurlup's optional Unholy sanctification;
   // Magical Experiment). Neither was resolved, so both were questions with no answer and no effect.
-  if (build.deityId) resolvePick(build.deityId, content.deities[build.deityId]?.effectChoices, applyAlwaysOn, content.deities[build.deityId]?.name ?? build.deityId);
+  if (build.deityId) resolvePick(build.deityId, content.deities[build.deityId]?.effectChoices, alwaysOnFor('deity', place(1, 'heritage')), content.deities[build.deityId]?.name ?? build.deityId);
   /* "This gives you the holy or unholy trait" — Deity (Cleric). The ANSWER lives on the DEITY
    * record's `sanctification` effect choice, whose options carry no grant (measured: 0 of 522
    * options across the 261 sanctified deities), and applyAlwaysOn only ever sees `opt.grant` — so
@@ -8506,13 +9613,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (sanct === 'holy' || sanct === 'unholy')
       chosenCreatureTraits.push({ trait: sanct, source: content.deities[build.deityId]?.name ?? build.deityId });
   }
-  if (build.backgroundId) resolvePick(build.backgroundId, content.backgrounds[build.backgroundId]?.effectChoices, applyAlwaysOn, content.backgrounds[build.backgroundId]?.name ?? build.backgroundId);
-  for (const fid of ownedFeatureIds) resolvePick(fid, content.classFeatures[fid]?.effectChoices, applyAlwaysOn, content.classFeatures[fid]?.name ?? fid);
+  if (build.backgroundId) resolvePick(build.backgroundId, content.backgrounds[build.backgroundId]?.effectChoices, alwaysOnFor('background', place(1, 'heritage')), content.backgrounds[build.backgroundId]?.name ?? build.backgroundId);
+  for (const fid of ownedFeatureIds) resolvePick(fid, content.classFeatures[fid]?.effectChoices, alwaysOnFor('feature', featurePlace(fid)), content.classFeatures[fid]?.name ?? fid);
   // A chosen subclass / extra-choice option (a kineticist element gate, the wizard's Runelord school)
   // ships as a classFeature record under the same slug — its picks are the character's too.
   for (const o of grantOptions) {
     if (ownedFeatureIds.has(o.id)) continue; // already resolved above
-    resolvePick(o.id, content.classFeatures[o.id]?.effectChoices, applyAlwaysOn, content.classFeatures[o.id]?.name ?? o.name ?? o.id);
+    resolvePick(o.id, content.classFeatures[o.id]?.effectChoices, alwaysOnFor('option', optionPlace(o.id)), content.classFeatures[o.id]?.name ?? o.name ?? o.id);
   }
   /*
    * batch 036: advanced-weaponry-construct — …and the inventor's INNOVATION MODIFICATIONS, which are
@@ -8524,7 +9631,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * or shown. Blast radius today: zero, no innovation modification ships `effectChoices` yet.
    */
   for (const mid of Object.values(build.inventorModifications ?? {})) {
-    if (mid && !ownedFeatureIds.has(mid)) resolvePick(mid, content.classFeatures[mid]?.effectChoices, applyAlwaysOn, content.classFeatures[mid]?.name ?? mid);
+    if (mid && !ownedFeatureIds.has(mid)) resolvePick(mid, content.classFeatures[mid]?.effectChoices, alwaysOnFor('feature', featurePlace(mid)), content.classFeatures[mid]?.name ?? mid);
   }
   // A class feature's PLAIN `choice` (stored under `feature:<id>`) may now carry a grant too. Those
   // pickers already rendered and their answers already round-tripped — the barbarian's instinct even
@@ -8539,8 +9646,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // Rest sheet cannot ask still has a builder picker, and a picker whose answer nothing applies is
     // the defect this whole pass is about. (No record is in that shape today; the pair must not drift.)
     if (!def || askedAtDailyPrep(def)) continue;
-    const g = (def.options ?? []).find((o) => o.value === build.featChoices?.[`feature:${fid}`])?.grant;
-    if (g) applyAlwaysOn(g, content.classFeatures[fid]?.name ?? fid);
+    /* A champion of a "must be" deity (Iomedae) is holy without a click, as the cleric's single-option read
+     * above: until 2026-10-27 an unanswered Deity and Cause gave no trait, and so no Radiant Armament holy
+     * rune either (sanctificationOf reads the trait). A stored answer, even one kept by Take anyway, wins. */
+    const answer =
+      build.featChoices?.[`feature:${fid}`] ||
+      (SANCTIFICATION_FROM_DEITY.has(fid) && def.flag === 'sanctification' ? deityMustBeSanctification(build, content) : undefined);
+    const g = (def.options ?? []).find((o) => o.value === answer)?.grant;
+    if (g) applyAlwaysOn(g, content.classFeatures[fid]?.name ?? fid, undefined, { source: `feature:${fid}`, place: featurePlace(fid) });
   }
   /*
    * …and a FEAT's plain `choice`, whose answer lives on `fc.choice.value` rather than in featChoices.
@@ -8566,8 +9679,253 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * with Lantern Beam on the sheet (measured by the batch-27 verifier). */
       const owned = (id: string) => id === build.heritageId || id === secondHeritageId || ownedFeatureIds.has(id);
       if (opt?.requiresAnyFeature?.length && !opt.requiresAnyFeature.some(owned)) continue;
-      if (opt?.grant) applyAlwaysOn(opt.grant, content.feats[fc.featId]?.name ?? fc.featId);
+      if (opt?.grant) applyAlwaysOn(opt.grant, content.feats[fc.featId]?.name ?? fc.featId, undefined, { source: `feat:${fc.featId}`, place: featRowPlace(fc) });
     }
+  }
+  /*
+   * THE RESOLVE POINT of the skill ledger (skill-order plan D2): every skill write and judgement is
+   * recorded by now, and nothing below writes a skill rank except the "exactly" clamp
+   * (`applyExactClamp`). A registered probe (tests only, `skillLedgerReplay`) gets the ledger and the live
+   * ranks here.
+   *
+   * WP3: THE PRINT PASS runs here (`resolveSkillPass`, src/rules/skillPass.ts): the recorded events replayed
+   * level by level in print order, every judge re-run on the print view at its own place and level. Its
+   * result REPLACES the live ranks and their lists (`swapInPrintSkills`, the one other symbol allowed to write
+   * a skill rank); everything below reads print. The live answer is kept for the legacy side channel
+   * (`skillOrderLegacyOf`, D19): the ranks today's order gave, clamped the same way, for the parity
+   * instrument's `--legacy-check` and nothing else.
+   */
+  const liveSkillsAtResolve = { ...skills };
+  const liveFallbacksAtResolve = [...skillFallbacks];
+  const liveIncreasesAtResolve = [...skillIncreases];
+  const liveLanguageLoresAtResolve = [...languageLores];
+  const passPrereqs = (() => {
+    const prereqs = new Map<string, SkillPrereqLine[]>();
+    const waived = new Set((background?.prerequisiteWaivers ?? []).map((w) => w.featId));
+    for (const f of feats) {
+      const def = content.feats[f.featId];
+      if (!def || f.grantedBy || waived.has(f.featId)) continue;
+      const p = featRowPlace(f);
+      const path = p.orderPath ?? [];
+      if (path.length !== 2 || (path[0] !== 1 && path[0] !== 2)) continue;
+      const lines = skillPrereqLines(def, content);
+      if (lines.length) prereqs.set(`${p.level}|${path[0]},${path[1]}`, lines);
+    }
+    return prereqs;
+  })();
+  /** The feat rows and prerequisite units the last `runSkillPass` handed the resolver (skill-order WP7: the
+   *  `without` re-run below starts from exactly what the character's own pass saw). */
+  let lastPassRows: SkillPassFeatRow[] = [];
+  /** …and the feat rows themselves, in the same order (WP7 round 2: `passWithout` finds a slot's row and its
+   *  granted subtree among them). */
+  let lastPassFeatRows: FeatChoice[] = [];
+  /** The print pass over the ledger, with the feat rows it may see through `hasFeat` (D6): the character's rows
+   *  plus `extra` (the rank-gated rows of the previous run, WP4), less the later grants those rows displace. */
+  const runSkillPass = (extra: readonly FeatChoice[]): SkillPassResult => {
+    const displaced = new Set(extra.map((r) => rankGatedDisplaces.get(r)).filter((r): r is FeatChoice => !!r));
+    lastPassFeatRows = [...feats.filter((f) => !displaced.has(f)), ...extra];
+    lastPassRows = lastPassFeatRows.map((f) => ({ featId: f.featId, ...(f.grantedBy ? { grantedBy: f.grantedBy } : {}), place: featRowPlace(f) }));
+    return resolveSkillPass(skillLedger.events, { level, featRows: lastPassRows, prereqs: passPrereqs });
+  };
+  /*
+   * THE RANK-GATED FEAT GRANTS, decided on the print history (skill-order plan D10, 1.4; WP4). FEAT_RANK_FEAT_GRANTS'
+   * carriers as the feat list held them BEFORE the Tweaks removals (`rankGatedCarrierRows`: a removal takes only the
+   * named feat, as today's queue and Tweaks part B do), in level order: each entry read at the moment its `when`
+   * names (`rankGatedGrants`). Skipped, as the queue skipped them: a carrier whose feat grants the trust gate
+   * darkens (`grantsRecordOff`), a granted id that does not ship, a feat a Tweaks removal takes away (D10 a), and
+   * a feat the character already holds or an earlier carrier already handed over (D10 b). The row carries
+   * `grantedBy` and the bound answer as before, at D10's level.
+   *
+   * THE EARLIEST SOURCE WINS (WP4 checker round 2, finding 1). Before WP4 the queue's rank gate put its feat in
+   * `takenFeats`, so a flat granter of the same feat later in the queue (Sinister Appearance → Intimidating Glare,
+   * Marine Marauder Dedication → Underwater Marauder) pushed nothing. The rank gate now runs after the queue, so
+   * that flat row is already in the list. "Held" therefore means held BEFORE the rank gate: a slot pick (no
+   * `grantedBy`) or a granted row at an earlier level keeps the feat, and so does a granted row at the same level
+   * whose granter comes first in D4's order (`rankGateFirst`, WP6L); any other GRANTED row gives way, and the
+   * rank-gated row takes its place (`rankGatedDisplaces`; it keeps that row's answer when
+   * the carrier binds none). That is print ("as soon as you meet the prerequisites … you gain these feats") and
+   * today's result whenever the carrier came first in the queue, without today's dependence on featPicks order.
+   */
+  const rankGatedDisplaces = new WeakMap<FeatChoice, FeatChoice>();
+  /*
+   * A SAME-LEVEL TIE follows D4 (skill-order WP6L item 2; the WP4 checker's minor on deviation 58): inside one level
+   * the feats run in slot-draw order, each granted feat right after its granter, depth first. The rank-gated feat
+   * arrives right after the moment its gate opens — the carrier's own place when the rank already held there (and
+   * always for 'taken' / 'standing'), else the place of the step that first made the rank hold at the grant's
+   * level, whichever is later — and a flat grant of the same feat right after ITS granter. A row whose unit D5 moved
+   * after the level's increases (its skill prerequisite holds only once they are in) sits there, at P7, even when
+   * the unit writes no rank (`passRowPlace`). Whichever of the two
+   * comes first in that order keeps the feat. Before this a tie always went to the flat granter: a monk 2 with
+   * Student of Water in the class slot and Marine Marauder Dedication in the Free Archetype slot got its
+   * Underwater Marauder from the dedication, though the class slot comes first.
+   */
+  const rankOf = (r: ProficiencyRank | undefined) => PROFICIENCY_RANKS.indexOf(r ?? 'untrained');
+  const comparePlace = (a: SkillPlace, b: SkillPlace) =>
+    a.level - b.level || SKILL_PHASE_RANK[a.phase] - SKILL_PHASE_RANK[b.phase] || compareOrderPath(a.orderPath ?? [], b.orderPath ?? []);
+  /** A feat row's place in the print pass: its P5 place, or P7 when D5 moved its unit after the level's increases
+   *  (`p.deferred`, which names units with no skill event too: Marine Marauder Dedication taken on the strength of
+   *  that level's Athletics increase sits after it; WP6L checker round 1). */
+  const passRowPlace = (p: SkillPassResult, row: FeatChoice): SkillPlace => {
+    const at = featRowPlace(row);
+    const path = at.orderPath ?? [];
+    return path.length >= 2 && p.deferred.includes(`${at.level}|${path[0]},${path[1]}`) ? { ...at, phase: 'featAfterIncrease' } : at;
+  };
+  const rankGatePoint = (p: SkillPassResult, d: RankGatedGrant): SkillPlace | undefined => {
+    const carrierRow = rankGatedCarrierRows.find((f) => f.featId === d.carrier);
+    if (!carrierRow) return undefined;
+    const at = passRowPlace(p, carrierRow);
+    const entry = (FEAT_RANK_FEAT_GRANTS[d.carrier] ?? []).find((e) => e.feat === d.feat);
+    if (entry?.when !== 'reached') return at;
+    // The step that made the rank hold (the last crossing at or before the grant's level).
+    const crossing = p.history.steps.filter((s) => s.key === entry.skill && s.level <= d.level && rankOf(s.to) >= rankOf(entry.rank) && rankOf(s.from) < rankOf(entry.rank)).pop();
+    if (!crossing) return at;
+    const id = crossing.source.slice(crossing.source.indexOf(':') + 1);
+    const ev = skillLedger.events.find((e) => e.level === crossing.level && (e.source === crossing.source || (crossing.source.startsWith('pick:') && e.source.slice(e.source.indexOf(':') + 1) === id)));
+    const reached: SkillPlace = { level: crossing.level, phase: crossing.phase, orderPath: ev?.orderPath ?? [] };
+    return comparePlace(reached, at) > 0 ? reached : at;
+  };
+  /** Does the rank-gated grant come before this flat-granted row of the same feat (both at one level, D4)? The
+   *  flat row sits right after its granter, so the gate is compared with the granter's place. */
+  const rankGateFirst = (p: SkillPassResult, d: RankGatedGrant, flat: FeatChoice): boolean => {
+    const point = rankGatePoint(p, d);
+    if (!point) return false;
+    const row = passRowPlace(p, flat);
+    const granter: SkillPlace = { ...row, orderPath: (row.orderPath ?? []).slice(0, -1) };
+    return comparePlace(point, granter) < 0;
+  };
+  const rankGatedRowsOf = (p: SkillPassResult): FeatChoice[] => {
+    const removed = liveRemovedFeatIds(build);
+    const carriers: { featId: string; level: number; slotKey?: string }[] = [];
+    for (const f of rankGatedCarrierRows) if (!grantsRecordOff(f.featId) && !carriers.some((c) => c.featId === f.featId)) carriers.push(f);
+    const out: FeatChoice[] = [];
+    for (const d of rankGatedGrants({ skillHistory: p.history, level }, p.skills, carriers)) {
+      const def = content.feats[d.feat];
+      if (!def || removed.has(d.feat) || out.some((f) => f.featId === d.feat)) continue;
+      const held = feats.filter((f) => f.featId === d.feat);
+      if (held.some((f) => !f.grantedBy || f.level < d.level || (f.level === d.level && !rankGateFirst(p, d, f)))) continue;
+      // Every held row is a later grant (or a same-level one the gate comes before): the earliest of them gives way.
+      const later = held.length ? held.reduce((a, b) => (b.level < a.level ? b : a)) : undefined;
+      const row: FeatChoice = {
+        featId: d.feat,
+        level: d.level,
+        category: def.category,
+        grantedBy: d.carrier,
+        // Stonemason's Eye names the specialty ("for stonemasonry") and WG/Foundry both preselect
+        // it, so the granted feat must not ask a twelve-way question it was never offered.
+        choice: boundGrantChoice(build, content, d.carrier, d.feat, carriers.find((c) => c.featId === d.carrier)?.slotKey) ?? grantedChoiceById[d.feat] ?? later?.choice,
+      };
+      if (later) rankGatedDisplaces.set(row, later);
+      out.push(row);
+    }
+    return out;
+  };
+  /* The pass runs without the rank-gated rows (they are decided from its history), but a judge's `hasFeat` must
+   * see a row placed before it (D6): Intuitive Crafting's "if you have both" reads Specialty Crafting, which
+   * Stonemason's Eye may have handed over. So while rows are granted, the pass runs again with them, until the
+   * decision it gives is the one it ran with (at most twice more; then the last run's own decision is taken). */
+  let skillPass = runSkillPass([]);
+  let rankGatedRows = rankGatedRowsOf(skillPass);
+  for (let round = 0; round < 2 && rankGatedRows.length; round++) {
+    const again = runSkillPass(rankGatedRows);
+    const rows = rankGatedRowsOf(again);
+    skillPass = again;
+    const same = rows.length === rankGatedRows.length && rows.every((r, i) => r.featId === rankGatedRows[i].featId && r.grantedBy === rankGatedRows[i].grantedBy && r.level === rankGatedRows[i].level);
+    rankGatedRows = rows;
+    if (same) break;
+  }
+  SKILL_LEDGER_PROBE.get(build)?.({ events: skillLedger.events, live: liveSkillsAtResolve, print: skillPass });
+  /*
+   * THE PASS WITHOUT SOME RECORDS (skill-order WP7; the WP3 checker's minor 2). A Builder reader asks "what did the
+   * skills stand at, at the end of this level, if this feat (and what it grants) were not taken?" — a feat's
+   * prerequisites, the feat picker for the slot that feat fills, a "a skill you're trained in" pool. Replaying the
+   * stored history without the feat's steps (ranks.ts `without`) cannot re-run the judges: a SAME-level record
+   * placed after it that answered "already trained → a skill of your choice" BECAUSE of it keeps its redirect, so
+   * the replay reads the skill untrained where print, without the feat, has the later record train it (and a
+   * "trained, or expert if already trained" grant keeps its expert). So the resolver runs again, here, on the
+   * ledger with those records' events and feat rows (and their prerequisite units) left out — every judge
+   * re-judged on that view. Lazy (only when a reader asks), cached per set, held beside the returned character
+   * (`SKILL_PASS_WITHOUT`), never on it; a stored or copied character falls back to the replay.
+   */
+  const passRowsAtResolve = lastPassRows;
+  const passFeatRowsAtResolve = lastPassFeatRows;
+  const passWithoutCache = new Map<string, SkillHistory>();
+  const passWithout = (without: ReadonlySet<string>): SkillHistory => {
+    const key = [...without].sort().join('|');
+    const hit = passWithoutCache.get(key);
+    if (hit) return hit;
+    const idOf = (source: string) => source.slice(source.indexOf(':') + 1);
+    /* WP7 round 2 (checker finding 1): an entry `<featId>@slot:<slotKey>` leaves out ONE row — the feat in that
+     * slot and the rows granted under it (`rowGranter`) — and never another copy of the same feat (a second
+     * Additional Lore, the one Kholo Lore grants). Its rows are told apart by their own place (`skillRowTag`); a
+     * feat event carries its row's (`row`, kept through a ladder move) or sits at it. A plain id leaves out every
+     * row of that feat, as before. */
+    const ids = new Set<string>();
+    const rows = new Set<FeatChoice>();
+    for (const w of without) {
+      const at = w.indexOf(SKILL_ROW_REF);
+      if (at < 0) {
+        ids.add(w);
+        continue;
+      }
+      const id = w.slice(0, at);
+      const slotKey = w.slice(at + SKILL_ROW_REF.length);
+      const row = passFeatRowsAtResolve.find((f) => f.featId === id && f.slotKey === slotKey);
+      if (row) rows.add(row);
+      else ids.add(id); // no such row (a stale slot key): the id, as a plain entry would
+    }
+    for (let grew = rows.size > 0; grew; ) {
+      grew = false;
+      for (const f of passFeatRowsAtResolve) {
+        const g = rowGranter.get(f);
+        if (g && rows.has(g) && !rows.has(f)) {
+          rows.add(f);
+          grew = true;
+        }
+      }
+    }
+    const tags = new Set([...rows].map((f) => skillRowTag(featRowPlace(f))));
+    const rowLeftOut = (r: SkillPassFeatRow) => ids.has(r.featId) || tags.has(skillRowTag(r.place));
+    const eventLeftOut = (e: SkillEvent) =>
+      ids.has(idOf(e.source)) || (tags.size > 0 && e.source.startsWith('feat:') && tags.has(e.row ?? `${e.level}|${e.orderPath.join(',')}`));
+    const prereqs = new Map(passPrereqs);
+    for (const r of passRowsAtResolve) {
+      const path = r.place.orderPath ?? [];
+      if (rowLeftOut(r) && path.length === 2) prereqs.delete(`${r.place.level}|${path[0]},${path[1]}`);
+    }
+    const p = resolveSkillPass(
+      skillLedger.events.filter((e) => !eventLeftOut(e)),
+      { level, featRows: passRowsAtResolve.filter((r) => !rowLeftOut(r)), prereqs },
+    );
+    passWithoutCache.set(key, p.history);
+    return p.history;
+  };
+  /** THE RESOLVE SWAP (D2): the print ranks and lists replace the live ones, in place (every reader below holds
+   *  these same objects). */
+  const swapInPrintSkills = (p: SkillPassResult): void => {
+    for (const k of Object.keys(skills) as ProficiencyKey[]) delete skills[k];
+    Object.assign(skills, p.skills);
+    skillFallbacks.splice(0, skillFallbacks.length, ...p.fallbacks);
+    skillIncreases.splice(0, skillIncreases.length, ...p.increases);
+    languageLores.splice(0, languageLores.length, ...p.languageLores);
+    for (const k of Object.keys(skillRankBefore)) delete skillRankBefore[k];
+    Object.assign(skillRankBefore, p.skillRankBefore);
+    locked.clear();
+    for (const k of Object.keys(lockedFrom)) delete lockedFrom[k];
+    for (const [k, from] of Object.entries(p.grantedSkills)) lock(k as ProficiencyKey, from);
+  };
+  swapInPrintSkills(skillPass);
+  // The rank-gated rows join the feat list here (D10 c: the removal pass and the level sort ran before them, so the
+  // list is sorted again, stably), and `takenFeats` as the queue's rows did. A later flat grant of the same feat
+  // gives way to it (`rankGatedDisplaces`: the earliest source wins).
+  if (rankGatedRows.length) {
+    for (const r of rankGatedRows) {
+      const later = rankGatedDisplaces.get(r);
+      const at = later ? feats.indexOf(later) : -1;
+      if (at >= 0) feats.splice(at, 1);
+      feats.push(r);
+      takenFeats.add(r.featId);
+    }
+    feats.sort((a, b) => a.level - b.level);
   }
   /*
    * "…and the trait appropriate to the type of servitor you've become (such as daemon, demon, or
@@ -9830,9 +11188,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * hold, so a character built before the archetype had an entry keeps the cantrips they picked
        * instead of losing both — see LEGACY_ARCHETYPE_CANTRIP_KEYS. */
       const srcCantripsRaw = pooledCantrips.length ? pooledCantrips : legacyCantripsOf(arch.dedicationId);
-      const srcCantrips = srcCantripsRaw.filter((id) => archetypeCantripAllowed(arch, id));
+      /* Tweaks phase 2 (WP4 finish, B3) — the second gated engine seam: a cantrip a LIVE `spell` "Take anyway"
+       * names passes the dedication's named list (C19: the allow is per record, in every picker that offers it).
+       * Paused, broken or with Tweaks switched off, `allowedInPicker` is false and the drop and its warning return. */
+      const archCantripOk = (id: string) => archetypeCantripAllowed(arch, id) || allowedInPicker(build, 'spell', id);
+      const srcCantrips = srcCantripsRaw.filter(archCantripOk);
       for (const id of srcCantripsRaw)
-        if (!archetypeCantripAllowed(arch, id))
+        if (!archCantripOk(id))
           effectWarnings.push({
             source: content.feats[arch.dedicationId]?.name ?? arch.dedicationId,
             message: `${content.spells[id]?.name ?? id} is not one of the cantrips this dedication grants — choose again from the ones it names.`,
@@ -10198,7 +11560,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * stored, never rewritten; the same test as the picker's (`sameTraditionsAs`). */
     const sameAs = sameTraditionsAs(def.from, content, { feats });
     const sameSpell = !!sameAs && sid === sameAs.answer;
-    const offTradition = !!sameAs && !content.spells[sid].traditions.some((t) => sameAs.traditions.has(t));
+    // A spell a live `spell` "Take anyway" names is granted off the tradition (Tweaks phase 2, WP4: the one gated
+    // build-time seam of that tweak). Paused or off, the warning returns and the pick stays stored.
+    const offTradition = !!sameAs && !content.spells[sid].traditions.some((t) => sameAs.traditions.has(t)) && !allowedInPicker(build, 'spell', sid);
     const offRank = (def.from.maxRank !== undefined && spellRank > def.from.maxRank) || (def.from.cantripsOnly === true && spellRank !== 0);
     if (sameSpell || offTradition || offRank) {
       const answerOf = sameAs ? content.feats[def.from.sameTraditionAsAnswerOf!]?.name ?? 'the earlier feat' : '';
@@ -10840,9 +12204,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       });
     }
 
-    // Overrides → "Added spells": spells force-granted via the Overrides section, listed at the
-    // chosen rank (cantrips at-will). Rituals are excluded here — they show in the Rituals section.
-    const addedSpells = (build.overrides?.addedSpells ?? []).filter((a) => content.spells[a.spellId] && !content.spells[a.spellId].ritual);
+    // Tweaks → "Added spells": spells force-granted through Tweaks (`grant.spell`), listed at the chosen
+    // rank (cantrips at-will). Only the LIVE ones (blocks/active.ts `liveGivenSpells`: switch, on/off, start
+    // level). Rituals are excluded here — they show in the Rituals section (SpellsTab, the same accessor).
+    const addedSpells = liveGivenSpells(build).filter((a) => content.spells[a.spellId] && !content.spells[a.spellId].ritual);
     if (addedSpells.length) {
       const addedCantrips: string[] = [];
       const addedRep: Record<number, string[]> = {};
@@ -11141,10 +12506,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         }
       : undefined;
 
-  // Override: features force-granted via Overrides — materialized for the Feats & Features list (any
-  // class feature, regardless of class). buildCharacter doesn't re-validate, so any id is accepted.
+  // Tweaks: class features force-granted (`grant.classFeature`) — materialized for the Feats & Features list
+  // (any class feature, regardless of class). buildCharacter doesn't re-validate, so any id is accepted.
+  // Only the LIVE ones, listed from max(stored level, start level) (blocks/active.ts `liveGivenFeatures`).
   const grantedFeatures: NonNullable<Character['grantedFeatures']> = [];
-  for (const g of build.overrides?.addedFeatures ?? []) {
+  for (const g of liveGivenFeatures(build)) {
     const f = content.classFeatures[g.featureId];
     if (!f) continue;
     grantedFeatures.push({
@@ -11300,22 +12666,39 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * the player set stays set, a lowered one included (spec 2 case B). Before this seam a later
    * FEAT_GRANTS raise could undo a rank the player lowered.
    *
-   * ⚠ ITS LIMIT (checker C16): the clamp runs LAST, so every in-build reader that ran before it saw the
-   * RAISED rank and its decision stands — `skillRankHere` ("already trained?" for the rank-gated feat
-   * grants), the redundant-training fallbacks (`skillFallbacks`, "already trained, pick another"), the
-   * conditional grants keyed on a rank. E.g. "exactly untrained" in a skill a feat also trains still lets
-   * that feat's "if you're already trained" clause fire. The stored rank is the held one, but two
-   * derive-time readers still beat it on the sheet: a gunslinger's firearm / crossbow ranks
-   * (`proficiencies.firearmProf`, which derive.ts deriveStrike takes when better than the category rank)
-   * and a daily-preparation skill pick (derive.ts `dailySkillRank`: Ancestral Longevity and the like
-   * raise the shown skill rank above the stored one). The reverse build cannot tell a class-skill pick
-   * from a rank this clamp or a floor made (see deriveBuildFromCharacter's 'granted' rebuild).
+   * WHAT IT CAPS (plan B WP5; B6, B26):
+   *   - the track's own rank, for every live hold;
+   *   - a gunslinger's firearm / crossbow rank of that weapon category (`proficiencies.firearmProf`,
+   *     which derive.ts deriveStrike takes when better than the category rank) — for a hold the PLAYER
+   *     made (new, or edited since the move), below;
+   *   - a daily-preparation skill pick (derive.ts `dailySkillRank`: Ancestral Longevity and the like
+   *     raise the shown skill rank above the stored one) — for a hold the player made, in derive.ts
+   *     (`heldExactly(c, key, { forCap: true })`).
+   * WHAT IT DOES NOT CAP:
+   *   - ⚠ (checker C16) for a hold the player made, every in-build reader that ran before the clamp saw the
+   *     RAISED rank and its decision stands — `skillRankHere` ("already trained?" for the rank-gated feat
+   *     grants), the redundant-training fallbacks (`skillFallbacks`, "already trained, pick another"), the
+   *     conditional grants keyed on a rank. E.g. "exactly untrained" in a skill a feat also trains still
+   *     lets that feat's "if you're already trained" clause fire;
+   *   - a MOVED hold (an old entry, plan B B26): its readers in between saw the lowered rank (it is also
+   *     written at the old `=` slot, B26 b) as they did before Tweaks — and it caps neither `firearmProf`
+   *     nor the daily pick (B26 c), because the old `=` never touched either: capping them would move a
+   *     firearm Strike or a shown skill outside spec 2's cases A-D;
+   *   - a weapon GROUP rank (`weaponGroups`, `weaponGroupRanks`) or one weapon's own rank: a category hold
+   *     reaches only the category (and, above, its firearm rank).
+   * The reverse build cannot tell a class-skill pick from a rank this clamp or a floor made (see
+   * deriveBuildFromCharacter's 'granted' rebuild).
    */
-  for (const b of rankTw.exactly) {
-    if (!b.target || !b.rank) continue;
-    const held = b.rank;
-    updateTrackRank(proficiencies, b.target, () => held);
-  }
+  applyExactClamp(proficiencies, rankTw.exactly);
+  /* THE LEGACY SIDE (skill-order plan D19; WP3): today's order's ranks at the resolve point, clamped by the same
+   * "exactly" holds — what the live path would have shown. Read by `skillOrderLegacyOf` only. */
+  const legacySkills = (() => {
+    const p = { skills: { ...liveSkillsAtResolve } } as unknown as Proficiencies;
+    applyExactClamp(p, rankTw.exactly.filter((b) => !!b.target && skillTrackKey(b.target) !== null));
+    return p.skills;
+  })();
+  /** The language-Lore rerun today's order would have asked for (D2, the legacy side of `languageLoreRerun`). */
+  let legacyLanguageLoreRerun: ProficiencyKey[] | undefined;
 
   /* Set by the language list below when the Lores above would leave the languages the player picked
    * without a slot. The languages win — a Lore only ever takes an Int slot no picked language needs —
@@ -11323,6 +12706,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * that fit are these; the build is re-run with only them (a shorter list each time, so it ends).
    * The stored list itself is never written: a Lore that gives way comes back when a slot frees up. */
   let languageLoreRerun: ProficiencyKey[] | undefined;
+  /** The live Tweaks max-HP set, if any (blocks/active.ts — switch, on/off, start level). */
+  const maxHpSet = liveMaxHpSet(build);
+  /* Tweaks phase 2, C46 (WP7): a paused or Tweaks-off extra feat place's pick and every answer made for it, which
+   * the feats above leave out — so a build-less reopen (deriveBuildFromCharacter) can put them back. Also a LIVE
+   * place's that has no row under its own key (run 3a: the take cap, a level above the character's, a granted feat),
+   * hence the rows' slot keys. WP8: also a book slot's copy the take cap dropped while a "Take a feat more times" for
+   * that feat is stored (paused, Tweaks off). Undefined for every character with no such place, which keeps the field absent
+   * (./tweakKept.ts). */
+  const tweakKept = tweakKeptOf(
+    build,
+    new Set(feats.map((f) => f.featId)),
+    new Set(feats.flatMap((f) => (f.slotKey ? [f.slotKey] : []))),
+  );
   const built: Character = {
     id: `char-${slug(build.name)}`,
     schemaVersion: CHARACTER_SCHEMA_VERSION,
@@ -11347,6 +12743,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.options ? { options: build.options } : {}),
     ...(build.pinnedDescs && build.pinnedDescs.length ? { pinnedDescs: build.pinnedDescs } : {}),
     ...(build.overrides ? { overrides: build.overrides } : {}),
+    // DERIVED (plan B, B3): how this read sorted the old rank entries; `overrides` above stays the stored
+    // object. The readers of a Character (rankTweaks — the explain timeline, the daily cap) lay it over.
+    ...(tweakRankSort ? { tweakRankSort } : {}),
+    ...(tweakKept ? { tweakKept } : {}),
+    // DERIVED (Tweaks phase 2 WP11, C16): each live extra boost and what it added; absent when there is none.
+    ...(tweakBoostSteps.length ? { tweakBoostSteps } : {}),
     ...(build.enabledSources ? { enabledSources: build.enabledSources } : {}),
     ...(build.campaignIds && build.campaignIds.length ? { campaignIds: build.campaignIds } : {}),
     ...(build.mythicEnabled ? { mythicEnabled: true } : {}),
@@ -11368,10 +12770,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     partialBoosts,
     proficiencies,
     hitPoints: {
-      current: build.overrides?.maxHp ?? hpMax + featHp,
+      current: maxHpSet ?? hpMax + featHp,
       temp: 0,
-      // Overrides → “Set maximum HP”. deriveMaxHp already preferred this over the whole computation.
-      ...(build.overrides?.maxHp != null ? { maxOverride: build.overrides.maxHp } : {}),
+      // Tweaks → "Set maximum HP" (`number.setMaxHp`), only while LIVE (blocks/active.ts `liveMaxHpSet`).
+      // deriveMaxHp already preferred this over the whole computation.
+      ...(maxHpSet != null ? { maxOverride: maxHpSet } : {}),
     },
     /* The RESOLVED ancestry HP, emitted only when a choice moved it off the record scalar (the
      * awakened animal's size table, Mightyfall Kobold's 10-instead-of-6) — deriveMaxHp prefers this,
@@ -11432,8 +12835,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const reduce = feats.reduce((n, f) => n + (content.feats[f.featId]?.drainedReduction ?? 0), 0);
       return reduce ? { drainedReduction: reduce } : {};
     })(),
+    // The BuildState, not `build.classId`: a Dual Class character's second class has its own resources.
     classResources: initialClassResources(
-      build.classId,
+      build,
       level,
       {
         str: abilityMod(abilities.str),
@@ -11444,6 +12848,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         cha: abilityMod(abilities.cha),
       },
       new Set(feats.map((f) => f.featId)),
+      // Additional Servings and its kin: the start value, and so every rest's refill, is the RAISED
+      // maximum the sheet shows (resourceMaxFor), not the bare 2 + Int.
+      resourceFloors,
     ),
     languages: (() => {
       const granted = ancestry?.languages.granted ?? [];
@@ -11488,27 +12895,36 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         ]);
         if (f.grantsLanguages.every((l) => withoutThisRecord.has(l))) fallbackSlots += 1;
       }
-      const slots =
+      const slotsFor = (lores: readonly ProficiencyKey[], skillRanks: Record<ProficiencyKey, ProficiencyRank>): number =>
         // …less every Int slot spent on a Lore instead (the setup house rule); the Lores themselves
         // are trained up with the skills, and only Int-granted slots may be traded this way.
         intLanguageSlots -
-        languageLores.length +
+        lores.length +
         (ancestry?.languages.additional ?? 0) +
         // "You learn three new languages of your choice" — a record widening the pick budget. The
         // picks themselves live in the same list the Int slots use, so the existing picker serves both.
-        recordLanguageSlots(content, feats.map((fc) => fc.featId), build.heritageId, invested, proficiencies.skills, level, build.backgroundId) +
+        recordLanguageSlots(content, feats.map((fc) => fc.featId), build.heritageId, invested, skillRanks, level, build.backgroundId) +
         fallbackSlots;
+      const slots = slotsFor(languageLores, proficiencies.skills);
       const picked = build.languages.filter((l) => !granted.includes(l));
       // A Lore may not push out a language the player picked (rule turned off, languages picked in
       // the freed slots, rule turned back on — or Int lowered): keep only the Lores that still fit.
       if (languageLores.length && picked.length > slots) {
         languageLoreRerun = languageLores.slice(0, Math.max(0, languageLores.length - (picked.length - slots)));
       }
+      // …and the same decision on today's order's Lores and ranks (the legacy side, D2).
+      const legacySlots = slotsFor(liveLanguageLoresAtResolve, legacySkills);
+      if (liveLanguageLoresAtResolve.length && picked.length > legacySlots) {
+        legacyLanguageLoreRerun = liveLanguageLoresAtResolve.slice(0, Math.max(0, liveLanguageLoresAtResolve.length - (picked.length - legacySlots)));
+      }
       const bonus = picked.slice(0, slots);
-      return [...new Set([...granted, ...bonus, ...featLangs, ...featureLangs, ...heritageLangs, ...bgLangs, ...itemLangs, ...(build.overrides?.addedLanguages ?? [])])];
+      // Tweaks `grant.language`: only the LIVE ones (blocks/active.ts — switch, on/off, start level).
+      return [...new Set([...granted, ...bonus, ...featLangs, ...featureLangs, ...heritageLangs, ...bgLangs, ...itemLangs, ...liveGivenLanguages(build)])];
     })(),
     feats,
     skillIncreases,
+    // The per-level skill history the print pass wrote (skill-order plan 1.4, WP3) — derived, never stored.
+    skillHistory: skillPass.history,
     ...(skillFallbacks.length ? { skillFallbacks } : {}),
     // batch 037: molten-wit#three-branches — the pre-grant ranks the builder's option gate reads.
     ...(Object.keys(skillRankBefore).length ? { skillRankBefore } : {}),
@@ -11667,7 +13083,229 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       return comps.length ? { companions: comps } : {};
     })()),
   };
-  return languageLoreRerun ? buildCharacter({ ...build, languageLores: languageLoreRerun }, content) : built;
+  /*
+   * THE LANGUAGE-LORE RERUN, both sides (skill-order plan D2 6b; WP3). The print side decides the character
+   * returned (`languageLoreRerun`); the legacy side (`skillOrderLegacyOf`) must be what TODAY's order would have
+   * returned, which reruns on its own decision (`legacyLanguageLoreRerun`):
+   *   - a build handed a legacy (SKILL_ORDER_BEFORE_CARRY) keeps it, and hands it on if print reruns again;
+   *   - neither reruns → this build's own legacy;
+   *   - both rerun with the same Lores → the plain rerun (it works out both sides itself);
+   *   - only print reruns → this build's legacy is carried into the rerun;
+   *   - the legacy side reruns (and print does not, or with other Lores) → one extra build with the legacy Lores,
+   *     whose legacy is taken (and carried into the print rerun, if any).
+   * The at-slot probe (plan B, B1) follows the LEGACY side: the old `=` sort was measured on today's path, and
+   * its snapshot must come from the build today's path returns.
+   */
+  const ownLegacy: SkillOrderLegacy = {
+    skills: legacySkills,
+    skillFallbacks: liveFallbacksAtResolve,
+    skillIncreases: liveIncreasesAtResolve,
+    // Today's order's rows (WP4: worked out by the feat-grant queue into this side list, never onto `feats`).
+    rankGated: legacyRankGatedRows.map((f) => `${f.grantedBy}>${f.featId}`),
+    increasesRaised: liveIncreasesRaised,
+  };
+  const carried = SKILL_ORDER_BEFORE_CARRY.get(build);
+  const probe = AT_SLOT_PROBE.get(build);
+  const sameLores = (a: readonly ProficiencyKey[] | undefined, b: readonly ProficiencyKey[] | undefined) => !!a && !!b && a.length === b.length && a.every((k, i) => k === b[i]);
+  let legacy: SkillOrderLegacy;
+  if (carried) legacy = carried;
+  else if (!legacyLanguageLoreRerun) legacy = ownLegacy;
+  else if (sameLores(languageLoreRerun, legacyLanguageLoreRerun)) {
+    const rerun: BuildState = { ...build, languageLores: languageLoreRerun };
+    if (probe) AT_SLOT_PROBE.set(rerun, probe);
+    return buildCharacter(rerun, content);
+  } else {
+    const extra: BuildState = { ...build, languageLores: legacyLanguageLoreRerun };
+    if (probe) AT_SLOT_PROBE.set(extra, probe);
+    legacy = SKILL_ORDER_BEFORE.get(buildCharacter(extra, content)) ?? ownLegacy;
+  }
+  if (!languageLoreRerun) {
+    SKILL_ORDER_BEFORE.set(built, legacy);
+    SKILL_PASS_WITHOUT.set(built, passWithout);
+    return built;
+  }
+  const rerun: BuildState = { ...build, languageLores: languageLoreRerun };
+  SKILL_ORDER_BEFORE_CARRY.set(rerun, legacy);
+  return buildCharacter(rerun, content);
+}
+
+/** Today's order's skill answer for one built character (skill-order plan D19; WP3): the ranks (clamped by the same
+ *  "exactly" holds), the redundant-training fallbacks, the skill increases and the rank-gated feat rows
+ *  (`grantedBy>featId`). */
+export interface SkillOrderLegacy {
+  skills: Record<ProficiencyKey, ProficiencyRank>;
+  skillFallbacks: NonNullable<Character['skillFallbacks']>;
+  skillIncreases: SkillIncrease[];
+  rankGated: string[];
+  /** `<lane>:<level>:<key>` (lane `main` | `bonus` | `background`) of every stored increase that raised a rank when
+   *  today's order spent it — the Builder notice's line 5 ("…now counts" / "…no longer raises it", WP9). Not read by
+   *  the parity instrument. */
+  increasesRaised: string[];
+}
+/** THE LEGACY SIDE CHANNEL (D19): built character → today's order's answer. Never on the Character itself (the
+ *  print pass's answer is the character; this is the parity instrument's `--legacy-check` reading). */
+const SKILL_ORDER_BEFORE = new WeakMap<Character, SkillOrderLegacy>();
+/** A language-Lore rerun build → the legacy its returned character carries (D2 6b: the legacy side decided
+ *  differently from the print side, so the rerun must not work it out again). */
+const SKILL_ORDER_BEFORE_CARRY = new WeakMap<BuildState, SkillOrderLegacy>();
+
+/** Today's order's skill answer for a character `buildCharacter` returned (`SkillOrderLegacy`), or undefined for
+ *  one it did not build (a stored or deep-copied character). For the parity instrument and tests only. */
+export function skillOrderLegacyOf(character: Character): SkillOrderLegacy | undefined {
+  return SKILL_ORDER_BEFORE.get(character);
+}
+
+/** Built character → its print pass re-run with some records left out (`passWithout` in `buildCharacter`; WP7). */
+const SKILL_PASS_WITHOUT = new WeakMap<Character, (without: ReadonlySet<string>) => SkillHistory>();
+
+/** Skill and Lore ranks by key (a key absent = untrained). */
+export type SkillRanks = Partial<Record<ProficiencyKey, ProficiencyRank>>;
+
+/** `<featId>@slot:<slotKey>`: a `without` entry for ONE feat row — the feat in that slot and what it grants
+ *  (`featSubtreeIds` with a slot key; WP7 round 2). */
+const SKILL_ROW_REF = '@slot:';
+
+/** A feat row's own place as a string (`<level>|<orderPath>`): the `row` a feat's skill events carry (WP7 round 2).
+ *  A slot row's equals its prerequisite unit key (`skillUnitKey`). */
+function skillRowTag(p: SkillPlace): string {
+  return `${p.level}|${(p.orderPath ?? []).join(',')}`;
+}
+
+/**
+ * A feat and everything it hands over (skill-order plan section 2, WP7): `featId` plus every row of
+ * `character.feats` whose `grantedBy` chain reaches it — the records a "without this feat" reading leaves out.
+ *
+ * With `slotKey` (the slot the feat fills; WP7 round 2, checker finding 1), only THAT row and the rows granted under
+ * it: a repeatable feat's other copy (Additional Lore at 2nd while the 4th-level slot's picker reads "without the
+ * Additional Lore here"), or the copy another feat grants (Kholo Lore's), keeps its skills. A slot key no row of
+ * this feat holds falls back to the id reading.
+ */
+export function featSubtreeIds(character: Pick<Character, 'feats'>, featId: string, slotKey?: string): Set<string> {
+  if (slotKey && character.feats.some((f) => f.featId === featId && f.slotKey === slotKey)) return new Set([`${featId}${SKILL_ROW_REF}${slotKey}`]);
+  const out = new Set<string>([featId]);
+  for (let grew = true; grew; ) {
+    grew = false;
+    for (const f of character.feats) {
+      if (f.grantedBy && out.has(f.grantedBy) && !out.has(f.featId)) {
+        out.add(f.featId);
+        grew = true;
+      }
+    }
+  }
+  return out;
+}
+
+/** The ranks with the live "exactly" holds active at `level` laid over them (blocks/active.ts `skillHoldsAt`): the
+ *  history is worked out before the final clamp (D8), and a Builder reader shows a held skill as the sheet does. */
+function withSkillHolds(c: Character, ranks: SkillRanks, level: number): SkillRanks {
+  const holds = skillHoldsAt(c, level);
+  if (!holds.size) return ranks;
+  const out: SkillRanks = { ...ranks };
+  for (const [k, r] of holds) out[k as ProficiencyKey] = r;
+  return out;
+}
+
+/**
+ * Every skill's rank at `point` of `level`, as the Builder's own readers read it (skill-order plan section 2,
+ * WP7): the per-level history (`skillRanksAt`) with the "exactly" holds active at that level laid over it. With
+ * `without` (a feat's subtree), read as if those records were never taken: on a character `buildCharacter`
+ * returned, the print pass runs again without them (every judge re-judged; `passWithout`); on any other
+ * (a stored copy) the history is replayed without their steps. Undefined without a history (the caller keeps the
+ * finished ranks, today's reading).
+ */
+export function skillRanksAtLevel(c: Character, level: number, point: SkillPoint, without?: ReadonlySet<string>): SkillRanks | undefined {
+  const rerun = without?.size ? SKILL_PASS_WITHOUT.get(c) : undefined;
+  const ranks = rerun
+    ? skillRanksAt({ skillHistory: rerun(without!) }, level, point)
+    : skillRanksAt(c, level, point, without?.size ? { without: replayWithout(c, without) } : undefined);
+  return ranks && withSkillHolds(c, ranks, level);
+}
+
+/** A `without` set as a stored history's replay can read it (ranks.ts): a stored step does not say which copy of a
+ *  feat wrote it, so one row (`<featId>@slot:<slotKey>`) becomes its feat and what that feat grants, each skipped
+ *  from the row's level on (`<id>@from:<level>`) — an earlier copy keeps its steps (WP7 round 2). */
+function replayWithout(c: Pick<Character, 'feats'>, without: ReadonlySet<string>): ReadonlySet<string> {
+  if (![...without].some((w) => w.includes(SKILL_ROW_REF))) return without;
+  const out = new Set<string>();
+  for (const w of without) {
+    const at = w.indexOf(SKILL_ROW_REF);
+    if (at < 0) {
+      out.add(w);
+      continue;
+    }
+    const id = w.slice(0, at);
+    const slotKey = w.slice(at + SKILL_ROW_REF.length);
+    const lvl = c.feats.find((f) => f.featId === id && f.slotKey === slotKey)?.level;
+    for (const x of featSubtreeIds(c, id)) out.add(lvl != null ? `${x}${SKILL_FROM_LEVEL}${lvl}` : x);
+  }
+  return out;
+}
+
+/**
+ * Every skill's rank just before a record's print place (`source` = '<kind>:<id>', `history.at`), as the Builder's
+ * readers read it (WP7: a feat's "Trained skill" slot, a replacement picker's heading and greying, a class
+ * option's replacement card). Nothing the record itself or what it grants does is placed before it, so this is
+ * already "without" them; a record with no place reads the ranks before its level's increases, without
+ * `without`. The holds active at `level` are laid over it. Undefined without a history.
+ */
+export function skillRanksAtRecord(c: Character, source: string, level: number, without?: ReadonlySet<string>): SkillRanks | undefined {
+  const before = skillRanksBeforeSource(c, source);
+  if (before) return withSkillHolds(c, before, level);
+  return skillRanksAtLevel(c, level, 'beforeIncreases', without);
+}
+
+/** One rank-gated feat grant `rankGatedGrants` decided: `carrier` hands `feat` over, and the row's level. */
+export interface RankGatedGrant {
+  carrier: string;
+  feat: string;
+  level: number;
+}
+
+/**
+ * THE RANK-GATED FEAT GRANTS, read off the per-level skill history (skill-order plan D10, 1.4; WP4). Pure: for each
+ * carrier (in the order given, each a held feat row with its level) and each of its `table` entries, the moment the
+ * entry's `when` names decides it —
+ *   - 'taken' (Stonemason's Eye, Intuitive Crafting: "if you're ALREADY trained"): the rank just before the
+ *     carrier's own place in print order (`skillRankBeforeSource`; with no place, the rank before that level's
+ *     increases without the carrier's own steps). Granted at the carrier's level.
+ *   - 'reached' (Student of Water, Raging Intimidation: "AS SOON AS you meet the prerequisites"): the first level
+ *     whose end holds the rank (`firstLevelAtRank`); granted at the later of that level and the carrier's.
+ *   - 'standing' (Gildedsoul): the finished rank (`final`, the print ranks before the "exactly" clamp — the moment
+ *     the queue read before WP4), with the carrier's own grant (`countOwnGrant`) or, without it, the history's end
+ *     without the carrier's steps.
+ * Returns every grant whose rank holds; the caller drops the ones a removal, a held feat or the trust gate stops.
+ * Without a history (never the case inside `buildCharacter`) every entry reads `final`.
+ */
+export function rankGatedGrants(
+  c: Pick<Character, 'skillHistory' | 'level'>,
+  final: Partial<Record<ProficiencyKey, ProficiencyRank>>,
+  carriers: readonly { featId: string; level: number }[],
+  table: Record<string, readonly { skill: ProficiencyKey; rank: ProficiencyRank; feat: string; when: RankGatedWhen; countOwnGrant?: boolean }[]> = FEAT_RANK_FEAT_GRANTS,
+): RankGatedGrant[] {
+  const out: RankGatedGrant[] = [];
+  const holds = (have: ProficiencyRank | undefined, need: ProficiencyRank) => PROFICIENCY_RANKS.indexOf(have ?? 'untrained') >= PROFICIENCY_RANKS.indexOf(need);
+  for (const carrier of carriers) {
+    for (const e of table[carrier.featId] ?? []) {
+      const own = new Set([carrier.featId]);
+      if (!c.skillHistory) {
+        if (holds(final[e.skill], e.rank)) out.push({ carrier: carrier.featId, feat: e.feat, level: carrier.level });
+        continue;
+      }
+      if (e.when === 'reached') {
+        const at = firstLevelAtRank(c, e.skill, e.rank);
+        if (at !== undefined) out.push({ carrier: carrier.featId, feat: e.feat, level: Math.max(carrier.level, at) });
+        continue;
+      }
+      const have =
+        e.when === 'taken'
+          ? skillRankBeforeSource(c, `feat:${carrier.featId}`, e.skill) ?? skillRankAt(c, e.skill, carrier.level, 'beforeIncreases', { without: own })
+          : e.countOwnGrant
+            ? final[e.skill]
+            : skillRankAt(c, e.skill, c.level, 'end', { without: own });
+      if (holds(have, e.rank)) out.push({ carrier: carrier.featId, feat: e.feat, level: carrier.level });
+    }
+  }
+  return out;
 }
 
 /**
@@ -11738,9 +13376,9 @@ function findSecondCasterEntry(c: Character, cls2: ClassDef, cls1?: ClassDef): S
  * the edit flow preserves it separately (see playForRebuild).
  */
 export function deriveBuildFromCharacter(c: Character, content: ContentDatabase): BuildState {
-  // Read back against the records the character was BUILT with: its own content edits laid over the
+  // Read back against the records the character was BUILT with: its own live content edits laid over the
   // caller's view (blocks/content.ts — the one content path), like every buildCharacter below.
-  content = contentFor(content, c.overrides);
+  content = contentFor(content, c);
   const ABIL: AbilityId[] = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
   const b = emptyBuild();
   b.name = c.name;
@@ -11756,6 +13394,16 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   if (c.overrides) b.overrides = JSON.parse(JSON.stringify(c.overrides)) as BuildOverrides;
   if (c.enabledSources) b.enabledSources = [...c.enabledSources];
   if (c.campaignIds?.length) b.campaignIds = [...c.campaignIds];
+  /* Tweaks phase 2, C46 (WP7): the extra feat places this character keeps but does not count now, from `c.tweakKept`:
+   * a held-back place (paused, or Tweaks off), and a live place whose pick got no Character.feats row (the take cap, a
+   * place above the character's level, a feat the character is also granted; run 3a). Read against the overrides and
+   * options copied just above, so only a place this build holds back too or reads as live. Their feats draw slots as the Builder draws them (the storage view: a paused Ultimate
+   * Flexibility keeps its 20th-level bonus slot, C11), and they go back under their keys at the very end, never
+   * over an entry a store holds by then (./tweakKept.ts). */
+  const keptPlaces = readKeptFeatPlaces(b, c.tweakKept);
+  /* WP8 (fixes round 1): a book slot's copy the take cap dropped while a readable "Take a feat more times" for that
+   * feat is stored (paused, Tweaks off): back under its own key at the very end too, never over a held entry. */
+  const keptCopies = readKeptFeatCopies(b, c.tweakKept);
   if (c.mythicEnabled) b.mythicEnabled = true;
   if (c.mythicCalling) b.mythicCalling = c.mythicCalling;
   if (c.mythicDestiny) b.mythicDestiny = c.mythicDestiny;
@@ -11815,20 +13463,42 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
    * swashbuckler has exactly two entries at 3rd level and the second belongs to the background store,
    * where a positional split would have parked it in a bonus lane the class never grants — and
    * buildCharacter, reading `bonusSkillIncreaseLevels`, would have dropped it on the next rebuild. */
-  const bonusLevels = new Set(c.classId ? content.classes[c.classId]?.bonusSkillIncreaseLevels ?? [] : []);
+  /* Skill order WP8 (plan D15, D16): an increase the engine wrote carries its LANE, so it goes back to the
+   * store it came from — whatever its position. Only an entry without one (a Wanderer's Guide import, a
+   * character saved before the lanes were told apart) is routed by the levels below, and those are the
+   * UNION of a Dual Class pair's (GM Core rules-1331: "a dual-class rogue/ranger still gets the extra … skill
+   * increase at levels where the other class doesn't provide them"), the levels `buildCharacter` reads. */
+  const rbLanes = classSkillIncreaseLevels(
+    c.classId ? content.classes[c.classId] : undefined,
+    c.variantRules?.dualClass && c.classId2 ? content.classes[c.classId2] : undefined,
+  );
+  const bonusLevels = new Set(rbLanes.bonus);
   for (const si of c.skillIncreases ?? []) {
-    if (b.skillIncreases[si.level] == null) b.skillIncreases[si.level] = si.skill;
+    /* Tweaks phase 2 WP11 (C43): an extra place's increase goes to NO store — its `choice.addPlace` block, copied
+     * back with `overrides` above, carries it, and the rebuild applies it again from there. Routed by level it
+     * would land in the main lane (a second increase at that level, or the level's own one taken). */
+    if (si.lane === 'tweak') continue;
+    if (si.lane === 'bonus') (b.bonusSkillIncreases ??= {})[si.level] = si.skill;
+    else if (si.lane === 'background') (b.backgroundSkillIncreases ??= {})[si.level] = si.skill;
+    else if (b.skillIncreases[si.level] == null) b.skillIncreases[si.level] = si.skill;
     else if (bonusLevels.has(si.level) && (b.bonusSkillIncreases ??= {})[si.level] == null)
       b.bonusSkillIncreases[si.level] = si.skill;
     else (b.backgroundSkillIncreases ??= {})[si.level] = si.skill;
   }
+  /* Tweaks phase 2 WP14 (C46): a skill-increase place a live "Remove a place" removes adds no Character row, so the
+   * answer it still holds comes from `c.tweakKept` — only for a place a live removal on THIS build names, and never
+   * over a level its lane's store already holds (./tweakKept.ts). */
+  restoreKeptSkillIncreases(b, readKeptSkillIncreases(b, c.tweakKept));
 
   /* The score the BOOSTS made. A Tweaks `attribute.add` block is copied back with `overrides` above and
    * buildCharacter adds it again on the rebuild, so the boost solver below must aim at the score
    * without it — aimed at `c.abilities` itself, every reverse build grew the score by the block once
    * more (Dex 12 + a +2 block: 14 → 16 → 18). Same reader as the build seam (blocks/active.ts). */
-  const boostedScore = (a: AbilityId): number =>
-    c.abilities[a] - scoreAddBlocks({ overrides: c.overrides, options: c.options, level: c.level }, a).reduce((n, blk) => n + (blk.value as number), 0);
+  const scoreBeforeAdds = (a: AbilityId): number => c.abilities[a] - scoreAddBlocks(c, a).reduce((n, blk) => n + (blk.value as number), 0);
+  /* Tweaks phase 2 WP11 (C43): …and without what the live extra boosts added (`c.tweakBoostSteps`): their blocks come
+   * back with `overrides` too, and the rebuild applies them again. The score the BOOK's boosts and flaws made. */
+  const tweakBoostSteps = Array.isArray(c.tweakBoostSteps) ? c.tweakBoostSteps.filter((t) => t && typeof t.value === 'number' && typeof t.attribute === 'string') : [];
+  const boostedScore = (a: AbilityId): number => scoreBeforeAdds(a) - tweakBoostSteps.reduce((n, t) => n + (t.attribute === a ? t.value : 0), 0);
   const ancestry = c.ancestryId ? content.ancestries[c.ancestryId] : undefined;
   const cls = c.classId ? content.classes[c.classId] : undefined;
   // Dual Class: a subsystem owned by class `id` may live on the second class.
@@ -11991,12 +13661,17 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     // reach (apexOf) so the level-boost reconstruction counts only the real boosts.
     const apexAbility = c.variantRules?.abp && c.level >= 17 && c.abpApex ? c.abpApex : null;
 
+    /* WP11 (C43): each live extra boost is ONE boost the solver must not place again. The score depends only on the
+     * flaws and the COUNT of boosts (flaws first, then +2 below 18, +1 from 18), so it is counted as a fixed boost
+     * against the whole score — subtracting its +2 / +1 from the score instead misses when a +2 landed below 18 and
+     * later boosts gave +1 (16 → 18 by the tweak, then 19, 20: 20 − 2 = 18 is reached one boost early). */
+    for (const t of tweakBoostSteps) if ((ABIL as string[]).includes(t.attribute)) fixedCount[t.attribute] = (fixedCount[t.attribute] ?? 0) + 1;
     const need: Partial<Record<AbilityId, number>> = {};
     for (const X of ABIL) {
       const apexOf = (v: number) => (X === apexAbility ? (v >= 18 ? v + 2 : 18) : v);
       let s = 10 - 2 * (flawCount[X] ?? 0);
       let total = 0;
-      while (apexOf(s) < boostedScore(X) && total < 40) {
+      while (apexOf(s) < scoreBeforeAdds(X) && total < 40) {
         s += s >= 18 ? 1 : 2;
         total++;
       }
@@ -12007,7 +13682,8 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
      *  free pick that repeats one (the same-source rule), so a solver that hands the ancestry's free
      *  slot an attribute the ancestry already boosts silently throws that boost away — a bard whose
      *  Charisma was 18 came back 16. See the save-anyway round-trip test. */
-    type Ev = { write: (sels: (AbilityId | null)[]) => void; slots: { options?: AbilityId[] }[]; taken?: AbilityId[] };
+    /* `set` / `level`: the boost set as a WP14 removal names it (blocks/active.ts `boostPlaceId`). */
+    type Ev = { write: (sels: (AbilityId | null)[]) => void; slots: { options?: AbilityId[] }[]; taken?: AbilityId[]; set: string; level?: number };
     const slotsOf = (boosts: AbilityBoost[]): { options?: AbilityId[] }[] =>
       boostSlots(boosts).map((sl) => (sl.kind === 'choice' ? { options: sl.options } : {}));
     const events: Ev[] = [];
@@ -12018,13 +13694,20 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
         write: (s) => (b.ancestryBoosts = s),
         slots: altBoosts ? [{}, {}] : slotsOf((eff ?? ancestry).abilityBoosts),
         taken: altBoosts ? [] : fixedBoosts((eff ?? ancestry).abilityBoosts),
+        set: 'ancestry',
       });
     if (background)
-      events.push({ write: (s) => (b.backgroundBoosts = s), slots: slotsOf(background.abilityBoosts), taken: fixedBoosts(background.abilityBoosts) });
-    events.push({ write: (s) => (b.levelBoosts = s), slots: [{}, {}, {}, {}] });
+      events.push({ write: (s) => (b.backgroundBoosts = s), slots: slotsOf(background.abilityBoosts), taken: fixedBoosts(background.abilityBoosts), set: 'background' });
+    events.push({ write: (s) => (b.levelBoosts = s), slots: [{}, {}, {}, {}], set: 'free' });
     const boostCount = attributeBoostCount(c.variantRules);
     for (const lvl of attributeBoostLevels(c.variantRules))
-      if (lvl <= c.level) events.push({ write: (s) => (b.attributeBoosts[lvl] = s), slots: Array.from({ length: boostCount }, () => ({})) });
+      if (lvl <= c.level) events.push({ write: (s) => (b.attributeBoosts[lvl] = s), slots: Array.from({ length: boostCount }, () => ({})), set: 'level', level: lvl });
+    /* Tweaks phase 2 WP14 (C46, C47): a boost place a live "Remove a place" on this build removes counts nothing, so
+     * the solver places no boost there (the score never had it); the pick it still holds comes back from
+     * `c.tweakKept` after solving, into that place only (./tweakKept.ts `readKeptBoosts`). Empty for every character
+     * without such a removal, so its solving is unchanged. */
+    const removedAt = events.map((ev) => removedBoostIndexes(b, ev.set, ev.level));
+    const keptBoosts = readKeptBoosts(b, c.tweakKept);
 
     const pick = (placed: Set<AbilityId>, options?: AbilityId[]): AbilityId | null => {
       let best: AbilityId | null = null;
@@ -12040,6 +13723,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     events.forEach((ev, ei) => {
       const st = slotState[ei];
       ev.slots.forEach((slot, si) => {
+        if (removedAt[ei].has(si)) return;
         const best = pick(st.placed, slot.options);
         if (best) {
           st.placed.add(best);
@@ -12051,9 +13735,9 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     // Pass 2 (relaxation): any boosts still unplaced — e.g. a hand-authored character whose scores
     // exceed a strict slot layout — fill remaining empty slots ignoring option lists, so the final
     // scores are still reproduced (buildCharacter doesn't enforce slot options anyway).
-    slotState.forEach((st) => {
+    slotState.forEach((st, ei) => {
       st.res.forEach((cur, si) => {
-        if (cur !== null) return;
+        if (cur !== null || removedAt[ei].has(si)) return;
         const best = pick(st.placed);
         if (best) {
           st.placed.add(best);
@@ -12062,6 +13746,74 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
         }
       });
     });
+    // WP14: each kept pick back into its removed place (never a place the solver filled: those are not removed).
+    for (const k of keptBoosts) {
+      const ei = events.findIndex((ev) => ev.set === k.set && (k.set !== 'level' || ev.level === k.level));
+      if (ei < 0 || !removedAt[ei].has(k.index) || k.index >= slotState[ei].res.length) continue;
+      if (slotState[ei].res[k.index] === null) slotState[ei].res[k.index] = k.attribute as AbilityId;
+    }
+    /* WP14 fix round 1: the solver may have given a LIVE place of the same set the kept pick's attribute (it never saw
+     * the kept pick). Two picks of one attribute in one set: `collectBoosts` keeps one, so after Restore a boost is lost
+     * silently. Move the live copy out along a cycle of moves (fix round 2: one search, any length up to
+     * REPAIR_DEPTH, any sets — a swap and a 3-set rotation alone missed arrangements, e.g. a 4-move chain through
+     * ancestry, background and free): lift X out of ei[j], carry it into a live place of any set that lacks it (its
+     * options allowing), pick up that place's attribute and carry it on, until the carried attribute fits back into
+     * ei[j]. Each move keeps the per-attribute counts, so every score, unchanged. For app-made data the player's own
+     * layout is such a cycle, so one always exists; only hand-written data can reach the fallback: no cycle → the
+     * removed place is left EMPTY, so after Restore it is owed (the "!" shows) instead of a duplicate that drops a
+     * boost unseen. Seeding the kept attribute into `placed` instead breaks the greedy fill. */
+    {
+      const res = slotState.map((st) => st.res);
+      const holds = (e: number, A: AbilityId, skip: number) => (events[e].taken ?? []).includes(A) || res[e].some((v, si) => si !== skip && v === A);
+      const fits = (e: number, si: number, A: AbilityId) => {
+        const o = events[e].slots[si]?.options;
+        return !o || o.includes(A);
+      };
+      const live = (e: number) => res[e].flatMap((v, si) => (v && !removedAt[e].has(si) ? [si] : []));
+      // The longest cycle tried, and a cap on places tried per kept pick (bounds the work on hand-written data).
+      const REPAIR_DEPTH = 6;
+      const REPAIR_NODE_BUDGET = 20000;
+      for (const k of keptBoosts) {
+        const ei = events.findIndex((ev) => ev.set === k.set && (k.set !== 'level' || ev.level === k.level));
+        const X = k.attribute as AbilityId;
+        if (ei < 0 || res[ei][k.index] !== X) continue;
+        const j = live(ei).find((si) => res[ei][si] === X);
+        if (j === undefined) continue;
+        // Lift X out: ei[j] is the hole the cycle must close on (null while searching, so `holds` skips it).
+        res[ei][j] = null;
+        let budget = REPAIR_NODE_BUDGET;
+        const used = new Set<string>();
+        // Carry A (depth moves made so far): close the cycle, or move A into a live place and carry what it held.
+        const carry = (A: AbilityId, depth: number, maxDepth: number): boolean => {
+          if (depth > 0 && !holds(ei, A, j) && fits(ei, j, A)) {
+            res[ei][j] = A;
+            return true;
+          }
+          if (depth >= maxDepth) return false;
+          for (let e = 0; e < events.length; e++) {
+            if (holds(e, A, -1)) continue;
+            for (const s of live(e)) {
+              const key = `${e}:${s}`;
+              if (used.has(key) || !fits(e, s, A) || --budget < 0) continue;
+              const B = res[e][s]!;
+              res[e][s] = A;
+              used.add(key);
+              if (carry(B, depth + 1, maxDepth)) return true;
+              used.delete(key);
+              res[e][s] = B;
+            }
+          }
+          return false;
+        };
+        // Shortest cycle first, so the fewest picks move.
+        let moved = false;
+        for (let d = 1; d <= REPAIR_DEPTH && !moved && budget > 0; d++) moved = carry(X, 0, d);
+        if (!moved) {
+          res[ei][j] = X;
+          res[ei][k.index] = null;
+        }
+      }
+    }
     events.forEach((ev, ei) => ev.write(slotState[ei].res));
   }
 
@@ -12249,7 +14001,23 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // granting taking lands in below.
   const pickByGrantingSlot = new Map<string, string>();
   const pickByGrantingFeat = new Map<string, string>();
+  /** Every pick-a-feat answer a granting slot's taking made, in row order — an extra place keeps all of them under
+   *  its own key (`<key>`, `<key>#1`, …: Spell Trickster's two), where a book slot re-attaches one. */
+  const picksByGrantingSlot = new Map<string, string[]>();
   for (const f of c.feats) {
+    /*
+     * Tweaks phase 2, WP7 (C43): a row an extra feat place emitted (`<level>:extra<category>:<n>`; the featPicks
+     * loop keeps its raw `extra…` category, C10) is the player's pick in THAT place. It goes straight to the
+     * placement below, ahead of every test here, and keeps its exact key there: never a real slot (a dedication in
+     * an extra class place used to take the first free book class slot, leaving the place empty and owed), never
+     * a chip. A key whose place block is missing keeps its key too (C9: a feat with no slot that counts).
+     */
+    if (f.slotKey && featPlaceKeyOf(f.slotKey)) {
+      const arr = featsByLevel.get(f.level) ?? [];
+      arr.push(f);
+      featsByLevel.set(f.level, arr);
+      continue;
+    }
     // A feat buildCharacter re-injects automatically (subclass/muse grant, option choice-feat, Voice of
     // Nature, Expand-the-Portal impulse): skip it entirely — no slot, no chip. It reappears on the sheet
     // via buildCharacter, so it's not lost, just not an editable builder slot.
@@ -12266,8 +14034,10 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       // a pick grant handed over silently disappears. Keyed by the granting TAKING, remapped to that
       // taking's new slot below.
       if (FEAT_PICK_GRANTS[f.grantedBy]) {
-        if (f.grantedBySlot) pickByGrantingSlot.set(f.grantedBySlot, f.featId);
-        else pickByGrantingFeat.set(f.grantedBy, f.featId); // saved before slots were recorded
+        if (f.grantedBySlot) {
+          pickByGrantingSlot.set(f.grantedBySlot, f.featId);
+          picksByGrantingSlot.set(f.grantedBySlot, [...(picksByGrantingSlot.get(f.grantedBySlot) ?? []), f.featId]);
+        } else pickByGrantingFeat.set(f.grantedBy, f.featId); // saved before slots were recorded
       }
       continue;
     }
@@ -12340,8 +14110,10 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   type RealSlot = { level: number; idx: number; category: FeatCategory; nth: number };
   const realSlots: RealSlot[] = [];
   if (c.classId) {
+    // The feats that draw slots: the character's, plus a held-back place's (the Builder's storage view, C11).
+    const slotDrawingIds = [...c.feats.map((f) => f.featId), ...keptPlaces.map((p) => p.featId)];
     for (let lvl = 1; lvl <= c.level; lvl++) {
-      const cats = levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2, c.mythicEnabled, c.feats.map((f) => f.featId)).featSlots;
+      const cats = levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2, c.mythicEnabled, slotDrawingIds).featSlots;
       // `nth`: the slot's place among its level's slots of its category — what a dual gate binds an
       // element to (`kineticSlotAllows`).
       cats.forEach((category, idx) => realSlots.push({ level: lvl, idx, category, nth: cats.slice(0, idx).filter((x) => x === category).length }));
@@ -12383,6 +14155,26 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     .flatMap(([, fs]) => fs);
   const granted: { featId: string; level: number; category: FeatCategory }[] = [];
   for (const f of orderedFeats) {
+    // An extra feat place's row (routed here above, C43): its EXACT key, with the answers the row carries — the
+    // choice (a multi-pick one split back over `<key>#0..#n`) and every pick-a-feat answer its taking made (under
+    // `<key>`, `<key>#1`, …). In level order with the book picks, so `featPicks` lists them as the build did.
+    if (f.slotKey && featPlaceKeyOf(f.slotKey)) {
+      const key = f.slotKey;
+      if (featIdAtSlot(b, key)) continue; // one row per key; a second never replaces the first
+      b.featPicks[key] = f.featId;
+      if (f.choice) {
+        const keys = choiceKeys(key, content.feats[f.featId]?.choice);
+        const values = keys.length > 1 ? f.choice.value.split(',') : [f.choice.value];
+        values.forEach((v, i) => {
+          if (keys[i] && v) b.featChoices[keys[i]] = v;
+        });
+      }
+      const picks = picksByGrantingSlot.get(key) ?? [];
+      pickKeysFor(key, FEAT_PICK_GRANTS[f.featId]?.picks).forEach((k, i) => {
+        if (picks[i]) (b.pickFeatChoices ??= {})[k] = picks[i];
+      });
+      continue;
+    }
     const free = realSlots.filter((s) => !usedSlots.has(`${s.level}:${s.idx}`));
     const minLvl = featMinLevel(f);
     const candidates = free
@@ -12428,7 +14220,11 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     for (const g of granted) {
       if (merged.filter((a) => a.featId === g.featId).length < maxTakes(content.feats[g.featId])) merged.push(g);
     }
-    b.overrides = { ...(b.overrides ?? {}), addedFeats: merged };
+    // Stamped `source: 'import'` (spec 2, plan B WP2): an overflow feat was the character's own content
+    // before it became a given feat, so it ignores the Tweaks master switch. `markImported` stamps only the
+    // entries appended here and never writes `v` (B27): a build-less character's reverse build at Builder
+    // open must keep reading ON.
+    b.overrides = markImported({ ...(b.overrides ?? {}), addedFeats: merged }, 'addedFeats', existing.length);
   }
 
   // Skills: classSkills (and the skilled-human heritage skill) by subtracting recomputable grants.
@@ -12481,11 +14277,16 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
      * increases ALONE explain is still dropped, by the `nativeSteps` comparison below, which is what
      * that comparison is for.
      */
+    /* Tweaks phase 2 WP11 (C43): an extra place's increase cannot come off that build — its block rides `overrides` —
+     * so the steps those increases give are not a training from somewhere else: a skill counts as granted only when
+     * the build gives it MORE than they explain (a class skill raised by an extra increase stays a class skill). */
+    const tweakSteps: Partial<Record<ProficiencyKey, number>> = {};
+    for (const si of c.skillIncreases ?? []) if (si.lane === 'tweak') tweakSteps[si.skill] = (tweakSteps[si.skill] ?? 0) + 1;
     for (const [sk, r] of Object.entries(
       buildCharacter({ ...b, classSkills: [], skillIncreases: {}, bonusSkillIncreases: {}, backgroundSkillIncreases: {} }, content)
         .proficiencies.skills,
     ) as [ProficiencyKey, ProficiencyRank][]) {
-      if (r !== 'untrained') granted.add(sk);
+      if (PROFICIENCY_RANKS.indexOf(r) > (tweakSteps[sk] ?? 0)) granted.add(sk);
     }
 
     // Steps the character's OWN recorded skill increases already contribute, per skill.
@@ -12530,21 +14331,37 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     {
       const rankIdx = (r: ProficiencyRank) => PROFICIENCY_RANKS.indexOf(r);
       // Baseline ranks from this build with increases stripped (b.classSkills/heritageSkill are set).
-      const baseline = buildCharacter({ ...b, skillIncreases: {} }, content).proficiencies.skills as Record<string, ProficiencyRank>;
+      const baselineChar = buildCharacter({ ...b, skillIncreases: {} }, content);
+      const baseline = baselineChar.proficiencies.skills as Record<string, ProficiencyRank>;
       // `nativeSteps` (computed above with the class-skill subtraction) is what the native increases
       // already contribute per skill — don't re-synthesize those.
-      const siLevels = (cls?.skillIncreaseLevels ?? SKILL_INCREASE_LEVELS).filter((lvl) => lvl <= c.level);
-      const freeLevels = siLevels.filter((lvl) => !b.skillIncreases[lvl]).sort((a, b2) => a - b2);
+      /* Skill order WP8 (plan D15): the main lane's levels are the union of a Dual Class pair's, as in
+       * `buildCharacter` and `levelGrants` — a fighter/rogue's increase at 2nd is a real slot. */
+      const siLevels = rbLanes.main.filter((lvl) => lvl <= c.level);
+      /* WP14: a main-lane place a live "Remove a place" removes applies nothing — never a level to synthesize into. */
+      const removedMain = removedSkillIncreasePlaces(b);
+      const freeLevels = siLevels.filter((lvl) => !b.skillIncreases[lvl] && !removedMain.has(skillPlaceId('main', lvl))).sort((a, b2) => a - b2);
       for (const [skRaw, rankRaw] of Object.entries(c.proficiencies.skills) as [ProficiencyKey, ProficiencyRank][]) {
         const baseIdx = rankIdx(baseline[skRaw] ?? 'untrained');
         const finalIdx = rankIdx(rankRaw);
-        const needed = finalIdx - baseIdx - (nativeSteps[skRaw] ?? 0);
+        // WP11: the baseline already holds the extra places' increases (their blocks stay on), so they are not taken off twice.
+        const needed = finalIdx - baseIdx - ((nativeSteps[skRaw] ?? 0) - (tweakSteps[skRaw] ?? 0));
+        /* Skill order WP8 (plan section 2, findings fix step 7): an increase raises the rank the skill HAS at
+         * its level — skill ranks are worked out level by level (ruling 1) — so a synthesized step can only
+         * build on the baseline's rank from the level the baseline reaches it: the first level whose end
+         * holds it, read from the baseline's own history (`firstLevelAtRank`). Kholo Lore at 5th trains
+         * Stealth at 5th; the increase that makes it expert lands at 5th (that level's feats come before its
+         * increases, D3) or later, never at 3rd, where it would train an untrained Stealth and Kholo Lore
+         * would then owe a replacement skill instead. A baseline rank from 1st (or no history) leaves the
+         * old placement unchanged. The plan names `'trained'`; the baseline's own rank is the same rule
+         * one step up (an apparition Lore expert at 8th: a master step at 7th would be swallowed by it). */
+        const fromLevel = baseIdx > 0 ? firstLevelAtRank(baselineChar, skRaw, PROFICIENCY_RANKS[baseIdx]) ?? 1 : 1;
         for (let n = 0; n < needed; n++) {
           // The (already+1)-th step above the baseline targets rank index baseIdx + already + 1; place
           // it at the earliest free level whose cap (expert@3–5, master@7–13, legendary@15+) permits it.
           const already = (nativeSteps[skRaw] ?? 0) + n;
           const targetRankIdx = baseIdx + already + 1;
-          const li = freeLevels.findIndex((lvl) => rankIdx(skillIncreaseCap(lvl)) >= targetRankIdx);
+          const li = freeLevels.findIndex((lvl) => lvl >= fromLevel && rankIdx(skillIncreaseCap(lvl)) >= targetRankIdx);
           if (li === -1) break; // no remaining level can legally grant this step — best-effort stops
           const lvl = freeLevels.splice(li, 1)[0];
           b.skillIncreases[lvl] = skRaw;
@@ -12770,7 +14587,59 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     if (archEidolon?.typeId) b.archetypeEidolonType = archEidolon.typeId;
   }
 
+  // Tweaks phase 2, C46 (WP7): last, so every store the character itself filled above wins — a kept place's pick and
+  // answers go back only where nothing is held (UNKNOWN ≠ EMPTY; a player's answer is never overwritten).
+  restoreKeptFeatPlaces(b, [...keptPlaces, ...keptCopies]);
   return b;
+}
+
+/** One printed skill-increase or boost place a "Remove a place" may name (Tweaks phase 2 WP14), with what it holds. */
+export type DrawnChoicePlace =
+  | { place: 'skillIncrease'; level: number; lane: 'main' | 'bonus' | 'background'; answer?: ProficiencyKey }
+  | { place: 'boost'; set: 'ancestry' | 'background' | 'free' | 'level'; level?: number; index: number; answer?: AbilityId };
+
+/**
+ * Tweaks phase 2 WP14 (C47): every printed skill-increase and boost place this build draws — the places a
+ * "Remove a place" may name, each with its stored answer. Skill increases by level (main, bonus, background lane,
+ * as `levelChoices` owes them), then the boost sets: ancestry, background, the four free level-1 boosts, each level
+ * set up to the character's level. Only places a player answers: a fixed boost, the key attribute, a second class's
+ * key attribute and a kineticist's element are no places. Indexes are stored positions (blocks/active.ts
+ * `boostPlaceId`). Pure; reads the storage view, removals included (a removed place is still drawn).
+ */
+export function drawnSkillBoostPlaces(build: BuildState, content: ContentDatabase): DrawnChoicePlace[] {
+  const out: DrawnChoicePlace[] = [];
+  const picks = heldFeatIds(build, undefined, { includePaused: true });
+  for (let lvl = 1; lvl <= build.level; lvl++) {
+    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, picks, build);
+    const lanes: ['main' | 'bonus' | 'background', boolean | undefined, ProficiencyKey | undefined][] = [
+      ['main', g.skillIncrease, build.skillIncreases[lvl]],
+      ['bonus', g.bonusSkillIncrease, build.bonusSkillIncreases?.[lvl]],
+      ['background', g.backgroundSkillIncrease, build.backgroundSkillIncreases?.[lvl]],
+    ];
+    for (const [lane, drawn, answer] of lanes) if (drawn) out.push({ place: 'skillIncrease', level: lvl, lane, ...(answer ? { answer } : {}) });
+  }
+  const boost = (set: 'ancestry' | 'background' | 'free' | 'level', count: number, list: readonly (AbilityId | null)[] | undefined, level?: number) => {
+    for (let i = 0; i < count; i++) {
+      const answer = list?.[i];
+      out.push({ place: 'boost', set, ...(set === 'level' ? { level } : {}), index: i, ...(answer ? { answer } : {}) });
+    }
+  };
+  const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
+  if (ancestry) {
+    // The heritage-ADJUSTED boosts, as the Setup card draws them and `collectBoosts` reads them (Mightyfall's package).
+    const eff = heritageAdjustedAncestryAttributes(
+      ancestry,
+      build.heritageId ? content.heritages[build.heritageId] : undefined,
+      build.heritageId ? build.featChoices?.[`heritage:${build.heritageId}`] : undefined,
+    );
+    boost('ancestry', build.options?.alternateAncestryBoosts ? 2 : boostSlots(eff.abilityBoosts).length, build.ancestryBoosts);
+  }
+  const background = resolveBackground(build, content);
+  if (background) boost('background', boostSlots(backgroundEffectiveBoosts(build, background)).length, build.backgroundBoosts);
+  boost('free', 4, build.levelBoosts);
+  const per = attributeBoostCount(build.variantRules);
+  for (const lvl of attributeBoostLevels(build.variantRules)) if (lvl <= build.level) boost('level', per, build.attributeBoosts[lvl], lvl);
+  return out;
 }
 
 /** What a given character level offers: auto features, feat slots, skill increase, boosts. */
@@ -12901,8 +14770,11 @@ export function levelGrants(
   return {
     features,
     featSlots,
-    skillIncrease: (cls?.skillIncreaseLevels ?? SKILL_INCREASE_LEVELS).includes(level),
-    bonusSkillIncrease: (cls?.bonusSkillIncreaseLevels ?? []).includes(level),
+    /* Skill order WP6 (plan D15): Dual Class owes both classes' increases, one per level (GM Core rules-1331),
+     * so a fighter/rogue has a slot at every level from 2nd. The same lists buildCharacter's print lanes read;
+     * no feat slot moves (stored slot keys index `featSlots`). */
+    skillIncrease: classSkillIncreaseLevels(cls, cls2).main.includes(level),
+    bonusSkillIncrease: classSkillIncreaseLevels(cls, cls2).bonus.includes(level),
     /* The BACKGROUND's extra increase (Reborn Soul at 3/7/15). Only reachable when the caller passed
      * the whole build — the dozen callers that only want feat slots do not, and a background they
      * cannot see grants nothing, exactly as a class archetype does not above. */
@@ -13030,12 +14902,69 @@ export function hasSpellSlotsOfRank(character: Character, minRank: number): bool
   );
 }
 
+/**
+ * A rank prerequisite line → its rank and its alternatives (lower case), or null when the line is not one.
+ * Compound "X or Y" is an OR, and so is the comma list AoN prints for three or more: "Expert in Arcana, Nature,
+ * Occultism, or Religion" split on " or " alone read as ONE unrecognized skill, "arcana, nature, occultism,", so
+ * the clause was not enforced at all. A clause with no "or" keeps its commas — there the comma is an AND, and
+ * splitting it would turn a requirement into an alternative. Shared by `checkPrerequisites` and
+ * `skillPrereqLines`, so the print pass (D5) reads a prerequisite exactly as the picker does.
+ */
+function parseRankPrereq(line: string): { need: ProficiencyRank; targets: string[] } | null {
+  const m = line.match(/^(trained|expert|master|legendary)\s+(?:in\s+)?(.+)$/i);
+  if (!m) return null;
+  const need = m[1].toLowerCase() as ProficiencyRank;
+  const targets = (/\bor\b/i.test(m[2]) ? m[2].split(/\s*,\s*(?:or\s+)?|\s+or\s+/i) : [m[2]]).map((t) => t.trim().toLowerCase()).filter(Boolean);
+  return { need, targets };
+}
+
+/** A prerequisite target's skill key: one of the sixteen skills, or a Lore; null for anything else (Perception,
+ *  a tradition, a feat name). */
+function prereqSkillKey(target: string): ProficiencyKey | null {
+  if ((SKILLS as readonly string[]).includes(target)) return target as SkillId;
+  return /\blore$/.test(target) ? loreKey(target) : null;
+}
+
+/**
+ * The SKILL-RANK prerequisites of a feat (skill-order plan D5; WP3): every rank line whose alternatives are all
+ * skills or Lores, as `checkPrerequisites` reads it — a declared token is not one, and a line naming Perception
+ * or anything unrecognized is left out (the print pass moves a feat only for a skill line it can judge). A
+ * background that waives the feat's prerequisites (Tall Tale) is the caller's to apply.
+ */
+export function skillPrereqLines(feat: Feat, content: ContentDatabase): SkillPrereqLine[] {
+  const out: SkillPrereqLine[] = [];
+  const declared = feat.prerequisites?.length ? declaredTokens(content) : undefined;
+  for (const line of feat.prerequisites ?? []) {
+    if (declared?.has(normToken(line))) continue;
+    const rl = parseRankPrereq(line);
+    if (!rl) continue;
+    const keys = rl.targets.map(prereqSkillKey);
+    if (!keys.length || keys.some((k) => k == null)) continue;
+    out.push({ line, need: rl.need, keys: keys as ProficiencyKey[] });
+  }
+  return out;
+}
+
+/**
+ * …`at` (skill-order plan section 2 and D5, WP7): with `atLevel`, a skill or Lore rank line reads the rank at the END
+ * of that level (`skillRanksAtLevel`, the "exactly" holds active then included) instead of the finished
+ * character's, so a feat taken at 3rd does not meet "expert in Athletics" with the increase from 5th. `without` = the
+ * records read as not taken: the picked feat's own subtree (a feat never meets its own prerequisite), or, in a slot's
+ * picker, the subtree of the feat that slot holds (a candidate REPLACES it). The same moment the print pass judges a
+ * feat's prerequisite at (`skillPrereqLines`, D5). A character without a history keeps the finished ranks.
+ */
 export function checkPrerequisites(
   feat: Feat,
   character: Character,
   content: ContentDatabase,
+  at?: { atLevel?: number; without?: ReadonlySet<string> },
 ): { met: boolean; unmet: string[] } {
   const unmet: string[] = [];
+  let ranksAt: SkillRanks | undefined | null = null;
+  const skillRankOf = (key: ProficiencyKey): ProficiencyRank => {
+    if (at?.atLevel != null && ranksAt === null) ranksAt = skillRanksAtLevel(character, at.atLevel, 'end', at.without);
+    return (ranksAt ?? character.proficiencies.skills)[key] ?? 'untrained';
+  };
   const abilityResults: { line: string; met: boolean }[] = [];
 
   /* A heritage's outright prohibition is checked FIRST, ahead of the background waiver below: *"you
@@ -13099,16 +15028,13 @@ export function checkPrerequisites(
       });
       continue;
     }
-    const m = line.match(/^(trained|expert|master|legendary)\s+(?:in\s+)?(.+)$/i);
-    if (m) {
-      const need = m[1].toLowerCase() as ProficiencyRank;
-      // Compound "X or Y" is an OR, and so is the comma list AoN prints for three or more: "Expert in Arcana, Nature, Occultism, or Religion" split on " or " alone read as ONE unrecognized skill, "arcana, nature, occultism,", so the clause was not enforced at all. A clause with no "or" keeps its commas — there the comma is an AND, and splitting it would turn a requirement into an alternative.
-      const targets = (/\bor\b/i.test(m[2]) ? m[2].split(/\s*,\s*(?:or\s+)?|\s+or\s+/i) : [m[2]]).map((t) => t.trim().toLowerCase()).filter(Boolean);
+    const rl = parseRankPrereq(line);
+    if (rl) {
+      const { need, targets } = rl;
       const rankOf = (target: string): ProficiencyRank | null => {
         if (target === 'perception') return character.proficiencies.perception;
-        if ((SKILLS as readonly string[]).includes(target)) return character.proficiencies.skills[target as SkillId] ?? 'untrained';
-        const lore = /\blore$/.test(target) ? loreKey(target) : null;
-        if (lore) return character.proficiencies.skills[lore] ?? 'untrained';
+        const key = prereqSkillKey(target);
+        if (key) return skillRankOf(key);
         return null; // unrecognized (a tradition, a feat name, …) — can't verify
       };
       const ranks = targets.map(rankOf);

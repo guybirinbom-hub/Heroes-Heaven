@@ -58,7 +58,7 @@ describe('mergeBundles', () => {
     expect(mergeBundles(local, null)).toBe(local);
   });
 
-  it('unions homebrew content, sources, and modes (local wins key conflicts)', () => {
+  it('unions homebrew content, sources, and modes (with no stamps on either side, local wins key conflicts)', () => {
     const local = bundle({
       homebrew: { ...emptyHomebrew(), items: { i1: { name: 'local-i1' }, shared: { name: 'local' } } } as CloudBundle['homebrew'],
       homebrewSources: { s1: { id: 's1', name: 'S1' } },

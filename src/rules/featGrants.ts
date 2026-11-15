@@ -22,6 +22,7 @@
  */
 import type { ArmorCategory, ProficiencyKey, ProficiencyRank, SaveId, WeaponCategory } from './types';
 import { FEAT_SKILL_GRANTS } from './featGrantsAuto';
+import { extraTakes, type SwitchHost } from './blocks/active';
 import { FEAT_LANE_GRANTS } from './featGrantsLane';
 
 /** One step of a level-gated proficiency upgrade a feat grants. */
@@ -947,6 +948,34 @@ export const grantsRecordOff = (id: string | undefined | null): boolean =>
   !!id && !!trustOffKinds.get(id)?.has('grantsRecord');
 
 /**
+ * The registry kinds the gate REALLY takes off this carrier right now — the marker's question, not an
+ * apply-side read. A lane kind that removes nothing (every key it answers also answers a trusted kind,
+ * so `withoutOffKinds` keeps it) is not named: the line must never claim a rule is held back when the
+ * sheet still applies it. Read off `withoutOffKinds`' own OUTPUT — the keys it really dropped — so the
+ * rule is never written twice. Empty when nothing is held back.
+ */
+export function grantKindsHeldBack(id: string | undefined | null): string[] {
+  const off = id ? trustOffKinds.get(id) : undefined;
+  if (!id || !off?.size) return [];
+  const out = new Set<string>();
+  if (off.has('grantsRecord')) out.add('grantsRecord');
+  const dropped = (before: FeatGrant, after: FeatGrant | undefined): void => {
+    for (const [key, value] of Object.entries(before)) {
+      const kept = (after as Record<string, unknown> | undefined)?.[key];
+      if (kept === undefined) for (const k of GRANT_KEY_KINDS[key] ?? []) out.add(k);
+      else if (key === 'choiceGrants') {
+        for (const [answer, g] of Object.entries(value as Record<string, FeatGrant>)) {
+          dropped(g, (kept as Record<string, FeatGrant>)[answer]);
+        }
+      }
+    }
+  };
+  const g = FEAT_GRANTS[id];
+  if (g) dropped(g, withoutOffKinds(g, off));
+  return [...out].sort();
+}
+
+/**
  * THE APPLY-SIDE READ of FEAT_GRANTS. Every reader in src/rules goes through this; a raw
  * `FEAT_GRANTS[…]` there is a lane the gate cannot reach, which `scripts/featgrants-raw-check.mjs`
  * turns red in `npm run verify`.
@@ -993,6 +1022,26 @@ export function maxTakes(feat: { maxTakable?: number | null } | undefined): numb
   if (!feat) return 1;
   if (feat.maxTakable === null) return Infinity;
   return feat.maxTakable ?? 1;
+}
+
+/**
+ * How many times a feat may be taken IN A FEAT SLOT on this build: the book's `maxTakes` plus every LIVE
+ * "Take a feat more times" tweak for it (Tweaks phase 2, WP8, plan C23; `extraTakes`: the tweak's own switch on AND
+ * Tweaks on — paused or off, the book's cap). Read at EXACTLY three gates, which must agree: the `buildCharacter`
+ * featPicks loop's cap, `slotRefusal`'s "Already taken" count (featSlots.ts) and `heldPickGranters`' `slotKept`
+ * (the pick walk's mirror of that loop). A FOURTH gate reads the same sum through `givenCopyCounts` (blocks/active.ts;
+ * WP8 round 4, F1): a given feat a slot already holds counts beside it while a live block leaves room — in
+ * `buildCharacter`'s given-feat loop and `heldFeatSlots`' given-feat dedupe. Every other `maxTakes` reader stays the book's (wp8-report.md lists each
+ * and why). Unlimited (`maxTakable: null`) stays unlimited. `feat` is the record when the caller holds it already
+ * (a picker asking about a feat of another content view); else it is read from `content`.
+ */
+export function takesAllowed(
+  featId: string,
+  content: { feats: Record<string, { maxTakable?: number | null } | undefined> },
+  build: SwitchHost,
+  feat: { maxTakable?: number | null } | undefined = content.feats[featId],
+): number {
+  return maxTakes(feat) + extraTakes(build, featId);
 }
 
 /**

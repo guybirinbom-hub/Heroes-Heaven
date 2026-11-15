@@ -63,8 +63,16 @@ npm run tauri build  # build the Windows installer → src-tauri/target/release/
 npm test             # run the test suite
 ```
 
-> **Releasing:** every GitHub release should include stable-named assets — `Heroes-Heaven-Setup.exe` (a copy of the generated `*_x64-setup.exe`) and `Heroes-Heaven-Android.apk` (a copy of the **signed release** `app-arm64-release.apk` from `npm run android:release`; the release keystore lives outside the repo) — so the download buttons above always point at the newest builds.
+The installer build signs its update file, so it needs the project's update signing key in `TAURI_SIGNING_PRIVATE_KEY`. To build without it, turn the update file off:
+
+```bash
+npm run tauri build -- --config "{\"bundle\":{\"createUpdaterArtifacts\":false}}"
+```
+
+> **Releasing:** every GitHub release should include stable-named assets — `Heroes-Heaven-Setup.exe` (a copy of the generated `*_x64-setup.exe`) and `Heroes-Heaven-Android.apk` (a copy of the **signed release** `app-arm64-release.apk` from `npm run android:release`; the release keystore lives outside the repo) — so the download buttons above always point at the newest builds. It also needs `latest.json` from `scripts/make-update-manifest.mjs`, which the Windows app's "Install the update" reads.
 
 ## Content & license
 
 Game rules content is from Pathfinder Second Edition (Remaster) by [Paizo Inc.](https://paizo.com), used under the ORC License. This is an unofficial, fan-made tool and is not affiliated with or endorsed by Paizo.
+
+The app ships the free fonts behind its Font setting (Inter, Quicksand, Roboto Slab, Cascadia Code, Atkinson Hyperlegible, OpenDyslexic) from [Fontsource](https://fontsource.org); their licences (SIL Open Font License 1.1, and Apache 2.0 for Roboto Slab) are in [`public/fonts-LICENSE.txt`](public/fonts-LICENSE.txt).

@@ -328,6 +328,14 @@ function renderRepertoire(
   return out;
 }
 
+/** A repertoire the overlay may add to: each rank's list is a NEW array. A spread of the map alone
+ *  hands back the STORED lists, and a push onto one writes today's spell into the saved character. */
+function copyRepertoire(rep: Record<number, string[]> | undefined): Record<number, string[]> {
+  const out: Record<number, string[]> = {};
+  for (const [rank, ids] of Object.entries(rep ?? {})) out[Number(rank)] = [...ids];
+  return out;
+}
+
 /** Overlay the in-play runtime values onto a freshly-built (snapshot) character. */
 export function applyPlayState(ch: Character, play: PlayState | undefined, content: ContentDatabase): Character {
   if (!play) return ch;
@@ -335,7 +343,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   // content path), so the HP clamp, Encumbered and the drawn spell lists read the same records as the
   // numbers: before, App's `character` was overlaid against the plain view while the sheet's numbers read
   // the edited records, and an edit that raised max HP drew "29 / 35" at full health.
-  content = contentFor(content, ch.overrides);
+  content = contentFor(content, ch);
   // A regular apex item (an invested item with an apexAttribute, e.g. Belt of Giant Strength) raises
   // one attribute (to 18, or +2 if already 18+). Bump it on the overlaid character so it ripples
   // through every derived stat (HP, saves, skills…). Only one apex item works at a time — the first
@@ -587,7 +595,8 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
       const granted = new Set(e.grantedCantrips ?? []);
       const defaults = e.cantrips.filter((id) => !granted.has(id));
       // One opening per stored pick even past the cap: a save made while a Dual Class cantrip bonus
-      // still fed this class draws every pick (`cantripCapWas`), and an opening is what draws it —
+      // still fed this class — or any non-book caster whose places shrank (Flexible Spellcaster, a
+      // removed Cantrip Expansion) — draws every pick (`cantripCapWas`), and an opening is what draws it —
       // including one the player PREPARED here, on the sheet, into an opening the larger cap gave.
       let cap = cantripOpenings(e);
       for (let i = cap; i < (e.cantripCapWas ?? 0); i++) if (play.preparedSpells?.[preparedCantripKey(e.id, i)]) cap = i + 1;
@@ -808,7 +817,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
               cantrips: [],
               repertoire: {},
             };
-      const repertoire: Record<number, string[]> = { ...(base.repertoire ?? {}) };
+      const repertoire = copyRepertoire(base.repertoire);
       const cantrips: string[] = [...(base.cantrips ?? [])];
       const innateUses = { ...(base.innateUses ?? {}) };
       const spellSources = { ...(base.spellSources ?? {}) };
@@ -882,7 +891,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
               cantrips: [],
               repertoire: {},
             };
-      const repertoire: Record<number, string[]> = { ...(base.repertoire ?? {}) };
+      const repertoire = copyRepertoire(base.repertoire);
       const spellSources = { ...(base.spellSources ?? {}) };
       for (const id of leveled) {
         const rank = content.spells[id].rank ?? 0;
@@ -950,7 +959,10 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     currency: play.currency ?? ch.currency,
     pinned: play.pinned ?? ch.pinned ?? [],
     pinnedDescs: play.pinnedDescs ?? ch.pinnedDescs ?? [],
-    classResources: play.resources ?? ch.classResources ?? {},
+    // The player's values win; a resource the play state has never held (a Dual Class second class's
+    // vials, gained on an engine update) gets the build's starting value instead of reading as 0 until a
+    // rest. The same merge playForRebuild does (⑪).
+    classResources: { ...(ch.classResources ?? {}), ...(play.resources ?? {}) },
     alchemyPrep: play.alchemyPrep ?? ch.alchemyPrep,
     dailyChoices: play.dailyChoices ?? ch.dailyChoices,
     ...(dailyLanguages.length ? { languages: [...(ch.languages ?? []), ...dailyLanguages], dailyLanguages } : {}),
@@ -1350,8 +1362,24 @@ export function addSpellTrade(play: PlayState, entry: SpellcastingEntry, from: n
     delete preparedSpells[k];
     delete expendedSlots[k];
   }
+  /* A stored trade this one can't stand beside is REPLACED, never kept beside it (Guy's bug, 2026-11-13:
+   * "two bonus slots of one rank"). `spellTradeError` reads only the trades IN FORCE, so an out-of-date
+   * trade (its slots gone: a Ring of Wizardry taken off, a level lost — `liveTrades` skips it) let a
+   * second trade to the same bonus rank in; once the slots came back, both were in force. Replaced: a
+   * stored trade to the same bonus rank (or a second cantrip trade), or one naming the slots this trade
+   * takes. Each is out of date — one in force would have refused this trade or marked its slots traded.
+   * The spell prepared in its bonus slot goes with it, as removeSpellTrade does. Every other stored
+   * trade, out of date or not, is kept untouched. */
+  const stored = tradesFor(play, entry.id);
+  const replaced = stored.filter((t) => t.to === to || (t.from === from && t.indices.some((i) => indices.includes(i))));
+  for (const t of replaced) {
+    if (t.to === CANTRIP_TRADE) continue;
+    const k = bonusSlotKey(entry.id, t.to, t.from);
+    delete preparedSpells[k];
+    delete expendedSlots[k];
+  }
   const spellTrades = { ...(play.spellTrades ?? {}) };
-  spellTrades[entry.id] = [...tradesFor(play, entry.id), { from, to, indices }];
+  spellTrades[entry.id] = [...stored.filter((t) => !replaced.includes(t)), { from, to, indices }];
   return { ...play, preparedSpells, expendedSlots, spellTrades };
 }
 
@@ -2378,12 +2406,23 @@ export function bumpItemCounter(
 ): PlayState {
   const live = (play.inventory ?? []).find((i) => i.instanceId === instanceId);
   const current = live?.counters?.[u.id]?.current ?? u.current;
+  const next = clamp(current + delta, 0, u.max);
+  /* A STACK of multi-use consumables (rations ×2, a week of food each) shows the uses of the copy in
+   * hand. Spending its last use finishes that copy: the stack drops by one and the next copy's uses
+   * appear, full (Guy, 2026-10-29). The last copy of a stack stays at empty for the player to remove. */
+  if (live && isStockCounter(u) && next === 0 && current > 0 && live.quantity > 1) {
+    const fewer = setItemQuantity(play, instanceId, live.quantity - 1);
+    return setItemCounter(fewer, instanceId, u.id, { current: u.max, max: u.max, resetsOnRest: u.resetsOnRest });
+  }
   return setItemCounter(play, instanceId, u.id, {
-    current: clamp(current + delta, 0, u.max),
+    current: next,
     max: u.max,
     resetsOnRest: u.resetsOnRest,
   });
 }
+
+/** A consumable's own uses (itemUses.ts synthesizes it as 'uses'): finite stock, never refilled by rest. */
+const isStockCounter = (u: { id: string; resetsOnRest: boolean }) => u.id === 'uses' && !u.resetsOnRest;
 
 /** Set the wallet directly (Manage Coins editor). */
 export function setCurrency(play: PlayState, currency: Coins): PlayState {
@@ -3383,7 +3422,8 @@ function resolvePlayItemPassives(
       const grant = (ch2.options ?? []).find((o) => o.value === picked)?.grant;
       if (!grant?.passive) continue;
       out ??= { ...(ch.resolvedItemPassives ?? {}) };
-      const cur = (out[it.itemId] ??= {});
+      // A copy of the item's entry, never the build's own: the writes below would land in the store.
+      const cur = (out[it.itemId] = { ...out[it.itemId] });
       for (const [k, v] of Object.entries(grant.passive)) {
         if (k === 'skills') cur.skills = { ...cur.skills, ...(v as Record<string, number>) };
         else if (Array.isArray(v)) (cur as Record<string, unknown[]>)[k] = [...((cur as Record<string, unknown[]>)[k] ?? []), ...v];

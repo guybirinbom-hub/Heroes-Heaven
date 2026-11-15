@@ -1,0 +1,63 @@
+--- a/src/builder/Builder.tsx
++++ b/src/builder/Builder.tsx
+@@ -43,6 +43,8 @@
+ import { classFeatureDescription } from '../rules/featureText';
+ // Item 7 (docs/overrides-redesign.md, Building blocks): the one content path for Overrides content edits.
+ import { contentFor } from '../rules/blocks/content';
++import { isAllowedAnyway } from '../rules/blocks/active';
++import { tweaksPageOn } from '../rules/blocks/stored';
+ import {
+   resolveBackground,
+   restrictedSkillIncreaseAllowed,
+@@ -319,8 +321,10 @@
+   // that DB with disabled source books filtered out — what the pickers offer. Already-chosen ids are
+   // always kept so disabling a book a character already used never breaks it.
+   // contentFor (rules/blocks/content.ts): the host passes the character's view (its carried records), the
+-  // edits go over it last; the same object for the same view and edits.
+-  const ovContent = useMemo(() => contentFor(baseContent, build.overrides), [baseContent, build.overrides]);
++  // edits go over it last; the same object for the same view and edits. Only the LIVE edits (the Tweaks
++  // switch, each edit's own on/off — plan B WP2), so the memo keys on `options` too: contentFor cannot
++  // un-apply an edit, and the Options toggle writes `options` alone.
++  const ovContent = useMemo(() => contentFor(baseContent, build), [baseContent, build.overrides, build.options]); // eslint-disable-line react-hooks/exhaustive-deps
+   const sourceCat = useMemo(() => sourceCatalog(baseContent), [baseContent]);
+   // desk #170: the Sources rows that print a Mythic Calling, named by the Level 0 picker's hint when every
+   // calling's book is off (read off the unfiltered database; `content` below has them removed).
+@@ -2350,7 +2354,7 @@
+                   />
+                   <OptionsCard build={build} actions={actions} content={content} />
+                 </RuleCards>
+-                {build.options?.overridesEnabled && (
++                {tweaksPageOn(build) && (
+                   <OverridesCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
+                 )}
+                 {hasSnareCrafting(featPrereqChar.feats.map((f) => f.featId)) && (
+@@ -2988,7 +2992,8 @@
+                       // different subclass) can break prerequisites that were met when picking.
+                       // Warn only — never auto-remove — and respect a deliberate override.
+                       const pickedFeat = picked ? content.feats[picked] : undefined;
+-                      const overridden = !!picked && (build.overrides?.allowedFeats?.includes(picked) ?? false);
++                      // A LIVE "Take anyway" only (blocks/active.ts): a paused one keeps the pick, and its warning returns.
++                      const overridden = !!picked && isAllowedAnyway(build, picked);
+                       const revalidation =
+                         pickedFeat && !overridden ? checkPrerequisites(pickedFeat, featPrereqChar, content) : null;
+                       const nowInvalid = !!revalidation && !revalidation.met;
+@@ -3863,7 +3868,7 @@
+           build.featPicks?.[pickerKey] === f.id ? undefined : exhaustedGrantReason(f, featPrereqChar);
+         // "Hide ineligible" filter predicate — mirrors the row's unmet/allowed logic below.
+         const featIneligible = (f: Feat) => {
+-          if (build.overrides?.allowedFeats?.includes(f.id)) return false;
++          if (isAllowedAnyway(build, f.id)) return false;
+           if (dedBlockedWhy(f)) return true;
+           if (noOpWhy(f)) return true;
+           return !checkPrerequisites(f, featPrereqChar, content).met;
+@@ -4006,8 +4011,8 @@
+               // "Take anyway", which records this one feat as a deliberate override (no global switch).
+               // Offered ONLY when the Overrides feature is enabled; otherwise unmet feats stay blocked
+               // (no hidden override state).
+-              const canOverride = !!build.options?.overridesEnabled;
+-              const allowed = build.overrides?.allowedFeats?.includes(f.id) ?? false;
++              const canOverride = tweaksPageOn(build);
++              const allowed = isAllowedAnyway(build, f.id);
+               const node = descNodeOf(f, 'feats');
+               // Replace: the feat in this slot NOW is marked (highlight + ✓), so the player can find it
+               // and compare the others with it. test/phone-builder-shell.test.tsx.

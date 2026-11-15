@@ -71,8 +71,8 @@ import { DOMAIN_SPELLS } from './domains';
 import { applyCounterMods } from './counterMods';
 import { armorSpecEffect, armorSpecValue } from './armorSpec';
 import { modeModifiersFor, modeNumberBonus, modeTypedMods, poolTypedMods, type ModeTarget, type TypedMod } from './modes';
-import { resolveTerms, takenByTerm, termsTotal, type Term, type TermPart } from './blocks/terms';
-import { numberTweakTerms } from './blocks/active';
+import { resolveTerms, takenByTerm, termsTotal, type Term, type TermLayer, type TermPart } from './blocks/terms';
+import { heldExactly, ignoredTweakTerms, maxHpTweakTerms, numberTweakTerms } from './blocks/active';
 import { contentFor } from './blocks/content';
 import { heldFeatSlots, type HeldInput } from './heldFeats';
 import { blockNumber, bookBlocksOf, clauseNumberBlocks, growingValue, itemChoiceBlocks, paramsOf, standingNumberBlocks, type BookCollection } from './blocks/book';
@@ -90,6 +90,7 @@ import {
   type MpDamage,
 } from './monsterParts';
 import { versatileVialFor, versatileVialLabel, versatileVialNote } from './versatileVial';
+import { heldClasses, type HeldClassFields } from './heldClasses';
 
 /** True when the Monster Parts variant rule is on AND this item has been switched to Monster-Parts
  *  mode (carries a `monsterPart` blob). Such an item ignores its runes/precious material entirely. */
@@ -1131,8 +1132,13 @@ export function spellTerms(c: Character, entry: SpellcastingEntry, which: 'attac
   /* A DC THE SOURCE PRINTS is a stated number, not a statistic — Sigil of the First Clan
    * (equipment-2679): *"You cast 1st-level command with a DC of 24."* Nothing modifies it, so the
    * conditions/modes pool is skipped too: those adjust the caster's own DC, and this DC is not theirs.
-   * A tweak does not reach it either, for the same reason. */
-  if (which === 'dc' && entry.fixedDc != null) return [baseTerm('Fixed DC', entry.fixedDc, 'printed by its source — nothing modifies it')];
+   * A tweak does not reach it either, for the same reason — it shows as a line of 0 that says so
+   * (plan B WP5, blocks/active.ts `ignoredTweakTerms`). */
+  if (which === 'dc' && entry.fixedDc != null)
+    return [
+      baseTerm('Fixed DC', entry.fixedDc, 'printed by its source — nothing modifies it'),
+      ...ignoredTweakTerms(c, `spell-dc@casting-entry:${entry.id}`, 'not on a DC printed by its source'),
+    ];
   const slot = which === 'dc' ? 'spell-dc' : 'spell-attack';
   return [
     ...(which === 'dc' ? [baseTerm('Base', 10)] : []),
@@ -1184,9 +1190,13 @@ export function featHpBonus(c: Character, db: ContentDatabase): number {
 }
 
 /**
- * Maximum HP's term list (see TERM LISTS). Not for a MANUAL maximum (`hitPoints.maxOverride`, the
- * legacy Overrides "max HP"): that replaces the whole calculation and `deriveMaxHp` returns it before
- * any list is built (checker C2) — tweak blocks on a manual maximum wait for part B.
+ * Maximum HP's term list (see TERM LISTS), a SET maximum included (plan B, WP3 — spec 2 case C): the
+ * Tweaks "Set maximum HP" (`number.setMaxHp`, the old Overrides max HP) is a 'set' term after the book
+ * lines (blocks/active.ts `maxHpTweakTerms`), so `resolveTerms` replaces the permanent part — ancestry,
+ * class + Con per level, every record's max-HP bonus, whose lines still show what they were — while a mode
+ * on Constitution, a max-HP mode and Drained still count on top, and an untyped tweak add still sums. A
+ * Character with `hitPoints.maxOverride` and no stored set (a hand-made seed, an old file) gets the same
+ * set term from that field; never both.
  */
 export function maxHpTerms(c: Character, db: ContentDatabase): Term[] {
   const ancestry = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
@@ -1205,7 +1215,8 @@ export function maxHpTerms(c: Character, db: ContentDatabase): Term[] {
     baseTerm(`(${hpPer} class + ${con} Con) × ${c.level} levels`, (hpPer + con) * c.level),
     // Every record with a max-HP clause is listed, as the breakdown always listed them, even at +0.
     ...hpBonusRecords(c, db).map((r): Term => ({ type: 'untyped', value: r.value, label: r.name, layer: 'book', key: r.key, source: r.block.source })),
-    ...numberTweakTerms(c, 'max-hp'),
+    // The tweaks: a set maximum (case C) and any other max-HP block.
+    ...maxHpTweakTerms(c),
     // A mode on Constitution moves every level's HP.
     ...abilityShiftTerms(c, 'con', c.level),
     // A mode targeting maximum HP is a flat shift of the total, not a per-level one.
@@ -1221,11 +1232,11 @@ export function maxHpTerms(c: Character, db: ContentDatabase): Term[] {
  * the one content path): this is the number every HP WRITE is computed from — initialPlay's damage seed,
  * the HP buttons, and the GM tracker's write-back (pcSheetTruth `sheetWithVitals`: damage = max − current)
  * — so a surface handing it the plain view cannot write a raw max over the player's HP. A database the
- * sheet already prepared comes back as the same object.
+ * sheet already prepared comes back as the same object. A set maximum is a term of that list (plan B,
+ * case C) — there is no early return, so the modes and Drained apply on top of it.
  */
 export function deriveMaxHp(c: Character, db: ContentDatabase): number {
-  if (c.hitPoints.maxOverride != null) return Math.max(0, c.hitPoints.maxOverride - drainedHpLoss(c));
-  return Math.max(0, termsTotal(maxHpTerms(c, contentFor(db, c.overrides))));
+  return Math.max(0, termsTotal(maxHpTerms(c, contentFor(db, c))));
 }
 
 export interface WornArmor {
@@ -1940,6 +1951,18 @@ export function sanctificationOf(c: Character, db?: ContentDatabase): 'holy' | '
     const hit = ok(String(cc.name ?? '').toLowerCase());
     if (hit) return hit;
   }
+  /*
+   * …and the TRAIT the answers granted, last. Deity and Cause's answer (`feature:deity-champion`)
+   * reaches neither shape above — a class feature's choice is not in `classChoices` — so a champion who
+   * answered there read as unsanctified and Radiant Armament never offered their rune: the deity card's
+   * answer was their only way in, and since 2026-10-27 the card no longer asks a champion (nothing else
+   * read it for them). `buildCharacter` puts the holy or unholy trait every sanctification answer grants
+   * on `chosenCreatureTraits`; the relic grants none.
+   */
+  for (const t of c.chosenCreatureTraits ?? []) {
+    const hit = ok(t.trait);
+    if (hit) return hit;
+  }
   return null;
 }
 
@@ -2130,9 +2153,12 @@ export function qualifiesForOption(c: Character, gate: SkillRankGate | undefined
 }
 
 /** The best rank this morning's answers give a skill, or undefined when they give none. Never lowers:
- *  a granted rank only counts when it beats what the character already has. */
+ *  a granted rank only counts when it beats what the character already has. A skill the PLAYER held
+ *  "exactly" with a tweak gets none (plan B, B6: the hold is the final word); a MOVED old entry does not
+ *  stop it (B26 c — the old `=` never touched the daily pick). */
 export function dailySkillRank(c: Character, db: ContentDatabase | undefined, key: ProficiencyKey): ProficiencyRank | undefined {
   if (!db || !c.dailyChoices) return undefined;
+  if (heldExactly(c, key, { forCap: true })) return undefined;
   const own = c.proficiencies.skills[key] ?? 'untrained';
   let best: ProficiencyRank | undefined;
   for (const g of dailyChoiceGrants(c, db)) {
@@ -2265,8 +2291,9 @@ export function mapNotesFor(c: Character, db: ContentDatabase, traits: string[])
   return notes;
 }
 
-/** AC's term list (see TERM LISTS): the number is its total, the breakdown its parts. A battle form's
- *  stated AC is the ONE term, and no tweak reaches it (spec item 8). */
+/** AC's term list (see TERM LISTS): the number is its total, the breakdown its parts. In a battle form
+ *  it is the stated AC plus a 0 line per AC tweak it ignores (ignoredTweakTerms); no tweak changes the
+ *  number (spec item 8). */
 export function acTerms(c: Character, db: ContentDatabase): Term[] {
   return acBuild(c, db).terms;
 }
@@ -2444,7 +2471,8 @@ function acBuild(c: Character, db: ContentDatabase): { terms: Term[]; rank: Prof
   const dexContribution = effDexCap != null ? Math.min(dex, effDexCap) : dex;
   // A BATTLE FORM states an AC outright, so nothing above it counts: not Dex, not armour, not
   // proficiency — and not a tweak either (spec item 8). One term, rather than adding — pest form says
-  // "AC 15", and folding that in as a bonus would have given a champion 45.
+  // "AC 15", and folding that in as a bonus would have given a champion 45. An AC tweak shows as a line
+  // of 0 that says why (plan B WP5, blocks/active.ts `ignoredTweakTerms`).
   const form = activeBattleForm(c);
   // Resolved, not read raw: every printed form states "AC = N + your level", so the authored value is
   // a formula string far more often than it is a number. `resolveFormula` returns the number
@@ -2452,7 +2480,12 @@ function acBuild(c: Character, db: ContentDatabase): { terms: Term[]; rank: Prof
   if (form?.ac != null) {
     const mode = (c.activeModes ?? []).find((m) => m.battleForm);
     const value = resolveFormula(form.ac, { level: c.level, abilities: c.abilities });
-    return { terms: [baseTerm(mode ? `${mode.name} (battle form)` : 'Battle form', value)], rank, dexCap: effDexCap, fromBattleForm: true };
+    return {
+      terms: [baseTerm(mode ? `${mode.name} (battle form)` : 'Battle form', value), ...ignoredTweakTerms(c, 'ac', 'not during a battle form')],
+      rank,
+      dexCap: effDexCap,
+      fromBattleForm: true,
+    };
   }
   // The SCORE's Dexterity under the cap is the base line; what a mode adds to it (still under the cap)
   // is its own play line, so the two always sum to `dexContribution`.
@@ -4101,31 +4134,9 @@ function addSubclassGrants(
   for (const id of subclassFeatureIds(opt?.featureIds, level)) if (db.classFeatures[id]) out.add(id);
 }
 
-/** The fields that say which classes a character — or a BuildState — holds. */
-type HeldClassFields = {
-  classId?: string | null;
-  subclassId?: string | null;
-  classId2?: string | null;
-  subclassId2?: string | null;
-  variantRules?: { dualClass?: boolean };
-};
-
-/**
- * Every class the character holds, with the subclass chosen for it: the first class always, the SECOND
- * only under the Dual Class variant rule — *"gain the proficiencies, HP, features and feats of a second
- * class"*. The same guard deriveMaxHp and buildCharacter use, so a `classId2` left behind on a record
- * with the rule off grants nothing.
- *
- * Exists because the second class was read in a handful of places and missed in the rest: the sheet's
- * owned-feature set walked only the first class's table, so a Fighter/Guardian owned no Guardian's
- * Armor and woke fatigued in full plate, a Fighter/Rogue had no Sneak Attack and a Wizard/Fighter no
- * weapon specialization. Anything that asks "which class / which subclass" asks here.
- */
-export function heldClasses(c: HeldClassFields): { classId: string | null; subclassId: string | null }[] {
-  const out = [{ classId: c.classId ?? null, subclassId: c.subclassId ?? null }];
-  if (c.variantRules?.dualClass && c.classId2) out.push({ classId: c.classId2, subclassId: c.subclassId2 ?? null });
-  return out;
-}
+/* `heldClasses` lives in heldClasses.ts (imported above and re-exported here) so classResources.ts and
+ * versatileVial.ts, which this file imports, can ask the same Dual Class question. */
+export { heldClasses };
 
 /** The subclass chosen for `classId` if the character holds that class (either slot under Dual Class),
  *  `null` when it is held with no subclass, `undefined` when it is not held at all. */
@@ -6188,6 +6199,10 @@ export interface SpeedPart {
   label: string;
   note?: string;
   value: number;
+  /** What kind of line it is, for `numberTermsFor` / `bookTotal` (rules/numberTerms.ts, plan B WP5):
+   *  'book' = the permanent Speed, 'transient' = what is on in play, 'tweak' = a tweak's line. explain.ts
+   *  prints label, note and value only. */
+  layer?: TermLayer;
 }
 
 /**
@@ -6211,7 +6226,8 @@ export interface SpeedPart {
  * The parts sum to the land Speed this returns, by construction.
  */
 export function landSpeedResolved(c: Character, db: ContentDatabase): { speeds: Speeds; parts: SpeedPart[] } {
-  const toParts = (stages: SpeedStage[]): SpeedPart[] => stages.map((s) => ({ label: s.label, ...(s.note ? { note: s.note } : {}), value: s.value }));
+  const toParts = (stages: SpeedStage[]): SpeedPart[] =>
+    stages.map((s) => ({ label: s.label, ...(s.note ? { note: s.note } : {}), value: s.value, layer: s.tweak ? 'tweak' : s.transient ? 'transient' : 'book' }));
   const formWins = !!activeBattleForm(c)?.speeds;
   const tweaks = formWins ? [] : numberTweakTerms(c, 'speed:land');
   const sets = tweaks.filter((t) => t.slot === 'set');
@@ -6219,7 +6235,12 @@ export function landSpeedResolved(c: Character, db: ContentDatabase): { speeds: 
   const adds = tweaks.filter((t) => t.slot !== 'set' && t.slot !== 'atLeast');
   if (!sets.length && !atLeasts.length) {
     const run = speedPipeline(c, db, { transients: true, tweakAdds: adds });
-    return { speeds: run.speeds, parts: toParts(run.stages) };
+    /* A battle form that states its Speeds ignores every land-Speed tweak: each shows as a line of 0 that
+     * says why (plan B WP5, blocks/active.ts `ignoredTweakTerms`). */
+    const ignored: SpeedPart[] = formWins
+      ? ignoredTweakTerms(c, 'speed:land', 'not while a battle form states its Speeds').map((t) => ({ label: t.label, note: t.note, value: 0, layer: 'tweak' }))
+      : [];
+    return { speeds: run.speeds, parts: [...toParts(run.stages), ...ignored] };
   }
   // The permanent Speed P, and what a set / each "at least" makes of it — in list order, as resolveTerms.
   const perm = speedPipeline(c, db, { transients: false });
@@ -6233,8 +6254,8 @@ export function landSpeedResolved(c: Character, db: ContentDatabase): { speeds: 
     current += l;
   }
   const setLines = (): SpeedPart[] => [
-    ...sets.map((t) => (t === winning ? { label: t.label, value: t.value - P } : { label: t.label, note: 'replaced by a later set', value: 0 })),
-    ...atLeasts.map((t) => (lifts.get(t) ? { label: t.label, value: lifts.get(t)! } : { label: t.label, note: `already ${t.value} or more`, value: 0 })),
+    ...sets.map((t): SpeedPart => (t === winning ? { label: t.label, value: t.value - P, layer: 'tweak' } : { label: t.label, note: 'replaced by a later set', value: 0, layer: 'tweak' })),
+    ...atLeasts.map((t): SpeedPart => (lifts.get(t) ? { label: t.label, value: lifts.get(t)!, layer: 'tweak' } : { label: t.label, note: `already ${t.value} or more`, value: 0, layer: 'tweak' })),
   ];
   if (!winning && ![...lifts.values()].some((l) => l > 0)) {
     // An "at least" that does not lift is +0, and everything else is the ordinary run.
@@ -6251,7 +6272,8 @@ export function landSpeedResolved(c: Character, db: ContentDatabase): { speeds: 
   const F0 = full0.speeds.land ?? 0;
   const untypedSum = untyped.reduce((n, t) => n + t.value, 0);
   const raw = current + (F0 - P0) + untypedSum;
-  const land = Math.max(0, raw);
+  // The player's own number first (never below 0), then what play moved; a play penalty stops at 5 feet.
+  const land = penaltyFloored(Math.max(0, current + untypedSum), F0 - P0);
   // The breakdown: the permanent lines (what P was), the set, then what is on in play — F0's play and
   // typed-tweak stages — and then each lasting line of F0 that play moved against P0 (a floor or a
   // "Minimum 0" that clips differently once play states are on). Lines are matched across the two
@@ -6274,12 +6296,13 @@ export function landSpeedResolved(c: Character, db: ContentDatabase): { speeds: 
   for (const { k, s } of keyed(full0.stages.filter((x) => !x.transient && !x.tweak))) {
     matched.add(k);
     const before = permByKey.get(k)?.value ?? 0;
-    if (s.value !== before) changed.push({ label: s.label, note: changedNote(s), value: s.value - before });
+    if (s.value !== before) changed.push({ label: s.label, note: changedNote(s), value: s.value - before, layer: 'transient' });
   }
-  for (const [k, s] of permByKey) if (!matched.has(k) && s.value) changed.push({ label: s.label, note: changedNote(s), value: -s.value });
+  for (const [k, s] of permByKey) if (!matched.has(k) && s.value) changed.push({ label: s.label, note: changedNote(s), value: -s.value, layer: 'transient' });
   const parts: SpeedPart[] = [...toParts(perm.stages), ...setLines(), ...toParts(onTop), ...changed];
-  for (const t of untyped) parts.push({ label: t.label, value: t.value });
-  if (land !== raw) parts.push({ label: 'Minimum 0', value: land - raw });
+  for (const t of untyped) parts.push({ label: t.label, value: t.value, layer: 'tweak' });
+  // The stat's own floor after the set's sum: not part of the permanent Speed a set replaced.
+  if (land !== raw) parts.push({ label: F0 < P0 && land > 0 ? SPEED_FLOOR_LABEL : 'Minimum 0', value: land - raw, layer: 'transient' });
   // The OTHER Speeds come from the ordinary run: a set on land Speed leaves fly, swim, climb and burrow
   // exactly as they are (their "your Speeds" bonuses included).
   const other = speedPipeline(c, db, { transients: true });
@@ -6288,6 +6311,17 @@ export function landSpeedResolved(c: Character, db: ContentDatabase): { speeds: 
 
 export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   return landSpeedResolved(c, db).speeds;
+}
+
+/** Player Core, Movement Types (rules-2346): *"Penalties can't reduce your Speeds below 5 feet unless
+ *  stated otherwise."* */
+export const SPEED_PENALTY_FLOOR = 5;
+const SPEED_FLOOR_LABEL = 'Minimum 5 feet';
+/** `speed + change`, where a negative change (a penalty) stops at 5 feet — and a Speed already at or
+ *  below 5 is left where it was, never raised. A positive change is added as it is. */
+export function penaltyFloored(speed: number, change: number): number {
+  if (change >= 0) return speed + change;
+  return Math.max(Math.min(speed, SPEED_PENALTY_FLOOR), speed + change);
 }
 
 function speedPipeline(c: Character, db: ContentDatabase, opt: SpeedRun): { speeds: Speeds; stages: SpeedStage[] } {
@@ -6652,17 +6686,22 @@ function speedPipeline(c: Character, db: ContentDatabase, opt: SpeedRun): { spee
   if (total > 0) {
     const before = landNow();
     const hadLand = speeds.land != null;
+    // Player Core, Movement Types (rules-2346): *"Penalties can't reduce your Speeds below 5 feet unless
+    // stated otherwise."* Encumbered repeats it (condition-70). A Speed already at 5 or less is left
+    // where it is: the floor stops a penalty, it never raises a Speed.
     for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
-      if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - total);
+      const v = speeds[k];
+      if (v != null) speeds[k] = penaltyFloored(v, -total);
     }
     if (hadLand) {
-      // One line per penalty, then the 0 floor when the penalties went past it.
+      // One line per penalty, then the 5-foot floor when the penalties went past it.
       if (armorPenalty) stages.push({ label: 'Armor Speed penalty', note: 'heavy armor or unmet Strength', value: -armorPenalty, transient: false });
       otherRows.forEach((r, i) => {
         const reduced = others[i] !== r.value ? ` (reduced from ${r.value} ft)` : '';
         stages.push({ label: r.label, ...(r.note || reduced ? { note: `${r.note ?? ''}${reduced}`.trim() } : {}), value: others[i] ? -others[i] : 0, transient: r.transient });
       });
-      if (before - total < 0) stages.push({ label: 'Minimum 0', value: total - before, transient: false });
+      const floored = landNow();
+      if (floored > before - total) stages.push({ label: SPEED_FLOOR_LABEL, value: floored - (before - total), transient: false });
     }
   }
   // HINDERING armor: "You take a -5 penalty to all your Speeds (to a minimum of a 5-foot Speed).
@@ -6697,7 +6736,7 @@ function speedPipeline(c: Character, db: ContentDatabase, opt: SpeedRun): { spee
     if (speeds[kind] == null && kind !== 'land') continue;   // a Speed the character does not have
     if (kind !== 'land') {
       const n = modeNumberBonus(modes, { kind: 'speed', detail: kind });
-      if (n) speeds[kind] = Math.max(0, (speeds[kind] ?? 0) + n);
+      if (n) speeds[kind] = penaltyFloored(speeds[kind] ?? 0, n);
       continue;
     }
     /* Land: the mode modifiers AND the UNTYPED land-Speed tweak adds, as one last stage (typed tweak adds
@@ -6712,14 +6751,15 @@ function speedPipeline(c: Character, db: ContentDatabase, opt: SpeedRun): { spee
     if (n) {
       const before = landNow();
       const raw = before + n;
-      speeds.land = Math.max(0, raw);
+      const landAfter = penaltyFloored(before, n);
+      speeds.land = landAfter;
       const taken = takenByTerm(mods);
       mods.forEach((m, i) => {
         const beaten = m.type !== 'untyped' && m.value !== 0 && taken[i] === 0;
         const note = beaten ? `${m.note ? m.note + ' — ' : ''}does not stack` : m.note;
         stages.push({ label: m.label, ...(note ? { note } : {}), value: taken[i], transient: !m.tweak, ...(m.tweak ? { tweak: true } : {}) });
       });
-      if (raw < 0) stages.push({ label: 'Minimum 0', value: -raw, transient: false });
+      if (landAfter > raw) stages.push({ label: SPEED_FLOOR_LABEL, value: landAfter - raw, transient: false });
     }
   }
   return { speeds, stages };

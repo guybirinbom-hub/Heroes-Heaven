@@ -9,16 +9,40 @@ export function charFingerprint(c: SavedChar): string {
   return JSON.stringify(c);
 }
 
-function unionRecords<T>(cloud: Record<string, T> | undefined, local: Record<string, T> | undefined): Record<string, T> {
-  return { ...(cloud ?? {}), ...(local ?? {}) };
+/** Each side's own "last created/updated at" stamps for keyed records (`revived`, storage.ts
+ *  recordReviveKeys — written on every save of a homebrew record, source, mode or membership). */
+type Stamps = { cloud: Record<string, number> | undefined; local: Record<string, number> | undefined };
+
+/** Does the LOCAL copy of key `k` win over the cloud's? The newer stamp wins; a missing stamp counts as
+ *  oldest (0); ties go to local, as for characters (mergeRoster).
+ *
+ *  Before 2026-11-13 local won EVERY key conflict, so a device holding an older copy of a record kept it
+ *  on each pull and pushed it back up: Guy changed a custom item's description (and once its name) on
+ *  one device and the other device never showed it (test/bug-item-edit-other-device.test.ts). */
+function localWins(k: string, stamps: Stamps): boolean {
+  return (stamps.local?.[k] ?? 0) >= (stamps.cloud?.[k] ?? 0);
 }
 
-/** Union campaign memberships by id (local wins on conflict — e.g. a just-updated defaults answer). */
-function mergeCampaigns<T extends { id: string }>(cloud: T[] | undefined, local: T[] | undefined): T[] {
-  const byId = new Map<string, T>();
-  for (const c of cloud ?? []) byId.set(c.id, c);
-  for (const c of local ?? []) byId.set(c.id, c);
-  return [...byId.values()];
+/** Union by key; on a key both sides hold, the newer copy by its `${prefix}${id}` stamp wins. */
+function unionRecords<T>(
+  cloud: Record<string, T> | undefined,
+  local: Record<string, T> | undefined,
+  stamps: Stamps,
+  prefix: string,
+): Record<string, T> {
+  const out: Record<string, T> = { ...(cloud ?? {}) };
+  for (const [id, v] of Object.entries(local ?? {})) {
+    if (!Object.prototype.hasOwnProperty.call(out, id) || localWins(prefix + id, stamps)) out[id] = v;
+  }
+  return out;
+}
+
+/** Union campaign memberships by id; on an id both sides hold, the newer `camp:<id>` stamp wins (a
+ *  just-updated defaults answer is stamped by saveCampaigns, so it still wins locally). */
+function mergeCampaigns<T extends { id: string }>(cloud: T[] | undefined, local: T[] | undefined, stamps: Stamps, prefix: string): T[] {
+  const cloudById = Object.fromEntries((cloud ?? []).map((c) => [c.id, c]));
+  const localById = Object.fromEntries((local ?? []).map((c) => [c.id, c]));
+  return Object.values(unionRecords(cloudById, localById, stamps, prefix));
 }
 
 /** Union two stamp maps (newest per key), pruning entries past the retention window. Used for both the
@@ -78,10 +102,19 @@ function dropTombstoned<T>(
   return out;
 }
 
-function mergeHomebrew(cloud: HomebrewContent | undefined, local: HomebrewContent | undefined): HomebrewContent {
+/** Each homebrew type: union by the newer stamp, then drop what a tombstone killed (one `hb:<type>:` key). */
+function mergeHomebrew(
+  cloud: HomebrewContent | undefined,
+  local: HomebrewContent | undefined,
+  stamps: Stamps,
+  deleted: Record<string, number>,
+  revived: Record<string, number>,
+): HomebrewContent {
   const out = {} as HomebrewContent;
   for (const t of HOMEBREW_TYPES) {
-    (out[t] as Record<string, unknown>) = unionRecords(cloud?.[t] as Record<string, unknown>, local?.[t] as Record<string, unknown>);
+    const prefix = `hb:${t}:`;
+    const union = unionRecords(cloud?.[t] as Record<string, unknown>, local?.[t] as Record<string, unknown>, stamps, prefix);
+    (out[t] as Record<string, unknown>) = dropTombstoned(union, deleted, revived, prefix);
   }
   return out;
 }
@@ -134,7 +167,8 @@ export function mergeRoster(
 
 /**
  * Merge a local bundle with the cloud's (or null when the cloud has nothing yet). Characters merge by
- * id+timestamp; homebrew content/sources and modes are a plain union (local wins key conflicts). The
+ * id+timestamp; homebrew content/sources, modes and campaign memberships are a union where, on a key both
+ * sides hold, the copy with the newer `revived` stamp wins (ties → local). The
  * result is a superset — nothing that exists on either side is dropped except a genuinely-older
  * same-id character.
  */
@@ -158,10 +192,11 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
   // "Last synced from …" metadata: keep whichever side wrote the cloud more recently.
   const localEdited = local.lastEditedAt ?? 0;
   const cloudEdited = cloud.lastEditedAt ?? 0;
-  const homebrew = mergeHomebrew(cloud.homebrew, local.homebrew);
-  for (const type of HOMEBREW_TYPES) {
-    (homebrew[type] as Record<string, unknown>) = dropTombstoned(homebrew[type] as Record<string, unknown>, deleted, revived, `hb:${type}:`);
-  }
+  // Each side's OWN stamps decide a key both hold (the merged `revived` above is the max of the two, so it
+  // cannot say which side is newer). Both pruned by the same retention, so a months-old stamp on one side
+  // never beats a rival the other side already pruned.
+  const stamps: Stamps = { cloud: mergeStamps(cloud.revived, undefined, now), local: mergeStamps(local.revived, undefined, now) };
+  const homebrew = mergeHomebrew(cloud.homebrew, local.homebrew, stamps, deleted, revived);
   // A PLAYER membership a character of the merged roster is still in outlives its tombstone. A removal
   // (App's launch cleanup of a campaign no character was in, or the Leave of a last character) is judged
   // on one device's roster; a character another device put in that campaign and had not pushed yet was
@@ -177,9 +212,9 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
     deleted,
     revived,
     homebrew,
-    homebrewSources: dropTombstoned(unionRecords(cloud.homebrewSources, local.homebrewSources), deleted, revived, 'hbsrc:'),
-    modes: dropTombstoned(unionRecords(cloud.modes, local.modes), deleted, revived, 'mode:'),
-    campaigns: mergeCampaigns(cloud.campaigns, local.campaigns).filter(
+    homebrewSources: dropTombstoned(unionRecords(cloud.homebrewSources, local.homebrewSources, stamps, 'hbsrc:'), deleted, revived, 'hbsrc:'),
+    modes: dropTombstoned(unionRecords(cloud.modes, local.modes, stamps, 'mode:'), deleted, revived, 'mode:'),
+    campaigns: mergeCampaigns(cloud.campaigns, local.campaigns, stamps, 'camp:').filter(
       (m) =>
         deleted[`campdel:${m.id}`] === undefined &&
         (deleted[`camp:${m.id}`] === undefined ||

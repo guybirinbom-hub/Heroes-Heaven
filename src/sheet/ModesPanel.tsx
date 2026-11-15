@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
+import { useUnsavedWork } from '../data/unsavedWork';
 import type { ModeDef, ModeModifier, ModifierType } from '../rules/types';
 import {
   MODE_TARGETS,
@@ -16,6 +17,8 @@ import {
 import { usePrefs, togglePinnedMode } from '../data/prefs';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { ModeDetailModal } from './ModeDetailModal';
+import { confirmDialog } from './confirm';
+import { TrustMarker } from './TrustMarker';
 import { useCopyOnWriteModes, useModeUsage, useModesRemoveFromCharacter, useModesSaveAsCopy } from './CopyOnWriteItems';
 
 function cap(s: string): string {
@@ -77,7 +80,8 @@ export function ModesPanel({
   library: ModeDef[];
   predefined: ModeDef[];
   catalog: ModeDef[];
-  classId?: string | null;
+  /** Every held class (`heldClasses`), or one class id. */
+  classId?: string | null | readonly (string | null)[];
   ancestryId?: string | null;
   /** Feat ids this character has — gates archetype modes (a mode's `feats` list). */
   featIds?: ReadonlySet<string>;
@@ -286,6 +290,9 @@ export function ModesPanel({
               </span>
             )}
           </div>
+          {/* The row is where most modes are switched on, so a held-back one says so here, not only in
+              its read popup (see TrustMarker). */}
+          <TrustMarker bucket="modes" id={mode.id} />
           {mode.modifiers.length > 0 && <div className="mode-mods">{mode.modifiers.map(summarizeMod).join(' · ')}</div>}
           {mode.note && <div className="mode-note">{mode.note}</div>}
           {mode.modifiers.length === 0 && !mode.note && <div className="mode-mods">no modifiers</div>}
@@ -503,10 +510,29 @@ export function ModeEditor({
   deleteLabel?: string;
   deleteTitle?: string;
 }) {
+  // The mode as this editor opened it (again whenever a different mode is opened in it): a change since
+  // lives only in the draft until Save, so closing the tab now asks first (data/unsavedWork.ts).
+  const opened = useRef({ id: draft.id, json: JSON.stringify(draft) });
+  if (opened.current.id !== draft.id) opened.current = { id: draft.id, json: JSON.stringify(draft) };
+  useUnsavedWork(() => JSON.stringify(draft) !== opened.current.json);
   const targetOptions = useMemo(() => modeTargetOptions(lores), [lores]);
   const setMod = (i: number, patch: Partial<ModeModifier>) =>
     onChange({ ...draft, modifiers: draft.modifiers.map((m, j) => (j === i ? { ...m, ...patch } : m)) });
   const removeMod = (i: number) => onChange({ ...draft, modifiers: draft.modifiers.filter((_, j) => j !== i) });
+  /* Delete asks first (bug 2026-10-23: one tap deleted the mode at once). Here in the editor, so every
+   * host asks — the sheet's Modes panel, the GM's edit sheet (the same panel) and Settings → Modes. */
+  const askDelete = async () => {
+    if (!onDelete) return;
+    const name = draft.name.trim() || 'this mode';
+    const removeOnly = deleteLabel !== 'Delete';
+    const ok = await confirmDialog({
+      title: removeOnly ? `Remove ${name} from this character?` : `Delete ${name}?`,
+      message: deleteTitle ?? "This deletes the mode and its modifiers. This can't be undone.",
+      confirmLabel: removeOnly ? 'Remove' : 'Delete',
+      danger: true,
+    });
+    if (ok) onDelete();
+  };
 
   const applyTemplate = (id: string) => {
     const t = catalog.find((c) => c.id === id);
@@ -625,7 +651,7 @@ export function ModeEditor({
 
       <div className="me-actions">
         {onDelete && (
-          <button className="btn-danger me-delete" title={deleteTitle} onClick={onDelete}>
+          <button className="btn-danger me-delete" title={deleteTitle} onClick={() => void askDelete()}>
             <i className="ti ti-trash" aria-hidden="true" /> {deleteLabel}
           </button>
         )}

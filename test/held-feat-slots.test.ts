@@ -346,3 +346,74 @@ describe('a character without active addedFeats: every routed walker answers as 
     );
   }, 600_000);
 });
+
+/*
+ * Tweaks phase 2, WP7 (C9): the live gate and the two views. An extra feat place (`choice.addPlace`, its pick under
+ * `<level>:extra<category>:<n>`) whose block is READABLE and not live (paused, or every tweak off) is skipped by the
+ * LIVE view (the default) and listed by the STORAGE view (`includePaused: true`). A key with no block, or an unreadable
+ * or newer one, is held in both. The pins above (no place block anywhere) are unchanged.
+ */
+describe('heldFeatSlots: the extra-place gate and the two views (tweaks p2 WP7, C9)', () => {
+  const KEY = '4:extraclass:483920';
+  const place = (on = true, extra: object = {}) => ({ id: 't1_wp7hf', kind: 'choice.addPlace', v: 1, place: 'feat', level: 4, category: 'class', n: 483920, ...(on ? {} : { on: false }), ...extra });
+  const hold = (blocks: object[], more: Partial<HeldInput> = {}, enabled = true): HeldInput => ({
+    level: 6,
+    featPicks: { '1:class:0': 'a', [KEY]: 'p' },
+    overrides: { v: 2, blocks } as unknown as BuildOverrides,
+    options: { overridesEnabled: enabled } as CharacterOptions,
+    ...more,
+  });
+  const slotIds = (b: HeldInput, includePaused?: boolean) => heldFeatSlots(b, undefined, includePaused ? { includePaused } : undefined).map((e) => `${e.slotKey}=${e.featId}`);
+
+  it('live place: both views list it, with its BOOK category (slotCategoryOf) and its level', () => {
+    const b = hold([place()]);
+    expect(slotIds(b)).toEqual(['1:class:0=a', `${KEY}=p`]);
+    expect(slotIds(b, true)).toEqual(slotIds(b));
+    const e = heldFeatSlots(b).find((x) => x.slotKey === KEY)!;
+    expect([e.category, e.level, e.via]).toEqual(['class', 4, 'slot']);
+  });
+
+  it('paused place, or Tweaks off: the live view skips it, the storage view lists it', () => {
+    for (const [name, b] of [
+      ['paused', hold([place(false)])],
+      ['off', hold([place()], {}, false)],
+    ] as const) {
+      expect(slotIds(b), name).toEqual(['1:class:0=a']);
+      expect(slotIds(b, true), name).toEqual(['1:class:0=a', `${KEY}=p`]);
+      expect(heldFeatIds(b, undefined, { includePaused: true }), name).toEqual(['a', 'p']);
+    }
+  });
+
+  it('no block, an unreadable block or a newer one: held in both views (UNKNOWN ≠ EMPTY)', () => {
+    for (const [name, b] of [
+      ['no block', hold([])],
+      ['unreadable (familiar)', { ...hold([place(false, { category: 'familiar' })]), featPicks: { '1:class:0': 'a', '4:extrafamiliar:483920': 'p' } }],
+      ['newer (v 99)', hold([place(false, { v: 99 })])],
+    ] as const) {
+      expect(heldFeatIds(b), name).toEqual(['a', 'p']);
+      expect(heldFeatIds(b, undefined, { includePaused: true }), name).toEqual(['a', 'p']);
+    }
+  });
+
+  it('a pick-a-feat answer keyed under a paused place: skipped live, listed in storage', () => {
+    const b = hold([place(false)], { pickFeatChoices: { [KEY]: 'q', '1:class:0': 'r' } });
+    expect(heldFeatSlots(b, undefined, { via: ['pickFeat'] }).map((e) => e.featId)).toEqual(['r']);
+    expect(heldFeatSlots(b, undefined, { via: ['pickFeat'], includePaused: true }).map((e) => e.featId)).toEqual(['q', 'r']);
+  });
+
+  it('a dedication bonus skill feat stops only when its dedication is held ONLY in paused places', () => {
+    const b = hold([place(false)], { featPicks: { [KEY]: 'rogue-dedication' }, dedicationSkillFeats: { 'rogue-dedication': 'charlatan', 'other-dedication': 'x' } });
+    expect(heldFeatSlots(b, undefined, { via: ['dedicationSkill'] }).map((e) => e.featId), 'paused: its skill feat stops; a dedication held nowhere keeps today').toEqual(['x']);
+    expect(heldFeatSlots(b, undefined, { via: ['dedicationSkill'], includePaused: true }).map((e) => e.featId)).toEqual(['charlatan', 'x']);
+    const alsoInBook = { ...b, featPicks: { ...b.featPicks, '2:class:0': 'rogue-dedication' } };
+    expect(heldFeatSlots(alsoInBook, undefined, { via: ['dedicationSkill'] }).map((e) => e.featId), 'also in a book slot: kept').toEqual(['charlatan', 'x']);
+  });
+
+  it('a given feat beside a paused place holding it: the live view lists the given copy, the storage view the stored pick', () => {
+    const b = hold([place(false)], { overrides: { v: 2, blocks: [place(false)], addedFeats: [add('p', 1)] } as unknown as BuildOverrides });
+    expect(heldFeatSlots(b).filter((e) => e.featId === 'p').map((e) => e.via)).toEqual(['override']);
+    expect(heldFeatSlots(b, undefined, { includePaused: true }).filter((e) => e.featId === 'p').map((e) => e.via)).toEqual(['slot']);
+    const live = hold([place()], { overrides: { v: 2, blocks: [place()], addedFeats: [add('p', 1)] } as unknown as BuildOverrides });
+    expect(heldFeatSlots(live).filter((e) => e.featId === 'p').map((e) => e.via), 'live place: the slot takes it, as before').toEqual(['slot']);
+  });
+});

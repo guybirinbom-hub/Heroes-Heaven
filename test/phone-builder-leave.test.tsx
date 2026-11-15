@@ -7,6 +7,7 @@ import { renderDom } from './_render';
 import { Builder, useBuildChanged } from '../src/builder/Builder';
 import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import { useBackHandler, useEscapeClose } from '../src/sheet/useEscapeClose';
+import { addEditor, openMenu, pick, press } from './_tweaks-harness';
 
 /**
  * LEAVING THE BUILDER ON A PHONE (owner's phone list, 2026-10-14; audit A1 A2 B1 C2 D1 E3).
@@ -126,6 +127,11 @@ function mount(el: ReturnType<typeof createElement>) {
   };
   cleanups.push(stop);
   return stop;
+}
+
+/** Tap the strip's "0" chip (ancestry, background, class): the builder itself opens on Setup. */
+function goToPage0(r: ReturnType<typeof renderDom>) {
+  r.click([...r.host.querySelectorAll('.lstrip .lchip')].find((c) => c.textContent?.trim() === '0') ?? null);
 }
 
 function open(initial?: BuildState) {
@@ -334,31 +340,70 @@ describe('leaving the builder after a change asks "Discard changes?"', () => {
     r.stop();
   });
 
-  it('a number still being typed (Overrides → Max HP, never left) counts as a change: Back asks', async () => {
-    // Final check 2026-10-14: the Overrides boxes write only when LEFT (DraftNumberInput), and Android's
-    // Back never takes focus from them — so "50 typed, then Back" read as no change, left without asking,
-    // and the 50 was gone. MUTATION: requestLeave without its blur-first step → onCancel ran (cancel 1).
-    const b = savedBuild();
-    const { r, calls } = open({ ...b, options: { ...(b.options ?? {}), overridesEnabled: true } } as BuildState);
-    const setupChip = [...r.host.querySelectorAll('.lstrip button')].find((x) => (x.textContent ?? '').trim() === 'Setup');
-    expect(setupChip, 'no Setup page chip').toBeTruthy();
-    r.click(setupChip!);
-    const hp = r.host.querySelector<HTMLInputElement>('input[aria-label="Max HP"]');
-    expect(hp, 'no Max HP box on the Setup page').toBeTruthy();
+  /** Type into a number box as the phone does, leaving it focused (Back never takes the focus). */
+  function typeKeepingFocus(box: HTMLInputElement, text: string) {
     const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!;
     act(() => {
-      hp!.focus();
-      hp!.dispatchEvent(new KeyboardEvent('keydown', { key: '0', bubbles: true }));
-      setter.call(hp!, '50');
-      hp!.dispatchEvent(new Event('input', { bubbles: true }));
+      box.focus();
+      box.dispatchEvent(new KeyboardEvent('keydown', { key: text.slice(-1), bubbles: true }));
+      setter.call(box, text);
+      box.dispatchEvent(new Event('input', { bubbles: true }));
     });
-    expect(document.activeElement, 'the box still has focus, as on the phone').toBe(hp);
+    expect(document.activeElement, 'the box still has focus, as on the phone').toBe(box);
+  }
+  const tweaksOn = (b: BuildState) => ({ ...b, options: { ...(b.options ?? {}), overridesEnabled: true } }) as BuildState;
+
+  it('a number still being typed (Tweaks → Set a number → Maximum HP, never left) counts as a change: Back asks', async () => {
+    // Final check 2026-10-14 (then on the Overrides card; plan B WP7 moved it to the Tweaks page): the
+    // number boxes write only when LEFT (DraftNumberInput), and Android's Back never takes focus from them —
+    // so "50 typed, then Back" read as no change, left without asking, and the 50 was gone. The "Add a
+    // tweak" editor holds its draft until Add (B22), so a draft there counts as a change too
+    // (TweaksPage onPendingChange). MUTATION (wp7-report.md): requestLeave without `tweakAddPending` →
+    // onCancel ran (cancel 1).
+    const { r, calls } = open(tweaksOn(savedBuild()));
+    await press(r.host.querySelector('.builder-head button.b-tweaks'));
+    await openMenu(r.host, 'Set a number');
+    await pick(addEditor(r.host)!, 'What', 'Maximum HP');
+    const hp = addEditor(r.host)!.querySelector<HTMLInputElement>('input[aria-label="Max HP"]');
+    expect(hp, 'no Max HP box in the Set a number editor').toBeTruthy();
+    typeKeepingFocus(hp!, '50');
     await back();
     await settle();
     expect(calls.cancel, 'left without asking — the typed 50 would be lost').toBe(0);
     expect(confirmTitle()).toBe('Discard changes?');
     await pressConfirm('Keep editing');
-    expect(r.host.querySelector<HTMLInputElement>('input[aria-label="Max HP"]')?.value, 'the typed value was kept').toBe('50');
+    expect(addEditor(r.host)?.querySelector<HTMLInputElement>('input[aria-label="Max HP"]')?.value, 'the typed value was kept').toBe('50');
+    r.stop();
+  });
+
+  it("a number still being typed in a tweak's own row (Maximum HP set to 40 → 50, never left): Back asks", async () => {
+    // The row editor writes when the box is LEFT: requestLeave leaves the focused box first, then compares.
+    // MUTATION: requestLeave without its blur-first step → onCancel ran (cancel 1).
+    const { r, calls } = open(tweaksOn({ ...savedBuild(), overrides: { v: 2, maxHp: 40 } } as BuildState));
+    await press(r.host.querySelector('.builder-head button.b-tweaks'));
+    await press(r.host.querySelector('li.tw-row[data-kind="number.setMaxHp"] .tw-row-head'));
+    const hp = r.host.querySelector<HTMLInputElement>('li.tw-row.open input[aria-label="Max HP"]');
+    expect(hp?.value).toBe('40');
+    typeKeepingFocus(hp!, '50');
+    await back();
+    await settle();
+    expect(calls.cancel, 'left without asking — the typed 50 would be lost').toBe(0);
+    expect(confirmTitle()).toBe('Discard changes?');
+    await pressConfirm('Keep editing');
+    expect(r.host.querySelector<HTMLInputElement>('li.tw-row.open input[aria-label="Max HP"]')?.value, 'the typed value was kept').toBe('50');
+    r.stop();
+  });
+
+  it('an "Add a tweak" editor opened and cancelled is no change: Back leaves at once', async () => {
+    const { r, calls } = open(tweaksOn(savedBuild()));
+    await press(r.host.querySelector('.builder-head button.b-tweaks'));
+    await openMenu(r.host, 'Set a number');
+    await pick(addEditor(r.host)!, 'What', 'AC');
+    await press([...addEditor(r.host)!.querySelectorAll('button')].find((b) => (b.textContent ?? '').trim() === 'Cancel'));
+    await back();
+    await settle();
+    expect(confirmBox(), 'nothing to ask').toBeNull();
+    expect(calls.cancel).toBe(1);
     r.stop();
   });
 
@@ -416,6 +461,8 @@ describe('phone width: the Escape KEY never leaves the builder (only Back does)'
 
   it('a picker open: Escape closes the picker, the next Escape does nothing', async () => {
     const { r, calls } = open();
+    // A new character opens on Setup (Guy, 2026-11-08); the Ancestry slot is on page 0, so open it first.
+    goToPage0(r);
     r.click(r.host.querySelector('[data-ctl-title="Ancestry"]'));
     expect(document.querySelector('.picker-overlay'), 'the Ancestry popup did not open').toBeTruthy();
     await escape();
@@ -430,6 +477,9 @@ describe('phone width: the Escape KEY never leaves the builder (only Back does)'
 describe('Back with a picker open closes the PICKER, not the builder', () => {
   it('new character, Level 0: the Ancestry popup (mounted with the builder) closes first', async () => {
     const { r, calls } = open();
+    // A new character opens on Setup (Guy, 2026-11-08: "it needs to open on setup not lv 1"); the
+    // player taps the "0" chip, then the Ancestry slot. Back still closes the popup before the builder.
+    goToPage0(r);
     r.click(r.host.querySelector('[data-ctl-title="Ancestry"]'));
     expect(document.querySelector('.picker-overlay'), 'the Ancestry popup did not open').toBeTruthy();
     await back();

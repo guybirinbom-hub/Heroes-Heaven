@@ -679,15 +679,18 @@ export function contentGatedModes(modes: Iterable<ModeDef>): ModeDef[] {
  *  by feats (e.g. an archetype trance) is relevant only to a character who has that dedication. */
 export function modeRelevant(
   mode: ModeDef,
-  classId?: string | null,
+  /** The character's class — or every held class (`heldClasses`), so a Dual Class Fighter/Barbarian's
+   *  Rage modes are listed by default like a barbarian's (bug 2026-10-23). */
+  classId?: string | null | readonly (string | null)[],
   ancestryId?: string | null,
   featIds?: ReadonlySet<string>,
 ): boolean {
   // An item mode belongs to its consumable, not to the player's own list: it appears by USING the
   // item and nowhere else, so it is never offered in the Modes panel or its search.
   if (mode.fromItemId) return false;
+  const classIds = Array.isArray(classId) ? classId : [classId];
   const gates: boolean[] = [];
-  if (mode.classes) gates.push(classId != null && mode.classes.includes(classId));
+  if (mode.classes) gates.push(classIds.some((id) => id != null && mode.classes!.includes(id)));
   if (mode.ancestries) gates.push(ancestryId != null && mode.ancestries.includes(ancestryId));
   if (mode.feats) gates.push(!!featIds && mode.feats.some((f) => featIds.has(f)));
   // The background gate matches through the same gate-id set the feat gate uses — modeGateIds adds

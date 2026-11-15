@@ -1,11 +1,10 @@
 // @vitest-environment jsdom
-import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { content } from './_content';
 import { renderDom } from './_render';
 import { FeatsTab } from '../src/sheet/FeatsTab';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
-import { ensureTraits } from '../src/data';
+import { TRAITED_BUCKETS as TRAITED, ensureTraits } from '../src/data';
 
 /**
  * EVERY RECORD OF A TRAITED KIND HAS A `traits` ARRAY (2026-10-16).
@@ -17,7 +16,27 @@ import { ensureTraits } from '../src/data';
  * record an array (ensureTraits, src/data/index.ts), and so does the tests' content().
  */
 
-const db = content({ trustGate: true });
+// The loader's own list, so a new traited bucket is planted and checked here with no second edit.
+// The buckets that must stay on it: dropping one from the loader's list would stop guarding its records.
+const MUST_STAY = ['ancestries', 'heritages', 'backgrounds', 'classes', 'classFeatures', 'feats', 'spells', 'items', 'deities', 'actions', 'runesmithRune'];
+it('the loader still guards every bucket that once crashed or was listed here', () => {
+  expect([...TRAITED]).toEqual(expect.arrayContaining(MUST_STAY));
+});
+// batch-independent plant (2026-10-23): the data now gives every record traits, so a test that relied on
+// the data having a trait-less record could no longer fail. This load strips `traits` off every class
+// feature (the bug's own bucket) and off the first record of each other traited kind before the reader's
+// normalisation runs, and adds one synthetic record with no key. Feats keep their real traits, so the
+// Feats-tab cases below still draw real trait chips and the archetype group.
+const db = content({
+  trustGate: true,
+  plant: (core) => {
+    for (const bucket of TRAITED) {
+      const recs = Object.values(core[bucket] ?? {});
+      for (const rec of bucket === 'classFeatures' ? recs : recs.slice(0, 1)) delete (rec as { traits?: unknown }).traits;
+    }
+    core.classFeatures['synthetic-no-traits'] = { id: 'synthetic-no-traits', name: 'Synthetic no-traits feature' };
+  },
+});
 const noop = () => undefined;
 
 const character = (classId: string, key: string) => {
@@ -55,12 +74,26 @@ describe('the Feats tab opens for every class whose features once had no traits'
   }
 });
 
-describe('ensureTraits', () => {
-  it('leaves no record of a traited kind without a traits array in the shipped core.json', () => {
-    const core = JSON.parse(readFileSync('public/core.json', 'utf8')) as Record<string, Record<string, { traits?: unknown }>>;
-    ensureTraits(core);
-    for (const bucket of ['ancestries', 'heritages', 'backgrounds', 'classes', 'classFeatures', 'feats', 'spells', 'items', 'deities', 'actions', 'runesmithRune']) {
-      for (const [id, rec] of Object.entries(core[bucket] ?? {})) expect(Array.isArray(rec.traits), `${bucket}/${id}`).toBe(true);
+describe('the reader gives every record of a traited kind a traits array', () => {
+  // mutation-proof: drop ensureTraits from test/_content.ts (or empty its body) and this goes red — the
+  // planted records above have no `traits` key when the reader sees them.
+  it('after a load where class features and one record of every other kind had none', () => {
+    expect(Array.isArray((db.classFeatures['synthetic-no-traits'] as { traits?: unknown }).traits)).toBe(true);
+    for (const bucket of TRAITED) {
+      const records = (db as unknown as Record<string, Record<string, { traits?: unknown }>>)[bucket] ?? {};
+      for (const [id, rec] of Object.entries(records)) expect(Array.isArray(rec.traits), `${bucket}/${id}`).toBe(true);
     }
+  });
+
+  it('ensureTraits itself fixes exactly the records that lack an array, and keeps a real one', () => {
+    const core = {
+      feats: { a: { id: 'a' }, b: { id: 'b', traits: ['Fighter'] }, c: { id: 'c', traits: 'oops' } },
+      classFeatures: { d: { id: 'd' } },
+    };
+    expect(ensureTraits(core)).toBe(3);
+    expect(core.feats.a).toHaveProperty('traits', []);
+    expect(core.feats.b.traits).toEqual(['Fighter']);
+    expect(core.feats.c).toHaveProperty('traits', []);
+    expect(core.classFeatures.d).toHaveProperty('traits', []);
   });
 });

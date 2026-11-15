@@ -1,0 +1,623 @@
+{
+  "arcane/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "arcane/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "arcane/sheet": {
+    "count": 1,
+    "elements": [
+      ".stab.on[role=\"tab\"]"
+    ]
+  },
+  "arcane/sheet#incomplete": {
+    "count": 6,
+    "elements": [
+      ".has-mode > .rank-pill[title=\"Expert\"]",
+      ".skill.rollable:nth-child(3) > .skill-mod",
+      ".stat-row.rollable:nth-child(1) > .rank-pill[title=\"Expert\"]",
+      ".stat-row.rollable:nth-child(2) > .rank-pill[title=\"Expert\"]",
+      ".stat-row.rollable:nth-child(4) > .rank-pill[title=\"Expert\"]",
+      ".strike-cost > .pf2-action[aria-label=\"One action\"][title=\"One action\"]"
+    ]
+  },
+  "contrast/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "contrast/roster#incomplete": {
+    "count": 0,
+    "elements": []
+  },
+  "contrast/sheet": {
+    "count": 0,
+    "elements": []
+  },
+  "contrast/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "crimson/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "crimson/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "crimson/sheet": {
+    "count": 3,
+    "elements": [
+      ".lk:nth-child(1)",
+      ".lk:nth-child(2)",
+      ".stab.on[role=\"tab\"]"
+    ]
+  },
+  "crimson/sheet#incomplete": {
+    "count": 6,
+    "elements": [
+      ".has-mode > .rank-pill[title=\"Expert\"]",
+      ".skill.rollable:nth-child(3) > .skill-mod",
+      ".stat-row.rollable:nth-child(1) > .rank-pill[title=\"Expert\"]",
+      ".stat-row.rollable:nth-child(2) > .rank-pill[title=\"Expert\"]",
+      ".stat-row.rollable:nth-child(4) > .rank-pill[title=\"Expert\"]",
+      ".strike-cost > .pf2-action[aria-label=\"One action\"][title=\"One action\"]"
+    ]
+  },
+  "daylight/roster": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1)",
+      ".rtab:nth-child(3)"
+    ]
+  },
+  "daylight/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "daylight/sheet": {
+    "count": 26,
+    "elements": [
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(1) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(1) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(2) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(2) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(3) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(3) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(4) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(4) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(5) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(5) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(6) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(6) > .ab-score",
+      ".dim2",
+      ".seg-btn[role=\"tab\"][type=\"button\"]:nth-child(2)",
+      ".seg-btn[role=\"tab\"][type=\"button\"]:nth-child(3)",
+      ".skill-sub",
+      ".strike-group",
+      ".strike-reach",
+      ".strike-reach-val",
+      ".tile.openable[title=\"How is this calculated?\"]:nth-child(1) > .tlab",
+      ".tile.openable[title=\"How is this calculated?\"]:nth-child(2) > .tlab",
+      ".xp-suffix",
+      "span:nth-child(1) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(2) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(3) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(4) > .strike-trait.info-term[role=\"button\"]"
+    ]
+  },
+  "daylight/sheet#incomplete": {
+    "count": 21,
+    "elements": [
+      ".skill.rollable:nth-child(1) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(10) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(11) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(12) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(13) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(14) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(15) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(16) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(17) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(2) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(3) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(3) > .skill-mod",
+      ".skill.rollable:nth-child(4) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(5) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(6) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(7) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(8) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(9) > .rank-pill[title=\"Untrained\"]",
+      ".strike-traits > span:nth-child(2)",
+      ".strike-traits > span:nth-child(3)",
+      ".strike-traits > span:nth-child(4)"
+    ]
+  },
+  "ember/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "ember/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "ember/sheet": {
+    "count": 0,
+    "elements": []
+  },
+  "ember/sheet#incomplete": {
+    "count": 2,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod",
+      ".strike-cost > .pf2-action[aria-label=\"One action\"][title=\"One action\"]"
+    ]
+  },
+  "forest/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "forest/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "forest/sheet": {
+    "count": 1,
+    "elements": [
+      ".skill-sub"
+    ]
+  },
+  "forest/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "goatval/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "goatval/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "goatval/sheet": {
+    "count": 1,
+    "elements": [
+      ".skill-sub"
+    ]
+  },
+  "goatval/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "graveyard/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "graveyard/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "graveyard/sheet": {
+    "count": 1,
+    "elements": [
+      ".skill-sub"
+    ]
+  },
+  "graveyard/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "midnight/roster": {
+    "count": 3,
+    "elements": [
+      ".add-item-btn:nth-child(2)",
+      ".on.rtab",
+      ".rcard-portrait"
+    ]
+  },
+  "midnight/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "midnight/sheet": {
+    "count": 7,
+    "elements": [
+      ".level-chip",
+      ".lk:nth-child(1)",
+      ".lk:nth-child(2)",
+      ".portrait",
+      ".skill-sub",
+      ".stab.on[role=\"tab\"]",
+      ".xp-add-btn"
+    ]
+  },
+  "midnight/sheet#incomplete": {
+    "count": 6,
+    "elements": [
+      ".has-mode > .rank-pill[title=\"Expert\"]",
+      ".skill.rollable:nth-child(3) > .skill-mod",
+      ".stat-row.rollable:nth-child(1) > .rank-pill[title=\"Expert\"]",
+      ".stat-row.rollable:nth-child(2) > .rank-pill[title=\"Expert\"]",
+      ".stat-row.rollable:nth-child(4) > .rank-pill[title=\"Expert\"]",
+      ".strike-cost > .pf2-action[aria-label=\"One action\"][title=\"One action\"]"
+    ]
+  },
+  "mono/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "mono/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "mono/sheet": {
+    "count": 0,
+    "elements": []
+  },
+  "mono/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "nocturne/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "nocturne/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "nocturne/sheet": {
+    "count": 0,
+    "elements": []
+  },
+  "nocturne/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "obsidian/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "obsidian/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "obsidian/sheet": {
+    "count": 0,
+    "elements": []
+  },
+  "obsidian/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "parchment/roster": {
+    "count": 3,
+    "elements": [
+      ".roster-sub",
+      ".rtab:nth-child(1)",
+      ".rtab:nth-child(3)"
+    ]
+  },
+  "parchment/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "parchment/sheet": {
+    "count": 32,
+    "elements": [
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(1) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(1) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(2) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(2) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(3) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(3) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(4) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(4) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(5) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(5) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(6) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(6) > .ab-score",
+      ".dim2",
+      ".seg-btn[role=\"tab\"][type=\"button\"]:nth-child(2)",
+      ".seg-btn[role=\"tab\"][type=\"button\"]:nth-child(3)",
+      ".skill-sub",
+      ".strike-group",
+      ".strike-reach",
+      ".strike-reach-val",
+      ".tab[role=\"tab\"][type=\"button\"]:nth-child(2)",
+      ".tab[role=\"tab\"][type=\"button\"]:nth-child(3)",
+      ".tab[role=\"tab\"][type=\"button\"]:nth-child(4)",
+      ".tab[role=\"tab\"][type=\"button\"]:nth-child(5)",
+      ".tab[role=\"tab\"][type=\"button\"]:nth-child(6)",
+      ".tab[role=\"tab\"][type=\"button\"]:nth-child(7)",
+      ".tile.openable[title=\"How is this calculated?\"]:nth-child(1) > .tlab",
+      ".tile.openable[title=\"How is this calculated?\"]:nth-child(2) > .tlab",
+      ".xp-suffix",
+      "span:nth-child(1) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(2) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(3) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(4) > .strike-trait.info-term[role=\"button\"]"
+    ]
+  },
+  "parchment/sheet#incomplete": {
+    "count": 22,
+    "elements": [
+      ".char-sub",
+      ".skill.rollable:nth-child(1) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(10) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(11) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(12) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(13) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(14) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(15) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(16) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(17) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(2) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(3) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(3) > .skill-mod",
+      ".skill.rollable:nth-child(4) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(5) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(6) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(7) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(8) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(9) > .rank-pill[title=\"Untrained\"]",
+      ".strike-traits > span:nth-child(2)",
+      ".strike-traits > span:nth-child(3)",
+      ".strike-traits > span:nth-child(4)"
+    ]
+  },
+  "royal/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "royal/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "royal/sheet": {
+    "count": 0,
+    "elements": []
+  },
+  "royal/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "sage/roster": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1)",
+      ".rtab:nth-child(3)"
+    ]
+  },
+  "sage/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "sage/sheet": {
+    "count": 29,
+    "elements": [
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(1) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(1) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(2) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(2) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(3) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(3) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(4) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(4) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(5) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(5) > .ab-score",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(6) > .ab-name",
+      ".ability.openable[title=\"How is this calculated?\"]:nth-child(6) > .ab-score",
+      ".dim2",
+      ".lk:nth-child(1)",
+      ".lk:nth-child(2)",
+      ".seg-btn[role=\"tab\"][type=\"button\"]:nth-child(2)",
+      ".seg-btn[role=\"tab\"][type=\"button\"]:nth-child(3)",
+      ".skill-sub",
+      ".stab.on[role=\"tab\"]",
+      ".strike-group",
+      ".strike-reach",
+      ".strike-reach-val",
+      ".tile.openable[title=\"How is this calculated?\"]:nth-child(1) > .tlab",
+      ".tile.openable[title=\"How is this calculated?\"]:nth-child(2) > .tlab",
+      ".xp-suffix",
+      "span:nth-child(1) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(2) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(3) > .strike-trait.info-term[role=\"button\"]",
+      "span:nth-child(4) > .strike-trait.info-term[role=\"button\"]"
+    ]
+  },
+  "sage/sheet#incomplete": {
+    "count": 26,
+    "elements": [
+      ".has-mode > .rank-pill[title=\"Expert\"]",
+      ".skill.rollable:nth-child(1) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(10) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(11) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(12) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(13) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(14) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(15) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(16) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(17) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(2) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(3) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(3) > .skill-mod",
+      ".skill.rollable:nth-child(4) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(5) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(6) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(7) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(8) > .rank-pill[title=\"Untrained\"]",
+      ".skill.rollable:nth-child(9) > .rank-pill[title=\"Untrained\"]",
+      ".stat-row.rollable:nth-child(1) > .rank-pill[title=\"Expert\"]",
+      ".stat-row.rollable:nth-child(2) > .rank-pill[title=\"Expert\"]",
+      ".stat-row.rollable:nth-child(4) > .rank-pill[title=\"Expert\"]",
+      ".strike-cost > .pf2-action[aria-label=\"One action\"][title=\"One action\"]",
+      ".strike-traits > span:nth-child(2)",
+      ".strike-traits > span:nth-child(3)",
+      ".strike-traits > span:nth-child(4)"
+    ]
+  },
+  "slate/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "slate/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "slate/sheet": {
+    "count": 1,
+    "elements": [
+      ".skill-sub"
+    ]
+  },
+  "slate/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "stellar/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "stellar/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "stellar/sheet": {
+    "count": 0,
+    "elements": []
+  },
+  "stellar/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "tavern/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "tavern/roster#incomplete": {
+    "count": 2,
+    "elements": [
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "tavern/sheet": {
+    "count": 1,
+    "elements": [
+      ".skill-sub"
+    ]
+  },
+  "tavern/sheet#incomplete": {
+    "count": 1,
+    "elements": [
+      ".skill.rollable:nth-child(3) > .skill-mod"
+    ]
+  },
+  "verdant/roster": {
+    "count": 0,
+    "elements": []
+  },
+  "verdant/roster#incomplete": {
+    "count": 3,
+    "elements": [
+      ".on.rtab > .rtab-n",
+      ".rtab:nth-child(1) > .rtab-n",
+      ".rtab:nth-child(3) > .rtab-n"
+    ]
+  },
+  "verdant/sheet": {
+    "count": 1,
+    "elements": [
+      ".dim2"
+    ]
+  },
+  "verdant/sheet#incomplete": {
+    "count": 5,
+    "elements": [
+      ".skill.rollable:nth-child(1) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(17) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(3) > .rank-pill[title=\"Trained\"]",
+      ".skill.rollable:nth-child(3) > .skill-mod",
+      ".strike-cost > .pf2-action[aria-label=\"One action\"][title=\"One action\"]"
+    ]
+  }
+}

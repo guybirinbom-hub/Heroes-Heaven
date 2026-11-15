@@ -97,6 +97,15 @@ const wait = (ms: number) =>
     await new Promise((r) => setTimeout(r, ms));
   });
 const press = (el: Element | null | undefined) => act(() => void el!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+/** The mode editor's Delete asks first (bug 2026-10-23, ModesPanel.tsx `askDelete`): answer the app's own dialog,
+ *  then let the answer's promise land. */
+const answerDelete = async (label: 'Delete' | 'Remove') => {
+  await wait(0);
+  const btn = [...document.querySelectorAll('.confirm-modal button')].find((b) => (b.textContent ?? '').trim() === label);
+  expect(btn, `the confirm offers "${label}"`).toBeTruthy();
+  press(btn);
+  await wait(0);
+};
 const setInput = (el: HTMLInputElement, value: string) => {
   const setValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!;
   act(() => {
@@ -265,6 +274,7 @@ describe('a user mode belongs to the character it was made on', () => {
     // the button says plain "Delete".
     expect(del?.textContent?.trim(), 'it says what it does').toBe('Remove from this character');
     press(del);
+    await answerDelete('Remove');
     await wait(50);
     const after = roster();
     // mutation-proof: drop `|| elsewhere` from App's removeOwnModeDef (src/App.tsx) and this goes red: the mode is
@@ -299,6 +309,7 @@ describe('a mode A owns or shares that B also has on (review, 2026-10-21)', () =
     // this goes red: plain "Delete", and pressing it deletes the mode, so B loses it.
     expect(del?.textContent?.trim(), 'it says what it does').toBe('Remove from this character');
     press(del);
+    await answerDelete('Remove');
     await wait(50);
     const after = roster();
     const kept = loadModes()[RAGE_A.id];
@@ -329,6 +340,7 @@ describe('a mode A owns or shares that B also has on (review, 2026-10-21)', () =
     press(rowOf(RAGE_A.name)!.querySelector('.mode-edit'));
     await wait(50);
     press(document.querySelector('.mode-editor .me-delete'));
+    await answerDelete('Remove');
     await wait(50);
     const after = roster();
     const kept = loadModes()[RAGE_A.id];
@@ -693,7 +705,7 @@ describe('the Modes panel on its own (checker, round 3)', () => {
     }
   });
 
-  it('on the GM’s edit sheet a mode one of his own characters OWNS offers "Remove from this character", never Delete (round 2)', () => {
+  it('on the GM’s edit sheet a mode one of his own characters OWNS offers "Remove from this character", never Delete (round 2)', async () => {
     // Delete there deleted it from his own character too: the sheet's removeModeDef now only switches it off for
     // this player (test below, on the real GmEditSheet).
     const GM_OWN: ModeDef = { id: 'mode-gm-bless-p1', name: 'Gm Bless', charId: G.id, modifiers: [{ value: 1, type: 'status', target: 'attack' }] };
@@ -727,6 +739,8 @@ describe('the Modes panel on its own (checker, round 3)', () => {
       expect(del?.title).toContain('belongs to another character');
       expect(host.querySelector('.mode-editor .me-scope-fixed')?.textContent, 'an edit would be the player’s own copy').toBe(`Only ${P.name}`);
       click(del);
+      expect(removed, 'nothing happens before the player answers the confirm').toEqual([]);
+      await answerDelete('Remove');
       expect(removed, 'the sheet’s remover is told which').toEqual([GM_OWN.id]);
     } finally {
       stop();
@@ -842,6 +856,7 @@ describe('the GM’s edit sheet and a mode one of his own characters owns or use
         const del = document.querySelector('.mode-editor .me-delete');
         expect(del?.textContent?.trim()).toBe('Remove from this character');
         click(del);
+        await answerDelete('Remove');
         await tick();
         // mutation-proof: drop the ${proof} half of GmEditSheet's removeModeDef check (src/sheet/GmEditSheet.tsx) and
         // this goes red: his writer is told to delete it from his saved modes.
@@ -883,6 +898,8 @@ describe('the GM’s edit sheet and a mode one of his own characters owns or use
       expect(del?.textContent?.trim()).toBe('Delete');
       click(del);
       await tick();
+      expect(deleted, 'nothing is deleted before the GM answers the confirm').toEqual([]);
+      await answerDelete('Delete');
       expect(deleted).toEqual([GM_UNOWNED.id]);
     } finally {
       stop();

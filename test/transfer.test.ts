@@ -5,6 +5,7 @@ import { exportNative, exportWg, importCharacter } from '../src/data/transfer';
 import { deriveBuildFromCharacter } from '../src/rules/build';
 import { emptyPlay } from '../src/rules/play';
 import { normalizeCharacter, normalizePlay } from '../src/rules/normalize';
+import { rebuildRoster } from '../src/data/rebuild';
 
 const c = content();
 
@@ -44,17 +45,23 @@ describe('native Codex export/import (lossless)', () => {
 
     const { saved: back, report } = importCharacter(exportNative(s), c);
     expect(report.lossless).toBe(true);
-    // Everything comes back byte-for-byte (modulo the idempotent normalize + a fresh roster id).
-    expect(back.character).toEqual(normalizeCharacter(character));
+    // What the player authored comes back byte-for-byte (modulo the idempotent normalize + a fresh roster id).
+    // The `character` is a derived cache: since 2026-10-23 the import re-derives it from the build at once
+    // (transfer.ts `rebuiltImport`), so it is what the next launch's rebuild would make — that rebuild finds
+    // nothing left to change. (This fixture's snapshot is not its build's own character, so it does move.)
+    expect(back.character).toEqual(rebuildRoster([back], c)[0].character);
+    expect(back.character.name).toBe(normalizeCharacter(character).name);
     expect(back.build).toEqual(buildState);
-    expect(back.play).toEqual(normalizePlay(play));
+    // The old file's notes lived on the character; the import moves them into play, where a rebuild keeps them.
+    expect(back.play).toEqual({ ...normalizePlay(play), notes: character.notes });
     // spot-checks on the things people worry about losing:
     const casting = back.character.spellcasting.find((e) => e.type === 'spontaneous')!;
     expect([...(casting.cantrips ?? []), ...Object.values(casting.repertoire ?? {}).flat()]).toEqual(
       expect.arrayContaining([dazeId, sootheId]),
     );
     expect(back.character.inventory.some((i) => i.itemId === weaponId)).toBe(true);
-    expect(back.character.notes?.[0]?.content).toContain('storied past');
+    expect((back.play?.notes ?? back.character.notes)?.[0]?.content, 'the notes the sheet shows').toContain('storied past');
+    expect(rebuildRoster([back], c)[0].play?.notes?.[0]?.content, 'and still there after the next launch').toContain('storied past');
     expect(back.play?.damage).toBe(7);
     expect(back.play?.conditions).toEqual([{ id: 'frightened', value: 1 }]);
   });

@@ -99,6 +99,12 @@ function initiativeTermList(c: Character, db: ContentDatabase | undefined, stat:
   return [...settled, ...own];
 }
 
+/** Initiative's whole term list as the sheet rolls it (with the character's own initiative statistic) —
+ *  for rules/numberTerms.ts `numberTermsFor` (plan B WP5). */
+export function initiativeTermsFor(c: Character, db: ContentDatabase | undefined): Term[] {
+  return initiativeTermList(c, db, c.initiativeSkill);
+}
+
 /** Initiative's number AND its breakdown parts, from one list (explain.ts's initiative case). */
 export function initiativeResolved(c: Character, db: ContentDatabase | undefined): { line: InitiativeLine; parts: TermPart[] } {
   return { line: deriveInitiative(c, db), parts: resolveTerms(initiativeTermList(c, db, c.initiativeSkill)).parts };

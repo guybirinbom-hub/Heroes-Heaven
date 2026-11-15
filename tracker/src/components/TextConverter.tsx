@@ -1,4 +1,6 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
+// The plain check list (no React of its own), so this works in Heroes Heaven and in the tracker's own app.
+import { registerUnsavedWork } from '../../../src/data/unsavedChecks'
 import type { Creature, Combatant } from '../types/pf2e'
 import { parseStatBlockText } from '../utils/parseStatBlockText'
 import { creatureToText } from '../utils/creatureToText'
@@ -279,6 +281,14 @@ export function TextConverter({ onClose, existing }: Props) {
   // Bumped each time we enter builder mode so the builder remounts and re-seeds
   // from the latest output (rather than holding stale form state).
   const [builderKey, setBuilderKey] = useState(0)
+
+  // A stat block typed, pasted, built or imported here is kept nowhere until Save: closing or reloading
+  // Heroes Heaven now asks first (src/data/unsavedWork.ts; checker 2026-11-08). Unsaved = the text or
+  // JSON differs from what the panel opened with, or an imported creature still waits for review.
+  const opened = useRef({ text: inputText, json: outputJson })
+  const unsaved = useRef<() => boolean>(() => false)
+  unsaved.current = () => isImportDraft || inputText !== opened.current.text || outputJson !== opened.current.json
+  useEffect(() => registerUnsavedWork(() => unsaved.current()), [])
 
   const previewCombatant = useMemo(() => {
     if (!preview || !outputJson.trim()) return null

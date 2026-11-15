@@ -10,6 +10,7 @@ import { ContentContext } from '../src/sheet/ContentContext';
 import { loadAstIndex, loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { RecordCard } from '../src/sheet/RecordCard';
 import { DetailsTab } from '../src/sheet/DetailsTab';
+import { SpellDetail } from '../src/sheet/SpellsTab';
 import { FeatDetail, type FeatEntry } from '../src/sheet/FeatDetail';
 import { FeatsTab, featEntries } from '../src/sheet/FeatsTab';
 import { linkClassOf, scopeOfCharacter } from '../src/sheet/cardScope';
@@ -240,6 +241,69 @@ describe('package M (2): a shared feature reached by a link inside a card is rea
       // class-68 (Psychic) "Weapon Specialization: As you touch a weapon, you glimpse the hands that made and wielded it"
       expect(txt(pop)).toMatch(/glimpse the hands that made and wielded it/);
       expect(txt(pop)).not.toMatch(/Thaumaturge/);
+    } finally { m.stop(); }
+  });
+
+  // The item's own card (chrome 'inset', as ItemDetail draws it) must follow the same path as the popup card.
+  // class-68 Psychic Weapon Specialization; the Bestial Mutagen page links the shared "weapon specialization".
+  it('psychic 13: a class-feature link inside an ITEM\'s inset card opens Psychic Weapon Specialization, not the shared page', async () => {
+    const ch = build('psychic', 13);
+    const m = await mount(
+      <RecordCard
+        node={{ title: 'Bestial Mutagen', description: '', key: 'items', slug: 'bestial-mutagen' }}
+        mode="mine" chrome="inset" scope={scopeOfCharacter(ch)} printed={[]} onExit={noop}
+      />,
+    );
+    try {
+      const lk = [...m.host.querySelectorAll('a.ast-lk')].find((a) => txt(a).toLowerCase() === 'weapon specialization');
+      await click(lk);
+      const pop = popup(m.host)!;
+      expect(txt(pop.querySelector('.info-title, .ast-name'))).toBe('Psychic Weapon Specialization');
+      expect(txt(pop)).toMatch(/glimpse the hands that made and wielded it/);
+    } finally { m.stop(); }
+  });
+
+  // The text-only lane (an item whose page did not load: no key, so DescBody draws the string) opens its links
+  // through the same linkedId as the pages do — in the inset card and in the popup card.
+  const TEXT_ONLY = { title: 'Plain Charm', description: 'Your strikes gain weapon specialization.', descRefs: [{ key: 'classFeatures', label: 'weapon specialization' }] };
+  const textLink = (host: Element) => [...host.querySelectorAll('a, button')].find((a) => txt(a).toLowerCase() === 'weapon specialization');
+  it('psychic 13: a class-feature link in the TEXT-ONLY lane of the inset card opens Psychic Weapon Specialization', async () => {
+    const ch = build('psychic', 13);
+    const m = await mount(<RecordCard node={TEXT_ONLY} mode="mine" chrome="inset" scope={scopeOfCharacter(ch)} printed={[]} onExit={noop} />);
+    try {
+      await click(textLink(m.host));
+      expect(txt(popup(m.host))).toMatch(/glimpse the hands that made and wielded it/);
+    } finally { m.stop(); }
+  });
+  it('psychic 13: a class-feature link in the TEXT-ONLY lane of the popup card opens Psychic Weapon Specialization', async () => {
+    const ch = build('psychic', 13);
+    const m = await mount(<RecordCard node={TEXT_ONLY} mode="mine" chrome="popup" scope={scopeOfCharacter(ch)} printed={[]} onExit={noop} />);
+    try {
+      await click(textLink(m.host));
+      expect(txt(m.host)).toMatch(/glimpse the hands that made and wielded it/);
+    } finally { m.stop(); }
+  });
+  // A class that lists the shared record itself (the fighter): the link opens the shared record READ FOR that
+  // class (the node carries its classId), never the Thaumaturge's page.
+  it('fighter 7: the TEXT-ONLY lane link to weapon specialization is read for the fighter, not the Thaumaturge', async () => {
+    const ch = build('fighter', 7);
+    const m = await mount(<RecordCard node={TEXT_ONLY} mode="mine" chrome="inset" scope={scopeOfCharacter(ch)} printed={[]} onExit={noop} />);
+    try {
+      await click(textLink(m.host));
+      const t = txt(popup(m.host));
+      expect(t).toMatch(/Weapon Specialization/);
+      expect(t).not.toMatch(/glimpse the hands/);
+      expect(t).not.toMatch(/thaumaturge/i);
+    } finally { m.stop(); }
+  });
+  // Spell pages link classFeatures:weapon-specialization / spell-repertoire; the spell card reads the character's class.
+  it('psychic 13: the Moon Frenzy spell page\'s "weapon specialization" link opens Psychic Weapon Specialization', async () => {
+    const ch = build('psychic', 13);
+    const m = await mount(<SpellDetail spell={db.spells['moon-frenzy']} classId={ch.classId} onClose={noop} />);
+    try {
+      const lk = [...m.host.querySelectorAll('a.ast-lk')].find((a) => txt(a).toLowerCase() === 'weapon specialization');
+      await click(lk);
+      expect(txt(m.host)).toMatch(/glimpse the hands that made and wielded it/);
     } finally { m.stop(); }
   });
 

@@ -1,0 +1,982 @@
+{
+ "header": {
+  "what": "Tweaks part B \"before\" numbers (plan WP0 step 5): per overrides:* character of scripts/blocks-parity-snapshot.mjs, per trust gate, every sheet number that differs from its #none twin (same build and play, no overrides) — a number as with minus twin, anything else as { twin, with }; stats named by the character's fixtureAbsolute regex are stored as values under `absolute`. Synthetic characters only.",
+  "engineCommit": "6f948593c642403c17b4329700fe27fb5ab3477c",
+  "coreSha": "8b55df3891aa8edb",
+  "takenAt": "2026-10-21T09:59:46.221Z",
+  "retake": "Re-take only when a DELTA itself changed after `npm run data` (a book number that moves both twins never changes a delta). Never on a newer engine: that would bake its own numbers in. Make a worktree at this header's engineCommit (git worktree add <dir> <engineCommit>), copy the CURRENT scripts/blocks-parity-snapshot.mjs and scripts/lib/heavy-lock.mjs plus the new public/core.json, public/core-descriptions.json and the re-stamped src/data/trust-ledger.json (the trust gate reads it) into it, run `npx jiti scripts/blocks-parity-snapshot.mjs --write-fixture` there (no --allow-dirty: the copied ledger is data, not engine), and copy test/fixtures/tweaks-legacy-before.json back."
+ },
+ "characters": {
+  "overrides:addedFeats:cleric-L4": {
+   "twin": "overrides:addedFeats:cleric-L4#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "hp.max": 4,
+      "pc.hpCurrent": 4,
+      "pc.maxHP": 4,
+      "summary.hpCur": 4,
+      "summary.hpMax": 4
+     }
+    },
+    "on": {
+     "deltas": {
+      "hp.max": 4,
+      "pc.hpCurrent": 4,
+      "pc.maxHP": 4,
+      "summary.hpCur": 4,
+      "summary.hpMax": 4
+     }
+    }
+   }
+  },
+  "overrides:addedFeats:wizard-L8": {
+   "twin": "overrides:addedFeats:wizard-L8#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "hp.max": 8,
+      "pc.hpCurrent": 8,
+      "pc.maxHP": 8,
+      "summary.hpCur": 8,
+      "summary.hpMax": 8
+     }
+    },
+    "on": {
+     "deltas": {
+      "hp.max": 8,
+      "pc.hpCurrent": 8,
+      "pc.maxHP": 8,
+      "summary.hpCur": 8,
+      "summary.hpMax": 8
+     }
+    }
+   }
+  },
+  "overrides:asof:fighter-L5": {
+   "twin": "overrides:asof:fighter-L5#none",
+   "gates": {
+    "off": {
+     "deltas": {}
+    },
+    "on": {
+     "deltas": {}
+    }
+   }
+  },
+  "overrides:at-slot:fighter-L4": {
+   "twin": "overrides:at-slot:fighter-L4#none",
+   "gates": {
+    "off": {
+     "deltas": {}
+    },
+    "on": {
+     "deltas": {}
+    }
+   }
+  },
+  "overrides:attributes:champion-L3": {
+   "twin": "overrides:attributes:champion-L3#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "ability.dex.mod": -3,
+      "ability.dex.score": -6,
+      "ability.str.mod": 3,
+      "ability.str.score": 6,
+      "ability.wis.mod": 1,
+      "ability.wis.score": 2,
+      "ac": -3,
+      "classDc": -3,
+      "classDc.mod": -3,
+      "initiative": 1,
+      "pc.ac": -3,
+      "pc.classDC": -3,
+      "pc.dex": -3,
+      "pc.perceptionMod": 1,
+      "pc.refMod": -3,
+      "pc.skills.Acrobatics": {
+       "twin": "2U",
+       "with": "-1U"
+      },
+      "pc.skills.Athletics": {
+       "twin": "8E",
+       "with": "11E"
+      },
+      "pc.skills.Medicine": {
+       "twin": "1U",
+       "with": "2U"
+      },
+      "pc.skills.Nature": {
+       "twin": "1U",
+       "with": "2U"
+      },
+      "pc.skills.Religion": {
+       "twin": "6T",
+       "with": "7T"
+      },
+      "pc.skills.Stealth": {
+       "twin": "7T",
+       "with": "4T"
+      },
+      "pc.skills.Survival": {
+       "twin": "1U",
+       "with": "2U"
+      },
+      "pc.skills.Thievery": {
+       "twin": "2U",
+       "with": "-1U"
+      },
+      "pc.str": 3,
+      "pc.willMod": 1,
+      "pc.wis": 1,
+      "perception": 1,
+      "save.reflex": -3,
+      "save.will": 1,
+      "skill.acrobatics": -3,
+      "skill.athletics": 3,
+      "skill.medicine": 1,
+      "skill.nature": 1,
+      "skill.religion": 1,
+      "skill.stealth": -3,
+      "skill.survival": 1,
+      "skill.thievery": -3,
+      "strike.fist.attack": {
+       "twin": "7/3/-1",
+       "with": "9/5/1"
+      },
+      "strike.fist.damage": {
+       "twin": "1d4+1 B",
+       "with": "1d4+4 B"
+      },
+      "strike.fist.dmgBonus": 3,
+      "summary.ac": -3,
+      "summary.perception": 1
+     }
+    },
+    "on": {
+     "deltas": {
+      "ability.dex.mod": -3,
+      "ability.dex.score": -6,
+      "ability.str.mod": 3,
+      "ability.str.score": 6,
+      "ability.wis.mod": 1,
+      "ability.wis.score": 2,
+      "ac": -3,
+      "classDc": -3,
+      "classDc.mod": -3,
+      "initiative": 1,
+      "pc.ac": -3,
+      "pc.classDC": -3,
+      "pc.dex": -3,
+      "pc.perceptionMod": 1,
+      "pc.refMod": -3,
+      "pc.skills.Acrobatics": {
+       "twin": "2U",
+       "with": "-1U"
+      },
+      "pc.skills.Athletics": {
+       "twin": "8E",
+       "with": "11E"
+      },
+      "pc.skills.Medicine": {
+       "twin": "1U",
+       "with": "2U"
+      },
+      "pc.skills.Nature": {
+       "twin": "1U",
+       "with": "2U"
+      },
+      "pc.skills.Religion": {
+       "twin": "6T",
+       "with": "7T"
+      },
+      "pc.skills.Stealth": {
+       "twin": "7T",
+       "with": "4T"
+      },
+      "pc.skills.Survival": {
+       "twin": "1U",
+       "with": "2U"
+      },
+      "pc.skills.Thievery": {
+       "twin": "2U",
+       "with": "-1U"
+      },
+      "pc.str": 3,
+      "pc.willMod": 1,
+      "pc.wis": 1,
+      "perception": 1,
+      "save.reflex": -3,
+      "save.will": 1,
+      "skill.acrobatics": -3,
+      "skill.athletics": 3,
+      "skill.medicine": 1,
+      "skill.nature": 1,
+      "skill.religion": 1,
+      "skill.stealth": -3,
+      "skill.survival": 1,
+      "skill.thievery": -3,
+      "strike.fist.attack": {
+       "twin": "7/3/-1",
+       "with": "9/5/1"
+      },
+      "strike.fist.damage": {
+       "twin": "1d4+1 B",
+       "with": "1d4+4 B"
+      },
+      "strike.fist.dmgBonus": 3,
+      "summary.ac": -3,
+      "summary.perception": 1
+     }
+    }
+   }
+  },
+  "overrides:daily:wizard-L5": {
+   "twin": "overrides:daily:wizard-L5#none",
+   "gates": {
+    "off": {
+     "deltas": {}
+    },
+    "on": {
+     "deltas": {
+      "pc.skills.Arcana": {
+       "twin": "11T",
+       "with": "4U"
+      },
+      "skill.arcana": -7,
+      "skill.arcana.rank": {
+       "twin": "trained",
+       "with": "untrained"
+      }
+     }
+    }
+   }
+  },
+  "overrides:daily:wizard-L8": {
+   "twin": "overrides:daily:wizard-L8#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "pc.skills.Arcana": {
+       "twin": "13T",
+       "with": "15E"
+      },
+      "skill.arcana": 2,
+      "skill.arcana.rank": {
+       "twin": "trained",
+       "with": "expert"
+      }
+     }
+    },
+    "on": {
+     "deltas": {
+      "pc.skills.Arcana": {
+       "twin": "13T",
+       "with": "15E"
+      },
+      "skill.arcana": 2,
+      "skill.arcana.rank": {
+       "twin": "trained",
+       "with": "expert"
+      }
+     }
+    }
+   }
+  },
+  "overrides:firearm:gunslinger-L5": {
+   "twin": "overrides:firearm:gunslinger-L5#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "strike.inv-1.attack": {
+       "twin": "11/6/1",
+       "with": "9/4/-1"
+      }
+     }
+    },
+    "on": {
+     "deltas": {
+      "strike.inv-1.attack": {
+       "twin": "11/6/1",
+       "with": "9/4/-1"
+      }
+     }
+    }
+   }
+  },
+  "overrides:hidden-card:fighter-L7": {
+   "twin": "overrides:hidden-card:fighter-L7#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "initiative": -4,
+      "pc.fortMod": -2,
+      "pc.fortProf": {
+       "twin": "E",
+       "with": "T"
+      },
+      "pc.perceptionMod": -4,
+      "pc.perceptionProf": {
+       "twin": "M",
+       "with": "T"
+      },
+      "perception": -4,
+      "perception.rank": {
+       "twin": "master",
+       "with": "trained"
+      },
+      "save.fortitude": -2,
+      "save.fortitude.rank": {
+       "twin": "expert",
+       "with": "trained"
+      },
+      "summary.perception": -4,
+      "summary.perceptionRank": {
+       "twin": "master",
+       "with": "trained"
+      }
+     }
+    },
+    "on": {
+     "deltas": {
+      "initiative": -4,
+      "pc.fortMod": -2,
+      "pc.fortProf": {
+       "twin": "E",
+       "with": "T"
+      },
+      "pc.perceptionMod": -4,
+      "pc.perceptionProf": {
+       "twin": "M",
+       "with": "T"
+      },
+      "perception": -4,
+      "perception.rank": {
+       "twin": "master",
+       "with": "trained"
+      },
+      "save.fortitude": -2,
+      "save.fortitude.rank": {
+       "twin": "expert",
+       "with": "trained"
+      },
+      "summary.perception": -4,
+      "summary.perceptionRank": {
+       "twin": "master",
+       "with": "trained"
+      }
+     }
+    }
+   }
+  },
+  "overrides:import-meta:fighter-L4": {
+   "twin": "overrides:import-meta:fighter-L4#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "pc.speed": 5,
+      "speed.land": 5
+     }
+    },
+    "on": {
+     "deltas": {
+      "pc.speed": 5,
+      "speed.land": 5
+     }
+    }
+   }
+  },
+  "overrides:legacy-misc:cleric-L3": {
+   "twin": "overrides:legacy-misc:cleric-L3#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "pc.languages": {
+       "twin": "Common",
+       "with": "Common, Draconic"
+      },
+      "pc.speed": -5,
+      "speed.land": -5,
+      "spell.added-spells.attack": {
+       "twin": "<absent>",
+       "with": 7
+      },
+      "spell.added-spells.dc": {
+       "twin": "<absent>",
+       "with": 17
+      },
+      "spell.added-spells.rank": {
+       "twin": "<absent>",
+       "with": "trained"
+      }
+     }
+    },
+    "on": {
+     "deltas": {
+      "pc.languages": {
+       "twin": "Common",
+       "with": "Common, Draconic"
+      },
+      "pc.speed": -5,
+      "speed.land": -5,
+      "spell.added-spells.attack": {
+       "twin": "<absent>",
+       "with": 7
+      },
+      "spell.added-spells.dc": {
+       "twin": "<absent>",
+       "with": 17
+      },
+      "spell.added-spells.rank": {
+       "twin": "<absent>",
+       "with": "trained"
+      }
+     }
+    }
+   }
+  },
+  "overrides:lore-bare:fighter-L3": {
+   "twin": "overrides:lore-bare:fighter-L3#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "skill.lore:Lore": {
+       "twin": "<absent>",
+       "with": 7
+      },
+      "skill.lore:Lore.rank": {
+       "twin": "<absent>",
+       "with": "expert"
+      }
+     }
+    },
+    "on": {
+     "deltas": {
+      "skill.lore:Lore": {
+       "twin": "<absent>",
+       "with": 7
+      },
+      "skill.lore:Lore.rank": {
+       "twin": "<absent>",
+       "with": "expert"
+      }
+     }
+    }
+   }
+  },
+  "overrides:lore-canonical:rogue-L7": {
+   "twin": "overrides:lore-canonical:rogue-L7#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "skill.lore:sailing": -2,
+      "skill.lore:sailing.rank": {
+       "twin": "expert",
+       "with": "trained"
+      }
+     }
+    },
+    "on": {
+     "deltas": {
+      "skill.lore:sailing": -2,
+      "skill.lore:sailing.rank": {
+       "twin": "expert",
+       "with": "trained"
+      }
+     }
+    }
+   }
+  },
+  "overrides:lore:bard-L5": {
+   "twin": "overrides:lore:bard-L5#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "skill.lore:Sailing Lore": {
+       "twin": "<absent>",
+       "with": 7
+      },
+      "skill.lore:Sailing Lore.rank": {
+       "twin": "<absent>",
+       "with": "trained"
+      }
+     }
+    },
+    "on": {
+     "deltas": {
+      "skill.lore:Sailing Lore": {
+       "twin": "<absent>",
+       "with": 7
+      },
+      "skill.lore:Sailing Lore.rank": {
+       "twin": "<absent>",
+       "with": "trained"
+      }
+     }
+    }
+   }
+  },
+  "overrides:lowered-raise:fighter-L4": {
+   "twin": "overrides:lowered-raise:fighter-L4#none",
+   "gates": {
+    "off": {
+     "deltas": {}
+    },
+    "on": {
+     "deltas": {}
+    }
+   }
+  },
+  "overrides:maxHp:wizard-L5": {
+   "twin": "overrides:maxHp:wizard-L5#none",
+   "gates": {
+    "off": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 77,
+      "pc.hpCurrent": 77,
+      "pc.maxHP": 77,
+      "summary.hpCur": 77,
+      "summary.hpMax": 77
+     }
+    },
+    "on": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 77,
+      "pc.hpCurrent": 77,
+      "pc.maxHP": 77,
+      "summary.hpCur": 77,
+      "summary.hpMax": 77
+     }
+    }
+   }
+  },
+  "overrides:maxHp:wizard-L5#con-mode": {
+   "twin": "overrides:maxHp:wizard-L5#con-mode#none",
+   "gates": {
+    "off": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 77,
+      "pc.hpCurrent": 77,
+      "pc.maxHP": 77,
+      "summary.hpCur": 77,
+      "summary.hpMax": 77
+     }
+    },
+    "on": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 77,
+      "pc.hpCurrent": 77,
+      "pc.maxHP": 77,
+      "summary.hpCur": 77,
+      "summary.hpMax": 77
+     }
+    }
+   }
+  },
+  "overrides:maxHp:wizard-L5#drained": {
+   "twin": "overrides:maxHp:wizard-L5#drained#none",
+   "gates": {
+    "off": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 67,
+      "pc.hpCurrent": 67,
+      "pc.maxHP": 67,
+      "summary.hpCur": 67,
+      "summary.hpMax": 67
+     }
+    },
+    "on": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 67,
+      "pc.hpCurrent": 67,
+      "pc.maxHP": 67,
+      "summary.hpCur": 67,
+      "summary.hpMax": 67
+     }
+    }
+   }
+  },
+  "overrides:maxHp:wizard-L5#mode": {
+   "twin": "overrides:maxHp:wizard-L5#mode#none",
+   "gates": {
+    "off": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 77,
+      "pc.hpCurrent": 77,
+      "pc.maxHP": 77,
+      "summary.hpCur": 77,
+      "summary.hpMax": 77
+     }
+    },
+    "on": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 77,
+      "pc.hpCurrent": 77,
+      "pc.maxHP": 77,
+      "summary.hpCur": 77,
+      "summary.hpMax": 77
+     }
+    }
+   }
+  },
+  "overrides:maxHp:wizard-L5#mode-drained": {
+   "twin": "overrides:maxHp:wizard-L5#mode-drained#none",
+   "gates": {
+    "off": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 67,
+      "pc.hpCurrent": 67,
+      "pc.maxHP": 67,
+      "summary.hpCur": 67,
+      "summary.hpMax": 67
+     }
+    },
+    "on": {
+     "deltas": {},
+     "absolute": {
+      "hp.max": 67,
+      "pc.hpCurrent": 67,
+      "pc.maxHP": 67,
+      "summary.hpCur": 67,
+      "summary.hpMax": 67
+     }
+    }
+   }
+  },
+  "overrides:proficiencies:fighter-L7": {
+   "twin": "overrides:proficiencies:fighter-L7#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "initiative": -4,
+      "pc.fortMod": -2,
+      "pc.fortProf": {
+       "twin": "E",
+       "with": "T"
+      },
+      "pc.perceptionMod": -4,
+      "pc.perceptionProf": {
+       "twin": "M",
+       "with": "T"
+      },
+      "perception": -4,
+      "perception.rank": {
+       "twin": "master",
+       "with": "trained"
+      },
+      "save.fortitude": -2,
+      "save.fortitude.rank": {
+       "twin": "expert",
+       "with": "trained"
+      },
+      "summary.perception": -4,
+      "summary.perceptionRank": {
+       "twin": "master",
+       "with": "trained"
+      }
+     }
+    },
+    "on": {
+     "deltas": {
+      "initiative": -4,
+      "pc.fortMod": -2,
+      "pc.fortProf": {
+       "twin": "E",
+       "with": "T"
+      },
+      "pc.perceptionMod": -4,
+      "pc.perceptionProf": {
+       "twin": "M",
+       "with": "T"
+      },
+      "perception": -4,
+      "perception.rank": {
+       "twin": "master",
+       "with": "trained"
+      },
+      "save.fortitude": -2,
+      "save.fortitude.rank": {
+       "twin": "expert",
+       "with": "trained"
+      },
+      "summary.perception": -4,
+      "summary.perceptionRank": {
+       "twin": "master",
+       "with": "trained"
+      }
+     }
+    }
+   }
+  },
+  "overrides:test-sample:fighter-L5": {
+   "twin": "overrides:test-sample:fighter-L5#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "ability.dex.mod": -4,
+      "ability.dex.score": -8,
+      "ac": -4,
+      "classDc": -4,
+      "classDc.mod": -4,
+      "pc.ac": -4,
+      "pc.classDC": -4,
+      "pc.dex": -4,
+      "pc.languages": {
+       "twin": "Common",
+       "with": "Common, Draconic"
+      },
+      "pc.refMod": -4,
+      "pc.skills.Acrobatics": {
+       "twin": "10T",
+       "with": "6T"
+      },
+      "pc.skills.Athletics": {
+       "twin": "11E",
+       "with": "12E"
+      },
+      "pc.skills.Stealth": {
+       "twin": "10T",
+       "with": "6T"
+      },
+      "pc.skills.Thievery": {
+       "twin": "3U",
+       "with": "-1U"
+      },
+      "pc.spellDC": {
+       "twin": "<absent>",
+       "with": 17
+      },
+      "save.reflex": -4,
+      "skill.acrobatics": -4,
+      "skill.athletics": 1,
+      "skill.stealth": -4,
+      "skill.thievery": -4,
+      "spell.added-spells.attack": {
+       "twin": "<absent>",
+       "with": 7
+      },
+      "spell.added-spells.dc": {
+       "twin": "<absent>",
+       "with": 17
+      },
+      "spell.added-spells.rank": {
+       "twin": "<absent>",
+       "with": "trained"
+      },
+      "strike.fist.attack": {
+       "twin": "12/8/4",
+       "with": "11/7/3"
+      },
+      "summary.ac": -4
+     },
+     "absolute": {
+      "hp.max": 30,
+      "pc.hpCurrent": 30,
+      "pc.maxHP": 30,
+      "summary.hpCur": 30,
+      "summary.hpMax": 30
+     }
+    },
+    "on": {
+     "deltas": {
+      "ability.dex.mod": -4,
+      "ability.dex.score": -8,
+      "ac": -4,
+      "classDc": -4,
+      "classDc.mod": -4,
+      "pc.ac": -4,
+      "pc.classDC": -4,
+      "pc.dex": -4,
+      "pc.languages": {
+       "twin": "Common",
+       "with": "Common, Draconic"
+      },
+      "pc.refMod": -4,
+      "pc.skills.Acrobatics": {
+       "twin": "10T",
+       "with": "6T"
+      },
+      "pc.skills.Athletics": {
+       "twin": "11E",
+       "with": "12E"
+      },
+      "pc.skills.Stealth": {
+       "twin": "10T",
+       "with": "6T"
+      },
+      "pc.skills.Thievery": {
+       "twin": "3U",
+       "with": "-1U"
+      },
+      "pc.spellDC": {
+       "twin": "<absent>",
+       "with": 17
+      },
+      "save.reflex": -4,
+      "skill.acrobatics": -4,
+      "skill.athletics": 1,
+      "skill.stealth": -4,
+      "skill.thievery": -4,
+      "spell.added-spells.attack": {
+       "twin": "<absent>",
+       "with": 7
+      },
+      "spell.added-spells.dc": {
+       "twin": "<absent>",
+       "with": 17
+      },
+      "spell.added-spells.rank": {
+       "twin": "<absent>",
+       "with": "trained"
+      },
+      "strike.fist.attack": {
+       "twin": "12/8/4",
+       "with": "11/7/3"
+      },
+      "summary.ac": -4
+     },
+     "absolute": {
+      "hp.max": 30,
+      "pc.hpCurrent": 30,
+      "pc.maxHP": 30,
+      "summary.hpCur": 30,
+      "summary.hpMax": 30
+     }
+    }
+   }
+  },
+  "overrides:test-sample:wizard-L5": {
+   "twin": "overrides:test-sample:wizard-L5#none",
+   "gates": {
+    "off": {
+     "deltas": {
+      "ability.dex.mod": -3,
+      "ability.dex.score": -6,
+      "ac": -3,
+      "pc.ac": -3,
+      "pc.dex": -3,
+      "pc.languages": {
+       "twin": "Common",
+       "with": "Common, Draconic"
+      },
+      "pc.refMod": -3,
+      "pc.skills.Acrobatics": {
+       "twin": "2U",
+       "with": "-1U"
+      },
+      "pc.skills.Athletics": {
+       "twin": "9E",
+       "with": "10E"
+      },
+      "pc.skills.Stealth": {
+       "twin": "9T",
+       "with": "6T"
+      },
+      "pc.skills.Thievery": {
+       "twin": "2U",
+       "with": "-1U"
+      },
+      "save.reflex": -3,
+      "skill.acrobatics": -3,
+      "skill.athletics": 1,
+      "skill.stealth": -3,
+      "skill.thievery": -3,
+      "spell.added-spells.attack": {
+       "twin": "<absent>",
+       "with": 10
+      },
+      "spell.added-spells.dc": {
+       "twin": "<absent>",
+       "with": 20
+      },
+      "spell.added-spells.rank": {
+       "twin": "<absent>",
+       "with": "trained"
+      },
+      "strike.fist.attack": {
+       "twin": "9/5/1",
+       "with": "7/3/-1"
+      },
+      "summary.ac": -3
+     },
+     "absolute": {
+      "hp.max": 30,
+      "pc.hpCurrent": 30,
+      "pc.maxHP": 30,
+      "summary.hpCur": 30,
+      "summary.hpMax": 30
+     }
+    },
+    "on": {
+     "deltas": {
+      "ability.dex.mod": -3,
+      "ability.dex.score": -6,
+      "ac": -3,
+      "pc.ac": -3,
+      "pc.dex": -3,
+      "pc.languages": {
+       "twin": "Common",
+       "with": "Common, Draconic"
+      },
+      "pc.refMod": -3,
+      "pc.skills.Acrobatics": {
+       "twin": "2U",
+       "with": "-1U"
+      },
+      "pc.skills.Athletics": {
+       "twin": "9E",
+       "with": "10E"
+      },
+      "pc.skills.Stealth": {
+       "twin": "9T",
+       "with": "6T"
+      },
+      "pc.skills.Thievery": {
+       "twin": "2U",
+       "with": "-1U"
+      },
+      "save.reflex": -3,
+      "skill.acrobatics": -3,
+      "skill.athletics": 1,
+      "skill.stealth": -3,
+      "skill.thievery": -3,
+      "spell.added-spells.attack": {
+       "twin": "<absent>",
+       "with": 10
+      },
+      "spell.added-spells.dc": {
+       "twin": "<absent>",
+       "with": 20
+      },
+      "spell.added-spells.rank": {
+       "twin": "<absent>",
+       "with": "trained"
+      },
+      "strike.fist.attack": {
+       "twin": "9/5/1",
+       "with": "7/3/-1"
+      },
+      "summary.ac": -3
+     },
+     "absolute": {
+      "hp.max": 30,
+      "pc.hpCurrent": 30,
+      "pc.maxHP": 30,
+      "summary.hpCur": 30,
+      "summary.hpMax": 30
+     }
+    }
+   }
+  }
+ }
+}

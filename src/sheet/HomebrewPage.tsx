@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react';
+import { useUnsavedWork } from '../data/unsavedWork';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import {
   loadHomebrewSources,
@@ -325,6 +326,9 @@ function HBEditorModal({
   // favored weapons and cleric spells) can resolve each way round.
   const [form, setForm] = useState<HBForm>(() => schema.toForm(initial ?? {}, content));
   const set = (k: string, v: string | string[]) => setForm((f) => ({ ...f, [k]: v }));
+  // Typed but not saved yet: closing the tab now asks first (data/unsavedWork.ts).
+  const opened = useRef(JSON.stringify(form));
+  useUnsavedWork(() => JSON.stringify(form) !== opened.current);
 
   // Heritage's ancestry dropdown is populated from the live content DB.
   const ancestryOptions = useMemo(

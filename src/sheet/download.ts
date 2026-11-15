@@ -4,8 +4,13 @@ import { chooseDialog, type DialogStyle } from './confirm';
 
 /** Save a text file the player asked for. One helper for every export in the app (backup, roster
  *  character, GM character, homebrew), with one route per shell:
- *   - a browser tab, the PWA and the PC app (WebView2) download it through a temporary object-URL
- *     anchor, exactly as before (`'saved'`; the browser or WebView2 puts it in Downloads);
+ *   - the PC app (WebView2) and a PC browser that has one (Chrome, Edge) open the system "Save as"
+ *     window, with the file's name filled in: the player picks the folder and may change the name
+ *     (owner, 2026-11-08: "the user dosent see the file explorer to let him chose the name and location").
+ *     Cancel there saves nothing and says nothing (`'cancelled'`);
+ *   - a browser without that window (Firefox, Safari, phone browsers, the PWA on a phone) downloads it
+ *     through a temporary object-URL anchor (`'saved'`; the browser puts it in Downloads). So does the
+ *     PC route when the browser refuses to open its window (no recent click), so a file is never lost;
  *   - the ANDROID app's WebView has no download listener, so an anchor saves nothing there. Instead
  *     the app's own dialog offers "Save to folder" (the system file picker, then tauri-plugin-fs
  *     writes into what was picked) and "Share" (the `share_text_file` command in src-tauri/src/lib.rs
@@ -41,8 +46,54 @@ export type DownloadOutcome = 'saved' | 'shared' | 'cancelled';
 export function downloadText({ filename, text, mime = 'application/json', style }: DownloadFile): Promise<DownloadOutcome> {
   assertDownloadFilename(filename);
   if (isTauri && isMobilePlatform) return saveOrShareOnPhone(filename, text, mime, style).catch(rejectAsError);
+  const picker = savePicker();
+  if (picker) return saveWithPicker(picker, filename, text, mime);
   anchorDownload(filename, text, mime);
   return Promise.resolve('saved');
+}
+
+/** The browser's "Save as" window (the File System Access API's `showSaveFilePicker`), when it has one.
+ *  Chrome and Edge on a PC and the PC app's WebView2 do; Firefox, Safari and most phone browsers do not. */
+type SavePicker = (options: {
+  suggestedName: string;
+  id?: string;
+  startIn?: string;
+  types?: { description: string; accept: Record<string, string[]> }[];
+}) => Promise<{ createWritable(): Promise<{ write(data: string): Promise<void>; close(): Promise<void> }> }>;
+
+function savePicker(): SavePicker | null {
+  const w = typeof window !== 'undefined' ? (window as unknown as { showSaveFilePicker?: SavePicker }) : undefined;
+  return typeof w?.showSaveFilePicker === 'function' ? w.showSaveFilePicker.bind(window) : null;
+}
+
+/** Opens the "Save as" window with the file's name filled in, then writes the text where the player
+ *  picked. `id` makes the window open in the folder the player used last time (Downloads the first time).
+ *  The window opens before the first `await`, so it still counts as part of the player's click. */
+async function saveWithPicker(picker: SavePicker, filename: string, text: string, mime: string): Promise<DownloadOutcome> {
+  const ext = filename.slice(filename.lastIndexOf('.'));
+  let handle: Awaited<ReturnType<SavePicker>>;
+  try {
+    handle = await picker({
+      suggestedName: filename,
+      id: 'heroes-heaven-export',
+      startIn: 'downloads',
+      types: [{ description: `${ext.slice(1).toUpperCase()} file`, accept: { [mime]: [ext] } }],
+    });
+  } catch (e) {
+    // Cancel (or closing the window) is an AbortError: no file, no notice.
+    if ((e as { name?: unknown } | null)?.name === 'AbortError') return 'cancelled';
+    // The browser would not open the window (no recent click, a blocked frame): the old download instead.
+    anchorDownload(filename, text, mime);
+    return 'saved';
+  }
+  try {
+    const out = await handle.createWritable();
+    await out.write(text);
+    await out.close();
+  } catch (e) {
+    throw e instanceof Error ? e : new Error(typeof e === 'string' && e.trim() ? e : 'The file could not be saved there.');
+  }
+  return 'saved';
 }
 
 /** Every caller's notice reads `(e as Error).message`. Tauri's invoke — and so the save picker, the

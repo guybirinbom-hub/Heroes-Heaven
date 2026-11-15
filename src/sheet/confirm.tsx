@@ -25,14 +25,24 @@ export interface ConfirmOptions {
   cancelLabel?: string;
   /** Style the affirmative button as destructive (red). Use for deletes/wipes. */
   danger?: boolean;
+  /** Focus the dismissive button instead of the affirmative one, so a stray Enter or Space keeps things as
+   *  they are (the app's close/reload question: a key pressed right after an accidental Alt+F4). */
+  focusCancel?: boolean;
   /** The overlay's inline style — see {@link DialogStyle}. */
   style?: DialogStyle;
 }
 
+/** Every question that can throw away unsaved work as the app closes (the Windows app's close / reload
+ *  question in App.tsx, the update banner's "Install without saving?"). "Keep editing" holds the focus, so
+ *  a stray Enter or Space keeps the work; the z-index sits above every campaign tracker layer (its search
+ *  9500, its floating hover card 30000), or the question would be held under one, out of sight
+ *  (checker 2026-11-08). */
+export const LEAVE_QUESTION = { focusCancel: true, style: { zIndex: 40000 } } as const;
+
 function ConfirmDialog({ opts, onResolve }: { opts: ConfirmOptions; onResolve: (v: boolean) => void }) {
   // Escape / click-outside / the X all cancel.
   useEscapeClose(() => onResolve(false));
-  const { title, message, confirmLabel = 'Confirm', cancelLabel = 'Cancel', danger, style } = opts;
+  const { title, message, confirmLabel = 'Confirm', cancelLabel = 'Cancel', danger, focusCancel, style } = opts;
   return (
     // confirm-overlay: lifts the dialog above every other layer (dice drawer, ref-search) — a
     // confirm is always the topmost interaction.
@@ -52,12 +62,12 @@ function ConfirmDialog({ opts, onResolve }: { opts: ConfirmOptions; onResolve: (
         </div>
         {message != null && <div className="confirm-body">{message}</div>}
         <div className="confirm-actions">
-          <button className="btn-ghost" onClick={() => onResolve(false)}>
+          <button className="btn-ghost" ref={focusCancel ? (b) => b?.focus() : undefined} onClick={() => onResolve(false)}>
             {cancelLabel}
           </button>
           <button
             className={danger ? 'btn-danger' : 'btn-primary'}
-            ref={(b) => b?.focus()}
+            ref={focusCancel ? undefined : (b) => b?.focus()}
             onClick={() => onResolve(true)}
           >
             {confirmLabel}

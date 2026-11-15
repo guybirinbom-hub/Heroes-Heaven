@@ -11,8 +11,9 @@ The owner asked (2026-09-05) that batches use LESS of the main-loop model and ma
 plan is `docs/wg-batch-pipeline.md` (three-judge reviewed); the prompts are
 `docs/wg-batch-workflow-prompts.md`. The main loop does three things per batch and nothing else:
 
-1. `Workflow({ name: 'wg-batch', args: { batch: 'NNN', count?: N, maxLevel?: L, ids?: 'a,b', print?: true } })`
-   — the saved workflow in `.claude/workflows/wg-batch.js`. `name` resolves only when the session's
+1. `Workflow({ name: 'wg-batch', args: { batch: 'NNN', count?: N, maxLevel?: L, ids?: 'a,b', print?: true, estimate: '<n> min', strictSteps: 'apply + commit (rules data)' } })`
+   — the saved workflow in `.claude/workflows/wg-batch.js` (a hook refuses any workflow run without `estimate` and
+   `strictSteps`; tell Guy the estimate). `name` resolves only when the session's
    cwd is this repo; from any other cwd pass
    `scriptPath: 'C:\\trying ai 2\\pf2e codex\\.claude\\workflows\\wg-batch.js'` instead. Every agent in it is Opus; every
    mechanical step is the deterministic driver `scripts/wg-batch-run.mjs --batch NNN --stage <stage>`.
@@ -138,6 +139,9 @@ name it.
   `.claude/settings.local.json` points `autoMemoryDirectory` at the shared memory folder).
 
 ## Where the rest lives
+
+- **Visual redesign (started 2026-10-24):** for any work on the look, read `PRODUCT.md`,
+  `docs/redesign/design-brief.md`, `docs/redesign/plan.md` and `DESIGN.md` (once it exists) first.
 
 - **Memory folder** (loads with the session): the running log, the release pointer, batch state, the
   standing owner questions and every lesson with a date.

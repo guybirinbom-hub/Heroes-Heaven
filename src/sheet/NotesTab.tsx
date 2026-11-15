@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import { useUnsavedWork } from '../data/unsavedWork';
 import type { Character } from '../rules/types';
 import { addNotePage, moveNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayUpdater } from '../rules/play';
 import { RefSearchModal, refLinkHtml, useKeyboardInset, type RefTarget } from './RichEditor';
@@ -65,6 +66,10 @@ function NoteEditor({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
+  // A keystroke whose 400 ms save has not run yet: reloading or closing the tab now would lose it, so it
+  // counts as unsaved work and the browser asks first (data/unsavedWork.ts).
+  const savePending = useRef(false);
+  useUnsavedWork(() => savePending.current);
   const latest = useRef(initialHtml);
   const onSaveRef = useRef(onSave);
   onSaveRef.current = onSave;
@@ -108,6 +113,7 @@ function NoteEditor({
         clearTimeout(timer.current);
         onSaveRef.current(pageId, latest.current);
       }
+      savePending.current = false;
     },
     [pageId],
   );
@@ -120,7 +126,11 @@ function NoteEditor({
     applyAutoDir(ref.current);
     latest.current = ref.current.innerHTML;
     if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => onSaveRef.current(pageId, latest.current), 400);
+    savePending.current = true;
+    timer.current = setTimeout(() => {
+      savePending.current = false;
+      onSaveRef.current(pageId, latest.current);
+    }, 400);
   };
   const exec = (cmd: string, arg?: string) => {
     // formatBlock toggles: applying the current block type again reverts to a paragraph.

@@ -4,6 +4,9 @@ import { createRoot } from 'react-dom/client'
 // re-expresses the tracker's own variable vocabulary in terms of them, so every component below —
 // all ported unchanged from the original app — themes itself from the character builder.
 import '@hh/theme/tokens.css'
+// The Font picker's bundled free families (Fontsource), so the tracker's Font setting draws the same
+// font on every device — the fontList it shows leads with these names.
+import '@hh/theme/bundled-fonts.css'
 // Heroes Heaven's shared chrome components (Logo, PageMenu) draw their icons from the Tabler
 // webfont via `ti ti-*` classes — the same set the builder uses. Required for the hamburger.
 import '@tabler/icons-webfont/dist/tabler-icons.min.css'

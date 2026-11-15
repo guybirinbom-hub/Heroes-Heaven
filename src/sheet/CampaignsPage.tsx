@@ -37,6 +37,7 @@ import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import { confirmDialog } from './confirm';
+import { CampaignGoneNote } from './CampaignGoneNote';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler, useEscapeClose, triggerBack } from './useEscapeClose';
 
@@ -610,6 +611,9 @@ function GmList({ campaigns, phone, onCreate, onOpen }: {
             <div className="cmp-card-main">
               <div className="cmp-card-name">{m.name}<span className={'cmp-role ' + m.role}>{m.role === 'gm' ? 'GM' : 'Player'}</span></div>
               {m.description && <div className="cmp-card-desc">{m.description}</div>}
+              {/* A player's campaign the server proved gone / closed to them (the GM's own are stripped
+                  on his devices when he deletes them — cloudMerge's `campdel:` marks). */}
+              {m.role === 'player' && <CampaignGoneNote campaignId={m.id} block awayFromLeave />}
               <CodeChip code={m.code} />
             </div>
             <i className="ti ti-chevron-right party-chev" aria-hidden="true" />

@@ -5699,6 +5699,64 @@ export interface FeatChoice {
 export interface SkillIncrease {
   level: number;
   skill: ProficiencyKey;
+  /** Which store the increase came from (skill-order plan D16): absent = the class's own increase of that
+   *  level; `bonus` = a class feature's extra one (Stylish Tricks); `background` = a background's (Reborn
+   *  Soul). The reverse build and the readers tell the three lanes apart by it. `tweak` (Tweaks phase 2, C15, WP11) =
+   *  an extra place a `choice.addPlace` block adds: the block carries the answer, so the reverse build routes it to no
+   *  store (C43). */
+  lane?: 'bonus' | 'background' | 'tweak';
+}
+
+/** One live extra attribute boost as `buildCharacter` applied it (`Character.tweakBoostSteps`, C16, WP11). */
+export interface TweakBoostStep {
+  /** The `choice.addPlace` block's id. */
+  id: string;
+  level: number;
+  attribute: AbilityId;
+  /** What it added: 2, or 1 when the score was already 18 or more (a partial boost). */
+  value: number;
+}
+
+/**
+ * The print phase of a skill step inside its level (skill-order plan D3): creation (1st level only) → Tweaks
+ * floors → old Overrides `=` sets → class features and options → heritage → feats → skill increases → feats
+ * whose skill prerequisite needs that level's increases → the final pass after the last level (standing gates
+ * such as Bardic Lore's "if you have legendary proficiency in Occultism").
+ */
+export type SkillPhase = 'create' | 'floor' | 'set' | 'feature' | 'heritage' | 'feat' | 'increase' | 'featAfterIncrease' | 'final';
+
+/** One step of a skill's per-level history (skill-order plan 1.5): what one record did to one key, where print
+ *  puts it. Derived, never authored; names are resolved at display time from content. */
+export interface SkillStep {
+  /** Print level of the step. */
+  level: number;
+  phase: SkillPhase;
+  key: ProficiencyKey;
+  from: ProficiencyRank;
+  /** `=== from` for a judged no-change. */
+  to: ProficiencyRank;
+  /** '<kind>:<id>' — class | class2 | background | heritage | ancestry | option | feature | feat | deity |
+   *  classPick | langLore | floor | set | increase | bonus | bgIncrease | pick (a stored replacement answer;
+   *  id = the record that owed it). */
+  source: string;
+  /** same = nothing changed; redirect = "already trained → a skill of your choice" (the record owed a
+   *  replacement); swallow = an old Overrides `=` overwrote this step (kept lowered); cap = an increase past
+   *  its level's cap; drop = an increase the record forbids (Bardic Lore, a restricted lane). */
+  note?: 'same' | 'redirect' | 'swallow' | 'cap' | 'drop';
+  /** With note `redirect`: the replacement the stored answer trained (absent while unanswered). */
+  pick?: ProficiencyKey;
+  /** A raising write that changed nothing because the key already stood higher: the rank it asked for (below
+   *  `from`). Lets a replay that leaves an earlier record out re-apply it (ranks.ts `without`). Absent = `to`. */
+  rank?: ProficiencyRank;
+}
+
+/** A character's skill ranks worked out level by level (skill-order plan 1.5, D12): the steps in print order,
+ *  and each record's print position ('<kind>:<id>' → the index of its first step; a record that changed
+ *  nothing points at where it sat). */
+export interface SkillHistory {
+  v: 1;
+  steps: SkillStep[];
+  at: Record<string, number>;
 }
 
 /** A flat/dice damage rider a feat/feature adds to Strikes (Spirit Striking, Offensive Boost). */
@@ -6059,7 +6117,9 @@ export interface SpellcastingEntry {
    *  `cantrips`; without the cap, zero picks made the whole Cantrips section invisible. */
   cantripCap?: number;
   /** The larger cap this class entry had before Dual Class sent each cantrip bonus to its own class
-   *  (Cantrip Expansion taken by the OTHER class). The build draws the player's stored picks up to it,
+   *  (Cantrip Expansion taken by the OTHER class) — or, for any non-book caster, the count of its own
+   *  picks when they outnumber its places (a mystery switch, Flexible Spellcaster, a removed Cantrip
+   *  Expansion; 2026-10-23). The build draws the player's stored picks up to it,
    *  the play overlay opens a cantrip prepared on the sheet up to it (`cantripOpenings`), and the sheet
    *  marks what is drawn past `cantripCap` (`cantripsOverOf`). Absent when the cap did not shrink. */
   cantripCapWas?: number;
@@ -6499,6 +6559,67 @@ export interface TweakMeta {
    *  matches the entry is ignored, so an entry an older app deleted and re-added does not inherit a stale
    *  "paused" or reason. */
   of?: string;
+  /** The entry came from an import (a Wanderer's Guide ritual, a reverse build's overflow feat), stamped
+   *  when it was added. It ignores the Tweaks master switch (spec 2); its own `on` still counts. */
+  source?: 'import';
+  /** The entry was made by the old Overrides and moved into Tweaks by the Builder-open stamp ("Moved from
+   *  Overrides", decision 19). Written only by that stamp; dropped by the writer on the entry's first edit. */
+  moved?: true;
+}
+
+/** Plan B, B3: the read-time sort of the OLD `overrides.proficiencies` entries (no meta `mode` with a
+ *  matching `of`): stored key → "at least" / "exactly" (src/rules/blocks/migrate.ts). */
+export type TweakRankSort = Record<string, 'atLeast' | 'exactly'>;
+
+/** One extra feat place (`choice.addPlace`, C8) that holds a pick and is either held back now — paused, or Tweaks
+ *  off — or live now with no Character.feats row under its own slot key (the take cap, a level above the
+ *  character's, a granted feat; WP7 run 3a). Tweaks phase 2, WP7, C46; src/rules/tweakKept.ts. */
+export interface KeptFeatPlace {
+  /** The place's slot key, `<level>:extra<category>:<n>`. */
+  slotKey: string;
+  /** The feat stored there (`featPicks[slotKey]`). */
+  featId: string;
+  /** Every answer made for it, by build map name → its entries as stored (rev 3 r9): each entry under the slot
+   *  key in the maps `swapSlotKeys` moves, and each entry keyed by the feat's own id in dedicationSkillFeats,
+   *  pickFeatChoices, pickCantripChoices, featSkillChoices and featLoreChoices when no Character.feats row holds
+   *  the feat (only on the first kept place holding it). Absent when there is none. */
+  answers?: Record<string, Record<string, string>>;
+}
+
+/** WP14 (C46): a skill-increase place a LIVE "Remove a place" removes, that holds an answer — the answer stays in
+ *  its store but counts nowhere, so no Character row carries it. src/rules/tweakKept.ts `keptSkillIncreases`. */
+export interface KeptSkillIncrease {
+  level: number;
+  /** 'main' (skillIncreases), 'bonus' (bonusSkillIncreases) or 'background' (backgroundSkillIncreases). */
+  lane: string;
+  skill: string;
+}
+
+/** WP14 (C46): a boost place a LIVE "Remove a place" removes, that holds a pick. `set`: 'ancestry'
+ *  (ancestryBoosts), 'background' (backgroundBoosts), 'free' (levelBoosts) or 'level' (attributeBoosts[level]);
+ *  `level` only for 'level'; `index` the stored position in that list. src/rules/tweakKept.ts `keptBoosts`. */
+export interface KeptBoost {
+  set: string;
+  level?: number;
+  index: number;
+  attribute: string;
+}
+
+/** Character.tweakKept (C46): what a build-less reopen (deriveBuildFromCharacter) needs that no Character.feats row
+ *  carries — every held-back extra feat place's pick, and every live one's that has no row under its key. Absent
+ *  when there is nothing to keep (a live place WITH its row adds nothing). Each list is present only when non-empty:
+ *  an older app's prune never sees an empty value at depth 1. WP14 added the removed skill-increase and boost places'
+ *  kept answers; WP16 and WP17 add theirs beside them. */
+export interface TweakKept {
+  /** WP14: each removed skill-increase place's answer (live removals only). */
+  skillIncreases?: KeptSkillIncrease[];
+  /** WP14: each removed boost place's pick (live removals only). */
+  boosts?: KeptBoost[];
+  featPlaces?: KeptFeatPlace[];
+  /** WP8 (fixes round 1): each BOOK slot's copy of a feat the take cap dropped while a readable "Take a feat more
+   *  times" for it is stored (paused, Tweaks off, or live with too few times) — `slotKey` a book slot key, `answers`
+   *  only the entries under that key (a row holds the feat). src/rules/tweakKept.ts `keptFeatCopies`. */
+  featCopies?: KeptFeatPlace[];
 }
 
 export interface Character {
@@ -6569,6 +6690,23 @@ export interface Character {
   options?: CharacterOptions;
   /** Creative "Overrides" — deliberate rule-breaks (allowed-ineligible feats, bonus/removed feats). */
   overrides?: BuildOverrides;
+  /** DERIVED (plan B, B3), never stored as the player's: how `buildCharacter` sorted the old Overrides rank
+   *  entries of `overrides` on this read — each "at least" or "exactly", against the rank the old `=` met
+   *  at its slot (B1). `overrides` itself stays the stored object; the readers (blocks/active.ts
+   *  `rankTweaks`, `liveLegacyRanks`) lay this over it. Absent when nothing needed sorting. Re-derived by
+   *  every rebuild, like every derived field; not in `CARRIED_CHARACTER_FIELDS`. */
+  tweakRankSort?: TweakRankSort;
+  /** DERIVED (Tweaks phase 2, C46): what a tweak keeps from counting now but must not lose — written only by
+   *  `buildCharacter`, read only by `deriveBuildFromCharacter` (a build-less reopen puts it back into the build's
+   *  own stores, never over an entry already there). Absent when every list is empty, so a character with no such
+   *  tweak is unchanged; older apps ignore the optional field. Not in `CARRIED_CHARACTER_FIELDS`. */
+  tweakKept?: TweakKept;
+  /** DERIVED (Tweaks phase 2, C16, WP11): each LIVE extra attribute boost (`choice.addPlace` with `place: 'boost'`)
+   *  `buildCharacter` applied, in the order it applied them — its block id, level, attribute and what it added (+2, or
+   *  +1 once the score was 18 or more). The attribute breakdown names each as its own "Tweak:" line, and the reverse
+   *  build counts each as a boost it must not solve again (C43). Absent when there is none, so every existing Character
+   *  is unchanged; older apps ignore the optional field. Not in `CARRIED_CHARACTER_FIELDS`. */
+  tweakBoostSteps?: TweakBoostStep[];
   /** Enabled source books (absent = the four Core books); other books are hidden from the builder. */
   enabledSources?: string[];
   /** Campaigns this character is attached to (their ids) — drives the sheet Party button + publishing. */
@@ -6895,6 +7033,10 @@ export interface Character {
   /** Class features force-granted via Overrides (rendered in the Feats & Features list). */
   grantedFeatures?: { featureId: string; name: string; level: number; description: string; descRefs?: DescRef[]; traits: Trait[]; actionCost?: ActionCost; rarity?: Rarity }[];
   skillIncreases?: SkillIncrease[];
+  /** DERIVED (skill-order plan 1.5, D12): how the skill ranks were worked out, level by level, as print
+   *  orders it. Never authored, never carried; absent on a character built before this engine (a reader then
+   *  keeps its old reading). The readers are in src/rules/ranks.ts. */
+  skillHistory?: SkillHistory;
   /** Commander folio tactics (chosen Action ids), with the tactics-feature metadata for display. */
   commanderTactics?: CommanderTactics;
   /** The runesmith's runic repertoire — which runes they know, and how many they may have etched. */

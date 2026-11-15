@@ -189,7 +189,7 @@ function known(list: { id: string; value?: number }[], content: ContentDatabase)
  */
 function maxHpOf(live: Character, content: ContentDatabase): number {
   try {
-    return deriveMaxHp(live, contentFor(content, live.overrides));
+    return deriveMaxHp(live, contentFor(content, live));
   } catch {
     return live.hitPoints?.current ?? 0;
   }

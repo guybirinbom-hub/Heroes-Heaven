@@ -3,7 +3,7 @@ import {
   loadDb, baseBuild, hostIdsFor, hostContext, slotFor, probeAt, pickersFor,
   declaredChoices, evidenceFor, referenceHosts, isEcho, withAnswer,
 } from '../scripts/builder-evidence.mjs';
-import { buildCharacter } from '../src/rules/build';
+import { buildCharacter, skillRanksAtLevel } from '../src/rules/build';
 
 /**
  * THE HARNESS'S OWN TEST.
@@ -90,15 +90,31 @@ describe('builder-evidence — it sees the pickers that are known to exist', () 
     expect(p).toHaveLength(1);
     expect(p[0].kind).toBe('skills');
     const { classId, ancestryId } = hostIdsFor(db.feats['assurance'], db);
-    const trained = Object.entries(hostContext(db, classId, ancestryId).char.proficiencies.skills)
+    // skill-order WP7 (d4d4b02; fixed in WP9): the picker offers the skills trained AT THE SLOT'S LEVEL (the
+    // engine's per-level history), not the finished level-20 ranks — Assurance in a 2nd-level slot cannot name a
+    // skill first trained at 3rd. So the expectation reads the same level.
+    const probe = probeAt('assurance', db, classId, ancestryId, 20);
+    const slotLevel = Number(String(probe.slotKey).split(':')[0]);
+    const trained = Object.entries(skillRanksAtLevel(probe.char, slotLevel, 'end'))
       .filter(([, r]) => r !== 'untrained')
       .map(([k]) => k);
+    expect(trained.length, 'the host is trained in several skills at that level').toBeGreaterThan(2);
     expect(p[0].options.map((o) => o.value).sort()).toEqual(trained.sort());
   });
 
   it('Automatic Knowledge: minRank expert is a STRICT subset of Assurance\'s list', () => {
-    const expert = pickers('automatic-knowledge')[0];
-    const trained = pickers('assurance')[0];
+    // skill-order WP7 (fixed in WP9): at the probe's own 2nd-level slot no skill is expert yet, so the expert list
+    // is empty there by the rules; compare both pickers in the host's last skill slot (20th), where it is not.
+    const { classId, ancestryId } = hostIdsFor(db.feats['automatic-knowledge'], db);
+    const ctx = hostContext(db, classId, ancestryId);
+    const last = ctx.slots.filter((s: { category: string }) => s.category === 'skill').pop()!;
+    const key = `${last.level}:${last.category}:${last.idx}`;
+    const at = (featId: string) => {
+      const b = { ...ctx.build, featPicks: { [key]: featId } };
+      return pickersFor(b, key, featId, db, buildCharacter(b, db)).filter((x: { lane: string }) => x.lane === 'choice')[0] as { optionCount: number };
+    };
+    const expert = at('automatic-knowledge');
+    const trained = at('assurance');
     expect(expert.optionCount).toBeGreaterThan(0);
     expect(expert.optionCount!).toBeLessThan(trained.optionCount!);
   });
@@ -232,11 +248,17 @@ describe('builder-evidence — pickersFor is driven by the build, not by the rec
   it('a redundant skill grant produces a replacement picker only on a host that already has it', () => {
     // The skillFallback lane is reported by the CHARACTER (`skillFallbacks`), so it exists on the rich
     // host and not on the minimal one. A record-reading checker cannot see it at all.
-    const rich = probeAt('goloma-lore', db, ...Object.values(hostIdsFor(db.feats['goloma-lore'], db)) as [string, string], 20, false);
-    const min = probeAt('goloma-lore', db, ...Object.values(hostIdsFor(db.feats['goloma-lore'], db)) as [string, string], 1, true);
+    // skill-order WP3: the probe feat moved from Goloma Lore to Orc Lore. The rich host trained Goloma
+    // Lore's Survival and Stealth only by later skill increases; worked out level by level, the 1st-level
+    // feat comes first and owes nothing, so it no longer shows the lane. Orc Lore has the same shape (an
+    // ancestry Lore feat, no question of its own, the redundancy clause) and the rich fighter host already
+    // holds Athletics at 1st, so the lane is still reported by the character.
+    const FEAT = 'orc-lore';
+    const rich = probeAt(FEAT, db, ...Object.values(hostIdsFor(db.feats[FEAT], db)) as [string, string], 20, false);
+    const min = probeAt(FEAT, db, ...Object.values(hostIdsFor(db.feats[FEAT], db)) as [string, string], 1, true);
     expect(rich.pickers.some((p: { lane: string }) => p.lane === 'skillFallback')).toBe(true);
     expect(min.pickers.some((p: { lane: string }) => p.lane === 'skillFallback')).toBe(false);
-    expect(db.feats['goloma-lore'].choice).toBeUndefined();
+    expect(db.feats[FEAT].choice).toBeUndefined();
   });
 
   it('pickersFor and the build agree on the storage key', () => {

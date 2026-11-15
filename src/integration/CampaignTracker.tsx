@@ -766,8 +766,10 @@ export function CampaignTracker({
    * painted at the page's own level — and whatever the tracker draws (its modals, its windows, the dice)
    * stays under any dialog on <body>, whatever z-index either side uses. Only while in flight: the rest
    * of the time the windows keep floating over the sheet's own popups as designed
-   * (test/tracker-windows-over-sheet.test.tsx). On the web and the PC app the save is done before the
-   * browser paints, so nothing changes on screen there. test/download-platform-route.test.tsx.
+   * (test/tracker-windows-over-sheet.test.tsx). Where the save is the plain download it is done before the
+   * browser paints, so nothing changes on screen; where the system "Save as" window opens (the PC app,
+   * Chrome and Edge on a PC — 2026-11-08) the isolation stays on until that window closes, under it.
+   * test/download-platform-route.test.tsx, test/download-save-as.test.tsx.
    * That chooser is a pop-up opened in the tracker, so it wears the tracker's look (the owner,
    * 2026-10-01): the same `dialogStyle` every confirm raised here gets, read when the export starts (a
    * ref, so this callback — and every export button under the provider — is not rebuilt each time a

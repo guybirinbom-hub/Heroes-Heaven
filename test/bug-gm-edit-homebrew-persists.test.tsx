@@ -210,6 +210,13 @@ describe('U3: what the GM deletes in his edit sheet stays deleted after the sess
     await tick();
     first.click(document.querySelector('button.me-delete'));
     await tick();
+    // The editor's Delete asks first (bug 2026-10-23): answer the app's own confirm.
+    const yes = buttonByText(document.querySelector('.confirm-modal') ?? document.createElement('div'), 'Delete');
+    expect(yes, 'the app’s own confirm').toBeTruthy();
+    await act(async () => {
+      yes!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    await tick();
     first.stop();
 
     expect(deleted).toEqual([MODE.id]);

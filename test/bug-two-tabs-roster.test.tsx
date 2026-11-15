@@ -777,3 +777,47 @@ describe(`two tabs of one browser profile never lose the player’s change (rend
     }
   }, TIMEOUT);
 });
+
+/*
+ * Tweaks phase 2, WP1 (plan C4): two tabs each ADD a phase-2 tweak inside one debounce. The tabs fold each other's
+ * roster with `mergeRosterEdits` (App.tsx), which merges an array of records BY `id`; before the v2 block id both
+ * tabs minted `t<max+1>` (here `t2`), and the merge fused the two blocks into one hybrid (a moreTakes with an
+ * anyList's rule, or the reverse). `t<n>_<4 random>` keeps them apart.
+ * RED ON THE OLD CODE (wp1-report.md): `newBlockId` back to its plain `t${max + 1}` → this leg fails (one block, mixed).
+ */
+describe('two tabs each add a phase-2 tweak: both survive the roster merge (tweaks p2 WP1, C4)', () => {
+  it('tab A allows a feat from any list, tab B takes another feat more times — both blocks stay, whole', async () => {
+    const { mergeRosterEdits } = await import('../src/data/rosterMerge');
+    const { writeChoiceTweak } = await import('../src/rules/blocks/write');
+    const { parseStoredBlocks } = await import('../src/rules/blocks/stored');
+    const OLD_BLOCK = { id: 't1', kind: 'number.add', v: 1, target: 'skill:athletics', value: 1 };
+    const base = { ...saved('tw', 'Tweak Tabs'), build: { ...buildOf('Tweak Tabs'), overrides: { blocks: [OLD_BLOCK] } } } as SavedChar;
+    // Each tab draws its own random tail (two tabs are two independent Math.random streams).
+    const inTab = (r: number, draft: Parameters<typeof writeChoiceTweak>[1][number]): SavedChar => {
+      const spy = vi.spyOn(Math, 'random').mockReturnValue(r);
+      try {
+        const w = writeChoiceTweak(base.build!, [draft]);
+        expect(w.refused, 'fixture: the tab writes its tweak').toBeUndefined();
+        return { ...base, build: w.build };
+      } finally {
+        spy.mockRestore();
+      }
+    };
+    const tabA = inTab(0.1, { kind: 'choice.anyList', record: 'toughness', fields: { rule: 'list' } });
+    const tabB = inTab(0.7, { kind: 'choice.moreTakes', record: 'fleet', fields: { times: 1 } });
+    const merged = mergeRosterEdits([base], [tabA], [tabB])[0];
+    const blocks = merged.build!.overrides!.blocks as Record<string, unknown>[];
+    expect(blocks, 'the old block and both new ones').toHaveLength(3);
+    const { known, foreign } = parseStoredBlocks(blocks);
+    expect(foreign, 'no hybrid block a reader cannot read').toEqual([]);
+    expect(known.map((b) => [b.kind, b.record])).toEqual(
+      expect.arrayContaining([
+        ['number.add', undefined],
+        ['choice.anyList', 'toughness'],
+        ['choice.moreTakes', 'fleet'],
+      ]),
+    );
+    expect(blocks.find((b) => b.kind === 'choice.anyList')).toEqual((tabA.build!.overrides!.blocks as unknown[])[1]);
+    expect(blocks.find((b) => b.kind === 'choice.moreTakes')).toEqual((tabB.build!.overrides!.blocks as unknown[])[1]);
+  });
+});

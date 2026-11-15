@@ -248,6 +248,25 @@ places: `src/sheet/FeatsTab.tsx`, `src/sheet/FeatDetail.tsx`, `src/sheet/ItemDet
 `src/builder/shared.tsx` (ChoiceDetails, so a gated picker says why it does nothing) and
 `src/sheet/DescriptionModal.tsx`.
 
+Since 2026-10-23 the marker asks `trustHeldBack(bucket, id)` (src/data/trustGate.ts), not the side map
+alone: the records map PLUS, for the 8 paired buckets, the situational lane, the FEAT_GRANTS kinds that
+really drop (`grantKindsHeldBack`), the engine lane, and the records that carry a gated mode or stance.
+Before that, about 2,750 records whose only dark rule lived in code (Incredible Initiative's +2
+initiative star is one) showed no line. Display only: nothing it reads changes what applies.
+
+Follow-up (2026-10-23): a record that HANDS OVER a held-back action (`grantsActions`, also on option rows)
+or feat shows the line too, naming it ("Claw Stance and Talon Stance, which it grants"). The feat pass
+reads FEAT_FEAT_GRANTS, its leveled twin, the rank registry (FEAT_RANK_FEAT_GRANTS) and the record's own
+top-level `grantsFeats`. The FEAT_GRANTS kinds are not asked for `items`/`actions` (their entries are a
+feat's). The mode popup (ModeDetailModal) and the stance bar (MainTab) render the marker. The Settings
+sentence counts the records in the 8 buckets that show the line (`trustHeldCount`, once per gate run).
+
+A held-back battle form loses its `battleForm` (MODE_PAYLOAD), so its feat falls back to a plain stance
+chip on the bar. That chip's tooltip and the bar's line ask the held-back MODE the feat carries (same
+`feats` link as the form chips) instead of the stance record, which usually holds just `{form, note}`;
+when both are held back the mode wins. The bar also shows the line for such a form switched on as a
+mode with no stance active (one line, never two).
+
 The gate is applied ONCE at content load, not per derive, so the sheet's cost is unchanged.
 
 ## 4. The switch

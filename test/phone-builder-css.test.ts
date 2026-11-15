@@ -303,13 +303,27 @@ describe('phone controls (fixtures carrying the real class names)', () => {
     <div class="src-wrap"><button class="src-act"></button><button class="src-check"></button>
       <div class="src-search"><input><button class="src-search-x"></button></div>
       <div class="src-books"><button class="src-book"></button></div></div>
-    <span class="ovr-chip"><button class="ovr-chip-x"></button></span>
-    <div class="ovr-attrs"><label class="ovr-attr"><span class="ovr-attr-k"></span><input class="ovr-attr-in"><button class="ovr-attr-x"></button></label></div>
-    <input class="ovr-edit-name"><textarea class="ovr-edit-desc"></textarea>
     <button class="mp-rules-link setup-rules-link"></button>
     <div class="custom-bg"><label class="cbg-field"><input><select></select></label></div>
     <button class="popsel ss-filled"><span class="ss-filled-body"><span class="popsel-val"></span></span><span class="ss-replace"></span></button>
+    <div class="pick-row tw-break-row"><button class="pick-body"></button><button class="pick-add tw-break-act"></button></div>
+    <button class="tw-mark-show"></button><button class="tw-kept-act"></button><button class="tw-option-add-go"></button>
+    <button class="tw-option-drop"></button><button class="tw-place-on"></button>
+    <label class="tw-reveal"><input type="checkbox"><span></span></label><button class="tw-break-desc"></button>
   `);
+
+  // tweaks p2 WP2 (check finding 6): the new choice controls keep the phone tap sizes — the break button 44px (plan
+  // section 2), the rest the secondary 36px.
+  it('tweaks p2: the Take anyway button is 44px, the other new choice controls 36px', () => {
+    expect(tapH(q(host, '.tw-break-act'))).toBeGreaterThanOrEqual(44);
+    for (const sel of ['.tw-mark-show', '.tw-kept-act', '.tw-option-add-go', '.tw-option-drop', '.tw-place-on']) expect(tapH(q(host, sel)), sel).toBeGreaterThanOrEqual(36);
+  });
+  // tweaks p2 WP4 finish (C6): the reveal switch ("Show heritages of other ancestries") is a 36px target on a phone —
+  // its whole label is the hit area — and a greyed row's own "View description" button too.
+  it('tweaks p2: the reveal switch and a greyed row\'s description button are 36px targets on a phone', () => {
+    expect(tapH(q(host, '.tw-reveal'))).toBeGreaterThanOrEqual(36);
+    expect(tapH(q(host, '.tw-break-desc'))).toBeGreaterThanOrEqual(36);
+  });
 
   it('decision 7: the MAIN controls are 40px — picker rows, Select/Add, book rows', () => {
     for (const sel of ['.picker-item', '.pick-body', '.pick-add', '.src-book', '.picker .name-input', '.fsel-results-search', '.fsel-metasearch', '.cbg-field input'])
@@ -320,7 +334,7 @@ describe('phone controls (fixtures carrying the real class names)', () => {
     for (const sel of [
       '.fsel-arch', '.fsel-head-filters', '.fsel-clear', '.fsel-tab', '.fsel-chip', '.fsel-inel',
       '.spr-chip', '.spr-add', '.cc-det', '.inv-toggle', '.rule-info', '.src-act', '.src-check',
-      '.src-search-x', '.ovr-chip-x', '.ovr-attr-x', '.ovr-attr-in', '.ovr-edit-name', '.setup-rules-link',
+      '.src-search-x', '.setup-rules-link',
     ])
       expect(tapH(q(host, sel)), sel).toBeGreaterThanOrEqual(36);
     // The spell chip's ✕ and ★ (13px glyphs) and the feat slot's clear ✕.
@@ -337,35 +351,23 @@ describe('phone controls (fixtures carrying the real class names)', () => {
     expect(px(val(q(host, '#row2'), 'margin-top')), 'feat/spell picker rows').toBeGreaterThanOrEqual(6);
   });
 
-  it('D4: the Overrides attribute grid fits the width instead of three min-content columns', () => {
-    const cols = val(q(host, '.ovr-attrs'), 'grid-template-columns') ?? '';
-    expect(cols).not.toBe('repeat(3, 1fr)');
-    expect(cols).toMatch(/auto-fill|auto-fit/);
-    expect(val(q(host, '.ovr-attr'), 'min-width')).toBe('0');
-    expect(val(q(host, '.ovr-attrs'), 'grid-template-columns', DESKTOP)).toBe('repeat(3, 1fr)'); // desktop unchanged
-  });
+  // RETIRED (plan B WP7): "D4: the Overrides attribute grid fits the width…" and the grid half of "D4 (round 2)".
+  // The six-box attribute grid (.ovr-attrs / .ovr-attr / .ovr-attr-in) left with the Setup Overrides card: each
+  // attribute set is now its own row on the Tweaks page, edited in the row's own editor, whose phone sizes are
+  // checked in "Tweaks on a phone" below (.tw-parts / .tw-num / .tw-text).
 
-  it('D4 (round 2): the attribute grid takes the card row’s full width — not one 98px column', () => {
-    // It is an item of the SubCard's wrapping flex row (.lvl-card-row), which sizes it to max-content;
-    // an auto-fill grid with no width of its own has room for exactly one column there.
-    // The real nesting (shared.tsx SetupCard → SubCard): the Overrides card's row holds the SubCard, whose
-    // own row holds the grid. Both rows size their items to content, so BOTH levels must take the width:
-    // measured on the phone, the grid alone at 100% stayed 98px inside a 196px subcard.
+  it('D4 (round 2): a follow-up card takes the card row’s full width on a phone', () => {
+    // The Setup card's row (.lvl-card-row) is a wrapping flex row that sizes its items to max-content, so a
+    // follow-up card stood as a ragged half-width card (196px of a 260px row). Measured on the phone.
     const row = fixture(
       '<div class="lvl-card lvl-card-setup"><div class="lvl-card-text"><div class="lvl-card-row" id="outer">' +
         '<div class="lvl-subcard"><div class="lvl-card lvl-card-setup lvl-card-child"><div class="lvl-card-text">' +
-        '<div class="lvl-card-row"><div class="ovr-attrs"><label class="ovr-attr"><span class="ovr-attr-k">Max HP</span>' +
-        '<input class="ovr-attr-in"></label></div></div></div></div></div></div></div></div>',
+        '<div class="lvl-card-row"></div></div></div></div></div></div></div>',
     );
-    const grid = q(row, '.ovr-attrs');
-    const w = winner(grid, ['width', 'flex', 'flex-basis'], PHONE);
-    expect(w && /\b100%/.test(w.value), `grid: phone width resolves to ${w?.prop}: ${w?.value}`).toBe(true);
     const sub = q(row, '#outer > .lvl-subcard');
     const f = winner(sub, ['flex', 'flex-basis', 'width'], PHONE);
     expect(f && /\b100%/.test(f.value), `subcard: phone width resolves to ${f?.prop}: ${f?.value}`).toBe(true);
-    expect(val(q(row, '.ovr-attr-k'), 'white-space'), '"Max HP" on one line').toBe('nowrap');
-    // Desktop: three columns and content-sized subcards, as before.
-    expect(val(grid, 'width', DESKTOP)).toBeUndefined();
+    // Desktop: content-sized subcards, as before.
     expect(winner(sub, ['flex', 'flex-basis', 'width'], DESKTOP)).toBeUndefined();
     row.remove();
   });
@@ -413,18 +415,9 @@ describe('phone controls (fixtures carrying the real class names)', () => {
     row.remove();
   });
 
-  it('round 3: the Max HP box takes the whole row, and no attribute label shrinks under its number field', () => {
-    // Measured: with the revert ↶ shown, "Max HP" in a 105px half-width box was cut to "Max H" behind "120".
-    const g = fixture(
-      '<div class="ovr-attrs" id="one"><label class="ovr-attr"><span class="ovr-attr-k">Max HP</span><input class="ovr-attr-in"></label></div>' +
-        '<div class="ovr-attrs" id="six"><label class="ovr-attr"></label><label class="ovr-attr"></label></div>',
-    );
-    expect(val(q(g, '#one > .ovr-attr'), 'grid-column')).toBe('1 / -1');
-    expect(val(q(g, '#six > .ovr-attr'), 'grid-column'), 'six boxes keep their columns').toBeUndefined();
-    expect(shrink(q(g, '.ovr-attr-k')), 'the label never shrinks').toBe(0);
-    expect(val(q(g, '#one > .ovr-attr'), 'grid-column', DESKTOP)).toBeUndefined();
-    g.remove();
-  });
+  // RETIRED (plan B WP7): "round 3: the Max HP box takes the whole row…". The Max HP box was one cell of the
+  // Overrides attribute grid, which is gone; Maximum HP is now a Tweaks row whose number part (.tw-num) is
+  // sized in "Tweaks on a phone" below, and the part label sits above its field, so nothing can cut it off.
 
   it('B8: a picked Voluntary flaw draws in the flaw red, everywhere; a picked boost keeps the accent', () => {
     // AbilitySelect kind="flaw" → PopupSelect pill with class is-flaw and a ti-arrow-down `.popsel-lead`.
@@ -478,7 +471,7 @@ describe('phone controls (fixtures carrying the real class names)', () => {
   });
 
   it('C16: builder and picker text fields are 16px on a phone', () => {
-    for (const sel of ['.fsel-results-search input', '.fsel-metasearch input', '.fsel-text', '.picker .name-input', '.cbg-field input', '.ovr-edit-name', '.ovr-attr-in'])
+    for (const sel of ['.fsel-results-search input', '.fsel-metasearch input', '.fsel-text', '.picker .name-input', '.cbg-field input'])
       expect(px(val(q(host, sel), 'font-size')), sel).toBeGreaterThanOrEqual(16);
   });
 
@@ -497,6 +490,125 @@ describe('phone controls (fixtures carrying the real class names)', () => {
     expect(w - 2 * px(inset), 'visible dot plus the ring on both sides').toBeGreaterThanOrEqual(40);
     expect(px(val(q(handle, '.rsl-stop'), 'font-size'))).toBeGreaterThanOrEqual(11);
     handle.remove();
+  });
+});
+
+/*
+ * Plan B WP6 (section 4.1): the Tweaks button joins the header's second row on a phone, and the Tweaks page's
+ * controls meet the owner's bar (40px main, 36px secondary, 16px fields, ≥ 6px between neighbours).
+ * Run once against the first WP6 stylesheet (Tweaks 62px wide, 8px gaps, Cancel/Save 10px padding) the
+ * 360px budget below was 366 > 336 and failed — the same overflow Edge showed (Save on a third row).
+ */
+describe('Tweaks on a phone (plan B WP6)', () => {
+  const head = fixture(
+    '<header class="builder-head"><div class="builder-title"></div><input class="name-input">' +
+      '<div class="lvl-ctl"><span class="lvl-ctl-label"></span><button class="lvl-step"></button><span class="lvl-ctl-val"></span><button class="lvl-step"></button></div>' +
+      '<button class="b-tweaks"><i class="ti ti-adjustments"></i><span class="b-tweaks-label">Tweaks</span><span class="b-tweaks-count">8</span></button>' +
+      '<button class="b-cancel">Cancel</button><button class="b-create">Save changes</button></header>',
+  );
+  const page = fixture(`
+    <div class="card-sec lvl-page tw-page"><div class="lvl-page-head"><span class="bsec-title"></span><button class="tw-done"></button></div>
+      <section class="lvl-group tw-group"><ul class="tw-list"><li class="tw-row open"><div class="tw-row-line">
+        <button class="tw-row-head"></button><button class="inv-toggle tw-toggle"><span class="tw-switch"></span></button></div>
+        <div class="tw-editor"><div class="tw-editor-actions"><button class="tw-goto"></button><button class="tw-del"></button><button class="tw-row-done"></button></div></div>
+      </li></ul></section>
+      <div class="tw-add"><div class="tw-menus"><button class="tw-menu"></button></div><button class="tw-adv-toggle"></button></div></div>
+  `);
+  const AT_390: Ctx = { width: 390, touch: true };
+  const AT_400: Ctx = { width: 400, touch: true };
+  /** A side padding as the cascade leaves it (the shorthand and the longhand compete). */
+  const padX = (el: Element, ctx: Ctx) => {
+    const d = winner(el, ['padding', 'padding-left'], ctx);
+    if (!d) return 0;
+    if (d.prop === 'padding-left') return d.value === '0' ? 0 : px(d.value);
+    const parts = d.value.split(/\s+/);
+    const x = parts.length >= 2 ? parts[1] : parts[0];
+    return x === '0' ? 0 : px(x);
+  };
+  const colGap = (el: Element, ctx: Ctx) => {
+    const d = winner(el, ['gap', 'column-gap'], ctx);
+    if (!d) throw new Error(`no gap resolves for ${el.className}`);
+    const parts = d.value.split(/\s+/);
+    return px(d?.prop === 'gap' && parts.length >= 2 ? parts[1] : parts[0]);
+  };
+
+  it('the Tweaks button is on the second row, 40px tall; the word hides at 400px and below, never on a desktop', () => {
+    const b = q(head, '.b-tweaks');
+    expect(val(b, 'order'), 'row 2 (after the name)').toBe('1');
+    expect(tapH(b)).toBeGreaterThanOrEqual(40);
+    expect(val(q(head, '.b-tweaks-label'), 'display')).toBe('none');
+    expect(val(q(head, '.b-tweaks-label'), 'display', AT_400)).toBe('none');
+    expect(val(q(head, '.b-tweaks-label'), 'display', { width: 412, touch: true }), 'a 412px phone keeps the word').toBeUndefined();
+    expect(val(q(head, '.b-tweaks-label'), 'display', DESKTOP)).toBeUndefined();
+    expect(val(b, 'order', DESKTOP), 'desktop: DOM order').toBeUndefined();
+  });
+
+  it('the header is still two rows at 360 px with the Tweaks button', () => {
+    // Text widths MEASURED in Edge (2026-10-21, the app font): "Cancel" at 12.5px = 45px, "Save changes" at
+    // 13px / 500 = 87px, the level value "5" box = 18px. Everything else comes from the stylesheet as it
+    // resolves at 360px: the two 40px steps and their gap, the Tweaks button, Cancel / Save padding and the
+    // header's column gap. The row is 360 − 2 × 12px header padding = 336px.
+    const CANCEL_TEXT = 45;
+    const SAVE_TEXT = 87;
+    const LEVEL_VALUE = 18;
+    for (const ctx of [PHONE, AT_390]) {
+      const step = q(head, '.lvl-step');
+      const stepper = 2 * tapW(step, ctx) + 2 * colGap(q(head, '.lvl-ctl'), ctx) + LEVEL_VALUE;
+      const tweaks = px(val(q(head, '.b-tweaks'), 'width', ctx));
+      const tweaksW = Number.isFinite(tweaks) ? tweaks : 20 + 15 + 7 + 18 + 2 + (val(q(head, '.b-tweaks-label'), 'display', ctx) === 'none' ? 0 : 50);
+      const cancel = CANCEL_TEXT + 2 * padX(q(head, '.b-cancel'), ctx) + 2;
+      const cancelLead = px(val(q(head, '.b-cancel'), 'margin-left', ctx)) || 0;
+      const save = SAVE_TEXT + 2 * padX(q(head, '.b-create'), ctx);
+      const gaps = 3 * colGap(q(head, '.builder-head'), ctx);
+      const row = stepper + tweaksW + cancelLead + cancel + save + gaps;
+      expect(row, `row 2 at ${ctx.width}px: ${stepper} + ${tweaksW} + ${cancelLead} + ${cancel} + ${save} + ${gaps}`).toBeLessThanOrEqual(ctx.width - 24);
+    }
+    expect(colGap(q(head, '.builder-head'), PHONE), 'never under 6px between neighbours').toBeGreaterThanOrEqual(6);
+  });
+
+  it('decision 7: the Tweaks page controls — 40px main, 36px secondary, ≥ 6px gaps', () => {
+    for (const sel of ['.tw-row-head', '.tw-toggle', '.tw-menu', '.tw-adv-toggle']) expect(tapH(q(page, sel)), sel).toBeGreaterThanOrEqual(40);
+    expect(tapW(q(page, '.tw-toggle')), 'the switch hit area').toBeGreaterThanOrEqual(44);
+    for (const sel of ['.tw-done', '.tw-goto', '.tw-del', '.tw-row-done']) expect(tapH(q(page, sel)), sel).toBeGreaterThanOrEqual(36);
+    for (const sel of ['.tw-list', '.tw-menus', '.tw-editor-actions', '.tw-row-line']) expect(px(val(q(page, sel), 'gap')), sel).toBeGreaterThanOrEqual(6);
+  });
+
+  it('WP7 (decision 7): the tweak editors — options and Add 40px, Cancel and Advanced 36px, 16px fields, one part per row', () => {
+    // Replaces the retired Overrides attribute-grid checks (D4 above): each attribute set, Max HP included,
+    // is a Tweaks row now, and its number lives in the editor's number part (.tw-num), not in a grid cell.
+    const ed = fixture(
+      '<div class="tw-editor tw-add-editor"><div class="tw-parts">' +
+        '<div class="tw-part tw-part-target wide"><span class="tw-part-label"></span></div>' +
+        '<div class="tw-chooser"><button class="tw-opt on"></button><button class="tw-opt"></button></div>' +
+        '<div class="tw-part tw-part-number"><span class="tw-part-label"></span><input class="tw-num"></div>' +
+        '<div class="tw-part tw-part-reason wide"><span class="tw-part-label"></span><input class="tw-text tw-reason"></div></div>' +
+        '<div class="tw-editor-adv"><button class="tw-editor-adv-toggle"></button></div>' +
+        '<div class="tw-editor-actions"><span class="tw-missing"></span><button class="tw-add-cancel"></button><button class="tw-add-go"></button></div></div>',
+    );
+    for (const sel of ['.tw-opt', '.tw-add-go']) expect(tapH(q(ed, sel)), sel).toBeGreaterThanOrEqual(40);
+    for (const sel of ['.tw-add-cancel', '.tw-editor-adv-toggle']) expect(tapH(q(ed, sel)), sel).toBeGreaterThanOrEqual(36);
+    for (const sel of ['.tw-num', '.tw-text']) {
+      expect(px(val(q(ed, sel), 'font-size')), `${sel}: 16px, so focusing it never zooms`).toBeGreaterThanOrEqual(16);
+      expect(tapH(q(ed, sel)), sel).toBeGreaterThanOrEqual(40);
+    }
+    for (const sel of ['.tw-parts', '.tw-chooser', '.tw-editor-actions']) expect(colGap(q(ed, sel), PHONE), sel).toBeGreaterThanOrEqual(6);
+    // A phone gives every part its own row; a desktop keeps a number part its own width beside the next one.
+    const num = q(ed, '.tw-part-number');
+    expect(winner(num, ['flex', 'flex-basis', 'width'], PHONE)?.value ?? '').toMatch(/\b100%/);
+    expect(winner(num, ['flex', 'flex-basis', 'width'], DESKTOP)).toBeUndefined();
+    expect(px(val(q(ed, '.tw-num'), 'font-size', DESKTOP)), 'desktop text size unchanged').toBeLessThan(16);
+    ed.remove();
+  });
+
+  it('every Tweaks :hover is gated by (hover: hover), and every Tweaks button has press feedback on a phone', () => {
+    const ungated = RULES.flatMap((r) => r.sels.filter((s) => /\.(b-tweaks|tw-)[\w-]*[^ ]*:hover/.test(s) && !r.at.some((a) => /hover:\s*hover/.test(a))));
+    expect(ungated).toEqual([]);
+    const pressed = RULES.filter((r) => applies(r, PHONE)).flatMap((r) => r.sels).filter((s) => s.includes(':active'));
+    for (const cls of [
+      'b-tweaks', 'tw-toggle', 'tw-done', 'tw-goto', 'tw-del', 'tw-row-done', 'tw-menu', 'tw-row-head', 'tw-adv-toggle',
+      'tw-opt', 'tw-add-go', 'tw-add-cancel', 'tw-editor-adv-toggle',
+    ])
+      expect(pressed.some((s) => s.startsWith(`button.${cls}:active`)), cls).toBe(true);
   });
 });
 

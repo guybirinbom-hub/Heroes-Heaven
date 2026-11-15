@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { content } from './_content';
 import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
+import { subclassSwapDrops } from '../src/builder/shared';
 import { emptyBuild, type BuildState } from '../src/rules/build';
 
 /**
@@ -314,6 +315,45 @@ describe('changing the subclass asks before it drops answered picks', () => {
     await flush();
     await save(h.r);
     expect(h.saved(), 'Cancel still changed the build').toEqual(start);
+    h.r.stop();
+  });
+
+  /* Tweaks phase 2 WP1 check, F4 (fixed after 2e53715; wp1-report.md "Check findings F1-F5"): Battle Creed's
+   * auto-placement wrote featPicks['2:class:0'] over the old feat and left that feat's answers ('2:class:0',
+   * '2:class:0#1') under the slot, so the dedication arrived holding the old feat's sub-choice. It goes through
+   * featSlots.ts `withFeat` now (C44). Failed on 2e53715's shared.tsx (proved once, the plant removed). */
+  const ANSWERED_L2: BuildState = {
+    ...CLERIC,
+    subclassId: 'warpriest',
+    featPicks: { '1:class:0': 'domain-initiate', '2:class:0': 'domain-initiate' },
+    featChoices: { '1:class:0': 'cities', '2:class:0': 'wealth', '2:class:0#1': 'travel' },
+  };
+
+  it("Battle Creed's dedication replaces the old level-2 feat WITH its answers; its own choice is unset (F4)", () => {
+    const out = subclassSwapDrops(ANSWERED_L2, c(), 'battle-creed');
+    expect(out.lostFeat).toBe('domain-initiate');
+    expect(out.featPicks).toEqual({ '1:class:0': 'domain-initiate', '2:class:0': 'battle-harbinger-dedication' });
+    // the old feat's answers are gone; the dedication's own choice starts unset; the level-1 answer stays
+    expect(out.featChoices).toEqual({ '1:class:0': 'cities' });
+    // nothing to replace (already the dedication): the maps come back as they are
+    const already = { ...ANSWERED_L2, featPicks: { '2:class:0': 'battle-harbinger-dedication' }, featChoices: { '2:class:0': 'x' } };
+    expect(subclassSwapDrops(already, c(), 'battle-creed').featChoices).toBe(already.featChoices);
+  });
+
+  it('confirming Battle Creed stores the dedication without the old feat\'s answers (F4, the reducer)', async () => {
+    const h = open(ANSWERED_L2);
+    page(h.r, '0');
+    await pick(h.r, 'Doctrine', 'Battle Creed');
+    expect(dialog()!.textContent).toContain('Domain Initiate');
+    h.r.click(dialogButton('Change doctrine'));
+    await flush();
+    await save(h.r);
+    const out = h.saved()!;
+    expect(out.subclassId).toBe('battle-creed');
+    expect(out.featPicks['2:class:0']).toBe('battle-harbinger-dedication');
+    expect(out.featChoices['2:class:0']).toBeUndefined();
+    expect(out.featChoices['2:class:0#1']).toBeUndefined();
+    expect(out.featChoices['1:class:0']).toBe('cities');
     h.r.stop();
   });
 });

@@ -172,6 +172,13 @@ function render(el: ReactElement): HTMLElement {
 }
 
 const click = (el: Element) => act(() => void el.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+/** The mode editor's Delete asks first (bug 2026-10-23, ModesPanel.tsx `askDelete`): answer the app's own dialog. */
+async function answerDelete(): Promise<void> {
+  await flush(1);
+  const btn = [...document.querySelectorAll('.confirm-modal button')].find((b) => /^(Delete|Remove)$/.test((b.textContent ?? '').trim()));
+  expect(btn, 'the app’s own confirm').toBeTruthy();
+  click(btn!);
+}
 const escape = () =>
   act(() => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
@@ -510,6 +517,7 @@ describe('(f) the sheet over the tracker writes homebrew through the page’s wr
     click(edit!);
     await flush(2);
     click(document.querySelector('button.me-delete')!);
+    await answerDelete();
     await flush(2);
     expect(deleted).toHaveLength(1);
   }, 180_000);
@@ -595,6 +603,7 @@ describe('(f) the sheet over the tracker writes homebrew through the page’s wr
     expect(name, 'fixture: the editor shows the mode’s name').not.toBe('');
     const idsNamed = Object.values(db.modes).filter((m) => m.name === name).map((m) => m.id);
     click(document.querySelector('button.me-delete')!);
+    await answerDelete();
     await flush(2);
     expect(deleted, 'the page’s writer hears the delete').toHaveLength(1);
     expect(idsNamed, 'the id handed over is the edited mode’s').toContain(deleted[0]);

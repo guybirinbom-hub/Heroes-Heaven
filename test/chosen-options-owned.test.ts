@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { content } from './_content';
 import { ownedFeatureIds } from '../src/rules/derive';
 import { statHasSituational } from '../src/rules/explain';
-import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../src/rules/build';
+import { buildCharacter, collectChosenIds, deriveBuildFromCharacter, emptyBuild, removeChosenIds, type BuildState } from '../src/rules/build';
 import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses';
 
 const c = content();
@@ -72,5 +72,34 @@ describe('chosen extra-choice options are owned features', () => {
       }
     }
     expect(dup).toEqual([]);
+  });
+});
+
+/*
+ * Tweaks phase 2, WP1 (plan C32): the records a choice tweak names are chosen records too. Turning a source off
+ * keeps them (collectChosenIds), and the hand-back that removes gone records drops the tweak with its record
+ * (removeChosenIds) — never a block this version cannot read. Synthetic homebrew heritage.
+ */
+describe('a homebrew heritage taken anyway through a phase-2 block (tweaks p2 WP1, C32)', () => {
+  const HB_HERITAGE = 'hb-heritage-reef-born';
+  const ALLOW = { id: 't1_k3f9', kind: 'choice.allowAnywayAnyPicker', v: 1, picker: 'heritage', record: HB_HERITAGE };
+  const NEWER = { id: 't2_q8w1', kind: 'choice.allowAnywayAnyPicker', v: 1, picker: 'mythicPath', record: HB_HERITAGE };
+  // WP13: a skill increase taken anyway (WP12) comes after the record rebuild; this stored one reads as a newer version's.
+  const SKILL = { id: 't3_z0a2', kind: 'choice.allowAnywayAnyPicker', v: 1, picker: 'skillIncrease', record: 'stealth', rule: 'cap', level: 5, lane: 'main' };
+  const b = build({ classId: 'fighter', level: 5, ancestryId: 'human', overrides: { blocks: [ALLOW, NEWER, SKILL] } as BuildState['overrides'] });
+
+  it('collectChosenIds keeps the heritage the block names, paused or not, and never a skill key', () => {
+    expect(collectChosenIds(b, c).has(HB_HERITAGE)).toBe(true);
+    const paused = build({ ...b, overrides: { blocks: [{ ...ALLOW, on: false }] } as BuildState['overrides'] });
+    expect(collectChosenIds(paused, c).has(HB_HERITAGE), 'a paused block still points at it').toBe(true);
+    expect(collectChosenIds(b, c).has('stealth'), "a skill increase's record is a skill, not a record").toBe(false);
+  });
+
+  it('removeChosenIds drops the block with its heritage, keeps every other block, and never touches one it cannot read', () => {
+    const next = removeChosenIds(b, new Set([HB_HERITAGE]));
+    expect(next.overrides?.blocks).toEqual([NEWER, SKILL]);
+    expect((next.overrides?.blocks as unknown[])[0], 'the newer block is the same object').toBe(NEWER);
+    expect((next.overrides?.blocks as unknown[])[1], 'WP13: the stored skill-increase allow too').toBe(SKILL);
+    expect(removeChosenIds(b, new Set(['something-else'])).overrides, 'nothing gone: the overrides object itself').toBe(b.overrides);
   });
 });

@@ -65,11 +65,12 @@ describe('stat breakdowns reconcile — listed parts sum to the displayed total'
     expect(sumParts(b)).toBe(Number(b.totalText));
   });
 
-  it('HP breakdown with a manual override shows a single reconciling part', () => {
+  it('HP breakdown with a manual max HP shows the book lines plus a set line, and reconciles', () => {
     const base = build('fighter', 5);
     const ch = { ...base, hitPoints: { ...base.hitPoints, maxOverride: 99 } } as never;
     const b = explainStat(ch, content(), { kind: 'hp' });
     expect(b.totalText).toBe('99');
+    expect(b.parts.length, 'the book lines stay, with the set line beside them').toBeGreaterThan(1);
     expect(sumParts(b)).toBe(99);
   });
 });

@@ -536,7 +536,8 @@ describe('a second class left on the build with Dual Class OFF grants nothing', 
     }
     expect(compared).toBeGreaterThan(1000);
     expect(differing).toEqual([]);
-  });
+    // 1,624 builds: 2.5 s alone, past the 5 s default beside a parity run (checker, 2026-10-24).
+  }, 30_000);
 
   /* …and the reads the sweep cannot run: the builder's components and derive's Character readers. A raw
    * comparison against `classId2`/`subclassId2` (or a `[classId, classId2]` pair) must sit on a line

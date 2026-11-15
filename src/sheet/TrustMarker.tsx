@@ -12,10 +12,11 @@
  * The `title` spells out WHICH parts are dark, still in plain words: field names are our bookkeeping,
  * not the player's problem.
  *
- * It reads the side map `trustOff(bucket, id)` that applyTrustGate fills at content load, so it costs
- * one map lookup and knows nothing about kinds, ledgers or lanes.
+ * It asks `trustHeldBack(bucket, id)` — the trust gate's one question "is any rule of this record held
+ * back right now, in any lane?" — so it costs a few set lookups and knows nothing about kinds, ledgers
+ * or lanes itself.
  */
-import { trustGateOn, trustOff, trustPartly, trustUnencoded } from '../data/trustGate';
+import { trustHeldBack, trustPartly, trustUnencoded } from '../data/trustGate';
 
 /**
  * Stripped field paths -> what a player would call them. First match wins, so the order is the
@@ -24,13 +25,22 @@ import { trustGateOn, trustOff, trustPartly, trustUnencoded } from '../data/trus
  */
 const WORDS: [RegExp, string][] = [
   [/situational/, 'its situational bonuses'],
+  // A held-back mode's form (MODE_PAYLOAD): the AC, temporary HP, Strikes and size of the shape.
+  [/^battleform$/, 'the battle form'],
+  // A held-back mode's `modifiers` list (emptied whole): its numbers on checks, AC, saves and so on.
+  [/^modifiers$/, 'its bonuses and penalties'],
+  // Whole leaf only: `untrainedProficiency` is a skill field, not weapon training.
+  [/^weaponproficiency$/, 'weapon training'],
+  // Whole leaf only: "resistances" contains "stance".
+  [/^stances?$/, 'its stance'],
   [/spell|cantrip|ritual|focus/, 'the spells it grants'],
   [/skill|lore/, 'skill training and bonuses'],
   [/resist|immun|weakness/, 'resistances and immunities'],
   [/speed/, 'movement speeds'],
   [/sense|vision/, 'senses'],
   [/strike|unarmed|crit|precision|reach|map|damage/, 'attacks and damage'],
-  [/armor|armour|\bac\b/, 'armour and AC'],
+  // `acBonus` and `dexCap` are a stance's own AC fields (STANCE_PAYLOAD).
+  [/armor|armour|\bac\b|^acbonus$|^dexcap$/, 'armour and AC'],
   [/save|perception|classdc|apex|statistic|statbonus/, 'checks and DCs'],
   [/language/, 'languages'],
   [/grant|mark|mode|whileactive|enhancement|derived/, 'the things it hands you'],
@@ -40,14 +50,32 @@ const WORDS: [RegExp, string][] = [
 /** The stripped paths, said in words, deduplicated and in the order WORDS lists them. */
 export function trustWords(paths: string[]): string {
   const said = new Set<string>();
+  /* `grants:<name>` — an action or feat this record hands over whose own rules are held back. Said by
+   * its name, after everything else: "Claw Stance and Talon Stance, which it grants". */
+  const granted: string[] = [];
   for (const p of paths) {
+    if (p.startsWith('grants:')) {
+      if (!granted.includes(p.slice(7))) granted.push(p.slice(7));
+      continue;
+    }
     // Only the LEAF matters: `effectChoices[].options[].grant.resistances` is a resistance, and the
     // container it hangs off is builder plumbing the player never sees.
     const leaf = p.split('.').pop()!.toLowerCase();
     said.add(WORDS.find(([re]) => re.test(leaf))?.[1] ?? 'some of its effects');
   }
   const order = WORDS.map(([, w]) => w).concat('some of its effects');
-  return [...said].sort((a, b) => order.indexOf(a) - order.indexOf(b)).join(', ');
+  const words = [...said].sort((a, b) => order.indexOf(a) - order.indexOf(b));
+  if (granted.length) {
+    const names = granted.length === 1 ? granted[0] : `${granted.slice(0, -1).join(', ')} and ${granted[granted.length - 1]}`;
+    words.push(`${names}, which it grants`);
+  }
+  return words.join(', ');
+}
+
+/** A tooltip with the "not yet verified" words added when the trust gate holds this record back — for
+ *  the controls too small for the line itself (a stance chip, a mode pill). */
+export function trustTitle(bucket: string, id: string, title: string): string {
+  return trustHeldBack(bucket, id)?.length ? `${title} — Not yet verified — shown, not applied` : title;
 }
 
 /**
@@ -79,8 +107,9 @@ export function TrustMarker({ bucket, id }: { bucket?: string; id?: string }) {
       </div>
     );
   }
-  if (!trustGateOn()) return null;
-  const off = trustOff(bucket, id);
+  /* Every lane, not only the records map: a record whose only dark rule is a situational star, a grant
+   * registry entry, an engine lane or the stance it carries is held back just the same (trustHeldBack). */
+  const off = trustHeldBack(bucket, id);
   if (!off || off.length === 0) return null;
   return (
     <div className="sd-choice-note" role="note" title={`Not applied yet: ${trustWords(off)}.`}>

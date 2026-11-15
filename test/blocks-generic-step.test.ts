@@ -162,6 +162,22 @@ const STEP: Record<string, { value: (v0: number, top: number) => number; expect:
   ],
 };
 
+/**
+ * The three states where a number IGNORES its tweaks (spec item 8; plan B WP5): a battle form's stated AC,
+ * a battle form's stated Speeds, a spell DC its source prints. A tweak there moves nothing — it shows as a
+ * breakdown line of 0 that says why (test/blocks-breakdown-sums.test.ts) — so "+1 adds 1" does not hold and
+ * the generic step skips them; the describe below ("where a number reads another, or nothing may move it")
+ * pins what happens instead. Returns the reason, or null for a target the step applies to.
+ */
+function ignoredHere(c: Character, key: string): string | null {
+  const form = (c.activeModes ?? []).find((m) => m.battleForm)?.battleForm;
+  if (key === 'ac' && form?.ac != null) return 'a battle form states the AC';
+  if (key === 'speed:land' && form?.speeds) return 'a battle form states the Speeds';
+  const dc = /^spell-dc@casting-entry:(.+)$/.exec(key);
+  if (dc && c.spellcasting.find((e) => e.id === dc[1])?.fixedDc != null) return 'its source prints the DC';
+  return null;
+}
+
 for (const { name, b } of CHARS) {
   const c0 = buildCharacter(b, db);
   for (const kindId of Object.keys(STEP)) {
@@ -171,6 +187,7 @@ for (const { name, b } of CHARS) {
     describe(`'${kindId}' on every target it accepts — ${name}`, () => {
       for (const tk of accepted) {
         for (const key of keysOf(c0, tk)) {
+          if (ignoredHere(c0, key)) continue;
           it(`${key}`, () => {
             const v0 = numberOf(c0, key);
             const top = onTopOfSet(c0, key);

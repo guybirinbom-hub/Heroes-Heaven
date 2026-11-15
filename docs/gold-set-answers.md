@@ -1162,3 +1162,17 @@ Each line quotes his answer exactly. NOT BUILT yet — see the fourth ruling.
   character; no notice when nothing changes. The build is never rewritten on load.
 - **This fix vs Tweaks part B** (both decide where the old Overrides "=" rank sits). — *"if you work on the same
   thing wait for the tweeks to finish"*. The fix starts only after Tweaks part B is finished.
+
+## 2026-10-24 · Two questions from the 10-23 side jobs
+
+Asked in chat with a plain explanation of each, after the seven side branches were merged; each answer is the
+option he picked.
+
+- **The campaign "deleted / removed" note across an app restart** (`src/data/campaignGone.ts`). — *"Keep as it
+  is"*. The note stays memory-only: a restart forgets it, and the first send after launch asks the server again,
+  so it comes back by itself once online. Never saved, so it can never stay wrong after a GM lets the player back.
+- **A rule fix that changes a saved character's numbers.** — *"Yes, one-time note"*. The 2026-10-21 skill-order
+  answer above becomes the rule for every such fix: the Builder shows a one-time note on opening a changed saved
+  character, listing what changed on it (like the skill-ranks note, `src/rules/skillOrderNotice.ts`); silent when
+  nothing changed; the build is never rewritten on load. First user: the rule switch-ons waiting on the unmerged
+  `credits/trustok` branch (Incredible Initiative +2, the new "pick another skill" question).

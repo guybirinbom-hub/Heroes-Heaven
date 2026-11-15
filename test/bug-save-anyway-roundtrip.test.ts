@@ -96,7 +96,7 @@ async function saveThroughTheUi(initial: BuildState, answer: 'Save anyway' | 'Ke
  *  (loadRoster + the once-per-launch rebuild), then reopen for editing. */
 function persistAndReopen(build: BuildState): BuildState {
   const db = c();
-  const built = buildCharacter(build, contentFor(db, build.overrides));
+  const built = buildCharacter(build, contentFor(db, build));
   expect(saveRoster([{ id: 'c-1', character: built, build }] as SavedChar[]), 'localStorage rejected the write').toBe(true);
   const entry = rebuildRoster(loadRoster(), db)[0];
   // App.tsx onEdit: the stored build, or a reverse-derived one when there is none.

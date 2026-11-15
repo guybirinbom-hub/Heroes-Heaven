@@ -16,6 +16,7 @@ import {
   deriveSpeeds,
   deriveSpellcasting,
   formatMod,
+  heldClasses,
   modeGateIds,
   stateGrantSummary,
   subclassOfHeldClass,
@@ -54,6 +55,7 @@ import { ItemDetail } from './ItemDetail';
 import { ItemEditorModal } from './ItemEditorModal';
 import { InfoTerm } from './InfoTerm';
 import { ModeDetailModal } from './ModeDetailModal';
+import { trustTitle } from './TrustMarker';
 import { MythicRules, mythicDestinies } from './MythicRules';
 import { senseDesc, languageDesc, DAILY_LANGUAGE_NOTE } from '../rules/glossary';
 import { RankPill, SituationalStar } from './widgets';
@@ -340,7 +342,7 @@ export function VitalsRail({
   // gate actions on the sheet, so drop them from the generic row here — for base class AND archetype
   // users alike — to avoid showing the same toggle twice.
   const STATE_RESOURCES = ['rage', 'panache', 'hunt-prey', 'unleash-psyche'];
-  const allResources = resourcesForCharacter(character.classId, new Set(character.feats.map((f) => f.featId)));
+  const allResources = resourcesForCharacter(character, new Set(character.feats.map((f) => f.featId)));
   const classResources = allResources.filter((r) => !STATE_RESOURCES.includes(r.id));
   const stateResources = allResources.filter((r) => STATE_RESOURCES.includes(r.id));
   const resourceVals = character.classResources ?? {};
@@ -1511,7 +1513,7 @@ export function VitalsRail({
                   is unreachable on a phone and easy to miss anywhere else. A display-only mode (a
                   timed state with no numbers — fast healing, concealment) is ENTIRELY its note, so
                   hiding that behind a tooltip hid the whole point of it. */}
-              <button className="mode-pill-name" onClick={() => setModeInfo(m)} title="What is this?">
+              <button className="mode-pill-name" onClick={() => setModeInfo(m)} title={trustTitle('modes', m.id, 'What is this?')}>
                 {m.name}
                 {m.duration && <span className="mode-pill-dur">{m.duration}</span>}
               </button>
@@ -1639,7 +1641,8 @@ export function VitalsRail({
           // point, and a 38-entry aura list is not a template.
           predefined={[...CATALOG_MODES, ...contentGatedModes(Object.values(content.modes))]}
           catalog={CATALOG_MODES}
-          classId={character.classId}
+          // Both classes of a Dual Class character, so the second class's modes (Rage, Cursebound…) list too.
+          classId={heldClasses(character).map((s) => s.classId)}
           ancestryId={character.ancestryId}
           // Class FEATURES too, not just feats. A mode gated on a class-feature id (an oracle's
           // cursebound stages, a thaumaturge's Amulet benefit) could never match a set built from

@@ -11,6 +11,8 @@
  * approximated: the picker is at worst slightly permissive, never blocking a legal pick.
  */
 import type { BuildState } from './build';
+import { anyListLifts } from './blocks/active';
+import { categoryWords, liftedAll, notOursWords, refusal, type SlotRefusal } from './choiceRefusal';
 import { elementTraitsOf, impulseAllowedFor } from './kineticElements';
 import type { ContentDatabase, Feat, FeatCategory } from './types';
 
@@ -316,14 +318,33 @@ export const pickKeysFor = (key: string, picks?: number): string[] =>
 export const pickPrompt = (prompt: string, index: number, picks?: number): string =>
   (picks ?? 1) > 1 ? `${prompt} (${index + 1} of ${picks})` : prompt;
 
-/** The feats a player may pick for a given grant, honoring category/level/trait/exclusions. */
-export function pickableFeats(spec: FeatPickSpec, build: BuildState, content: ContentDatabase): Feat[] {
-  // Explicit menu (Pitborn): just the listed feats that exist, sorted like the rest.
+/*
+ * The three BONUS feat pickers' rules as specs (Tweaks phase 2, WP5 rev 3). Their option lists stay their own
+ * (src/builder/bonusFeatOptions.ts; a test holds each spec to its list); `pickRefusal` reads these for the words of
+ * a greyed row when "Search every feat" is on. The engine never re-checks these three picks (`heritageFeatId`,
+ * `umtFeatId`, `pushBonusSkillFeats` test only that the feat exists and is not taken), so their "Allow here" is
+ * picker-only.
+ */
+/** The Versatile Human heritage feat: a 1st-level general feat (a skill feat is one). */
+export const HERITAGE_FEAT_SPEC: FeatPickSpec = { prompt: 'Choose a general feat', category: 'general', maxLevel: 1 };
+/** The School of Unified Magical Theory bonus feat: a 1st-level wizard class feat. */
+export const UMT_FEAT_SPEC: FeatPickSpec = { prompt: 'Choose a wizard feat', category: 'class', maxLevel: 1, traits: ['wizard'] };
+/** A dedication's bonus skill feat (Rogue Dedication): a skill feat of any level. */
+export const BONUS_SKILL_FEAT_SPEC: FeatPickSpec = { prompt: 'Choose a skill feat', category: 'skill', maxLevel: 20 };
+
+const capFirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/**
+ * EVERY rule a pick-a-feat refuses feat f for (Tweaks phase 2, WP5, C22) — an empty list is the book's "yes". The
+ * tests `pickableFeats` always ran: the level, an impulse's element (`slotRule`, never lifted: C18), then the list —
+ * ONE `list` refusal with the words of the first list test that fails. An explicit menu (Pitborn) has only its list.
+ * "Needs level 1 or lower" is the level rule's words here (plan WP5: the bonus pickers' greyed rows).
+ */
+export function pickRefusal(spec: FeatPickSpec, build: BuildState, content: ContentDatabase): (f: Feat) => SlotRefusal[] {
+  const list = (words: string) => refusal('list', words);
   if (spec.ids) {
-    return spec.ids
-      .map((id) => content.feats[id])
-      .filter((f): f is Feat => !!f)
-      .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+    const ids = new Set(spec.ids);
+    return (f) => (ids.has(f.id) ? [] : [list("Not on this pick's list")]);
   }
   const maxL =
     spec.maxLevel === 'self' ? build.level : spec.maxLevel === 'half' ? Math.floor(build.level / 2) : spec.maxLevel;
@@ -335,37 +356,54 @@ export function pickableFeats(spec: FeatPickSpec, build: BuildState, content: Co
   // Elemental Overlap — "slightly permissive" meant every element, which made Kineticist Dedication's
   // element answer decide nothing at all. Same rule as the feat-slot picker, from the same function.
   const elements = elementTraitsOf(build, build.level);
-  return Object.values(content.feats)
-    .filter((f) => {
-      if (f.level > maxL) return false;
-      if (f.traits.includes('impulse') && !impulseAllowedFor(f.traits, elements)) return false;
-      /* …and a spec asking for a CLASS feat accepts an archetype-category one, for the same reason the
-       * class feat SLOT does (see featSlots.ts): RAW an archetype feat is bought with a class feat. */
-      const classTakesArchetype = spec.category === 'class' && f.category === 'archetype' && f.traits.includes('archetype');
-      if (spec.category && f.category !== spec.category && !classTakesArchetype && !(spec.category === 'general' && f.category === 'skill')) return false;
-      const tr = new Set(f.traits);
-      if (spec.traits && !spec.traits.every((t) => tr.has(t))) return false;
-      if (spec.dynamicTrait === 'class' && clsTrait && !tr.has(clsTrait)) return false;
-      if (spec.dynamicTrait === 'ancestry' && ancTrait) {
-        // A grant of "a 1st-level ancestry feat" (Ancestral Paragon) offers whatever an ancestry
-        // SLOT would offer, so this reads the same widened set as eligibleFeatsForSlot
-        // (featSlots.ts): a versatile heritage's own feats, the extra ancestry lists a heritage
-        // opens (Aiuvarin: elf), and universal-ancestry. Filtering on the bare ancestry trait
-        // offered only the base ancestry's feats — not even the extra feats a versatile heritage grants.
-        const her = build.heritageId ? content.heritages[build.heritageId] : undefined;
-        const widened = [
-          ancTrait,
-          ...(her?.versatile ? [her.id, ...(her.traits ?? [])] : []),
-          ...(her?.extraAncestryFeatTraits ?? []),
-        ];
-        if (!widened.some((t) => tr.has(t)) && !tr.has('universal-ancestry')) return false;
-      }
-      if (spec.excludeTraits && spec.excludeTraits.some((t) => tr.has(t))) return false;
-      // A multiclass dedication carries no class TRAIT — the class it belongs to is `archetype`.
-      if (spec.excludeDynamicTrait === 'class' && clsTrait && (tr.has(clsTrait) || f.archetype === clsTrait)) return false;
-      if (spec.excludeDynamicTrait === 'ancestry' && ancTrait && tr.has(ancTrait)) return false;
-      if (spec.exclude && spec.exclude.includes(f.id)) return false;
-      return true;
-    })
-    .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+  // A grant of "a 1st-level ancestry feat" (Ancestral Paragon) offers whatever an ancestry
+  // SLOT would offer, so this reads the same widened set as eligibleFeatsForSlot
+  // (featSlots.ts): a versatile heritage's own feats, the extra ancestry lists a heritage
+  // opens (Aiuvarin: elf), and universal-ancestry. Filtering on the bare ancestry trait
+  // offered only the base ancestry's feats — not even the extra feats a versatile heritage grants.
+  const her = build.heritageId ? content.heritages[build.heritageId] : undefined;
+  const widened = ancTrait ? [ancTrait, ...(her?.versatile ? [her.id, ...(her.traits ?? [])] : []), ...(her?.extraAncestryFeatTraits ?? [])] : [];
+  const listTest = (f: Feat): SlotRefusal | null => {
+    /* …and a spec asking for a CLASS feat accepts an archetype-category one, for the same reason the
+     * class feat SLOT does (see featSlots.ts): RAW an archetype feat is bought with a class feat. */
+    const classTakesArchetype = spec.category === 'class' && f.category === 'archetype' && f.traits.includes('archetype');
+    if (spec.category && f.category !== spec.category && !classTakesArchetype && !(spec.category === 'general' && f.category === 'skill'))
+      return list(categoryWords(f.category, spec.category));
+    const tr = new Set(f.traits);
+    const missing = (spec.traits ?? []).filter((t) => !tr.has(t));
+    if (missing.length) return list(`Needs the ${missing.join(' and ')} trait${missing.length > 1 ? 's' : ''}`);
+    if (spec.dynamicTrait === 'class' && clsTrait && !tr.has(clsTrait)) return list(notOursWords(f, content.classes, clsTrait));
+    if (spec.dynamicTrait === 'ancestry' && ancTrait && !widened.some((t) => tr.has(t)) && !tr.has('universal-ancestry'))
+      return list(notOursWords(f, content.ancestries, ancTrait));
+    const barred = spec.excludeTraits?.find((t) => tr.has(t));
+    if (barred) return list(`${capFirst(barred)} feats are not on this pick's list`);
+    // A multiclass dedication carries no class TRAIT — the class it belongs to is `archetype`.
+    if (spec.excludeDynamicTrait === 'class' && clsTrait && (tr.has(clsTrait) || f.archetype === clsTrait)) return list("Your own class's feat: this pick takes another class's");
+    if (spec.excludeDynamicTrait === 'ancestry' && ancTrait && tr.has(ancTrait)) return list("Your own ancestry's feat: this pick takes another ancestry's");
+    if (spec.exclude && spec.exclude.includes(f.id)) return list("Not on this pick's list");
+    return null;
+  };
+  return (f) => {
+    const out: SlotRefusal[] = [];
+    if (f.level > maxL) out.push(refusal('level', `Needs level ${maxL} or lower`));
+    if (f.traits.includes('impulse') && !impulseAllowedFor(f.traits, elements)) out.push(refusal('slotRule', 'An impulse of an element you have no gate for'));
+    const l = listTest(f);
+    if (l) out.push(l);
+    return out;
+  };
+}
+
+/**
+ * The feats a player may pick for a given grant, honoring category/level/trait/exclusions — `pickRefusal`'s "yes",
+ * plus what a live "Pick from any list" (`choice.anyList`) lifts (WP5, C22: every refusal lifted). The engine's
+ * pick-a-feat drops read this too, so a live allow counts and a paused one drops the answer again (C5).
+ */
+export function pickableFeats(spec: FeatPickSpec, build: BuildState, content: ContentDatabase): Feat[] {
+  const refuse = pickRefusal(spec, build, content);
+  const lifts = anyListLifts(build);
+  // Explicit menu (Pitborn): just the listed feats that exist (and a lifted one), sorted like the rest.
+  const pool = spec.ids
+    ? [...spec.ids, ...[...lifts.keys()].filter((id) => !spec.ids!.includes(id))].map((id) => content.feats[id]).filter((f): f is Feat => !!f)
+    : Object.values(content.feats);
+  return pool.filter((f) => liftedAll(refuse(f), lifts.get(f.id))).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
 }

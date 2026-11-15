@@ -20,6 +20,7 @@ import {
 import { canPrepareStaff, chargeCounterId, highestSlotRank, isStaff, openSlots, type OpenSlot } from '../rules/itemUses';
 import { AlchemyPicker } from './AlchemyPanel';
 import { abilityMod, deriveSpeeds, setPlusOnMods } from '../rules/derive';
+import { heldClassNames } from '../rules/heldClasses';
 import type { BuildState } from '../rules/build';
 import { explainStat, type StatRef } from '../rules/explain';
 import {
@@ -528,7 +529,8 @@ export function CharacterSheet({
   };
 
   const ancestry = character.ancestryId ? content.ancestries[character.ancestryId] : undefined;
-  const cls = character.classId ? content.classes[character.classId] : undefined;
+  // Both classes of a Dual Class character ("Fighter / Barbarian"), not just the first.
+  const clsName = heldClassNames(character, content.classes);
   const initials = character.name.slice(0, 2).toUpperCase();
   const portrait = character.appearance?.portrait;
   // On-device sharp copy (installed app) when present, else the compressed/synced one. Used for the
@@ -636,13 +638,13 @@ export function CharacterSheet({
             <span className="char-name-text">{character.name}</span>
             {custom.showLevelChip !== false && <span className="level-chip">Level {character.level}</span>}
           </div>
-          {custom.showSubline !== false && (ancestry?.name || cls?.name) && (
+          {custom.showSubline !== false && (ancestry?.name || clsName) && (
             // Only join with "·" when BOTH sides exist — an unfinished character (no ancestry or no
             // class yet) otherwise showed a bare " · " with nothing around it.
             <div className="char-sub">
               {ancestry?.name && <span className="lk">{ancestry.name}</span>}
-              {ancestry?.name && cls?.name ? ' · ' : ''}
-              {cls?.name && <span className="lk">{cls.name}</span>}
+              {ancestry?.name && clsName ? ' · ' : ''}
+              {clsName && <span className="lk">{clsName}</span>}
             </div>
           )}
         </div>

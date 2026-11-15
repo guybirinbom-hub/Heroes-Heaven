@@ -1,0 +1,17 @@
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -1331,10 +1331,11 @@
+   // its own view — carried records first, then the edits (rules/blocks/content.ts, the one content path).
+   // contentFor returns the same ref when there are no edits, and the same object for the same view and
+   // edits — the very object applyPlayState lays over `activeContent` for `character` above — so
+-  // memoization downstream is preserved.
++  // memoization downstream is preserved. Only the LIVE edits (the Tweaks switch, each edit's own on/off —
++  // plan B WP2), so the memo keys on `options` too: contentFor cannot un-apply an edit.
+   const sheetContent = useMemo(
+-    () => (activeContent ? contentFor(activeContent, active?.character.overrides) : activeContent),
+-    [activeContent, active?.character.overrides],
++    () => (activeContent ? contentFor(activeContent, active?.character) : activeContent),
++    [activeContent, active?.character.overrides, active?.character.options],
+   );
+   // …and the builder's, when it is editing a character that carries records (a GM-made feat must stay
+   // a pick the builder knows, and the Save below must derive with it).

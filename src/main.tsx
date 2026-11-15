@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import '@tabler/icons-webfont/dist/tabler-icons.min.css';
 import './theme/tokens.css';
+// The Font picker's free families, shipped with the app (latin + latin-ext only). warmFontStacks()
+// draws every stack once at idle start, so each family's latin file is fetched then; the PWA precaches them.
+import './theme/bundled-fonts.css';
 import './sheet.css';
 import { initTheme } from './theme/theme-manager';
 import { initZoom } from './theme/zoom';

@@ -32,8 +32,10 @@
  */
 import type { AstNode } from './astStore';
 import type { CardScope } from './cardModel';
-import type { Character, ContentDatabase } from '../rules/types';
+import type { Character, ContentDatabase, DescRef } from '../rules/types';
+import type { DescNode } from './descref';
 import { classArchetypeFor, classFeatureIdsOwned, heldClasses, holdsSubclass, ownedFeatureIds } from '../rules/derive';
+import { classOwnFeatureId } from '../rules/featureText';
 import LEVEL_FOLDS_JSON from '../../scripts/data/level-folds.json';
 // Read here, not through astVisibility.ts pageSliceOf: astVisibility imports canonLabel from this module.
 import PAGE_SLICES_JSON from '../data/page-slices.json';
@@ -706,6 +708,24 @@ export function linkClassOf(trail: readonly { key?: string; slug?: string; class
     if (n?.classId) return n.classId;
   }
   return scopeClassId;
+}
+
+/** The record id a linked word opens, for every card and every host of a description (popup, inset, the
+ *  text-only lane, a spell's page links): a class feature opens the record the link's class lists for it
+ *  (classOwnFeatureId — the class is linkClassOf's); any other link opens what it names. */
+export function linkedId(content: ContentDatabase | null | undefined, bucket: string | undefined, slug: string, trail: readonly { key?: string; slug?: string; classId?: string }[], scopeClassId: string | undefined): string {
+  return bucket === 'classFeatures' && content ? classOwnFeatureId(slug, linkClassOf(trail, scopeClassId), content) : slug;
+}
+
+/** The node a linked word opens (linkedId's record). It carries the class it was read for (`classId`,
+ *  linkClassOf's), so the card it opens — a separate popup with no scope of its own — reads a feature several
+ *  classes list as that class's paragraph, and the links inside it, however many steps down, keep the class. */
+export function linkedNode(content: ContentDatabase | null | undefined, bucket: string, slug: string, trail: readonly { key?: string; slug?: string; classId?: string }[], scopeClassId: string | undefined): DescNode | undefined {
+  const id = linkedId(content, bucket, slug, trail, scopeClassId);
+  const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null | undefined)?.[bucket]?.[id];
+  if (!rec) return undefined;
+  const classId = linkClassOf(trail, scopeClassId);
+  return { title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug: id, ...(classId ? { classId } : {}) } as DescNode;
 }
 
 /**

@@ -71,6 +71,9 @@ const PYROTECHNIC_VIAL = 'pyrotechnic-versatile-vial';
 /** The only maker of pyrotechnic vials, and the one maker that makes no plain ones. */
 const FIREWORK_TECHNICIAN = 'firework-technician-dedication';
 
+/** Whether this item id is one of the two vial records (plain or pyrotechnic). */
+export const isVersatileVial = (itemId: string): boolean => itemId === PLAIN_VIAL || itemId === PYROTECHNIC_VIAL;
+
 /** The Crafting rank Craft asks for an item of this level (action-2385). */
 export function craftRankFor(itemLevel: number): ProficiencyRank {
   return itemLevel >= 17 ? 'legendary' : itemLevel >= 9 ? 'master' : 'trained';
@@ -86,16 +89,18 @@ export function versatileVialTierFor(level: number, crafting: ProficiencyRank): 
   return best;
 }
 
-const hasVialCounter = (classId: string | null, featIds: Set<string>) =>
-  resourcesForCharacter(classId, featIds).some((r) => r.id === 'versatile-vials');
+/** The class fields the vial counter reads: both classes of a Dual Class character, not just the first. */
+type VialHolder = Pick<Character, 'classId' | 'classId2' | 'variantRules' | 'feats'>;
+
+const hasVialCounter = (c: VialHolder, featIds: Set<string>) =>
+  resourcesForCharacter(c, featIds).some((r) => r.id === 'versatile-vials');
 
 /** Whether this character makes THIS kind of vial — the vial counter, narrowed to the vial's kind. */
-export function makesVersatileVial(c: Pick<Character, 'classId' | 'feats'>, itemId: string): boolean {
+export function makesVersatileVial(c: VialHolder, itemId: string): boolean {
   const feats = new Set((c.feats ?? []).map((f) => f.featId));
-  const classId = c.classId ?? null;
-  if (itemId === PYROTECHNIC_VIAL) return feats.has(FIREWORK_TECHNICIAN) && hasVialCounter(classId, feats);
+  if (itemId === PYROTECHNIC_VIAL) return feats.has(FIREWORK_TECHNICIAN) && hasVialCounter(c, feats);
   feats.delete(FIREWORK_TECHNICIAN);
-  return hasVialCounter(classId, feats);
+  return hasVialCounter(c, feats);
 }
 
 export interface VersatileVialThrow {
@@ -108,11 +113,11 @@ export interface VersatileVialThrow {
 
 /** The vial this character throws. Null when the item is no vial. */
 export function versatileVialFor(
-  c: Pick<Character, 'classId' | 'feats' | 'level'>,
+  c: VialHolder & Pick<Character, 'level'>,
   itemId: string,
   crafting: ProficiencyRank,
 ): VersatileVialThrow | null {
-  if (itemId !== PLAIN_VIAL && itemId !== PYROTECHNIC_VIAL) return null;
+  if (!isVersatileVial(itemId)) return null;
   if (!makesVersatileVial(c, itemId)) return { tier: VERSATILE_VIAL_TIERS[0], made: false };
   const tier = versatileVialTierFor(c.level, crafting);
   const next = VERSATILE_VIAL_TIERS[VERSATILE_VIAL_TIERS.indexOf(tier) + 1];

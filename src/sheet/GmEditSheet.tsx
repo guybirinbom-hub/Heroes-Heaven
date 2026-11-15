@@ -1,7 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useUnsavedWork } from '../data/unsavedWork';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
-import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
+import { buildCharacter, type BuildState } from '../rules/build';
+import { editableBuildOf, UNREADABLE_BUILD_NOTICE } from '../data/editBuild';
 import { contentFor } from '../rules/blocks/content';
 import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, toggleMode, type PlayState } from '../rules/play';
 import { modeAlsoElsewhere, modeOwnedElsewhere } from '../rules/modes';
@@ -91,7 +93,11 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
 }, ref) {
   const [work, setWork] = useState<SavedChar>(initial);
   const [dirty, setDirty] = useState(false);
+  // The GM's edits live only here until Update player: closing the tab now loses them (data/unsavedWork.ts).
+  useUnsavedWork(() => dirty);
   const [editing, setEditing] = useState<BuildState | null>(null);
+  // The open build was rebuilt from the sheet (no stored build); the Tweaks page says so (plan B WP6).
+  const [editingDerived, setEditingDerived] = useState(false);
   const [busy, setBusy] = useState(false);
   // The published states we already know about — the snapshot we opened, plus whatever we last pushed.
   // The stale-edit guard warns only when the current published sheet matches NEITHER (i.e. the PLAYER,
@@ -220,10 +226,12 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   // The player's Overrides content edits laid over the carried view — carried records first, then the
   // edits (../rules/blocks/content.ts, the one content path; `character` above gets the same object from
   // applyPlayState). For deriving and drawing only: a push collects `carried` from `viewContent`, never
-  // from here, so an edit is never baked into the record the player's sheet carries.
+  // from here, so an edit is never baked into the record the player's sheet carries. Only the LIVE edits
+  // (the Tweaks switch, each edit's own on/off — plan B WP2), so the memo keys on `options` too: contentFor
+  // cannot un-apply an edit.
   const sheetContent = useMemo(
-    () => contentFor(viewContent, work.character.overrides),
-    [viewContent, work.character.overrides],
+    () => contentFor(viewContent, work.character),
+    [viewContent, work.character.overrides, work.character.options],
   );
 
   const updatePlay = (fn: (p: PlayState) => PlayState) => {
@@ -326,13 +334,17 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   };
 
   const openBuilder = () => {
-    let b: BuildState;
-    try {
-      b = work.build ?? deriveBuildFromCharacter(work.character, viewContent);
-    } catch {
-      b = emptyBuild();
+    // The stored build when there is one; the reverse build only for a build-less character. If that
+    // throws there is NO build to edit (a blank one's Save would replace the player's whole character), so
+    // the Builder stays closed and the working copy stays as it is (src/data/editBuild.ts).
+    // The Builder stamps its draft at open (blocks/save.ts); only Save stores it, never this.
+    const eb = editableBuildOf(work, viewContent);
+    if (!eb) {
+      void chooseDialog({ ...UNREADABLE_BUILD_NOTICE, buttons: [{ value: 'ok', label: 'OK', primary: true }] });
+      return;
     }
-    setEditing(b);
+    setEditingDerived(eb.derived);
+    setEditing(eb.build);
   };
 
   const onCreate = (build: BuildState) => {
@@ -515,7 +527,9 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   if (editing) {
     return (
       <ContentContext.Provider value={viewContent}>
-        <Builder content={viewContent} initial={editing} onCancel={() => setEditing(null)} onCreate={onCreate} />
+        {/* skillOrderNotice={false} — skill order D13 (WP9): the one-time skill-order notice is the PLAYER's; the
+            GM's edit neither shows it nor stamps `skillOrder`, so the player still sees it on their next open. */}
+        <Builder content={viewContent} initial={editing} derivedBuild={editingDerived} onCancel={() => setEditing(null)} onCreate={onCreate} skillOrderNotice={false} />
       </ContentContext.Provider>
     );
   }

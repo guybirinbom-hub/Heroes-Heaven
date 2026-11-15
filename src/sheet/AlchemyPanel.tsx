@@ -44,7 +44,7 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
    * real alchemist the 2 + Int and everyone else the gated flat 4); going through it keeps this panel
    * and the resource counter on the sheet from disagreeing about the same value.
    */
-  const vialDef = resourcesForCharacter(character.classId ?? null, new Set(character.feats.map((f) => f.featId))).find(
+  const vialDef = resourcesForCharacter(character, new Set(character.feats.map((f) => f.featId))).find(
     (r) => r.id === 'versatile-vials',
   );
   const abilityMods = Object.fromEntries(Object.entries(character.abilities).map(([k, v]) => [k, abilityMod(v as number)])) as Record<AbilityId, number>;
@@ -59,7 +59,7 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
 
   const pick = (itemId: string) => {
     if (picker === 'quick') {
-      onPlay((p) => quickAlchemy(p, itemId, p.resources?.['versatile-vials'] ?? vialMax, vialMax));
+      onPlay((p) => quickAlchemy(p, itemId, p.resources?.['versatile-vials'] ?? vialsCur, vialMax));
     } else {
       onPlay((p) => {
         const total = Object.values(p.alchemyPrep ?? {}).reduce((a, b) => a + b, 0);

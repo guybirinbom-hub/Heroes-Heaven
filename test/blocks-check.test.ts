@@ -1,8 +1,21 @@
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { BOOK_FIELD_ALLOW, CONTENT_PATH_HOME, checkBlocks, checkBookFieldReaders, checkContentPath, codeOnly, featureNumbers, laneKeys, type BlocksCheckInput, type BookReaderAllow } from '../src/rules/blocks/check';
-import { BLOCK_KINDS, EDITOR_PARTS, SOURCE_KINDS, STILL_TO_ADD, blockKind } from '../src/rules/blocks/registry';
+import {
+  BOOK_FIELD_ALLOW,
+  CONTENT_PATH_HOME,
+  checkBlocks,
+  checkBookFieldReaders,
+  checkChoiceKinds,
+  checkContentPath,
+  codeOnly,
+  featureNumbers,
+  laneKeys,
+  type BlocksCheckInput,
+  type BookReaderAllow,
+  type ChoiceKindsInput,
+} from '../src/rules/blocks/check';
+import { BLOCK_KINDS, EDITOR_PARTS, SOURCE_KINDS, STILL_TO_ADD, blockKind, isChoiceKind } from '../src/rules/blocks/registry';
 import { OWNERS, TARGETS } from '../src/rules/blocks/targets';
 
 /**
@@ -69,8 +82,11 @@ const row = (over: Record<string, unknown> = {}) => ({
 });
 
 function good(): BlocksCheckInput {
+  // The planted kind stands "not in Tweaks yet" (editor planned, not built) so the STILL_TO_ADD rules have
+  // something to bite on; the real number.add has had its editor since plan B WP7.
+  const def = blockKind('number.add')!;
   return {
-    registry: [{ ...blockKind('number.add')!, test: 'test/fake.test.ts' }],
+    registry: [{ ...def, test: 'test/fake.test.ts', editor: { ...def.editor!, built: false } }],
     stillToAdd: [{ id: 'number.add', why: 'part B builds the screen' }],
     editorParts: EDITOR_PARTS,
     sourceKinds: SOURCE_KINDS,
@@ -91,6 +107,8 @@ function good(): BlocksCheckInput {
     lanesDoc: LANES,
     blockFiles: [{ path: 'src/rules/blocks/a.ts', text: "import { x } from './targets';\nimport type { T } from '../types';" }],
     readFile: (p) => (p === 'test/fake.test.ts' ? "it('number.add', () => {})" : null),
+    // tweaks p2 WP1: the planted catalog has no row the real BOOK_ONLY_NO_FIELDS names (it would read as stale)
+    bookOnlyNoFields: [],
   };
 }
 
@@ -187,6 +205,34 @@ describe('blocks guard: each bad case fails once', () => {
     // A longer name that starts with the id is not the id.
     expect(errorsOf((i) => (i.readFile = () => "it('number.addLater works', () => {})"))).toMatch(/no it\(\)\/describe\(\) title/);
   });
+  it('a kind whose Tweaks page group is not one of the known groups (plan B, B19)', () => {
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], group: 'Odds and ends' as never }]))).toMatch(/registry number\.add: group "Odds and ends" is not one of the Tweaks page's groups/);
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], group: undefined as never }]))).toMatch(/group "undefined" is not one of/);
+    expect(errorsOf((i) => (i.tweakGroups = ['Ranks']))).toMatch(/group "Numbers" is not one of the Tweaks page's groups \(Ranks\)/);
+  });
+  it('a menu holding two kinds for the same target with no chooser label, or the same label twice (B19)', () => {
+    const add = (k: string, option: string | undefined, menus = ['Set a number']) => {
+      const def = blockKind(k)!;
+      return { ...def, test: 'test/fake.test.ts', editor: { ...def.editor!, menus, option, built: false } };
+    };
+    // The planted input's own number.add stays (its catalog row is built), in a menu of its own.
+    const base = add('number.add', undefined, ['Base']);
+    const withKinds = (...kinds: ReturnType<typeof add>[]) => (i: BlocksCheckInput) => {
+      i.registry = [base, ...kinds];
+      cat(i).families = ['number', 'grant', 'attribute'];
+      cat(i).rows = [row(), ...kinds.map((k) => row({ id: k.id, family: k.family, bookFields: [] })), cat(i).rows[1]];
+      i.stillToAdd = [base, ...kinds].map((k) => ({ id: k.id, why: 'later' }));
+      i.readFile = () => [base, ...kinds].map((k) => `it('${k.id}', () => {})`).join('\n');
+    };
+    // number.set + number.atLeast share every number target: both need a label, and the labels must differ.
+    expect(errorsOf(withKinds(add('number.set', 'Set to'), add('number.atLeast', 'At least')))).toBe('');
+    expect(errorsOf(withKinds(add('number.set', undefined), add('number.atLeast', 'At least')))).toMatch(/registry number\.set: menu "Set a number" holds number\.set and number\.atLeast for the same target, so number\.set needs editor\.option/);
+    expect(errorsOf(withKinds(add('number.set', 'Set to'), add('number.atLeast', 'Set to')))).toMatch(/number\.set \/ number\.atLeast: menu "Set a number" offers both as "Set to"/);
+    // Two kinds in one menu with NO target in common (a number and a score) need no chooser.
+    expect(errorsOf(withKinds(add('number.set', undefined, ['Bonus or penalty']), add('attribute.add', undefined, ['Bonus or penalty'])))).toBe('');
+    // Two kinds sharing a target but listed under different menus need none either.
+    expect(errorsOf(withKinds(add('number.set', undefined, ['A']), add('number.atLeast', undefined, ['B'])))).toBe('');
+  });
   it('a target whose owner is not built while the target is', () => {
     expect(errorsOf((i) => (i.targets = [...TARGETS, { ...TARGETS[0], kind: 'damage', owner: 'companion', built: true }]))).toMatch(/built, but its owner "companion" is not/);
   });
@@ -196,6 +242,142 @@ describe('blocks guard: each bad case fails once', () => {
     expect(errorsOf((i) => i.blockFiles.push({ path: 'src/rules/blocks/sub/d.ts', text: "import '../../../../scripts/trust-ledger.mjs';" }))).toMatch(/sub\/d\.ts: imports/);
   });
 });
+
+/*
+ * Tweaks phase 2, WP1: the catalog's bookOnly mark (rev 3, finding 20), the new `accepts` members, the shared-menu
+ * rule over them, and checkChoiceKinds (every choice kind prints and is tested). Each bad case fails once here.
+ */
+describe('tweaks p2 WP1: bookOnly rows, the new accepts members and checkChoiceKinds', () => {
+  it('bookOnly on a built row fails', () => {
+    expect(errorsOf((i) => (cat(i).rows[0].bookOnly = true))).toMatch(/catalog row number\.add: bookOnly on a "built" row/);
+  });
+  it('bookOnly on a to-add row with no bookFields fails; with bookFields, on a ruled row, or exempted with a reason it passes', () => {
+    expect(errorsOf((i) => (cat(i).rows[1].bookOnly = true))).toBe('');
+    expect(
+      errorsOf((i) => {
+        cat(i).rows[1].bookOnly = true;
+        cat(i).rows[1].bookFields = [];
+      }),
+    ).toMatch(/catalog row grant\.action: bookOnly on a "to-add" row with no bookFields/);
+    expect(
+      errorsOf((i) => {
+        Object.assign(cat(i).rows[1], { bookOnly: true, bookFields: [], status: 'ruled', ruling: 'R1' });
+      }),
+    ).toBe('');
+    expect(
+      errorsOf((i) => {
+        Object.assign(cat(i).rows[1], { bookOnly: true, bookFields: [] });
+        i.bookOnlyNoFields = [{ id: 'grant.action', why: 'its book data is a code table' }];
+      }),
+    ).toBe('');
+  });
+  it('an exemption that is stale (no such to-add bookOnly row with empty bookFields) or has no reason fails', () => {
+    expect(errorsOf((i) => (i.bookOnlyNoFields = [{ id: 'grant.action', why: 'x' }]))).toMatch(/BOOK_ONLY_NO_FIELDS grant\.action: stale/);
+    expect(
+      errorsOf((i) => {
+        Object.assign(cat(i).rows[1], { bookOnly: true, bookFields: [] });
+        i.bookOnlyNoFields = [{ id: 'grant.action', why: ' ' }];
+      }),
+    ).toMatch(/BOOK_ONLY_NO_FIELDS grant\.action: no reason/);
+  });
+  it('a to-add bookOnly row is printed apart, out of the per-phase count', () => {
+    const plain = good();
+    expect(checkBlocks(plain).info[0]).toMatch(/1 still to add or shaped by a ruling \(phase 3: 1\); book-only, waits for the re-implementation: 0/);
+    const marked = good();
+    cat(marked).rows[1].bookOnly = true;
+    expect(checkBlocks(marked).info[0]).toMatch(/0 still to add or shaped by a ruling \(\); book-only, waits for the re-implementation: 1/);
+  });
+  it('an accepts list of pickers / places / questions that is empty or names a value twice fails; rules must be a non-empty list', () => {
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], accepts: { pickers: [] } }]))).toMatch(/accepts\.pickers must be one non-empty list/);
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], accepts: { places: ['feat', 'feat'] } }]))).toMatch(/accepts\.places names a value twice/);
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], accepts: { records: [] } }]))).toMatch(/accepts\.records must be one non-empty list/);
+    // a good list passes the accepts rule (stored in blocks and pointing at questions, it is now a choice kind, so
+    // checkChoiceKinds asks for its rowText case — the planted input has no wgExport.ts)
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], accepts: { questions: ['choice'] } }]))).toBe('choice kind number.add: src/rules/blocks/wgExport.ts is missing, so no rowText case can name it');
+    expect(errorsOf((i) => (i.registry = [{ ...i.registry[0], rules: [] }]))).toMatch(/rules must be a non-empty list/);
+  });
+  it('one menu holding two kinds whose places (or pickers, questions) overlap needs a chooser label (B19)', () => {
+    const two = (aAccepts: object, bAccepts: object) => (i: BlocksCheckInput) => {
+      const set = blockKind('number.set')!;
+      i.registry = [
+        { ...i.registry[0], accepts: aAccepts as never, editor: { ...i.registry[0].editor!, menus: ['M'] } },
+        { ...set, test: 'test/fake.test.ts', accepts: bAccepts as never, editor: { ...set.editor!, menus: ['M'], option: undefined, built: false } },
+      ];
+      cat(i).rows.push(row({ id: 'number.set', bookFields: [...(set.bookFields ?? [])] }));
+      i.stillToAdd = [...i.stillToAdd, { id: 'number.set', why: 'later' }];
+      i.readFile = () => "it('number.add', () => {})\nit('number.set', () => {})";
+    };
+    expect(errorsOf(two({ places: ['feat', 'boost'] }, { places: ['boost'] }))).toMatch(/menu "M" holds number\.add and number\.set for the same target/);
+    expect(errorsOf(two({ pickers: ['heritage'] }, { pickers: ['heritage'] }))).toMatch(/for the same target/);
+    expect(errorsOf(two({ places: ['feat'] }, { places: ['boost'] }))).not.toMatch(/for the same target/);
+    expect(errorsOf(two({ places: ['feat'] }, { questions: ['feat'] }))).not.toMatch(/for the same target/);
+  });
+
+  const choiceInput = (over: Partial<ChoiceKindsInput> = {}): ChoiceKindsInput => ({
+    registry: BLOCK_KINDS,
+    wgExport: read('src/rules/blocks/wgExport.ts'),
+    readFile: read,
+    ...over,
+  });
+  const choiceErrors = (over: Partial<ChoiceKindsInput>) => checkChoiceKinds(choiceInput(over)).errors.join('\n');
+
+  it('checkChoiceKinds passes on the real registry, wgExport.ts and test files, and checks all seven kinds', () => {
+    expect(checkChoiceKinds(choiceInput()).errors).toEqual([]);
+    expect(BLOCK_KINDS.filter((k) => isChoiceKind(k)).map((k) => k.id).sort()).toEqual(
+      ['choice.addPlace', 'choice.allowAnywayAnyPicker', 'choice.anyList', 'choice.changeAnswer', 'choice.editOptions', 'choice.moreTakes', 'remove.choicePlace'].sort(),
+    );
+  });
+  it('checkChoiceKinds: a choice kind with no rowText case in wgExport.ts fails (a mention in a comment is not a case)', () => {
+    const text = read('src/rules/blocks/wgExport.ts')!;
+    const cut = text.split("case 'choice.anyList':").join('');
+    expect(cut).not.toBe(text);
+    expect(choiceErrors({ wgExport: cut })).toMatch(/choice kind choice\.anyList: no "case 'choice\.anyList':"/);
+    expect(choiceErrors({ wgExport: `${cut}\n// case 'choice.anyList':\n` })).toMatch(/choice kind choice\.anyList: no "case/);
+    expect(choiceErrors({ wgExport: null })).toMatch(/wgExport\.ts is missing/);
+  });
+  // WP13 (C34 shrunk to the built kinds): a kind nothing applies yet reads as a newer version's, so a rowText case for it
+  // could never run — the guard refuses one, and refuses none for the built kinds.
+  it('checkChoiceKinds: a rowText case for a not-yet kind (choice.changeAnswer, choice.editOptions) fails', () => {
+    const text = read('src/rules/blocks/wgExport.ts')!;
+    expect(text).not.toMatch(/case\s+'choice\.(changeAnswer|editOptions)'\s*:/);
+    const planted = text.replace("case 'choice.anyList':", "case 'choice.changeAnswer':\n    case 'choice.anyList':");
+    expect(planted).not.toBe(text);
+    expect(choiceErrors({ wgExport: planted })).toMatch(/choice kind choice\.changeAnswer: nothing applies it yet.*can never run/);
+    expect(choiceErrors({ wgExport: `${text}\n// case 'choice.editOptions':\n` })).toBe('');
+  });
+  it('checkChoiceKinds: a place or a rule with no words fails', () => {
+    // WP13: was the rune place (WP17, after the record rebuild); the boost place is the last built one.
+    expect(choiceErrors({ placeWords: (p) => (p.place === 'boost' ? undefined : 'x') })).toMatch(/choice kind remove\.choicePlace: placeWords has no words for the place "boost"/);
+    expect(choiceErrors({ ruleWords: (r) => (r === 'onlyAtLevel' ? '' : 'x') })).toMatch(/choice kind choice\.anyList: ruleWords has no words for the rule "onlyAtLevel"/);
+  });
+  it('checkChoiceKinds: a choice kind whose test file names it in no title fails', () => {
+    // tweaks p2 WP8: choice.moreTakes is built and names its own test file, so the planted gap is a kind still on the store test.
+    expect(choiceErrors({ readFile: (p) => (p === 'test/tweaks-p2-store.test.ts' ? "it('choice.anyList', () => {})" : read(p)) })).toMatch(/choice kind choice\.changeAnswer: no it\(\)\/describe\(\) title/);
+  });
+  it('checkBlocks runs checkChoiceKinds (a planted gap in the words fails the whole guard)', () => {
+    expect(checkBlocks({ ...realInput(), placeWords: () => undefined }).errors.join('\n')).toMatch(/placeWords has no words for the place "feat"/);
+  });
+});
+
+function realInput(): BlocksCheckInput {
+  const dir = 'src/rules/blocks';
+  return {
+    registry: BLOCK_KINDS,
+    stillToAdd: STILL_TO_ADD,
+    editorParts: EDITOR_PARTS,
+    sourceKinds: SOURCE_KINDS,
+    targets: TARGETS,
+    owners: OWNERS,
+    catalog: JSON.parse(read(`${dir}/catalog.json`) ?? 'null'),
+    designDoc: read('docs/overrides-redesign.md') ?? '',
+    lanesDoc: read('docs/mechanic-lanes.md') ?? '',
+    blockFiles: readdirSync(join(ROOT, dir), { recursive: true })
+      .map((f) => String(f).replace(/\\/g, '/'))
+      .filter((f) => f.endsWith('.ts'))
+      .map((f) => ({ path: `${dir}/${f}`, text: read(`${dir}/${f}`)! })),
+    readFile: read,
+  };
+}
 
 describe('blocks guard on the real files', () => {
   it('passes, and prints the not-in-Tweaks-yet list', () => {
@@ -321,7 +503,7 @@ describe('item 10: book fields are read only in blocks/book.ts (checkBookFieldRe
     expect(errors).toEqual([]);
     expect(info.join('\n')).toMatch(/read only in src\/rules\/blocks\/book\.ts/);
     for (const a of BOOK_FIELD_ALLOW) expect(a.why.trim().length, a.file).toBeGreaterThan(10);
-  });
+  }, 30_000); // tweaks p2 WP1: a whole-tree scan; the default 5 s timed out under a 36-file run (wp0-report.md)
 });
 
 describe('item 7: one content path — applyOverrides only inside blocks/content.ts (checkContentPath)', () => {
@@ -412,5 +594,5 @@ describe('item 7: one content path — applyOverrides only inside blocks/content
     const { errors, info } = checkContentPath(files);
     expect(errors).toEqual([]);
     expect(info.join('\n')).toMatch(/applyOverrides is named only in src\/rules\/blocks\/content\.ts, which exports contentFor alone/);
-  });
+  }, 30_000); // tweaks p2 WP1: a whole-tree scan; the default 5 s timed out under a 36-file run (wp0-report.md)
 });

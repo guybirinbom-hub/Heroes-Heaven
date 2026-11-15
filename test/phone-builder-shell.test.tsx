@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { content } from './_content';
 import { renderDom } from './_render';
-import { Builder, overrideUndoHint, withArticle } from '../src/builder/Builder';
+import { Builder, tweakUndoHint, withArticle } from '../src/builder/Builder';
 import { emptyBuild, type BuildState } from '../src/rules/build';
 
 /**
@@ -186,6 +186,54 @@ describe('a new builder page opens at its top', () => {
  * A6 C7 — the CHARACTER row opened only from its 32px chevron. Before the fix the word "Character"
  * sat outside the button (this test failed at "the word is inside the toggle").
  */
+/*
+ * Plan B WP6 (section 4.1, B24): the Tweaks button rides in the header's second row on a phone, and the
+ * Tweaks page never changes the Character panel's open state (it sits above the page as the player left it).
+ */
+describe('Tweaks on a phone (plan B WP6)', () => {
+  const TW = () => FIGHTER({ overrides: { v: 2, addedLanguages: ['draconic'] }, options: { overridesEnabled: true } } as Partial<BuildState>);
+
+  it("phone: the Tweaks button sits in the header's second row", () => {
+    const b = open(TW());
+    const head = b.host.querySelector('header.builder-head')!;
+    const btn = head.querySelector<HTMLButtonElement>(':scope > button.b-tweaks');
+    expect(btn, 'a direct child of the header (its CSS order puts it on row 2)').not.toBeNull();
+    const kids = [...head.children];
+    const at = (sel: string) => kids.findIndex((k) => k.matches(sel));
+    // Row 1 is the title and name; row 2 is the stepper, Tweaks, Cancel and Save, in that DOM order.
+    expect(at('.name-input')).toBeLessThan(at('.lvl-ctl'));
+    expect(at('.lvl-ctl')).toBeLessThan(at('.b-tweaks'));
+    expect(at('.b-tweaks')).toBeLessThan(at('.b-cancel'));
+    expect(btn!.getAttribute('aria-label'), 'the word stays in the label when the CSS hides it').toBe('Tweaks, 1');
+    expect(btn!.querySelector('.ti-adjustments')).not.toBeNull();
+    expect(btn!.querySelector('.b-tweaks-count')?.textContent).toBe('1');
+  });
+
+  it('phone: opening and closing Tweaks keeps the Character panel as the player left it (open stays open, closed stays closed), above the page', () => {
+    const b = open(TW());
+    const toggle = () => b.host.querySelector('.brail-toggle') as HTMLElement;
+    const tweaks = () => b.host.querySelector('button.b-tweaks') as HTMLElement;
+    // Closed stays closed.
+    expect(toggle().getAttribute('aria-expanded')).toBe('false');
+    b.click(tweaks());
+    expect(b.host.querySelector('.tw-page'), 'the page is open').not.toBeNull();
+    expect(toggle().getAttribute('aria-expanded'), 'opening Tweaks leaves the panel closed').toBe('false');
+    b.click(tweaks());
+    expect(toggle().getAttribute('aria-expanded')).toBe('false');
+    // Open stays open.
+    b.click(toggle());
+    expect(toggle().getAttribute('aria-expanded')).toBe('true');
+    b.click(tweaks());
+    expect(toggle().getAttribute('aria-expanded'), 'opening Tweaks leaves the panel open').toBe('true');
+    expect(b.host.querySelector('.brail .brow'), 'the stats are on screen beside the page').not.toBeNull();
+    b.click(b.host.querySelector('.tw-page button.tw-done'));
+    expect(b.host.querySelector('.tw-page')).toBeNull();
+    expect(toggle().getAttribute('aria-expanded'), 'and closing it too').toBe('true');
+    // The panel and the page share the one body grid (the phone CSS orders the panel first).
+    expect(b.host.querySelector('.builder-body > aside.brail')).not.toBeNull();
+  });
+});
+
 describe('the CHARACTER title row is the toggle on a phone', () => {
   it('phone: the word is inside the toggle, and a tap on it opens and closes the stats', () => {
     const b = open(FIGHTER());
@@ -273,13 +321,14 @@ describe('picker titles use "an" before a vowel', () => {
  * on phones (the owner's setting); only the wording changes there.
  */
 describe('the override confirm names an undo the device really has', () => {
-  it('overrideUndoHint', () => {
-    expect(overrideUndoHint(false, true)).toBe('You can undo with Ctrl+Z.');
-    expect(overrideUndoHint(false, false)).toBe('You can undo with Ctrl+Z.');
-    expect(overrideUndoHint(true, false)).not.toMatch(/Ctrl/);
-    expect(overrideUndoHint(true, false)).toMatch(/✕/);
-    expect(overrideUndoHint(true, true)).toMatch(/Undo arrow/);
-    expect(overrideUndoHint(true, true)).not.toMatch(/Ctrl/);
+  // plan B WP8: renamed from overrideUndoHint (the box now says "tweak").
+  it('tweakUndoHint', () => {
+    expect(tweakUndoHint(false, true)).toBe('You can undo with Ctrl+Z.');
+    expect(tweakUndoHint(false, false)).toBe('You can undo with Ctrl+Z.');
+    expect(tweakUndoHint(true, false)).not.toMatch(/Ctrl/);
+    expect(tweakUndoHint(true, false)).toMatch(/✕/);
+    expect(tweakUndoHint(true, true)).toMatch(/Undo arrow/);
+    expect(tweakUndoHint(true, true)).not.toMatch(/Ctrl/);
   });
 
   it('phone: "Take anyway" never says Ctrl+Z', async () => {
@@ -296,8 +345,105 @@ describe('the override confirm names an undo the device really has', () => {
     await settle();
     expect(confirmTitle()).toMatch(/anyway\?$/);
     const text = confirmBox()!.querySelector('.confirm-body')?.textContent ?? '';
-    expect(text).toContain('deliberate override');
+    // plan B WP8: the box names the Tweaks page, where the record is listed.
+    expect(text).toContain('This records a tweak for this feat only; it is listed on the Tweaks page.');
     expect(text).not.toMatch(/Ctrl\+Z/);
+  });
+});
+
+/*
+ * Plan B WP8 — "Take anyway" is a tweak: offered only while Tweaks is on, written through the write door
+ * (blocks/write.ts takeAnywayWrite + writeTweak). The old writer appended the id to `allowedFeats` by hand,
+ * so taking a feat whose "Take anyway" was PAUSED listed it twice (wp2-report, Out of scope). Battle
+ * Medicine needs Medicine, which this fighter does not have.
+ */
+describe('Take anyway is a tweak, written through the write door', () => {
+  function openSaving(initial: BuildState) {
+    const saved: BuildState[] = [];
+    const rendered = renderDom(createElement(Builder, { content: content(), initial, onCancel: () => undefined, onCreate: (b: BuildState) => void saved.push(b) }));
+    cleanups.push(() => rendered.stop());
+    const { host, click } = rendered;
+    const page = (label: string) => click([...host.querySelectorAll('.lstrip button')].find((b) => (b.textContent ?? '').trim() === label) ?? null);
+    return { host, click, page, saved };
+  }
+  /** The skill-feat picker on the level-2 page, ineligible feats shown, and Battle Medicine's row. */
+  function battleMedicineRow(b: ReturnType<typeof openSaving>) {
+    b.page('2');
+    b.click(b.host.querySelector('[data-ctl-title="Skill feat"]'));
+    const showInel = [...document.querySelectorAll('button')].find((x) => /^Show ineligible/.test((x.textContent ?? '').trim()));
+    if (showInel) b.click(showInel);
+    return [...document.querySelectorAll('.pick-row')].find((r) => (r.querySelector('.picker-name')?.textContent ?? '').startsWith('Battle Medicine'));
+  }
+  async function takeAnywayAndSave(b: ReturnType<typeof openSaving>, row: Element) {
+    const take = row.querySelector('.pick-add');
+    await act(async () => {
+      take!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    await settle();
+    await pressConfirm('Take anyway');
+    expect(b.host.querySelector('[data-ctl-title="Skill feat"][data-ctl-state="picked"]'), 'the slot holds the feat').toBeTruthy();
+    await act(async () => {
+      b.host.querySelector('.b-create')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    await settle();
+    if (confirmTitle() === 'Save with choices left?') await pressConfirm('Save anyway');
+    expect(b.saved.length, 'saved once').toBe(1);
+    return b.saved[0];
+  }
+
+  it('Take anyway is offered only while Tweaks is on and writes through the write door (v 2, of)', async () => {
+    // Tweaks off: the row is greyed, with no "Take anyway".
+    const off = openSaving(FIGHTER({ options: { ...(emptyBuild().options ?? {}), overridesEnabled: false } }));
+    const offRow = battleMedicineRow(off);
+    expect(offRow, 'Battle Medicine is listed').toBeTruthy();
+    expect(offRow!.textContent).not.toMatch(/Take anyway/);
+    expect((offRow!.querySelector('.pick-add') as HTMLButtonElement | null)?.disabled).toBe(true);
+    await escape();
+    while (cleanups.length) cleanups.pop()!();
+    for (const n of [...document.body.children]) n.remove();
+
+    // Tweaks on: "Take anyway", the tweak's wording, and the stored entry is the door's (v 2 and its meta `of`).
+    const on = openSaving(FIGHTER({ options: { ...(emptyBuild().options ?? {}), overridesEnabled: true } }));
+    const onRow = battleMedicineRow(on);
+    expect(onRow!.textContent).toMatch(/Take anyway/);
+    expect(onRow!.querySelector('.picker-override-note')?.textContent).toBe('Tweak: you can take this anyway, ignoring the rule.');
+    const saved = await takeAnywayAndSave(on, onRow!);
+    expect(saved.overrides?.allowedFeats).toEqual(['battle-medicine']);
+    expect(saved.overrides?.v).toBe(2);
+    /* Leftovers run 2026-10-22: `v` and `of` alone pass even with the old hand-written append back, because the
+     * Save stamp adds both to an entry with no meta — and marks it `moved` (blocks/save.ts step 3). So the whole
+     * meta is asserted: the door's entry has `of` and nothing else; a hand-written one would come out
+     * `{ of, moved: true }` and read "Moved from Overrides" next time. Before Save no screen tells the two apart
+     * (the planted append drew the same Tweaks row, byte for byte — leftovers-tests-report.md), so this is the
+     * earliest place to look. MUTATION PROOF: the old append planted back turns this red. */
+    expect(saved.overrides?.meta?.['allowedFeats:battle-medicine']).toEqual({ of: 'battle-medicine' });
+    expect(saved.featPicks['2:skill:1']).toBe('battle-medicine');
+    // …and the player's next visit shows it as their own tweak, not one "Moved from Overrides".
+    while (cleanups.length) cleanups.pop()!();
+    for (const n of [...document.body.children]) n.remove();
+    const again = openSaving(saved);
+    await act(async () => {
+      again.host.querySelector('.builder-head button.b-tweaks')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    await settle();
+    const tw = again.host.querySelector('li.tw-row[data-key="allowedFeats:battle-medicine"]');
+    expect(tw, 'the Take anyway row is listed').toBeTruthy();
+    expect(tw!.querySelector('.tw-chip-moved'), 'no "Moved from Overrides" chip').toBeNull();
+  });
+
+  it('a PAUSED Take anyway is switched back on, never listed twice', async () => {
+    const b = openSaving(
+      FIGHTER({
+        options: { ...(emptyBuild().options ?? {}), overridesEnabled: true },
+        overrides: { v: 2, allowedFeats: ['battle-medicine'], meta: { 'allowedFeats:battle-medicine': { of: 'battle-medicine', on: false } } },
+      }),
+    );
+    const row = battleMedicineRow(b);
+    // Paused: not allowed now, so the picker offers "Take anyway" again.
+    expect(row!.textContent).toMatch(/Take anyway/);
+    const saved = await takeAnywayAndSave(b, row!);
+    expect(saved.overrides?.allowedFeats, 'one entry, not two').toEqual(['battle-medicine']);
+    expect(saved.overrides?.meta?.['allowedFeats:battle-medicine']?.on).not.toBe(false);
   });
 });
 

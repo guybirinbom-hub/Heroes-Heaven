@@ -398,6 +398,14 @@ const setInput = (el: HTMLInputElement, value: string) => {
   });
 };
 const press = (el: Element | null | undefined) => act(() => void el!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+/** The mode editor's Delete asks first (bug 2026-10-23, ModesPanel.tsx `askDelete`): answer the app's own dialog. */
+const answerDelete = async (label: 'Delete' | 'Remove') => {
+  await wait(0);
+  const btn = [...document.querySelectorAll('.confirm-modal button')].find((b) => (b.textContent ?? '').trim() === label);
+  expect(btn, `the confirm offers "${label}"`).toBeTruthy();
+  press(btn);
+  await wait(0);
+};
 
 describe('(R1) what each campaign is sent: what ITS shared homebrew already gives its members only FILLS a gap', () => {
   const A = 'camp-a';
@@ -665,6 +673,7 @@ describe("(R5) round 3: on the player's OWN sheet a mode the GM's push brought i
     expect(remove?.textContent?.trim(), 'it says what it does').toBe('Remove from this character');
     expect(remove?.title).toContain('this character only');
     press(remove);
+    await answerDelete('Remove');
     await wait(600); // the persist and the republish
     flushPersist();
 
@@ -729,6 +738,7 @@ describe("(R5) round 3: on the player's OWN sheet a mode the GM's push brought i
 
     await openModeEditor(app, OWN_MODE.name);
     press(document.querySelector('.me-delete'));
+    await answerDelete('Delete');
     await wait(50);
     expect(loadModes()[OWN_MODE.id], 'deleted from their saved modes').toBeUndefined();
     expect(loadTombstones()[`mode:${OWN_MODE.id}`], 'with its tombstone, as ever').toBeGreaterThan(0);

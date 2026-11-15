@@ -48,7 +48,8 @@ export function ConditionsModal({
   /** App-provided modes, directly toggleable + gated by class/ancestry. */
   predefined?: ModeDef[];
   catalog?: ModeDef[];
-  classId?: string | null;
+  /** Every held class (`heldClasses`), or one class id — passed to the Modes panel. */
+  classId?: string | null | readonly (string | null)[];
   ancestryId?: string | null;
   featIds?: ReadonlySet<string>;
   charKey?: string;

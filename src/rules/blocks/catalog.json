@@ -56,7 +56,7 @@
       "lanes": [],
       "bookFields": [],
       "bookOnly": false,
-      "note": "Wraps the old overrides.maxHp key. Part B: a mode's max HP bonus keeps counting on top of it (fix case C)."
+      "note": "Wraps the old overrides.maxHp key. Part B WP3 (case C): a 'set' term of the max-HP list, so a mode's max HP bonus, a Con mode and Drained count on top of it."
     },
     {
       "id": "attribute.add",
@@ -117,7 +117,7 @@
     {
       "id": "rank.legacySet",
       "family": "rank",
-      "title": "Rank set by the old Overrides (not sorted yet)",
+      "title": "Old rank, kept as it was",
       "phase": 1,
       "place": "advanced",
       "status": "built",
@@ -218,12 +218,13 @@
       "title": "Take anyway in every other picker",
       "phase": 2,
       "place": "advanced",
-      "status": "to-add",
+      "status": "built",
+      "registry": true,
       "features": [10],
       "lanes": [],
       "bookFields": [],
       "bookOnly": false,
-      "note": "\"Take anyway\" in the spell, skill, heritage, subclass, deity and archetype-rule pickers, as feature 10 asks; today only the feat picker has it."
+      "note": "Registered by Tweaks phase 2 WP1; built in WP4 (applies: blocks): the heritage, background, deity, both subclass pickers, sanctification, and the spell pickers (each class pool, the second class, a dedication's book ranks and archetype pool, open spell choices picked or granted). Two engine seams read it: the open spell grant's tradition rule and a dedication's named cantrips. A skill increase's cap / locked / narrowed rules (WP12) come after the record rebuild (WP13: no picker offers them; a stored one reads as made in a newer version). Still open: the archetype rules, pick-a-feat prerequisites (C41), option prerequisites inside a choice, Path to Perfection."
     },
     {
       "id": "text.edit",
@@ -359,7 +360,7 @@
       "lanes": ["redundantFallback"],
       "bookFields": ["featGrantsAuto.redundantFallback"],
       "bookOnly": true,
-      "note": "A book rule that turns a wasted training into a different skill or a higher rank."
+      "note": "A book rule that turns a wasted training into a different skill or a higher rank. book-only: waits for the re-implementation (decision 25); not a phase-2 tweak."
     },
     {
       "id": "rank.otherClassDc",
@@ -385,8 +386,8 @@
       "features": [],
       "lanes": ["abilityBoost", "abilityFlaw"],
       "bookFields": ["abilityBoosts", "abilityFlaws"],
-      "bookOnly": false,
-      "note": "A boost or flaw that follows the PF2e boost rules, unlike attribute.add which moves the score directly."
+      "bookOnly": true,
+      "note": "A boost or flaw that follows the PF2e boost rules, unlike attribute.add which moves the score directly; an extra boost a tweak adds is choice.addPlace. book-only: waits for the re-implementation (decision 25); not a phase-2 tweak."
     },
     {
       "id": "attribute.apex",
@@ -398,8 +399,8 @@
       "features": [],
       "lanes": ["apex"],
       "bookFields": ["apexAttribute"],
-      "bookOnly": false,
-      "note": "Raises an attribute to 18, or by 2 if it is already 18 or more."
+      "bookOnly": true,
+      "note": "Raises an attribute to 18, or by 2 if it is already 18 or more. book-only: waits for the re-implementation (decision 25); not a phase-2 tweak."
     },
     {
       "id": "attribute.useOther",
@@ -530,12 +531,27 @@
       "title": "Pick from any list",
       "phase": 2,
       "place": "advanced",
-      "status": "to-add",
+      "status": "built",
+      "registry": true,
       "features": [11],
       "lanes": [],
       "bookFields": [],
       "bookOnly": false,
-      "note": "A general feat in a class slot, another ancestry's feat, a feat above your level, or the same feat more times than it allows."
+      "note": "Built in Tweaks phase 2 WP5 (applies: blocks): a general feat in a class slot, another ancestry's feat, a feat above your level or past its only level, in the feat slots, the pick-a-feat pickers and the three bonus feat pickers (Versatile Human, Unified Magical Theory, a dedication's bonus skill feat); open feat choices wait. Mythic and impulse slot rules are not liftable. Taking the same feat more times is choice.moreTakes."
+    },
+    {
+      "id": "choice.moreTakes",
+      "family": "choice",
+      "title": "Take a feat more times",
+      "phase": 2,
+      "place": "advanced",
+      "status": "built",
+      "registry": true,
+      "features": [11],
+      "lanes": [],
+      "bookFields": [],
+      "bookOnly": false,
+      "note": "Decision 17 (C2): the same feat more times than it allows, its own kind. Built in Tweaks phase 2 WP8 (applies: blocks): one tweak per feat raises the take cap of the feat slots and extra places (the slot and place pickers' Take again, the Tweaks page's Add); a second copy adds only what can add up: its own slot-keyed answer counts (Canny Acumen's save, Different Worlds' Lore, Natural Ambition's feat), but a once-only feat's answers keyed by the feat id are shared, so a second copy adds no answer of its own there: its spell choice (Minor Deific Power, Minor Magic, Spell Runes), skill choice (Natural Skill), cantrip choice (Arcane Tattoos), bonus skill feat (Magical Knowledge) and other choices (Magical Resistance's energy type); the row says which. A feat more times through a feat's own pick (pick-a-feat grants) and auto-granted feats keep the book's cap. The daily items lane keeps the book's count of takings too: a once-only feat with daily temporary items (Gadget Specialist, Basic Scroll Cache, Herbal Forager) taken more times still prepares one taking's items (dailyItems.ts)."
     },
     {
       "id": "choice.addPlace",
@@ -543,12 +559,13 @@
       "title": "Add a choice place (extra feat slot, boost...)",
       "phase": 2,
       "place": "main",
-      "status": "to-add",
+      "status": "built",
+      "registry": true,
       "features": [12],
       "lanes": ["grantsFeatChoice"],
       "bookFields": [],
       "bookOnly": false,
-      "note": "An extra feat slot, skill increase, attribute boost, class-feature choice, cantrip or spell known at a level; book feat slots live in the FEAT_PICK_GRANTS code table today."
+      "note": "Built in Tweaks phase 2 WP7 (applies: blocks) for the extra feat place: the level page's Add a place and its place card, and the Tweaks page's Add a place; WP11 built the extra skill increase (its own lane after the level's main, bonus and background increases, with the level's cap) and the extra attribute boost (its own breakdown line), each a carrier holding its answer, with their level-page cards and the Tweaks page's place kind and answer part. Phase 2: feat place, skill increase, boost; an extra class-feature choice waits (WP15's one reader is its first half); cantrip and spell known come with spellcasting.cantrip / spellcasting.slot (phase 5). Book feat slots live in the FEAT_PICK_GRANTS code table today."
     },
     {
       "id": "choice.changeAnswer",
@@ -556,12 +573,13 @@
       "title": "Answer a choice outside its list",
       "phase": 2,
       "place": "advanced",
-      "status": "to-add",
+      "status": "built",
+      "registry": true,
       "features": [14],
       "lanes": [],
       "bookFields": [],
       "bookOnly": false,
-      "note": "Pick a skill a feat's list does not offer; today the resolvers drop such answers silently."
+      "note": "Registered by Tweaks phase 2 WP1 (applies: not-yet); WP10 delivers it after the record rebuild. Until then (WP13) a stored one reads as made in a newer version: kept byte for byte, shown read-only, never applied, and the write door refuses a new one. Pick a skill a feat's list does not offer; today the resolvers drop such answers silently. The answer families reached and the ones waiting are section 4b of the phase-2 plan."
     },
     {
       "id": "choice.editOptions",
@@ -569,12 +587,13 @@
       "title": "Add or remove options in a choice list",
       "phase": 2,
       "place": "advanced",
-      "status": "to-add",
+      "status": "built",
+      "registry": true,
       "features": [15],
       "lanes": [],
-      "bookFields": ["choice", "effectChoices"],
+      "bookFields": [],
       "bookOnly": false,
-      "note": "Example: add fire to the energy types a feat offers."
+      "note": "Registered by Tweaks phase 2 WP1 (applies: not-yet); WP9 delivers it after the record rebuild. Until then (WP13) a stored one reads as made in a newer version: kept byte for byte, shown read-only, never applied, and the write door refuses a new one. Example: add fire to the energy types a feat offers. C38: no book field moves; book analog: choiceOptionAdditions / choiceOptionLimits, moved in the big job."
     },
     {
       "id": "choice.pickOne",
@@ -601,7 +620,7 @@
       "lanes": ["effectGrant", "grantsFeatByChoice"],
       "bookFields": ["effectChoices.grant", "grantedFeatByChoice"],
       "bookOnly": true,
-      "note": "The answer to a choice decides what is granted, falling back to the default grant when unanswered so no saved character loses it."
+      "note": "The answer to a choice decides what is granted, falling back to the default grant when unanswered so no saved character loses it. book-only: waits for the re-implementation (decision 25); not a phase-2 tweak."
     },
     {
       "id": "choice.daily",
@@ -786,12 +805,13 @@
       "title": "Remove a choice place",
       "phase": 2,
       "place": "advanced",
-      "status": "to-add",
+      "status": "built",
+      "registry": true,
       "features": [13],
       "lanes": [],
       "bookFields": [],
       "bookOnly": false,
-      "note": "Removes a slot; anything already picked there stays as a feat with no slot and is never lost silently."
+      "note": "Built in Tweaks phase 2 WP6 for printed feat slots and WP14 for skill increase and boost places. Class-feature-choice places (WP16), a commander's tactic places and a runesmith's rune places (WP17) come after the record rebuild (WP13: no picker offers them; a stored one reads as made in a newer version). Not removable: an ancestry's or background's fixed boost, a class's key boost, a second class's key boost, the kineticist's element group, a class's initial trained skills. Removing class features, ancestry or heritage features, spells, languages, proficiencies and senses is feature 17 (phase 3); removing spellcasting is feature 22 (phase 5); removing a list's options is feature 15 (choice.editOptions); spell places wait for phase 5, places a record gives and bonus language places for phase 3; formula picks are not places; a place a feat adds to a count (Additional Ikon, Tactical Expansion, Tactical Excellence) is phase 3. Anything already picked in a removed place stays as a feat with no slot and is never lost silently."
     },
     {
       "id": "remove.spellcasting",
@@ -1013,7 +1033,7 @@
       "lanes": ["innateGate"],
       "bookFields": ["innateSpells.minLevel"],
       "bookOnly": false,
-      "note": "Every tweak's start level (part B stores it in overrides.meta); books use the same gate for a spell ladder such as \"at 10th level you can also cast\"."
+      "note": "Every tweak's start level: not a kind of its own (it has no storage and no seam), but the `level` part of each tweak's editor, built in part B (stored in overrides.meta `from`, a given feat's or class feature's own stored level, or a block's `from`; plan B, B18). The book side (`innateSpells.minLevel`, a spell ladder such as \"at 10th level you can also cast\") waits for the big re-implementation."
     },
     {
       "id": "gate.whileState",
@@ -1082,7 +1102,7 @@
       "lanes": ["enhancement", "enhancementPicker"],
       "bookFields": ["enhancement", "enhancementPicker"],
       "bookOnly": true,
-      "note": "A second tier printed on a feat that counts only while another record points at it."
+      "note": "A second tier printed on a feat that counts only while another record points at it. book-only: waits for the re-implementation (decision 25); not a phase-2 tweak."
     },
 
     {

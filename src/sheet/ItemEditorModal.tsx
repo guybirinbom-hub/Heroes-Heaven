@@ -1,4 +1,5 @@
-import { type ReactNode, useId, useMemo, useState } from 'react';
+import { type ReactNode, useId, useMemo, useRef, useState } from 'react';
+import { useUnsavedWork } from '../data/unsavedWork';
 import { partyHasFeat } from '../data/partyCapabilities';
 import { attachItem, bumpItemQuantity, detachItem, removeInventoryItem, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import { affixHostType, canAttachTo } from '../rules/attachments';
@@ -480,6 +481,10 @@ export function ItemEditorModal({
   // Pre-filled from the record being edited, so a copy REMEMBERS what it was started from (the row
   // reads "Spellguard Shield" instead of an empty picker) and Clear is what unsets it.
   const [baseId, setBaseId] = useState<string | null>(item?.basedOn ?? null);
+  // What the editor opened with: anything typed or picked since lives only here until Save, so closing
+  // the tab now asks first (data/unsavedWork.ts).
+  const opened = useRef(JSON.stringify([d, baseId]));
+  useUnsavedWork(() => JSON.stringify([d, baseId]) !== opened.current);
   // The rich-text editors are uncontrolled; bump this key to remount them when the description is
   // replaced wholesale (copy-from-item, reset) so they reflect the new value.
   const [editorKey, setEditorKey] = useState(0);

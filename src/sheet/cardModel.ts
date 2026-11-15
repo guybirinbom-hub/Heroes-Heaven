@@ -111,6 +111,11 @@ export type OursKind =
    */
   | 'override'
   /**
+   * Tweaks phase 2 WP7: the feat sits in an extra feat place a tweak added ("Tweak: extra class feat place"), not
+   * in a slot the book gives — only while that place counts (a paused place's feat is not on the sheet at all).
+   */
+  | 'place'
+  /**
    * Card step 8: a homebrew record's typed Trigger / Requirements / Frequency / Access field
    * (types.ts Feat.trigger …, written by homebrewSchemas.ts), drawn as a use line above the body —
    * marked ours, never styled as print. `label` carries the line's label.
@@ -120,7 +125,7 @@ export type OursKind =
 export const OURS_KINDS: readonly OursKind[] = [
   'choice', 'mark', 'actionMark', 'note', 'enhancement', 'spellNote', 'atYourLevel',
   'usesRetune', 'skillTier', 'critSpec', 'blurb', 'remastered', 'empty', 'noPage',
-  'override', 'useLine',
+  'override', 'place', 'useLine',
 ];
 
 export interface OursLine {

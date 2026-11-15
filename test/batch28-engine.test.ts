@@ -408,7 +408,8 @@ describe('batch 28 — class carriers (engine 1: types + build)', () => {
     // Strip the clause and any skill is accepted again — the defect this closed. (The bonus increase
     // itself rides `bonusSkillIncreaseLevels`, which stays, so what is removed is only the restriction.)
     const unrestricted = withClass('swashbuckler', { restrictedSkillIncreaseLevels: undefined });
-    expect(braggart('medicine', unrestricted).skillIncreases).toEqual([{ level: 3, skill: 'medicine' }]);
+    // A bonus-lane increase names its lane (`SkillIncrease.lane`, plan D16) since b090c2c; this line changed in WP6.
+    expect(braggart('medicine', unrestricted).skillIncreases).toEqual([{ level: 3, skill: 'medicine', lane: 'bonus' }]); // skill-order WP6: D16 (bonus lane) — print: Stylish Tricks, class-feature-1016 (Player Core 2 pg. 158), "an additional skill increase" at 3rd level
   });
 
   it('the thaumaturge gains its 9th- and 17th-level bonus increases, restricted to its four skills', () => {
@@ -878,14 +879,14 @@ describe('batch 28 — the pickers that answer the new fields (verifier)', () =>
     const untraited = withClass('champion', {
       subclass: { ...sub, options: sub.options.map((o) => patched(o, { traits: undefined })) },
     });
-    const causes = (sanct?: string, content_: ContentDatabase = db) =>
+    const causes = (sanct?: string, content_: ContentDatabase = db, deityId = 'iomedae') =>
       ctl(
         originPage(
           {
             classId: 'champion',
             subclassId: 'justice',
             keyAbility: 'str',
-            deityId: 'iomedae',
+            deityId,
             ...(sanct ? { featChoices: { 'feature:deity-champion': sanct } } : {}),
           },
           content_,
@@ -896,8 +897,12 @@ describe('batch 28 — the pickers that answer the new fields (verifier)', () =>
     expect(holy.options - holy.live, 'the two Unholy causes are unpickable for a holy champion').toBe(2);
     const none = causes('none');
     expect(none.options - none.live, '"none" can take neither the holy nor the unholy four').toBe(4);
-    const open = causes(undefined);
-    expect(open.options - open.live, 'unanswered leaves the list wide').toBe(0);
+    const open = causes(undefined, db, 'abadar');
+    expect(open.options - open.live, 'unanswered leaves the list wide while the deity allows both (Abadar can be holy or unholy)').toBe(0);
+    /* 2026-10-27: unanswered no longer means "all". Iomedae must be holy, so her champion can never be unholy
+     * (Deity (Champion): "if you "must be" holy or unholy, you gain the trait"); test/champion-cause-sanctification. */
+    const iomedae = causes(undefined);
+    expect(iomedae.options - iomedae.live, 'unanswered under a must-be-holy deity: the two Unholy causes stay greyed').toBe(2);
     const stripped = causes('holy', untraited);
     expect(stripped.options - stripped.live, 'strip the traits and nothing is greyed — the gate reads them and nothing else').toBe(0);
     expect(stripped.options, 'and the same seven causes are on offer either way').toBe(open.options);

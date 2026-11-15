@@ -146,8 +146,8 @@ export const TARGETS: TargetDef[] = [
 ];
 
 /** The details a target kind accepts. `lore:<slug>` comes from `loreKey`; phase 1 Speed is land only. */
-const WEAPON_DETAILS = ['unarmed', 'simple', 'martial', 'advanced'];
-const ARMOR_DETAILS = ['unarmored', 'light', 'medium', 'heavy'];
+export const WEAPON_DETAILS = ['unarmed', 'simple', 'martial', 'advanced'];
+export const ARMOR_DETAILS = ['unarmored', 'light', 'medium', 'heavy'];
 const SPEED_DETAILS = ['land', 'fly', 'swim', 'climb', 'burrow'];
 /** Phase 1 builds land Speed only (spec item 8); the other movement types come with phase 3's speeds. */
 export const BUILT_SPEED_DETAILS = ['land'];

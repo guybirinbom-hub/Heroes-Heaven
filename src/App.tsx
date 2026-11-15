@@ -30,23 +30,27 @@ import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, fetchPublishedSheet, deleteGmEdit, markGmEditRefused, currentUserId, subscribeGmEdits, type GmEdit } from './data/party';
+import { campaignGoneReason, clearAllCampaignGone, clearCampaignGone, keepCampaignGoneFor, markCampaignGone } from './data/campaignGone';
 import { loadRoster, saveRoster, newRosterId, loadModes, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadUnheldCampaigns, saveUnheldCampaigns, loadRevived, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { authoredKey, hash53 } from './data/authored';
-import { isTauri } from './platform';
+import { isDesktopApp, isTauri } from './platform';
 import { carryModePin, getPrefs, subscribePrefs } from './data/prefs';
 import { useIsMobile, useShowUndoButtons } from './sheet/useIsMobile';
 import { gmEditVerdict, boundGmBase, editsToApply, sameInstant, type GmChainRecord } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
 import { setupPersist, schedulePersist, persistNow, flushPersist, foldIntoPersist, hasPendingPersist, HOLD_WRITE } from './data/persist';
+import { guardReloadKey, guardWindowClose, installUnsavedWarning } from './data/unsavedWork';
 import { loadRosterKnown, takeForeignRoster, rosterOwnerSwitched, type ForeignRoster } from './data/rosterTabs';
 import { mergeRosterEdits } from './data/rosterMerge';
 import { gmApplyYields as gmApplyYieldsBy, revertOwnStep, settleMergedBuild } from './data/rosterFold';
-import { chooseDialog } from './sheet/confirm';
-import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
+import { chooseDialog, confirmDialog, LEAVE_QUESTION } from './sheet/confirm';
+import { buildCharacter, type BuildState } from './rules/build';
+import { editableBuildOf, UNREADABLE_BUILD_NOTICE } from './data/editBuild';
 import { contentFor } from './rules/blocks/content';
 import { useUndoableState } from './useUndoableState';
 import { applyPlayState, initialPlay, ownedRestIds, playForRebuild, reconcileFormulaBook, rest, toggleMode, type PlayState } from './rules/play';
 import { abilityMod } from './rules/derive';
+import { restedClassResources } from './rules/classResources';
 import { companionConMod } from './rules/companions';
 import { ContentContext } from './sheet/ContentContext';
 import { PopupSizeController } from './sheet/PopupSizeController';
@@ -55,7 +59,7 @@ import { PopupSizeLock } from './sheet/PopupSizeLock';
 import { SettingsPage } from './sheet/SettingsPage';
 import { CustomizationContext, useGlobalCustomization, effectiveCustomization } from './data/customization';
 import { bumpZoom, resetZoom, ZOOM_STEP } from './theme/zoom';
-import type { Character, ContentDatabase, Item, ModeDef } from './rules/types';
+import type { AbilityId, Character, ContentDatabase, Item, ModeDef } from './rules/types';
 
 /** How often to look for a GM's edit when the Realtime stream is DOWN. Only ever runs in that case, so
  *  it can be brisk: at the table a GM's change to your hit points has to land in about a second. */
@@ -224,7 +228,8 @@ export default function App() {
    *  decision is actually MADE, which is either the content load or the `bootPending` effect below. */
   const stopBootCancel = useRef(() => {});
   // The build being edited: a BuildState (edit existing) or null (creating new).
-  const [editing, setEditing] = useState<{ id: string; build: BuildState } | null>(null);
+  // `derived`: the build was rebuilt from the sheet (no stored build); the Tweaks page says so (plan B WP6).
+  const [editing, setEditing] = useState<{ id: string; build: BuildState; derived?: boolean } | null>(null);
   // True when the last persist attempt was rejected (e.g. localStorage quota) — surfaced as a banner
   // so the user knows their changes aren't being saved rather than losing them silently. 'held' = the
   // write was held back because another tab switched accounts (persist HOLD_WRITE) — storage is fine, so
@@ -566,6 +571,13 @@ export default function App() {
   const sentJsonRef = useRef<Map<string, string>>(new Map());
   const publishFailedRef = useRef(false);
   const [publishNonce, setPublishNonce] = useState(0);
+  // "Removed from this campaign" is about one account: another account (or none) forgets every mark.
+  const publishUid = auth.session?.user?.id ?? null;
+  useEffect(() => clearAllCampaignGone(), [publishUid]);
+  /** The account a send went out for is compared with this when it answers: an answer about the account
+   *  that just signed out never marks the next one's campaign. (Canonical "latest value" ref.) */
+  const publishUidRef = useRef(publishUid);
+  publishUidRef.current = publishUid;
   useEffect(() => {
     // The retry: a failed publish goes again on online / focus / visible. No timer — no polling.
     const kick = () => {
@@ -604,6 +616,8 @@ export default function App() {
       // Read at most once per run, and only when a character carries something (carriedForCampaign below).
       let origins: Map<string, string> | null = null;
       let ownWins: Set<string> | null = null;
+      // A campaign no character here is in any more: its gone / removed mark goes, so a join again sends.
+      keepCampaignGoneFor(new Set(roster.flatMap((sc) => sc.character.campaignIds ?? [])));
       for (const sc of roster) {
         const ids = sc.character.campaignIds ?? [];
         if (!ids.length) continue;
@@ -641,12 +655,26 @@ export default function App() {
             const published = { id: sc.id, character: sc.character, build: sc.build, play: sc.play, ...(sent ? { carried: sent } : {}) };
             const json = publishKey(published);
             const key = cid + '|' + sc.id;
+            // Still desired: a campaign the server proved gone (or this player removed from) is not
+            // UNPUBLISHED either — the character keeps it until the player presses Leave.
             desired.add(key);
+            // Proven gone / removed (data/campaignGone.ts): no more sends there this session — each one
+            // failed, and the online / focus retry sent it again and again. Unknown failures still retry.
+            if (campaignGoneReason(cid)) continue;
             if (sentJsonRef.current.get(key) === json) continue;
             sentJsonRef.current.set(key, json);
+            const sentFor = publishUidRef.current;
             void publishCharacter(cid, sc.id, live.name, summary, published).then((res) => {
-              if (res === 'ok') onPublishedKey(key);
-              else if (res === 'failed') {
+              if (res === 'ok') {
+                // A send that lands proves the campaign is there: the characters held back by its mark go
+                // again now (one more run of this effect — no timer).
+                if (clearCampaignGone(cid)) setPublishNonce((n) => n + 1);
+                onPublishedKey(key);
+              } else if (res === 'gone' || res === 'refused') {
+                // Not sent: forgotten like a failure, so a send after the mark clears goes out again.
+                if (sentJsonRef.current.get(key) === json) sentJsonRef.current.delete(key);
+                if (sentFor === publishUidRef.current) markCampaignGone(cid, res === 'gone' ? 'gone' : 'removed');
+              } else if (res === 'failed') {
                 if (sentJsonRef.current.get(key) === json) sentJsonRef.current.delete(key);
                 publishFailedRef.current = true;
               }
@@ -1124,6 +1152,62 @@ export default function App() {
       flushPersist(); // component teardown (e.g. HMR) shouldn't drop a pending write
     };
   }, []);
+  // Web only: closing the tab, reloading or navigating away while a screen holds work it has not saved
+  // (a new character in the builder, an open editor) makes the browser ask first (data/unsavedWork.ts;
+  // Guy 2026-11-08). Its own listener, beside the flush above, never in place of it.
+  useEffect(() => (isTauri ? undefined : installUnsavedWarning()), []);
+  // The Windows app's X button and Alt+F4: the same question, in the app's own popup (data/unsavedWork.ts
+  // guardWindowClose). Nothing unsaved → flush and close as before.
+  useEffect(() => {
+    if (!isDesktopApp) return;
+    let unlisten: (() => void) | null = null;
+    let gone = false;
+    void import('@tauri-apps/api/window').then(async ({ getCurrentWindow }) => {
+      const win = getCurrentWindow();
+      const off = await win.onCloseRequested((event) =>
+        guardWindowClose(event, {
+          ask: () =>
+            confirmDialog({
+              title: 'Close without saving?',
+              message: 'Something you changed isn’t saved yet. Closing now throws it away.',
+              confirmLabel: 'Close anyway',
+              cancelLabel: 'Keep editing',
+              danger: true,
+              ...LEAVE_QUESTION,
+            }),
+          beforeClose: flushPersist,
+          close: () => win.destroy(),
+        }),
+      );
+      if (gone) off();
+      else unlisten = off;
+    });
+    return () => {
+      gone = true;
+      unlisten?.();
+    };
+  }, []);
+  // The Windows app's F5 / Ctrl+R: the same question before the page reloads (data/unsavedWork.ts
+  // guardReloadKey; Guy 2026-11-08). Capture phase, so no screen's own key handler runs first.
+  useEffect(() => {
+    if (!isDesktopApp) return;
+    const onKey = (e: KeyboardEvent) =>
+      void guardReloadKey(e, {
+        ask: () =>
+          confirmDialog({
+            title: 'Reload without saving?',
+            message: 'Something you changed isn’t saved yet. Reloading now throws it away.',
+            confirmLabel: 'Reload anyway',
+            cancelLabel: 'Keep editing',
+            danger: true,
+            ...LEAVE_QUESTION,
+          }),
+        beforeReload: flushPersist,
+        reload: () => window.location.reload(),
+      });
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, []);
   useEffect(() => saveActiveId(activeId), [activeId]);
   // Remember whether the campaigns page is the current screen, so a fresh launch can reopen a
   // campaign the app was closed on. (Removable integration; see src/integration/lastCampaignView.ts.)
@@ -1370,10 +1454,11 @@ export default function App() {
   // its own view — carried records first, then the edits (rules/blocks/content.ts, the one content path).
   // contentFor returns the same ref when there are no edits, and the same object for the same view and
   // edits — the very object applyPlayState lays over `activeContent` for `character` above — so
-  // memoization downstream is preserved.
+  // memoization downstream is preserved. Only the LIVE edits (the Tweaks switch, each edit's own on/off —
+  // plan B WP2), so the memo keys on `options` too: contentFor cannot un-apply an edit.
   const sheetContent = useMemo(
-    () => (activeContent ? contentFor(activeContent, active?.character.overrides) : activeContent),
-    [activeContent, active?.character.overrides],
+    () => (activeContent ? contentFor(activeContent, active?.character) : activeContent),
+    [activeContent, active?.character.overrides, active?.character.options],
   );
   // …and the builder's, when it is editing a character that carries records (a GM-made feat must stay
   // a pick the builder knows, and the Save below must derive with it).
@@ -1463,10 +1548,14 @@ export default function App() {
   const saveModeDef = (mode: ModeDef) => {
     setContent((c) => (c ? { ...c, modes: { ...c.modes, [mode.id]: mode } } : c));
     saveMode(mode);
+    // Modes are in the homebrew fingerprint (2026-11-13): already merged, so this device's own push echo is
+    // not "a mode arrived by sync" (as addCustomItem above).
+    if (lastHbFp.current !== null) lastHbFp.current = homebrewFingerprint();
   };
   const removeModeDef = (id: string) => {
     setContent((c) => (c ? { ...c, modes: Object.fromEntries(Object.entries(c.modes).filter(([k]) => k !== id)) } : c));
     deleteMode(id);
+    if (lastHbFp.current !== null) lastHbFp.current = homebrewFingerprint();
   };
   /*
    * The player's OWN sheet's mode writers (round 3, 2026-10-20, final findings N-a / N-c). A mode only the
@@ -1700,7 +1789,10 @@ export default function App() {
             setActiveId(collide.id);
             finalId = collide.id;
           } else {
-            const entry = action === 'rename' ? { ...saved, character: { ...saved.character, name: uniqueName(saved.character.name, roster) } } : saved;
+            // "Keep both" renames the BUILD too: the character is re-derived from it (the launch rebuild takes
+            // its name from `build.name`), so a name set on the character alone came back as the original's.
+            const name = action === 'rename' ? uniqueName(saved.character.name, roster) : null;
+            const entry = name ? { ...saved, character: { ...saved.character, name }, ...(saved.build ? { build: { ...saved.build, name } } : {}) } : saved;
             setRoster((r) => [...r, entry]);
             setActiveId(entry.id);
             finalId = entry.id;
@@ -1760,6 +1852,7 @@ export default function App() {
       <Builder
         content={buildDb}
         initial={editing?.build}
+        derivedBuild={editing?.derived}
         onLeaveCampaign={(campaignId) => leaveCampaign(campaignId, editing?.id)}
         onCancel={() => {
           setEditing(null);
@@ -1890,12 +1983,24 @@ export default function App() {
         // Teammates on the Party page derive against the plain content, as the Campaigns page does —
         // never `sheetContent`, which carries THIS character's content edits (item 7 fixer, 2026-10-21).
         partyContent={readyContent}
-        onRest={(o) =>
+        onRest={(o) => {
+          // Refill to the maximum the tracker DRAWS: the play-overlaid character (an invested apex item
+          // raises an ability only there) with its resourceFloors (Additional Servings). The stored
+          // character's classResources sat below both (bug found 2026-10-23: vials rested to 4 / 5).
+          // Worked out here, outside the updater, from the same render-time `character` the rail drew.
+          const restedResources = character
+            ? restedClassResources(
+                character,
+                Object.fromEntries(
+                  Object.entries(character.abilities).map(([k, v]) => [k, abilityMod(v)]),
+                ) as Record<AbilityId, number>,
+              )
+            : active.character.classResources;
           updatePlay((p) =>
             rest(p, {
               level: active.character.level,
-              conMod: abilityMod(active.character.abilities.con),
-              initialResources: active.character.classResources,
+              conMod: abilityMod((character ?? active.character).abilities.con), // the drawn Con: an invested apex item raises it only in play (test/bug-rest-con-apex.test.ts)
+              initialResources: restedResources,
               // Lets rest tell an ITEM mode (clears overnight) from one the player toggled themselves —
               // from this character's own view, so a carried mode (data/carried.ts, 2026-10-20) is known too.
               modeDefs: ownDb.modes,
@@ -1918,21 +2023,19 @@ export default function App() {
                 }),
               ),
             }),
-          )
-        }
+          );
+        }}
         onOpenRoster={() => setMode('roster')}
         onEdit={() => {
-          // Any character is editable: use its stored build, or reverse-derive one from the
-          // finished character (seeds/imports have no stored build). The reverse-derive can throw
-          // on an unusual imported/legacy character, so fall back to a blank build instead of crashing.
-          let editBuild: BuildState;
-          try {
-            editBuild = active.build ?? deriveBuildFromCharacter(active.character, ownDb);
-          } catch (err) {
-            console.error('Could not reconstruct build from character; starting from a blank build:', err);
-            editBuild = emptyBuild();
+          // The stored build, or one reverse-derived from the finished character (seeds/imports have no
+          // stored build). If that throws there is NO build to edit: a blank one's Save would replace the
+          // whole character, so the Builder stays closed and the sheet stays as it is (src/data/editBuild.ts).
+          const eb = editableBuildOf(active, ownDb);
+          if (!eb) {
+            void chooseDialog({ ...UNREADABLE_BUILD_NOTICE, buttons: [{ value: 'ok', label: 'OK', primary: true }] });
+            return;
           }
-          setEditing({ id: active.id, build: editBuild });
+          setEditing({ id: active.id, build: eb.build, derived: eb.derived });
           setMode('builder');
         }}
       />

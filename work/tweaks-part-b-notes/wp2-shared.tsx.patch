@@ -1,0 +1,30 @@
+--- a/src/builder/shared.tsx
++++ b/src/builder/shared.tsx
+@@ -114,6 +114,7 @@
+ import { featIdAtSlot, heldFeatIds } from '../rules/heldFeats';
+ import { bookGrantChips } from '../rules/spellOptions';
+ import { pruneOverrides } from '../rules/blocks/write';
++import { liveAttributeSets } from '../rules/blocks/active';
+ 
+ /** "1st", "2nd", "3rd", "4th" … — a spell rank in player text. */
+ const ordinalRank = (r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
+@@ -5461,7 +5462,8 @@
+   // If the character has ATTRIBUTE OVERRIDES (Overrides section — force raw scores), those PIN the
+   // ability scores: boosts and even a class change won't move them. That silently looks like "my
+   // stats don't update", so surface it right here where boosts are edited, with a one-click clear.
+-  const pinned = Object.keys(build.overrides?.attributes ?? {}) as AbilityId[];
++  // Only the LIVE sets (rules/blocks/active.ts — Tweaks switch, on/off, start level): a paused set pins nothing.
++  const pinned = liveAttributeSets(build).map((s) => s.ability);
+   const clearAttrOverrides = () => {
+     const ov = { ...(build.overrides ?? {}) };
+     delete ov.attributes;
+@@ -5881,7 +5883,8 @@
+     <>
+       <div className="fs-abil">
+         {ABILITIES.map((ab) => {
+-          const pinned = build.overrides?.attributes?.[ab] !== undefined;
++          // A LIVE set only (rules/blocks/active.ts): a paused one shows no lock.
++          const pinned = liveAttributeSets(build).some((s) => s.ability === ab);
+           return (
+             <div
+               className={'fs-ab fs-ab-open' + (pinned ? ' fs-ab-pinned' : '')}

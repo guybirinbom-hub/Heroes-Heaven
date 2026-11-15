@@ -1,5 +1,6 @@
 import type { Character, ContentDatabase, ProficiencyRank } from '../rules/types';
 import { SKILLS } from '../rules/types';
+import { heldClassNames } from '../rules/heldClasses';
 import {
   deriveAc,
   deriveMaxHp,
@@ -60,7 +61,7 @@ export function computePcStats(c: Character, content: ContentDatabase): PcStats 
   // The character's own Overrides content edits over `content` (../rules/blocks/content.ts — the one
   // content path): the GM's row reads the records the player's sheet reads, so an edit of a feat's
   // numbers (its max HP, a save) is on the row too. Last, over the carried view `sheetPcStats` passes.
-  content = contentFor(content, c?.overrides);
+  content = contentFor(content, c);
   const safe = <T>(fn: () => T, fallback: T): T => {
     try {
       return fn();
@@ -99,7 +100,7 @@ export function computePcStats(c: Character, content: ContentDatabase): PcStats 
 
   return {
     ancestryClass:
-      [c.ancestryId ? content.ancestries[c.ancestryId]?.name : undefined, c.classId ? content.classes[c.classId]?.name : undefined]
+      [c.ancestryId ? content.ancestries[c.ancestryId]?.name : undefined, heldClassNames(c, content.classes)]
         .filter(Boolean)
         .join(' ') || undefined,
     level: c.level ?? 0,

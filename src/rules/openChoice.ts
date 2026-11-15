@@ -22,6 +22,9 @@ export interface OpenOption {
   /** A KEPT stored answer the rule certainly does not allow — the sentence the builder shows under the
    *  filled control, so it does not read as a valid pick (Q27). Absent on every ordinary option. */
   notAllowed?: string;
+  /** The `notAllowed` reason is a TRADITION rule a "Take anyway" tweak may lift (`excludeOwnTraditions`, the
+   *  `sameTraditionAsAnswerOf` tradition arm). Never set for "already your … cantrip" (a no-op grey). */
+  liftable?: boolean;
 }
 
 /**
@@ -99,7 +102,17 @@ export function openChoiceOptions(
   /** `keep`: the choice's stored answers — exempt from `excludeOwnTraditions`, so an answer given before
    *  that rule (or before the character's tradition changed) stays in its own picker rather than reading
    *  as unanswered while the build still grants it. */
-  opts?: { hideLegacy?: boolean; character?: Character; keep?: readonly (string | null | undefined)[] },
+  opts?: {
+    hideLegacy?: boolean;
+    character?: Character;
+    keep?: readonly (string | null | undefined)[];
+    /** A spell a live `spell` "Take anyway" names (Tweaks phase 2, WP4): its tradition rules are lifted — it is
+     *  offered and never marked for them. "Already your … cantrip" still holds. */
+    allowed?: (id: string) => boolean;
+    /** "Show spells of other traditions": also return the spells the tradition rules filter out, each with its
+     *  `notAllowed` reason and `liftable` (the picker greys them and offers Take anyway). */
+    reveal?: boolean;
+  },
 ): OpenOption[] {
   if (!from) return [];
   switch (from.type) {
@@ -144,35 +157,47 @@ export function openChoiceOptions(
       // buildCharacter gives for not granting it (the earlier answer can change after this one was given).
       const sameAs = sameTraditionsAs(from, content, opts?.character);
       const answerOf = sameAs ? content.feats[from.sameTraditionAsAnswerOf!]?.name ?? 'the earlier feat' : '';
+      const lifted = (s: { id: string }) => !!opts?.allowed?.(s.id);
       const sameWhy = (s: { id: string; name: string; traditions?: string[] }): string | undefined =>
         !sameAs
           ? undefined
           : s.id === sameAs.answer
             ? `${s.name} is already your ${answerOf} cantrip — choose another.`
-            : !(s.traditions ?? []).some((t) => sameAs.traditions.has(t))
+            : !lifted(s) && !(s.traditions ?? []).some((t) => sameAs.traditions.has(t))
               ? `${s.name} is not from the tradition of your ${answerOf} cantrip — choose again.`
               : undefined;
+      // The reason the "Show spells of other traditions" reveal greys a filtered-out spell with (WP4).
+      const ownWhy = (s: { name: string; traditions?: string[] }): string =>
+        !s.traditions?.length ? `${s.name} is from no magical tradition, and this choice needs one.` : `${s.name} is from your own tradition, and this choice needs another.`;
       return spellsMatching(filter, content, opts?.hideLegacy)
         .filter(matchesAny)
-        .filter((s) => keep.has(s.id) || (traditionOk(s) && !sameWhy(s)))
+        // A lift never re-offers the answer it must differ from ("already your … cantrip" is no tradition rule).
+        .filter((s) => keep.has(s.id) || (lifted(s) && s.id !== sameAs?.answer) || (traditionOk(s) && !sameWhy(s)) || (!!opts?.reveal && s.id !== sameAs?.answer))
         .map((s) => {
           const rank = (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`;
-          const barred = !!from.excludeOwnTraditions && !s.traditions?.length;
+          const kept = keep.has(s.id);
+          const barred = !lifted(s) && !!from.excludeOwnTraditions && !s.traditions?.length;
           const notSame = sameWhy(s);
+          // Only the reveal reaches here with a spell on the character's own tradition (a kept one stays unmarked).
+          const ownTradition = !kept && !lifted(s) && !barred && !traditionOk(s);
+          // "— choose again" speaks to the stored answer only; a row the reveal adds was never picked (merge check).
+          const again = kept ? ' — choose again' : '';
           return {
             id: s.id,
             name: s.name,
             note: barred
-              ? `${rank} · from no magical tradition — choose again`
+              ? `${rank} · from no magical tradition${again}`
               : notSame
-                ? `${rank} · ${s.id === sameAs?.answer ? `already your ${answerOf} cantrip` : `not from your ${answerOf} cantrip's tradition`} — choose again`
+                ? `${rank} · ${s.id === sameAs?.answer ? `already your ${answerOf} cantrip` : `not from your ${answerOf} cantrip's tradition`}${again}`
                 : rank,
             description: s.description,
             ...(barred
-              ? { notAllowed: `${s.name} is from no magical tradition, and this choice needs one — choose again.` }
+              ? { notAllowed: `${s.name} is from no magical tradition, and this choice needs one${again}.`, liftable: true }
               : notSame
-                ? { notAllowed: notSame }
-                : {}),
+                ? { notAllowed: kept ? notSame : notSame.replace(/ — choose again\.$/, '.'), ...(s.id === sameAs?.answer ? {} : { liftable: true }) }
+                : ownTradition
+                  ? { notAllowed: ownWhy(s), liftable: true }
+                  : {}),
           };
         });
     }

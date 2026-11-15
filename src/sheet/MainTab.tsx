@@ -29,7 +29,7 @@ import { traitDesc } from '../rules/glossary';
 import { assuranceNote, assuranceResult, markNote, markTooltip, markedActionCost, nameOfRecord, recordMarkersFor, sheetLoreKeys, spellNotesFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { SKILL_ACTIONS, rankAtLeast } from '../rules/skillActions';
 import { RecordCard } from './RecordCard';
-import { heldFeatureClassOf, scopeOfCharacter } from './cardScope';
+import { heldFeatureClassOf, linkedNode, scopeOfCharacter } from './cardScope';
 import { astSlug, useAstNode } from './useAst';
 import { OURS_KINDS, type OursLine } from './cardModel';
 import { atLevelLines } from './cardAtLevel';
@@ -44,6 +44,8 @@ import { CritSpecText } from './CritSpecText';
 import { InfoTerm } from './InfoTerm';
 import { useEscapeClose } from './useEscapeClose';
 import { useCustomization } from '../data/customization';
+import { TrustMarker, trustTitle as heldTitle } from './TrustMarker';
+import { trustHeldBack } from '../data/trustGate';
 
 const capWord = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -153,6 +155,7 @@ export function PinnedDescCard({ pin, content, character, onClose, onPlay, pinne
         maxRank={character ? spellMaxRank(character) : undefined}
         signature={!!character && spellSignatureIds(character.spellcasting).has(spell.id)}
         notes={character ? spellNotesFor(character, spell.id) : undefined}
+        classId={character?.classId ?? undefined}
         onClose={onClose}
       />
     );
@@ -604,7 +607,7 @@ function NoRecordActionDetail({ detail, onClose, character, content, onPlay, pin
               ))}
             </div>
           )}
-          <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} />
+          <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} linkNode={(b, s) => linkedNode(content, b, s, [], character.classId ?? undefined)} />
         </div>
       </div>
     </div>
@@ -826,7 +829,7 @@ export function MainTab({
   // Signature resource STATES the character has (rage / panache, from the base class or an archetype
   // dedication) and whether each is currently active. An action gated on a state the character has but
   // hasn't turned on is shown with a "needs <state>" badge — still readable, just not usable yet.
-  const resourceIds = new Set(resourcesForCharacter(character.classId, new Set(character.feats.map((f) => f.featId))).map((r) => r.id));
+  const resourceIds = new Set(resourcesForCharacter(character, new Set(character.feats.map((f) => f.featId))).map((r) => r.id));
   /** Vials mean Quick Alchemy, which the Alchemist Dedication grants without Advanced Alchemy. */
   const hasVersatileVials = resourceIds.has('versatile-vials');
   const gateActive = (g: ResourceGate) => (character.classResources?.[g] ?? 0) > 0;
@@ -916,7 +919,24 @@ export function MainTab({
         !!m.battleForm &&
         (m.feats ?? []).some((f) => (f === featId || f.startsWith(`${featId}:`)) && gateIds.has(f)),
     );
+  /* The trust gate strips `battleForm` off every mode it holds back (MODE_PAYLOAD), so a held-back
+   * form never reaches `formModesFor` and its feat falls back to the plain stance chip — whose stance
+   * record usually holds only `{form, note}` and is not held back itself (bone-swarm, worm-form and
+   * a-little-bird-told-me also carry senses/speeds; the mode is asked instead, as the bigger loss).
+   * Without this the bar said nothing
+   * about why pressing Animal Rage applies no form (Q27). Display only: what applies is unchanged.
+   * Form stances only: a plain stance's chip does not toggle any mode its feat also carries.
+   * (Measured 2026-10-23: 9 held-back modes hang off a stance feat, all 9 battle forms.) */
+  const heldModeFor = (featId: string) =>
+    !content.stances[featId]?.form
+      ? undefined
+      : Object.values(content.modes ?? {}).find(
+          (m) =>
+            (m.feats ?? []).some((f) => (f === featId || f.startsWith(`${featId}:`)) && gateIds.has(f)) &&
+            !!trustHeldBack('modes', m.id)?.length,
+        );
   const activeModeIds = new Set((character.activeModes ?? []).map((m) => m.id));
+  const activeHeldMode = character.activeStance ? heldModeFor(character.activeStance) : undefined;
   // Item actions: activatable carried items (consumables, or invested/worn/equipped magic items).
   const itemActions: (Act & { key: string })[] = (character.inventory ?? [])
     .map((inv) => ({ inv, item: content.items[inv.itemId] }))
@@ -1526,13 +1546,16 @@ export function MainTab({
                           type="button"
                           className={'stance-chip' + (activeModeIds.has(m.id) ? ' on' : '')}
                           disabled={!onPlay}
-                          title={m.note || m.name}
+                          title={heldTitle('modes', m.id, m.note || m.name)}
                           onClick={onPlay ? () => onPlay((p) => toggleMode(p, m.id, content.modes)) : undefined}
                         >
                           {m.name}
                         </button>
                       ));
                     }
+                    /* A held-back form lands here (see heldModeFor): its tooltip names the mode, which
+                       wins over a held-back stance record too — the form is the bigger loss. */
+                    const heldMode = heldModeFor(f.id);
                     return [
                       <button
                         key={f.id}
@@ -1543,12 +1566,14 @@ export function MainTab({
                           (character.activeStance === f.id && stanceIssue ? ' unmet' : '')
                         }
                         disabled={!onPlay}
-                        title={
+                        title={heldTitle(
+                          heldMode ? 'modes' : 'stances',
+                          heldMode ? heldMode.id : f.id,
                           [content.stances[f.id]?.requires?.text && `Requires: ${content.stances[f.id]!.requires!.text}`,
                            content.stances[f.id]?.note || f.name]
                             .filter(Boolean)
-                            .join(' — ')
-                        }
+                            .join(' — '),
+                        )}
                         onClick={onPlay ? () => onPlay((p) => setActiveStance(p, f.id)) : undefined}
                       >
                         {f.name}
@@ -1567,6 +1592,26 @@ export function MainTab({
                     </span>
                   </div>
                 )}
+                {/* The stance (or form) you are in, when the trust gate holds its rules back: the same line
+                    every record shows, where you pressed it — an inert stance that looks active reads as
+                    a broken sheet. */}
+                {/* A held-back form is never in `formModesFor` (the gate strips its battleForm), so the
+                    chip you pressed is the stance one: ask the mode it carries too (the mode wins — the
+                    form is the bigger loss). One line, not two. */}
+                {character.activeStance && (
+                  <TrustMarker
+                    bucket={activeHeldMode ? 'modes' : 'stances'}
+                    id={activeHeldMode ? activeHeldMode.id : character.activeStance}
+                  />
+                )}
+                {/* …and the same held-back form switched on as a MODE (from the Modes panel, or an older
+                    save), with no stance active: the bar would otherwise say nothing about it. */}
+                {stanceFeats
+                  .map((f) => heldModeFor(f.id))
+                  .filter((m): m is NonNullable<typeof m> => !!m && activeModeIds.has(m.id) && m.id !== activeHeldMode?.id)
+                  .map((m) => (
+                    <TrustMarker key={`trust-${m.id}`} bucket="modes" id={m.id} />
+                  ))}
                 {character.activeStance && content.stances[character.activeStance]?.note && (
                   <div className="stance-note">{content.stances[character.activeStance].note}</div>
                 )}

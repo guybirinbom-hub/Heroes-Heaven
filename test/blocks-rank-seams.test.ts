@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { buildCharacter, deriveBuildFromCharacter, emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
 import { readLegacyBlocks } from '../src/rules/blocks/stored';
-import { deriveSkill, profBonus } from '../src/rules/derive';
+import { dailySkillRank, deriveSkill, deriveStrikes, profBonus } from '../src/rules/derive';
 import type { BuildOverrides, Character, ProficiencyRank, TweakMeta } from '../src/rules/types';
 import { content } from './_content';
 
@@ -16,9 +16,12 @@ import { content } from './_content';
  *     loop (after the class raises);
  *   - 'rank.exactly': ONE clamp just before the Character is put together, after every raise — so a rank
  *     the player lowered stays lowered when a later class feature or a feat grant raises it.
- * An entry with no mode ('rank.legacySet') keeps today's `=` loop exactly (checker C2: part A moves no
- * number except case D). Every rank block goes through the one reader (blocks/active.ts): paused,
- * broken, below its start level, or the Tweaks switch off → no effect. Synthetic characters only.
+ * An entry with no mode is SORTED on read (part B open point 2, plan B WP3: B1, B2): "exactly" when it is
+ * below the rank the old `=` met at its slot, else "at least" — so an increase the old `=` swallowed now
+ * counts (spec 2 case A) and a raw Lore key floors the real Lore row; only an entry the sort cannot take
+ * (an unreadable rank, a bare `lore:Lore`) keeps today's `=` ('rank.legacySet'). Every rank block goes
+ * through the one reader (blocks/active.ts): paused, broken, below its start level, or the Tweaks switch
+ * off → no effect. Synthetic characters only.
  */
 
 const db = content();
@@ -107,6 +110,67 @@ describe("'rank.exactly': one clamp after every raise", () => {
   });
 });
 
+/*
+ * Plan B WP5 (B6, B26 c): "exactly" is the final word — a hold the PLAYER made also holds a gunslinger's
+ * firearm rank of that category and stops a daily-preparation pick from lifting the skill; a MOVED hold (an
+ * old entry sorted "exactly" on read, or stamped `moved`) caps neither, because the old `=` never touched
+ * either. Mutation notes: drop the firearm lines in build.ts's clamp, or the `heldExactly` line in
+ * derive.ts `dailySkillRank` → the first two its fail; cap moved holds too (drop `!b.moved` / `forCap`) → the
+ * third fails.
+ */
+describe("'rank.exactly' also caps the firearm rank and a daily skill pick — for a hold the player made (B6, B26 c)", () => {
+  const gunslinger = hero('gunslinger', 5, { inventory: [{ instanceId: 'arq', itemId: 'arquebus', quantity: 1, equipped: true }] } as Partial<BuildState>);
+  const arquebus = (c: Character) => deriveStrikes(c, db).find((s) => s.group === 'firearm' && s.category === 'martial')!.attack[0];
+  const leshy = hero('wizard', 1, { ancestryId: 'leshy' } as Partial<BuildState>);
+  const ageless: BuildOverrides = { addedFeats: [{ featId: 'ageless-spirit', level: 1, category: 'ancestry' }] };
+  /** The sheet after this morning's Ageless Spirit answer (default Athletics, a skill the wizard is untrained in). */
+  const morning = (more: BuildOverrides = {}, skill = 'athletics') =>
+    ({ ...build(leshy, { ...ageless, ...more }), dailyChoices: { 'ageless-spirit:agelessSpiritSkill': skill } }) as Character;
+
+  it("exactly caps a gunslinger's firearm rank: 'exactly trained' martial holds the arquebus (a martial firearm) at trained too", () => {
+    const c0 = build(gunslinger);
+    expect(c0.proficiencies.firearmProf?.martial).toBe('master');
+    const c = build(gunslinger, exactly('martial', 'trained'));
+    expect(c.proficiencies.attacks.martial).toBe('trained');
+    expect(c.proficiencies.firearmProf?.martial).toBe('trained');
+    // The other categories keep their firearm rank: the hold names one category.
+    expect(c.proficiencies.firearmProf?.simple).toBe(c0.proficiencies.firearmProf?.simple);
+    expect(arquebus(c0) - arquebus(c)).toBe(profBonus('master', 5) - profBonus('trained', 5));
+  });
+
+  it("exactly caps a daily-preparation skill pick (Ageless Spirit): 'exactly untrained' Athletics stays untrained after the morning's answer", () => {
+    expect(deriveSkill(morning(), 'athletics', db).rank).toBe('trained'); // the pick lifts it
+    expect(dailySkillRank(morning(), db, 'athletics')).toBe('trained');
+    const held = morning(exactly('athletics', 'untrained'));
+    expect(dailySkillRank(held, db, 'athletics')).toBeUndefined();
+    expect(deriveSkill(held, 'athletics', db).rank).toBe('untrained');
+    // A paused hold caps nothing.
+    expect(deriveSkill(morning(exactly('athletics', 'untrained', { on: false })), 'athletics', db).rank).toBe('trained');
+  });
+
+  it("a MOVED hold (an old entry sorted 'exactly', or stamped moved) caps neither: the firearm Strike and the daily-pick skill show what they showed before", () => {
+    const before = build(gunslinger);
+    // An old entry with no mode: below the class rank, so the read-time sort makes it "exactly" — moved.
+    const old = build(gunslinger, { proficiencies: { martial: 'trained' } });
+    expect(old.tweakRankSort?.martial).toBe('exactly');
+    expect(old.proficiencies.attacks.martial).toBe('trained');
+    expect(old.proficiencies.firearmProf).toEqual(before.proficiencies.firearmProf);
+    expect(arquebus(old)).toBe(arquebus(before));
+    const stamped = build(gunslinger, exactly('martial', 'trained', { moved: true }));
+    expect(stamped.proficiencies.firearmProf).toEqual(before.proficiencies.firearmProf);
+    // The daily pick: a stamped-moved hold and an old sorted entry both let the morning's answer lift it.
+    expect(deriveSkill(morning(exactly('athletics', 'untrained', { moved: true })), 'athletics', db).rank).toBe('trained');
+    // An old entry lowering the wizard's class-trained Arcana sorts "exactly" (moved); the morning's Arcana
+    // answer still lifts it, as it did under the old `=`.
+    const oldDaily = morning({ proficiencies: { arcana: 'untrained' } }, 'arcana');
+    expect(oldDaily.tweakRankSort?.arcana).toBe('exactly');
+    expect(oldDaily.proficiencies.skills.arcana).toBe('untrained');
+    expect(deriveSkill(oldDaily, 'arcana', db).rank).toBe('trained');
+    // …while the same hold made by the player caps it.
+    expect(deriveSkill(morning(exactly('arcana', 'untrained'), 'arcana'), 'arcana', db).rank).toBe('untrained');
+  });
+});
+
 describe("'rank.atLeast' on a save, Perception, class DC, weapon or armor track: a floor after the class raises", () => {
   it('lifts a track below it and never lowers one above it (a fighter at 9th: Fortitude master, Reflex expert)', () => {
     const b = hero('fighter', 9);
@@ -123,32 +187,45 @@ describe("'rank.atLeast' on a save, Perception, class DC, weapon or armor track:
   });
 });
 
-describe("'rank.legacySet' — an old entry with no 'at least' / 'exactly' keeps today's '=' (checker C2)", () => {
+describe("an old entry with no 'at least' / 'exactly' is sorted on read (part B open point 2; B1, B2)", () => {
   const wiz3 = hero('wizard', 3, { skillIncreases: { 3: 'athletics' } } as Partial<BuildState>);
 
-  it('an old "trained" plus a later increase is still trained (today), while the same entry marked "at least" gives expert', () => {
+  // Plan B WP3 (spec 2 case A, part B open point 2): these three expects were "trained (today)" — the old
+  // `=` swallowed the level-3 increase. Sorted on read, the entry (trained, at or above the at-slot rank
+  // trained) is "at least trained", seeded before the increases, so the increase counts.
+  it('an old "trained" plus a later increase is now expert (case A), like the same entry marked "at least"', () => {
     const legacy = build(wiz3, { proficiencies: { athletics: 'trained' } });
-    expect(legacy.proficiencies.skills.athletics).toBe('trained');
-    // Meta that names no mode, or names another entry's rank, is not a mode: still today's '='.
-    expect(build(wiz3, rankTweak('athletics', 'trained', { reason: 'old' })).proficiencies.skills.athletics).toBe('trained');
-    expect(build(wiz3, { proficiencies: { athletics: 'trained' }, meta: { 'proficiencies:athletics': { mode: 'atLeast', of: 'expert' } } }).proficiencies.skills.athletics).toBe('trained');
+    expect(legacy.proficiencies.skills.athletics).toBe('expert');
+    expect(legacy.tweakRankSort).toEqual({ athletics: 'atLeast' });
+    // Meta that names no mode, or names another entry's rank (stale), is not a mode: sorted on read too.
+    expect(build(wiz3, rankTweak('athletics', 'trained', { reason: 'old' })).proficiencies.skills.athletics).toBe('expert');
+    expect(build(wiz3, { proficiencies: { athletics: 'trained' }, meta: { 'proficiencies:athletics': { mode: 'atLeast', of: 'expert' } } }).proficiencies.skills.athletics).toBe('expert');
     expect(build(wiz3, atLeast('athletics', 'trained')).proficiencies.skills.athletics).toBe('expert');
   });
 
-  it('an old lower entry is still lifted by a later feat grant (today), while the same entry marked "exactly" stays', () => {
+  // B1 pin (the blocker's second pin): Medicine is untrained AT THE SLOT, so the redundant 'untrained' entry
+  // sorts "at least" and Medic Dedication still raises it — sorted against the FINAL rank (expert) it would
+  // be "exactly untrained" and the raise would be lost.
+  it('an old lower entry is still lifted by a later feat grant (today), while the same entry marked "exactly" stays (B1: sorted against the at-slot rank)', () => {
     const b = hero('fighter', 4);
     const medic: BuildOverrides = { addedFeats: [{ featId: 'medic-dedication', level: 2, category: 'class' }] };
     expect(build(b, { ...medic, proficiencies: { medicine: 'untrained' } }).proficiencies.skills.medicine).toBe('expert');
     expect(build(b, { ...medic, ...exactly('medicine', 'untrained') }).proficiencies.skills.medicine).toBe('untrained');
   });
 
-  it("an old entry still sets every track with '=' (lowers a class rank, adds a Lore under its raw key); marked 'at least' it does neither", () => {
+  // Plan B WP3: Fortitude and Perception sort "exactly trained" (below their at-slot rank, no later raise in
+  // a fighter build) — the same numbers as the old `=`. Only the Lore expect moved (the Lore-row move, part B
+  // open point 2): a raw `lore:Sailing Lore` entry is always "at least" and floors the real `lore:sailing`
+  // row instead of writing a row of its own.
+  it("an old entry still lowers a class rank as the '=' did (sorted 'exactly'), and a raw Lore key now floors the real Lore row; marked 'at least' it lowers nothing", () => {
     const b = hero('fighter', 7);
     const old = { fortitude: 'trained', perception: 'trained', 'lore:Sailing Lore': 'expert' } as Record<string, ProficiencyRank>;
     const c = build(b, { proficiencies: old });
     expect(c.proficiencies.saves.fortitude).toBe('trained');
     expect(c.proficiencies.perception).toBe('trained');
-    expect(c.proficiencies.skills['lore:Sailing Lore' as never]).toBe('expert');
+    expect(c.proficiencies.skills['lore:sailing']).toBe('expert');
+    expect('lore:Sailing Lore' in c.proficiencies.skills).toBe(false);
+    expect(c.tweakRankSort).toEqual({ fortitude: 'exactly', perception: 'exactly', 'lore:Sailing Lore': 'atLeast' });
     const meta = Object.fromEntries(Object.entries(old).map(([k, r]) => [`proficiencies:${k}`, { mode: 'atLeast' as const, of: r }]));
     const sorted = build(b, { proficiencies: old, meta });
     expect(sorted.proficiencies.saves.fortitude).toBe(build(b).proficiencies.saves.fortitude);
@@ -280,6 +357,8 @@ describe('rank blocks survive the reverse build (build → deriveBuildFromCharac
   it('KNOWN LIMIT (part B keeps the stored build): a real class-skill pick under a live rank tweak comes back as "granted", not as a pick — the same as today\'s legacy "="', () => {
     // If this starts failing, the reverse build learned to tell a pick from a tweak: update the limit
     // lines beside the clamp in build.ts, in docs/overrides-redesign.md item 8 and the part B list.
+    // Part B WP4 keeps the STORED build on both edit paths (src/data/editBuild.ts `editableBuildOf`), so this
+    // limit now reaches only build-less characters: test/tweaks-edit-path.test.ts pins the round trip.
     const b = hero('wizard', 1, { classSkills: ['athletics', 'stealth'] } as Partial<BuildState>);
     for (const ov of [exactly('athletics', 'expert'), atLeast('athletics', 'expert'), { proficiencies: { athletics: 'expert' as ProficiencyRank } }]) {
       const back = deriveBuildFromCharacter(build(b, ov), db);

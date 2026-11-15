@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useRef, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
-import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, FeatChoiceDef, GiftVariant, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
-import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
+import type { AbilityId, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, Feat, FeatChoiceDef, GiftVariant, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
+import { ABILITIES, SKILLS } from '../rules/types';
 import { BOOK_SPLIT_MARK, enabledBookSet, entrySourceOn, sourceCatalog, sourceIdToken, storedSources, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
 import { rankBySearch, searchMatches } from '../data/searchRank';
@@ -11,6 +11,7 @@ import { fetchCampaignByCode, normalizeCode, type CampaignMembership } from '../
 import { campaignsOfCharacter, leaveCampaignQuestion } from '../data/campaignLeave';
 import { refreshCampaignHomebrew } from '../data/campaignHomebrew';
 import { confirmDialog } from '../sheet/confirm';
+import { CampaignGoneNote } from '../sheet/CampaignGoneNote';
 import {
   type BuildState,
   CUSTOM_BACKGROUND_ID,
@@ -47,6 +48,10 @@ import {
   backgroundChoiceKey,
   backgroundChoiceKind,
   backgroundChoiceValue,
+  backgroundLorePicks,
+  backgroundSkillPick,
+  skillKeyLabel,
+  subclassSkillPick,
   secondHeritageIdOf,
   signaturesAt,
   toggleSignature,
@@ -55,8 +60,9 @@ import {
   chosenFromBooks,
   removeChosenIds,
   withCustomAnswer,
+  skillRanksAtLevel,
 } from '../rules/build';
-import { archetypeCantripCounts, archetypeTradition, choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, optionGiftVariant, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
+import { archetypeCantripCounts, archetypeTradition, choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, optionGiftVariant, resolveClassArchetype, subclassOptionState } from '../rules/build';
 import { bookCantripLabel, bookTitle } from '../rules/spellcasting';
 import { listValues } from '../data';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
@@ -106,13 +112,24 @@ import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { useBackHandler, useEscapeClose } from '../sheet/useEscapeClose';
 import { isMobileNow } from '../sheet/useIsMobile';
-import { DraftNumberInput } from './DraftNumberInput';
 import type { DescNode } from '../sheet/descref';
-import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
-import { picksLosingSlot, rekeyFeatSlots, SLOT_KEYED } from '../rules/featSlots';
+import { FEAT_PICK_GRANTS, HERITAGE_FEAT_SPEC, pickRefusal, pickableFeats, type FeatPickSpec } from '../rules/featPickGrants';
+import { liftedAll } from '../rules/choiceRefusal';
+import { heritageFeatOptions } from './bonusFeatOptions';
+import { AnyListNote, allowable, confirmAllowHere } from './tweaks/anyList';
+import { picksLosingSlot, rekeyFeatSlots, SLOT_KEYED, withFeat } from '../rules/featSlots';
 // Case D (docs/overrides-redesign.md spec item 2): a feat given through Tweaks is held like a picked one.
-import { featIdAtSlot, heldFeatIds } from '../rules/heldFeats';
+import { featIdAtSlot, heldFeatIds, slotCategoryOf } from '../rules/heldFeats';
 import { bookGrantChips } from '../rules/spellOptions';
+import { setTweaksSwitch } from '../rules/blocks/write';
+import { allowedInPicker, anyListLifts, liveAttributeSets } from '../rules/blocks/active';
+import { tweaksPageOn } from '../rules/blocks/stored';
+import { askTweaksOff } from './tweaks/switchConfirm';
+import { BreakableOptionRow } from './tweaks/choiceParts';
+import { boostSetParts } from './tweaks/removePlace';
+import { CardMenu } from './FeatSlotCard';
+import { choiceKeptHow, keyedByAnswer, slugWords, withKeptAnswer, type KeptOpts } from './keptAnswer';
+import { BookGreyLine, RevealToggle, StoredPickNote, confirmTakeAnyway, storedPickGrey, useTweakUndoHint, type AnyPickerKey, type Breakable, type PickerReveal } from './tweaks/takeAnyway';
 
 /** "1st", "2nd", "3rd", "4th" … — a spell rank in player text. */
 const ordinalRank = (r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
@@ -418,12 +435,12 @@ function emptyExtraChoices(c: ClassDef | undefined): Record<string, string[]> {
  * exactly what they return and the confirm list is built from the same call, so the dialog cannot
  * name a loss the reducer doesn't take, or miss one it does.
  */
-/** What `changeSubclass(id)` throws away, and the featPicks map it leaves behind. */
+/** What `changeSubclass(id)` throws away, and the featPicks and featChoices maps it leaves behind. */
 export function subclassSwapDrops(
   b: BuildState,
   content: ContentDatabase,
   id: string,
-): { clearsSpells: boolean; featPicks: Record<string, string>; lostFeat: string | null } {
+): { clearsSpells: boolean; featPicks: Record<string, string>; featChoices: Record<string, string>; lostFeat: string | null } {
   const cls = b.classId ? content.classes[b.classId] : undefined;
   const oldOpt = cls?.subclass?.options.find((o) => o.id === b.subclassId);
   const newOpt = cls?.subclass?.options.find((o) => o.id === id);
@@ -433,16 +450,22 @@ export function subclassSwapDrops(
   // removes the value the app filled in itself, which is nobody's answer and not a loss.
   const L2 = '2:class:0';
   let featPicks = b.featPicks;
+  let featChoices = b.featChoices;
   let lostFeat: string | null = null;
   if (id === 'battle-creed' && b.featPicks[L2] !== 'battle-harbinger-dedication') {
     lostFeat = b.featPicks[L2] ?? null;
-    featPicks = { ...b.featPicks, [L2]: 'battle-harbinger-dedication' };
+    // Through the ONE feat placement (featSlots.ts `withFeat`, C44): the old feat's answers (`2:class:0`,
+    // `2:class:0#n`) go with it. A plain featPicks write left them under the slot, and the dedication then
+    // arrived carrying the old feat's sub-choice (WP1 check, F4 — the Splinter Faith pattern).
+    ({ featPicks, featChoices } = withFeat(b, L2, 'battle-harbinger-dedication'));
   } else if (oldOpt?.id === 'battle-creed' && id !== 'battle-creed' && b.featPicks[L2] === 'battle-harbinger-dedication') {
+    // Leaving: only the pick the app filled in goes. Its answers stay under the slot, as a removal leaves them
+    // today (nothing reads an answer whose slot holds no feat, and the next feat placed there clears them).
     featPicks = { ...b.featPicks };
     delete featPicks[L2];
   }
   // a patron change that switches tradition invalidates previously chosen spells
-  return { clearsSpells: oldOpt?.tradition !== newOpt?.tradition, featPicks, lostFeat };
+  return { clearsSpells: oldOpt?.tradition !== newOpt?.tradition, featPicks, featChoices, lostFeat };
 }
 
 /** What `changeDeity(id)` keeps (font + featChoices) and what it throws away (the dropped domains). */
@@ -564,9 +587,11 @@ function withoutPicks(b: BuildState, named: [string, string][]): Partial<BuildSt
   );
 }
 
-/** "Level 2 mythic feat", "Level 4 free archetype feat" — how a confirm names the slot a pick sat in. */
+/** "Level 2 mythic feat", "Level 4 free archetype feat" — how a confirm names the slot a pick sat in. The BOOK
+ *  category (`slotCategoryOf`, Tweaks phase 2 WP7, C10): an extra class place's key reads "class". */
 const slotName = (key: string) => {
-  const [lvl, cat] = key.split(':');
+  const lvl = key.split(':')[0];
+  const cat = slotCategoryOf(key);
   return `Level ${lvl} ${cat === 'archetype' ? 'free archetype' : cat} feat`;
 };
 
@@ -633,6 +658,11 @@ export function requestSubclassChange(id: string, build: BuildState, content: Co
 /** Change the deity, asking first when that would throw an answered pick away. */
 export function requestDeityChange(id: string, build: BuildState, content: ContentDatabase, actions: BuilderActions) {
   if (id === build.deityId) return;
+  void confirmLoss('Change deity?', 'Change deity', deityChangeLosses(id, build, content), () => actions.changeDeity(id));
+}
+
+/** What `changeDeity(id)` asks before it throws away (the deity guard's list). */
+export function deityChangeLosses(id: string, build: BuildState, content: ContentDatabase): string[] {
   /* adversarially confirmed 2026-09-13: this list used to be built only `if (build.deityId)`, which
    * hid the same disagreement the subclass guard did — `changeDeity` replaces an answered divine font
    * and drops off-list domains whether or not a deity was set first, so a build carrying either with
@@ -645,7 +675,123 @@ export function requestDeityChange(id: string, build: BuildState, content: Conte
    * Asmodeus was asked to give up "Divine font — Heal", a choice they never had. */
   const hasFont = heldClasses(build).some((s) => s.classId && content.classes[s.classId]?.features?.some((f) => f.featureId === 'divine-font'));
   if (hasFont && build.divineFont && font !== build.divineFont) lost.push(`Divine font — ${cap(build.divineFont)}`);
-  void confirmLoss('Change deity?', 'Change deity', lost, () => actions.changeDeity(id));
+  return lost;
+}
+
+/** What `changeHeritage` asks before it throws away. */
+export function heritageChangeLosses(build: BuildState): string[] {
+  const lost: string[] = [];
+  if (build.heritageId) {
+    if (build.heritageSkill) lost.push('Heritage skill');
+    if (build.heritageFeatId) lost.push('Heritage feat');
+  }
+  return lost;
+}
+
+/** What `changeBackground` asks before it throws away. */
+export function backgroundChangeLosses(build: BuildState): string[] {
+  const lost: string[] = [];
+  if (build.backgroundId) {
+    if (build.backgroundBoosts.some((a) => a)) lost.push('Background attribute boosts');
+    if (build.backgroundSkillChoice) lost.push('Background skill');
+  }
+  return lost;
+}
+
+/* The pick reducers, pure (Tweaks phase 2, WP4): the actions call them, and a "Take anyway" applies the same one to
+ * the build after its tweak, so the pick and the tweak are ONE write (`writeChoiceTweak`) — one undo step. */
+
+/** A new heritage may not grant a trained skill / a bonus feat, so drop any stale picks. */
+export function withHeritage<B extends BuildState>(b: B, id: string): B {
+  return { ...b, heritageId: id, heritageSkill: null, heritageFeatId: null };
+}
+
+export function withBackground<B extends BuildState>(b: B, id: string, content: ContentDatabase): B {
+  if (id === CUSTOM_BACKGROUND_ID) return { ...b, backgroundId: id, backgroundBoosts: [], customBackground: b.customBackground ?? emptyCustomBackground() };
+  const bg = content.backgrounds[id];
+  const slots = bg ? boostSlots(bg.abilityBoosts) : [];
+  // A different background's skill choice no longer applies — clear the stale pick.
+  return { ...b, backgroundId: id, backgroundBoosts: slots.map(() => null), backgroundSkillChoice: null };
+}
+
+export function withSubclass<B extends BuildState>(b: B, id: string, content: ContentDatabase): B {
+  // A racket that requires a deity (rogue Avenger) used to have one picked for it — the first
+  // entry in the database — so the player never saw the question. It stays unset; setupMissing
+  // reports "Deity" (buildNeedsDeity covers subclass-driven requirements) until they answer it.
+  const deityId = b.deityId;
+  const { clearsSpells, featPicks, featChoices } = subclassSwapDrops(b, content, id);
+  if (clearsSpells) return { ...b, subclassId: id, deityId, featPicks, featChoices, cantrips: [], spells: {}, signatures: {} };
+  return { ...b, subclassId: id, deityId, featPicks, featChoices };
+}
+
+export function withDeity<B extends BuildState>(b: B, id: string, content: ContentDatabase): B {
+  const { font, featChoices } = deitySwapDrops(b, content, id);
+  return { ...b, deityId: id || null, divineFont: font, featChoices };
+}
+
+/**
+ * "Take anyway" in a Setup picker (WP4): the tweak's confirm first (C21), then the picker's own loss list when the
+ * pick clears answers, then ONE `patch` holding the tweak and the pick (`pick`, the same pure reducer the plain
+ * pick uses) — one undo step. A paused allow for the same pick is switched back on, never listed twice.
+ */
+export async function takeAnywayPick(
+  actions: BuilderActions,
+  opts: { name: string; rule: string; undoHint?: string; k: AnyPickerKey; host: BuildState; losses?: { title: string; verb: string; list: string[] }; pick: (b: BuildState) => BuildState },
+): Promise<void> {
+  const write = await confirmTakeAnyway<BuildState>({ name: opts.name, rule: opts.rule, undoHint: opts.undoHint, k: opts.k, host: opts.host });
+  if (!write) return;
+  const commit = () => actions.patch((b) => write(b, opts.pick));
+  if (opts.losses?.list.length) void confirmLoss(opts.losses.title, opts.losses.verb, opts.losses.list, commit);
+  else commit();
+}
+
+/**
+ * C35: the ONE set of subclass-picker parts both pickers use (Setup and the level page): each option's grey from
+ * `subclassOptionState` (the sanctification rule; un-greyed with a note while a live "Take anyway" covers it), the
+ * picker's `breakable` (Tweaks page on only), the stored pick's grey look and its note (mark or book line, C45).
+ * `slot` 2 is the Dual Class second class's picker: it reads and writes `subclassId2` and keeps that picker's
+ * plain write, with no loss list (2026-10-27 — until then a Fighter/Champion of Iomedae picked Desecration
+ * there with no grey, no reason and nothing in Setup).
+ */
+export function subclassPickerParts(build: BuildState, content: ContentDatabase, actions: BuilderActions, undoHint: string, cls: ClassDef | undefined, slot: 1 | 2 = 1) {
+  const key = (id: string): AnyPickerKey => ({ picker: 'subclass', record: id, classId: cls?.id });
+  const find = (id: string) => cls?.subclass?.options.find((o) => o.id === id);
+  const stateOf = (o: { id: string; traits?: string[] } | undefined) => (o ? subclassOptionState(o, build, content, cls?.id) : null);
+  const take = (id: string, pick = true) => {
+    const o = find(id);
+    const rule = stateOf(o)?.bookReason;
+    if (!o || !rule) return;
+    const verb = `Change ${(cls?.subclass?.name ?? 'subclass').toLowerCase()}`;
+    void takeAnywayPick(actions, {
+      name: o.name,
+      rule,
+      undoHint,
+      k: key(id),
+      host: build,
+      ...(pick && slot === 1 ? { losses: { title: `${verb}?`, verb, list: subclassChangeLosses(build, content, id) } } : {}),
+      pick: (b) => (!pick ? b : slot === 2 ? { ...b, subclassId2: id } : withSubclass(b, id, content)),
+    });
+  };
+  const tweaksOn = tweaksPageOn(build);
+  const storedId = slot === 2 ? build.subclassId2 : build.subclassId;
+  const stored = storedId ? find(storedId) : undefined;
+  const storedRule = stateOf(stored)?.bookReason ?? null;
+  return {
+    option: (o: { id: string; traits?: string[] }): { disabled?: boolean; disabledReason?: string; note?: string } => {
+      const st = stateOf(o)!;
+      return st.reason ? { disabled: true, disabledReason: st.reason } : st.tweaked ? { note: 'Allowed by a tweak' } : {};
+    },
+    breakable: tweaksOn ? { reasonOf: (id: string) => stateOf(find(id))?.reason, onTakeAnyway: (id: string) => take(id) } : undefined,
+    grey: storedPickGrey(build, stored ? key(stored.id) : null, storedRule),
+    note: (
+      <StoredPickNote
+        host={build}
+        k={stored ? key(stored.id) : null}
+        rule={storedRule}
+        onTakeAnyway={tweaksOn && stored ? () => take(stored.id, false) : undefined}
+      />
+    ),
+  };
 }
 
 /**
@@ -705,8 +851,9 @@ export function useBuilderActions(
       const slots = a ? boostSlots(a.abilityBoosts) : [];
       setBuild((b) => {
         // Drop ancestry-category feat picks (slotKey = "level:category:idx") — the old
-        // ancestry's feats are illegal for the new one. Keep class/skill/general picks.
-        const isAncestry = (k: string) => k.split(':')[1] === 'ancestry';
+        // ancestry's feats are illegal for the new one. Keep class/skill/general picks. An extra ANCESTRY place's
+        // pick goes too (its book category, `slotCategoryOf`: Tweaks phase 2 WP7, C10); the place itself stays.
+        const isAncestry = (k: string) => slotCategoryOf(k) === 'ancestry';
         const featPicks = Object.fromEntries(Object.entries(b.featPicks).filter(([k]) => !isAncestry(k)));
         const featChoices = Object.fromEntries(Object.entries(b.featChoices).filter(([k]) => !isAncestry(k)));
         return {
@@ -726,26 +873,13 @@ export function useBuilderActions(
       });
     },
     changeHeritage(id) {
-      // A new heritage may not grant a trained skill / a bonus feat, so drop any stale picks.
-      patch({ heritageId: id, heritageSkill: null, heritageFeatId: null });
+      setBuild((b) => withHeritage(b, id));
     },
     setHeritageSkill(skill) {
       patch({ heritageSkill: skill });
     },
     changeBackground(id) {
-      if (id === CUSTOM_BACKGROUND_ID) {
-        setBuild((b) => ({
-          ...b,
-          backgroundId: id,
-          backgroundBoosts: [],
-          customBackground: b.customBackground ?? emptyCustomBackground(),
-        }));
-        return;
-      }
-      const b = content.backgrounds[id];
-      const slots = b ? boostSlots(b.abilityBoosts) : [];
-      // A different background's skill choice no longer applies — clear the stale pick.
-      patch({ backgroundId: id, backgroundBoosts: slots.map(() => null), backgroundSkillChoice: null });
+      setBuild((b) => withBackground(b, id, content));
     },
     setCustomBackground(p) {
       setBuild((b) => ({ ...b, customBackground: { ...(b.customBackground ?? emptyCustomBackground()), ...p } }));
@@ -781,15 +915,7 @@ export function useBuilderActions(
       }));
     },
     changeSubclass(id) {
-      setBuild((b) => {
-        // A racket that requires a deity (rogue Avenger) used to have one picked for it — the first
-        // entry in the database — so the player never saw the question. It stays unset; setupMissing
-        // reports "Deity" (buildNeedsDeity covers subclass-driven requirements) until they answer it.
-        const deityId = b.deityId;
-        const { clearsSpells, featPicks } = subclassSwapDrops(b, content, id);
-        if (clearsSpells) return { ...b, subclassId: id, deityId, featPicks, cantrips: [], spells: {}, signatures: {} };
-        return { ...b, subclassId: id, deityId, featPicks };
-      });
+      setBuild((b) => withSubclass(b, id, content));
     },
     toggleExtraChoice(groupId, optionId, maxPick) {
       setBuild((b) => {
@@ -806,10 +932,7 @@ export function useBuilderActions(
       });
     },
     changeDeity(id) {
-      setBuild((b) => {
-        const { font, featChoices } = deitySwapDrops(b, content, id);
-        return { ...b, deityId: id || null, divineFont: font, featChoices };
-      });
+      setBuild((b) => withDeity(b, id, content));
     },
     changeDivineFont(font) {
       patch({ divineFont: font });
@@ -900,30 +1023,10 @@ export function useBuilderActions(
       });
     },
     setFeat(slotKey, featId) {
-      setBuild((b) => {
-        const featPicks = { ...b.featPicks };
-        const featChoices = { ...b.featChoices };
-        // A new feat invalidates the old slot's sub-choice — INCLUDING a multi-pick one, whose
-        // answers live at `<slot>#0..#n`, not at the bare slot key. Deleting only the bare key left
-        // Splinter Faith's four answers behind: swap it out of a slot and back in and the player got
-        // "nature, pain, zeal, death" — four domains they never picked for this feat, one of them the
-        // *"up to one domain that isn't on either list"* (feat-7596) — which is exactly the surprise
-        // the comment below says was removed. Same `#n` blindness as the changeDeity loop, fixed at
-        // the one place every feat swap goes through, so every multi-pick choice is covered.
-        for (const k of Object.keys(featChoices)) {
-          if (k === slotKey || k.startsWith(`${slotKey}#`)) delete featChoices[k];
-        }
-        if (featId) {
-          featPicks[slotKey] = featId;
-          // The feat's embedded choice ("choose a domain", "choose an energy type") is left UNSET.
-          // It used to be pre-filled with the first option so the feat was usable immediately, but a
-          // filled picker doesn't read as a question — Domain Initiate arrived with a domain the player
-          // never chose, and the focus spell that came with it was a surprise.
-        } else {
-          delete featPicks[slotKey];
-        }
-        return { ...b, featPicks, featChoices };
-      });
+      // The one feat placement (featSlots.ts `withFeat`, Tweaks phase 2 C44): it clears the old feat's
+      // answers at the slot key AND every `<slot>#n` (the Splinter Faith fix), and leaves the new feat's own
+      // choice unset. The phase-2 writes that place a feat use the same function.
+      setBuild((b) => withFeat(b, slotKey, featId));
     },
     setFeatChoice(slotKey, value) {
       setBuild((b) => ({ ...b, featChoices: { ...b.featChoices, [slotKey]: value } }));
@@ -1209,9 +1312,12 @@ export function AbilitySelect({
   exclude,
   title = 'Attribute boost',
   kind = 'boost',
+  keptHow,
 }: {
   value: AbilityId | null;
   options: readonly AbilityId[];
+  /** WP9: a stored value not in `options` shows by name, greyed, saying what the sheet does with it. */
+  keptHow?: KeptOpts['how'];
   onChange: (v: AbilityId | null) => void;
   /** Abilities already chosen elsewhere in this boost group — disabled here. */
   exclude?: readonly (AbilityId | null)[];
@@ -1233,17 +1339,20 @@ export function AbilitySelect({
       clearLabel="Clear"
       icon={flaw ? 'ti-arrow-down' : undefined}
       className={flaw ? 'is-flaw' : undefined}
-      options={options.map((o) => {
-        const taken = o !== value && !!exclude?.includes(o);
-        return {
-          value: o,
-          label: ABILITY_LABEL[o],
-          disabled: taken,
-          // The greying was here already; the sentence was not, and "why is Strength grey?" is a
-          // real question when four boost pills sit side by side.
-          disabledReason: taken ? (flaw ? 'Already chosen by another pick in this group.' : 'Already boosted by another pick in this group.') : undefined,
-        };
-      })}
+      options={(() => {
+        const rows = options.map((o) => {
+          const taken = o !== value && !!exclude?.includes(o);
+          return {
+            value: o as string,
+            label: ABILITY_LABEL[o],
+            disabled: taken,
+            // The greying was here already; the sentence was not, and "why is Strength grey?" is a
+            // real question when four boost pills sit side by side.
+            disabledReason: taken ? (flaw ? 'Already chosen by another pick in this group.' : 'Already boosted by another pick in this group.') : undefined,
+          };
+        });
+        return keptHow ? withKeptAnswer(rows, value, { labelOf: (v) => ABILITY_LABEL[v as AbilityId] ?? v, how: keptHow }) : rows;
+      })()}
     />
   );
 }
@@ -1349,6 +1458,9 @@ export function SearchSelect({
   sourcesHidden,
   sortByName = false,
   clearLabel,
+  breakable,
+  reveal,
+  grey = false,
 }: {
   label: string;
   value: string | null | undefined;
@@ -1380,6 +1492,13 @@ export function SearchSelect({
    *  list, shown only while something is chosen, that calls `onChange('')`. An action, never a fake
    *  `''` option — that would be counted as one more choice and need a page it does not have. */
   clearLabel?: string;
+  /** Tweaks phase 2 (WP4): a greyed option whose RULE reason `breakable.reasonOf` names is drawn as WP2's
+   *  `BreakableOptionRow` with "Take anyway". Passed only while the Tweaks page is on; absent = as before. */
+  breakable?: Breakable;
+  /** The reveal switch under the search box ("Show heritages of other ancestries"); passed only with Tweaks on. */
+  reveal?: PickerReveal;
+  /** C45: the stored pick is one a book rule refuses and no live tweak covers — its NAME shows, greyed. */
+  grey?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
@@ -1442,7 +1561,7 @@ export function SearchSelect({
     <>
       {current && currentNode ? (
         // Filled + describable: the value opens its description; a separate Replace button re-opens the picker.
-        <div {...ctlAttrs} className="popsel is-picked ss-filled">
+        <div {...ctlAttrs} className={'popsel is-picked ss-filled' + (grey ? ' tw-grey-pick' : '')} {...(grey ? { 'data-pick-grey': '' } : {})}>
           <button type="button" className="ss-filled-body" title="View description" onClick={() => setDescNode(currentNode)}>
             <span className="popsel-val">{current.name}</span>
           </button>
@@ -1454,7 +1573,8 @@ export function SearchSelect({
         <button
           type="button"
           {...ctlAttrs}
-          className={'popsel' + (current ? ' is-picked' : ' is-empty')}
+          className={'popsel' + (current ? ' is-picked' : ' is-empty') + (grey && current ? ' tw-grey-pick' : '')}
+          {...(grey && current ? { 'data-pick-grey': '' } : {})}
           onClick={openPicker}
         >
           {current ? (
@@ -1495,6 +1615,7 @@ export function SearchSelect({
                 autoFocus={!isMobileNow()}
                 onChange={(e) => setQ(e.target.value)}
               />
+              {reveal && <RevealToggle reveal={reveal} />}
             </div>
             <div className="picker-list">
               {sections.map((s) => (
@@ -1503,6 +1624,24 @@ export function SearchSelect({
                   {s.items.map((o) => {
                     const off = !!o.disabled && o.id !== value;
                     const node = readFirst ? mkNode(o) : null;
+                    // Only a RULE grey gets the button: the row's own reason must BE the rule's (C20; WP4 finish C2 —
+                    // a row greyed for another reason, a narrowing or "already chosen", stays a plain grey row).
+                    const rule = off && breakable ? breakable.reasonOf(o.id) : null;
+                    if (rule && rule === o.disabled && breakable)
+                      return (
+                        <BreakableOptionRow
+                          key={o.id}
+                          name={o.name}
+                          note={o.note}
+                          reason={rule}
+                          action={breakable.action}
+                          onOpenDesc={node ? () => setDescNode(node) : undefined}
+                          onAct={() => {
+                            setOpen(false);
+                            breakable.onTakeAnyway(o.id);
+                          }}
+                        />
+                      );
                     // Read-first rows: press the row to read its description; the Select button chooses it.
                     return readFirst ? (
                       <PickerRow
@@ -1590,6 +1729,159 @@ export function SearchSelect({
 /** A value picker that opens a popup list instead of a native dropdown (used for every
  *  in-builder choice: subclass, extra choices, ability boosts, skills, companion type, …).
  *  Auto-enables a search box for long lists. */
+/** How many rows a picker with its reveal on draws before "N more — type to narrow the list" (WP5). */
+const REVEAL_CAP = 200;
+
+/**
+ * ONE FEAT LIST PICKER: every pick-a-feat (General Training, Ancestral Paragon, …) and the three bonus feat pickers
+ * (Versatile Human, School of Unified Magical Theory, a dedication's bonus skill feat) — Tweaks phase 2, WP5.
+ *
+ * The options are the book's (`feats`, or `pickableFeats(spec)`), plus a feat a LIVE "Pick from any list" lets in
+ * ("Allowed here by a tweak"). With the Tweaks page on, "Search every feat" (default off) adds the rest, greyed
+ * with `pickRefusal`'s words and "Allow here" (C20, C22; no "Take anyway": these pickers check no prerequisites,
+ * C41); a rule no tweak lifts (an impulse's element) gets no button. The stored answer always shows by name — greyed
+ * with the book's reason when nothing live covers it (C45) — and its Tweak mark or book line sits under the control.
+ * `pick` is the plain pick as a pure reducer: the select and the "Allow here" write (one `writeChoiceTweak`, one
+ * undo step) both use it.
+ */
+export function FeatPickSelect({
+  build,
+  content,
+  actions,
+  spec,
+  feats,
+  value,
+  pick,
+  hide,
+  noteOf,
+  title,
+  placeholder,
+  search,
+  className,
+}: {
+  className?: string;
+  build: BuildState;
+  content: ContentDatabase;
+  actions: BuilderActions;
+  /** The rule the greyed rows' words and "Allow here" read (`pickRefusal`). */
+  spec: FeatPickSpec;
+  /** The offered feats, in order (default `pickableFeats(spec)`); the bonus pickers pass their own list. */
+  feats?: readonly Feat[];
+  value: string;
+  pick: (b: BuildState, featId: string) => BuildState;
+  /** Feats never offered (a sibling pick's answer). */
+  hide?: ReadonlySet<string>;
+  noteOf?: (f: Feat) => string | undefined;
+  title: string;
+  placeholder: string;
+  search?: boolean;
+}) {
+  const [reveal, setReveal] = useState(false);
+  const undoHint = useTweakUndoHint();
+  const L = featListTweak({ build, content, actions, spec, feats, hide, value, reveal, setReveal, undoHint, pick });
+  const options = L.rows.map(({ f, disabledReason, allowedByTweak }) => ({
+    value: f.id,
+    label: f.name,
+    note: allowedByTweak ? 'Allowed here by a tweak' : noteOf?.(f),
+    description: f.description,
+    record: { bucket: 'feats', id: f.id },
+    ...(disabledReason ? { disabled: true, disabledReason } : {}),
+  }));
+  return (
+    <>
+      <PopupSelect
+        className={className}
+        title={title}
+        placeholder={placeholder}
+        value={value}
+        search={search}
+        onChange={(v) => actions.patch((b) => pick(b, v))}
+        options={options}
+        grey={L.grey}
+        reveal={L.reveal}
+        breakable={L.breakable}
+      />
+      {L.note}
+    </>
+  );
+}
+
+/**
+ * The parts a feat list picker needs for "Pick from any list" (WP5), whatever control draws it (FeatPickSelect's
+ * PopupSelect, the Versatile Human heritage feat's SearchSelect): the rows in order — the stored answer first when
+ * no list offers it (C45, greyed with the book's words), the book's feats, the feats a live allow lets in, then with
+ * the reveal on every other feat greyed with its words — plus the stored pick's grey look, its note (Tweak mark or
+ * book line), the reveal switch and the "Allow here" door (Tweaks page on only).
+ */
+export function featListTweak(o: {
+  build: BuildState;
+  content: ContentDatabase;
+  actions: BuilderActions;
+  spec: FeatPickSpec;
+  feats?: readonly Feat[];
+  hide?: ReadonlySet<string>;
+  value: string | null | undefined;
+  reveal: boolean;
+  setReveal: (on: boolean) => void;
+  undoHint: string;
+  pick: (b: BuildState, featId: string) => BuildState;
+}) {
+  const { build, content, spec, hide } = o;
+  const tweaksOn = tweaksPageOn(build);
+  const refuse = pickRefusal(spec, build, content);
+  const lifts = anyListLifts(build);
+  const base = (o.feats ?? pickableFeats(spec, build, content)).filter((f) => !hide?.has(f.id));
+  const baseIds = new Set(base.map((f) => f.id));
+  // A feat a live allow lets in that the book list leaves out (the bonus pickers keep their own lists).
+  const lifted = [...lifts.keys()]
+    .map((id) => content.feats[id])
+    .filter((f): f is Feat => !!f && !baseIds.has(f.id) && !hide?.has(f.id) && liftedAll(refuse(f), lifts.get(f.id)));
+  const shownIds = new Set([...baseIds, ...lifted.map((f) => f.id)]);
+  const words = (f: Feat) => refuse(f).map((r) => r.words).join('; ');
+  const off =
+    tweaksOn && o.reveal
+      ? listValues(content, content.feats)
+          .filter((f) => !shownIds.has(f.id) && !hide?.has(f.id) && refuse(f).length > 0)
+          .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
+      : [];
+  const stored = o.value ? content.feats[o.value] : undefined;
+  const storedOff = !!stored && !shownIds.has(stored.id) && !off.some((f) => f.id === stored.id);
+  const row = (f: Feat, disabledReason?: string) => ({ f, disabledReason, allowedByTweak: !disabledReason && refuse(f).length > 0 });
+  const rows = [
+    ...(storedOff && stored ? [row(stored, words(stored) || 'Not on this list')] : []),
+    ...base.map((f) => row(f)),
+    ...lifted.map((f) => row(f)),
+    ...off.map((f) => row(f, words(f))),
+  ];
+  // C45: a stored answer no live allow covers shows greyed (a feat the content lost shows its id, as before).
+  const storedRefusals = stored ? refuse(stored) : [];
+  const grey = !!stored && storedRefusals.length > 0 && !liftedAll(storedRefusals, lifts.get(stored.id));
+  const allow = async (id: string) => {
+    const f = content.feats[id];
+    const refusals = f ? refuse(f) : [];
+    if (!f || !allowable(refusals)) return;
+    const write = await confirmAllowHere<BuildState>({ name: f.name, featId: id, refusals, host: build, undoHint: o.undoHint });
+    if (write) o.actions.patch((b) => write(b, (x) => o.pick(x, id)));
+  };
+  const breakable: Breakable | undefined = tweaksOn
+    ? {
+        reasonOf: (id) => {
+          const f = content.feats[id];
+          return f && allowable(refuse(f)) ? words(f) : null;
+        },
+        onTakeAnyway: (id) => void allow(id),
+        action: 'allow',
+      }
+    : undefined;
+  return {
+    rows,
+    grey,
+    breakable,
+    reveal: tweaksOn ? { label: 'Search every feat', on: o.reveal, onToggle: o.setReveal } : undefined,
+    note: stored && storedRefusals.length > 0 ? <AnyListNote host={build} featId={stored.id} refusals={storedRefusals} /> : null,
+  };
+}
+
 export function PopupSelect({
   value,
   options,
@@ -1604,12 +1896,17 @@ export function PopupSelect({
   addCustom,
   clearLabel,
   sourcesHidden,
+  breakable,
+  grey: greyProp = false,
+  reveal,
 }: {
   value: string | null | undefined;
   /** `disabled` greys the option out; `disabledReason` is the short sentence saying WHY, printed in
    *  the row and repeated as its tooltip. Q27: an option that cannot be picked must look unpickable
    *  and, where the reason is knowable, say so — never render identically and be silently inert. */
-  options: ({ value: string; label: string; note?: string; disabled?: boolean; disabledReason?: string } & OptionDesc)[];
+  /** `kept` marks a stored answer the list does not offer (`withKeptAnswer`, WP9): the control shows it by name,
+   *  greyed, with this line under it. */
+  options: ({ value: string; label: string; note?: string; disabled?: boolean; disabledReason?: string; kept?: string } & OptionDesc)[];
   onChange: (value: string) => void;
   placeholder?: string;
   title?: string;
@@ -1640,6 +1937,12 @@ export function PopupSelect({
   clearLabel?: string;
   /** Options this character's Sources hide — the list says how many, with a way to turn books on. */
   sourcesHidden?: SourcesHidden;
+  /** Tweaks phase 2 (WP4): see SearchSelect's `breakable`. Passed only while the Tweaks page is on. */
+  breakable?: Breakable;
+  /** C45: see SearchSelect's `grey`. */
+  grey?: boolean;
+  /** WP4 finish: see SearchSelect's `reveal` (the granted-feat open spell choice, the archetype pool's pickers). */
+  reveal?: PickerReveal;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
@@ -1663,6 +1966,21 @@ export function PopupSelect({
     setCustomMode(false);
     setCustomText('');
   };
+  // WP4: a rule-greyed option with "Take anyway" (WP2's BreakableOptionRow; the one look in every picker).
+  const breakRow = (o: { value: string; label: string; note?: string }, rule: string, node: DescNode | null) => (
+    <BreakableOptionRow
+      key={o.value}
+      name={o.label}
+      note={o.note}
+      reason={rule}
+      action={breakable?.action}
+      onOpenDesc={node ? () => setDescNode(node) : undefined}
+      onAct={() => {
+        close();
+        breakable?.onTakeAnyway(o.value);
+      }}
+    />
+  );
   const customRefusal = customText.trim() ? (addCustom?.refuse?.(customText.trim()) ?? null) : null;
   const commitCustom = () => {
     const t = customText.trim();
@@ -1671,6 +1989,8 @@ export function PopupSelect({
     close();
   };
   const current = options.find((o) => o.value === value && o.value !== '');
+  // WP9: a kept answer (a stored value the list does not offer) shows by name in the book's C45 grey, its line under it.
+  const grey = greyProp || !!current?.kept;
   // A describable current pick (slot variant) gets the read-first filled control: the value opens its
   // description, a Replace button re-opens the picker — so pressing the value reads it, never re-chooses.
   // card step 7b: an option that names its record opens that record's own page (optionNode).
@@ -1684,6 +2004,9 @@ export function PopupSelect({
     useSearch && needle
       ? rankBySearch(options.filter((o) => searchMatches(q, o.label)), q, (o) => o.label)
       : options;
+  // WP5: a reveal can add thousands of rows ("Search every feat"): with it on, the first REVEAL_CAP are drawn and
+  // the rest are a typed search away. Off, every row is drawn, as always.
+  const rows = reveal?.on && filtered.length > REVEAL_CAP ? filtered.slice(0, REVEAL_CAP) : filtered;
   const openPicker = () => {
     setQ('');
     setCustomMode(false);
@@ -1720,7 +2043,7 @@ export function PopupSelect({
         </button>
       ) : variant === 'slot' && current && currentNode ? (
         // Read-first filled slot: press the value to read its description; Replace re-opens the picker.
-        <div {...ctlAttrs} className={'popsel is-picked ss-filled' + (className ? ' ' + className : '')}>
+        <div {...ctlAttrs} className={'popsel is-picked ss-filled' + (className ? ' ' + className : '') + (grey ? ' tw-grey-pick' : '')} {...(grey ? { 'data-pick-grey': '' } : {})}>
           <button type="button" className="ss-filled-body" title="View description" onClick={() => setDescNode(currentNode)}>
             {icon && <span className="popsel-tile"><i className={'ti ' + icon} aria-hidden="true" /></span>}
             <span className="popsel-val">{current.label}</span>
@@ -1733,7 +2056,8 @@ export function PopupSelect({
         <button
           type="button"
           {...ctlAttrs}
-          className={'popsel' + (variant === 'pill' ? ' pill' : '') + (current ? ' is-picked' : ' is-empty') + (className ? ' ' + className : '')}
+          className={'popsel' + (variant === 'pill' ? ' pill' : '') + (current ? ' is-picked' : ' is-empty') + (className ? ' ' + className : '') + (grey && current ? ' tw-grey-pick' : '')}
+          {...(grey && current ? { 'data-pick-grey': '' } : {})}
           onClick={openPicker}
         >
           {current ? (
@@ -1755,6 +2079,7 @@ export function PopupSelect({
           )}
         </button>
       )}
+      {current?.kept && <BookGreyLine rule={current.kept} />}
       {open && (
         <div className="picker-overlay" onClick={close}>
           <div className="picker" onClick={(e) => e.stopPropagation()}>
@@ -1812,13 +2137,22 @@ export function PopupSelect({
                       autoFocus={!isMobileNow()}
                       onChange={(e) => setQ(e.target.value)}
                     />
+                    {reveal && <RevealToggle reveal={reveal} />}
+                  </div>
+                )}
+                {/* A short list has no search box; the reveal (WP4 finish) still sits above the rows. */}
+                {!useSearch && reveal && (
+                  <div style={{ padding: '0 10px' }}>
+                    <RevealToggle reveal={reveal} />
                   </div>
                 )}
                 <div className="picker-list">
-                  {filtered.some((o) => o.description)
+                  {rows.some((o) => o.description)
                     ? // Read-first rows: press the option to read its description; the Select button chooses it.
-                      filtered.map((o) => {
+                      rows.map((o) => {
                         const node = o.description ? optionNode({ ...o, name: o.label }) : null;
+                        const rule = breakable && o.disabled && o.value !== value ? breakable.reasonOf(o.value) : null;
+                        if (rule && rule === o.disabledReason && breakable) return breakRow(o, rule, node);
                         return (
                           <PickerRow
                             key={o.value || '__none'}
@@ -1837,7 +2171,11 @@ export function PopupSelect({
                           />
                         );
                       })
-                    : filtered.map((o) => (
+                    : rows.map((o) => {
+                        // As above: only where the row's own reason IS the rule's (C2).
+                        const rule = breakable && o.disabled && o.value !== value ? breakable.reasonOf(o.value) : null;
+                        if (rule && rule === o.disabledReason && breakable) return breakRow(o, rule, null);
+                        return (
                         <button
                           type="button"
                           key={o.value || '__none'}
@@ -1859,7 +2197,8 @@ export function PopupSelect({
                             {o.disabled && o.disabledReason && <div className="picker-why">{o.disabledReason}</div>}
                           </div>
                         </button>
-                      ))}
+                        );
+                      })}
                   {addCustom && (
                     <button type="button" className="picker-item" onClick={() => setCustomMode(true)}>
                       <span className="picker-check"><i className="ti ti-pencil" aria-hidden="true" /></span>
@@ -1867,6 +2206,11 @@ export function PopupSelect({
                         <div className="picker-name">{addCustom.label}</div>
                       </div>
                     </button>
+                  )}
+                  {rows.length < filtered.length && (
+                    <div className="picker-more" data-reveal-more={filtered.length - rows.length}>
+                      {filtered.length - rows.length} more — type to narrow the list.
+                    </div>
                   )}
                   {filtered.length === 0 && !addCustom && !(sourcesHidden && hiddenCount(sourcesHidden, useSearch ? q : '')) && (
                     <div className="setup-note" style={{ padding: 12 }}>
@@ -2104,11 +2448,14 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
   // Phone audit D3: the Sources card, one tap from the Mythic Calling list when its books are off.
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const fullDb = useContent();
+  const undoHint = useTweakUndoHint();
   const dualClass = !!build.variantRules?.dualClass;
   const abp = !!build.variantRules?.abp;
   const mythic = !!build.mythicEnabled;
   if (!dualClass && !abp && !mythic) return null;
   const cls2 = build.classId2 ? content.classes[build.classId2] : undefined;
+  // The second class's subclass greys, explains and takes anyway like the first (a Fighter/Champion's cause).
+  const sub2Parts = subclassPickerParts(build, content, actions, undoHint, cls2, 2);
   const callings = Object.values(content.classFeatures)
     .filter((f) => (f.traits ?? []).includes('calling'))
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -2143,9 +2490,12 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
               value={build.subclassId2 ?? ''}
               onChange={(v) => actions.patch({ subclassId2: v || null })}
               clearLabel="Clear"
-              options={cls2.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } }))}
+              options={cls2.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id }, ...sub2Parts.option(o) }))}
+              breakable={sub2Parts.breakable}
+              grey={sub2Parts.grey}
             />
           )}
+          {cls2?.subclass && sub2Parts.note}
         </SetupCard>
       )}
       {abp && (
@@ -2405,8 +2755,8 @@ export function CampaignAttachCard({
    * in, never every campaign the account is in, and there is no in/out toggle — leaving asks first, and
    * coming back is joining again with the code (data/campaignLeave.ts). */
   const inCampaigns = campaignsOfCharacter(build.campaignIds, memberships);
-
   const setIds = setCampaignIds ?? ((f: (ids: string[]) => string[]) => actions.patch((b) => ({ campaignIds: f(b.campaignIds ?? []) })));
+
   const leave = async (m: CampaignMembership) => {
     if (!(await confirmDialog(leaveCampaignQuestion(m, live.current.name)))) return;
     onLeaveCampaign?.(m.id); // App: detach this character; a player's membership goes once no character is left in it
@@ -2442,7 +2792,7 @@ export function CampaignAttachCard({
     const mine = res.ok && !!res.value.ownerId && res.value.ownerId === auth.session?.user.id;
     let list = have;
     if (mine && have.some((m) => m.id === id && m.role !== 'gm')) {
-      // Stored as 'player' (the join before 2026-10-21 did that, and the local copy wins the merge, so it
+      // Stored as 'player' (the join before 2026-10-21 did that, and the local copy won the merge then, so it
       // spread): the code proves it is theirs — put the GM role back, also when this character is in it.
       list = have.map((m) => (m.id === id ? { ...m, role: 'gm' as const } : m));
       saveCampaigns(list);
@@ -2544,6 +2894,7 @@ export function CampaignAttachCard({
                     <i className="ti ti-logout" aria-hidden="true" /> Leave
                   </button>
                 )}
+                <CampaignGoneNote campaignId={m.id} gm={m.role === 'gm'} />
               </span>
             ))}
           </div>
@@ -2634,32 +2985,6 @@ export function RuleCards({
     </>
   );
 }
-
-/**
- * "Overrides" — the creative/freeform editing section. Lets the user deliberately break the rules in
- * SPECIFIC, explicit cases (no global "ignore everything" switch): take a feat you don't qualify for
- * (recorded inline from the feat picker's "Take anyway"), grant a bonus feat with no slot, or remove
- * a feat the rules auto-granted. Each bent rule shows as a removable chip so it stays visible.
- * Authoring brand-new content (homebrew feats/options) is intentionally a separate future section.
- */
-// Proficiency tracks the user can override, in display order (skills appended below).
-const PROF_TRACKS: { key: string; name: string }[] = [
-  { key: 'perception', name: 'Perception' },
-  { key: 'classDc', name: 'Class DC' },
-  { key: 'fortitude', name: 'Fortitude save' },
-  { key: 'reflex', name: 'Reflex save' },
-  { key: 'will', name: 'Will save' },
-  { key: 'unarmed', name: 'Unarmed attacks' },
-  { key: 'simple', name: 'Simple weapons' },
-  { key: 'martial', name: 'Martial weapons' },
-  { key: 'advanced', name: 'Advanced weapons' },
-  { key: 'unarmored', name: 'Unarmored defense' },
-  { key: 'light', name: 'Light armor' },
-  { key: 'medium', name: 'Medium armor' },
-  { key: 'heavy', name: 'Heavy armor' },
-];
-const profTrackName = (key: string) =>
-  PROF_TRACKS.find((t) => t.key === key)?.name ?? (key.startsWith('lore:') ? `${cap(key.slice(5))} Lore` : cap(key));
 
 /** Per-character source books: enable/disable books (default = the four Core books) so the builder
  *  pickers only offer content from the books you allow. Already-chosen content is always kept. */
@@ -3127,314 +3452,29 @@ export function FormulaBookCard({ build, actions, content, character }: EditorPr
   );
 }
 
-/**
- * The overrides object the Overrides card saves: `prev` with `next` laid over it, every EMPTY field
- * dropped (so an emptied override clears to absent), and `undefined` when nothing is left.
- *
- * Generic over the keys on purpose. It used to rebuild the object one hand-written line per key, and
- * there was no `maxHp` line, so Overrides → Set maximum HP looked like it worked and saved nothing
- * (phone audit D5). A key added to BuildOverrides later is kept without anyone remembering to add it;
- * test/overrides-write.test.tsx holds a sample of EVERY BuildOverrides key, read off types.ts.
- */
-export function pruneOverrides(prev: BuildOverrides, next: Partial<BuildOverrides>): BuildOverrides | undefined {
-  const merged: Record<string, unknown> = { ...prev, ...next };
-  const out: Record<string, unknown> = {};
-  for (const [k, v] of Object.entries(merged)) if (overrideHasContent(v, 1)) out[k] = v;
-  return Object.keys(out).length ? (out as BuildOverrides) : undefined;
-}
-
-/** Empty = absent, not a finite number, an empty list, or an object holding nothing. `depth` 1 looks one
- *  level into an object's values, which is the shape the old per-key checks had: contentEdits
- *  `{ feats: {} }` is empty, `{ feats: { x: {} } }` (an edit just started) is not; attributes `{}` is
- *  empty, `{ str: 10 }` is not. */
-function overrideHasContent(v: unknown, depth: number): boolean {
-  if (v == null) return false;
-  if (typeof v === 'number') return Number.isFinite(v);
-  if (Array.isArray(v)) return v.length > 0;
-  if (typeof v === 'object') return Object.values(v as Record<string, unknown>).some((x) => x !== undefined && (depth > 0 ? overrideHasContent(x, depth - 1) : true));
-  return true;
-}
-
-export function OverridesCard({ build, actions, content, character }: EditorProps & { character: Character }) {
-  const ov = build.overrides ?? {};
-  const featName = (id: string) => content.feats[id]?.name ?? id;
-  const featureName = (id: string) => content.classFeatures[id]?.name ?? id;
-  const langName = (id: string) => content.languages[id]?.name ?? cap(id);
-  // Write a pruned overrides object — drop empty fields so an emptied override clears to `undefined`.
-  const writeOv = (next: Partial<BuildOverrides>) => actions.patch({ overrides: pruneOverrides(ov, next) });
-
-  // --- Feats: allow-past-prereqs ledger + grant (feat OR feature) + remove ---
-  const unallow = (id: string) => {
-    const slot = Object.entries(build.featPicks).find(([, v]) => v === id)?.[0];
-    if (slot) actions.setFeat(slot, null);
-    writeOv({ allowedFeats: (ov.allowedFeats ?? []).filter((x) => x !== id) });
-  };
-  const grant = (prefixed: string) => {
-    const i = prefixed.indexOf(':');
-    const kind = prefixed.slice(0, i);
-    const id = prefixed.slice(i + 1);
-    if (kind === 'feat') {
-      const f = content.feats[id];
-      if (f && !ov.addedFeats?.some((a) => a.featId === id)) writeOv({ addedFeats: [...(ov.addedFeats ?? []), { featId: id, level: Math.min(f.level, build.level), category: f.category }] });
-    } else {
-      const f = content.classFeatures[id];
-      if (f && !ov.addedFeatures?.some((a) => a.featureId === id)) writeOv({ addedFeatures: [...(ov.addedFeatures ?? []), { featureId: id, level: Math.min(f.level, build.level) }] });
-    }
-  };
-  const ungrantFeat = (id: string) => writeOv({ addedFeats: (ov.addedFeats ?? []).filter((a) => a.featId !== id) });
-  const ungrantFeature = (id: string) => writeOv({ addedFeatures: (ov.addedFeatures ?? []).filter((a) => a.featureId !== id) });
-  const removeFeat = (id: string) => { if (!ov.removedFeatIds?.includes(id)) writeOv({ removedFeatIds: [...(ov.removedFeatIds ?? []), id] }); };
-  const unremove = (id: string) => writeOv({ removedFeatIds: (ov.removedFeatIds ?? []).filter((x) => x !== id) });
-
-  const grantOptions = [
-    ...Object.values(content.feats).filter((f) => f.level <= build.level && !ov.addedFeats?.some((a) => a.featId === f.id)).map((f) => ({ id: `feat:${f.id}`, name: f.name, note: `Feat · ${cap(f.category)} · lvl ${f.level}`, description: f.description, descRefs: f.descRefs, record: { bucket: 'feats', id: f.id } })),
-    ...Object.values(content.classFeatures).filter((f) => !ov.addedFeatures?.some((a) => a.featureId === f.id)).map((f) => ({ id: `feature:${f.id}`, name: f.name, note: `Feature · lvl ${f.level}`, description: f.description, descRefs: f.descRefs, record: { bucket: 'classFeatures', id: f.id } })),
-  ].sort((a, b) => a.name.localeCompare(b.name));
-  const removeOptions = character.feats
-    .filter((f, i, arr) => arr.findIndex((x) => x.featId === f.featId) === i && !ov.removedFeatIds?.includes(f.featId))
-    .map((f) => ({ id: f.featId, name: featName(f.featId), note: `level ${f.level}` }));
-
-  // --- Attributes: force a raw score, no limits ---
-  // Called once, when the player leaves the box (DraftNumberInput) — never per keystroke, which refilled
-  // an emptied box mid-edit and saved 12 → 8 as 128 (phone audit D6).
-  const setAttr = (ab: AbilityId, n: number) => writeOv({ attributes: { ...ov.attributes, [ab]: n } });
-  const revertAttr = (ab: AbilityId) => {
-    const a = { ...(ov.attributes ?? {}) };
-    delete a[ab];
-    writeOv({ attributes: a });
-  };
-
-  // --- Proficiencies: set any track to any rank ---
-  const setProf = (key: string, rank: ProficiencyRank) => writeOv({ proficiencies: { ...ov.proficiencies, [key]: rank } });
-  const clearProf = (key: string) => {
-    const p = { ...(ov.proficiencies ?? {}) };
-    delete p[key];
-    writeOv({ proficiencies: p });
-  };
-  const profTrackOptions = [
-    ...PROF_TRACKS.filter((t) => !(t.key in (ov.proficiencies ?? {}))).map((t) => ({ id: t.key, name: t.name })),
-    ...SKILLS.filter((s) => !(s in (ov.proficiencies ?? {}))).map((s) => ({ id: s, name: cap(s) })),
-  ];
-
-  // --- Languages ---
-  const addLang = (id: string) => { if (!ov.addedLanguages?.includes(id)) writeOv({ addedLanguages: [...(ov.addedLanguages ?? []), id] }); };
-  const removeLang = (id: string) => writeOv({ addedLanguages: (ov.addedLanguages ?? []).filter((x) => x !== id) });
-  const langOptions = Object.values(content.languages)
-    .filter((l) => !ov.addedLanguages?.includes(l.id) && !character.languages.includes(l.id))
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map((l) => ({ id: l.id, name: l.name }));
-
-  // --- Spells: grant any spell at any rank (rituals included; no tradition/access check) ---
-  const spellName = (id: string) => content.spells[id]?.name ?? id;
-  const addSpell = (id: string) => {
-    const sp = content.spells[id];
-    if (sp && !ov.addedSpells?.some((a) => a.spellId === id)) writeOv({ addedSpells: [...(ov.addedSpells ?? []), { spellId: id, rank: sp.rank }] });
-  };
-  const setSpellRank = (id: string, rank: number) => writeOv({ addedSpells: (ov.addedSpells ?? []).map((a) => (a.spellId === id ? { ...a, rank } : a)) });
-  const removeSpell = (id: string) => writeOv({ addedSpells: (ov.addedSpells ?? []).filter((a) => a.spellId !== id) });
-  const spellOptions = Object.values(content.spells)
-    .filter((s) => !ov.addedSpells?.some((a) => a.spellId === s.id))
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map((s) => ({ id: s.id, name: s.name, note: (s.ritual ? 'Ritual' : cap(s.traditions[0] ?? 'spell')) + ` · rank ${s.rank}`, description: s.description, descRefs: s.descRefs, record: { bucket: 'spells', id: s.id } }));
-
-  // --- Change an existing feat/feature (edit its name + description text) ---
-  type EditMap = 'feats' | 'classFeatures';
-  const startEdit = (prefixed: string) => {
-    const i = prefixed.indexOf(':');
-    const map: EditMap = prefixed.slice(0, i) === 'feat' ? 'feats' : 'classFeatures';
-    const id = prefixed.slice(i + 1);
-    const ce = ov.contentEdits ?? {};
-    if (ce[map]?.[id]) return;
-    writeOv({ contentEdits: { ...ce, [map]: { ...(ce[map] ?? {}), [id]: {} } } });
-  };
-  const setEdit = (map: EditMap, id: string, patch: Record<string, unknown>) => {
-    const ce = ov.contentEdits ?? {};
-    writeOv({ contentEdits: { ...ce, [map]: { ...(ce[map] ?? {}), [id]: { ...(ce[map]?.[id] ?? {}), ...patch } } } });
-  };
-  const revertEdit = (map: EditMap, id: string) => {
-    const ce = ov.contentEdits ?? {};
-    const m = { ...(ce[map] ?? {}) };
-    delete m[id];
-    writeOv({ contentEdits: { ...ce, [map]: m } });
-  };
-  const editOptions = [
-    ...Object.values(content.feats).filter((f) => !ov.contentEdits?.feats?.[f.id]).map((f) => ({ id: `feat:${f.id}`, name: f.name, note: `Feat · lvl ${f.level}` })),
-    ...Object.values(content.classFeatures).filter((f) => !ov.contentEdits?.classFeatures?.[f.id]).map((f) => ({ id: `feature:${f.id}`, name: f.name, note: `Feature · lvl ${f.level}` })),
-  ].sort((a, b) => a.name.localeCompare(b.name));
-  const editEntries: { map: EditMap; id: string }[] = [
-    ...Object.keys(ov.contentEdits?.feats ?? {}).map((id) => ({ map: 'feats' as EditMap, id })),
-    ...Object.keys(ov.contentEdits?.classFeatures ?? {}).map((id) => ({ map: 'classFeatures' as EditMap, id })),
-  ];
-
-  const chip = (id: string, label: string, onX: () => void) => (
-    <span className="ovr-chip" key={id}>
-      {label}
-      <button type="button" className="ovr-chip-x" title="Remove this override" onClick={onX} aria-label={`Remove override: ${label}`}>
-        <i className="ti ti-x" aria-hidden="true" />
-      </button>
-    </span>
-  );
-
-  return (
-    <SetupCard icon="ti-wand" label="Overrides">
-      <p className="ovr-intro">
-        Creative editing — deliberately bend the rules for specific cases. In a feat picker, a feat you don't qualify for shows
-        a <span className="ovr-take-inline">Take anyway</span> option; it lands here.
-      </p>
-
-      {!!ov.allowedFeats?.length && (
-        <SubCard icon="ti-lock-open" label="Taken despite prerequisites" count={ov.allowedFeats.length}>
-          <div className="ovr-chips">{ov.allowedFeats.map((id) => chip(id, featName(id), () => unallow(id)))}</div>
-        </SubCard>
-      )}
-
-      <SubCard icon="ti-plus" label="Grant a feat or feature" count={(ov.addedFeats?.length ?? 0) + (ov.addedFeatures?.length ?? 0) || undefined}>
-        <SearchSelect label="Grant a feat or feature" value={null} placeholder="Add a feat or feature…" options={grantOptions} onChange={grant} bare />
-        {(!!ov.addedFeats?.length || !!ov.addedFeatures?.length) && (
-          <div className="ovr-chips">
-            {ov.addedFeats?.map((a) => chip(`feat:${a.featId}`, featName(a.featId), () => ungrantFeat(a.featId)))}
-            {ov.addedFeatures?.map((a) => chip(`feature:${a.featureId}`, featureName(a.featureId), () => ungrantFeature(a.featureId)))}
-          </div>
-        )}
-      </SubCard>
-
-      <SubCard icon="ti-minus" label="Remove a granted feat" count={ov.removedFeatIds?.length || undefined}>
-        <SearchSelect label="Remove a feat" value={null} placeholder="Remove a feat…" options={removeOptions} onChange={removeFeat} bare />
-        {!!ov.removedFeatIds?.length && <div className="ovr-chips">{ov.removedFeatIds.map((id) => chip(id, featName(id), () => unremove(id)))}</div>}
-      </SubCard>
-
-      <SubCard icon="ti-stairs-up" label="Change attributes" count={ov.attributes && Object.keys(ov.attributes).length ? Object.keys(ov.attributes).length : undefined}>
-        <div className="ovr-attrs">
-          {ABILITIES.map((ab) => {
-            const overridden = ov.attributes?.[ab] !== undefined;
-            return (
-              <label key={ab} className={'ovr-attr' + (overridden ? ' on' : '')}>
-                <span className="ovr-attr-k">{ABILITY_LABEL[ab]}</span>
-                <DraftNumberInput
-                  className="ovr-attr-in"
-                  aria-label={ABILITY_LABEL[ab]}
-                  value={character.abilities[ab]}
-                  onCommit={(n) => setAttr(ab, n)}
-                  // Emptied and left = back to the computed score (what the revert button does).
-                  onClear={() => revertAttr(ab)}
-                />
-                {overridden && (
-                  <button type="button" className="ovr-attr-x" title="Revert to computed" onClick={() => revertAttr(ab)} aria-label={`Revert ${ab}`}>
-                    <i className="ti ti-arrow-back-up" aria-hidden="true" />
-                  </button>
-                )}
-              </label>
-            );
-          })}
-        </div>
-      </SubCard>
-
-      {/* Maximum HP. The engine has honoured hitPoints.maxOverride and had a dedicated breakdown
-          line for it all along; nothing anywhere ever wrote it, so a finished feature had no control
-          and the breakdown branch could never be seen. */}
-      <SubCard icon="ti-heart" label="Set maximum HP" count={ov.maxHp != null ? 1 : undefined}>
-        <div className="ovr-attrs">
-          <label className={'ovr-attr' + (ov.maxHp != null ? ' on' : '')}>
-            <span className="ovr-attr-k">Max HP</span>
-            {/* Phone audit D5: this never saved anything — writeOv rebuilt the overrides key by key and had
-                no maxHp line (pruneOverrides is generic now). D6: a draft box, as for the attributes. */}
-            <DraftNumberInput
-              className="ovr-attr-in"
-              aria-label="Max HP"
-              min={1}
-              value={ov.maxHp ?? character.hitPoints.current}
-              onCommit={(n) => writeOv({ maxHp: n })}
-              onClear={() => writeOv({ maxHp: undefined })}
-            />
-            {ov.maxHp != null && (
-              <button type="button" className="ovr-attr-x" title="Revert to computed" onClick={() => writeOv({ maxHp: undefined })} aria-label="Revert maximum HP">
-                <i className="ti ti-arrow-back-up" aria-hidden="true" />
-              </button>
-            )}
-          </label>
-        </div>
-      </SubCard>
-
-      <SubCard icon="ti-award" label="Change proficiency" count={ov.proficiencies && Object.keys(ov.proficiencies).length ? Object.keys(ov.proficiencies).length : undefined}>
-        <SearchSelect label="Add a proficiency" value={null} placeholder="Choose a track…" options={profTrackOptions} onChange={(k) => setProf(k, 'trained')} bare />
-        {!!ov.proficiencies && Object.keys(ov.proficiencies).length > 0 && (
-          <div className="ovr-rows">
-            {Object.entries(ov.proficiencies).map(([key, rank]) => (
-              <div className="ovr-row" key={key}>
-                <span className="ovr-row-k">{profTrackName(key)}</span>
-                <PopupSelect variant="pill" title="Rank" value={rank} onChange={(v) => setProf(key, v as ProficiencyRank)} options={PROFICIENCY_RANKS.map((r) => ({ value: r, label: cap(r) }))} />
-                <button type="button" className="ovr-chip-x" title="Remove" onClick={() => clearProf(key)} aria-label={`Remove ${key} override`}>
-                  <i className="ti ti-x" aria-hidden="true" />
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </SubCard>
-
-      <SubCard icon="ti-language" label="Add a language" count={ov.addedLanguages?.length || undefined}>
-        <SearchSelect label="Add a language" value={null} placeholder="Add a language…" options={langOptions} onChange={addLang} bare />
-        {!!ov.addedLanguages?.length && <div className="ovr-chips">{ov.addedLanguages.map((id) => chip(id, langName(id), () => removeLang(id)))}</div>}
-      </SubCard>
-
-      <SubCard icon="ti-sparkles" label="Add spell" count={ov.addedSpells?.length || undefined}>
-        <SearchSelect label="Add a spell" value={null} placeholder="Add any spell or ritual…" options={spellOptions} onChange={addSpell} bare />
-        {!!ov.addedSpells?.length && (
-          <div className="ovr-rows">
-            {ov.addedSpells.map((a) => {
-              const isRitual = content.spells[a.spellId]?.ritual;
-              return (
-                <div className="ovr-row" key={a.spellId}>
-                  <span className="ovr-row-k">
-                    {spellName(a.spellId)}
-                    {isRitual ? ' (ritual)' : ''}
-                  </span>
-                  {!isRitual && (
-                    <PopupSelect
-                      variant="pill"
-                      title="Rank"
-                      value={String(a.rank)}
-                      onChange={(v) => setSpellRank(a.spellId, Number(v))}
-                      options={Array.from({ length: 11 }, (_, r) => ({ value: String(r), label: r === 0 ? 'Cantrip' : `Rank ${r}` }))}
-                    />
-                  )}
-                  <button type="button" className="ovr-chip-x" title="Remove" onClick={() => removeSpell(a.spellId)} aria-label={`Remove ${spellName(a.spellId)}`}>
-                    <i className="ti ti-x" aria-hidden="true" />
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </SubCard>
-
-      <SubCard icon="ti-edit" label="Change a feat or feature" count={editEntries.length || undefined}>
-        <SearchSelect label="Edit a feat or feature" value={null} placeholder="Edit a feat or feature…" options={editOptions} onChange={startEdit} bare />
-        {editEntries.map(({ map, id }) => {
-          const entry = (map === 'feats' ? content.feats : content.classFeatures)[id];
-          if (!entry) return null;
-          return (
-            <div className="ovr-edit" key={`${map}:${id}`}>
-              <div className="ovr-edit-head">
-                <input className="ovr-edit-name" value={entry.name} onChange={(e) => setEdit(map, id, { name: e.target.value })} />
-                <button type="button" className="ovr-chip-x" title="Revert all edits to this entry" onClick={() => revertEdit(map, id)} aria-label={`Revert edits to ${entry.name}`}>
-                  <i className="ti ti-x" aria-hidden="true" />
-                </button>
-              </div>
-              <textarea className="ovr-edit-desc" rows={4} value={entry.description} onChange={(e) => setEdit(map, id, { description: e.target.value })} />
-            </div>
-          );
-        })}
-      </SubCard>
-    </SetupCard>
-  );
-}
-
 /** Per-character convenience/house options on the Setup page (alternate ancestry boosts, voluntary
  *  flaw, ignore bulk, dice roller on/off). Distinct from the GMG variant rules. */
-export function OptionsCard({ build, actions }: EditorProps) {
+export function OptionsCard({
+  build,
+  actions,
+  content,
+  character,
+  tweaksContent,
+}: EditorProps & {
+  /** The character the draft builds and the Builder's FULL content view: the Tweaks switch-off list names
+   *  its tweaks with them (plan B section 5.3). */
+  character?: Character;
+  tweaksContent?: ContentDatabase;
+}) {
   const opts = build.options ?? {};
   const set = (patch: Partial<CharacterOptions>) => actions.patch({ options: { ...opts, ...patch } });
+  // The Tweaks switch (decision 28): as the draft reads it, written only by setTweaksSwitch (v and the option
+  // together). Off asks first and lists what stops counting; on asks nothing.
+  const tweaksOn = tweaksPageOn(build);
+  const toggleTweaks = async () => {
+    if (tweaksOn && !(await askTweaksOff(build, tweaksContent ?? content, character))) return;
+    actions.patch((b) => setTweaksSwitch(b, !tweaksOn));
+  };
   return (
     <SetupCard icon="ti-settings" label="Options">
       <div className="spr-chips">
@@ -3482,13 +3522,13 @@ export function OptionsCard({ build, actions }: EditorProps) {
           onToggle={() => set({ deepBackground: !opts.deepBackground })}
         />
         <ToggleWithInfo
-          label="Overrides"
-          description="Reveal the Overrides section — creative, deliberate rule-breaking for specific cases: take feats you don't qualify for, grant or remove feats and features, edit attributes and proficiencies, and more."
-          on={!!opts.overridesEnabled}
-          onToggle={() => set({ overridesEnabled: !opts.overridesEnabled })}
+          label="Tweaks"
+          description="Your own changes to this character's rules: give or remove a feat, a class feature, a language or a spell, change a number or a rank, take a feat you don't qualify for, or rewrite a description. On shows the Tweaks button in the top bar. Off pauses every tweak until you turn it back on; nothing is deleted."
+          on={tweaksOn}
+          onToggle={() => void toggleTweaks()}
           className="ovr-opt"
         >
-          <i className="ti ti-wand" aria-hidden="true" /> Overrides
+          <i className="ti ti-adjustments" aria-hidden="true" /> Tweaks
         </ToggleWithInfo>
       </div>
     </SetupCard>
@@ -3501,6 +3541,9 @@ export function SetupCard({
   count,
   closed,
   children,
+  boostSet,
+  menu,
+  after,
 }: {
   icon: string;
   label: string;
@@ -3513,6 +3556,10 @@ export function SetupCard({
    */
   closed?: { summary?: ReactNode };
   children: ReactNode;
+  /** WP14: as SubCard's — the free boosts' set name, card menu and removed places' rows (open cards only). */
+  boostSet?: string;
+  menu?: ReactNode;
+  after?: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
   if (closed) {
@@ -3536,7 +3583,7 @@ export function SetupCard({
     );
   }
   return (
-    <div className="lvl-card lvl-card-setup" data-setupcard={label}>
+    <div className={'lvl-card lvl-card-setup' + (after ? ' lvl-card-has-rows' : '')} data-setupcard={label} {...(boostSet ? { 'data-boost-set': boostSet } : {})}>
       <span className="lvl-card-icon">
         <i className={'ti ' + icon} aria-hidden="true" />
       </span>
@@ -3547,6 +3594,9 @@ export function SetupCard({
         </div>
         <div className="lvl-card-row">{children}</div>
       </div>
+      {menu}
+      {/* Fix round 1: the removed places' rows take the card's full width on their own line (not beside the menu). */}
+      {after && <div className="lvl-removed-rows">{after}</div>}
     </div>
   );
 }
@@ -3558,11 +3608,31 @@ export function SetupCard({
  *  Grim Fascination is counted by `levelChoices` with required:true and listed in the Create/Save
  *  confirmation, but its row was the only required row on the page with no marker on it — the level
  *  said "3 choices left" and only two of the three rows showed which. */
-export function SubCard({ icon, label, count, pending, children }: { icon: string; label: string; count?: ReactNode; pending?: boolean; children: ReactNode }) {
+export function SubCard({
+  icon,
+  label,
+  count,
+  pending,
+  children,
+  boostSet,
+  menu,
+  after,
+}: {
+  icon: string;
+  label: string;
+  count?: ReactNode;
+  pending?: boolean;
+  children: ReactNode;
+  /** WP14: a Setup boost set's name (`data-boost-set`), its card menu (at the card's end) and its removed places'
+   *  rows (under its selects). All absent: the sub-card is exactly what it was. */
+  boostSet?: string;
+  menu?: ReactNode;
+  after?: ReactNode;
+}) {
   return (
-    <div className="lvl-subcard" data-subcard={label}>
+    <div className="lvl-subcard" data-subcard={label} {...(boostSet ? { 'data-boost-set': boostSet } : {})}>
       <i className="ti ti-corner-down-right lvl-subcard-conn" aria-hidden="true" />
-      <div className="lvl-card lvl-card-setup lvl-card-child">
+      <div className={'lvl-card lvl-card-setup lvl-card-child' + (after ? ' lvl-card-has-rows' : '')}>
         <span className="lvl-card-icon">
           <i className={'ti ' + icon} aria-hidden="true" />
         </span>
@@ -3574,6 +3644,8 @@ export function SubCard({ icon, label, count, pending, children }: { icon: strin
           <div className="lvl-card-row">{children}</div>
         </div>
         {pending && <span className="lvl-pending">!</span>}
+        {menu}
+        {after && <div className="lvl-removed-rows">{after}</div>}
       </div>
     </div>
   );
@@ -3708,19 +3780,72 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   /* Two headed groups, not one mixed list (owner, 2026-09-22): the ancestry's OWN heritages first,
    * then the versatile ones any ancestry may take. Ordered here so the picker's sections come out in
    * that order — it heads each group in the order it first meets one. */
+  /* Tweaks phase 2 (WP4): with the Tweaks page on, "Show heritages of other ancestries" (default off) adds the rest,
+   * each greyed with its book reason and "Take anyway". C45: the STORED heritage is always in the list — a
+   * heritage of another ancestry shows by name (greyed under the card while no live tweak covers it), never the
+   * placeholder — on, paused, with Tweaks off and with no tweak at all. */
+  const tweaksOn = tweaksPageOn(build);
+  const undoHint = useTweakUndoHint();
+  const [revealHeritages, setRevealHeritages] = useState(false);
+  // …and the two-casters card's archetype pool pickers' "Show spells of other traditions" (WP4 finish, B2/B3).
+  const [revealArchSpells, setRevealArchSpells] = useState(false);
+  const foreignHeritage = (h: { ancestryId: string | null }) => h.ancestryId !== null && h.ancestryId !== build.ancestryId;
+  const heritageRule = (h: { ancestryId: string | null } | undefined): string | null =>
+    h && foreignHeritage(h) ? `Not a heritage of your ${build.ancestryId ? (content.ancestries[build.ancestryId]?.name ?? build.ancestryId) + ' ' : ''}ancestry.` : null;
   const heritageOpts = [
     ...Object.values(content.heritages).filter((h) => h.ancestryId !== null && h.ancestryId === build.ancestryId),
     // The ancestry's own keep the ancestry's order; the versatile ones (from every book) by name.
     ...Object.values(content.heritages)
       .filter((h) => h.ancestryId === null)
       .sort((a, b) => a.name.localeCompare(b.name)),
+    // The other ancestries' heritages: every one under the reveal, else only the stored one (C45) and one a live
+    // tweak allows (made on the Tweaks page alone, the picker offers it un-greyed).
+    ...Object.values(content.heritages)
+      .filter((h) => foreignHeritage(h) && ((tweaksOn && revealHeritages) || h.id === build.heritageId || allowedInPicker(build, 'heritage', h.id)))
+      .sort((a, b) => (content.ancestries[a.ancestryId!]?.name ?? a.ancestryId!).localeCompare(content.ancestries[b.ancestryId!]?.name ?? b.ancestryId!) || a.name.localeCompare(b.name)),
   ];
+  const heritageKey = (id: string): AnyPickerKey => ({ picker: 'heritage', record: id });
+  const takeHeritageAnyway = (id: string, pick = true) => {
+    const h = content.heritages[id];
+    const rule = heritageRule(h);
+    if (!h || !rule) return;
+    void takeAnywayPick(actions, {
+      name: h.name,
+      rule,
+      undoHint,
+      k: heritageKey(id),
+      host: build,
+      ...(pick ? { losses: { title: 'Change heritage?', verb: 'Change heritage', list: heritageChangeLosses(build) } } : {}),
+      pick: (b) => (pick ? withHeritage(b, id) : b),
+    });
+  };
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
   const background = build.backgroundId ? content.backgrounds[build.backgroundId] : undefined;
+  // A printed ancestry gate on a background (Sewer Dragon: kobold only): the book reason, or null.
+  const backgroundRule = (b: { ancestryPrerequisite?: string[] } | undefined): string | null =>
+    b?.ancestryPrerequisite?.length && build.ancestryId && !b.ancestryPrerequisite.includes(build.ancestryId)
+      ? `Requires the ${b.ancestryPrerequisite.map(cap).join(' or ')} ancestry.`
+      : null;
+  const backgroundKey = (id: string): AnyPickerKey => ({ picker: 'background', record: id });
+  const takeBackgroundAnyway = (id: string, pick = true) => {
+    const b = content.backgrounds[id];
+    const rule = backgroundRule(b);
+    if (!b || !rule) return;
+    void takeAnywayPick(actions, {
+      name: b.name,
+      rule,
+      undoHint,
+      k: backgroundKey(id),
+      host: build,
+      ...(pick ? { losses: { title: 'Change background?', verb: 'Change background', list: backgroundChangeLosses(build) } } : {}),
+      pick: (x) => (pick ? withBackground(x, id, content) : x),
+    });
+  };
   const cls = build.classId ? content.classes[build.classId] : undefined;
   // Dual Class: a subsystem owned by class `id` may live on the second class — its setup UI should
   // appear (and read the right subclass) regardless of which slot the class is in.
   const cls2 = build.variantRules?.dualClass && build.classId2 ? content.classes[build.classId2] : undefined;
+  const subParts = subclassPickerParts(build, content, actions, undoHint, cls);
   const ownsClass = (id: string): boolean => cls?.id === id || cls2?.id === id;
   const classDefOf = (id: string): ClassDef | undefined => (cls?.id === id ? cls : cls2?.id === id ? cls2 : undefined);
   const subclassOf = (id: string): string | null => (cls?.id === id ? build.subclassId : cls2?.id === id ? build.subclassId2 ?? null : null);
@@ -3774,6 +3899,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   // second free slot the moment the answer flips.
   const bgSlots = background ? boostSlots(backgroundEffectiveBoosts(build, background)) : [];
   const bgFixed = background ? fixedBoosts(backgroundEffectiveBoosts(build, background)) : [];
+  /* Tweaks phase 2 WP14 (C47): the ancestry's and background's boost sets — "Remove boost place N" in each card's menu
+     (Tweaks on), a removed place's select not drawn, its kept row (or thin line) under the selects. The fixed boosts
+     are no places (they are not in the slots). */
+  const ancBp = boostSetParts(build, actions.patch, 'ancestry', ancSlots.length, build.ancestryBoosts);
+  const bgBp = boostSetParts(build, actions.patch, 'background', bgSlots.length, build.backgroundBoosts);
   const subKey = subclassKeyAbility(build, content);
   // A racket-style subclass offers a key-attribute CHOICE (Dex or the racket's attribute) — show
   // the picker restricted to those; otherwise a multi-key class shows its own list.
@@ -3808,14 +3938,31 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   const limitChar = useMemo(() => { try { return buildCharacter(build, content); } catch { return undefined; } }, [build, content]);
   // Level-1 general feats (skill feats are a subset of general feats) for a feat-granting heritage
   // (Versatile Human). Content-static, so memoize away per-keystroke re-filters.
-  const heritageFeatOpts = useMemo(
-    () =>
-      Object.values(content.feats)
-        .filter((f) => f.level <= 1 && (f.category === 'general' || f.category === 'skill'))
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((f) => ({ id: f.id, name: f.name, note: f.category === 'skill' ? 'skill feat' : undefined, description: f.description, descRefs: f.descRefs, record: { bucket: 'feats', id: f.id } })),
-    [content.feats],
-  );
+  // The list is bonusFeatOptions.ts's; `featListTweak` adds "Search every feat" and the stored pick's look (WP5).
+  const heritageFeats = useMemo(() => heritageFeatOptions(content), [content]);
+  const [heritageFeatReveal, setHeritageFeatReveal] = useState(false);
+  const heritageFeatUndoHint = useTweakUndoHint();
+  const heritageFeatList = featListTweak({
+    build,
+    content,
+    actions,
+    spec: HERITAGE_FEAT_SPEC,
+    feats: heritageFeats,
+    value: build.heritageFeatId,
+    reveal: heritageFeatReveal,
+    setReveal: setHeritageFeatReveal,
+    undoHint: heritageFeatUndoHint,
+    pick: (b, id) => ({ ...b, heritageFeatId: id }),
+  });
+  const heritageFeatOpts = heritageFeatList.rows.map(({ f, disabledReason, allowedByTweak }) => ({
+    id: f.id,
+    name: f.name,
+    note: allowedByTweak ? 'Allowed here by a tweak' : f.category === 'skill' ? 'skill feat' : undefined,
+    description: f.description,
+    descRefs: f.descRefs,
+    record: { bucket: 'feats', id: f.id },
+    ...(disabledReason ? { disabled: disabledReason } : {}),
+  }));
   // Surface non-common rarity (uncommon/rare from adventure-path content) as a note.
   const note = (r?: string) => (r && r !== 'common' ? r : undefined);
   // Changing class clears class-specific picks (feats, class skills, spells/cantrips, subclass
@@ -3875,28 +4022,19 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       if (build.heritageSkill) lost.push('Heritage skill');
       if (build.heritageFeatId) lost.push('Heritage feat');
       if (build.languages.length) lost.push(`Languages (${build.languages.length})`);
-      const feats = Object.keys(build.featPicks).filter((k) => k.split(':')[1] === 'ancestry').length;
+      // changeAncestry's own test (`slotCategoryOf`): an extra ancestry place's pick is named too (WP7, C10).
+      const feats = Object.keys(build.featPicks).filter((k) => slotCategoryOf(k) === 'ancestry').length;
       if (feats) lost.push(`Ancestry feat${feats > 1 ? 's' : ''} (${feats})`);
     }
     void confirmLoss('Change ancestry?', 'Change ancestry', lost, () => actions.changeAncestry(id));
   };
   const requestHeritageChange = (id: string) => {
     if (id === build.heritageId) return;
-    const lost: string[] = [];
-    if (build.heritageId) {
-      if (build.heritageSkill) lost.push('Heritage skill');
-      if (build.heritageFeatId) lost.push('Heritage feat');
-    }
-    void confirmLoss('Change heritage?', 'Change heritage', lost, () => actions.changeHeritage(id));
+    void confirmLoss('Change heritage?', 'Change heritage', heritageChangeLosses(build), () => actions.changeHeritage(id));
   };
   const requestBackgroundChange = (id: string) => {
     if (id === build.backgroundId) return;
-    const lost: string[] = [];
-    if (build.backgroundId) {
-      if (build.backgroundBoosts.some((a) => a)) lost.push('Background attribute boosts');
-      if (build.backgroundSkillChoice) lost.push('Background skill');
-    }
-    void confirmLoss('Change background?', 'Change background', lost, () => actions.changeBackground(id));
+    void confirmLoss('Change background?', 'Change background', backgroundChangeLosses(build), () => actions.changeBackground(id));
   };
   return (
     <>
@@ -3934,8 +4072,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               ? 'Ancestry boosts · two free (alternate)'
               : `Ancestry boost${ancSlots.length > 1 ? 's' : ''}${ancFixed.length ? ` · +${ancFixed.map((a) => ABILITY_LABEL[a]).join(', ')}` : ''}`
           }
+          boostSet="ancestry"
+          menu={ancBp.menu && <CardMenu items={ancBp.menu} />}
+          after={ancBp.rows.length ? ancBp.rows : undefined}
         >
-          {ancSlots.map((slot, i) => (
+          {ancSlots.map((slot, i) => ancBp.removed.has(i) ? null : (
             <AbilitySelect
               key={i}
               value={build.ancestryBoosts[i] ?? null}
@@ -3974,16 +4115,35 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           value={build.heritageId}
           onChange={requestHeritageChange}
           descBucket="heritages"
-          options={heritageOpts.map((h) => ({
-            id: h.id,
-            name: h.name,
-            note: note(h.rarity),
-            description: h.description,
-            descRefs: h.descRefs,
-            record: { bucket: 'heritages', id: h.id },
-            group: h.ancestryId === null ? 'Versatile heritages' : `${ancestry?.name ?? 'Ancestry'} heritages`,
-          }))}
+          options={heritageOpts.map((h) => {
+            const rule = heritageRule(h);
+            const allowed = !!rule && allowedInPicker(build, 'heritage', h.id);
+            return {
+              id: h.id,
+              name: h.name,
+              note: allowed ? [note(h.rarity), 'Allowed by a tweak'].filter(Boolean).join(' · ') : note(h.rarity),
+              ...(rule && !allowed ? { disabled: rule } : {}),
+              description: h.description,
+              descRefs: h.descRefs,
+              record: { bucket: 'heritages', id: h.id },
+              group:
+                h.ancestryId === null
+                  ? 'Versatile heritages'
+                  : h.ancestryId === build.ancestryId
+                    ? `${ancestry?.name ?? 'Ancestry'} heritages`
+                    : `${content.ancestries[h.ancestryId]?.name ?? h.ancestryId} heritages`,
+            };
+          })}
           sourcesHidden={sourcesHidden('heritages')}
+          breakable={tweaksOn ? { reasonOf: (id) => heritageRule(content.heritages[id]), onTakeAnyway: (id) => takeHeritageAnyway(id) } : undefined}
+          reveal={tweaksOn ? { label: 'Show heritages of other ancestries', on: revealHeritages, onToggle: setRevealHeritages } : undefined}
+          grey={storedPickGrey(build, build.heritageId ? heritageKey(build.heritageId) : null, heritageRule(heritage))}
+        />
+        <StoredPickNote
+          host={build}
+          k={build.heritageId ? heritageKey(build.heritageId) : null}
+          rule={heritageRule(heritage)}
+          onTakeAnyway={tweaksOn && build.heritageId ? () => takeHeritageAnyway(build.heritageId!, false) : undefined}
         />
       </SetupCard>
       {/* Heritages that grant a "skill of your choice" (Skilled human) need a picker, or
@@ -4011,7 +4171,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             value={build.heritageFeatId}
             onChange={(id) => actions.patch({ heritageFeatId: id })}
             options={heritageFeatOpts}
+            grey={heritageFeatList.grey}
+            reveal={heritageFeatList.reveal}
+            breakable={heritageFeatList.breakable}
           />
+          {heritageFeatList.note}
         </SubCard>
       )}
       {/* A "choose N Lores" heritage (Half Moon Sarangay: 2; Born of Item: 1) — free-text Lore subjects. */}
@@ -4043,10 +4207,16 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             value={build.heritageResistanceChoice ?? ''}
             onChange={(v) => actions.patch({ heritageResistanceChoice: v || null })}
             clearLabel="Clear"
-            options={heritage.choiceResistance.options.map((o) => ({
-              value: o.value,
-              label: o.label.toLowerCase() === o.value ? cap(o.value) : `${o.label} (${o.value})`,
-            }))}
+            // WP9: a stored damage type the list does not offer still counts — `deriveDefenses` reads
+            // heritageResistanceChoice with no list check — so it shows by name, greyed, saying so.
+            options={withKeptAnswer(
+              heritage.choiceResistance.options.map((o) => ({
+                value: o.value,
+                label: o.label.toLowerCase() === o.value ? cap(o.value) : `${o.label} (${o.value})`,
+              })),
+              build.heritageResistanceChoice,
+              { labelOf: cap, how: () => ({ counts: true }) },
+            )}
           />
           <p className="setup-hint">Resistance to the chosen damage type equal to half your level (minimum 1).</p>
         </SubCard>
@@ -4075,7 +4245,19 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   placeholder={`${def.prompt}…`}
                   value={build.featChoices[key] ?? ''}
                   onChange={(v) => actions.setFeatChoice(key, v)}
-                  options={(def.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(def, o.value, content) }))}
+                  // WP9: a stored answer the list does not offer, by name. A body size `ancestryBodySize` does not
+                  // know is ignored and the record's own size stands; any other answer per `choiceKeptHow`.
+                  options={withKeptAnswer(
+                    (def.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(def, o.value, content) })),
+                    build.featChoices[key],
+                    {
+                      labelOf: (v) => slugWords(featChoiceLabel(v)),
+                      how:
+                        def.flag === 'bodySize'
+                          ? () => ({ counts: false, instead: ancestry.size ? cap(ancestry.size) : undefined })
+                          : choiceKeptHow(def, keyedByAnswer(ancestry.id)),
+                    },
+                  )}
                 />
               )}
               {def.note && <p className="setup-hint">{def.note}</p>}
@@ -4115,7 +4297,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   placeholder={`${def.prompt}…`}
                   value={build.featChoices[key] ?? ''}
                   onChange={(v) => actions.setFeatChoice(key, v)}
-                  options={narrowed.map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(def, o.value, content), disabled: !!(o as { disabled?: string }).disabled, disabledReason: (o as { disabled?: string }).disabled }))}
+                  // WP9: a stored answer the (narrowed) list does not offer, by name (`choiceKeptHow`).
+                  options={withKeptAnswer(
+                    narrowed.map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(def, o.value, content), disabled: !!(o as { disabled?: string }).disabled, disabledReason: (o as { disabled?: string }).disabled })),
+                    build.featChoices[key],
+                    { labelOf: (v) => slugWords(featChoiceLabel(v)), how: choiceKeptHow(def, keyedByAnswer(heritage.id)) },
+                  )}
                 />
               )}
               {reasons.map((r, i) => (
@@ -4133,16 +4320,19 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       {build.heritageId &&
         FEAT_PICK_GRANTS[build.heritageId] &&
         (() => {
-          const spec = FEAT_PICK_GRANTS[build.heritageId!];
-          const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } }));
+          const hid = build.heritageId!;
+          const spec = FEAT_PICK_GRANTS[hid];
           return (
             <SubCard icon="ti-medal" label={spec.prompt}>
-              <PopupSelect
+              <FeatPickSelect
+                build={build}
+                content={content}
+                actions={actions}
+                spec={spec}
                 title={spec.prompt}
                 placeholder={`${spec.prompt}…`}
-                value={build.pickFeatChoices?.[build.heritageId!] ?? ''}
-                onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [build.heritageId!]: v } })}
-                options={opts}
+                value={build.pickFeatChoices?.[hid] ?? ''}
+                pick={(b, v) => ({ ...b, pickFeatChoices: { ...(b.pickFeatChoices ?? {}), [hid]: v } })}
               />
             </SubCard>
           );
@@ -4184,22 +4374,32 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           onChange={requestBackgroundChange}
           options={[
             ...(showCustomBg ? [{ id: CUSTOM_BACKGROUND_ID, name: '✎ Custom background…', pin: true }] : []),
-            ...Object.values(content.backgrounds).map((b) => ({
-              id: b.id,
-              name: b.name,
-              note: note(b.rarity),
-              description: b.description,
-              descRefs: b.descRefs,
-              // card step 7b: the popup opens the background's own page (it opened as 'origin' and fell back).
-              record: { bucket: 'backgrounds', id: b.id },
-              // A printed ancestry gate (Sewer Dragon: kobold only) greys the option with its reason.
-              disabled:
-                b.ancestryPrerequisite?.length && build.ancestryId && !b.ancestryPrerequisite.includes(build.ancestryId)
-                  ? `Requires the ${b.ancestryPrerequisite.map(cap).join(' or ')} ancestry.`
-                  : undefined,
-            })),
+            ...Object.values(content.backgrounds).map((b) => {
+              const rule = backgroundRule(b);
+              const allowed = !!rule && allowedInPicker(build, 'background', b.id);
+              return {
+                id: b.id,
+                name: b.name,
+                note: allowed ? [note(b.rarity), 'Allowed by a tweak'].filter(Boolean).join(' · ') : note(b.rarity),
+                description: b.description,
+                descRefs: b.descRefs,
+                // card step 7b: the popup opens the background's own page (it opened as 'origin' and fell back).
+                record: { bucket: 'backgrounds', id: b.id },
+                // A printed ancestry gate (Sewer Dragon: kobold only) greys the option with its reason — unless a
+                // live "Take anyway" covers it (WP4).
+                disabled: rule && !allowed ? rule : undefined,
+              };
+            }),
           ]}
           sourcesHidden={sourcesHidden('backgrounds')}
+          breakable={tweaksOn ? { reasonOf: (id) => backgroundRule(content.backgrounds[id]), onTakeAnyway: (id) => takeBackgroundAnyway(id) } : undefined}
+          grey={storedPickGrey(build, build.backgroundId ? backgroundKey(build.backgroundId) : null, backgroundRule(background))}
+        />
+        <StoredPickNote
+          host={build}
+          k={build.backgroundId ? backgroundKey(build.backgroundId) : null}
+          rule={backgroundRule(background)}
+          onTakeAnyway={tweaksOn && build.backgroundId ? () => takeBackgroundAnyway(build.backgroundId!, false) : undefined}
         />
         {/* The chosen background's TrustMarker on the card itself: SearchSelect draws none on its
             filled control, and a created background whose print is only partly applied must say so
@@ -4242,8 +4442,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         <SubCard
           icon="ti-arrow-up"
           label={`Background boost${bgSlots.length > 1 ? 's' : ''}${bgFixed.length ? ` · +${bgFixed.map((a) => ABILITY_LABEL[a]).join(', ')}` : ''}`}
+          boostSet="background"
+          menu={bgBp.menu && <CardMenu items={bgBp.menu} />}
+          after={bgBp.rows.length ? bgBp.rows : undefined}
         >
-          {bgSlots.map((slot, i) => (
+          {bgSlots.map((slot, i) => bgBp.removed.has(i) ? null : (
             <AbilitySelect
               key={i}
               value={build.backgroundBoosts[i] ?? null}
@@ -4261,13 +4464,21 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <PopupSelect
             title="Background trained skill"
             placeholder="Choose a skill"
-            value={
-              build.backgroundSkillChoice && background.trainedSkillChoice.includes(build.backgroundSkillChoice)
-                ? build.backgroundSkillChoice
-                : ''
-            }
+            // WP9: a stored skill the list does not offer shows by name, greyed: `backgroundSkillPick` ignores it
+            // and trains the first option instead, and the line says which.
+            value={build.backgroundSkillChoice ?? ''}
             onChange={(v) => actions.patch({ backgroundSkillChoice: (v || null) as SkillId | null })}
-            options={background.trainedSkillChoice.map((s) => ({ value: s, label: cap(s) }))}
+            options={withKeptAnswer(
+              background.trainedSkillChoice.map((s) => ({ value: s, label: cap(s) })),
+              build.backgroundSkillChoice,
+              {
+                labelOf: skillKeyLabel,
+                how: () => {
+                  const used = backgroundSkillPick(build, background)?.value;
+                  return { counts: false, instead: used ? cap(used) : undefined };
+                },
+              },
+            )}
           />
         </SubCard>
       )}
@@ -4285,6 +4496,18 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             // "plane-of-air" → "Plane of Air Lore"; bare cap() would render the hyphens.
             const loreLabel = (s: string) =>
               s.split('-').map((w, i) => (i > 0 && ['of', 'the', 'a', 'an', 'and'].includes(w) ? w : cap(w))).join(' ') + ' Lore';
+            /* WP9: a stored Lore the list does not offer shows by name, greyed. `backgroundLorePicks` ignores it and
+               fills the place with the earliest unpicked option: the n-th place it does not count gets the n-th of
+               those, which is what the line names. */
+            const opts = background.trainedLoreOptions!;
+            const counted: string[] = [];
+            for (const v of values.slice(0, count)) if (v && opts.includes(v) && !counted.includes(v)) counted.push(v);
+            const fills = backgroundLorePicks(build, background).filter((p) => !counted.includes(p));
+            const fillOf = (i: number) => {
+              let n = 0;
+              for (let j = 0; j < i; j++) if (!(values[j] && opts.includes(values[j]) && values.indexOf(values[j]) === j)) n++;
+              return fills[n];
+            };
             return slots.slice(0, count).map((k, i) => (
               <PopupSelect
                 key={k}
@@ -4292,9 +4515,17 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 placeholder={count > 1 ? `Choose Lore ${i + 1}…` : 'Choose a Lore…'}
                 value={values[i]}
                 onChange={(v) => actions.patch({ [k]: v })}
-                options={background
-                  .trainedLoreOptions!.filter((s) => s === values[i] || !values.includes(s))
-                  .map((s) => ({ value: s, label: loreLabel(s) }))}
+                options={withKeptAnswer(
+                  opts.filter((s) => s === values[i] || !values.includes(s)).map((s) => ({ value: s, label: loreLabel(s) })),
+                  values[i],
+                  {
+                    labelOf: loreLabel,
+                    how: () => {
+                      const used = fillOf(i);
+                      return { counts: false, instead: used ? loreLabel(used) : undefined };
+                    },
+                  },
+                )}
               />
             ));
           })()}
@@ -4347,12 +4578,21 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             // Trailblazer names its terrain "(such as forest or underground)" — an illustrative list,
             // so `allowCustom` lets the player write the one they actually explored. Only choices that
             // opt in get the row; the field is what confines it, not the kind.
-            options={withCustomAnswer(
-              background.choice.kind === 'skills'
-                ? trainedSkillOptions(buildCharacter(build, content), background.choice.minRank ?? 'trained')
-                : (background.choice.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(background.choice!, o.value, content) })),
-              background.choice,
+            // WP9: after the typed answer's row, a stored answer the list does not offer, by name. It counts:
+            // `backgroundChoiceValue` hands the stored answer to every reader with no list check.
+            options={withKeptAnswer(
+              withCustomAnswer(
+                background.choice.kind === 'skills'
+                  ? trainedSkillOptions(
+                      { proficiencies: { skills: creationSkillRanks(limitChar ?? buildCharacter(build, content)) } },
+                      background.choice.minRank ?? 'trained',
+                    )
+                  : (background.choice.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(background.choice!, o.value, content) })),
+                background.choice,
+                backgroundChoiceValue(build, background),
+              ),
               backgroundChoiceValue(build, background),
+              { labelOf: (v) => ((SKILLS as readonly string[]).includes(v) ? cap(v) : slugWords(featChoiceLabel(v))), how: () => ({ counts: true }) },
             )}
             addCustom={
               background.choice.allowCustom && {
@@ -4402,15 +4642,18 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           picker: without one the answer can never be given and the feat is never granted. */}
       {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && FEAT_PICK_GRANTS[background.id] && (() => {
         const spec = FEAT_PICK_GRANTS[background.id];
-        const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } }));
+        const bid = background.id;
         return (
           <SubCard icon="ti-medal" label={spec.prompt}>
-            <PopupSelect
+            <FeatPickSelect
+              build={build}
+              content={content}
+              actions={actions}
+              spec={spec}
               title={spec.prompt}
               placeholder={`${spec.prompt}…`}
-              value={build.pickFeatChoices?.[background.id] ?? ''}
-              onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [background.id]: v } })}
-              options={opts}
+              value={build.pickFeatChoices?.[bid] ?? ''}
+              pick={(b, v) => ({ ...b, pickFeatChoices: { ...(b.pickFeatChoices ?? {}), [bid]: v } })}
             />
           </SubCard>
         );
@@ -4427,7 +4670,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           .filter((fb) => fb.featId === build.backgroundId)
           .map((fb) => {
             const fbKey = `${build.backgroundId}:fallback:${fb.skill}`;
-            const held = limitChar?.proficiencies.skills[fb.skill] ?? 'trained';
+            /* The rank WHEN THE BACKGROUND IS TAKEN, at creation (skill-order WP7 / WP11 0h): a later increase on the
+               skill does not make the heading say "expert", and a skill only a later level trains is a live
+               replacement, not greyed. */
+            const atCreation = limitChar ? creationSkillRanks(limitChar) : undefined;
+            const heldNow = atCreation?.[fb.skill];
+            const held = heldNow && heldNow !== 'untrained' ? heldNow : 'trained';
             return (
               <SubCard key={fbKey} icon="ti-bulb" label={`Already ${held} in ${cap(fb.skill)} — replacement skill`}>
                 <PopupSelect
@@ -4440,7 +4688,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   clearLabel="Clear"
                   // A skill already trained is a second dead end — the replacement grants `trained`.
                   options={SKILLS.map((s) => {
-                    const cur = limitChar?.proficiencies.skills[s] ?? 'untrained';
+                    const cur = atCreation?.[s] ?? 'untrained';
                     const dead = s !== build.featSkillChoices?.[fbKey] && cur !== 'untrained';
                     return {
                       value: s,
@@ -4492,11 +4740,15 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               data-ctl-live={keyOptions.length}
               data-ctl-state={build.keyAbility && keyOptions.includes(build.keyAbility) ? 'picked' : 'empty'}
             >
+              {/* WP9: a stored key attribute the list does not offer shows by name, greyed. The class's own list:
+                  `collectBoosts` and the class DC read build.keyAbility with no list check, so it counts. A
+                  racket-style subclass list: `resolveOptionKeyAbility` ignores it for the list's first. */}
               <AbilitySelect
                 title="Key attribute"
-                value={build.keyAbility && keyOptions.includes(build.keyAbility) ? build.keyAbility : null}
+                value={build.keyAbility ?? null}
                 options={keyOptions}
                 onChange={(v) => actions.patch({ keyAbility: v })}
+                keptHow={() => (subKeyOptions?.length ? { counts: false, instead: subKey ? ABILITY_LABEL[subKey] : undefined } : { counts: true })}
               />
             </span>
           ) : (
@@ -4535,22 +4787,23 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             /* …and grey the options the character's SANCTIFICATION forbids. Champion class-58: *"Whether
              * you become holy, unholy, or neither will limit your choice of causes"* / *"Some causes are
              * limited to certain sanctifications"* — Desecration and Iniquity are Unholy, Grandeur and
-             * Redemption Holy. `subclassOptionAllowed` is the same predicate `originMissing` uses to
-             * report an illegal cause, so the picker and Setup completeness cannot disagree; it returns
-             * true while sanctification is unanswered, leaving the list wide for a half-built champion. */
-            options={liveOptions(cls.subclass.featureId, cls.subclass.options, cls.id).map((o) => {
-              const need = o.traits?.find((t) => t === 'holy' || t === 'unholy');
-              const allowed = subclassOptionAllowed(o, build, content);
-              return {
-                value: o.id,
-                label: o.name,
-                description: o.description,
-                descRefs: o.descRefs,
-                record: { bucket: 'classFeatures', id: o.id },
-                ...(allowed ? {} : { disabled: true, disabledReason: `Needs a ${need} sanctification.` }),
-              };
-            })}
+             * Redemption Holy. `subclassOptionState` (C35, through `subclassPickerParts`) is the same answer
+             * `originMissing` uses to report an illegal cause, and the level-page picker uses it too, so the
+             * pickers and Setup completeness cannot disagree. While sanctification is unanswered the
+             * deity's Sanctification entry still limits the list (Iomedae's champion sees both unholy
+             * causes greyed); with no deity yet it stays wide for a half-built champion. */
+            options={liveOptions(cls.subclass.featureId, cls.subclass.options, cls.id).map((o) => ({
+              value: o.id,
+              label: o.name,
+              description: o.description,
+              descRefs: o.descRefs,
+              record: { bucket: 'classFeatures', id: o.id },
+              ...subParts.option(o),
+            }))}
+            breakable={subParts.breakable}
+            grey={subParts.grey}
           />
+          {subParts.note}
         </SetupCard>
       )}
       {(() => {
@@ -4574,16 +4827,28 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <SubCard icon="ti-school" label="Trained skill">
             <PopupSelect
               title="Trained skill"
-              value={lore || current}
+              // WP9: a stored skill the list does not offer shows by name, greyed (never "Choose…"):
+              // `subclassSkillPick` ignores it and trains the first option, which the line names.
+              value={lore || current || build.subclassSkill || ''}
               onChange={(v) =>
                 choice.includes(v as SkillId)
                   ? actions.patch({ subclassSkill: v as SkillId, subclassLore: null })
                   : actions.patch({ subclassLore: v })
               }
-              options={[
-                ...choice.map((s) => ({ value: s, label: s.charAt(0).toUpperCase() + s.slice(1) })),
-                ...(lore ? [{ value: lore, label: `${cap(lore)} Lore` }] : []),
-              ]}
+              options={withKeptAnswer(
+                [
+                  ...choice.map((s) => ({ value: s, label: s.charAt(0).toUpperCase() + s.slice(1) })),
+                  ...(lore ? [{ value: lore, label: `${cap(lore)} Lore` }] : []),
+                ],
+                lore ? null : build.subclassSkill,
+                {
+                  labelOf: skillKeyLabel,
+                  how: () => {
+                    const used = subclassSkillPick(build, content, choice)?.value;
+                    return { counts: false, instead: used ? cap(used) : undefined };
+                  },
+                },
+              )}
               addCustom={
                 subOpt?.skillChoiceLore
                   ? {
@@ -5055,6 +5320,22 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         const required = buildUsesDeity(build, content);
         // A Razmiran priest's Cleric Dedication names its deity (Q9: only the legal pick is live).
         const named = deityNamedBy(build, content);
+        // WP4: the book rule against a deity (null when it allows it); a live "Take anyway" un-greys it.
+        const deityRule = (id: string | null | undefined) => (named && id && id !== named.id ? `Not allowed: ${named.reason}` : null);
+        const deityKey = (id: string): AnyPickerKey => ({ picker: 'deity', record: id });
+        const takeDeityAnyway = (id: string, pick = true) => {
+          const rule = deityRule(id);
+          if (!rule || !content.deities[id]) return;
+          void takeAnywayPick(actions, {
+            name: content.deities[id].name,
+            rule,
+            undoHint,
+            k: deityKey(id),
+            host: build,
+            ...(pick ? { losses: { title: 'Change deity?', verb: 'Change deity', list: deityChangeLosses(id, build, content) } } : {}),
+            pick: (b) => (pick ? withDeity(b, id, content) : b),
+          });
+        };
         return (
           <SetupCard
             icon="ti-flare"
@@ -5075,17 +5356,28 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               /* An optional pick has to be undoable: a follower who changes their mind needs a way back
                  to no deity at all. A required card has none — its answer is owed. */
               clearLabel={required ? undefined : 'No deity'}
-              options={Object.values(content.deities).map((d) => ({
-                id: d.id,
-                name: d.name,
-                note: [note(d.rarity), d.domains?.slice(0, 3).join(', ')].filter(Boolean).join(' · ') || undefined,
-                description: d.description,
-                descRefs: d.descRefs,
-                record: { bucket: 'deities', id: d.id },
-                // Never the stored answer: a pick must not vanish under the player (it is named in the choices left).
-                disabled: named && d.id !== named.id && d.id !== build.deityId ? `Not allowed: ${named.reason}` : undefined,
-              }))}
+              options={Object.values(content.deities).map((d) => {
+                const allowed = !!deityRule(d.id) && allowedInPicker(build, 'deity', d.id);
+                return {
+                  id: d.id,
+                  name: d.name,
+                  note: [note(d.rarity), d.domains?.slice(0, 3).join(', '), allowed ? 'Allowed by a tweak' : ''].filter(Boolean).join(' · ') || undefined,
+                  description: d.description,
+                  descRefs: d.descRefs,
+                  record: { bucket: 'deities', id: d.id },
+                  // Never the stored answer: a pick must not vanish under the player (it is named in the choices left).
+                  disabled: !allowed && d.id !== build.deityId ? (deityRule(d.id) ?? undefined) : undefined,
+                };
+              })}
               sourcesHidden={sourcesHidden('deities')}
+              breakable={tweaksOn ? { reasonOf: (id) => (allowedInPicker(build, 'deity', id) ? null : deityRule(id)), onTakeAnyway: (id) => takeDeityAnyway(id) } : undefined}
+              grey={storedPickGrey(build, build.deityId ? deityKey(build.deityId) : null, deityRule(build.deityId))}
+            />
+            <StoredPickNote
+              host={build}
+              k={build.deityId ? deityKey(build.deityId) : null}
+              rule={deityRule(build.deityId)}
+              onTakeAnyway={tweaksOn && build.deityId ? () => takeDeityAnyway(build.deityId!, false) : undefined}
             />
             {/* Phone audit D3 (a blocker): with the default books a new cleric had NO deity to choose and the
                 card said nothing about why. Every deity is printed outside the Core books. Only on a
@@ -5101,9 +5393,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             )}
             {/* A deity can ask a question of its own — Lurlup's "Sanctification: can be Unholy". Deities
                 were the one chosen record with no pick surface at all, so the answer had nowhere to go.
-                Only a cleric, champion, vindicator or mortal herald is asked it (effectChoiceOffered): a
-                plain follower is not sanctified, and the Cleric and Champion dedications answer through
-                their own sanctification choice. */}
+                Only a cleric, vindicator or mortal herald is asked it (effectChoiceOffered): a plain
+                follower is not sanctified, the champion answers in Deity and Cause, and the Cleric and
+                Champion dedications answer through their own sanctification choice. */}
             <EffectChoicesPicker
               recordId={build.deityId ?? ''}
               choices={build.deityId ? content.deities[build.deityId]?.effectChoices : undefined}
@@ -5243,7 +5535,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
            * Display only: the answers become ordinary picks on the first edit (writeArchetypeCantrip),
            * never on open. */
           const legacyCantrips = !as.cantrips.length
-            ? legacyArchetypeCantrips(arch.dedicationId, build, content).filter((id) => archetypeCantripAllowed(arch, id))
+            ? // build.ts's `archCantripOk`: a cantrip a live `spell` Take anyway names stays (merge check).
+              legacyArchetypeCantrips(arch.dedicationId, build, content).filter((id) => archetypeCantripAllowed(arch, id) || allowedInPicker(build, 'spell', id))
             : [];
           const rowCantrips = legacyCantrips.length ? legacyCantrips : as.cantrips;
           /* Editing while the fallback is showing materialises it first — otherwise toggleArchetypeCantrip
@@ -5275,6 +5568,58 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             .filter((s) => !grantedCantrips.has(s.id))
             .filter((s) => widened.has(s.id) || archetypeCantripAllowed(arch, s.id))
             .sort((a, b) => a.name.localeCompare(b.name));
+          /* Tweaks phase 2 (WP4 finish, B2/B3): this pool's pickers take a spell past the book's list too. The
+           * reason is the dedication's named cantrips (Oatia Skysage — the engine drops one it does not name,
+           * lifted by a live `spell` allow: build.ts's B3 seam) or the pool's tradition (never dropped: picker-only).
+           * A spell a live allow names is offered un-greyed; the rest only under the reveal (Tweaks page on, default
+           * off), greyed with the reason and "Take anyway" — one write holds the tweak and the pick. */
+          const archName = content.feats[arch.dedicationId]?.name ?? 'this dedication';
+          const archOffReason = (id: string): string =>
+            content.spells[id]?.rank === 0 && !widened.has(id) && !archetypeCantripAllowed(arch, id) ? `Not one of the cantrips ${archName} names.` : `Not on the ${cap(trad)} spell list.`;
+          /** The spells a pool picker leaves out (`onList` false), as picker rows: allowed ones un-greyed with a note,
+           *  revealed ones greyed with the reason. */
+          const archOffRows = (pool: readonly { id: string; name: string; rank: number; description?: string; descRefs?: unknown; traditions: string[] }[], label: (s: { name: string; rank: number }) => string) => {
+            const rows: Parameters<typeof PopupSelect>[0]['options'] = [];
+            for (const s of pool) {
+              const live = allowedInPicker(build, 'spell', s.id);
+              if (!live && !(tweaksOn && revealArchSpells)) continue;
+              rows.push({
+                value: s.id,
+                label: label(s),
+                description: s.description,
+                descRefs: s.descRefs as OptionDesc['descRefs'],
+                record: { bucket: 'spells', id: s.id },
+                ...(live ? { note: 'Allowed by a tweak' } : { disabled: true, disabledReason: archOffReason(s.id) }),
+              });
+            }
+            return rows;
+          };
+          const takeArchSpell = (id: string, pick: (b: BuildState) => BuildState) =>
+            void takeAnywayPick(actions, { name: content.spells[id]?.name ?? id, rule: archOffReason(id), undoHint, k: { picker: 'spell', record: id }, host: build, pick });
+          const archBreakable = (pick: (id: string) => (b: BuildState) => BuildState): Breakable | undefined =>
+            tweaksOn ? { reasonOf: (id) => (allowedInPicker(build, 'spell', id) ? null : archOffReason(id)), onTakeAnyway: (id) => takeArchSpell(id, pick(id)) } : undefined;
+          const archReveal = tweaksOn ? { label: 'Show spells of other traditions', on: revealArchSpells, onToggle: setRevealArchSpells } : undefined;
+          const onCantripList = new Set([...cantripList.map((s) => s.id), ...grantedCantrips]);
+          const offCantrips = Object.values(content.spells)
+            .filter((s) => s.rank === 0 && s.traditions.length > 0 && !onCantripList.has(s.id) && !rowCantrips.includes(s.id))
+            .sort((a, b) => a.name.localeCompare(b.name));
+          /** C45 under a chip row: each stored spell the pool's list refuses, by name — the Tweak mark while a tweak
+           *  covers it, else the book's grey line ("Take anyway" writes the tweak only). */
+          const archChipNotes = (ids: readonly string[], offList: (id: string) => boolean) =>
+            [...new Set(ids)].filter(offList).map((id) => (
+              <StoredPickNote
+                key={`arch-note:${id}`}
+                host={build}
+                k={{ picker: 'spell', record: id }}
+                rule={`${content.spells[id]?.name ?? id}: ${archOffReason(id)}`}
+                onTakeAnyway={tweaksOn ? () => takeArchSpell(id, (b) => b) : undefined}
+              />
+            ));
+          const pickArchCantrip = (id: string) => (b: BuildState): BuildState => {
+            const cur = b.archetypeSpells ?? { cantrips: [], spells: {}, tradition: null, keyAbility: null };
+            const base = legacyCantrips.length && !cur.cantrips.length ? legacyCantrips : cur.cantrips;
+            return { ...b, archetypeSpells: { ...cur, cantrips: base.includes(id) ? base : [...base, id] } };
+          };
           return (
             <SetupCard icon="ti-wand" label="Archetype spellcasting">
               {arch.config.choiceTradition && (
@@ -5319,7 +5664,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   title="Add a cantrip"
                   value=""
                   onChange={(v) => v && writeArchetypeCantrip(v)}
-                  options={cantripList.map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs, record: { bucket: 'spells', id: s.id } }))}
+                  options={[
+                    ...cantripList.map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs, record: { bucket: 'spells', id: s.id } })),
+                    ...(rowCantrips.length < cantripCap ? archOffRows(offCantrips, (s) => s.name) : []),
+                  ]}
+                  breakable={rowCantrips.length < cantripCap ? archBreakable(pickArchCantrip) : undefined}
+                  reveal={archReveal}
                 />
                 {rowCantrips.length > 0 && (
                   <div className="spr-chips" style={{ marginTop: 6 }}>
@@ -5335,6 +5685,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                     ))}
                   </div>
                 )}
+                {archChipNotes(rowCantrips, (id) => !onCantripList.has(id))}
                 {/* With no leveled rows yet (no Basic spellcasting feat), the cantrip row is the book's last
                     row, so it shows a leveled grant too (Basic Witchcraft's lesson taken first). */}
                 {book && grantRow(0, rowCantrips, !archetypeBookRanks(build.level, arch).length)}
@@ -5375,6 +5726,16 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                           const options = listValues(content, content.spells)
                             .filter((s) => s.rank >= r.minSpellRank && s.rank <= r.maxSpellRank && s.traditions.includes(trad) && !inBook.has(s.id))
                             .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
+                          // WP4 finish (B2): the other traditions' spells of this rank window, for "Take anyway".
+                          const offSpells = listValues(content, content.spells)
+                            .filter((s) => s.rank >= r.minSpellRank && s.rank <= r.maxSpellRank && s.traditions.length > 0 && !s.traditions.includes(trad) && !inBook.has(s.id))
+                            .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
+                          const rankLabel = (s: { name: string; rank: number }) => (s.rank === r.rank ? s.name : `${s.name} (${ordinalRank(s.rank)})`);
+                          const pickBookSpell = (id: string) => (b: BuildState): BuildState => {
+                            const cur = b.archetypeSpells ?? { cantrips: [], spells: {}, tradition: null, keyAbility: null };
+                            const at = cur.spells?.[r.rank] ?? [];
+                            return at.includes(id) ? b : { ...b, archetypeSpells: { ...cur, spells: { ...(cur.spells ?? {}), [r.rank]: [...at, id] } } };
+                          };
                           return (
                             <div className="spell-pick-row arch-book-rank" key={r.rank}>
                               <div className="spr-head">
@@ -5401,6 +5762,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                                   ))}
                                 </div>
                               )}
+                              {archChipNotes(chosen, (id) => !!content.spells[id] && !content.spells[id].traditions.includes(trad))}
                               {/* The last row also shows grants at ranks the book has no row for yet. */}
                               {grantRow(r.rank, chosen, r.rank === ranks[ranks.length - 1].rank)}
                               {full ? (
@@ -5414,13 +5776,18 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                                   title={`Add a spell to your ${book.noun} for ${ordinalRank(r.rank)} rank${archetypeBookRankNote(r) ? ` (${archetypeBookRankNote(r)})` : ''}`}
                                   value=""
                                   onChange={(v) => v && actions.toggleArchetypePoolBookSpell(r.rank, v, r.places)}
-                                  options={options.map((s) => ({
-                                    value: s.id,
-                                    label: s.rank === r.rank ? s.name : `${s.name} (${ordinalRank(s.rank)})`,
-                                    description: s.description,
-                                    descRefs: s.descRefs,
-                                    record: { bucket: 'spells', id: s.id },
-                                  }))}
+                                  options={[
+                                    ...options.map((s) => ({
+                                      value: s.id,
+                                      label: rankLabel(s),
+                                      description: s.description,
+                                      descRefs: s.descRefs,
+                                      record: { bucket: 'spells', id: s.id },
+                                    })),
+                                    ...archOffRows(offSpells, rankLabel),
+                                  ]}
+                                  breakable={archBreakable(pickBookSpell)}
+                                  reveal={archReveal}
                                 />
                               )}
                             </div>
@@ -5550,33 +5917,42 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   );
 }
 
-export function AttributeEditor({ build, actions }: EditorProps) {
+export function AttributeEditor({ build, actions, onOpenTweaks }: EditorProps & { onOpenTweaks?: (key: string) => void }) {
   // Origin/class boosts now nest under their own cards (see OriginPickers). What remains here is
   // the level-1 free boosts, which aren't tied to any one origin.
   // If the character has ATTRIBUTE OVERRIDES (Overrides section — force raw scores), those PIN the
   // ability scores: boosts and even a class change won't move them. That silently looks like "my
-  // stats don't update", so surface it right here where boosts are edited, with a one-click clear.
-  const pinned = Object.keys(build.overrides?.attributes ?? {}) as AbilityId[];
-  const clearAttrOverrides = () => {
-    const ov = { ...(build.overrides ?? {}) };
-    delete ov.attributes;
-    actions.patch({ overrides: Object.keys(ov).length ? ov : undefined });
-  };
+  // stats don't update", so surface it right here where boosts are edited, with a way to them.
+  // Only the LIVE sets (rules/blocks/active.ts — Tweaks switch, on/off, start level): a paused set pins nothing.
+  // Plan B, B17 (WP8): "Show in Tweaks" opens the first set's row there — the one place a tweak is changed,
+  // paused or deleted. It used to delete every set at once from here, past the Tweaks page.
+  const pinned = liveAttributeSets(build).map((s) => s.ability);
+  // Tweaks phase 2 WP14 (C47): the four free boosts as one set — its menu, and a removed place's kept row.
+  const freeBp = boostSetParts(build, actions.patch, 'free', build.levelBoosts.length, build.levelBoosts, undefined, onOpenTweaks);
   return (
-    <SetupCard icon="ti-arrow-up" label="Free boosts" count="4">
+    <SetupCard
+      icon="ti-arrow-up"
+      label="Free boosts"
+      count={String(build.levelBoosts.filter((_, i) => !freeBp.removed.has(i)).length)}
+      boostSet="free"
+      menu={freeBp.menu && <CardMenu items={freeBp.menu} />}
+      after={freeBp.rows.length ? freeBp.rows : undefined}
+    >
       {pinned.length > 0 && (
         <div className="attr-override-warn">
           <i className="ti ti-lock" aria-hidden="true" />
           <span>
             {pinned.length === 6 ? 'All ability scores are' : `${pinned.map((a) => ABILITY_LABEL[a]).join(', ')} ${pinned.length === 1 ? 'is' : 'are'}`} set by
-            an Override — boosts and class changes won't change {pinned.length === 1 ? 'it' : 'them'}.
+            a tweak — boosts and class changes won't change {pinned.length === 1 ? 'it' : 'them'}.
           </span>
-          <button type="button" className="attr-override-clear" onClick={clearAttrOverrides}>
-            Clear override{pinned.length === 1 ? '' : 's'}
-          </button>
+          {onOpenTweaks && (
+            <button type="button" className="attr-override-clear" onClick={() => onOpenTweaks(`attributes:${pinned[0]}`)}>
+              Show in Tweaks
+            </button>
+          )}
         </div>
       )}
-      {build.levelBoosts.map((v, i) => (
+      {build.levelBoosts.map((v, i) => freeBp.removed.has(i) ? null : (
         <AbilitySelect
           key={i}
           value={v}
@@ -5599,6 +5975,19 @@ export function loreLabel(key: string): string {
   return subject ? `${subject} Lore` : 'Lore';
 }
 
+/** The skill ranks a 1st-level creation question reads (skill-order WP7, WP11 step 0h; plan section 2): the per-level
+ *  history at 1st level before its skill increases, the "exactly" holds active at 1st laid over it — never the
+ *  finished character's, so a skill or Lore a later level trains (an increase, a feat at 2nd or later) is not yet
+ *  "already trained". The default point is `beforeIncreases`, not the plan's P0-only `creation`: print gives every
+ *  1st-level source together (the heritage and its skill pick, the 1st-level ancestry and class feats, the
+ *  background's and deity's choices), so Dwarven Lore at 1st or Ancient Ash's skill IS already trained when the
+ *  background or class question is asked (checker finding 1, 2026-10-23). `creation` (P0 alone) is for a reader that
+ *  explains the engine's own P0 judge (the "Lore instead of language" card). A character with no history (a stored
+ *  copy from before it) keeps its finished ranks. */
+function creationSkillRanks(ch: Character, point: 'creation' | 'beforeIncreases' = 'beforeIncreases'): Record<string, ProficiencyRank> {
+  return (skillRanksAtLevel(ch, 1, point) ?? ch.proficiencies.skills) as Record<string, ProficiencyRank>;
+}
+
 /** Why a typed Lore can't be taken as a NEW Lore on a builder card, or null. Every card that buys a
  *  Lore asks this one question: a blank subject names nothing, one already on the card is there, and
  *  one the character is already trained in — from its background, a class skill, a Lore taken
@@ -5610,7 +5999,10 @@ function newLoreRefusal(ch: Character, text: string, onCard: readonly string[]):
   if (!key) return 'Name the Lore — e.g. Warfare.';
   if (onCard.includes(key)) return `${loreLabel(key)} is already on this card.`;
   const from = ch.grantedSkills?.[key];
-  if (!from && (ch.proficiencies.skills[key] ?? 'untrained') === 'untrained') return null;
+  // At creation (skill-order WP7 / WP11 0h): a Lore a later level trains (Additional Lore at 2nd, a 3rd-level
+  // increase) is not "already trained" when this 1st-level Lore is bought — print trains it now, and the later
+  // record then takes its own "already trained" clause.
+  if (!from && (creationSkillRanks(ch)[key] ?? 'untrained') === 'untrained') return null;
   return `Already trained in ${loreLabel(key)}${from ? ` — from ${from}` : ''}. Choose a new Lore.`;
 }
 
@@ -5744,7 +6136,10 @@ export function LanguageEditor({ build, actions, content, character }: EditorPro
       key,
       idle: counts
         ? null
-        : (ch.proficiencies.skills[key] ?? 'untrained') !== 'untrained'
+        : // The engine judges a language Lore in the 1st-level creation phase (P0), so the reason reads the ranks
+          // there: a Lore only a later level trains (Additional Lore at 2nd) is idle for want of a slot, not
+          // "already trained" (skill-order WP11 step 0h, checker finding 2).
+          (creationSkillRanks(ch, 'creation')[key] ?? 'untrained') !== 'untrained'
           ? `already trained${from ? ` (${from})` : ''}`
           : 'no free language slot from Intelligence',
     });
@@ -5976,13 +6371,14 @@ export function FullStats({ build, content, character }: { build: BuildState; co
     <>
       <div className="fs-abil">
         {ABILITIES.map((ab) => {
-          const pinned = build.overrides?.attributes?.[ab] !== undefined;
+          // A LIVE set only (rules/blocks/active.ts): a paused one shows no lock.
+          const pinned = liveAttributeSets(build).some((s) => s.ability === ab);
           return (
             <div
               className={'fs-ab fs-ab-open' + (pinned ? ' fs-ab-pinned' : '')}
               key={ab}
               onClick={() => setStatRef({ kind: 'ability', ability: ab })}
-              title={pinned ? `${ABILITY_LABEL[ab]} is set by an Override — boosts don't change it` : `${ABILITY_LABEL[ab]} — how is this calculated?`}
+              title={pinned ? `${ABILITY_LABEL[ab]} is set by a tweak — boosts don't change it` : `${ABILITY_LABEL[ab]} — how is this calculated?`}
             >
               <div className="fs-an">
                 {ABILITY_LABEL[ab]}

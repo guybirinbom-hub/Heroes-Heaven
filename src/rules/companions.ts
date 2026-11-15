@@ -11,11 +11,12 @@
  * The maturity ranks + HP formula are sourced from the published Animal Companion
  * rules (Archives of Nethys), authored into COMPANION_FORMULA below.
  */
-import { abilityModOf, deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl, unitBulk, bestHandwrapsRunes, bestMpHandwraps } from './derive';
+import { abilityModOf, acTerms, deriveMaxHp, perceptionTerms, profBonus, pwl, saveTerms, unitBulk, bestHandwrapsRunes, bestMpHandwraps, penaltyFloored } from './derive';
 import { mpWeaponRefine, mpImbuedDamageTerms, type MpDamage } from './monsterParts';
 import { abpOn, abpAttack, abpStrikingDice } from './abp';
-import { conditionPenalty } from './conditions';
-import { modeNumberBonus } from './modes';
+import { conditionTypedMods, type ConditionSlot } from './conditions';
+import { modeTypedMods, poolTypedMods, type ModeTarget, type TypedMod } from './modes';
+import { termsTotal, type Term } from './blocks/terms';
 import { specificFamiliar } from './specificFamiliars';
 import { companionModKeys, COMPANION_MODS, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, type CreatureOffer } from './companionGrants';
 import type {
@@ -34,6 +35,23 @@ import type {
   SkillId,
   SourceInfo,
 } from './types';
+
+/**
+ * A companion's own typed modifiers on one number — its conditions and its modes — as raw typed mods.
+ *
+ * Every companion number POOLS these (with any item bonus its gear or array gives) through
+ * `poolTypedMods`, the one PF2e stacking rule: best bonus and worst penalty of each type, untyped sums.
+ * The block used to add `conditionPenalty(...) + modeNumberBonus(...)` side by side, so a frightened
+ * companion under a −1 status curse took −2, and barding's +1 item bonus added to a mode's item bonus.
+ */
+function ownMods(conditions: ActiveCondition[], ability: AbilityId, slot: ConditionSlot, modes: ModeDef[], target: ModeTarget): TypedMod[] {
+  return [...conditionTypedMods(conditions, ability, slot), ...modeTypedMods(modes, target)];
+}
+
+/** `ownMods` pooled, with any typed bonus of the companion's own (gear, the eidolon array) in the pool. */
+function ownPool(conditions: ActiveCondition[], ability: AbilityId, slot: ConditionSlot, modes: ModeDef[], target: ModeTarget, extra: TypedMod[] = []): number {
+  return poolTypedMods([...extra, ...ownMods(conditions, ability, slot, modes, target)]);
+}
 
 /** A save's defining ability → the save name a mode targets (modes match saves by name, not ability). */
 const SAVE_NAME: Partial<Record<AbilityId, string>> = { con: 'fortitude', dex: 'reflex', wis: 'will' };
@@ -405,22 +423,24 @@ export function deriveAnimalCompanion(
 
   const speeds = { ...type.speeds };
   if (speeds.land) speeds.land += m.speedBonus + (spec?.speedBonus ?? 0) + gear.speedBonus;
-  // A worn armor/barding Speed penalty applies to every Speed.
+  // A worn armor/barding Speed penalty applies to every Speed, and stops at 5 feet like every penalty.
   if (gear.speedPenalty) {
     for (const key of Object.keys(speeds) as (keyof typeof speeds)[]) {
-      if (speeds[key] != null) speeds[key] = Math.max(0, (speeds[key] as number) + gear.speedPenalty);
+      if (speeds[key] != null) speeds[key] = penaltyFloored(speeds[key] as number, gear.speedPenalty);
     }
   }
 
   const acRank = rankMax(m.ranks.ac, spec?.acRank);
   const dexForAc = gear.dexCap != null ? Math.min(ab.dex ?? 0, gear.dexCap) : ab.dex ?? 0;
-  const ac = 10 + dexForAc + profBonus(acRank, level, withoutLevel) + gear.acBonus + conditionPenalty(conditions, 'dex', 'ac') + modeNumberBonus(modes, { kind: 'ac' });
+  // Barding's AC is an ITEM bonus ("AC Bonus" on armour is the item bonus it grants), so a mode's item
+  // bonus to AC competes with it rather than adding.
+  const ac = 10 + dexForAc + profBonus(acRank, level, withoutLevel) + ownPool(conditions, 'dex', 'ac', modes, { kind: 'ac' }, [{ type: 'item', value: gear.acBonus }]);
   // Per-type base HP (Bird 4 / Wolf 6 / Bear 8 …) + (6 + Con) per level.
   const hpBase = type.hp ?? COMPANION_FORMULA.hpBase;
   const hp = hpBase + (COMPANION_FORMULA.hpPerLevel + (COMPANION_FORMULA.hpAddConPerLevel ? (ab.con ?? 0) : 0)) * level;
   const save = (a: AbilityId): StatMod => ({
     name: '',
-    modifier: (ab[a] ?? 0) + profBonus(m.ranks.saves, level, withoutLevel) + conditionPenalty(conditions, a, 'save') + modeNumberBonus(modes, { kind: 'save', detail: SAVE_NAME[a] }),
+    modifier: (ab[a] ?? 0) + profBonus(m.ranks.saves, level, withoutLevel) + ownPool(conditions, a, 'save', modes, { kind: 'save', detail: SAVE_NAME[a] }),
     rank: m.ranks.saves,
   });
 
@@ -437,11 +457,11 @@ export function deriveAnimalCompanion(
     const atkAbility: AbilityId = finesse && (ab.dex ?? 0) > (ab.str ?? 0) ? 'dex' : 'str';
     // A few Strikes explicitly don't add the companion's Strength (the Ghost's ghostly touch).
     const flat =
-      (opts.noStrengthDamage ? 0 : ab.str ?? 0) + flatBonus + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
+      (opts.noStrengthDamage ? 0 : ab.str ?? 0) + flatBonus + ownPool(conditions, atkAbility, 'damage', modes, { kind: 'damage' });
     const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
     return {
       name,
-      attack: (ab[atkAbility] ?? 0) + profBonus(m.ranks.attack, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
+      attack: (ab[atkAbility] ?? 0) + profBonus(m.ranks.attack, level, withoutLevel) + ownPool(conditions, atkAbility, 'attack', modes, { kind: 'attack' }),
       damage: `${dice}d${dieSize}${dmgFlat} ${damageType}${opts.plus ? ` plus ${opts.plus}` : ''}`,
       traits,
       // Carried so the stat block can say Ranged without having to infer it from traits, which 195 of
@@ -505,7 +525,7 @@ export function deriveAnimalCompanion(
     if (modSkill.has(sk)) rank = rankMax(rank, modSkill.get(sk));
     const ability = SKILL_ABILITY[sk];
     const checkPen = ability === 'str' || ability === 'dex' ? gear.checkPenalty : 0;
-    return { name: cap(sk), modifier: (ab[ability] ?? 0) + profBonus(rank, level, withoutLevel) + checkPen + conditionPenalty(conditions, ability, 'skill') + modeNumberBonus(modes, { kind: 'skill', detail: sk }), rank };
+    return { name: cap(sk), modifier: (ab[ability] ?? 0) + profBonus(rank, level, withoutLevel) + checkPen + ownPool(conditions, ability, 'skill', modes, { kind: 'skill', detail: sk }), rank };
   });
 
   const strMod = ab.str ?? 0;
@@ -579,7 +599,7 @@ export function deriveAnimalCompanion(
     saves: { fortitude: save('con'), reflex: save('dex'), will: save('wis') },
     perception: {
       name: 'Perception',
-      modifier: (ab.wis ?? 0) + profBonus(m.ranks.perception, level, withoutLevel) + conditionPenalty(conditions, 'wis', 'perception') + modeNumberBonus(modes, { kind: 'perception' }),
+      modifier: (ab.wis ?? 0) + profBonus(m.ranks.perception, level, withoutLevel) + ownPool(conditions, 'wis', 'perception', modes, { kind: 'perception' }),
       rank: m.ranks.perception,
     },
     speeds,
@@ -603,18 +623,34 @@ interface Defenses {
   perception: number;
 }
 
-/** A familiar / eidolon uses the master's AC, save modifiers, and Perception — then its
- * own conditions apply on top. */
+/**
+ * A familiar / eidolon uses the master's AC, save modifiers, and Perception — then its own conditions
+ * and modes apply.
+ *
+ * ONE POOL, not "the master's total plus the companion's". The master's number is built from the
+ * master's LIVE sheet, so the master's own conditions and modes are already inside it; adding the
+ * companion's on top made a frightened master's frightened familiar take −2 Will, and status penalties
+ * never stack. So the companion's typed modifiers join the master's TERM LIST (the same list the
+ * master's number and breakdown are built from) and `termsTotal` pools them all once: the worst status
+ * penalty, the best item bonus, and so on, across both.
+ *
+ * Whether the master's conditions should reach the familiar or eidolon at all is not decided here —
+ * they did before and still do; only the double-count of a same-type modifier is gone.
+ */
 function masterDefenses(character: Character, content: ContentDatabase, conditions: ActiveCondition[] = [], modes: ModeDef[] = []): Defenses {
+  const withOwn = (master: Term[], ability: AbilityId, slot: ConditionSlot, target: ModeTarget) =>
+    termsTotal([...master, ...ownMods(conditions, ability, slot, modes, target).map((m): Term => ({ ...m, label: 'Companion', layer: 'transient' }))]);
   return {
-    ac: deriveAc(character, content).value + conditionPenalty(conditions, 'dex', 'ac') + modeNumberBonus(modes, { kind: 'ac' }),
+    ac: withOwn(acTerms(character, content), 'dex', 'ac', { kind: 'ac' }),
     saves: {
-      // Pass content so the master's resilient-rune bonus is included (deriveSave needs it).
-      fortitude: deriveSave(character, 'fortitude', content).modifier + conditionPenalty(conditions, 'con', 'save') + modeNumberBonus(modes, { kind: 'save', detail: 'fortitude' }),
-      reflex: deriveSave(character, 'reflex', content).modifier + conditionPenalty(conditions, 'dex', 'save') + modeNumberBonus(modes, { kind: 'save', detail: 'reflex' }),
-      will: deriveSave(character, 'will', content).modifier + conditionPenalty(conditions, 'wis', 'save') + modeNumberBonus(modes, { kind: 'save', detail: 'will' }),
+      // Pass content so the master's resilient-rune bonus is included (saveTerms needs it).
+      fortitude: withOwn(saveTerms(character, 'fortitude', content), 'con', 'save', { kind: 'save', detail: 'fortitude' }),
+      reflex: withOwn(saveTerms(character, 'reflex', content), 'dex', 'save', { kind: 'save', detail: 'reflex' }),
+      will: withOwn(saveTerms(character, 'will', content), 'wis', 'save', { kind: 'save', detail: 'will' }),
     },
-    perception: derivePerception(character).modifier + conditionPenalty(conditions, 'wis', 'perception') + modeNumberBonus(modes, { kind: 'perception' }),
+    // No content, exactly as before (`derivePerception(character)`), so this change moves no number
+    // except where a same-type modifier sits on both sides.
+    perception: withOwn(perceptionTerms(character), 'wis', 'perception', { kind: 'perception' }),
   };
 }
 
@@ -827,7 +863,7 @@ export function deriveFamiliar(
     ...masterDefenses(character, content, conditions, modes),
     // Spellslime's Ooze Defense: its AC is 10 + your level, NOT equal to yours (immune to crits/precision).
     ...(sf?.id === 'spellslime'
-      ? { ac: 10 + character.level + conditionPenalty(conditions, 'dex', 'ac') + modeNumberBonus(modes, { kind: 'ac' }) }
+      ? { ac: 10 + character.level + ownPool(conditions, 'dex', 'ac', modes, { kind: 'ac' }) }
       : {}),
     // All three printed modifiers move together, so one grant field carries all three. This OVERRIDES
     // the Perception the `masterDefenses` spread just above copied from the master, and Acrobatics and
@@ -835,10 +871,11 @@ export function deriveFamiliar(
     // could not track Intelligence as it changed.
     ...(statAb && statMod != null
       ? {
-          perception: statMod + conditionPenalty(conditions, 'wis', 'perception') + modeNumberBonus(modes, { kind: 'perception' }),
+          perception: statMod + ownPool(conditions, 'wis', 'perception', modes, { kind: 'perception' }),
+          // Conditions only, as before: no mode has ever reached these two rows.
           skills: [
-            { name: 'Acrobatics', modifier: statMod + conditionPenalty(conditions, 'dex', 'skill') },
-            { name: 'Stealth', modifier: statMod + conditionPenalty(conditions, 'dex', 'skill') },
+            { name: 'Acrobatics', modifier: statMod + poolTypedMods(conditionTypedMods(conditions, 'dex', 'skill')) },
+            { name: 'Stealth', modifier: statMod + poolTypedMods(conditionTypedMods(conditions, 'dex', 'skill')) },
           ],
           statNote: `Uses your AC and saves; its Perception, Acrobatics and Stealth are your ${ABILITY_FULL[statAb]} modifier + your level. HP equal to ${5 + (hasTough ? 2 : 0)} × your level.`,
         }
@@ -962,16 +999,14 @@ export function deriveEidolon(
   // An eidolon is always UNARMORED, uses ITS OWN Dexterity (capped by its array's Dex cap) and its OWN
   // unarmored-defense proficiency, which advances on the eidolon's schedule (NOT the summoner's): trained,
   // expert at 11 (Eidolon Defensive Expertise), master at 19 (Eidolon Defensive Mastery). The array's item
-  // bonus to AC is added on top.
+  // bonus to AC pools with the eidolon's own modifiers, so a mode's item bonus competes with it.
   const cappedDex = ec.dexCap != null ? Math.min(ab.dex, ec.dexCap) : ab.dex;
   const eidolonUnarmoredRank = level >= 19 ? 'master' : level >= 11 ? 'expert' : 'trained';
   const eidolonAc =
     10 +
     cappedDex +
     profBonus(eidolonUnarmoredRank, level, withoutLevel) +
-    (ec.acItemBonus ?? 0) +
-    conditionPenalty(conditions, 'dex', 'ac') +
-    modeNumberBonus(modes, { kind: 'ac' });
+    ownPool(conditions, 'dex', 'ac', modes, { kind: 'ac' }, [{ type: 'item', value: ec.acItemBonus ?? 0 }]);
 
   // Build an unarmed Strike: the summoner's eidolon-attack proficiency + the eidolon's Str (or Dex
   // when the attack is finesse and Dex is higher); damage is one die + Str, plus the summoner's
@@ -1028,7 +1063,7 @@ export function deriveEidolon(
           : ab.str
         : 0
       : ab.str;
-    const flat = dmgAbility + specDamage + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
+    const flat = dmgAbility + specDamage + ownPool(conditions, atkAbility, 'damage', modes, { kind: 'damage' });
     const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
     // Striking on the shared handwraps adds dice to EVERY unarmed Strike the eidolon has, granted ones
     // included — rune-sharing is written per Strike, not per natural weapon. (The animal-companion path
@@ -1045,7 +1080,8 @@ export function deriveEidolon(
       (runeCritPersistent.length ? ` (plus ${runeCritPersistent.join(', ')} on a crit)` : '');
     return {
       name: rawName?.trim() || fallback,
-      attack: ab[atkAbility] + profBonus(attackRank, level, withoutLevel) + potencyBonus + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
+      // Potency (handwraps, ABP or a Monster-Parts refinement) is an ITEM bonus, so it pools with a mode's.
+      attack: ab[atkAbility] + profBonus(attackRank, level, withoutLevel) + ownPool(conditions, atkAbility, 'attack', modes, { kind: 'attack' }, [{ type: 'item', value: potencyBonus }]),
       damage,
       traits: [...traits, 'unarmed'],
       ...(ranged ? { range: opts!.range } : {}),

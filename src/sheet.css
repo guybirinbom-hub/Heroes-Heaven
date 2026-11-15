@@ -347,6 +347,21 @@ body {
   justify-content: center;
   margin-top: 14px;
 }
+/* "Your GM deleted this campaign" / "You were removed from this campaign" (CampaignGoneNote): on its own
+   line under the campaign's name on the Setup card, the phone's campaign card and the Party page. */
+.cmp-gone-note {
+  flex-basis: 100%;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--app-warn);
+}
+.cmp-gone-note.block {
+  display: block;
+  margin-top: 6px;
+}
+.cmp-in:has(.cmp-gone-note) {
+  flex-wrap: wrap;
+}
 .cmp-join-input {
   display: flex;
   gap: 8px;
@@ -2787,6 +2802,10 @@ body {
 .stance-chip:disabled {
   opacity: 0.6;
   cursor: default;
+}
+/* The "Not yet verified" line (TrustMarker) under the chips, on its own row like the note. */
+.stance-bar > .sd-choice-note {
+  flex-basis: 100%;
 }
 .stance-note {
   flex-basis: 100%;
@@ -9202,12 +9221,20 @@ button.ff-trait.rune-link:focus-visible {
   font-size: 13.5px;
   line-height: 1.55;
   color: var(--app-text);
+  /* A long message scrolls INSIDE the box. The .picker caps its height and clips (overflow: hidden),
+     so a body taller than a phone screen pushed the buttons below the cut: no way to answer. The body
+     shrinks and scrolls; the head and the buttons keep their size. */
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .confirm-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
   padding: 16px;
+  flex: none;
 }
 
 /* ---- numbers that open the stat-breakdown panel ---- */

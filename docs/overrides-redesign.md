@@ -9,6 +9,23 @@ use when every PF2e record is re-implemented later (decisions 22–25; Part 2 "B
 978677c book blocks, 55accab rank seams, 3e27a16 given feats work like picked, then the one content
 path, item 7). A browser test passed: a character built with the old Overrides card opens with every
 change kept and the same numbers, except case D. Part B's prompt is in Part 3 ("Phase 1 part B prompt").
+2026-10-22: phase 1 PART B is built and committed: the Tweaks page itself. Commits in order: 7155266 (WP0
+before-numbers), fc984f9 (WP1 one write door), d7577b0 (WP2 one reader), 6137d5d (WP3 old characters),
+c2abbcd (WP5 holds), 6a386d9 (WP9a export warning), eb1174f (WP4 saving), 5cf6a5c (WP6 the page),
+f4e375e (WP7 the editors), be136fb (WP8 a given feat's questions), 05b6d66 (WP9b wording), bf92e87
+(WP10 the final proof, the browser test and its fixes). Every sheet number matched the before-numbers
+except the planned fixes; the full test suite passed except two known load time-outs (card-stubs,
+bestiary-corpus-refute) that pass alone, the same as before part B. Part B's own decisions are B1–B27 in "Decisions
+so far"; the release notes for phase 1 are in Part 3 ("Phase 1 release notes"). The "skill ranks
+level by level" job (Guy's 2026-10-21 rulings; it waited for part B) is built; its release notes are in Part 3
+("Skill ranks level by level — release notes"). NEXT: phase 2 (Choices) in a new chat.
+2026-10-27: phase 2 (Choices) is built, cut to what survives the planned rebuild of every record (Guy, 2026-10-25:
+"Only what survives"): Take anyway in six more pickers, Pick from any list, Take a feat more times, extra feat / skill
+increase / boost places, removing a feat / skill increase / boost place, the Tweak mark, and a stored off-list answer
+shown by name. Commits "Tweaks p2 WPn: …" from 2e53715 (WP1) to c880804 (WP14 + WPR), then WP13 (finish). What was
+built, and where, is in Part 2 ("Phase 2 — as built"); the release notes are in Part 3 ("Phase 2 release notes").
+Change an answer, Edit a list, a skill increase's rules and removing class-feature choice, tactic or rune places come
+after the record rebuild (chat-todo "After the rebuild…"); until then a stored one reads as made in a newer version.
 
 - **Part 1** is for Guy: what exists, what is broken, the feature ideas, the names, the questions.
 - **Part 2** is for the chat that builds it: the code facts behind every line of Part 1.
@@ -117,6 +134,51 @@ Guy, 2026-10-20 (part A check-in: he saw looks 1–3, asked for a mix, and picke
     Options. That switch is the on/off switch of decision 8 (pauses every tweak, after the confirm).
 29. **The list is grouped by kind** (Numbers, Ranks, Feats, Languages, Spells…). "Add a tweak" sits
     under the list; Advanced folds out under it.
+
+Part B's own decisions, 2026-10-21 (made while building; every option was rules-correct, so none needed
+a ruling):
+
+- B1. An old rank change counts as "lowered" only if it was lower than the rank the character had at
+  that point of the build, before any feat raised it.
+- B2. Otherwise it becomes "at least". An old Lore change always becomes "at least". An old entry the
+  app cannot read keeps working exactly as before.
+- B3. That sorting happens when the character is read. The saved character is not changed by it.
+- B4. Opening the Builder fixes the sorting in place, so numbers never jump while you edit. It is saved
+  only when you press Save; Cancel asks nothing.
+- B5. A set maximum HP is now one line of the HP math: modes, a Constitution mode and Drained count on
+  top of it. Older apps still see the set number.
+- B6. A rank you hold "exactly" also holds a gunslinger's firearm rank and a daily skill pick, for
+  tweaks you make. Old entries moved from Overrides do not (see B26).
+- B7. Deleting a given feat keeps its answers. Giving it again brings them back.
+- B8. A given feat's unanswered question belongs to the Tweaks page: the button shows a dot and Save
+  lists it. This covers a feat's own choice; a dedication's bonus skill feat and skill picks are not
+  counted yet, for a given feat or a slot pick (chat-todo).
+- B9. The Tweaks page takes the place of the level page. Clicking any level closes it.
+- B10. A given feat has one level number, its start level. Changing it moves the tweak.
+- B11. Old entries show "Moved from Overrides" until you first edit them. Things the app adds on import
+  are marked as such from now on.
+- B12. The Tweaks button counts every listed tweak: on, paused, broken, and made in a newer version.
+- B13. Text edits obey the Tweaks switch and their own on/off, like every other tweak.
+- B14. A brand-new character can switch Tweaks on before it has any tweak.
+- B15. A character whose last tweak is gone stays clean: nothing empty is saved.
+- B16. Any Save that changes a spellcasting entry asks first, not only one caused by a given feat.
+- B17. The Free boosts warning's "Clear" button became "Show in Tweaks".
+- B18. "Starts at level N" exists for tweaks now. The same for book rules waits for the big
+  re-implementation.
+- B19. Each kind's group heading and menu labels ("Set to", "At least", "Exactly") are written once,
+  next to the kind, and the automatic check checks them.
+- B20. The Wanderer's Guide export lists every tweak it cannot carry, paused ones too ("off now").
+- B21. An automatic check makes sure every part of the app reads tweaks through the one door.
+- B22. A change to an existing tweak counts at once, like every Builder control (no inner Save). A new
+  tweak needs "Add". Ctrl+Z undoes both.
+- B23. The phone's Back button works as in the rest of the Builder. The Tweaks page has its own Done
+  button.
+- B24. On a phone, the Character panel stays open or closed as you left it while Tweaks is open.
+- B25. Removing a feat, "Take anyway" and text edits have no start level in this version.
+- B26. An old rank change keeps feeding the rest of the build what it fed before (Molten Wit, a
+  firearm rank, a daily skill pick) until you edit it. From then on it works like a new tweak.
+- B27. Old and new app versions stay safe together: the app never lowers a newer version's mark, and
+  never pauses old tweaks by accident.
 
 ## What Overrides can do today
 
@@ -886,6 +948,45 @@ Line numbers drift; find each place by its symbol name. Counts marked "about" we
   `buildChoiceOptions` (`build.ts:2245`) and `effectiveChoiceOptions` (`derive.ts:1637`).
 - `checkPrerequisites` (`build.ts:11209`) sees `classId` only (`:11233-11237`).
 
+### Phase 2 — as built (2026-10-27)
+
+The plan is `work/tweaks-phase2-notes/plan.md` (untracked); each work package has its report beside it. Every
+phase-2 tweak is one element of `overrides.blocks`, read by `src/rules/blocks/stored.ts` (one reader per kind) and
+applied only through `src/rules/blocks/active.ts`; the write door is `src/rules/blocks/write.ts`.
+
+- **Feature 10, Take anyway** (WP4, 3f383d9 … 460d503): `choice.allowAnywayAnyPicker`, pickers heritage, background,
+  deity, subclass, spell (with the open spell choices: Adapted Cantrip, Adaptive Adept) and sanctification
+  (`ANY_PICKERS`, `registry.ts`). Two engine seams: the open spell grant's tradition rule and a dedication's named
+  cantrips (`allowedInPicker` in `build.ts`). NOT built: a skill increase past its rules (cap / locked / narrowed,
+  WP12).
+- **Feature 11, any list and more takes**: `choice.anyList` (WP5, d685d62) in slot pickers, pick-a-feat pickers and the
+  three bonus feat pickers; `choice.moreTakes` (WP8, de8d84a), "Take again", the copies counted by `featCopiesHeld`.
+- **Feature 12, extra places**: `choice.addPlace` place `feat` (WP7, b7e2242 … faa48ae; its pick under the derived key
+  `<level>:extra<category>:<n>`, kept through a build-less reopen by `Character.tweakKept`) and places `skillIncrease`
+  and `boost` (WP11, 96bc53c; breakdown lines in `explain.ts`). NOT built: an extra class-feature choice, cantrip or
+  spell known.
+- **Feature 13, remove a place**: `remove.choicePlace` places `feat` (WP6, fbab62e … 20f633d; the shared
+  `FeatSlotCard`), `skillIncrease` and `boost` (WP14, c880804; kept rows in `removePlace.tsx`). `REMOVE_PLACES` holds
+  exactly these three. NOT built: class-feature choice places (WP15 / WP16), tactic and rune places (WP17).
+- **Feature 14, change an answer**: only WP9 step 4 (145343a), a display fix: a stored answer its list does not offer
+  shows by name, greyed, with what the sheet does (`src/builder/keptAnswer.ts`, `withKeptAnswer`, 11 pickers).
+  `choice.changeAnswer` is registered with `applies: 'not-yet'` and stays on `STILL_TO_ADD` (WP10).
+- **Feature 15, edit a list**: `choice.editOptions` is registered with `applies: 'not-yet'` and stays on
+  `STILL_TO_ADD` (WP9 steps 1-3).
+- **Feature 42, warn never block**: the Tweak mark (`TweakMark.tsx`, WP2) on every pick a tweak names; the zero-marks
+  sweep (`test/tweaks-p2-mark.test.tsx`) proves a character with no such tweak shows none.
+- **WP13 (finish), the deferred values are not live.** A kind with `applies: 'not-yet'` reads as made in a newer
+  version (`stored.ts` `readOne`: kept byte for byte, listed read-only under "Made in a newer version", never applied),
+  and the write door refuses a new one ("… is not in this version yet"). A trimmed value of a built kind (`picker:
+  'skillIncrease'`, `place: 'classChoice' | 'tactic' | 'rune'`) is outside its closed set, so it reads the same way.
+  `scripts/blocks-check.mjs` (`checkChoiceKinds`) fails on a rowText case for a not-yet kind (C34 lists the built
+  kinds only). `QuestionPart`, `OptionsPart` (`choiceParts.tsx`) and the answer part's `'value'` mode are kept,
+  unrendered, for WP9 / WP10. The dev-only taste sample (`dev/tweaks-p2-sample.html` and its component and test) is
+  deleted; the screenshots in the notes folder keep what Guy judged.
+- **Older apps** (WPR, c880804): `scripts/older-app-replay.mjs` replays every `overrides:p2-*` parity character
+  through v0.1.44's and v0.1.45's own code (every byte kept, nothing applied it does not understand) and is a
+  pre-release guard in the hh-release skill.
+
 ## Give and remove (features 16–19)
 
 - Give feat cap: `f.level <= build.level` (`shared.tsx:2989`).
@@ -1185,3 +1286,225 @@ How to work:
 - At the end: the doc's status line and "Decisions so far", the memory note, and tell Guy that phase 2
   (Choices) is next, in a new chat.
 ```
+
+**Open point 8, as built (2026-10-21, part B WP4).** The launch rebuild ALREADY applies case D: `rebuildRoster` →
+`buildCharacter` → `heldFeatSlots` turns a cleric given Flexible Spellcaster Dedication spontaneous on load, the
+same entry as the picked feat (test/tweaks-casting-confirm.test.tsx, "the launch rebuild already turns…"). The
+2026-10-20 browser note ("only after the next Builder save") was a stale-module artefact of that session's dev
+server, not a hole in the load path. Prepared and chosen spells are not dropped by a Save either:
+`playForRebuild` keeps every `preparedSpells` / `repertoireSpells` key, through a pause and a resume and with
+Tweaks switched off (same test file). What part B added is the question: any Builder Save that changes a
+spellcasting entry (its type, its prepared slots, a smaller repertoire or cantrip count, the entry gone) asks
+"This changes <entry>" first (blocks/save.ts `castingEntryChanges`, builder/tweaks/castingConfirm.tsx).
+
+## Phase 1 release notes
+
+For the release chat (hh-release skill): what players see change with Tweaks phase 1 (parts A and B).
+One line each, in plain words. Merged from part B's open point 7, every report's "Tell Guy" lines and
+the plan's section 10.
+
+The new Tweaks page
+- Overrides is now called Tweaks. Switch it on in Setup → Options, and a Tweaks button with a count
+  appears in the Builder's top bar.
+- The button opens a Tweaks page in place of the level page, with your character's stats still in view.
+  Clicking a level closes it.
+- The page lists every tweak, grouped by kind (Numbers, Ranks, Feats, Languages, Spells…). Click one to
+  open its editor; one is open at a time. "Add a tweak" sits under the list, rarer kinds under Advanced.
+- Every tweak has its own reason and on/off switch, and most have a start level ("Starts at level 9").
+  Removing a feat, "Take anyway" and text edits have no start level yet.
+- Bonuses and penalties (+/-), "set to" and "at least" work on the main numbers. A tweaked number's
+  breakdown shows a line like "Tweak: +1 (Guild training)", so the math adds up. No marks next to numbers.
+- A "set" tweak gets a "Book number changed" mark when the book number under it changes, for example
+  after a level-up.
+- Attribute scores can be set (for example to 18); "at least 18" for a score is not there yet.
+- Ranks: a rank tweak means "at least" by default. "Exactly" holds the rank, even when a later step
+  would raise it.
+- A skill held "exactly" is greyed out in the skill-increase picker ("Held at Trained by a tweak"), and
+  the skill's history names the tweak. A held rank also holds a gunslinger's firearm rank and a daily
+  skill pick.
+- Add a Lore with any subject. It is offered by the skill-increase picker like any other Lore.
+- Give yourself feats of any level, from any book. A given feat asks its own questions under its
+  editor. A feat's own choice (like Assurance's skill) puts a dot on the Tweaks button and is named by
+  Save's "choices left" until it is answered. A dedication's bonus skill feat and skill picks are not
+  counted yet (the same as for a feat in a level slot).
+- A tweak that a number ignores (AC or Speeds in a battle form, a printed spell DC) shows as a 0 line in
+  the breakdown, with the reason.
+- A tweak that points to a feat, spell, class feature or spellcasting entry that is no longer there (a
+  given or removed feat, "Take anyway", a text edit, a spell DC tweak) shows as broken, with "Remove" and
+  "Point to another". It is never dropped. (Given languages are not checked yet.)
+- A tweak made in a newer app version is listed and kept as it is, read-only.
+- Deleting a tweak asks nothing. Ctrl+Z brings it back.
+- Switching Tweaks off in Options first asks, and lists what turns off. While off, every tweak you made
+  is paused and the numbers go back to the book; things an import added stay on, and the question says
+  which. Switching on brings them back.
+- The Free boosts warning now offers "Show in Tweaks" instead of clearing the change. With several
+  set scores it opens the first one's row; the page lists the others next to it.
+- On a phone, the Tweaks button is an icon with the count. The Character panel stays open or closed as
+  you left it while the Tweaks page is open (one tap shows it).
+
+Old characters
+- Characters with old Overrides show the Tweaks button after their first Builder open, even if the old
+  card was switched off (that switch only hid the card; the changes always counted). Their old changes
+  are listed as "Moved from Overrides".
+- Every number stays the same except these fixes: a skill increase that an old rank change swallowed now
+  counts; a rank you lowered now stays lowered; a set maximum HP now keeps a mode's HP bonus (a
+  Constitution mode moves it too).
+- An old rank change counts as "lowered" only if it was lower than the rank the character had at that
+  point, before any feat raised it. Otherwise it becomes "at least", so a feat that upgrades the rank
+  ("expert if already trained") keeps doing so.
+- Old rank changes keep feeding the rest of the build what they did before (Molten Wit, a gunslinger's
+  firearm rank, a daily skill pick) until you edit that tweak.
+- An old Lore change now sits on the Lore's own row ("Sailing Lore" instead of "Sailing Lore Lore").
+- Older apps (a teammate's old phone) still show the old Overrides card, ignore the new parts, and still
+  apply every tweak, the paused ones and those under a switched-off Tweaks included.
+
+Given feats and spellcasting
+- A feat you give yourself now works like the same feat picked in a slot. A cleric given Flexible
+  Spellcaster Dedication turns spontaneous; the spells it had prepared stay saved.
+- Saving a character whose spellcasting changes (Flexible Spellcaster given or picked, a casting
+  dedication paused, Tweaks switched off) now asks first. It names the entry and what changes, and says
+  the chosen spells stay saved.
+
+Other
+- Text edits now reach the party card, the tracker and HP.
+- The Initiative popup's Roll button now rolls Initiative.
+- Exporting to the other character-builder format now lists every tweak the file cannot carry, paused
+  ones marked "(off now)", and asks before it saves the file.
+- Wording: the feat card says "Your text: …" (was "Your override: …"); a locked score and the Free boosts
+  warning say "set by a tweak"; an old entry the app could not sort says "an older tweak, kept as it
+  was" in a skill's history; Settings → Appearance says each character can "change" its look. The only
+  "Overrides" left on screen is the "Moved from Overrides" mark on old entries.
+
+## Skill ranks level by level — release notes
+
+For the release chat (hh-release skill): what players see change now that skill ranks are worked out one
+level at a time, the way the printed rules do. One line each, in plain words.
+
+How ranks are worked out
+- Your skill ranks are now worked out level by level, in the order the rules print: what you get at 1st
+  level first, then each later level in turn, with that level's skill increase and feats counted together.
+- A skill that a feat trains no longer wastes a later increase. Kholo Lore trains Stealth at 1st level; a
+  Stealth increase at 3rd level now makes it Expert (it used to stay Trained).
+- A feat that says "if you are already trained, pick another skill" offers the replacement only when the
+  skill was already trained at the moment you take the feat, from any source: your background, your class,
+  an earlier increase or an earlier feat. Before, it could offer a free skill even when nothing was trained yet.
+  With "Verified rules only" on (the default), Kholo Lore, Vandal, Snare Setter and Alchemist Dedication do not
+  offer this replacement yet: that part of them is not verified. Turn the setting off to get it.
+- An exemplar's root epithet (The Brave, The Cunning and the others) that lands on a skill you are already
+  trained in at 3rd level now asks you for a replacement skill, as the rules say.
+- Feats that another feat gives once a skill reaches a rank (Student of Water, Raging Intimidation) now
+  appear at the level that rank is actually reached, not at the level the first feat was taken. For
+  example, Raging Intimidation gives Scare to Death at the level Intimidation becomes Legendary.
+- Stonemason's Eye and Intuitive Crafting give Specialty Crafting only when Crafting was already trained when
+  you took them. A Crafting increase at a later level no longer counts for this.
+- A feat whose skill requirement you only meet at a later level now shows as "not met" at its own level.
+- The skill-increase picker, the feat requirements, the skill pickers (feats and backgrounds), the new-Lore
+  check and the "how was this calculated" popup all use the ranks you really have at that level.
+- Importing or rebuilding a character puts its skill increases at the level the rules give them. When the
+  rebuilt character cannot reach a rank the file has, the import tells you which skill.
+
+Dual Class
+- Dual Class characters get skill increases at both classes' levels. New empty skill-increase places
+  appear at the levels of the second class.
+
+Old characters
+- Opening an old character never changes it. Nothing is rewritten when it loads.
+- If the new order changes a number on an old character, the Builder shows a one-time notice that names
+  what changed (for example "Stealth: Trained → Expert (Kholo Lore at 1st, skill increase at 3rd)."). If
+  nothing changed, you see nothing.
+- Answers that no longer apply (a replacement skill the feat no longer asks for) stay stored, so nothing you
+  chose is lost.
+- A GM who edits a player's character does not see this notice and cannot clear it; it stays for the player.
+- Tweaks keep working as before: a rank set to "at least" counts from its start level, and "exactly" still
+  holds the final rank.
+
+## Phase 2 release notes
+
+For the release chat (hh-release skill): what players see change with Tweaks phase 2 (Choices). One line each, in
+plain words. From the plan's section 7, cut to what was built (Guy, 2026-10-25: "Only what survives").
+
+New choices
+- "Take anyway" now works in more pickers: heritage (also another ancestry's heritages, behind "Show heritages of other
+  ancestries"), background, deity, subclass, a sanctification your deity doesn't allow, and spells from other
+  traditions (also in "a cantrip from another tradition" picks such as Adapted Cantrip and Adaptive Adept).
+- Pick a feat from any list: a general feat in a class slot, another ancestry's feat, or a feat above your level — also
+  in the feats some feats let you pick (General Training, Ancestral Paragon) and in the Versatile Human heritage feat,
+  the Universal Mind Training wizard feat and a dedication's bonus skill feat. Each rule you break is its own tweak.
+- Take a feat more times than it allows: a second Fleet really adds another 5 feet. A second copy adds only what can
+  add up.
+- Add a place at any level: an extra feat slot (ancestry, class, general, skill or archetype, and impulse, mythic or
+  bonus where your class has them), an extra skill increase or an extra attribute boost. An extra boost shows as its
+  own line in the attribute's breakdown.
+- Remove a place you don't want: a feat slot, a skill increase or an attribute boost. A feat already in a removed slot
+  stays as a feat with no slot and keeps counting. A skill or attribute pick in a removed place stays on screen ("kept,
+  doesn't count") with Restore; pause the tweak or switch Tweaks off and it counts again.
+
+On the Tweaks page and in the Builder
+- Each one is a row under "Choices" on the Tweaks page, with its reason, on/off, Go to and Delete.
+- Picks a tweak allows carry a small "Tweak" mark. Feats you took "anyway" with the old Overrides card now carry it too.
+- A heritage, background, deity, subclass or bonus feat that is outside its list now always shows by name, greyed with
+  the reason, instead of an empty "Choose…" (it always counted). A character imported with such a pick shows it too.
+- A saved answer that is not on its list (from an import or an older edit) now shows by name, greyed, with words that
+  say what your sheet does with it, instead of "Choose…".
+- With the mark and these two, these are the only changes an existing character can see.
+- While a tweak is paused, or Tweaks are off, what a tweak ADDED stops counting (an extra place and the feat in it, with
+  what that feat gives, an extra increase or boost, a second copy, a feat picked from another list through a feat's
+  own pick, an Adaptive Adept cantrip outside its Adapted Cantrip's tradition). What a tweak only ALLOWED stays picked
+  and keeps counting (a heritage or feat taken anyway, a feat in another kind of slot, a sanctification, an Adapted
+  Cantrip from your own tradition); the builder shows the book's warning again. What a tweak REMOVED comes back and
+  counts. With Tweaks off, an extra place still shows, greyed, so you can see what is waiting.
+- Deleting an extra feat place keeps its feat as a feat with no slot. Deleting asks nothing; Ctrl+Z brings it back.
+
+Older versions and other devices
+- Older versions (0.1.44, 0.1.45): a feat in an extra place shows as a feat with no slot and counts, even while paused;
+  extra increases and boosts, second copies, an Adaptive Adept cantrip outside its tradition and feats picked from
+  another list through a feat's own pick don't apply there; a removed place counts there. A heritage, background,
+  deity or bonus feat from outside its list shows empty there but still counts. Nothing in your saved character is
+  lost; the new version brings them back.
+- A GM on an older version who opens and saves your character publishes that version's numbers until your next change.
+- A character rebuilt without its saved build (rare: a very old save, or a file in the other character-builder format
+  imported again) keeps a paused place's feat and a removed place's pick on this version; an older version, or that
+  file, loses those two.
+
+What each older version does (plan section 5, cut to what was built):
+
+| what | v0.1.44 | v0.1.45 | a GM on an older app (GmEditSheet = the same Builder) | party card / tracker |
+|---|---|---|---|---|
+| the tweaks themselves | kept (an older app keeps a non-empty list as it is) | kept as "made in a newer version", shown nowhere | kept; Update pushes them back | — |
+| a feat in an extra place (live or paused) | "Feat with no slot", counts, Remove only (no Move) | same | same | the player's numbers |
+| an extra place's feat with no tweak left | same | same | same | same |
+| an extra increase or boost, a second copy, a feat picked from another list through a feat's own pick | not applied (book numbers) | not applied | not applied in the GM's edit view | the player's numbers |
+| a feat allowed in another slot, a pick allowed by a picker | the pick shown with that app's own warning; same numbers | same | same | the player's numbers |
+| a heritage, background or deity taken anyway; a bonus feat (heritage, Universal Mind Training, dedication skill feat) from outside its list | the picker shows it EMPTY ("Choose…"), while the sheet still counts it; same numbers | same | same, and a GM who re-picks it there replaces the player's pick | the player's numbers |
+| a cantrip taken anyway from another tradition, a sanctification taken anyway | an Adaptive Adept cantrip off its tradition is dropped (book number) with the "choose again" line; an Adapted Cantrip from your own tradition counts and shows by name; the sanctification counts with the deity line | same | same | the player's numbers |
+| a removed feat slot | the slot drawn with its pick; an empty removed slot shows as owed | same | same | same numbers |
+| a removed skill increase or boost place | the place drawn with its answer, which counts (book numbers); an empty one shows as owed | same | same | the player's numbers |
+| a reopen without a saved build (a very old save, a file in the other character-builder format imported again) | an extra place's feat goes into the first free real slot (or an imported chip) and the place shows empty and owed; a second copy may fall to the chip limit; the extra increase lands in the main lane and the extra boost is solved into the boosts; a paused place comes back empty and a removed place's kept answer is not restored (the tweak itself survives) | same | same | — |
+| the same reopen on THIS version | — | — | — | a live place's feat stays in its place; a paused or off place's feat and a removed place's kept answer come back; a file in the other character-builder format carries neither, so an import loses only those |
+
+Coming after the record rebuild (Guy, 2026-10-25), each a "Still open" line
+- Taking a skill increase past its level's limit, on a Lore that can't be raised that way (Bardic Lore), or outside the
+  skills a bonus increase is limited to (Stylish Tricks).
+- Answering a skill or other choice outside its list ("Change an answer"); adding a value to a list of names or greying
+  out options you don't want ("Edit a list").
+- Removing a class-feature choice place (a thaumaturge's second implement, an animist's apparition, a wizard's thesis),
+  a commander's tactic place or a runesmith's rune place.
+- A tweak of these kinds that a newer version saved shows here as "Made in a newer version": kept as it is, never
+  applied.
+
+Still open (later phases)
+- An extra class-feature choice; an extra cantrip or spell known (with the spellcasting work); removing an ancestry's
+  or background's fixed boost, a class's key boost, a second class's key boost, the kineticist's element choice or a
+  class's starting trained skills; removing class features, ancestry or heritage features, spells, languages,
+  proficiencies or senses (phase 3) and spellcasting (phase 5); removing a spell place (a cantrip, spell known,
+  spellbook or signature place: phase 5), a place a feat or heritage gives (a bonus feat, a pick-a-feat or
+  pick-a-cantrip answer, a feat's own choice, the tactic places Tactical Expansion and Tactical Excellence add: phase 3)
+  or a bonus language place (phase 3); alchemist formula picks (written into the formula book once, not a place);
+  changing what a feat's effect choice gives (e.g. Draconic Resistance's list), blast types, worked-out answers, daily
+  and item answers, a subclass's own sub-picks, a pick-a-cantrip or domain spell, a subclass's key attribute and other
+  one-field class picks; Take anyway for an option's own prerequisite inside a choice (Manifold Modifications, Grand
+  Metamorphosis); a feat from outside an open "any 1st-level dwarf feat" pick; an open pick's language, weapon,
+  heritage, ancestry or background from outside its list (e.g. an uncommon language for "any common language"); two
+  boosts to one attribute in one set; a given feat twice (phase 3); Path to Perfection's save rules; class-archetype
+  and mythic rules; spells above their slot's rank; a feat more times through a feat's own pick; Take anyway for
+  prerequisites in the feats some feats let you pick (those pickers don't check prerequisites yet).

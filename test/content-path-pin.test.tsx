@@ -18,8 +18,9 @@ import type { Character, ContentDatabase } from '../src/rules/types';
  * and the GM's HP write (pcSheetTruth `sheetWithVitals`: damage = max − current HP) used the raw max —
  * a heal the player never had, written back over their HP.
  *
- * Now `contentFor(db, overrides)` (src/rules/blocks/content.ts) is the one path, called by the derive
- * boundary from the character's own overrides. This pins, for ONE synthetic character:
+ * Now `contentFor(db, host)` (src/rules/blocks/content.ts) is the one path, called by the derive
+ * boundary with the character (or build) itself — `{ overrides, options }`, plan B B13: only the LIVE edits
+ * are laid over (the Tweaks master switch, each edit's own on/off). This pins, for ONE synthetic character:
  *   (1) every surface equals the sheet: max HP, current HP, Reflex (an edit of a printed feat) and
  *       Fortitude (an edit of the player's own HOMEBREW feat, which on a GM's device exists only as a
  *       record the sheet CARRIES — the order: carried records first, then the edits); and the reverse:
@@ -32,7 +33,10 @@ import type { Character, ContentDatabase } from '../src/rules/types';
  *       (fixer 2026-10-20: removing either call left all legs green before; a temp-copy plant of each
  *       removal now fails 2 and 1 tests);
  *   (3) loading is not an edit — no new authoredKey, nothing pushed, the sheet object untouched;
- *   (4) the cache (C9): the same database object for the same base and the same contentEdits object.
+ *   (4) the cache (C9): the same database object for the same base and the same contentEdits object;
+ *   (5) plan B WP2: a PAUSED edit (or Tweaks switched off on a v:2 character) reaches no surface, the
+ *       Builder's preview included, and switching Tweaks off in the Builder drops the edit at once (every
+ *       memo that calls contentFor keys on `options` too — contentFor cannot un-apply an edit).
  * Before the change, (1)'s party card, tracker row, vitals, GM HP write, party viewer and roster card
  * legs failed (run 2026-10-20, recorded in the item-7 report). Every name and record here is synthetic.
  */
@@ -90,6 +94,8 @@ vi.mock('../src/data/supabase', () => {
         getSession: async () => ({ data: { session: { user: { id: 'gm-1' } } } }),
         getUser: async () => ({ data: { user: { id: 'gm-1' } } }),
         signOut: async () => ({ error: null }),
+        // The Builder (WP2's ovContent tests below) mounts useAuth through its campaign card.
+        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => undefined } } }),
       },
     },
     isCloudSyncEnabled: true,
@@ -185,7 +191,7 @@ function buildOf(edits: boolean): BuildState {
  *  (initialPlay), and the custom records it uses carried (App's publish). */
 function playerSheet(edits = true): SavedChar {
   const build = buildOf(edits);
-  const character = buildCharacter(build, contentFor(ownerDb, build.overrides));
+  const character = buildCharacter(build, contentFor(ownerDb, build));
   const play = initialPlay(character, ownerDb);
   const sc = { id: CHAR, character, build, play } as SavedChar;
   const carried = collectCarried(sc, ownContent(ownerDb, sc));
@@ -193,11 +199,11 @@ function playerSheet(edits = true): SavedChar {
 }
 
 /** THE SHEET's numbers, exactly as src/App.tsx draws the player's own sheet: `activeContent` (own view),
- *  `character` = applyPlayState against it, `sheetContent` = contentFor(activeContent, overrides). */
+ *  `character` = applyPlayState against it, `sheetContent` = contentFor(activeContent, character). */
 function sheetNumbers(sc: SavedChar) {
   const activeContent = ownContent(ownerDb, sc);
   const character = applyPlayState(sc.character, sc.play, activeContent);
-  const sheetContent = contentFor(activeContent, sc.character.overrides);
+  const sheetContent = contentFor(activeContent, sc.character);
   return {
     max: deriveMaxHp(character, sheetContent),
     cur: character.hitPoints.current,
@@ -311,7 +317,7 @@ describe('fixture', () => {
     const heavyOff = heavyPurse(playerSheet(false));
     expect(encumbered(applyPlayState(heavyOff.character, heavyOff.play, ownContent(ownerDb, heavyOff))), 'no edit: Encumbered').toBe(true);
     const heavyOn = heavyPurse(playerSheet(true));
-    expect(encumbered(applyPlayState(heavyOn.character, heavyOn.play, contentFor(ownContent(ownerDb, heavyOn), heavyOn.character.overrides))), 'with the edit').toBe(false);
+    expect(encumbered(applyPlayState(heavyOn.character, heavyOn.play, contentFor(ownContent(ownerDb, heavyOn), heavyOn.character))), 'with the edit').toBe(false);
     expect(on.fortitude - off.fortitude, 'the carried homebrew feat edit').toBe(2);
     expect(db.feats[FEAT.id], 'the GM database lacks the player feat').toBeUndefined();
     expect(Object.keys(playerSheet().carried?.feats ?? {}), 'the feat rides along').toEqual([FEAT.id]);
@@ -444,7 +450,7 @@ describe('item 7 / C1 pin: every surface shows the sheet’s numbers', () => {
       <ContentContext.Provider value={ownDb}>
         <CharacterSheet
           character={applyPlayState(me.character, me.play, ownDb)}
-          content={contentFor(ownDb, me.character.overrides)}
+          content={contentFor(ownDb, me.character)}
           build={me.build}
           charKey={me.id}
           partyEnabled
@@ -466,10 +472,10 @@ describe('item 7 / C1 pin: every surface shows the sheet’s numbers', () => {
 describe('the order: carried records first, then the edits (never collected into carried)', () => {
   it('the documented order reaches the carried feat; the reverse order loses the edit; carried copies stay un-edited', () => {
     const sc = playerSheet();
-    const ov = sc.character.overrides;
-    const right = contentFor(foreignContent(db, sc), ov);
+    const host = sc.character;
+    const right = contentFor(foreignContent(db, sc), host);
     expect(right.feats[FEAT.id]?.saveBonuses, 'carried first, then the edits').toEqual(EDITS.feats![FEAT.id].saveBonuses);
-    const reversed = foreignContent(contentFor(db, ov), sc);
+    const reversed = foreignContent(contentFor(db, host), sc);
     expect(reversed.feats[FEAT.id]?.saveBonuses, 'the planted bad order loses the edit').toBeUndefined();
     // The derive boundary applies the edits LAST, so a surface handing it the plain view still gets it right.
     expect(computePcStats(applyPlayState(sc.character, sc.play, foreignContent(db, sc)), foreignContent(db, sc)).fortMod).toBe(sheetNumbers(sc).fortitude);
@@ -503,7 +509,7 @@ describe('the derive boundary: each entry point applies the character’s own ed
     const build = { ...buildOf(false), overrides: { ...buildOf(false).overrides, contentEdits: lower } } as BuildState;
     // Built as the app's onCreate built it (the edits laid over), then seeded the way App's / the GM
     // sheet's updatePlay seeds a first play edit: initialPlay against the plain view.
-    const character = buildCharacter(build, contentFor(ownerDb, build.overrides));
+    const character = buildCharacter(build, contentFor(ownerDb, build));
     const plain = buildCharacter(buildOf(false), ownerDb);
     expect(character.hitPoints.current, 'fixture: the edit lowers max HP by 3').toBe(plain.hitPoints.current - 3);
     expect(initialPlay(character, ownerDb).damage, 'a full-health character starts with no damage').toBe(0);
@@ -538,26 +544,143 @@ describe('loading is not an edit (spec item 3, C4)', () => {
 describe('C9: contentFor is cached by base database, then by the contentEdits object', () => {
   it('same base + same edits object → the same database; a view of a view adds nothing', () => {
     const sc = playerSheet();
-    const ov = sc.character.overrides!;
-    const a = contentFor(db, ov);
+    const host = sc.character;
+    const ov = host.overrides!;
+    const a = contentFor(db, host);
     expect(a).not.toBe(db);
-    expect(contentFor(db, ov), 'the same object on every call').toBe(a);
-    expect(contentFor(db, { ...ov, addedFeats: [] }), 'another overrides object, the same contentEdits object').toBe(a);
-    expect(contentFor(a, ov), 'idempotent on its own output').toBe(a);
+    expect(contentFor(db, host), 'the same object on every call').toBe(a);
+    expect(contentFor(db, { overrides: { ...ov, addedFeats: [] } }), 'another overrides object, the same contentEdits object').toBe(a);
+    expect(contentFor(a, host), 'idempotent on its own output').toBe(a);
     const copy = { ...a } as ContentDatabase;
-    expect(contentFor(copy, ov), 'a copy of a prepared database (playerFacingContent, a source filter) is kept as is').toBe(copy);
+    expect(contentFor(copy, host), 'a copy of a prepared database (playerFacingContent, a source filter) is kept as is').toBe(copy);
     const pf = playerFacingContent(a, sc.character.inventory);
-    expect(contentFor(pf, ov)).toBe(pf);
+    expect(contentFor(pf, host)).toBe(pf);
     expect(contentFor(db, undefined)).toBe(db);
-    expect(contentFor(db, { contentEdits: { feats: {}, classFeatures: {} } })).toBe(db);
+    expect(contentFor(db, { overrides: { contentEdits: { feats: {}, classFeatures: {} } } })).toBe(db);
     const clone = JSON.parse(JSON.stringify(ov)) as BuildOverrides;
-    const b = contentFor(db, clone);
+    const b = contentFor(db, { overrides: clone });
     expect(b, 'a different contentEdits object is a different entry').not.toBe(a);
     expect(b.feats.toughness).toEqual(a.feats.toughness);
     expect(db.feats.toughness.maxHpBonus, 'the shared database is never mutated').toEqual({ perLevel: 1 });
     // The App's character (applyPlayState) and its sheet database meet on one object: the boundary's
     // own call returns what the host made.
     const own = ownContent(ownerDb, sc);
-    expect(contentFor(own, sc.character.overrides)).toBe(contentFor(own, (applyPlayState(sc.character, sc.play, own) as Character).overrides));
+    expect(contentFor(own, sc.character)).toBe(contentFor(own, applyPlayState(sc.character, sc.play, own) as Character));
+    // A bare overrides object handed in place of the host would silently drop every edit: refused.
+    expect(() => contentFor(db, ov as never), 'the host, never its overrides object').toThrow(/pass the character or build/);
   });
+});
+
+/* ───────────── plan B WP2 (B13): only the LIVE text edits are laid over, on every surface ───────────── */
+
+const { Builder } = await import('../src/builder/Builder');
+
+/** The player's sheet, its build changed by `tweak` before it is built and seeded (as `playerSheet`). */
+function sheetWith(tweak: (b: BuildState) => BuildState): SavedChar {
+  const build = tweak(buildOf(true));
+  const character = buildCharacter(build, ownerDb); // the derive boundary lays the live edits itself
+  const play = initialPlay(character, ownerDb);
+  const sc = { id: CHAR, character, build, play } as SavedChar;
+  const carried = collectCarried(sc, ownContent(ownerDb, sc));
+  return { ...sc, ...(carried ? { carried } : {}) };
+}
+/** Toughness's edit (+6 max HP, +1 AC) paused by its own switch: the meta `contentEdits:feats/toughness`. */
+const pauseToughness = (b: BuildState): BuildState =>
+  ({ ...b, overrides: { ...b.overrides, meta: { 'contentEdits:feats/toughness': { on: false } } } }) as BuildState;
+/** The fixture build with no tweak at all (no given feats, no edits): what the master switch off draws. */
+const untweaked = (): BuildState => ({ ...buildOf(false), overrides: undefined }) as BuildState;
+/** A v:2 character (saved by a Tweaks-aware app) with the Tweaks master switch off: every tweak is paused,
+ *  the given Toughness and Fleet included (not only the text edits). */
+const masterOff = (b: BuildState): BuildState => ({ ...b, options: { ...b.options, overridesEnabled: false }, overrides: { ...b.overrides, v: 2 } }) as BuildState;
+const masterOn = (b: BuildState): BuildState => ({ ...b, options: { ...b.options, overridesEnabled: true }, overrides: { ...b.overrides, v: 2 } }) as BuildState;
+
+/** The Builder's own preview (FullStats → LiveStats, from `ovContent`): its "Hit points" row. */
+function builderHp(host: HTMLElement): number {
+  const row = [...host.querySelectorAll('.brow')].find((r) => (r.querySelector('.bk-text')?.textContent ?? '').startsWith('Hit points'));
+  return Number((row?.querySelector('.bv')?.textContent ?? 'NaN').replace(/[^0-9-]/g, ''));
+}
+function openBuilder(build: BuildState): HTMLElement {
+  return render(<Builder content={ownerDb} initial={build} onCancel={() => undefined} onCreate={() => undefined} />);
+}
+
+describe('plan B WP2 (B13): a paused text edit reaches no surface', () => {
+  it.each([
+    // `base`: the build whose sheet the paused one must equal.
+    ['its own switch (meta on: false) pauses the Toughness edit only', pauseToughness, { reflexEdited: true, base: () => buildOf(false) }],
+    ['the Tweaks master switch off on a v:2 character pauses every edit', masterOff, { reflexEdited: false, base: untweaked }],
+  ] as const)("a paused text edit reaches no surface (sheet, card, tracker, HP write, and the Builder's ovContent) — %s", (_label, pause, want) => {
+    const on = sheetNumbers(playerSheet(true));
+    const off = sheetNumbers(sheetWith(() => want.base()));
+    expect(on.max - off.max, 'fixture: the live tweaks add max HP').toBeGreaterThan(0);
+    const sc = sheetWith(pause);
+    const sheet = sheetNumbers(sc);
+    // The sheet (App's sheetContent): no +6 HP, no +1 AC; Fleet's Reflex edit only while its own entry is live.
+    expect(sheet.max, 'sheet max HP').toBe(off.max);
+    expect(sheet.ac, 'sheet AC').toBe(off.ac);
+    expect(sheet.reflex, 'sheet Reflex').toBe(want.reflexEdited ? on.reflex : off.reflex);
+    expect(sheet.cur, 'full health is the un-edited max').toBe(off.max);
+    // The party card, the tracker row, the vitals and the GM's HP write (on the GM's device, raw content).
+    expect(memberCardSummary(member(sc), sc, db).hpMax, 'party card').toBe(off.max);
+    expect(memberCardSummary(member(sc), sc, db).ac, 'party card AC').toBe(off.ac);
+    const row = sheetPcStats(sc, db);
+    expect([row.maxHP, row.ac, row.refMod], 'tracker row').toEqual([off.max, off.ac, sheet.reflex]);
+    expect(vitalsFromSheet(sc, db).maxHP, 'vitals').toBe(off.max);
+    const written = sheetWithVitals(sc, { currentHP: off.max - 3, maxHP: off.max, conditions: [] }, db);
+    expect(written.play?.damage, 'the GM HP write: damage = the un-edited max − the HP set').toBe(3);
+    // The Builder's preview (ovContent): the same build with the edit live draws +6.
+    const live = openBuilder(buildOf(true));
+    const liveHp = builderHp(live);
+    act(() => root!.unmount());
+    root = null;
+    const plain = openBuilder(want.base());
+    const plainHp = builderHp(plain);
+    act(() => root!.unmount());
+    root = null;
+    expect(liveHp - plainHp, 'fixture: the Builder preview draws the live tweaks as the sheet does').toBe(on.max - off.max);
+    const paused = openBuilder(sc.build!);
+    expect(builderHp(paused), "the Builder's ovContent lays no paused edit").toBe(plainHp);
+    // Nothing was written by reading: the stored edit and its pause are kept as they are.
+    expect(sc.character.overrides?.contentEdits).toEqual(EDITS);
+  }, 120_000);
+
+  it('switching Tweaks off on a v:2 build removes a text edit from the Builder preview and the sheet with no other edit', async () => {
+    // Mutation proof (recorded in work/tweaks-part-b-notes/wp2-report.md): a temp copy of Builder.tsx whose
+    // `ovContent` memo keys on [baseContent, build.overrides] only — the toggle below writes `options` and
+    // nothing else, so that memo hands the preview the database edited for the switch-ON state and the
+    // "after" HP keeps the +6 (contentFor cannot un-apply an edit): this it() fails.
+    // Toughness held by a real level-3 general pick and the text edit as the ONLY tweak: switching off
+    // pauses the edit alone, and the feat stays (a given Toughness would pause with it and hide the edit).
+    const picked = (edits: boolean): BuildState =>
+      masterOn({
+        ...buildOf(false),
+        featPicks: { ...buildOf(false).featPicks, '3:general:0': 'toughness' },
+        overrides: edits ? { contentEdits: EDITS } : {},
+      } as BuildState);
+    const plainHost = openBuilder(picked(false));
+    const plainHp = builderHp(plainHost);
+    act(() => root!.unmount());
+    root = null;
+    const build = picked(true);
+    const host = openBuilder(build);
+    expect(builderHp(host), 'fixture: Tweaks on, the edit is live (+6)').toBe(plainHp + 6);
+    const setup = [...host.querySelectorAll('.lstrip button')].find((b) => (b.textContent ?? '').trim() === 'Setup');
+    expect(setup, 'the Setup page button').toBeDefined();
+    act(() => (setup as HTMLButtonElement).click());
+    const toggle = host.querySelector<HTMLButtonElement>('button.ovr-opt');
+    expect(toggle?.classList.contains('on'), 'the Overrides option starts on').toBe(true);
+    act(() => toggle!.click());
+    await settle();
+    // Plan B WP6 (section 5.3): switching Tweaks off asks first; the live text edit is on its list.
+    const ask = document.querySelector('.confirm-modal');
+    expect(ask?.textContent ?? '', 'the switch-off question lists the edit').toContain('Turn off Tweaks?');
+    const turnOff = [...(ask?.querySelectorAll('button') ?? [])].find((b) => (b.textContent ?? '').trim() === 'Turn off');
+    act(() => turnOff!.click());
+    await settle();
+    expect(host.querySelector('button.ovr-opt')?.classList.contains('on'), 'switched off').toBe(false);
+    expect(builderHp(host), "the Builder preview drops the edit at once (ovContent keys on options)").toBe(plainHp);
+    // …and the sheet built from that build (only `options` changed) draws no edit either.
+    const offBuild = { ...build, options: { ...build.options, overridesEnabled: false } } as BuildState;
+    expect(sheetNumbers(sheetWith(() => offBuild)).max, 'the sheet').toBe(sheetNumbers(sheetWith(() => picked(false))).max);
+    expect(sheetNumbers(sheetWith(() => build)).max, 'fixture: the sheet draws the live edit').toBe(sheetNumbers(sheetWith(() => picked(false))).max + 6);
+  }, 120_000);
 });

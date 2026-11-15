@@ -39,6 +39,13 @@ vi.mock('../src/data/trustGate', () => ({
     if (!bucket || !id) throw new Error(`trustOff called with bucket=${bucket} id=${id}`);
     return stub.dark.has(`${bucket}/${id}`) ? OFF_PATHS : undefined;
   },
+  /* The marker's one question since 2026-10-23 (every lane, not only the records map). The lanes
+   * themselves are tested unmocked in trust-held-back.test.tsx; here it answers from the same stub. */
+  trustHeldBack: (bucket: string, id: string) => {
+    if (!bucket || !id) throw new Error(`trustHeldBack called with bucket=${bucket} id=${id}`);
+    if (!stub.on) return undefined;
+    return stub.dark.has(`${bucket}/${id}`) ? OFF_PATHS : undefined;
+  },
   trustUnencoded: (bucket: string, id: string) => {
     if (!bucket || !id) throw new Error(`trustUnencoded called with bucket=${bucket} id=${id}`);
     return stub.bare.has(`${bucket}/${id}`);
@@ -139,6 +146,22 @@ describe('TrustMarker', () => {
     const paths = [...new Set(Object.values(LEDGER.records as Record<string, string[]>).flat())];
     expect(paths.length).toBeGreaterThan(50);
     expect(paths.filter((p) => trustWords([p]) === 'some of its effects')).toEqual([]);
+  });
+
+  /* The code-side lanes trustHeldBack names (situational, the grant registry's kinds, a carried mode
+   * or stance) each get their own words; only the hard-coded engine lane is the generic sentence. */
+  it('has words for every code-side lane trustHeldBack names', () => {
+    expect(trustWords(['situational'])).toBe('its situational bonuses');
+    expect(trustWords(['featGrants.skills'])).toBe('skill training and bonuses');
+    expect(trustWords(['featGrants.weaponProficiency'])).toBe('weapon training');
+    expect(trustWords(['featGrants.armor'])).toBe('armour and AC');
+    expect(trustWords(['featGrants.saves', 'featGrants.perception'])).toBe('checks and DCs');
+    expect(trustWords(['featGrants.choiceGrants', 'featGrants.grantsRecord', 'modes'])).toBe('the things it hands you');
+    expect(trustWords(['stances'])).toBe('its stance');
+    expect(trustWords(['engine'])).toBe('some of its effects');
+    // The lane words match whole leaves only: these real record fields keep their own words.
+    expect(trustWords(['untrainedProficiency'])).not.toBe('weapon training');
+    expect(trustWords(['resistances'])).toBe('resistances and immunities');
   });
 });
 

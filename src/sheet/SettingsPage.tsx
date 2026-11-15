@@ -11,7 +11,7 @@ import { isCloudSyncEnabled } from '../data/supabase';
 import { useAuth, signOut } from '../data/useAuth';
 import { getDeviceInfo, setLoginSkipped } from '../data/device';
 import { setPref, usePrefs } from '../data/prefs';
-import { TRUST_LEDGER, trustCensus } from '../data/trustGate';
+import { TRUST_LEDGER, trustHeldCount } from '../data/trustGate';
 import { APP_VERSION, DATA_VERSIONS } from '../version';
 import { rulesDataLine } from '../data/dataFreshness';
 import { CustomizationEditor } from './CustomizationEditor';
@@ -111,7 +111,7 @@ function AppearanceSection() {
     <div className="settings-section">
       <h3 className="settings-h">Appearance</h3>
       <p className="settings-desc">
-        The default look and behaviour of the app and every character sheet. Each character can override any of this from
+        The default look and behaviour of the app and every character sheet. Each character can change any of this from
         its own Customize drawer (its menu → Customize); this is what they start from.
       </p>
 
@@ -216,7 +216,7 @@ function AppearanceSection() {
 function RulesSection() {
   const prefs = usePrefs();
   const on = prefs.trustGate !== false;
-  const census = trustCensus();
+  const held = trustHeldCount();
   const n = (x: number) => x.toLocaleString();
   return (
     <div className="settings-section">
@@ -240,16 +240,19 @@ function RulesSection() {
         works, and some of it may be wrong. Either way nothing is deleted, and you can switch back at any time.
       </p>
       <p className="settings-desc">
+        {/* The number is the cards that show "Not yet verified" (trustHeldCount, counted once per gate
+            run), so the sentence and the lines a player meets can never disagree. */}
         {on ? (
+          <>Right now {n(held.now)} feats, features, items and actions have rules held back until verified.</>
+        ) : held.ifOn !== undefined ? (
           <>
-            Right now {n(census.recordsOff)} feats, features and items apply none of their rules and{' '}
-            {n(census.recordsPartly)} apply part of them, and {n(census.stars)} situational bonuses (the "+1 to this when
-            that" reminders) are hidden.
+            Everything is being applied. Turning this on would hold back rules on {n(held.ifOn)} feats, features, items
+            and actions until they have been verified.
           </>
         ) : (
           <>
-            Everything is being applied. Turning this on would hold back{' '}
-            {n(Object.keys(TRUST_LEDGER.records).length)} feats, features and items until they have been checked.
+            Everything is being applied. Turning this on would hold back rules on at least{' '}
+            {n(Object.keys(TRUST_LEDGER.records).length)} feats, features and items until they have been verified.
           </>
         )}
       </p>
