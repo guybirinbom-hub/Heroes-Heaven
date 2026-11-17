@@ -31,7 +31,7 @@ import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data
 import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, allowCharacterBack, fetchGmEdits, fetchPublishedSheet, deleteGmEdit, markGmEditRefused, currentUserId, subscribeGmEdits, type GmEdit } from './data/party';
 import { campaignGoneReason, clearAllCampaignGone, clearCampaignGone, keepCampaignGoneFor, markCampaignGone, onCharacterLetBack } from './data/campaignGone';
-import { loadRoster, saveRoster, newRosterId, loadModes, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadUnheldCampaigns, saveUnheldCampaigns, loadRevived, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, loadModes, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadUnheldCampaigns, saveUnheldCampaigns, loadRevived, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, rosterUnshownText, type SavedChar } from './data/storage';
 import { authoredKey, hash53 } from './data/authored';
 import { isDesktopApp, isTauri } from './platform';
 import { carryModePin, getPrefs, subscribePrefs } from './data/prefs';
@@ -754,6 +754,9 @@ export default function App() {
         return;
       }
       if (!authoritative || roster.length === 0) return; // gave up waiting → don't risk deleting
+      // A character on the roster key this app cannot read may own a portrait: delete nothing then
+      // (UNKNOWN is not EMPTY, 2026-11-17 — storage.ts readRoster).
+      if (rosterUnshownText()) return;
       void gcSharpPortraits(new Set(roster.flatMap((c) => collectPortraitRefs(c))));
     };
     void attempt(0);
@@ -776,7 +779,9 @@ export default function App() {
     if (auth.status !== 'signed-in') return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
-    const ready = () => hasSyncedOnce() && rosterRef.current.length > 0;
+    // …and never while the roster key holds a character this app cannot read: it may be in the campaign
+    // (UNKNOWN is not EMPTY, 2026-11-17 — storage.ts readRoster).
+    const ready = () => hasSyncedOnce() && rosterRef.current.length > 0 && !rosterUnshownText();
     const attempt = (tries: number) => {
       if (cancelled) return;
       if (!ready() && tries < 20) {

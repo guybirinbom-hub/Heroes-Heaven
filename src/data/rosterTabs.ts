@@ -35,7 +35,7 @@
  * roster is that account's (the same rule as startSync).
  */
 import { knownRoster, lineageOf, noteRosterKnown, rosterFromHistory, rosterSig } from './rosterLineage';
-import { ROSTER_KEY, loadSyncOwner, parseRoster, type SavedChar } from './storage';
+import { ROSTER_KEY, loadSyncOwner, parseRoster, readRoster, type SavedChar } from './storage';
 import { recentPersists } from './persist';
 
 export type ForeignRoster =
@@ -84,13 +84,19 @@ export function takeForeignRoster(): ForeignRoster | null {
   if (rosterOwnerSwitched()) {
     // Emptied by the switch and not filled yet: nothing to take (and nothing of ours may go there).
     if (raw === null) return null;
+    const read = readRoster(raw);
+    // Not a roster at all: no information, like the empty key (saveRoster copies it aside before a write).
+    if (!read.readable) return null;
     const prior = knownRoster().raw;
-    const incoming = parseRoster(raw);
-    noteRosterKnown(raw, incoming, undefined, loadSyncOwner());
-    return { kind: 'replace', incoming, prior };
+    noteRosterKnown(raw, read.roster, undefined, loadSyncOwner());
+    return { kind: 'replace', incoming: read.roster, prior };
   }
   const k = knownRoster();
   if (raw === null || raw === k.raw) return null;
+  // UNKNOWN is not EMPTY (2026-11-17, test/bug-roster-wipe.test.ts): a value that is not a roster tells
+  // this tab nothing — merged as a roster it read as "the other tab deleted every character".
+  const read = readRoster(raw);
+  if (!read.readable) return null;
   const sig = rosterSig(raw);
   const lineage = lineageOf(sig);
   if (!lineage) {
@@ -101,7 +107,15 @@ export function takeForeignRoster(): ForeignRoster | null {
     if ([...recentPersists()].reverse().some((r) => JSON.stringify(r) === raw)) return { kind: 'echo' };
   }
   const base = ((lineage?.on && rosterFromHistory(lineage.on)) || k.roster) as SavedChar[];
-  const incoming = parseRoster(raw);
+  // An entry the other tab's write holds that this tab cannot read is not a deletion: where the base has
+  // that character, the base's copy stands in for it, so the merge reads it as unchanged. The unread
+  // entry itself stays on the key (saveRoster carries it).
+  const unread = new Set(
+    read.kept.map((e) => (e && typeof e === 'object' ? (e as { id?: unknown }).id : undefined)).filter((id): id is string => typeof id === 'string' && !!id),
+  );
+  const shown = new Set(read.roster.map((c) => c.id));
+  const standIns = unread.size ? base.filter((c) => unread.has(c.id) && !shown.has(c.id)) : [];
+  const incoming = standIns.length ? [...read.roster, ...standIns] : read.roster;
   noteRosterKnown(raw, incoming, sig);
   return { kind: 'write', base, incoming };
 }

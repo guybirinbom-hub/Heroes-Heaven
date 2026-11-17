@@ -68,10 +68,11 @@ function mergeStamps(a: Record<string, number> | undefined, b: Record<string, nu
 function withoutDeletedCampaigns(roster: SavedChar[], deleted: Record<string, number>): SavedChar[] {
   const gone = new Set(Object.keys(deleted).filter((k) => k.startsWith('campdel:')).map((k) => k.slice('campdel:'.length)));
   if (!gone.size) return roster;
-  const holds = (ids: string[] | undefined) => !!ids?.some((id) => gone.has(id));
+  const holds = (ids: string[] | undefined) => Array.isArray(ids) && ids.some((id) => gone.has(id));
   const keep = (ids: string[] | undefined) => ids?.filter((id) => !gone.has(id));
   let changed = false;
   const out = roster.map((c) => {
+    if (!isEntry(c)) return c; // an entry the app cannot read rides through untouched
     const inChar = holds(c.character?.campaignIds);
     const inBuild = holds(c.build?.campaignIds);
     if (!inChar && !inBuild) return c;
@@ -134,12 +135,27 @@ export function mergeRoster(
 ): { roster: SavedChar[]; charUpdated: Record<string, number> } {
   const byId = new Map<string, SavedChar>();
   const ts: Record<string, number> = {};
+  // An entry without a string id (a null, a hand-edited row) cannot be merged by id — keyed by `undefined`
+  // they overwrote each other. Each is kept as it is, once (UNKNOWN is not EMPTY, 2026-11-17).
+  const loose = new Map<string, SavedChar>();
+  const keepLoose = (c: unknown) => {
+    const k = JSON.stringify(c) ?? 'undefined';
+    if (!loose.has(k)) loose.set(k, c as SavedChar);
+  };
 
   for (const c of cloud) {
+    if (!hasId(c)) {
+      keepLoose(c);
+      continue;
+    }
     byId.set(c.id, c);
     ts[c.id] = cloudTs[c.id] ?? 0;
   }
   for (const c of local) {
+    if (!hasId(c)) {
+      keepLoose(c);
+      continue;
+    }
     const lt = localTs[c.id] ?? 0;
     const existing = byId.get(c.id);
     if (!existing) {
@@ -162,7 +178,17 @@ export function mergeRoster(
     }
   }
 
-  return { roster: [...byId.values()], charUpdated: ts };
+  return { roster: [...byId.values(), ...loose.values()], charUpdated: ts };
+}
+
+/** A roster entry with a string id — the only kind the merge can key. */
+function hasId(c: unknown): c is SavedChar {
+  return !!c && typeof c === 'object' && typeof (c as { id?: unknown }).id === 'string';
+}
+
+/** A roster entry the app reads (an object with a string id and a character object; storage.ts isRosterEntry). */
+function isEntry(c: unknown): c is SavedChar {
+  return hasId(c) && !!c.character && typeof c.character === 'object';
 }
 
 /**
@@ -205,7 +231,8 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
   // deleted (`campdel:<id>`, CampaignsPage) stays deleted before every rule: also where an older install
   // stored the GM's own campaign as 'player', and also against a revive stamp a later join wrote offline or
   // an older app version wrote on every save.
-  const heldCampaigns = new Set(roster.flatMap((c) => [...(c.character?.campaignIds ?? []), ...(c.build?.campaignIds ?? [])]));
+  const idsOf = (v: unknown): string[] => (Array.isArray(v) ? v : []);
+  const heldCampaigns = new Set(roster.filter(isEntry).flatMap((c) => [...idsOf(c.character.campaignIds), ...idsOf(c.build?.campaignIds)]));
   return {
     roster,
     charUpdated,

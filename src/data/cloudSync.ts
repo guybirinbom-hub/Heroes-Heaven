@@ -31,8 +31,11 @@ import { supabase } from './supabase';
 import {
   loadCharUpdated,
   loadSyncOwner,
+  isRosterEntry,
   readCloudBundle,
+  readRosterEntries,
   recordTombstoneKeys,
+  rosterKeptIds,
   saveCharUpdated,
   saveSyncOwner,
   wipeSyncedLocalData,
@@ -135,8 +138,9 @@ export function bundleSettingsChanged(merged: CloudBundle): boolean {
  *  that character was edited during the roundtrip and is not in the cloud yet — it still has to go up. */
 function rosterLostToLocal(final: CloudBundle, carried: CloudBundle): boolean {
   if (final.roster.length !== carried.roster.length) return true;
-  const was = new Map(carried.roster.map((c) => [c.id, charFingerprint(c)]));
-  return final.roster.some((c) => was.get(c.id) !== charFingerprint(c));
+  // Entries the app cannot read (a null, no id) are carried through the merge as they are: skip them here.
+  const was = new Map(carried.roster.filter(isRosterEntry).map((c) => [c.id, charFingerprint(c)]));
+  return final.roster.filter(isRosterEntry).some((c) => was.get(c.id) !== charFingerprint(c));
 }
 
 /** Adopt a merged bundle locally: write it to localStorage, re-apply live settings, and hand the
@@ -153,7 +157,11 @@ function rosterLostToLocal(final: CloudBundle, carried: CloudBundle): boolean {
 function adopt(merged: CloudBundle): void {
   flushPersist(); // an edit sitting in the 400 ms debounce is a real edit — get it into localStorage
   const final = mergeBundles(readCloudBundle(), merged);
-  const rosterChanged = rosterDiffers(final.roster);
+  // What React gets is what a load would give: each entry normalized, and one the app cannot read left
+  // out of the screens — written to the roster key all the same (writeCloudBundle → saveRoster keeps it),
+  // so it is still there for the next push. A cloud entry used to reach React and storage as it came.
+  const shown = readRosterEntries(final.roster).roster;
+  const rosterChanged = rosterDiffers(shown);
   // Did the merge bring DIFFERENT settings / customization than this device holds? Only then is a
   // reload + repaint warranted. Before this, every adopt — including the echo of this device's OWN
   // push, ~3 s after each edit — re-read prefs, re-read the customization and re-ran initTheme(),
@@ -174,8 +182,8 @@ function adopt(merged: CloudBundle): void {
       /* non-fatal */
     }
   }
-  fingerprints = new Map(final.roster.map((c) => [c.id, charFingerprint(c)]));
-  if (rosterChanged) applyRoster?.(final.roster);
+  fingerprints = new Map(shown.map((c) => [c.id, charFingerprint(c)]));
+  if (rosterChanged) applyRoster?.(shown);
   if (rosterLostToLocal(final, merged)) {
     dirty = true;
     schedulePush();
@@ -297,6 +305,14 @@ export function noteRosterChange(roster: SavedChar[]): void {
   const now = Date.now();
   const present = new Set<string>();
   let changed = false;
+  // What this session held before this persist: only a character in it can have been DELETED by the
+  // player. Every id in charUpdated used to count — after a first pull that failed (offline), with a
+  // roster that loaded empty or partial, the first persist tombstoned every character the device did not
+  // show, and the next good pull dropped them from the cloud and every device (2026-11-17,
+  // test/bug-roster-wipe.test.ts). UNKNOWN is not EMPTY: an id never held this session is left alone.
+  const held = new Set(fingerprints.keys());
+  // A character still on this device's roster key that the app cannot read is not deleted either.
+  const onDisk = rosterKeptIds();
 
   for (const c of roster) {
     present.add(c.id);
@@ -309,7 +325,7 @@ export function noteRosterChange(roster: SavedChar[]): void {
   }
   const removed: string[] = [];
   for (const id of Object.keys(ts)) {
-    if (!present.has(id)) {
+    if (!present.has(id) && held.has(id) && !onDisk.has(id)) {
       removed.push(id);
       delete ts[id];
       changed = true;

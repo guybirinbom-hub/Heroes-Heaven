@@ -40,6 +40,7 @@ import {
   loadSyncOwner,
   loadTombstones,
   newRosterId,
+  rosterUnshownText,
   saveCampaignHbCache,
   saveHomebrewEntry,
   saveHomebrewSource,
@@ -333,6 +334,9 @@ function convertGone(
       // entry the GM deleted from a source he still shares would be turned into this player's own
       // homebrew. A record the character really uses is named in its build or play too, and found there.
       rosterJson = JSON.stringify(loadRoster().map(({ carried: _carried, ...rest }) => rest));
+      // …and whatever the roster key holds that the app cannot read, as stored: a character this device
+      // cannot show may still use the entry (UNKNOWN is not EMPTY, 2026-11-17). Counting it keeps more.
+      rosterJson += rosterUnshownText();
     }
     // ponytail: a substring scan of the whole saved roster for `"<id>"` — any field of any character
     // counts as "uses it". An unrelated string equal to the id keeps an entry it didn't need to; walk

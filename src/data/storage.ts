@@ -113,29 +113,167 @@ export function loadRoster(): SavedChar[] {
   return parseRoster(raw);
 }
 
-/** The roster a raw stored value holds — loadRoster's parse, for a value already read. */
-export function parseRoster(raw: string | null): SavedChar[] {
-  try {
-    const parsed = raw ? JSON.parse(raw) : null;
-    if (!Array.isArray(parsed)) return [];
-    // Drop structurally-broken entries (interrupted write / external edit) and normalize the
-    // survivors so a legacy or hand-edited character can't crash the roster on render.
-    return parsed
-      .filter((e) => e && typeof e === 'object' && typeof e.id === 'string' && e.character && typeof e.character === 'object')
-      .map((e) => {
-        const out = { ...e, character: normalizeCharacter(e.character), play: e.play ? normalizePlay(e.play) : undefined };
-        try {
-          const before = authoredKey(e);
-          const after = authoredKey(out);
-          if (before !== after) loadedAuthored.set(hash53(before), after);
-        } catch {
-          /* a sheet that won't serialise has no pair; the verdict then judges it as stored */
-        }
-        return out;
-      });
-  } catch {
-    return [];
+/*
+ * UNKNOWN IS NOT EMPTY — THE ROSTER-WIPE BUG (2026-11-17, test/bug-roster-wipe.test.ts).
+ *
+ * The parse below used to wrap the whole roster in ONE try/catch: a single entry whose normalize threw
+ * (a name like {"toString":0}), or a value that did not JSON.parse, loaded as [] — and App's mount persist
+ * wrote that [] over the stored roster 400 ms later. Every character gone, the original string with them.
+ *
+ * Now nothing stored is ever dropped by a load:
+ *  - an entry that cannot be shown (not an object, no string id, no character object, or its normalize
+ *    throws) is KEPT AS STORED: hidden from every screen (nothing renders a half-read character), and
+ *    carried back onto the key, unchanged, by every saveRoster after it;
+ *  - a value that is not a JSON array at all is UNKNOWN: it loads as [] so the app opens, and saveRoster
+ *    copies it to its own key (ROSTER_UNREADABLE_PREFIX + its signature; "Export everything" includes it)
+ *    before the first write over it — and refuses the write when that copy cannot be made. A copy rather
+ *    than refusing every write: the player keeps working and nothing they do is lost, while the unread
+ *    value stays byte-for-byte where a fix or a support request can get it back.
+ */
+
+/** Where saveRoster keeps a stored roster value it could not read, before writing over it. */
+export const ROSTER_UNREADABLE_PREFIX = 'wanderers-codex:roster-unreadable:v1:';
+
+/** A stored roster entry with the shape the app reads: an object with a string id and a character object. */
+export function isRosterEntry(e: unknown): e is SavedChar {
+  if (!e || typeof e !== 'object') return false;
+  const o = e as { id?: unknown; character?: unknown };
+  return typeof o.id === 'string' && !!o.character && typeof o.character === 'object';
+}
+
+/** Stored entries of that shape whose normalize THREW — kept as stored like any unreadable entry. */
+const unreadableEntries = new WeakSet<object>();
+
+/** An entry the app shows: the right shape, and its normalize did not throw. */
+function isShownEntry(e: unknown): boolean {
+  return isRosterEntry(e) && !unreadableEntries.has(e);
+}
+
+/** What a stored roster value holds. */
+export interface RosterRead {
+  /** The entries the app can show, normalized. */
+  roster: SavedChar[];
+  /** The entries it cannot show, exactly as stored — every saveRoster writes them back. */
+  kept: unknown[];
+  /** False when the value is not a JSON array at all (UNKNOWN: saveRoster copies it aside before writing). */
+  readable: boolean;
+}
+
+/** Each entry of a roster array, normalized when it can be read, else kept as it is. */
+export function readRosterEntries(entries: unknown[]): { roster: SavedChar[]; kept: unknown[] } {
+  const roster: SavedChar[] = [];
+  const kept: unknown[] = [];
+  for (const e of entries) {
+    if (!isRosterEntry(e)) {
+      kept.push(e);
+      continue;
+    }
+    let out: SavedChar;
+    try {
+      out = { ...e, character: normalizeCharacter(e.character), play: e.play ? normalizePlay(e.play) : undefined };
+    } catch {
+      unreadableEntries.add(e);
+      kept.push(e);
+      continue;
+    }
+    try {
+      const before = authoredKey(e);
+      const after = authoredKey(out);
+      if (before !== after) loadedAuthored.set(hash53(before), after);
+    } catch {
+      /* a sheet that won't serialise has no pair; the verdict then judges it as stored */
+    }
+    roster.push(out);
   }
+  return { roster, kept };
+}
+
+/** The last stored value read or written, and what of it the app cannot show — saveRoster runs on every
+ *  persist (each HP tick, debounced), so it must not re-parse the key each time to find what to carry. */
+let lastScan: { raw: string; kept: unknown[]; readable: boolean } | null = null;
+
+/** Read a raw stored roster value: what can be shown, what is kept as stored, and whether it was a roster. */
+export function readRoster(raw: string | null): RosterRead {
+  if (raw === null || raw === '') return { roster: [], kept: [], readable: true };
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    parsed = undefined;
+  }
+  const read: RosterRead = Array.isArray(parsed) ? { ...readRosterEntries(parsed), readable: true } : { roster: [], kept: [], readable: false };
+  lastScan = { raw, kept: read.kept, readable: read.readable };
+  return read;
+}
+
+/** The roster a raw stored value holds — loadRoster's parse, for a value already read. Only what can be
+ *  shown: an entry it cannot read is kept on the key by saveRoster (readRoster), never dropped. */
+export function parseRoster(raw: string | null): SavedChar[] {
+  return readRoster(raw).roster;
+}
+
+/** What of the stored value `raw` the app cannot show, from the cache when it is the value last seen. */
+function scanOf(raw: string): { kept: unknown[]; readable: boolean } {
+  if (lastScan && lastScan.raw === raw) return lastScan;
+  const { kept, readable } = readRoster(raw);
+  return { kept, readable };
+}
+
+/** The stored value the roster key holds now, or null (empty, or storage unreadable). */
+function storedRosterRaw(): string | null {
+  try {
+    const raw = localStorage.getItem(KEY);
+    return raw === '' ? null : raw;
+  } catch {
+    return null;
+  }
+}
+
+/** The ids of entries the roster key holds that the app cannot show. Cloud sync never tombstones one:
+ *  the character is still on this device, just not readable here (src/data/cloudSync.ts noteRosterChange). */
+export function rosterKeptIds(): Set<string> {
+  const raw = storedRosterRaw();
+  const ids = new Set<string>();
+  if (raw === null) return ids;
+  for (const e of scanOf(raw).kept) {
+    const id = e && typeof e === 'object' ? (e as { id?: unknown }).id : undefined;
+    if (typeof id === 'string' && id) ids.add(id);
+  }
+  return ids;
+}
+
+/** Everything the roster key holds that loadRoster does not show, as text (empty when nothing): the kept
+ *  entries, or the whole value when it is not a roster at all. For a scan that must count every character
+ *  on this device, readable or not (src/data/campaignHomebrew.ts usedByRoster). */
+export function rosterUnshownText(): string {
+  const raw = storedRosterRaw();
+  if (raw === null) return '';
+  const s = scanOf(raw);
+  if (!s.readable) return raw;
+  return s.kept.length ? JSON.stringify(s.kept) : '';
+}
+
+/** Copy a stored roster value that is not a roster to its own key. True once the copy is on disk. */
+function backupUnreadableRoster(raw: string): boolean {
+  const key = ROSTER_UNREADABLE_PREFIX + rosterSig(raw);
+  try {
+    if (localStorage.getItem(key) !== raw) {
+      localStorage.setItem(key, raw);
+      console.warn(`[roster] the stored roster could not be read; kept unchanged under ${key} before saving over it`);
+    }
+    return localStorage.getItem(key) === raw;
+  } catch {
+    return false;
+  }
+}
+
+/** The kept entries of the stored value that the roster about to be written does not already hold. */
+function keptToCarry(kept: unknown[], roster: unknown[]): unknown[] {
+  if (!kept.length) return kept;
+  const own = roster.filter((e) => !isShownEntry(e));
+  if (!own.length) return kept;
+  const texts = new Set(own.map((e) => JSON.stringify(e)));
+  return kept.filter((e) => !texts.has(JSON.stringify(e)));
 }
 
 /**
@@ -149,18 +287,35 @@ export function parseRoster(raw: string | null): SavedChar[] {
  *
  * A value the key already holds is not written again: no `storage` event goes out for it, so another
  * tab never sees an "echo" of a roster it wrote itself.
+ *
+ * Nothing the key holds that this app cannot read is lost by a write (UNKNOWN is not EMPTY, see
+ * readRoster above): its kept entries are written back after `roster`, and a value that is not a roster
+ * at all is copied to its own key first — no copy, no write.
  */
 export function saveRoster(roster: SavedChar[]): boolean {
   try {
-    const raw = JSON.stringify(roster);
     const cur = localStorage.getItem(KEY);
+    const was = cur === null || cur === '' ? null : scanOf(cur);
+    if (was && !was.readable) {
+      // Nothing of the player's to save yet (the launch's own write of the empty roster it loaded): the
+      // unread value stays where it is. Anything real is written only once a copy of it is on disk.
+      if (!roster.length) return true;
+      if (!backupUnreadableRoster(cur as string)) return false;
+    }
+    const carry = was?.readable ? keptToCarry(was.kept, roster) : [];
+    const all = carry.length ? [...roster, ...carry] : roster;
+    const raw = JSON.stringify(all);
     const k = knownRoster();
     const sig = rosterSig(raw);
     if (cur !== raw) {
       writeLineage(sig, cur === null ? null : cur === k.raw ? k.sig : rosterSig(cur));
       localStorage.setItem(KEY, raw);
     }
-    noteRosterKnown(raw, roster, sig, loadSyncOwner());
+    // Only what the app shows is what this tab knows it holds (the base another tab's write is merged
+    // against); a cloud adopt can hand over entries it cannot read, and they ride along as kept ones.
+    const shown = roster.every(isShownEntry) ? roster : roster.filter(isShownEntry);
+    lastScan = { raw, kept: shown === roster ? carry : [...roster.filter((e) => !isShownEntry(e)), ...carry], readable: true };
+    noteRosterKnown(raw, shown, sig, loadSyncOwner());
     return true;
   } catch {
     // Storage unavailable or over quota — the roster won't persist. Surfaced to the user by the

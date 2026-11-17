@@ -222,5 +222,6 @@ export const ITEM_ID_ALIASES: Record<string, string> = {
 
 /** Resolve a possibly-removed item id to its canonical replacement (identity if not aliased). */
 export function resolveItemAlias(itemId: string): string {
-  return ITEM_ID_ALIASES[itemId] ?? itemId;
+  // Own keys only: a stored itemId of "constructor" or "__proto__" read Object.prototype's members.
+  return Object.prototype.hasOwnProperty.call(ITEM_ID_ALIASES, itemId) ? ITEM_ID_ALIASES[itemId] : itemId;
 }

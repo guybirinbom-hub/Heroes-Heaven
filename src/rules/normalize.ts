@@ -115,7 +115,10 @@ export function normalizeCharacter(input: unknown): Character {
   return {
     ...(cRest as Character),
     schemaVersion: typeof c.schemaVersion === 'number' ? c.schemaVersion : CHARACTER_SCHEMA_VERSION,
-    id: typeof c.id === 'string' && c.id ? c.id : `char-${(c.name ?? 'unnamed').toString().toLowerCase().replace(/\s+/g, '-')}`,
+    // Never call a method on a stored value: a name like {"toString":0} made `.toString()` throw here,
+    // the roster's parse caught it for the WHOLE list and the next persist wrote [] over every character
+    // (2026-11-17, test/bug-roster-wipe.test.ts).
+    id: typeof c.id === 'string' && c.id ? c.id : `char-${(typeof c.name === 'string' ? c.name : 'unnamed').toLowerCase().replace(/\s+/g, '-')}`,
     name: typeof c.name === 'string' ? c.name : 'Unnamed',
     // Clamp level to the legal [1,20] range: a bad native .codex import or legacy roster entry with
     // level 0 / negative / 21+ otherwise derives broken HP and proficiency. (Mirrors clampLevel in
