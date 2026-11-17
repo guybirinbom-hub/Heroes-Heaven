@@ -10,7 +10,7 @@
 --
 -- The GM's own homebrew (his synced account data) stays the original; these rows are the published copy.
 -- Only the campaign's GM writes. Reading follows the campaign-system convention (MEMBERS READ below):
--- any signed-in account the GM hasn't kicked can read, because membership lives in each player's synced
+-- any signed-in account can read (2026-11-17: no player is ever blocked), because membership lives in each player's synced
 -- data, not on the server — server-side membership is a separate task. Players keep the last copy they
 -- pulled on their device. Deleting the campaign deletes its rows (the players' apps then keep what they
 -- had as their own homebrew).
@@ -57,25 +57,20 @@ create policy chb_gm_all on public.campaign_homebrew
 
 -- MEMBERS READ — the campaign-system convention, the same gate campaign_characters' cc_read uses. The
 -- server keeps no member list (membership lives in each player's own synced data), so ANY signed-in
--- account that isn't on this campaign's kick list can read these rows; the app only asks for the
+-- account can read these rows; the app only asks for the
 -- campaigns the player holds. What it really allows: an unfiltered `select * from campaign_homebrew`
 -- returns every campaign's shared homebrew (campaign ids are readable through
 -- campaigns_read_authenticated), so treat shared homebrew as visible to every signed-in user of the app.
 -- server-side membership is a separate task: a member table that joins and kicks write to, which would
 -- tighten this policy and every other campaign table's at once.
--- A kicked player's read comes back empty, and their app keeps what it had as their own homebrew.
+-- 2026-11-17: no player is ever blocked from a campaign (a GM's Remove takes out one character), so this rule
+-- no longer checks the old kick list (supabase-campaign-remove-character.sql sets the same rule).
 drop policy if exists chb_member_read on public.campaign_homebrew;
 create policy chb_member_read on public.campaign_homebrew
   for select to authenticated
-  using (
-    exists (
-      select 1 from public.campaigns c
-      where c.id = campaign_id
-        and not (auth.uid() = any (coalesce(c.removed, '{}'::uuid[])))
-    )
-  );
+  using (exists (select 1 from public.campaigns c where c.id = campaign_id));
 
--- Realtime: a GM's edit reaches players' open apps live. RLS gates the stream (a kicked player gets nothing).
+-- Realtime: a GM's edit reaches players' open apps live. RLS gates the stream.
 do $$
 begin
   if not (select relrowsecurity from pg_class where oid = 'public.campaign_homebrew'::regclass) then

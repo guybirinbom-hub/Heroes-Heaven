@@ -426,8 +426,12 @@ export function Builder({
   onLeaveCampaign,
   derivedBuild,
   skillOrderNotice = true,
+  charId,
 }: {
   content: ContentDatabase;
+  /** The roster id of the character being edited (absent for a new one): the Campaigns card says when its GM
+   *  removed THIS character from a campaign (CampaignGoneNote, 2026-11-17). */
+  charId?: string;
   /** An existing build to edit; omitted when creating a new character. */
   initial?: BuildState;
   /** Skill order D13 (plan work/skill-rank-level-by-level/plan.md, WP9): the one-time "skill ranks are now worked
@@ -3272,6 +3276,7 @@ export function Builder({
                     campaign defaults editor renders too. */}
                 <RuleCards build={build} actions={actions} content={content} sourcesContent={ovContent} catalog={sourceCat}>
                   <CampaignAttachCard
+                    charId={charId}
                     build={build}
                     actions={actions}
                     content={content}

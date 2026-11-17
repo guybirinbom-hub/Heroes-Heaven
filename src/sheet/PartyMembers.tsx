@@ -3,7 +3,7 @@ import type { ContentDatabase } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { rememberPartyCapabilities } from '../data/partyCapabilities';
-import { fetchParty, fetchMemberRow, fetchPendingGmEdits, currentUserId, kickFromParty, subscribeParty, subscribeMemberSheet, type PartyMember } from '../data/party';
+import { fetchParty, fetchMemberRow, fetchPendingGmEdits, currentUserId, removeCharacterFromCampaign, subscribeParty, subscribeMemberSheet, type PartyMember } from '../data/party';
 import {
   gmEditRefused,
   gmEditSchemaOutdated,
@@ -576,16 +576,18 @@ export function PartyMembers({
     [fetched, campaignId, content, pendingVersion, summarizeFor, myId],
   );
 
+  // Guy 2026-11-17: Remove takes out THIS character only — never the player, never their other characters
+  // (data/party.ts removeCharacterFromCampaign).
   const kick = async (m: PartyMember) => {
     const ok = await confirmDialog({
-      title: `Remove ${m.name}’s player?`,
-      message: "Their characters leave this party and they can't rejoin unless you re-share the code. This removes every character that player shared with the campaign.",
+      title: `Remove ${m.name} from this campaign?`,
+      message: `${m.name} leaves this party. The player and their other characters stay. The player can bring ${m.name} back by entering the campaign code again (with the newest version of the app).`,
       confirmLabel: 'Remove',
       danger: true,
       style: dialogStyle,
     });
     if (!ok) return;
-    const res = await kickFromParty(campaignId, m.ownerId);
+    const res = await removeCharacterFromCampaign(campaignId, m.charId, m.ownerId);
     if (res.ok) setReload((r) => r + 1);
     else setError(res.error);
   };

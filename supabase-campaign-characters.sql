@@ -18,18 +18,34 @@ create index if not exists campaign_characters_campaign_idx on public.campaign_c
 
 alter table public.campaign_characters enable row level security;
 
--- GM "kick": a list of members the campaign owner has removed. Kicked users can't re-publish.
+-- The old GM "kick" list of whole players. Kept so older apps can still read it; no rule checks it any more
+-- (2026-11-17: a GM's Remove takes out one character, never a player — supabase-campaign-remove-character.sql).
 alter table public.campaigns add column if not exists removed uuid[] not null default '{}'::uuid[];
 
--- Owner publishes / updates / removes their own attached characters — UNLESS the GM has kicked them.
+-- Owner publishes / updates / removes their own attached characters — unless the GM removed THAT character.
+-- The GM's one-character Remove list (`removed_chars`) and everything around it come ONLY from
+-- supabase-campaign-remove-character.sql, so the app can tell from that column whether that file ran (a
+-- checker's finding, 2026-11-17: this file adding the column alone left a half-updated database). Once it ran,
+-- this file keeps the same rule on a re-run; before it, the rule blocks nobody.
 drop policy if exists cc_owner_write on public.campaign_characters;
-create policy cc_owner_write on public.campaign_characters
-  for all to authenticated
-  using (owner_id = auth.uid())
-  with check (
-    owner_id = auth.uid()
-    and not (auth.uid() = any (coalesce((select removed from public.campaigns c where c.id = campaign_id), '{}'::uuid[])))
-  );
+do $$
+begin
+  if exists (select 1 from information_schema.columns
+              where table_schema = 'public' and table_name = 'campaigns' and column_name = 'removed_chars') then
+    create policy cc_owner_write on public.campaign_characters
+      for all to authenticated
+      using (owner_id = auth.uid())
+      with check (
+        owner_id = auth.uid()
+        and not ((owner_id::text || '|' || char_id) = any (coalesce((select removed_chars from public.campaigns c where c.id = campaign_id), '{}'::text[])))
+      );
+  else
+    create policy cc_owner_write on public.campaign_characters
+      for all to authenticated
+      using (owner_id = auth.uid())
+      with check (owner_id = auth.uid());
+  end if;
+end $$;
 
 -- The campaign owner (GM) can DELETE any member's rows for their campaign (the kick action).
 drop policy if exists cc_gm_delete on public.campaign_characters;

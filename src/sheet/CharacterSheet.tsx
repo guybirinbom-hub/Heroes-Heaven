@@ -136,6 +136,7 @@ export function CharacterSheet({
   readOnlyNote,
   gmEdit,
   onOpenOwn,
+  charId,
   onBack,
   onBackToTracker,
   charKey,
@@ -194,6 +195,8 @@ export function CharacterSheet({
   /** Open one of this device's own characters (a roster id). The Party page uses it when the card you
    *  tapped turns out to be yours — see PartyMembers.ownRosterId. */
   onOpenOwn?: (charId: string) => void;
+  /** This character's roster id — the Party page says when its GM removed THIS character (2026-11-17). */
+  charId?: string;
   /** GM editing a player's character (from the campaign detail): fully editable, no nav hamburger, and
    *  a top-bar [edit-build · export · Update · Back] set. `onUpdate` pushes to the player (silently);
    *  `onExport` downloads the file. Mutually exclusive with `readOnly`.
@@ -555,6 +558,7 @@ export function CharacterSheet({
         content={teammateContent}
         campaigns={attachedCampaigns}
         characterName={character.name}
+        charId={charId}
         characters={characters}
         // Tapping your own card here leaves the party view as well as switching character — without
         // the close it would hand App a new active id and leave the party page sitting on top of it.

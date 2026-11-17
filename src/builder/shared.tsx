@@ -10,6 +10,8 @@ import { useAuth } from '../data/useAuth';
 import { fetchCampaignByCode, normalizeCode, type CampaignMembership } from '../data/campaigns';
 import { campaignsOfCharacter, leaveCampaignQuestion } from '../data/campaignLeave';
 import { refreshCampaignHomebrew } from '../data/campaignHomebrew';
+import { allowCharacterBack, type LetBackResult } from '../data/party';
+import { campaignGoneReason, charMarkKey } from '../data/campaignGone';
 import { confirmDialog } from '../sheet/confirm';
 import { CampaignGoneNote } from '../sheet/CampaignGoneNote';
 import {
@@ -2735,7 +2737,10 @@ export function CampaignAttachCard({
   content,
   onLeaveCampaign,
   setCampaignIds,
+  charId,
 }: EditorProps & {
+  /** The roster id of this character (absent for a new one) — its own "removed by the GM" note. */
+  charId?: string;
   onLeaveCampaign?: (campaignId: string) => void;
   /** The Builder's door for this character's campaign list: not an undo step (an undo never changes
    *  campaigns — data/campaignLeave.ts). Absent: through `actions.patch`. */
@@ -2798,7 +2803,24 @@ export function CampaignAttachCard({
       saveCampaigns(list);
       setMemberships(list);
     }
+    // Entering the code lets this character back if the GM removed it (2026-11-17: Remove takes out one
+    // character; the GM's dialog says the player brings it back with the code). A no-op when it was not removed.
+    // 'back': it was removed and is let back now (App sends it to the party at once); 'not-removed': nothing to
+    // do; 'failed': the database could not be asked (offline, or its update was not run).
+    const letBack = async (cid: string): Promise<LetBackResult> => {
+      if (!charId || auth.status !== 'signed-in') return 'not-removed';
+      return allowCharacterBack(cid, charId);
+    };
     if ((live.current.campaignIds ?? []).includes(id)) {
+      // The GM removed this character and it still holds the campaign: the code brings it back to the party —
+      // once, and never with an "already in" error (a checker's finding, 2026-11-17).
+      // Asked also when the code lookup failed: offline it answers 'failed' on its own, so a removed character
+      // gets the connection error and keeps the code, never "already in" (a checker's finding, 2026-11-17).
+      const back = await letBack(id);
+      if (back === 'failed' && charId && campaignGoneReason(charMarkKey(id, charId)) === 'char-removed') {
+        setError('Could not bring this character back — check your connection and enter the code again.');
+        return;
+      }
       // In it, but the account is not (it showed as "Campaign"): a NEW character from a file keeps the file's
       // campaigns, or a removal on another device raced a join here. The code puts the membership back —
       // its name, its party and its GM's shared homebrew (a checker's finding, 2026-10-21).
@@ -2808,6 +2830,10 @@ export function CampaignAttachCard({
         saveCampaigns(next);
         setMemberships(next);
         void refreshCampaignHomebrew();
+        setCode('');
+        return;
+      }
+      if (back === 'back') {
         setCode('');
         return;
       }
@@ -2840,6 +2866,7 @@ export function CampaignAttachCard({
       setMemberships(list);
       recordReviveKeys([`camp:${c.id}`]);
     }
+    void letBack(c.id);
     setIds((ids) => [...new Set([...ids, c.id])]);
     setCode('');
     const d = c.defaults;
@@ -2894,7 +2921,7 @@ export function CampaignAttachCard({
                     <i className="ti ti-logout" aria-hidden="true" /> Leave
                   </button>
                 )}
-                <CampaignGoneNote campaignId={m.id} gm={m.role === 'gm'} />
+                <CampaignGoneNote campaignId={m.id} charId={charId} gm={m.role === 'gm'} />
               </span>
             ))}
           </div>

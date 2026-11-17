@@ -22,6 +22,7 @@ import type { SavedChar } from './storage';
 import type { CampaignResult } from './campaigns';
 import type { ContentDatabase } from '../rules/types';
 import { foreignContent, withCarriedAttached } from './carried';
+import { campaignGoneReason, characterLetBack, charMarkKey } from './campaignGone';
 
 /** A pending GM edit for one of the current user's characters (judged on sync — src/App.tsx). */
 export interface GmEdit {
@@ -103,8 +104,10 @@ const SCHEMA_MESSAGE =
 /** What became of one publish: it landed, it failed, or a newer one for the same key replaced it
  *  before it was sent. Two failures are PROVEN by the server and stop the sending (App, data/campaignGone.ts):
  *  'gone' — the campaign no longer exists (its GM deleted it); 'refused' — it exists and its GM removed
- *  this player. 'failed' is every other failure, an unknown one included: it is sent again later. */
-export type PublishResult = 'ok' | 'failed' | 'superseded' | 'gone' | 'refused';
+ *  this player (the old player-wide kick, still answered for an older database); 'char-removed' — its GM
+ *  removed THIS character only (removeCharacterFromCampaign), which stops only this character's sends.
+ *  'failed' is every other failure, an unknown one included: it is sent again later. */
+export type PublishResult = 'ok' | 'failed' | 'superseded' | 'gone' | 'refused' | 'char-removed';
 type LaneOutcome = Exclude<PublishResult, 'superseded'>;
 
 /**
@@ -211,7 +214,7 @@ export function publishCharacter(
       .from('campaign_characters')
       .upsert({ campaign_id: campaignId, owner_id: owner, char_id: charId, name, summary, sheet, updated_at: new Date().toISOString() });
     if (!error) return 'ok';
-    return whyPublishRefused(client, campaignId, owner, error);
+    return whyPublishRefused(client, campaignId, owner, error, charId);
   });
 }
 
@@ -231,8 +234,10 @@ const CAMPAIGN_FK = 'campaign_characters_campaign_id_fkey';
  * say "gone", so each proven answer needs TWO agreeing facts:
  *  - 'gone': the upsert broke the CAMPAIGN foreign key, named in the error (only a signed-in write that passed the row rules
  *    gets that far) AND the read, signed in as the same account, succeeded and found no row;
+ *  - 'char-removed': a row rule refused the upsert AND the read found the campaign with THIS character in
+ *    its `removed_chars` list (the GM's Remove — removeCharacterFromCampaign);
  *  - 'refused': a row rule refused the upsert AND the read found the campaign with this account in its
- *    `removed` list (the kick — kickFromParty).
+ *    `removed` list (the old player-wide kick; a database without supabase-campaign-remove-character.sql).
  * Anything else — another error, a read that failed or threw, a session that changed or ended (a
  * signed-out read finds no rows of anything), a campaign that is there and does not list this player —
  * is 'failed', which App retries exactly as before.
@@ -242,6 +247,7 @@ async function whyPublishRefused(
   campaignId: string,
   owner: string,
   error: { code?: string; message?: string; details?: string | null },
+  charId?: string,
 ): Promise<LaneOutcome> {
   const code = error.code;
   if (code !== FK_VIOLATION && code !== RLS_VIOLATION) return 'failed';
@@ -249,12 +255,16 @@ async function whyPublishRefused(
   if (code === FK_VIOLATION && !`${error.message ?? ''} ${error.details ?? ''}`.includes(CAMPAIGN_FK)) return 'failed';
   try {
     if ((await currentUserId()) !== owner) return 'failed';
-    const { data, error: readError } = await client.from('campaigns').select('id,removed').eq('id', campaignId).maybeSingle();
+    // Every column: `removed_chars` exists only once supabase-campaign-remove-character.sql ran, and naming a
+    // missing column would fail the read.
+    const { data, error: readError } = await client.from('campaigns').select('*').eq('id', campaignId).maybeSingle();
     if (readError) return 'failed';
     // …and still the same account AFTER the read: a sign-out or another account's sign-in while it was on its
     // way changes whose token it carried (none reads no rows at all) — a checker's finding, 2026-10-23.
     if ((await currentUserId()) !== owner) return 'failed';
     if (!data) return code === FK_VIOLATION ? 'gone' : 'failed';
+    const removedChars = (data as { removed_chars?: unknown }).removed_chars;
+    if (code === RLS_VIOLATION && charId && Array.isArray(removedChars) && removedChars.includes(removedCharKey(owner, charId))) return 'char-removed';
     const removed = (data as { removed?: unknown }).removed;
     if (code === RLS_VIOLATION && Array.isArray(removed) && removed.includes(owner)) return 'refused';
     return 'failed';
@@ -273,17 +283,63 @@ export function unpublishCharacter(campaignId: string, charId: string): Promise<
   });
 }
 
-/** GM only: remove a member from the campaign — ban them (so they can't re-publish) and drop their
- *  published characters. Requires the caller to own the campaign (enforced by RLS). */
-export async function kickFromParty(campaignId: string, memberOwnerId: string): Promise<CampaignResult<null>> {
+/** One entry of a campaign's `removed_chars`: the owner's account id and the character id, so the database lets
+ *  only that character's own player take it off the list (allow_character_back). */
+export const removedCharKey = (ownerId: string, charId: string) => `${ownerId}|${charId}`;
+
+/** What the GM is told when the database still lacks the one-character Remove. */
+export const REMOVE_CHARACTER_SCHEMA_MESSAGE =
+  'Removing one character needs one database update first: run supabase-campaign-remove-character.sql once in the Supabase SQL editor. Nothing was removed.';
+
+/**
+ * GM only: take ONE character out of the campaign (Guy, 2026-11-17: "when i remove a character it removes all
+ * taht playerc characters … it shouldnt ban the same character or the player in any way"). The character's id
+ * goes on the campaign's `removed_chars` list FIRST — so the player's app cannot quietly send it back (the row
+ * rule refuses it; their app then says the GM removed this character) — and then only that character's row is
+ * deleted. The player, their other characters and any new one are never touched; joining with the code again
+ * takes the id off the list (allowCharacterBack). The old player-wide `removed` list is never written.
+ * A database without supabase-campaign-remove-character.sql changes nothing and says which file to run.
+ */
+export async function removeCharacterFromCampaign(campaignId: string, charId: string, ownerId: string): Promise<CampaignResult<null>> {
   if (!supabase) return { ok: false, error: 'Sign in to manage the party.' };
-  const { data: camp, error: e1 } = await supabase.from('campaigns').select('removed').eq('id', campaignId).maybeSingle();
+  if (!ownerId) return { ok: false, error: 'Could not tell whose character this is. Nothing was removed.' };
+  const { data: camp, error: e1 } = await supabase.from('campaigns').select('*').eq('id', campaignId).maybeSingle();
   if (e1) return { ok: false, error: e1.message || 'Could not read the campaign.' };
-  const removed = Array.from(new Set([...(((camp?.removed as string[] | null) ?? []) as string[]), memberOwnerId]));
-  const { error: e2 } = await supabase.from('campaigns').update({ removed }).eq('id', campaignId);
-  if (e2) return { ok: false, error: e2.message || 'Could not remove the member.' };
-  await supabase.from('campaign_characters').delete().eq('campaign_id', campaignId).eq('owner_id', memberOwnerId);
+  if (!camp) return { ok: false, error: 'Could not read the campaign.' };
+  const had = (camp as { removed_chars?: unknown }).removed_chars;
+  if (!Array.isArray(had)) return { ok: false, error: REMOVE_CHARACTER_SCHEMA_MESSAGE };
+  // shortcut: read-then-write — a Remove racing the same campaign's let-back can put that one entry back; the
+  // player then re-enters the code once more. Done properly by an append inside the database.
+  const removedChars = Array.from(new Set([...(had as string[]), removedCharKey(ownerId, charId)]));
+  const { error: e2 } = await supabase.from('campaigns').update({ removed_chars: removedChars }).eq('id', campaignId);
+  if (e2) return { ok: false, error: isMissingColumn(e2, 'removed_chars') ? REMOVE_CHARACTER_SCHEMA_MESSAGE : e2.message || 'Could not remove the character.' };
+  const { error: e3 } = await supabase.from('campaign_characters').delete().eq('campaign_id', campaignId).eq('char_id', charId);
+  if (e3) return { ok: false, error: e3.message || 'Could not remove the character.' };
   return { ok: true, value: null };
+}
+
+/**
+ * Player: let this character back into a campaign its GM removed it from — called when the player joins it again
+ * with the code, and when they press Leave on it. Takes the id off the campaign's `removed_chars` through the
+ * database function (only the GM may write the campaign row). Best effort: a database without the function, or
+ * a character that was never removed, changes nothing; true when the call went through.
+ */
+export type LetBackResult = 'back' | 'not-removed' | 'failed';
+export async function allowCharacterBack(campaignId: string, charId: string): Promise<LetBackResult> {
+  if (!supabase) return 'failed';
+  try {
+    // The database answers true only when it took this player's own entry off the list.
+    const { data, error } = await supabase.rpc('allow_character_back', { p_campaign: campaignId, p_char: charId });
+    if (error) return 'failed';
+    // Not on the list (any more — another device of this player may have let it back): a mark this device still
+    // holds is stale, so it goes and the character is sent again too.
+    if (data !== true && campaignGoneReason(charMarkKey(campaignId, charId)) !== 'char-removed') return 'not-removed';
+    // App sends the character again now (its last copy may be unchanged since the Remove deleted it).
+    characterLetBack(campaignId, charId);
+    return 'back';
+  } catch {
+    return 'failed';
+  }
 }
 
 /**

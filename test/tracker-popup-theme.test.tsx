@@ -103,7 +103,7 @@ vi.mock('../src/data/party', async (importOriginal) => ({
   deleteGmEdit: async () => 1,
   subscribeGmEdits: () => () => undefined,
   pushGmEdit: async () => ({ ok: true, value: null }),
-  kickFromParty: async () => ({ ok: true, value: null }),
+  removeCharacterFromCampaign: async () => ({ ok: true, value: null }),
 }));
 vi.mock('../src/data/campaigns', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../src/data/campaigns')>()),

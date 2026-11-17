@@ -29,8 +29,8 @@ import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
-import { publishCharacter, unpublishCharacter, fetchGmEdits, fetchPublishedSheet, deleteGmEdit, markGmEditRefused, currentUserId, subscribeGmEdits, type GmEdit } from './data/party';
-import { campaignGoneReason, clearAllCampaignGone, clearCampaignGone, keepCampaignGoneFor, markCampaignGone } from './data/campaignGone';
+import { publishCharacter, unpublishCharacter, allowCharacterBack, fetchGmEdits, fetchPublishedSheet, deleteGmEdit, markGmEditRefused, currentUserId, subscribeGmEdits, type GmEdit } from './data/party';
+import { campaignGoneReason, clearAllCampaignGone, clearCampaignGone, keepCampaignGoneFor, markCampaignGone, onCharacterLetBack } from './data/campaignGone';
 import { loadRoster, saveRoster, newRosterId, loadModes, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadUnheldCampaigns, saveUnheldCampaigns, loadRevived, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { authoredKey, hash53 } from './data/authored';
 import { isDesktopApp, isTauri } from './platform';
@@ -578,6 +578,16 @@ export default function App() {
    *  that just signed out never marks the next one's campaign. (Canonical "latest value" ref.) */
   const publishUidRef = useRef(publishUid);
   publishUidRef.current = publishUid;
+  // A character its GM removed was let back in (the code entered again, or Leave): forget its last sent copy and
+  // run the publish again, so it reaches the party now, not only after its next edit (2026-11-17).
+  useEffect(
+    () =>
+      onCharacterLetBack((cid, charId) => {
+        sentJsonRef.current.delete(cid + '|' + charId);
+        setPublishNonce((n) => n + 1);
+      }),
+    [],
+  );
   useEffect(() => {
     // The retry: a failed publish goes again on online / focus / visible. No timer — no polling.
     const kick = () => {
@@ -617,7 +627,9 @@ export default function App() {
       let origins: Map<string, string> | null = null;
       let ownWins: Set<string> | null = null;
       // A campaign no character here is in any more: its gone / removed mark goes, so a join again sends.
-      keepCampaignGoneFor(new Set(roster.flatMap((sc) => sc.character.campaignIds ?? [])));
+      // Each held campaign AND each held (campaign, character) pair, so a removed character's own mark goes
+      // once that character leaves, even while another character stays in the campaign.
+      keepCampaignGoneFor(new Set(roster.flatMap((sc) => (sc.character.campaignIds ?? []).flatMap((cid) => [cid, cid + '|' + sc.id]))));
       for (const sc of roster) {
         const ids = sc.character.campaignIds ?? [];
         if (!ids.length) continue;
@@ -660,7 +672,9 @@ export default function App() {
             desired.add(key);
             // Proven gone / removed (data/campaignGone.ts): no more sends there this session — each one
             // failed, and the online / focus retry sent it again and again. Unknown failures still retry.
-            if (campaignGoneReason(cid)) continue;
+            // …and a character its GM removed (only that one: 'char-removed' is keyed by `cid|charId`, the same
+            // `key` — Guy 2026-11-17, the GM's Remove never stops the player's other characters).
+            if (campaignGoneReason(cid) || campaignGoneReason(key)) continue;
             if (sentJsonRef.current.get(key) === json) continue;
             sentJsonRef.current.set(key, json);
             const sentFor = publishUidRef.current;
@@ -668,8 +682,13 @@ export default function App() {
               if (res === 'ok') {
                 // A send that lands proves the campaign is there: the characters held back by its mark go
                 // again now (one more run of this effect — no timer).
-                if (clearCampaignGone(cid)) setPublishNonce((n) => n + 1);
+                const clearedChar = clearCampaignGone(key);
+                if (clearCampaignGone(cid) || clearedChar) setPublishNonce((n) => n + 1);
                 onPublishedKey(key);
+              } else if (res === 'char-removed') {
+                // The GM removed THIS character: only its sends stop; the card says so, with Leave.
+                if (sentJsonRef.current.get(key) === json) sentJsonRef.current.delete(key);
+                if (sentFor === publishUidRef.current) markCampaignGone(key, 'char-removed');
               } else if (res === 'gone' || res === 'refused') {
                 // Not sent: forgotten like a failure, so a send after the mark clears goes out again.
                 if (sentJsonRef.current.get(key) === json) sentJsonRef.current.delete(key);
@@ -1664,6 +1683,9 @@ export default function App() {
       void refreshCampaignHomebrew();
     }
     if (charId === undefined) return;
+    // A character its GM removed (only that one, 2026-11-17) is let back in as it leaves, so joining again
+    // with the code later sends it as normal. Best effort and harmless for any other character.
+    if (auth.status === 'signed-in') void allowCharacterBack(campaignId, charId);
     commitStructural();
     // Not an undo step: coming back is joining again with the code, and Ctrl+Z would bring the link back
     // without the membership it may have dropped. (The roster's undo is a three-way revert, so an undo of
@@ -1853,6 +1875,7 @@ export default function App() {
         content={buildDb}
         initial={editing?.build}
         derivedBuild={editing?.derived}
+        charId={editing?.id}
         onLeaveCampaign={(campaignId) => leaveCampaign(campaignId, editing?.id)}
         onCancel={() => {
           setEditing(null);
@@ -1958,6 +1981,7 @@ export default function App() {
       <CharacterSheet
         // This else is reached only when pickScreen returned 'sheet', which requires content AND a
         // character — so `character` is non-null here; TS just can't infer it through `which`.
+        charId={active.id}
         undo={undo}
         redo={redo}
         canUndo={canUndo}

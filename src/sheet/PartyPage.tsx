@@ -22,11 +22,13 @@ interface PartyPageProps {
   onLeave?: (campaignId: string) => void;
   /** The character this page was opened from, named in the Leave question. */
   characterName?: string;
+  /** The roster id of the character this page was opened from — its own "removed by the GM" note. */
+  charId?: string;
 }
 
 /** Party view opened from a character's Party button — teammates' characters in summary for the
- *  selected campaign; tap one to read (only) their full sheet. A GM viewing here can still kick. */
-export function PartyPage({ content, campaigns, characters, onOpenOwn, onClose, onLeave, characterName }: PartyPageProps) {
+ *  selected campaign; tap one to read (only) their full sheet. A GM viewing here can still remove one. */
+export function PartyPage({ content, campaigns, characters, onOpenOwn, onClose, onLeave, characterName, charId }: PartyPageProps) {
   const [selectedId, setSelectedId] = useState(campaigns[0]?.id ?? '');
   const selectedCampaign = campaigns.find((c) => c.id === selectedId);
   const { sheetEl, open } = useMemberViewer(content, { roster: characters, onOpenOwn });
@@ -71,7 +73,7 @@ export function PartyPage({ content, campaigns, characters, onOpenOwn, onClose, 
         <PartyMembers campaignId={selectedId} isGm={selectedCampaign?.role === 'gm'} content={content} onView={(m) => void open(selectedId, m.charId, m.ownerId)} />
         {/* This character leaves the campaign — a GM's character too (the campaign stays; a GM ends it by
             deleting it on the Campaigns page). */}
-        {selectedCampaign && <CampaignGoneNote campaignId={selectedCampaign.id} block gm={selectedCampaign.role === 'gm'} />}
+        {selectedCampaign && <CampaignGoneNote campaignId={selectedCampaign.id} charId={charId} block gm={selectedCampaign.role === 'gm'} />}
         {onLeave && selectedCampaign && (
           <div className="party-leave-row">
             <button className="chip danger" onClick={() => void leave()}>

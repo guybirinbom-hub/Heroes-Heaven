@@ -508,13 +508,15 @@ describe('a GM renaming a shared source', () => {
 
 describe('who can read shared homebrew — the campaign-system convention', () => {
   it('is documented as the convention in the SQL and the data layer, with server-side membership a separate task', () => {
-    // chb_member_read lets any signed-in account the GM hasn't kicked read, like every campaign table:
-    // membership lives in each player's synced data, not on the server. That is a stated convention,
-    // not a defect of this feature — this pins that it stays stated where the policy and its reader live.
+    // chb_member_read lets any signed-in account read, like every campaign table: membership lives in each
+    // player's synced data, not on the server. That is a stated convention, not a defect of this feature —
+    // this pins that it stays stated where the policy and its reader live. 2026-11-17 (Guy: a GM's Remove
+    // "shouldnt ban the same character or the player in any way"): it no longer checks the old kick list.
     const root = resolve(__dirname, '..');
     const sql = readFileSync(resolve(root, 'supabase-campaign-homebrew.sql'), 'utf8');
     const ts = readFileSync(resolve(root, 'src/data/campaignHomebrew.ts'), 'utf8');
-    expect(sql).toMatch(/create policy chb_member_read[\s\S]*not \(auth\.uid\(\) = any/);
+    expect(sql).toMatch(/create policy chb_member_read[\s\S]*using \(exists \(select 1 from public\.campaigns c where c\.id = campaign_id\)\);/);
+    expect(sql).not.toMatch(/create policy chb_member_read[^;]*removed/);
     for (const text of [sql, ts]) {
       expect(text).toContain('campaign-system convention');
       expect(text).toContain('server-side membership is a separate task');
