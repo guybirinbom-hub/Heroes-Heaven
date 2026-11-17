@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { CloudBundle, SavedChar } from '../src/data/storage';
 
@@ -199,11 +200,30 @@ describe('every other reader of the roster key counts what it cannot read', () =
     const storage = await import('../src/data/storage');
     localStorage.setItem(ROSTER_KEY, JSON.stringify([pc('a', 'Ayla'), { id: 'x', note: 'uses hb-entry-7' }]));
     expect(storage.rosterUnshownText()).toContain('hb-entry-7');
-    expect([...storage.rosterKeptIds()]).toEqual(['x']);
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 1, lists: 0 }); // the Characters screen's notice
     localStorage.setItem(ROSTER_KEY, '[{"id":"a","feats":["hb-entry-9"]');
     expect(storage.rosterUnshownText()).toContain('hb-entry-9');
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 0, lists: 1 });
     localStorage.setItem(ROSTER_KEY, JSON.stringify([pc('a', 'Ayla')]));
     expect(storage.rosterUnshownText()).toBe('');
+  });
+
+  it('an account switch copies a roster holding entries this version cannot read aside before removing it', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const withKept = JSON.stringify([pc('a', 'Ayla'), { id: 'x', character: null, note: 'never synced' }]);
+    localStorage.setItem(ROSTER_KEY, withKept);
+    storage.wipeSyncedLocalData();
+    expect(localStorage.getItem(ROSTER_KEY)).toBeNull();
+    const copies = Object.keys(localStorage).filter((k) => k.startsWith(UNREADABLE_PREFIX));
+    expect(copies).toHaveLength(1);
+    expect(localStorage.getItem(copies[0])).toBe(withKept);
+    // A roster the app reads whole is uploaded already: nothing is copied for it.
+    localStorage.clear();
+    localStorage.setItem(ROSTER_KEY, JSON.stringify([pc('a', 'Ayla')]));
+    storage.wipeSyncedLocalData();
+    expect(Object.keys(localStorage).filter((k) => k.startsWith(UNREADABLE_PREFIX))).toHaveLength(0);
   });
 
   it('the cloud merge keeps every entry without an id (keyed by `undefined` they overwrote each other), each once', async () => {
@@ -224,22 +244,76 @@ describe('another tab writing a roster with one bad entry is not read as deletin
     localStorage.setItem(ROSTER_KEY, raw);
   }
 
-  it('the good entries arrive, the unreadable one stands in from the base, and the merge deletes nothing', async () => {
+  it('the good entries arrive, the unreadable one stays on the key exactly once (the other tab\'s copy), and nothing is lost', async () => {
     plantThrowingNormalize();
     localStorage.setItem(ROSTER_KEY, JSON.stringify([pc('a', 'Ayla'), pc('b', 'Bram'), pc('c', 'Cora')]));
     vi.resetModules();
     const tabs = await import('../src/data/rosterTabs');
     const lineage = await import('../src/data/rosterLineage');
+    const storage = await import('../src/data/storage');
     const { mergeRosterEdits } = await import('../src/data/rosterMerge');
     const mine = tabs.loadRosterKnown();
     // The other tab edits Bram and writes Cora in a shape this tab cannot read.
-    otherTabWrites(JSON.stringify([pc('a', 'Ayla'), pc('b', 'Bram the Bold'), pc('c', 'BREAKS')]), lineage.knownRoster().sig, lineage.rosterSig);
+    const theirC = pc('c', 'BREAKS', { level: 5 });
+    otherTabWrites(JSON.stringify([pc('a', 'Ayla'), pc('b', 'Bram the Bold'), theirC]), lineage.knownRoster().sig, lineage.rosterSig);
     const f = tabs.takeForeignRoster();
     expect(f?.kind).toBe('write');
     if (f?.kind !== 'write') return;
+    expect(f.unread).toEqual(['c']); // App hands these to cloudSync.forgetHeld: not a deletion
     const merged = mergeRosterEdits(f.base, mine, f.incoming);
-    expect(merged.map((c) => c.id).sort()).toEqual(['a', 'b', 'c']);
     expect(merged.find((c) => c.id === 'b')?.character.name).toBe('Bram the Bold');
+    // This tab's next write: Cora is on the key once, as the other tab wrote her — never this tab's older
+    // readable copy beside it (the base stand-in wrote both: two entries with one id, a checker's finding
+    // on 12e9ad2).
+    expect(storage.saveRoster(merged)).toBe(true);
+    const onDisk = JSON.parse(localStorage.getItem(ROSTER_KEY)!) as { id: string; character: { name: string } }[];
+    expect(onDisk.map((e) => e.id).sort()).toEqual(['a', 'b', 'c']);
+    expect(onDisk.find((e) => e.id === 'c')).toEqual(theirC);
+    expect(onDisk.find((e) => e.id === 'b')?.character.name).toBe('Bram the Bold');
+  });
+
+  it('App tells cloud sync about an unread character on both foreign-roster paths (wiring of the tab test below)', () => {
+    const app = readFileSync(`${process.cwd()}/src/App.tsx`, 'utf8') // vt.mjs runs from the checkout root;
+    expect(app.match(/forgetHeld\(f\.unread\)/g)?.length).toBe(2); // foldForeign + reconcileWrite
+  });
+
+  it('signed in: a character another tab wrote unreadably is not tombstoned, and the cloud keeps it', async () => {
+    plantThrowingNormalize();
+    vi.resetModules();
+    const { normalizeCharacter } = await import('../src/rules/normalize');
+    const ch = (id: string, name: string) => ({ id, character: normalizeCharacter({ id, name }) }) as SavedChar;
+    sb.state.cloudRow = { roster: [ch('a', 'Ayla'), ch('b', 'Bram'), ch('c', 'Cora')], charUpdated: { a: 1000, b: 1000, c: 1000 } } as unknown as CloudBundle;
+    sb.state.upserts = [];
+    sb.state.failNext = 0;
+    localStorage.setItem(OWNER_KEY, 'user-1');
+    const storage = await import('../src/data/storage');
+    const persist = await import('../src/data/persist');
+    const tabs = await import('../src/data/rosterTabs');
+    const lineage = await import('../src/data/rosterLineage');
+    const { mergeRosterEdits } = await import('../src/data/rosterMerge');
+    const sync = await import('../src/data/cloudSync');
+    persist.setupPersist(storage.saveRoster, () => {});
+    const applied: SavedChar[][] = [];
+    const stop = await sync.startCloudSync((r) => applied.push(r));
+    try {
+      await vi.advanceTimersByTimeAsync(10);
+      const mine = applied.at(-1)!;
+      expect(mine.map((c) => c.id).sort()).toEqual(['a', 'b', 'c']);
+      // The other tab (a newer version, say) writes Cora in a shape this tab cannot read.
+      otherTabWrites(JSON.stringify([...mine.filter((c) => c.id !== 'c'), pc('c', 'BREAKS')]), lineage.knownRoster().sig, lineage.rosterSig);
+      const f = tabs.takeForeignRoster();
+      if (f?.kind !== 'write') throw new Error(`expected a write, got ${f?.kind}`);
+      sync.forgetHeld(f.unread); // what App's foldForeign does first
+      persist.schedulePersist(mergeRosterEdits(f.base, mine, f.incoming));
+      await vi.advanceTimersByTimeAsync(PERSIST_MS + 50);
+      const tomb = JSON.parse(localStorage.getItem(TOMBSTONES_KEY) ?? '{}') as Record<string, number>;
+      expect(tomb['char:c']).toBeUndefined();
+      expect(storedIds()?.sort()).toEqual(['a', 'b', 'c']);
+      await vi.advanceTimersByTimeAsync(3100); // the live push
+      for (const up of sb.state.upserts) expect(up.roster.map((c) => c.id)).toContain('c');
+    } finally {
+      stop();
+    }
   });
 
   it('a value that is not a roster at all is no information: nothing is taken from it', async () => {
@@ -314,6 +388,44 @@ describe('cloud: a failed first pull never tombstones characters this session ne
       const tomb = JSON.parse(localStorage.getItem(TOMBSTONES_KEY) ?? '{}') as Record<string, number>;
       expect(tomb['char:c2']).toBeGreaterThan(0);
       expect(tomb['char:c1']).toBeUndefined();
+    } finally {
+      stop();
+    }
+  });
+
+  it('a kept unreadable entry sharing an id with a readable character never blocks deleting that character (checker finding on 12e9ad2)', async () => {
+    vi.resetModules();
+    const { normalizeCharacter } = await import('../src/rules/normalize');
+    const ch = (id: string, name: string) => ({ id, character: normalizeCharacter({ id, name }) }) as SavedChar;
+    // This device's key holds Ayla and an entry for x it cannot read; the cloud holds a readable x.
+    const keptX = { id: 'x', character: null };
+    localStorage.setItem(ROSTER_KEY, JSON.stringify([ch('a', 'Ayla'), keptX]));
+    localStorage.setItem(CHAR_UPDATED_KEY, JSON.stringify({ a: 1000 }));
+    localStorage.setItem(OWNER_KEY, 'user-1');
+    sb.state.cloudRow = { roster: [ch('a', 'Ayla'), ch('x', 'Xan')], charUpdated: { a: 1000, x: 1000 } } as unknown as CloudBundle;
+    sb.state.upserts = [];
+    sb.state.failNext = 0;
+    const storage = await import('../src/data/storage');
+    const persist = await import('../src/data/persist');
+    const sync = await import('../src/data/cloudSync');
+    persist.setupPersist(storage.saveRoster, () => {});
+    const applied: SavedChar[][] = [];
+    const stop = await sync.startCloudSync((r) => applied.push(r));
+    try {
+      await vi.advanceTimersByTimeAsync(10);
+      expect(applied.at(-1)?.map((c) => c.id).sort()).toEqual(['a', 'x']);
+      // The player deletes Xan.
+      persist.schedulePersist(applied.at(-1)!.filter((c) => c.id !== 'x'));
+      await vi.advanceTimersByTimeAsync(PERSIST_MS + 50);
+      const tomb = JSON.parse(localStorage.getItem(TOMBSTONES_KEY) ?? '{}') as Record<string, number>;
+      expect(tomb['char:x']).toBeGreaterThan(0);
+      await vi.advanceTimersByTimeAsync(3100); // the live push
+      const up = sb.state.upserts.at(-1);
+      expect(up).toBeDefined();
+      expect(up!.roster.some((e) => storage.isRosterEntry(e) && e.id === 'x')).toBe(false); // no readable x goes back
+      expect(up!.deleted?.['char:x']).toBeGreaterThan(0);
+      // The unreadable copy is still on this device (UNKNOWN is not EMPTY).
+      expect(JSON.parse(localStorage.getItem(ROSTER_KEY)!)).toContainEqual(keptX);
     } finally {
       stop();
     }

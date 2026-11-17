@@ -35,7 +35,6 @@ import {
   readCloudBundle,
   readRosterEntries,
   recordTombstoneKeys,
-  rosterKeptIds,
   saveCharUpdated,
   saveSyncOwner,
   wipeSyncedLocalData,
@@ -298,6 +297,13 @@ export function noteDerivedRefresh(roster: SavedChar[], prev?: SavedChar[]): voi
   for (const c of roster) if (!holdsEdit.has(c.id)) fingerprints.set(c.id, charFingerprint(c));
 }
 
+/** Characters that left this tab's screen because another tab wrote them in a shape this tab cannot read
+ *  (rosterTabs: a `write`'s `unread` ids). They are still on the roster key, kept as stored, so the next
+ *  persist must not read them as deleted and tombstone the other tab's newer copy in the cloud. */
+export function forgetHeld(ids: readonly string[]): void {
+  for (const id of ids) fingerprints.delete(id);
+}
+
 /** After each local persist: bump timestamps for characters whose content changed (and prune ones
  *  that were deleted), then mark dirty so the next leave uploads. No network here (open/close model). */
 export function noteRosterChange(roster: SavedChar[]): void {
@@ -310,9 +316,12 @@ export function noteRosterChange(roster: SavedChar[]): void {
   // roster that loaded empty or partial, the first persist tombstoned every character the device did not
   // show, and the next good pull dropped them from the cloud and every device (2026-11-17,
   // test/bug-roster-wipe.test.ts). UNKNOWN is not EMPTY: an id never held this session is left alone.
+  // Fingerprints are built only from entries the screens were handed, so an unreadable copy of a held id
+  // on the roster key never blocks a real delete of the readable one (a checker's finding on 12e9ad2:
+  // with [a, x, {id:'x',character:null}] on the key, deleting x never reached the cloud). A held
+  // character that left the screen because ANOTHER TAB wrote it in a shape this tab cannot read is no
+  // deletion: App forgets it first (forgetHeld above, rosterTabs' `unread`).
   const held = new Set(fingerprints.keys());
-  // A character still on this device's roster key that the app cannot read is not deleted either.
-  const onDisk = rosterKeptIds();
 
   for (const c of roster) {
     present.add(c.id);
@@ -325,7 +334,7 @@ export function noteRosterChange(roster: SavedChar[]): void {
   }
   const removed: string[] = [];
   for (const id of Object.keys(ts)) {
-    if (!present.has(id) && held.has(id) && !onDisk.has(id)) {
+    if (!present.has(id) && held.has(id)) {
       removed.push(id);
       delete ts[id];
       changed = true;

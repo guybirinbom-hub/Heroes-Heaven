@@ -39,8 +39,10 @@ import { ROSTER_KEY, loadSyncOwner, parseRoster, readRoster, type SavedChar } fr
 import { recentPersists } from './persist';
 
 export type ForeignRoster =
-  /** Another tab's roster, and the roster it and this tab's state both grew from. */
-  | { kind: 'write'; base: SavedChar[]; incoming: SavedChar[] }
+  /** Another tab's roster, and the roster it and this tab's state both grew from. `unread`: ids of
+   *  entries in that write this tab cannot read (kept on the key as stored; the merge drops them from
+   *  the screen) — the caller tells cloud sync they were not deleted (cloudSync.forgetHeld). */
+  | { kind: 'write'; base: SavedChar[]; incoming: SavedChar[]; unread: string[] }
   /** Another ACCOUNT's roster (another tab signed in as someone else): this tab's roster is replaced by
    *  it, whole — nothing of the old account's is merged into it. `prior`: the roster value this tab knew
    *  on disk before (the old account's), so the caller can tell whether a write it had queued held
@@ -107,15 +109,19 @@ export function takeForeignRoster(): ForeignRoster | null {
     if ([...recentPersists()].reverse().some((r) => JSON.stringify(r) === raw)) return { kind: 'echo' };
   }
   const base = ((lineage?.on && rosterFromHistory(lineage.on)) || k.roster) as SavedChar[];
-  // An entry the other tab's write holds that this tab cannot read is not a deletion: where the base has
-  // that character, the base's copy stands in for it, so the merge reads it as unchanged. The unread
-  // entry itself stays on the key (saveRoster carries it).
-  const unread = new Set(
-    read.kept.map((e) => (e && typeof e === 'object' ? (e as { id?: unknown }).id : undefined)).filter((id): id is string => typeof id === 'string' && !!id),
-  );
+  // An entry the other tab's write holds that this tab cannot read leaves this tab's screen (the merge
+  // reads it as gone) but stays on the key exactly once, as the other tab wrote it: saveRoster carries
+  // it, the way a load keeps one. No stand-in from the base: that wrote this tab's OLDER readable copy
+  // beside the other tab's newer one — two entries with one id (a checker's finding on 12e9ad2). The
+  // caller tells cloud sync these ids were not deleted (`unread`, cloudSync.forgetHeld).
   const shown = new Set(read.roster.map((c) => c.id));
-  const standIns = unread.size ? base.filter((c) => unread.has(c.id) && !shown.has(c.id)) : [];
-  const incoming = standIns.length ? [...read.roster, ...standIns] : read.roster;
-  noteRosterKnown(raw, incoming, sig);
-  return { kind: 'write', base, incoming };
+  const unread = [
+    ...new Set(
+      read.kept
+        .map((e) => (e && typeof e === 'object' ? (e as { id?: unknown }).id : undefined))
+        .filter((id): id is string => typeof id === 'string' && !!id && !shown.has(id)),
+    ),
+  ];
+  noteRosterKnown(raw, read.roster, sig);
+  return { kind: 'write', base, incoming: read.roster, unread };
 }

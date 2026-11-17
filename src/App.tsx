@@ -17,7 +17,7 @@ import { loadContent, rebuildContent, onDescriptionsLoaded } from './data';
 import { buildPageNav, pickScreen } from './appScreen';
 import { PageNavContext } from './sheet/PageMenu';
 import { useAuth } from './data/useAuth';
-import { startCloudSync, hasSyncedOnce, noteDerivedRefresh, pullForGmApply } from './data/cloudSync';
+import { startCloudSync, hasSyncedOnce, noteDerivedRefresh, pullForGmApply, forgetHeld } from './data/cloudSync';
 import { startCampaignHomebrew, refreshCampaignHomebrew, homebrewFingerprint } from './data/campaignHomebrew';
 import { dropUnheldPlayerCampaigns, keepRosterCampaigns, leaveCampaignFor, withCampaignsOf, withoutCampaign } from './data/campaignLeave';
 import { fetchOwnedCampaignIds } from './data/campaigns';
@@ -1362,6 +1362,9 @@ export default function App() {
       setRoster(f.incoming, { record: false, resetHistory: true });
       return;
     }
+    // A character the other tab wrote in a shape this tab cannot read leaves the screen but stays on the
+    // key: cloud sync must not read it as deleted (rosterTabs `unread`, test/bug-roster-wipe.test.ts).
+    forgetHeld(f.unread);
     const opts = mergeOpts();
     const theirs = new Set(f.incoming);
     const fold = (r: SavedChar[]) => {
@@ -1391,6 +1394,7 @@ export default function App() {
     // Another account's key, not filled yet: nothing this tab holds may go there.
     if (!f && rosterOwnerSwitched()) return HOLD_WRITE;
     if (!f || f.kind === 'echo') return queued; // an old version's echo: our roster goes back over it
+    forgetHeld(f.unread); // as foldForeign above: an unread character is no deletion
     const opts = mergeOpts();
     const out = mergeRosterEdits(f.base, queued, f.incoming, opts);
     if (out === queued) return queued;

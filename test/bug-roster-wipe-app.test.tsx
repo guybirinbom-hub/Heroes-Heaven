@@ -22,7 +22,22 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-async function mountApp(): Promise<void> {
+/** The Characters screen's text: opened from the page menu when App is on a sheet. */
+async function charactersScreenText(): Promise<string> {
+  const menu = document.querySelector<HTMLButtonElement>('button[aria-label="Menu"]');
+  if (!document.querySelector('.roster-screen') && menu) {
+    await act(async () => menu.click());
+    const item = [...document.querySelectorAll<HTMLElement>('[role="menuitem"], button')].find((b) => b.textContent?.trim() === 'Characters');
+    if (!item) throw new Error('no Characters entry in the page menu');
+    await act(async () => item.click());
+  }
+  const screen = document.querySelector('.roster-screen');
+  if (!screen) throw new Error('the Characters screen did not open');
+  return screen.textContent ?? '';
+}
+
+/** Mount App, wait past its mount persist, and return the text of the first screen it painted. */
+async function mountApp(): Promise<string> {
   vi.stubGlobal('fetch', async () => ({ ok: false, status: 404, json: async () => ({}) }));
   if (!Element.prototype.scrollIntoView) Element.prototype.scrollIntoView = () => undefined;
   window.matchMedia ??= ((q: string) => ({
@@ -44,9 +59,11 @@ async function mountApp(): Promise<void> {
   await act(async () => {
     live!.render(<App />);
   });
+  const first = host.textContent ?? '';
   await act(async () => {
     await new Promise((r) => setTimeout(r, 900)); // past the 400 ms mount persist
   });
+  return first;
 }
 
 describe('mounting the app never writes an emptied roster over the stored one', () => {
@@ -66,6 +83,11 @@ describe('mounting the app never writes an emptied roster over the stored one', 
       const onDisk = JSON.parse(raw!) as { id?: string }[];
       expect(onDisk.map((e) => e.id).sort()).toEqual(['a', 'b', 't', 'x']);
       expect(onDisk.find((e) => e.id === 'x')).toEqual(stored[2]); // kept exactly as stored
+      // …and the Characters screen says so: a short roster is never taken for "deleted" (a checker's
+      // finding on 12e9ad2: the kept entry was hidden with no word to the player).
+      const characters = await charactersScreenText();
+      expect(characters).toContain('Ayla');
+      expect(characters).toContain("1 saved character can't be read by this version. It is kept unchanged");
     },
     APP_TIMEOUT,
   );
@@ -77,6 +99,7 @@ describe('mounting the app never writes an emptied roster over the stored one', 
       localStorage.setItem(ROSTER_KEY, broken);
       await mountApp();
       expect(localStorage.getItem(ROSTER_KEY)).toBe(broken);
+      expect(await charactersScreenText()).toContain('A saved character list could not be read. It is kept unchanged');
     },
     APP_TIMEOUT,
   );

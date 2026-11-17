@@ -229,17 +229,24 @@ function storedRosterRaw(): string | null {
   }
 }
 
-/** The ids of entries the roster key holds that the app cannot show. Cloud sync never tombstones one:
- *  the character is still on this device, just not readable here (src/data/cloudSync.ts noteRosterChange). */
-export function rosterKeptIds(): Set<string> {
+/** What this device keeps that the Characters screen cannot show, for its one-line notice
+ *  (src/sheet/RosterScreen.tsx): `entries`, stored characters on the roster key this version cannot
+ *  read; `lists`, whole roster values that could not be read at all (the key's own value, and every copy
+ *  under ROSTER_UNREADABLE_PREFIX). Without the line the player saw an empty or short roster and
+ *  believed those characters deleted (a checker's finding on 12e9ad2). */
+export function rosterUnreadCounts(): { entries: number; lists: number } {
   const raw = storedRosterRaw();
-  const ids = new Set<string>();
-  if (raw === null) return ids;
-  for (const e of scanOf(raw).kept) {
-    const id = e && typeof e === 'object' ? (e as { id?: unknown }).id : undefined;
-    if (typeof id === 'string' && id) ids.add(id);
+  const s = raw === null ? null : scanOf(raw);
+  let lists = s && !s.readable ? 1 : 0;
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k !== null && k.startsWith(ROSTER_UNREADABLE_PREFIX) && localStorage.getItem(k) !== raw) lists++;
+    }
+  } catch {
+    /* unreadable storage: nothing to count */
   }
-  return ids;
+  return { entries: s?.readable ? s.kept.length : 0, lists };
 }
 
 /** Everything the roster key holds that loadRoster does not show, as text (empty when nothing): the kept
@@ -253,13 +260,13 @@ export function rosterUnshownText(): string {
   return s.kept.length ? JSON.stringify(s.kept) : '';
 }
 
-/** Copy a stored roster value that is not a roster to its own key. True once the copy is on disk. */
-function backupUnreadableRoster(raw: string): boolean {
+/** Copy a stored roster value the app cannot (wholly) read to its own key. True once the copy is on disk. */
+function backupUnreadableRoster(raw: string, why = 'the stored roster could not be read'): boolean {
   const key = ROSTER_UNREADABLE_PREFIX + rosterSig(raw);
   try {
     if (localStorage.getItem(key) !== raw) {
       localStorage.setItem(key, raw);
-      console.warn(`[roster] the stored roster could not be read; kept unchanged under ${key} before saving over it`);
+      console.warn(`[roster] ${why}; kept unchanged under ${key}`);
     }
     return localStorage.getItem(key) === raw;
   } catch {
@@ -991,6 +998,11 @@ export function saveSyncOwner(uid: string): void {
  *  until its first pull succeeded — offline, a character made in the new account was never saved (a
  *  checker's finding on S3, 2026-10-20; test/bug-account-switch-this-tab.test.tsx). */
 export function wipeSyncedLocalData(): void {
+  // What the roster key holds that this version cannot read was never uploaded (readCloudBundle sends
+  // only what it shows), so removing the key would lose it with no copy anywhere: it is copied aside
+  // first, as saveRoster does (UNKNOWN is not EMPTY; a checker's finding on 12e9ad2).
+  const raw = storedRosterRaw();
+  if (raw !== null && rosterUnshownText()) backupUnreadableRoster(raw, 'an account switch removes the roster, which holds entries this version cannot read');
   noteRosterKnown(null, [], null, null);
   for (const k of [
     ROSTER_KEY,
