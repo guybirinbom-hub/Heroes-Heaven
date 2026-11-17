@@ -143,11 +143,17 @@ export function mergeRoster(
     if (!loose.has(k)) loose.set(k, c as SavedChar);
   };
 
+  // Two entries with one id on the same side: the FIRST is the one that counts. A roster key lists what
+  // the app holds first and the copies it keeps as stored after it (storage.ts saveRoster), so a later
+  // same-id entry is an older copy; letting it win the tie handed the cloud an old character over the
+  // newer device's edits (a checker's finding on 54f6585).
+  const fromLocal = new Set<string>();
   for (const c of cloud) {
     if (!hasId(c)) {
       keepLoose(c);
       continue;
     }
+    if (byId.has(c.id)) continue;
     byId.set(c.id, c);
     ts[c.id] = cloudTs[c.id] ?? 0;
   }
@@ -156,6 +162,8 @@ export function mergeRoster(
       keepLoose(c);
       continue;
     }
+    if (fromLocal.has(c.id)) continue;
+    fromLocal.add(c.id);
     const lt = localTs[c.id] ?? 0;
     const existing = byId.get(c.id);
     if (!existing) {

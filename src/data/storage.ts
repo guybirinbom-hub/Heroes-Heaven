@@ -125,7 +125,7 @@ export function loadRoster(): SavedChar[] {
  *    throws) is KEPT AS STORED: hidden from every screen (nothing renders a half-read character), and
  *    carried back onto the key, unchanged, by every saveRoster after it;
  *  - a value that is not a JSON array at all is UNKNOWN: it loads as [] so the app opens, and saveRoster
- *    copies it to its own key (ROSTER_UNREADABLE_PREFIX + its signature; "Export everything" includes it)
+ *    copies it to its own key (ROSTER_UNREADABLE_PREFIX + owner + its signature; "Export everything" includes it)
  *    before the first write over it — and refuses the write when that copy cannot be made. A copy rather
  *    than refusing every write: the player keeps working and nothing they do is lost, while the unread
  *    value stays byte-for-byte where a fix or a support request can get it back.
@@ -238,21 +238,37 @@ export function rosterUnreadCounts(): { entries: number; lists: number } {
   const raw = storedRosterRaw();
   const s = raw === null ? null : scanOf(raw);
   let lists = s && !s.readable ? 1 : 0;
-  try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k !== null && k.startsWith(ROSTER_UNREADABLE_PREFIX) && localStorage.getItem(k) !== raw) lists++;
-    }
-  } catch {
-    /* unreadable storage: nothing to count */
-  }
+  for (const k of rosterBackupKeys()) if (isOwnRosterBackup(k) && localStorage.getItem(k) !== raw) lists++;
   return { entries: s?.readable ? s.kept.length : 0, lists };
 }
 
-/** Everything the roster key holds that loadRoster does not show, as text (empty when nothing): the kept
- *  entries, or the whole value when it is not a roster at all. For a scan that must count every character
- *  on this device, readable or not (src/data/campaignHomebrew.ts usedByRoster). */
-export function rosterUnshownText(): string {
+/** Every key a roster copy sits under (ROSTER_UNREADABLE_PREFIX), whoever it was made for. */
+function rosterBackupKeys(): string[] {
+  const out: string[] = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k !== null && k.startsWith(ROSTER_UNREADABLE_PREFIX)) out.push(k);
+    }
+  } catch {
+    /* unreadable storage: no copies to find */
+  }
+  return out;
+}
+
+/** A copy's key names the account it was made for (`<prefix><owner or 'local'>:<signature>`). Only this
+ *  account's copies, and copies made signed out, are counted on its Characters screen and go into its
+ *  "Export everything": after an account switch the old account's copy is kept on the device, unseen,
+ *  until that account signs in here again (a checker's finding on 54f6585 — the new account was told
+ *  about, and exported, the other account's list). */
+export function isOwnRosterBackup(key: string): boolean {
+  if (!key.startsWith(ROSTER_UNREADABLE_PREFIX)) return false;
+  const tag = key.slice(ROSTER_UNREADABLE_PREFIX.length).split(':')[0];
+  return tag === 'local' || tag === (loadSyncOwner() ?? 'local');
+}
+
+/** What the roster key itself holds that loadRoster does not show, as text (empty when nothing). */
+function keyUnshownText(): string {
   const raw = storedRosterRaw();
   if (raw === null) return '';
   const s = scanOf(raw);
@@ -260,9 +276,28 @@ export function rosterUnshownText(): string {
   return s.kept.length ? JSON.stringify(s.kept) : '';
 }
 
-/** Copy a stored roster value the app cannot (wholly) read to its own key. True once the copy is on disk. */
-function backupUnreadableRoster(raw: string, why = 'the stored roster could not be read'): boolean {
-  const key = ROSTER_UNREADABLE_PREFIX + rosterSig(raw);
+/** Everything this device keeps of a roster that loadRoster does not show, as text (empty when nothing):
+ *  the key's kept entries (or its whole value when it is not a roster at all), and every copy saved under
+ *  ROSTER_UNREADABLE_PREFIX, whoever it was made for. For a scan that must count every character on this
+ *  device, readable or not: campaign homebrew's usedByRoster, App's portrait GC and its cleanup of
+ *  campaigns no character holds. Once the first real save had copied an unread value aside the key read
+ *  clean again, and the GC deleted a portrait only the copy still named (a checker's finding on 54f6585). */
+export function rosterUnshownText(): string {
+  let text = keyUnshownText();
+  for (const k of rosterBackupKeys()) {
+    try {
+      text += localStorage.getItem(k) ?? '';
+    } catch {
+      /* unreadable storage: nothing more to add */
+    }
+  }
+  return text;
+}
+
+/** Copy a stored roster value the app cannot (wholly) read to its own key, named for the account it
+ *  belongs to (isOwnRosterBackup). True once the copy is on disk. */
+function backupUnreadableRoster(raw: string, why = 'the stored roster could not be read', owner: string | null = loadSyncOwner()): boolean {
+  const key = `${ROSTER_UNREADABLE_PREFIX}${owner ?? 'local'}:${rosterSig(raw)}`;
   try {
     if (localStorage.getItem(key) !== raw) {
       localStorage.setItem(key, raw);
@@ -274,13 +309,24 @@ function backupUnreadableRoster(raw: string, why = 'the stored roster could not 
   }
 }
 
-/** The kept entries of the stored value that the roster about to be written does not already hold. */
+/** The kept entries of the stored value that the roster about to be written does not already hold: not
+ *  the same text, and not an older copy of an id the roster writes unreadably itself. Only a cloud adopt
+ *  hands saveRoster an entry it cannot show, and the merge chose that copy of the id; this version could
+ *  never have edited the one on the key. Carried, each remote edit of a character this version cannot
+ *  read left one more full copy on the key, without end (a checker's finding on 54f6585). */
 function keptToCarry(kept: unknown[], roster: unknown[]): unknown[] {
   if (!kept.length) return kept;
   const own = roster.filter((e) => !isShownEntry(e));
   if (!own.length) return kept;
   const texts = new Set(own.map((e) => JSON.stringify(e)));
-  return kept.filter((e) => !texts.has(JSON.stringify(e)));
+  const ids = new Set(own.map(idOf).filter((id): id is string => id !== undefined));
+  return kept.filter((e) => !texts.has(JSON.stringify(e)) && !ids.has(idOf(e) as string));
+}
+
+/** A stored entry's string id, if it has one. */
+function idOf(e: unknown): string | undefined {
+  const id = e && typeof e === 'object' ? (e as { id?: unknown }).id : undefined;
+  return typeof id === 'string' ? id : undefined;
 }
 
 /**
@@ -997,12 +1043,13 @@ export function saveSyncOwner(uid: string): void {
  *  the old account, this tab read its own wipe as "another tab switched accounts" and held every write
  *  until its first pull succeeded — offline, a character made in the new account was never saved (a
  *  checker's finding on S3, 2026-10-20; test/bug-account-switch-this-tab.test.tsx). */
-export function wipeSyncedLocalData(): void {
+export function wipeSyncedLocalData(owner: string | null = loadSyncOwner()): void {
   // What the roster key holds that this version cannot read was never uploaded (readCloudBundle sends
   // only what it shows), so removing the key would lose it with no copy anywhere: it is copied aside
-  // first, as saveRoster does (UNKNOWN is not EMPTY; a checker's finding on 12e9ad2).
+  // first, as saveRoster does (UNKNOWN is not EMPTY; a checker's finding on 12e9ad2). The copy is named
+  // for `owner`, the account whose roster this was (cloudSync passes it: it saves the new owner first).
   const raw = storedRosterRaw();
-  if (raw !== null && rosterUnshownText()) backupUnreadableRoster(raw, 'an account switch removes the roster, which holds entries this version cannot read');
+  if (raw !== null && keyUnshownText()) backupUnreadableRoster(raw, 'an account switch removes the roster, which holds entries this version cannot read', owner);
   noteRosterKnown(null, [], null, null);
   for (const k of [
     ROSTER_KEY,

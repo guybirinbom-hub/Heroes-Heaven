@@ -430,7 +430,7 @@ async function startSync(onRosterReplaced: (roster: SavedChar[]) => void): Promi
     // undo history belongs to another account now — read after, every old-account step survived, and
     // Ctrl+Z on one put an old character into this account (test/bug-account-switch-this-tab.test.tsx).
     saveSyncOwner(uid);
-    wipeSyncedLocalData();
+    wipeSyncedLocalData(prevOwner); // a copy of an unreadable roster is named for the account it was
     applyRoster([]); // reflect the wipe immediately; the pull below fills in this account's characters
     cancelPersist(); // drop any pending debounced write so the stale empty roster can't flush post-pull
   }

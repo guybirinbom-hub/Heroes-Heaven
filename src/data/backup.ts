@@ -9,7 +9,7 @@
 import { APP_VERSION } from '../version';
 import { notifyReset } from '../../tracker/src/store/persistBus';
 import { LINEAGE_KEY } from './rosterLineage';
-import type { HomebrewContent, HomebrewSource } from './storage';
+import { ROSTER_UNREADABLE_PREFIX, isOwnRosterBackup, type HomebrewContent, type HomebrewSource } from './storage';
 
 /** The GM-device mirror's per-key history (src/data/trackerSync.ts's STAMP_PREFIX, one file per
  *  account). Named here so a restore can leave it out — see restoreBackup. */
@@ -75,6 +75,9 @@ export function createBackup(now = new Date()): string {
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key === null) continue;
+      // A copy of a roster this version could not read that another account on this device owns stays
+      // out of this account's file (storage.ts isOwnRosterBackup); it stays on the device for that account.
+      if (key.startsWith(ROSTER_UNREADABLE_PREFIX) && !isOwnRosterBackup(key)) continue;
       const value = localStorage.getItem(key);
       if (value !== null) data[key] = value;
     }
@@ -247,6 +250,9 @@ export function restoreBackup(env: BackupEnvelope): number {
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (key === null || !isAppKey(key)) continue;
+    // A copy of a roster this version could not read is never cleared by a restore: it is the only copy
+    // there is (never uploaded, and maybe another account's), and the backup being restored may predate it.
+    if (key.startsWith(ROSTER_UNREADABLE_PREFIX)) continue;
     const value = localStorage.getItem(key);
     if (value !== null) snapshot[key] = value;
     clearKeys.add(key);

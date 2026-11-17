@@ -324,6 +324,119 @@ describe('another tab writing a roster with one bad entry is not read as deletin
     localStorage.setItem(ROSTER_KEY, '[{"id":"a","charac');
     expect(tabs.takeForeignRoster()).toBeNull();
   });
+
+  it('…also on the account-switch path: another tab signed in as someone else and the key holds a value that is not a roster', async () => {
+    localStorage.setItem(OWNER_KEY, 'user-1');
+    localStorage.setItem(ROSTER_KEY, JSON.stringify([pc('a', 'Ayla'), pc('b', 'Bram')]));
+    vi.resetModules();
+    const tabs = await import('../src/data/rosterTabs');
+    tabs.loadRosterKnown();
+    localStorage.setItem(OWNER_KEY, 'user-2');
+    localStorage.setItem(ROSTER_KEY, '[{"id":"z","charac');
+    expect(tabs.takeForeignRoster()).toBeNull(); // never "the new account has no characters"
+  });
+});
+
+describe('copies of an unreadable roster (checker findings on 54f6585)', () => {
+  it('the scans that delete by "nothing uses it" still see a list once it is copied aside (portrait GC, campaign cleanup, homebrew)', async () => {
+    const broken = '[{"id":"a","character":{"name":"Ayla","portraitRef":"p_1"}},{"id":"b","charac';
+    localStorage.setItem(ROSTER_KEY, broken);
+    const { persist, storage } = await mount();
+    persist.schedulePersist([pc('new', 'Newcomer')]); // the first real save copies it aside
+    await vi.advanceTimersByTimeAsync(PERSIST_MS + 50);
+    expect(storedIds()).toEqual(['new']);
+    expect(storage.rosterUnshownText()).toContain('p_1');
+    // App gates the portrait GC and the cleanup of unheld campaigns on exactly that text.
+    const app = readFileSync(`${process.cwd()}/src/App.tsx`, 'utf8');
+    expect(app.match(/rosterUnshownText\(\)/g)?.length).toBe(2);
+  });
+
+  it('a copy made at an account switch is the old account\'s: not counted, not exported for the new one, kept on the device, and never cleared by a restore', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    const backup = await import('../src/data/backup');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    localStorage.setItem(OWNER_KEY, 'user-1');
+    const withKept = JSON.stringify([pc('a', 'Ayla'), { id: 'x', character: null }]);
+    localStorage.setItem(ROSTER_KEY, withKept);
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 1, lists: 0 });
+    // cloudSync's switch: the new owner is saved first, then the wipe names the old one.
+    expect(readFileSync(`${process.cwd()}/src/data/cloudSync.ts`, 'utf8')).toMatch(/saveSyncOwner\(uid\);\s*wipeSyncedLocalData\(prevOwner\);/);
+    localStorage.setItem(OWNER_KEY, 'user-2');
+    storage.wipeSyncedLocalData('user-1');
+    const copies = Object.keys(localStorage).filter((k) => k.startsWith(UNREADABLE_PREFIX));
+    expect(copies).toHaveLength(1);
+    expect(localStorage.getItem(copies[0])).toBe(withKept);
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 0, lists: 0 }); // user-2 is told nothing about user-1's list
+    expect(Object.keys(backup.parseBackup(backup.createBackup()).data).some((k) => k.startsWith(UNREADABLE_PREFIX))).toBe(false);
+    expect(storage.rosterUnshownText()).toContain('"x"'); // …but the device's GC still sees it
+    // A restore replaces everything else, never the copy.
+    backup.restoreBackup(backup.parseBackup(backup.createBackup()));
+    expect(localStorage.getItem(copies[0])).toBe(withKept);
+    // user-1 signs in here again: told, and it goes in user-1's export.
+    localStorage.setItem(OWNER_KEY, 'user-1');
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 0, lists: 1 });
+    expect(backup.parseBackup(backup.createBackup()).data[copies[0]]).toBe(withKept);
+  });
+
+  it('Settings counts a kept unreadable character in the Export and Uninstall lines (wiring)', () => {
+    const page = readFileSync(`${process.cwd()}/src/sheet/SettingsPage.tsx`, 'utf8');
+    expect(page.match(/const charCount = savedCharCount\(\);/g)?.length).toBe(2);
+    expect(page).toMatch(/function savedCharCount\(\): number \{\s*return loadRoster\(\)\.length \+ rosterUnreadCounts\(\)\.entries;/);
+  });
+});
+
+describe('a character this version cannot read, edited on a newer device, never piles up copies here (checker finding on 54f6585)', () => {
+  it('five remote edits of an unreadable cloud x leave exactly one x on the key, the newest; the notice counts one', async () => {
+    vi.resetModules();
+    const { normalizeCharacter } = await import('../src/rules/normalize');
+    const ch = (id: string, name: string) => ({ id, character: normalizeCharacter({ id, name }) }) as SavedChar;
+    const x = (rev: number) => ({ id: 'x', character: null, future: { rev } });
+    sb.state.cloudRow = { roster: [ch('a', 'Ayla'), x(1)], charUpdated: { a: 1000, x: 1001 } } as unknown as CloudBundle;
+    sb.state.upserts = [];
+    sb.state.failNext = 0;
+    localStorage.setItem(OWNER_KEY, 'user-1');
+    const storage = await import('../src/data/storage');
+    const persist = await import('../src/data/persist');
+    const sync = await import('../src/data/cloudSync');
+    persist.setupPersist(storage.saveRoster, () => {});
+    const stop = await sync.startCloudSync(() => {});
+    try {
+      await vi.advanceTimersByTimeAsync(10);
+      for (let rev = 2; rev <= 5; rev++) {
+        await vi.advanceTimersByTimeAsync(5000); // past the pull throttle (and any push)
+        sb.state.cloudRow = { ...sb.state.cloudRow!, roster: [ch('a', 'Ayla'), x(rev)], charUpdated: { a: 1000, x: 1000 + rev } } as unknown as CloudBundle;
+        window.dispatchEvent(new Event('focus')); // a pull, as Realtime would start one
+        await vi.advanceTimersByTimeAsync(10);
+        await vi.advanceTimersByTimeAsync(10);
+      }
+      const onDisk = JSON.parse(localStorage.getItem(ROSTER_KEY)!) as { id: string; future?: { rev: number } }[];
+      expect(onDisk.filter((e) => e.id === 'x').map((e) => e.future?.rev)).toEqual([5]);
+      expect(storage.rosterUnreadCounts().entries).toBe(1);
+    } finally {
+      stop();
+    }
+  });
+
+  it('a stored entry kept unread here stays when the roster written holds no unreadable copy of its id', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    const keptX = { id: 'x', character: null, note: 'only here' };
+    localStorage.setItem(ROSTER_KEY, JSON.stringify([pc('a', 'Ayla'), keptX]));
+    storage.loadRoster();
+    expect(storage.saveRoster([...storage.loadRoster(), { id: 'y', character: null } as never])).toBe(true);
+    expect(JSON.parse(localStorage.getItem(ROSTER_KEY)!)).toContainEqual(keptX);
+  });
+
+  it('the merge takes the FIRST of two local entries with one id (the newest; later ones are older kept copies)', async () => {
+    const { mergeRoster } = await import('../src/data/cloudMerge');
+    const NEW = { id: 'x', character: { name: 'NEW' } } as never;
+    const OLD = { id: 'x', character: { name: 'OLD' } } as never;
+    const out = mergeRoster([NEW, OLD], { x: 1000 }, [NEW], { x: 1000 });
+    expect(out.roster).toEqual([NEW]);
+    const cloudDup = mergeRoster([], {}, [NEW, OLD], { x: 1000 });
+    expect(cloudDup.roster).toEqual([NEW]);
+  });
 });
 
 describe('cloud: a failed first pull never tombstones characters this session never held', () => {

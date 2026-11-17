@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { getAppearance, setAccent, setFont, setStyle, setTheme } from '../theme/theme-manager';
 import { getZoom, setZoom, subscribeZoom } from '../theme/zoom';
-import { loadRoster, loadSyncMeta, wipeAllData } from '../data/storage';
+import { loadRoster, loadSyncMeta, rosterUnreadCounts, wipeAllData } from '../data/storage';
 import { backupCharCount, backupFilename, createBackup, parseBackup, restoreBackup } from '../data/backup';
 import { cancelPersist, flushPersist } from '../data/persist';
 import { downloadText } from './download';
@@ -260,11 +260,18 @@ function RulesSection() {
   );
 }
 
+/** Every character saved on this device: the ones the app shows and the ones it keeps as stored but
+ *  cannot read (storage.ts rosterUnreadCounts). Both go in the export and both go with an uninstall,
+ *  which said "0 saved characters" over a kept one (a checker's finding on 54f6585). */
+function savedCharCount(): number {
+  return loadRoster().length + rosterUnreadCounts().entries;
+}
+
 /** Whole-device backup: export everything the app has stored into one file, or restore such a
  *  file (replacing all characters, homebrew, and settings on this device, then reloading). */
 function BackupSection() {
   const fileRef = useRef<HTMLInputElement>(null);
-  const charCount = loadRoster().length;
+  const charCount = savedCharCount();
 
   const showError = (message: string, title = 'Import failed') =>
     void chooseDialog({ title, message, buttons: [{ value: 'ok', label: 'OK', primary: true }] });
@@ -520,7 +527,7 @@ function UninstallSection() {
   const [typed, setTyped] = useState('');
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
-  const charCount = loadRoster().length;
+  const charCount = savedCharCount();
   const ready = typed.trim().toUpperCase() === CONFIRM_WORD;
 
   const doUninstall = async () => {
