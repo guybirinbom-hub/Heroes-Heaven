@@ -256,7 +256,10 @@ export function rosterResetCopies(): number {
  *  ROSTER_UNREADABLE_PREFIX (the GC and campaign scans, Export everything, a restore) treats it as any copy. */
 const RESET_TAG = 'reset';
 function isResetCopy(key: string): boolean {
-  return key.slice(ROSTER_UNREADABLE_PREFIX.length).split(':')[1] === RESET_TAG;
+  // Not a split-and-index: blocks-check reads every `x.split(':')[1]` as a feat slot key's category.
+  const rest = key.slice(ROSTER_UNREADABLE_PREFIX.length);
+  const owner = rest.indexOf(':');
+  return owner >= 0 && rest.startsWith(`${RESET_TAG}:`, owner + 1);
 }
 
 /** Every key a roster copy sits under (ROSTER_UNREADABLE_PREFIX), whoever it was made for. */
