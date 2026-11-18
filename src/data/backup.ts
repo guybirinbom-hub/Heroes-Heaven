@@ -9,7 +9,7 @@
 import { APP_VERSION } from '../version';
 import { notifyReset } from '../../tracker/src/store/persistBus';
 import { LINEAGE_KEY } from './rosterLineage';
-import { ROSTER_UNREADABLE_PREFIX, isOwnRosterBackup, type HomebrewContent, type HomebrewSource } from './storage';
+import { ROSTER_UNREADABLE_PREFIX, copyUnreadRosterAside, isOwnRosterBackup, type HomebrewContent, type HomebrewSource } from './storage';
 
 /** The GM-device mirror's per-key history (src/data/trackerSync.ts's STAMP_PREFIX, one file per
  *  account). Named here so a restore can leave it out — see restoreBackup. */
@@ -243,6 +243,16 @@ export function restoreBackup(env: BackupEnvelope): number {
   // save (a pending push, the teardown flush) writes the pre-restore copy straight back out, and the
   // mirror then reads each restored key as one it has already reconciled: the cloud's copy is skipped
   // for good, and a key the backup left out never comes back. See forgetTrackerSyncStamps.
+  // …and before the roster key is cleared: what it holds that the app cannot show (a value that is not a
+  // roster, or kept unreadable entries) goes to its own copy, which the loop below never clears. Without
+  // it, the obvious recovery step for "A saved character list could not be read. It is kept unchanged"
+  // (restore last week's backup) destroyed that list for good — it was never uploaded. No copy, no restore.
+  if (!copyUnreadRosterAside('a backup was restored over it')) {
+    throw new Error(
+      'Restore stopped: a saved character list this version can’t read could not be kept aside (storage is full). ' +
+        'Export everything first, free up space, and try again. Nothing was changed.',
+    );
+  }
   notifyReset();
   // Snapshot current app-owned values so we can roll back on any failure.
   const snapshot: Record<string, string> = {};

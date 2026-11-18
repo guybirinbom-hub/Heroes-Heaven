@@ -573,4 +573,158 @@ describe('cloud: a failed first pull never tombstones characters this session ne
       stop();
     }
   });
+
+  it('offline open (the first pull fails): a character loaded at launch that the player deletes is still tombstoned', async () => {
+    vi.resetModules();
+    const { normalizeCharacter } = await import('../src/rules/normalize');
+    const ch = (id: string, name: string) => ({ id, character: normalizeCharacter({ id, name }) }) as SavedChar;
+    sb.state.cloudRow = { roster: [ch('c1', 'Ayla'), ch('c2', 'Bram')], charUpdated: { c1: 1000, c2: 1000 } } as unknown as CloudBundle;
+    sb.state.upserts = [];
+    sb.state.failNext = 1; // the opening pull fails
+    localStorage.setItem(OWNER_KEY, 'user-1');
+    const storage = await import('../src/data/storage');
+    const persist = await import('../src/data/persist');
+    const sync = await import('../src/data/cloudSync');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    storage.saveRoster([ch('c1', 'Ayla'), ch('c2', 'Bram')]); // what this device held before it went offline
+    storage.saveCharUpdated({ c1: 1000, c2: 1000 });
+    persist.setupPersist(storage.saveRoster, () => {});
+    const stop = await sync.startCloudSync(() => {});
+    try {
+      await vi.advanceTimersByTimeAsync(10);
+      expect(sync.hasSyncedOnce()).toBe(false);
+      persist.schedulePersist([storage.loadRoster()[0]]); // the player deletes Bram, still offline
+      await vi.advanceTimersByTimeAsync(PERSIST_MS + 50);
+      const tomb = JSON.parse(localStorage.getItem(TOMBSTONES_KEY) ?? '{}') as Record<string, number>;
+      expect(tomb['char:c2']).toBeGreaterThan(0);
+      expect(tomb['char:c1']).toBeUndefined();
+    } finally {
+      stop();
+    }
+  });
+});
+
+describe('the steps that clear or replace the roster on purpose keep what was never read (ported from main 5ff8815)', () => {
+  const copiesNow = () => Object.keys(localStorage).filter((k) => k.startsWith(UNREADABLE_PREFIX));
+
+  it('Restore over a key that does not parse copies the old value aside first (equal to the old raw), and the restore lands', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    const backup = await import('../src/data/backup');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    // Last week's backup: one readable character.
+    localStorage.setItem(ROSTER_KEY, JSON.stringify([pc('old', 'Weekold')]));
+    const env = backup.parseBackup(backup.createBackup());
+    localStorage.clear();
+    // Today the key holds a cut-off value: the notice says "kept unchanged", and the player restores.
+    const broken = '[{"id":"a","character":{"name":"Ayla"}},{"id":"b","charac';
+    localStorage.setItem(ROSTER_KEY, broken);
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 0, lists: 1 });
+    backup.restoreBackup(env);
+    expect(storedIds()).toEqual(['old']);
+    const copies = copiesNow();
+    expect(copies).toHaveLength(1);
+    expect(localStorage.getItem(copies[0])).toBe(broken);
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 0, lists: 1 }); // still told, still exported
+  });
+
+  it('Restore over a readable key holding an unreadable entry keeps that entry too', async () => {
+    vi.resetModules();
+    const backup = await import('../src/data/backup');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const env = backup.parseBackup(backup.createBackup()); // an empty device's backup
+    const withKept = JSON.stringify([pc('a', 'Ayla'), { id: 'x', note: 'no character object' }]);
+    localStorage.setItem(ROSTER_KEY, withKept);
+    backup.restoreBackup(env);
+    expect(copiesNow().map((k) => localStorage.getItem(k))).toEqual([withKept]);
+  });
+
+  it('Restore is refused, changing nothing, when that copy cannot be made', async () => {
+    vi.resetModules();
+    const backup = await import('../src/data/backup');
+    const env = backup.parseBackup(backup.createBackup());
+    const broken = '[{"id":"a",';
+    localStorage.setItem(ROSTER_KEY, broken);
+    const real = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function (this: Storage, k: string, v: string) {
+      if (k.startsWith(UNREADABLE_PREFIX)) throw new DOMException('full', 'QuotaExceededError');
+      real.call(this, k, v);
+    });
+    expect(() => backup.restoreBackup(env)).toThrow(/could not be kept aside/);
+    expect(localStorage.getItem(ROSTER_KEY)).toBe(broken);
+  });
+
+  it('the crash screen\'s "Reset saved data" (clearRoster) of a key that does not parse leaves a copy, told as a list that could not be read', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const broken = '[{"id":"a","character":{"name":"Ayla"}},{"id":"b","charac';
+    localStorage.setItem(ROSTER_KEY, broken);
+    storage.clearRoster();
+    expect(localStorage.getItem(ROSTER_KEY)).toBeNull();
+    expect(copiesNow().map((k) => localStorage.getItem(k))).toEqual([broken]);
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 0, lists: 1 });
+    expect(storage.rosterResetCopies()).toBe(0);
+    // A value too large to sit beside its copy is copied into the space the key freed.
+    localStorage.clear();
+    localStorage.setItem(ROSTER_KEY, broken);
+    const real = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function (this: Storage, k: string, v: string) {
+      if (k.startsWith(UNREADABLE_PREFIX) && localStorage.getItem(ROSTER_KEY) !== null) throw new DOMException('full', 'QuotaExceededError');
+      real.call(this, k, v);
+    });
+    storage.clearRoster();
+    expect(localStorage.getItem(ROSTER_KEY)).toBeNull();
+    expect(copiesNow().map((k) => localStorage.getItem(k))).toEqual([broken]);
+  });
+
+  it('a crash reset of an empty roster ("[]") leaves no copy and no notice', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    localStorage.setItem(ROSTER_KEY, '[]');
+    storage.clearRoster();
+    expect(localStorage.getItem(ROSTER_KEY)).toBeNull();
+    expect(copiesNow()).toEqual([]);
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 0, lists: 0 });
+    expect(storage.rosterResetCopies()).toBe(0);
+  });
+
+  it('a crash reset of a readable roster keeps it under a reset copy, and the notice says so without calling it unreadable', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    const { unreadNotice } = await import('../src/sheet/RosterScreen');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const stored = JSON.stringify([pc('a', 'Ayla'), pc('b', 'Bren')]);
+    localStorage.setItem(ROSTER_KEY, stored);
+    storage.clearRoster();
+    expect(localStorage.getItem(ROSTER_KEY)).toBeNull();
+    const copies = copiesNow();
+    expect(copies.map((k) => localStorage.getItem(k))).toEqual([stored]);
+    expect(copies[0].startsWith(`${UNREADABLE_PREFIX}local:reset:`)).toBe(true);
+    expect(storage.rosterUnreadCounts()).toEqual({ entries: 0, lists: 0 }); // never "could not be read"
+    expect(storage.rosterResetCopies()).toBe(1);
+    const line = unreadNotice({ ...storage.rosterUnreadCounts(), resets: storage.rosterResetCopies() });
+    expect(line).toBe('Characters saved before a reset are kept on this device; Settings → Export everything saves a copy.');
+    expect(line).not.toMatch(/could not be read|can't be read/);
+    // "Export everything" carries it, and the scans that delete by "nothing uses it" still see it.
+    const backup = await import('../src/data/backup');
+    expect(backup.parseBackup(backup.createBackup()).data[copies[0]]).toBe(stored);
+    expect(storage.rosterUnshownText()).toContain('Bren');
+    // The notice text with nothing kept is unchanged ('' and the old one-list wording).
+    expect(unreadNotice({ entries: 0, lists: 0 })).toBe('');
+    expect(unreadNotice({ entries: 0, lists: 1 })).toBe('A saved character list could not be read. It is kept unchanged; Settings → Export everything saves a copy.');
+    // Wiring: the Characters screen passes the reset count to the notice.
+    expect(readFileSync(`${process.cwd()}/src/sheet/RosterScreen.tsx`, 'utf8')).toMatch(/\{ \.\.\.rosterUnreadCounts\(\), resets: rosterResetCopies\(\) \}/);
+  });
+
+  it('normalize fills missing proficiency ranks on a copy, never in the stored entry it reads', async () => {
+    vi.resetModules();
+    const { normalizeCharacter } = await import('../src/rules/normalize');
+    const stored = { name: 'Ayla', proficiencies: { saves: {}, attacks: {}, defenses: {} } };
+    const before = JSON.stringify(stored);
+    const out = normalizeCharacter(stored);
+    expect(JSON.stringify(stored)).toBe(before);
+    expect(Object.keys(out.proficiencies.saves).length).toBeGreaterThan(0);
+  });
 });

@@ -238,8 +238,25 @@ export function rosterUnreadCounts(): { entries: number; lists: number } {
   const raw = storedRosterRaw();
   const s = raw === null ? null : scanOf(raw);
   let lists = s && !s.readable ? 1 : 0;
-  for (const k of rosterBackupKeys()) if (isOwnRosterBackup(k) && localStorage.getItem(k) !== raw) lists++;
+  for (const k of rosterBackupKeys()) if (isOwnRosterBackup(k) && !isResetCopy(k) && localStorage.getItem(k) !== raw) lists++;
   return { entries: s?.readable ? s.kept.length : 0, lists };
+}
+
+/** How many copies of this account's roster the crash screen's "Reset saved data" kept (clearRoster) of a
+ *  roster this version COULD read. They are not "lists that could not be read" (saying so would be a false
+ *  alarm), so the Characters screen says what they are instead (RosterScreen unreadNotice). */
+export function rosterResetCopies(): number {
+  const raw = storedRosterRaw();
+  let n = 0;
+  for (const k of rosterBackupKeys()) if (isOwnRosterBackup(k) && isResetCopy(k) && localStorage.getItem(k) !== raw) n++;
+  return n;
+}
+
+/** The tag after the owner in a reset copy's key (`<prefix><owner>:reset:<signature>`); every other scan of
+ *  ROSTER_UNREADABLE_PREFIX (the GC and campaign scans, Export everything, a restore) treats it as any copy. */
+const RESET_TAG = 'reset';
+function isResetCopy(key: string): boolean {
+  return key.slice(ROSTER_UNREADABLE_PREFIX.length).split(':')[1] === RESET_TAG;
 }
 
 /** Every key a roster copy sits under (ROSTER_UNREADABLE_PREFIX), whoever it was made for. */
@@ -294,10 +311,28 @@ export function rosterUnshownText(): string {
   return text;
 }
 
+/** Before a Restore clears the roster key on purpose (backup.restoreBackup): copy what the key holds that
+ *  loadRoster does not show (a value that is not a roster, or kept unreadable entries) to its own key, so
+ *  the restore never takes it with it. The whole value is copied (one string; the readable part is the
+ *  player's to replace). True when nothing needed a copy or the copy is on disk; false when it could not
+ *  be made. Before this, "restore last week's backup" — the obvious step after the notice "A saved
+ *  character list could not be read. It is kept unchanged" — destroyed that list for good. */
+export function copyUnreadRosterAside(why: string): boolean {
+  const raw = storedRosterRaw();
+  if (raw !== null && keyUnshownText()) return backupUnreadableRoster(raw, why);
+  return true;
+}
+
 /** Copy a stored roster value the app cannot (wholly) read to its own key, named for the account it
- *  belongs to (isOwnRosterBackup). True once the copy is on disk. */
-function backupUnreadableRoster(raw: string, why = 'the stored roster could not be read', owner: string | null = loadSyncOwner()): boolean {
-  const key = `${ROSTER_UNREADABLE_PREFIX}${owner ?? 'local'}:${rosterSig(raw)}`;
+ *  belongs to (isOwnRosterBackup). True once the copy is on disk. `kind` 'reset': a roster this version
+ *  could read, kept by the crash screen's reset (clearRoster) — counted apart (rosterResetCopies). */
+function backupUnreadableRoster(
+  raw: string,
+  why = 'the stored roster could not be read',
+  owner: string | null = loadSyncOwner(),
+  kind: 'unread' | 'reset' = 'unread',
+): boolean {
+  const key = `${ROSTER_UNREADABLE_PREFIX}${owner ?? 'local'}:${kind === 'reset' ? `${RESET_TAG}:` : ''}${rosterSig(raw)}`;
   try {
     if (localStorage.getItem(key) !== raw) {
       localStorage.setItem(key, raw);
@@ -381,10 +416,35 @@ export function newRosterId(): string {
   return `c-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e6).toString(36)}`;
 }
 
-/** Last-resort recovery: wipe the persisted roster + active id (e.g. a corrupt save crashing on load). */
+/** What the crash reset keeps of a stored roster value: 'unread' for a value that is not a roster (the
+ *  notice says a list could not be read), 'reset' for a roster this version reads that holds anything (the
+ *  notice says characters from before a reset are kept — never "could not be read", a false alarm), and
+ *  null for an empty one ('[]': nothing to keep, no copy and no notice). JSON.parse only: the reset runs
+ *  after a crash, so it calls no normalize. */
+function resetCopyKind(raw: string): 'unread' | 'reset' | null {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return 'unread';
+  }
+  if (!Array.isArray(parsed)) return 'unread';
+  return parsed.length ? 'reset' : null;
+}
+
+/** Last-resort recovery: wipe the persisted roster + active id (e.g. a corrupt save crashing on load).
+ *  The roster is copied aside first (backupUnreadableRoster: the Characters notice counts it, "Export
+ *  everything" saves it), so a player who is not signed in does not lose every character to the crash
+ *  screen's one button. A copy too large to sit beside the key is made after the key is gone, in the
+ *  space it freed. */
 export function clearRoster(): void {
   try {
+    const raw = storedRosterRaw();
+    const kind = raw === null ? null : resetCopyKind(raw);
+    const why = 'the player reset saved data after a crash';
+    const copied = kind === null || backupUnreadableRoster(raw as string, why, undefined, kind);
     localStorage.removeItem(KEY);
+    if (!copied) backupUnreadableRoster(raw as string, why, undefined, kind as 'unread' | 'reset');
     localStorage.removeItem(ACTIVE_KEY);
   } catch {
     // ignore

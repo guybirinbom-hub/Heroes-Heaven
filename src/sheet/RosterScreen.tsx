@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import type { CharacterAppearance, ContentDatabase, Item, ModeDef } from '../rules/types';
-import { rosterUnreadCounts, type SavedChar } from '../data/storage';
+import { rosterResetCopies, rosterUnreadCounts, type SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { deriveMaxHp } from '../rules/derive';
 import { heldClassNames } from '../rules/heldClasses';
@@ -70,14 +70,18 @@ async function wgTweaksOk(c: SavedChar, content: ContentDatabase): Promise<boole
   });
 }
 
-/** The Characters screen's one line about what is kept but not shown, or '' when nothing is. */
-export function unreadNotice({ entries, lists }: { entries: number; lists: number }): string {
+/** The Characters screen's one line about what is kept but not shown, or '' when nothing is. `resets`:
+ *  copies the crash screen's "Reset saved data" kept of a list this version COULD read (storage.ts
+ *  rosterResetCopies) — said as what they are, never "could not be read" (that would be a false alarm). */
+export function unreadNotice({ entries, lists, resets = 0 }: { entries: number; lists: number; resets?: number }): string {
   const parts: string[] = [];
   if (entries) parts.push(`${entries} saved character${entries === 1 ? '' : 's'} can't be read by this version.`);
   if (lists) parts.push(lists === 1 ? 'A saved character list could not be read.' : `${lists} saved character lists could not be read.`);
-  if (!parts.length) return '';
-  const many = entries + lists > 1;
-  return `${parts.join(' ')} ${many ? 'They are' : 'It is'} kept unchanged; Settings → Export everything saves a copy.`;
+  const heads: string[] = [];
+  if (parts.length) heads.push(`${parts.join(' ')} ${entries + lists > 1 ? 'They are' : 'It is'} kept unchanged`);
+  if (resets) heads.push('Characters saved before a reset are kept on this device');
+  if (!heads.length) return '';
+  return `${heads.join('. ')}; Settings → Export everything saves a copy.`;
 }
 
 /** The character roster: search, filter, import/export, and per-character cards with actions.
@@ -247,7 +251,7 @@ export function RosterScreen({
   // What this device keeps but cannot show (src/data/storage.ts rosterUnreadCounts): said in one line, so
   // a short or empty roster is never taken for "my characters were deleted". Re-read with each roster.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const unread = useMemo(() => rosterUnreadCounts(), [roster]);
+  const unread = useMemo(() => ({ ...rosterUnreadCounts(), resets: rosterResetCopies() }), [roster]);
   const unreadLine = unreadNotice(unread);
 
   return (

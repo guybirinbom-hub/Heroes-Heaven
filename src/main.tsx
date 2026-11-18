@@ -76,7 +76,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             if (
               await confirmDialog({
                 title: 'Reset all saved characters?',
-                message: "This clears the roster stored in this browser and can't be undone.",
+                message:
+                  'This clears the character list stored in this browser so the app can open. Any characters in it stay on this device as a copy: the Characters page says so, and Settings → Export everything saves it.',
                 confirmLabel: 'Reset',
                 danger: true,
               })

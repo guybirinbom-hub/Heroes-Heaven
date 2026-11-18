@@ -63,11 +63,14 @@ function normAbilities(a: unknown): AbilityScores {
 
 function normProficiencies(p: unknown): Proficiencies {
   const src = p && typeof p === 'object' ? (p as Partial<Proficiencies>) : {};
-  const saves = (src.saves && typeof src.saves === 'object' ? src.saves : {}) as Proficiencies['saves'];
+  // Copies, never the stored objects: filling a missing rank in place changed the very entry the load
+  // then compares against (storage.ts readRosterEntries' authoredKey pair) and keeps as stored when a
+  // later step throws.
+  const saves = { ...(src.saves && typeof src.saves === 'object' ? src.saves : {}) } as Proficiencies['saves'];
   for (const s of SAVES) if (!saves[s]) saves[s] = UNTRAINED;
-  const attacks = (src.attacks && typeof src.attacks === 'object' ? src.attacks : {}) as Proficiencies['attacks'];
+  const attacks = { ...(src.attacks && typeof src.attacks === 'object' ? src.attacks : {}) } as Proficiencies['attacks'];
   for (const a of ['unarmed', 'simple', 'martial', 'advanced'] as const) if (!attacks[a]) attacks[a] = UNTRAINED;
-  const defenses = (src.defenses && typeof src.defenses === 'object' ? src.defenses : {}) as Proficiencies['defenses'];
+  const defenses = { ...(src.defenses && typeof src.defenses === 'object' ? src.defenses : {}) } as Proficiencies['defenses'];
   for (const d of ['unarmored', 'light', 'medium', 'heavy'] as const) if (!defenses[d]) defenses[d] = UNTRAINED;
   return {
     perception: src.perception ?? UNTRAINED,
