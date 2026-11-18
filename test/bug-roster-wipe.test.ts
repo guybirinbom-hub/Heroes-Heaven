@@ -226,6 +226,24 @@ describe('every other reader of the roster key counts what it cannot read', () =
     expect(Object.keys(localStorage).filter((k) => k.startsWith(UNREADABLE_PREFIX))).toHaveLength(0);
   });
 
+  it('an account switch with no room for the copy beside the key copies it into the space the wipe freed', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const withKept = JSON.stringify([pc('a', 'Ayla'), { id: 'x', character: null, note: 'never synced' }]);
+    localStorage.setItem(ROSTER_KEY, withKept);
+    const real = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function (this: Storage, k: string, v: string) {
+      if (k.startsWith(UNREADABLE_PREFIX) && localStorage.getItem(ROSTER_KEY) !== null) throw new DOMException('full', 'QuotaExceededError');
+      real.call(this, k, v);
+    });
+    storage.wipeSyncedLocalData('user-1');
+    expect(localStorage.getItem(ROSTER_KEY)).toBeNull();
+    const copies = Object.keys(localStorage).filter((k) => k.startsWith(UNREADABLE_PREFIX));
+    expect(copies.map((k) => localStorage.getItem(k))).toEqual([withKept]);
+    expect(copies[0].startsWith(`${UNREADABLE_PREFIX}user-1:`)).toBe(true);
+  });
+
   it('the cloud merge keeps every entry without an id (keyed by `undefined` they overwrote each other), each once', async () => {
     const { mergeRoster } = await import('../src/data/cloudMerge');
     const one = { note: 'first' };
@@ -690,10 +708,21 @@ describe('the steps that clear or replace the roster on purpose keep what was ne
       if (k.startsWith(UNREADABLE_PREFIX)) throw new DOMException('full', 'QuotaExceededError');
       real.call(this, k, v);
     });
-    storage.clearRoster();
+    expect(storage.clearRoster()).toBe(false);
     expect(localStorage.getItem(ROSTER_KEY)).toBe(stored);
     expect(copiesNow()).toEqual([]);
     expect(localStorage.getItem('wanderers-codex:active:v1')).toBeNull();
+    // Only after the player's second yes ("Clear without a copy") does it go, with no copy attempted.
+    expect(storage.clearRoster({ withoutCopy: true })).toBe(true);
+    expect(localStorage.getItem(ROSTER_KEY)).toBeNull();
+    expect(copiesNow()).toEqual([]);
+    // A reset that could copy reports true. Wiring: the crash screen asks again on false, before any reload.
+    localStorage.setItem(ROSTER_KEY, stored);
+    vi.restoreAllMocks();
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    expect(storage.clearRoster()).toBe(true);
+    const main = readFileSync(`${process.cwd()}/src/main.tsx`, 'utf8');
+    expect(main).toMatch(/if \(!clearRoster\(\)\) \{[\s\S]*?confirmLabel: 'Clear without a copy'[\s\S]*?if \(!anyway\) return;\s*clearRoster\(\{ withoutCopy: true \}\);\s*\}\s*window\.location\.reload\(\);/);
   });
 
   it('a crash reset of an empty roster ("[]") leaves no copy and no notice', async () => {

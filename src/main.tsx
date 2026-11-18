@@ -82,7 +82,21 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 danger: true,
               })
             ) {
-              clearRoster();
+              // No room on the device for the promised copy: the list was put back, so ask before
+              // clearing it without one (a reload alone would bring the same crash back, unexplained).
+              if (!clearRoster()) {
+                const anyway = await confirmDialog({
+                  title: 'No room to keep a copy',
+                  message:
+                    'This device has no room to keep a copy of your characters, so the list was not cleared. Clear it anyway? The characters in it are lost, except those saved in your account online.',
+                  confirmLabel: 'Clear without a copy',
+                  cancelLabel: 'Keep them',
+                  danger: true,
+                  focusCancel: true,
+                });
+                if (!anyway) return;
+                clearRoster({ withoutCopy: true });
+              }
               window.location.reload();
             }
           }}

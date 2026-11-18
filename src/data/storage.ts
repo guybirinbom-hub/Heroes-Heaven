@@ -439,22 +439,27 @@ function resetCopyKind(raw: string): 'unread' | 'reset' | null {
  *  The roster is copied aside first (backupUnreadableRoster: the Characters notice counts it, "Export
  *  everything" saves it), so a player who is not signed in does not lose every character to the crash
  *  screen's one button. A copy too large to sit beside the key is made after the key is gone, in the
- *  space it freed. */
-export function clearRoster(): void {
+ *  space it freed.
+ *
+ *  Returns false when no copy fits even then: the roster is put back as it was (the crash screen
+ *  promised the characters are kept) and the caller asks the player before `withoutCopy` clears it. */
+export function clearRoster(opts: { withoutCopy?: boolean } = {}): boolean {
   try {
     const raw = storedRosterRaw();
-    const kind = raw === null ? null : resetCopyKind(raw);
+    const kind = raw === null || opts.withoutCopy ? null : resetCopyKind(raw);
     const why = 'the player reset saved data after a crash';
     const copied = kind === null || backupUnreadableRoster(raw as string, why, undefined, kind);
     localStorage.removeItem(KEY);
-    // No room for a copy even after the key is gone: put the roster back as it was. The crash screen
-    // promised the characters are kept, so a reset that cannot copy them resets nothing of the roster.
+    // No room for a copy even after the key is gone: put the roster back as it was.
     if (!copied && !backupUnreadableRoster(raw as string, why, undefined, kind as 'unread' | 'reset')) {
       localStorage.setItem(KEY, raw as string);
+      localStorage.removeItem(ACTIVE_KEY);
+      return false;
     }
     localStorage.removeItem(ACTIVE_KEY);
+    return true;
   } catch {
-    // ignore
+    return true; // storage unavailable: nothing more this button can do; the reload shows what is left
   }
 }
 
@@ -1116,7 +1121,9 @@ export function wipeSyncedLocalData(owner: string | null = loadSyncOwner()): voi
   // first, as saveRoster does (UNKNOWN is not EMPTY; a checker's finding on 12e9ad2). The copy is named
   // for `owner`, the account whose roster this was (cloudSync passes it: it saves the new owner first).
   const raw = storedRosterRaw();
-  if (raw !== null && keyUnshownText()) backupUnreadableRoster(raw, 'an account switch removes the roster, which holds entries this version cannot read', owner);
+  const why = 'an account switch removes the roster, which holds entries this version cannot read';
+  const mustCopy = raw !== null && !!keyUnshownText();
+  const copied = !mustCopy || backupUnreadableRoster(raw as string, why, owner);
   noteRosterKnown(null, [], null, null);
   for (const k of [
     ROSTER_KEY,
@@ -1141,6 +1148,8 @@ export function wipeSyncedLocalData(owner: string | null = loadSyncOwner()): voi
       /* non-fatal */
     }
   }
+  // Too full to copy beside the key: copy into the space the removals just freed (as clearRoster does).
+  if (!copied) backupUnreadableRoster(raw as string, why, owner);
 }
 
 export interface CloudBundle {
