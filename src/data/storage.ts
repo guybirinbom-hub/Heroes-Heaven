@@ -451,13 +451,10 @@ export function clearRoster(opts: { withoutCopy?: boolean } = {}): boolean {
     const copied = kind === null || backupUnreadableRoster(raw as string, why, undefined, kind);
     localStorage.removeItem(KEY);
     // No room for a copy even after the key is gone: put the roster back as it was.
-    if (!copied && !backupUnreadableRoster(raw as string, why, undefined, kind as 'unread' | 'reset')) {
-      localStorage.setItem(KEY, raw as string);
-      localStorage.removeItem(ACTIVE_KEY);
-      return false;
-    }
+    const putBack = !copied && !backupUnreadableRoster(raw as string, why, undefined, kind as 'unread' | 'reset');
+    if (putBack) localStorage.setItem(KEY, raw as string);
     localStorage.removeItem(ACTIVE_KEY);
-    return true;
+    return !putBack;
   } catch {
     return true; // storage unavailable: nothing more this button can do; the reload shows what is left
   }
