@@ -447,7 +447,11 @@ export function clearRoster(): void {
     const why = 'the player reset saved data after a crash';
     const copied = kind === null || backupUnreadableRoster(raw as string, why, undefined, kind);
     localStorage.removeItem(KEY);
-    if (!copied) backupUnreadableRoster(raw as string, why, undefined, kind as 'unread' | 'reset');
+    // No room for a copy even after the key is gone: put the roster back as it was. The crash screen
+    // promised the characters are kept, so a reset that cannot copy them resets nothing of the roster.
+    if (!copied && !backupUnreadableRoster(raw as string, why, undefined, kind as 'unread' | 'reset')) {
+      localStorage.setItem(KEY, raw as string);
+    }
     localStorage.removeItem(ACTIVE_KEY);
   } catch {
     // ignore

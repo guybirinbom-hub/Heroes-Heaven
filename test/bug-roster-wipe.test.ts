@@ -678,6 +678,24 @@ describe('the steps that clear or replace the roster on purpose keep what was ne
     expect(copiesNow().map((k) => localStorage.getItem(k))).toEqual([broken]);
   });
 
+  it('a crash reset that cannot make any copy (storage full) puts the roster back instead of losing it', async () => {
+    vi.resetModules();
+    const storage = await import('../src/data/storage');
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const stored = JSON.stringify([pc('a', 'Ayla'), pc('b', 'Bren')]);
+    localStorage.setItem(ROSTER_KEY, stored);
+    localStorage.setItem('wanderers-codex:active:v1', 'a');
+    const real = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function (this: Storage, k: string, v: string) {
+      if (k.startsWith(UNREADABLE_PREFIX)) throw new DOMException('full', 'QuotaExceededError');
+      real.call(this, k, v);
+    });
+    storage.clearRoster();
+    expect(localStorage.getItem(ROSTER_KEY)).toBe(stored);
+    expect(copiesNow()).toEqual([]);
+    expect(localStorage.getItem('wanderers-codex:active:v1')).toBeNull();
+  });
+
   it('a crash reset of an empty roster ("[]") leaves no copy and no notice', async () => {
     vi.resetModules();
     const storage = await import('../src/data/storage');
